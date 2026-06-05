@@ -1,0 +1,16 @@
+environment: staging
+
+superadmin: #Common superadmin URL.
+  url: https://superadmin.nxtwash.com/login
+
+admin: #This URL is from Superadmin > AP Staging
+  url: https://staging.nxtwash.com/
+
+pos: #This URL is from Superadmin > POS App
+  url: https://devpos.nxtwash.com/
+
+tunnel: #This URL is from Superadmin > Tunnel Stage
+  url: https://devtunnel.nxtwash.com/wash-queue
+
+customer_portal: #Not sure about the URL yet. 
+  url: 

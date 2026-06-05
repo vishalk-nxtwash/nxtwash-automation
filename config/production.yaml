@@ -1,0 +1,16 @@
+environment: production
+
+superadmin: #General Superadmin URL.
+  url: https://superadmin.nxtwash.com/login
+
+admin: #This URL is from Superadmin > AP Production
+  url: https://admin.nxtwash.com/
+
+pos: #This URL is from Superadmin > POS App
+  url: https://pos.nxtwash.com/
+  
+tunnel: #This URL is from Superadmin > Tunnel Production
+  url: https://tunnel.nxtwash.com/wash-queue
+
+customer_portal: #Not sure about the URL yet.
+  url: 
