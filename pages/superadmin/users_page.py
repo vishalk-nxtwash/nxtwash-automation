@@ -136,7 +136,15 @@ class CreateUserPage(BasePage):
             By.XPATH,
             "//*[@role='option' and normalize-space()='%s']" % role_name
         )
-        self.click(role_option)
+
+        try:
+            self.click(role_option)
+        except TimeoutException:
+            raise AssertionError(
+                "Role '%s' was not available in the user role dropdown."
+                % role_name
+            )
+
         role_id_input = self.wait.until(
             EC.presence_of_element_located(self.ROLE_ID_INPUT)
         )

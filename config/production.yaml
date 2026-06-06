@@ -3,7 +3,7 @@ environment: production
 superadmin: #General Superadmin URL.
   url: https://superadmin.nxtwash.com/login
 
-admin: #This URL is from Superadmin > AP Production
+admin_portal: #This URL is from Superadmin > AP Production
   url: https://admin.nxtwash.com/
 
 pos: #This URL is from Superadmin > POS App
