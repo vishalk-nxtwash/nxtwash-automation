@@ -3,7 +3,7 @@ environment: staging
 superadmin: #Common superadmin URL.
   url: https://superadmin.nxtwash.com/login
 
-admin: #This URL is from Superadmin > AP Staging
+admin_portal: #This URL is from Superadmin > AP Staging
   url: https://staging.nxtwash.com/
 
 pos: #This URL is from Superadmin > POS App
