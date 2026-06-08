@@ -1,7 +1,7 @@
 superadmin:
-  username: vishal.k@nxtwash.com
-  password: Carwash1
+  username_env: SUPERADMIN_USERNAME
+  password_env: SUPERADMIN_PASSWORD
 
 admin_portal:
-  username: vishalkumar@gmail.com
-  password: vishalKumar@nxtwash
+  username_env: ADMIN_PORTAL_USERNAME
+  password_env: ADMIN_PORTAL_PASSWORD

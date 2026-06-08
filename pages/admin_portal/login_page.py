@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
@@ -50,10 +51,12 @@ class AdminLoginPage(BasePage):
 
     def wait_for_overview(self):
         """Wait until Admin Portal overview is visible."""
-        self.wait.until(
+        long_wait = WebDriverWait(self.driver, 30)
+
+        long_wait.until(
             lambda driver: driver.current_url == self.config.get_url(self.PORTAL)
         )
-        self.wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
+        long_wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
 
     def get_overview_text(self):
         """Get Admin overview title text."""
