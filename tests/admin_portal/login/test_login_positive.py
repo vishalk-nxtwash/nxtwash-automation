@@ -1,0 +1,48 @@
+from tests.admin_portal.login.conftest import configured_credentials
+from tests.admin_portal.login.conftest import open_login_page
+
+
+def test_login_with_valid_credentials(browser):
+
+    login_page = open_login_page(browser)
+
+    login_page.login()
+    login_page.wait_for_overview()
+
+    assert browser.current_url == login_page.config.get_url(login_page.PORTAL)
+    assert login_page.get_overview_text() == "Overview"
+
+
+def test_login_using_enter_key(browser):
+
+    login_page = open_login_page(browser)
+    username, password = configured_credentials(login_page)
+
+    login_page.submit_with_enter(username, password)
+    login_page.wait_for_overview()
+
+    assert login_page.get_overview_text() == "Overview"
+
+
+def test_session_persists_after_refresh(browser):
+
+    login_page = open_login_page(browser)
+
+    login_page.login()
+    login_page.wait_for_overview()
+    browser.refresh()
+    login_page.wait_for_overview()
+
+    assert login_page.get_overview_text() == "Overview"
+
+
+def test_authenticated_user_cannot_access_login_page(browser):
+
+    login_page = open_login_page(browser)
+
+    login_page.login()
+    login_page.wait_for_overview()
+    login_page.open_login_url()
+    login_page.wait_until_redirected_away_from_login()
+
+    assert "/login" not in browser.current_url
