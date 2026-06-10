@@ -1,7 +1,7 @@
 import json
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -14,6 +14,10 @@ class SitesPage(BasePage):
         "//*[contains(normalize-space(),'Sites/Locations')]"
     )
     FILTER_BUTTON = (By.XPATH, "//button[contains(.,'Filter by')]")
+    DOWNLOAD_BUTTON = (
+        By.XPATH,
+        "//button[contains(.,'Filter by')]/preceding-sibling::button[1]"
+    )
     ADD_SITE_BUTTON = (
         By.XPATH,
         "//button[contains(normalize-space(), 'Add site')]"
@@ -27,15 +31,54 @@ class SitesPage(BasePage):
         By.XPATH,
         "//button[normalize-space()='Reset filters']"
     )
+    TABLE_HEADERS = (
+        By.XPATH,
+        "//*[normalize-space()='Site name' or normalize-space()='State name' "
+        "or normalize-space()='City name' or normalize-space()='Email' "
+        "or normalize-space()='Lanes']"
+    )
 
     def wait_for_loaded(self):
         """Wait until Sites / Locations is visible."""
+        self.driver.switch_to.default_content()
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.wait.until(EC.element_to_be_clickable(self.ADD_SITE_BUTTON))
 
+    def get_body_text(self):
+        """Get visible page text."""
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def get_site_count_from_title(self):
+        """Return the visible site count from the page title."""
+        title = self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        text = title.text.strip()
+        if "(" not in text or ")" not in text:
+            return None
+        return int(text.split("(")[-1].split(")")[0])
+
+    def table_headers_are_visible(self):
+        """Return whether the expected list columns are visible."""
+        headers = [element.text.strip() for element in self.driver.find_elements(*self.TABLE_HEADERS)]
+        expected_headers = ["Site name", "State name", "City name", "Email", "Lanes"]
+        return all(header in headers for header in expected_headers)
+
+    def download_button_is_clickable(self):
+        """Return whether the download button can be clicked."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
+        ).is_displayed()
+
     def open_filters(self):
         """Open site filters."""
+        visible_filters = [
+            element
+            for element in self.driver.find_elements(*self.SITE_NAME_FILTER)
+            if element.is_displayed()
+        ]
+        if visible_filters:
+            return
+
         self.click(self.FILTER_BUTTON)
         self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_FILTER))
 
@@ -73,6 +116,12 @@ class SitesPage(BasePage):
     def click_add_site(self):
         """Open the create site page."""
         self.click(self.ADD_SITE_BUTTON)
+
+    def reset_filters(self):
+        """Reset the site filter panel."""
+        self.open_filters()
+        self.click(self.RESET_FILTERS_BUTTON)
+        self.wait_for_loaded()
 
     def get_site_summary_with_api(self, site_name):
         """Return a site summary by exact name from the authenticated session."""
@@ -294,9 +343,69 @@ class CreateSitePage(BasePage):
     SITE_CODE_INPUT = (By.NAME, "siteCode")
     EMAIL_INPUT = (By.NAME, "emailId")
     PHONE_INPUT = (By.NAME, "phone")
+    STREET_ADDRESS_INPUT = (
+        By.XPATH,
+        "//*[normalize-space()='Street address']"
+        "/following::input[1]"
+    )
+    ZIP_CODE_INPUT = (
+        By.XPATH,
+        "//*[normalize-space()='ZIP code']"
+        "/following::input[1]"
+    )
+    PAY_WEEK_START_DAY_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select pay week start day']"
+        "/ancestor::*[contains(@class,'nxt-select__control')][1]"
+    )
+    STATE_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select state']"
+        "/ancestor::*[contains(@class,'nxt-select__control')][1]"
+    )
+    CITY_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select city']"
+        "/ancestor::*[contains(@class,'nxt-select__control')][1]"
+    )
+    TIME_ZONE_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select time zone']"
+        "/ancestor::*[contains(@class,'nxt-select__control')][1]"
+    )
+    STATE_SALES_TAX_INPUT = (
+        By.XPATH,
+        "//*[contains(normalize-space(),'State sales tax')]"
+        "/following::input[1]"
+    )
+    CITY_SALES_TAX_INPUT = (
+        By.XPATH,
+        "//*[contains(normalize-space(),'City sales tax')]"
+        "/following::input[1]"
+    )
+    SITE_CONTACT_EMAIL_INPUT = (
+        By.XPATH,
+        "//*[normalize-space()='Site contact email address']"
+        "/following::input[1]"
+    )
+    ACTIVE_SITE_SWITCH = (
+        By.NAME,
+        "isActive"
+    )
+    CONFIRM_DIALOG = (By.XPATH, "//*[@role='dialog']")
+    CONFIRM_DIALOG_PRIMARY_BUTTON = (
+        By.XPATH,
+        "//*[@role='dialog']//button["
+        "contains(normalize-space(),'Yes') "
+        "or contains(normalize-space(),'Confirm') "
+        "or contains(normalize-space(),'Discard') "
+        "or contains(normalize-space(),'Leave') "
+        "or contains(normalize-space(),'OK')]"
+    )
 
     def wait_for_loaded(self):
         """Wait until the create site form is visible."""
+        self.driver.switch_to.default_content()
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.NEW_MODE_LABEL))
         self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
@@ -304,3 +413,307 @@ class CreateSitePage(BasePage):
     def get_body_text(self):
         """Get visible page text."""
         return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def _set_input_value(self, locator, value):
+        """Set a React-controlled input value and dispatch change events."""
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            ).set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            str(value)
+        )
+        self.wait.until(lambda driver: element.get_attribute("value") == str(value))
+
+    def _scroll_to_locator(self, locator):
+        """Scroll a field into view."""
+        element = self.wait.until(EC.presence_of_element_located(locator))
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({ block: 'center' });",
+            element
+        )
+        return element
+
+    def _select_combobox_option(self, combobox_locator, option_text, fallback=None):
+        """Select an option from a React select combobox."""
+        combobox = self._scroll_to_locator(combobox_locator)
+        self.wait.until(EC.element_to_be_clickable(combobox_locator))
+        combobox.click()
+        input_elements = combobox.find_elements(By.XPATH, ".//input")
+        if input_elements:
+            input_elements[0].send_keys(Keys.CONTROL, "a")
+            input_elements[0].send_keys(option_text)
+        else:
+            self.driver.switch_to.active_element.send_keys(option_text)
+
+        option = self._find_select_option(option_text)
+        selected_text = option_text
+
+        if option is None and fallback is not None:
+            if input_elements:
+                input_elements[0].send_keys(Keys.CONTROL, "a")
+                input_elements[0].send_keys(fallback)
+            else:
+                self.driver.switch_to.active_element.send_keys(
+                    Keys.CONTROL,
+                    "a"
+                )
+                self.driver.switch_to.active_element.send_keys(fallback)
+            option = self._find_select_option(fallback)
+            selected_text = fallback
+
+        if option is None:
+            raise AssertionError("Dropdown option was not found: %s" % option_text)
+
+        self.driver.execute_script("arguments[0].click();", option)
+        self.wait.until(
+            lambda driver: selected_text.lower() in self.get_body_text().lower()
+        )
+
+    def _find_select_option(self, option_text):
+        """Return a visible select option by exact or contains text."""
+        normalized = option_text.lower()
+        exact_xpath = (
+            "//*[@role='option' and translate(normalize-space(), "
+            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
+            % normalized
+        )
+        contains_xpath = (
+            "//*[@role='option' and contains(translate(normalize-space(), "
+            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')]"
+            % normalized
+        )
+
+        for option_xpath in (exact_xpath, contains_xpath):
+            try:
+                option = self.wait.until(
+                    lambda driver: self._get_clickable_option_after_scroll(
+                        option_xpath
+                    )
+                )
+            except TimeoutException:
+                option = None
+
+            if option:
+                return option
+
+        return None
+
+    def _get_clickable_option_after_scroll(self, option_xpath):
+        """Return a select option, scrolling the open menu if needed."""
+        options = self.driver.find_elements(By.XPATH, option_xpath)
+        if options:
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({ block: 'nearest' });",
+                options[0]
+            )
+            if options[0].is_displayed() and options[0].is_enabled():
+                return options[0]
+
+        menus = self.driver.find_elements(
+            By.XPATH,
+            "//*[contains(@class,'form-select__menu-list')]"
+        )
+        for menu in menus:
+            self.driver.execute_script(
+                "arguments[0].scrollTop = arguments[0].scrollHeight;",
+                menu
+            )
+
+        options = self.driver.find_elements(By.XPATH, option_xpath)
+        if options and options[0].is_displayed() and options[0].is_enabled():
+            return options[0]
+
+        return None
+
+    def switch_is_on(self, locator):
+        """Return whether a switch is on."""
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+        return (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.is_selected()
+            or switch.get_attribute("checked") is not None
+        )
+
+    def ensure_switch_on(self, locator):
+        """Turn a switch on if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+        if not self.switch_is_on(locator):
+            clickable = self.driver.execute_script(
+                """
+                let input = arguments[0];
+                let current = input;
+                while (current && current.parentElement) {
+                    const button = current.parentElement.querySelector(
+                        'button[role="switch"], button'
+                    );
+                    if (button) return button;
+                    current = current.parentElement;
+                }
+                return input;
+                """,
+                switch
+            )
+            self.driver.execute_script("arguments[0].click();", clickable)
+            self.wait.until(
+                lambda driver: self.switch_is_on(locator)
+            )
+
+    def active_site_switch_is_on(self):
+        """Return whether Active site switch is on."""
+        return self.switch_is_on(self.ACTIVE_SITE_SWITCH)
+
+    def enter_basic_information(self, site_name, site_code, email):
+        """Enter the basic site information."""
+        self._set_input_value(self.SITE_NAME_INPUT, site_name)
+        self._set_input_value(self.SITE_CODE_INPUT, site_code)
+        self._set_input_value(self.EMAIL_INPUT, email)
+
+    def get_site_name_value(self):
+        """Return the current site name value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SITE_NAME_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def enter_address_information(
+        self,
+        street_address,
+        zip_code,
+        state,
+        city,
+        time_zone
+    ):
+        """Enter the address information."""
+        self._set_input_value(self.STREET_ADDRESS_INPUT, street_address)
+        self._set_input_value(self.ZIP_CODE_INPUT, zip_code)
+        self._select_combobox_option(self.STATE_COMBOBOX, state)
+        self._select_combobox_option(self.CITY_COMBOBOX, city)
+        self._select_combobox_option(
+            self.TIME_ZONE_COMBOBOX,
+            time_zone,
+            "Eastern"
+        )
+
+    def select_pay_week_start_day(self, day):
+        """Select the pay week start day."""
+        self._select_combobox_option(self.PAY_WEEK_START_DAY_COMBOBOX, day)
+
+    def enter_tax_settings(self, state_sales_tax, city_sales_tax):
+        """Enter site tax settings."""
+        self._set_input_value(self.STATE_SALES_TAX_INPUT, state_sales_tax)
+        self._set_input_value(self.CITY_SALES_TAX_INPUT, city_sales_tax)
+
+    def enter_site_contact_email(self, email):
+        """Enter the site contact email."""
+        self._set_input_value(self.SITE_CONTACT_EMAIL_INPUT, email)
+
+    def get_site_name_validation_message(self):
+        """Return the native validation message for site name."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SITE_NAME_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def site_name_input_is_valid(self):
+        """Return native validity state for site name."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SITE_NAME_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def click_cancel(self):
+        """Click cancel."""
+        self.click(self.CANCEL_BUTTON)
+
+    def click_cancel_and_confirm_if_needed(self):
+        """Click cancel and confirm the unsaved-changes dialog if it appears."""
+        self.click_cancel()
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.CONFIRM_DIALOG))
+            self.click(self.CONFIRM_DIALOG_PRIMARY_BUTTON)
+        except TimeoutException:
+            pass
+
+    def click_save_new(self):
+        """Click Save new."""
+        self._scroll_to_locator(self.SAVE_NEW_BUTTON)
+        button = self.wait.until(EC.element_to_be_clickable(self.SAVE_NEW_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+
+    def fill_general_settings(
+        self,
+        site_name,
+        site_code,
+        email,
+        street_address,
+        zip_code,
+        state,
+        city,
+        time_zone,
+        state_sales_tax,
+        city_sales_tax,
+        site_contact_email,
+        pay_week_start_day="Monday"
+    ):
+        """Fill the requested General settings fields."""
+        self.enter_basic_information(site_name, site_code, email)
+        self.select_pay_week_start_day(pay_week_start_day)
+        self.ensure_switch_on(self.ACTIVE_SITE_SWITCH)
+        self.enter_address_information(
+            street_address,
+            zip_code,
+            state,
+            city,
+            time_zone
+        )
+        self.enter_tax_settings(state_sales_tax, city_sales_tax)
+        self.enter_site_contact_email(site_contact_email)
+
+    def create_site(
+        self,
+        site_name,
+        site_code,
+        email,
+        street_address,
+        zip_code,
+        state,
+        city,
+        time_zone,
+        state_sales_tax,
+        city_sales_tax,
+        site_contact_email,
+        pay_week_start_day="Monday"
+    ):
+        """Create a site through the UI."""
+        self.fill_general_settings(
+            site_name,
+            site_code,
+            email,
+            street_address,
+            zip_code,
+            state,
+            city,
+            time_zone,
+            state_sales_tax,
+            city_sales_tax,
+            site_contact_email,
+            pay_week_start_day
+        )
+        self.click_save_new()

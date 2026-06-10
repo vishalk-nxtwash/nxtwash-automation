@@ -44,6 +44,34 @@ class AdminSidebar(BasePage):
         By.XPATH,
         "//a[@href='/services/serviceCategories']"
     )
+    MEMBERSHIPS_LINK = (
+        By.XPATH,
+        "//a[@href='/services/memberships']"
+    )
+    WASH_PACKAGES_LINK = (
+        By.XPATH,
+        "//a[@href='/services/washPackages']"
+    )
+    WASH_EXTRAS_LINK = (
+        By.XPATH,
+        "//a[@href='/services/washExtras']"
+    )
+    WASH_BOOKS_LINK = (
+        By.XPATH,
+        "//a[@href='/services/washBooks']"
+    )
+    COUPON_CODES_LINK = (
+        By.XPATH,
+        "//a[@href='/services/couponPackages']"
+    )
+    GIFT_CARDS_LINK = (
+        By.XPATH,
+        "//a[@href='/services/giftCards']"
+    )
+    DISCOUNTS_LINK = (
+        By.XPATH,
+        "//a[@href='/services/discounts']"
+    )
 
     def open_overview(self):
         """Open Overview."""
@@ -57,3 +85,38 @@ class AdminSidebar(BasePage):
         """Open Services > Service Categories."""
         self.click(self.SERVICES_BUTTON)
         self.click(self.SERVICE_CATEGORIES_LINK)
+
+    def open_memberships(self):
+        """Open Services > Memberships."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.MEMBERSHIPS_LINK)
+
+    def open_wash_packages(self):
+        """Open Services > Wash Packages."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.WASH_PACKAGES_LINK)
+
+    def open_wash_extras(self):
+        """Open Services > Wash Extras."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.WASH_EXTRAS_LINK)
+
+    def open_wash_books(self):
+        """Open Services > Wash Books."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.WASH_BOOKS_LINK)
+
+    def open_coupon_codes(self):
+        """Open Services > Coupon Codes."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.COUPON_CODES_LINK)
+
+    def open_gift_cards(self):
+        """Open Services > Gift Cards."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.GIFT_CARDS_LINK)
+
+    def open_discounts(self):
+        """Open Services > Discounts."""
+        self.click(self.SERVICES_BUTTON)
+        self.click(self.DISCOUNTS_LINK)
