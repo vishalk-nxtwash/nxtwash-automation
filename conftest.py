@@ -7,6 +7,12 @@ def pytest_addoption(parser):  #here browser will stay open bydefault and
         default=False,
         help="Close browser after test execution"
     )
+    parser.addoption(
+        "--single-window",
+        action="store_true",
+        default=False,
+        help="Reuse one browser window for grouped screen suites"
+    )
 
 #When we want brownser to stay open, currently browser will close upon runnung script
 """

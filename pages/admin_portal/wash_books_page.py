@@ -1,5 +1,6 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -87,6 +88,11 @@ class WashBooksPage(BasePage):
         By.XPATH,
         "//*[contains(@class,'inovua-react-toolkit-checkbox') "
         "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+    )
+    SERVICE_LOCATION_ROWS = (
+        By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row') "
+        "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
     )
     REDEEM_AS_COMBOBOXES = (
         By.XPATH,
@@ -445,6 +451,13 @@ class WashBooksPage(BasePage):
 
     def visible_location_price_inputs(self):
         """Return visible location price inputs."""
+        rows = self.visible_service_location_rows()
+        if rows:
+            return [
+                row.find_element(By.NAME, "price")
+                for row in rows
+            ]
+
         return [
             element
             for element in self.driver.find_elements(*self.LOCATION_PRICE_INPUTS)
@@ -453,6 +466,13 @@ class WashBooksPage(BasePage):
 
     def visible_location_commission_inputs(self):
         """Return visible location commission inputs, excluding global commission."""
+        rows = self.visible_service_location_rows()
+        if rows:
+            return [
+                row.find_element(By.NAME, "commission")
+                for row in rows
+            ]
+
         elements = [
             element
             for element in self.driver.find_elements(*self.COMMISSION_INPUTS)[1:]
@@ -460,8 +480,49 @@ class WashBooksPage(BasePage):
         ]
         return elements
 
+    def visible_service_location_rows(self):
+        """Return visible service location rows, preferring baseline test sites."""
+        rows = [
+            row
+            for row in self.driver.find_elements(*self.SERVICE_LOCATION_ROWS)
+            if row.rect["width"] > 0 and row.rect["height"] > 0
+        ]
+        unique_rows = []
+        seen_locations = set()
+
+        for row in rows:
+            lines = [
+                line.strip()
+                for line in row.text.splitlines()
+                if line.strip()
+            ]
+            location_key = "\n".join(lines[:2])
+            if not location_key or location_key in seen_locations:
+                continue
+            seen_locations.add(location_key)
+            unique_rows.append(row)
+
+        baseline_rows = [
+            row
+            for row in unique_rows
+            if "VK Test carwash 2" in row.text or "VK Test Wash 01" in row.text
+        ]
+
+        return baseline_rows or unique_rows
+
     def visible_assignment_checkboxes(self):
         """Return visible service assignment checkboxes, excluding header."""
+        rows = self.visible_service_location_rows()
+        if rows:
+            return [
+                row.find_element(
+                    By.XPATH,
+                    ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+                    "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+                )
+                for row in rows
+            ]
+
         checkboxes = [
             checkbox
             for checkbox in self.driver.find_elements(*self.ASSIGNMENT_CHECKBOXES)
@@ -535,21 +596,49 @@ class WashBooksPage(BasePage):
         self.set_grid_input_value(commission_inputs[row_index], commission)
 
     def set_grid_input_value(self, element, value):
-        """Set a grid input using native typing, with JS fallback."""
-        try:
-            element.click()
-            element.clear()
-            element.send_keys(str(value))
-            self.driver.execute_script(
-                """
-                arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-                arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-                arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
-                """,
-                element
-            )
-        except Exception:
+        """Set a React grid input value without appending to stale text."""
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({ block: 'center' });"
+            "arguments[0].focus();",
+            element
+        )
+        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(str(value))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element
+        )
+        if not self.grid_input_numeric_value_matches(element, value):
             self._set_input_value(element, str(value))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+            """,
+            element
+        )
+        self.wait.until(
+            lambda driver: self.grid_input_numeric_value_matches(element, value)
+        )
+
+    def grid_input_numeric_value_matches(self, element, value):
+        """Return whether a possibly formatted numeric input equals value."""
+        current_value = element.get_attribute("value") or ""
+        try:
+            current_number = float(
+                "".join(
+                    character
+                    for character in current_value
+                    if character.isdigit() or character in ".-"
+                )
+            )
+            expected_number = float(str(value))
+            return current_number == expected_number
+        except ValueError:
+            return current_value == str(value)
 
     def assign_location_by_index(self, row_index):
         """Assign one visible location row."""
@@ -567,7 +656,8 @@ class WashBooksPage(BasePage):
     def assign_all_locations(self):
         """Assign all visible service location rows."""
         self.wait_for_service_location_rows()
-        self.ensure_checkbox_checked(self.visible_assignment_header_checkbox())
+        for row_index in range(len(self.visible_assignment_checkboxes())):
+            self.assign_location_by_index(row_index)
 
     def enable_location_customer_portal_by_index(self, row_index):
         """Enable one row-level Show on CP switch."""

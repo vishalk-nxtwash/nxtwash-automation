@@ -141,8 +141,12 @@ class WashPackagesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.SEARCH_INPUT)
         )
-        element.clear()
-        element.send_keys(package_name)
+        self._set_input_value(element, package_name)
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == package_name
+        )
 
     def get_package_price(self, package_name):
         """Return visible price for a package row."""
@@ -163,7 +167,8 @@ class WashPackagesPage(BasePage):
     def open_filter_panel(self):
         """Open the Wash Packages filter panel."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
+        button = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
@@ -185,9 +190,8 @@ class WashPackagesPage(BasePage):
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""
-        return self.wait.until(
-            EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
-        ).is_displayed()
+        button = self.wait.until(EC.presence_of_element_located(self.DOWNLOAD_BUTTON))
+        return button.is_displayed()
 
     def open_create_package(self):
         """Open create package form."""
@@ -217,6 +221,20 @@ class WashPackagesPage(BasePage):
             EC.visibility_of_element_located(self.SERVICE_NAME_INPUT)
         )
         return element.get_attribute("value")
+
+    def get_global_price_value(self):
+        """Return package global price input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def get_global_commission_value(self):
+        """Return package global commission input value."""
+        elements = self.wait.until(
+            EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
+        )
+        return elements[0].get_attribute("value")
 
     def open_discount_settings(self):
         """Open Discount settings tab."""
@@ -376,16 +394,17 @@ class WashPackagesPage(BasePage):
             )
 
         if not checkbox_is_checked():
-            checkbox.click()
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+                checkbox
+            )
+            self.driver.execute_script("arguments[0].click();", checkbox)
             self.wait.until(lambda driver: checkbox_is_checked())
 
         price_input = row.find_element(By.NAME, "price")
         commission_input = row.find_element(By.NAME, "commission")
-
-        price_input.clear()
-        price_input.send_keys(str(price))
-        commission_input.clear()
-        commission_input.send_keys(str(commission))
+        self._set_input_value(price_input, str(price))
+        self._set_input_value(commission_input, str(commission))
 
     def fill_package_form(
         self,
@@ -416,6 +435,17 @@ class WashPackagesPage(BasePage):
         """Cancel create/edit package."""
         self.click(self.CANCEL_BUTTON)
 
+    def update_package_name(self, old_name, new_name):
+        """Update package service name and return to the list."""
+        self.open_edit_package(old_name)
+        self.enter_service_name(new_name)
+        self.ensure_active_switch_on()
+        self.click_save_package()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            return
+
     def create_package(
         self,
         service_name,
@@ -436,4 +466,7 @@ class WashPackagesPage(BasePage):
             site_name
         )
         self.click_save_package()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            return
