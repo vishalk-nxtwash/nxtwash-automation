@@ -1,0 +1,626 @@
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+from pages.common.base_page import BasePage
+
+
+class GiftCardsPage(BasePage):
+
+    LIST_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/giftCards?')]"
+    )
+    CREATE_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/giftCards/new')]"
+    )
+    EDIT_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/giftCards/') "
+        "and not(contains(@src,'/services/giftCards/new'))]"
+    )
+    CUSTOMER_LIST_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerGiftCards?')]"
+    )
+    CUSTOMER_CREATE_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerGiftCards/new')]"
+    )
+
+    PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Gift cards']")
+    CUSTOMER_PAGE_TITLE = (
+        By.XPATH,
+        "//*[normalize-space()='Customer gift cards']"
+    )
+    SEARCH_INPUT = (By.NAME, "giftCardName")
+    CUSTOMER_SEARCH_INPUT = (By.NAME, "giftCardNumber")
+    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    DOWNLOAD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+    )
+    ADD_GIFT_CARD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='+ Add new gift card']"
+    )
+    CUSTOMER_GIFT_CARDS_TAB = (
+        By.XPATH,
+        "//button[normalize-space()='Customer gift cards']"
+    )
+    ADD_CUSTOMER_GIFT_CARD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='+ Add customer gift card']"
+    )
+    SAVE_GIFT_CARD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Save gift card']"
+    )
+    SAVE_CUSTOMER_GIFT_CARD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Save customer gift card']"
+    )
+    CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
+
+    GIFT_CARD_NAME_INPUT = (By.NAME, "giftCardName")
+    GIFT_CARD_AMOUNT_INPUT = (By.NAME, "giftCardAmount")
+    LANDING_PAGE_CODE_INPUT = (By.NAME, "landingPageCode")
+    CUSTOMER_GIFT_CARD_NUMBER_INPUT = (By.NAME, "giftCardNumber")
+    CUSTOMER_GIFT_CARD_AMOUNT_INPUT = (By.NAME, "giftCardAmount")
+
+    OPEN_PRICE_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Open price']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    WASH_CARD_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Wash card']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    SHOW_ON_CUSTOMER_PORTAL_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Show on customer portal']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    ACTIVE_SERVICE_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active service']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    ACTIVE_CUSTOMER_GIFT_CARD_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active customer gift card']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+
+    def wait_for_list_loaded(self):
+        """Wait until the Gift Cards list is visible."""
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+
+    def wait_for_create_loaded(self):
+        """Wait until the create gift card form is visible."""
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
+        )
+        self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
+        )
+        self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+
+    def wait_for_edit_loaded(self):
+        """Wait until the edit gift card form is visible."""
+        self.driver.switch_to.default_content()
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
+        )
+        self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+        self.wait.until(lambda driver: self.get_gift_card_name_value() != "")
+
+    def wait_for_customer_list_loaded(self):
+        """Wait until the Customer Gift Cards list is visible."""
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(self.CUSTOMER_LIST_FRAME)
+        )
+        self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_PAGE_TITLE)
+        )
+        self.wait.until(
+            EC.element_to_be_clickable(self.ADD_CUSTOMER_GIFT_CARD_BUTTON)
+        )
+
+    def wait_for_customer_create_loaded(self):
+        """Wait until the create customer gift card form is visible."""
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(
+                self.CUSTOMER_CREATE_FRAME
+            )
+        )
+        self.wait.until(
+            EC.visibility_of_element_located(
+                self.CUSTOMER_GIFT_CARD_NUMBER_INPUT
+            )
+        )
+        self.wait.until(
+            EC.element_to_be_clickable(self.SAVE_CUSTOMER_GIFT_CARD_BUTTON)
+        )
+
+    def get_body_text(self):
+        """Get visible text inside the current iframe."""
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def get_gift_card_row_locator(self, gift_card_name):
+        """Build a locator for a gift card row by name."""
+        return (
+            By.XPATH,
+            "//*[@data-props-id='giftCardName']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % gift_card_name
+        )
+
+    def wait_for_gift_card_row(self, gift_card_name):
+        """Wait until a gift card row is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(
+                self.get_gift_card_row_locator(gift_card_name)
+            )
+        )
+
+    def search_gift_card(self, gift_card_name):
+        """Search gift card by name."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        )
+        element.clear()
+        element.send_keys(gift_card_name)
+
+    def search_customer_gift_card(self, gift_card_number):
+        """Search customer gift card by number."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_SEARCH_INPUT)
+        )
+        element.clear()
+        element.send_keys(gift_card_number)
+
+    def gift_card_exists(self, gift_card_name):
+        """Return whether a gift card exists in the list."""
+        self.wait_for_list_loaded()
+        self.search_gift_card(gift_card_name)
+
+        try:
+            self.wait_for_gift_card_row(gift_card_name)
+            return True
+        except TimeoutException:
+            return False
+
+    def get_gift_card_amount(self, gift_card_name):
+        """Return visible amount for a gift card row."""
+        row = self.wait_for_gift_card_row(gift_card_name)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='giftCardAmount']"
+        ).text.strip()
+
+    def get_gift_card_status(self, gift_card_name):
+        """Return visible status for a gift card row."""
+        row = self.wait_for_gift_card_row(gift_card_name)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='isActive']"
+        ).text.strip()
+
+    def get_customer_gift_card_row_locator(self, gift_card_number):
+        """Build a locator for a customer gift card row by number."""
+        return (
+            By.XPATH,
+            "//*[@data-props-id='giftCardNumber']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % gift_card_number
+        )
+
+    def wait_for_customer_gift_card_row(self, gift_card_number):
+        """Wait until a customer gift card row is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(
+                self.get_customer_gift_card_row_locator(gift_card_number)
+            )
+        )
+
+    def customer_gift_card_exists(self, gift_card_number):
+        """Return whether a customer gift card exists in the list."""
+        self.wait_for_customer_list_loaded()
+        self.search_customer_gift_card(gift_card_number)
+
+        try:
+            self.wait_for_customer_gift_card_row(gift_card_number)
+            return True
+        except TimeoutException:
+            return False
+
+    def get_customer_gift_card_name(self, gift_card_number):
+        """Return visible gift card name for a customer gift card row."""
+        row = self.wait_for_customer_gift_card_row(gift_card_number)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='giftCardName']"
+        ).text.strip()
+
+    def get_customer_gift_card_amount(self, gift_card_number):
+        """Return visible amount for a customer gift card row."""
+        row = self.wait_for_customer_gift_card_row(gift_card_number)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='giftCardAmount']"
+        ).text.strip()
+
+    def download_button_is_clickable(self):
+        """Return whether the download button can be clicked."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
+        ).is_displayed()
+
+    def open_create_gift_card(self):
+        """Open create gift card form."""
+        self.wait_for_list_loaded()
+        self.click(self.ADD_GIFT_CARD_BUTTON)
+        self.wait_for_create_loaded()
+
+    def open_customer_gift_cards(self):
+        """Open Customer gift cards tab."""
+        self.wait_for_list_loaded()
+        self.click(self.CUSTOMER_GIFT_CARDS_TAB)
+        self.wait_for_customer_list_loaded()
+
+    def open_create_customer_gift_card(self):
+        """Open create customer gift card form."""
+        self.wait_for_customer_list_loaded()
+        self.click(self.ADD_CUSTOMER_GIFT_CARD_BUTTON)
+        self.wait_for_customer_create_loaded()
+
+    def open_edit_gift_card(self, gift_card_name):
+        """Open edit gift card form."""
+        self.wait_for_list_loaded()
+        self.search_gift_card(gift_card_name)
+        row = self.wait_for_gift_card_row(gift_card_name)
+        edit_button = row.find_element(
+            By.XPATH,
+            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        edit_button.click()
+        self.wait_for_edit_loaded()
+
+    def get_gift_card_name_value(self):
+        """Return current gift card name input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def get_gift_card_name_validation_message(self):
+        """Return native validation message for gift card name."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def gift_card_name_input_is_valid(self):
+        """Return native validity state for gift card name."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def enter_gift_card_name(self, gift_card_name):
+        """Enter gift card name."""
+        self.enter_text(self.GIFT_CARD_NAME_INPUT, gift_card_name)
+
+    def enter_gift_card_amount(self, amount):
+        """Enter gift card amount."""
+        self.enter_text(self.GIFT_CARD_AMOUNT_INPUT, str(amount))
+
+    def enter_landing_page_code(self, landing_page_code):
+        """Enter landing page code."""
+        self.enter_text(self.LANDING_PAGE_CODE_INPUT, landing_page_code)
+
+    def get_select_input_by_label(self, label):
+        """Return a React Select input using its visible label."""
+        return self.wait.until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    "//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'form-select__wrapper')][1]"
+                    "//input[@role='combobox']" % label
+                )
+            )
+        )
+
+    def select_option_by_label(self, label, option):
+        """Select a React Select option by field label."""
+        select_input = self.get_select_input_by_label(label)
+        select_input.click()
+        option_element = self.wait.until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    "//*[@role='option' and normalize-space()='%s']"
+                    % option
+                )
+            )
+        )
+        option_element.click()
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    "//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'form-select__wrapper')][1]"
+                    "//*[normalize-space()='%s']" % (label, option)
+                )
+            )
+        )
+
+    def select_customer_gift_card_site(self, site_name):
+        """Select site on customer gift card form."""
+        self.select_option_by_label("Select site", site_name)
+
+    def select_customer_gift_card_template(self, gift_card_name):
+        """Select gift card on customer gift card form."""
+        self.select_option_by_label("Select gift card", gift_card_name)
+
+    def enter_customer_gift_card_number(self, gift_card_number):
+        """Enter customer gift card number."""
+        self.enter_text(self.CUSTOMER_GIFT_CARD_NUMBER_INPUT, gift_card_number)
+
+    def enter_customer_gift_card_amount(self, amount):
+        """Enter customer gift card amount."""
+        self.enter_text(self.CUSTOMER_GIFT_CARD_AMOUNT_INPUT, str(amount))
+
+    def customer_gift_card_number_input_is_valid(self):
+        """Return native validity state for customer gift card number."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(
+                self.CUSTOMER_GIFT_CARD_NUMBER_INPUT
+            )
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_customer_gift_card_number_validation_message(self):
+        """Return native validation message for customer gift card number."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(
+                self.CUSTOMER_GIFT_CARD_NUMBER_INPUT
+            )
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def switch_is_on(self, locator):
+        """Return whether a switch is enabled."""
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+        return switch.get_attribute("aria-checked") == "true"
+
+    def ensure_switch_on(self, locator):
+        """Turn a switch on if needed."""
+        switch = self.wait.until(EC.element_to_be_clickable(locator))
+
+        if switch.get_attribute("aria-checked") != "true":
+            switch.click()
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") == "true"
+            )
+
+    def enable_all_main_toggles(self):
+        """Enable all gift card-level toggles."""
+        self.ensure_switch_on(self.OPEN_PRICE_SWITCH)
+        self.ensure_switch_on(self.WASH_CARD_SWITCH)
+        self.ensure_switch_on(self.SHOW_ON_CUSTOMER_PORTAL_SWITCH)
+        self.ensure_switch_on(self.ACTIVE_SERVICE_SWITCH)
+
+    def ensure_active_customer_gift_card_on(self):
+        """Turn active customer gift card on if needed."""
+        self.ensure_switch_on(self.ACTIVE_CUSTOMER_GIFT_CARD_SWITCH)
+
+    def main_toggles_are_on(self):
+        """Return whether all gift card-level toggles are enabled."""
+        return (
+            self.switch_is_on(self.OPEN_PRICE_SWITCH)
+            and self.switch_is_on(self.WASH_CARD_SWITCH)
+            and self.switch_is_on(self.SHOW_ON_CUSTOMER_PORTAL_SWITCH)
+            and self.switch_is_on(self.ACTIVE_SERVICE_SWITCH)
+        )
+
+    def _checkbox_is_checked(self, checkbox):
+        """Return whether an Inovua grid checkbox is checked."""
+        classes = checkbox.get_attribute("class")
+        return (
+            "inovua-react-toolkit-checkbox--checked" in classes
+            and "inovua-react-toolkit-checkbox--unchecked" not in classes
+        )
+
+    def get_location_row(self, location_name):
+        """Return the location assignment row."""
+        return self.wait.until(
+            EC.visibility_of_element_located(
+                (
+                    By.XPATH,
+                    "//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+                    % location_name
+                )
+            )
+        )
+
+    def assign_location(self, location_name):
+        """Assign a gift card to one location."""
+        row = self.get_location_row(location_name)
+        checkbox = row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+        )
+
+        if not self._checkbox_is_checked(checkbox):
+            checkbox.click()
+            self.wait.until(lambda driver: self._checkbox_is_checked(checkbox))
+
+    def location_is_assigned(self, location_name):
+        """Return whether a location is assigned."""
+        row = self.get_location_row(location_name)
+        checkbox = row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+        )
+
+        return self._checkbox_is_checked(checkbox)
+
+    def enable_location_show_on_cp(self, location_name):
+        """Enable Show on CP for one assigned location."""
+        row = self.get_location_row(location_name)
+        switch = row.find_element(By.XPATH, ".//button[@role='switch']")
+
+        if switch.get_attribute("aria-checked") != "true":
+            switch.click()
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") == "true"
+            )
+
+    def location_show_on_cp_is_on(self, location_name):
+        """Return whether Show on CP is enabled for a location."""
+        row = self.get_location_row(location_name)
+        switch = row.find_element(By.XPATH, ".//button[@role='switch']")
+
+        return switch.get_attribute("aria-checked") == "true"
+
+    def assign_all_locations_and_show_on_cp(self, location_names):
+        """Assign all requested locations and enable their Show on CP switches."""
+        for location_name in location_names:
+            self.assign_location(location_name)
+            self.enable_location_show_on_cp(location_name)
+
+    def fill_gift_card_form(
+        self,
+        gift_card_name,
+        amount,
+        landing_page_code,
+        location_names
+    ):
+        """Fill gift card form with requested settings."""
+        self.enter_gift_card_name(gift_card_name)
+        self.enter_gift_card_amount(amount)
+        self.enter_landing_page_code(landing_page_code)
+        self.enable_all_main_toggles()
+        self.assign_all_locations_and_show_on_cp(location_names)
+
+    def click_save_gift_card(self):
+        """Click save gift card."""
+        self.click(self.SAVE_GIFT_CARD_BUTTON)
+
+    def click_save_customer_gift_card(self):
+        """Click save customer gift card."""
+        self.click(self.SAVE_CUSTOMER_GIFT_CARD_BUTTON)
+
+    def click_cancel(self):
+        """Cancel create/edit gift card."""
+        self.click(self.CANCEL_BUTTON)
+
+    def create_gift_card(
+        self,
+        gift_card_name,
+        amount,
+        landing_page_code,
+        location_names
+    ):
+        """Create a gift card and return to list."""
+        self.open_create_gift_card()
+        self.fill_gift_card_form(
+            gift_card_name,
+            amount,
+            landing_page_code,
+            location_names
+        )
+        self.click_save_gift_card()
+        self.wait_for_list_loaded()
+
+    def update_gift_card_settings(
+        self,
+        gift_card_name,
+        amount,
+        landing_page_code,
+        location_names
+    ):
+        """Update an existing gift card to expected settings."""
+        self.open_edit_gift_card(gift_card_name)
+        self.fill_gift_card_form(
+            gift_card_name,
+            amount,
+            landing_page_code,
+            location_names
+        )
+        self.click_save_gift_card()
+
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            self.wait_for_edit_loaded()
+            self.click_cancel()
+            self.wait_for_list_loaded()
+
+    def fill_customer_gift_card_form(
+        self,
+        site_name,
+        gift_card_name,
+        gift_card_number,
+        amount
+    ):
+        """Fill customer gift card form with requested details."""
+        self.select_customer_gift_card_site(site_name)
+        self.select_customer_gift_card_template(gift_card_name)
+        self.enter_customer_gift_card_number(gift_card_number)
+        self.enter_customer_gift_card_amount(amount)
+        self.ensure_active_customer_gift_card_on()
+
+    def create_customer_gift_card(
+        self,
+        site_name,
+        gift_card_name,
+        gift_card_number,
+        amount
+    ):
+        """Create a customer gift card and return to list."""
+        self.open_create_customer_gift_card()
+        self.fill_customer_gift_card_form(
+            site_name,
+            gift_card_name,
+            gift_card_number,
+            amount
+        )
+        self.click_save_customer_gift_card()
+        self.wait_for_customer_list_loaded()

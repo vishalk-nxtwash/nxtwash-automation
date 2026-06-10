@@ -1,0 +1,21 @@
+from tests.admin_portal.discounts.conftest import MISSING_DISCOUNT
+from tests.admin_portal.discounts.conftest import open_discounts_page
+from tests.admin_portal.discounts.conftest import page_has_no_broken_state
+
+
+def test_missing_discount_is_not_returned(browser):
+
+    discounts_page = open_discounts_page(browser)
+    discounts_page.search_discount(MISSING_DISCOUNT)
+
+    assert MISSING_DISCOUNT not in discounts_page.get_body_text()
+    assert page_has_no_broken_state(discounts_page)
+
+
+def test_discounts_special_character_search_stays_usable(browser):
+
+    discounts_page = open_discounts_page(browser)
+    discounts_page.search_discount("%%%___###")
+
+    assert page_has_no_broken_state(discounts_page)
+    assert discounts_page.driver.find_element(*discounts_page.SEARCH_INPUT).is_displayed()
