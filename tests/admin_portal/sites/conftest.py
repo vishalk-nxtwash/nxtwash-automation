@@ -2,10 +2,10 @@ import random
 
 import pytest
 
-from pages.admin_portal.login_page import AdminLoginPage
-from pages.admin_portal.sidebar import AdminSidebar
 from pages.admin_portal.sites_page import CreateSitePage
 from pages.admin_portal.sites_page import SitesPage
+from tests.admin_portal.admin_session import ensure_admin_logged_in
+from tests.admin_portal.admin_session import open_admin_path
 
 
 BASE_SITE_NAME = "VK AL"
@@ -32,20 +32,14 @@ BROKEN_STATE_TEXTS = [
 @pytest.fixture
 def logged_in_admin_browser(browser):
 
-    login_page = AdminLoginPage(browser)
-    login_page.open()
-    login_page.wait_for_loaded()
-    login_page.login()
-    login_page.wait_for_overview()
+    ensure_admin_logged_in(browser)
 
     return browser
 
 
 def open_sites_page(browser):
 
-    browser.switch_to.default_content()
-    sidebar = AdminSidebar(browser)
-    sidebar.open_sites_locations()
+    open_admin_path(browser, "/sites")
 
     sites_page = SitesPage(browser)
     sites_page.wait_for_loaded()

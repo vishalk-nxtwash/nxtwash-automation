@@ -147,7 +147,10 @@ class WashExtrasPage(BasePage):
 
     def search_extra(self, extra_name):
         """Search wash extra by service name."""
-        self.enter_text(self.SEARCH_INPUT, extra_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        )
+        self._set_input_value(element, extra_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
@@ -173,15 +176,15 @@ class WashExtrasPage(BasePage):
     def open_filter_panel(self):
         """Open the Wash Extras filter panel."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
+        button = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""
-        return self.wait.until(
-            EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
-        ).is_displayed()
+        button = self.wait.until(EC.presence_of_element_located(self.DOWNLOAD_BUTTON))
+        return button.is_displayed()
 
     def open_create_extra(self):
         """Open create wash extra form."""

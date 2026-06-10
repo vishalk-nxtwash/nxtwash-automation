@@ -504,7 +504,7 @@ class GiftCardsPage(BasePage):
     def enable_location_show_on_cp(self, location_name):
         """Enable Show on CP for one assigned location."""
         row = self.get_location_row(location_name)
-        switch = row.find_element(By.XPATH, ".//button[@role='switch']")
+        switch = row.find_element(By.XPATH, "(.//button[@role='switch'])[last()]")
 
         if switch.get_attribute("aria-checked") != "true":
             switch.click()
@@ -515,7 +515,7 @@ class GiftCardsPage(BasePage):
     def location_show_on_cp_is_on(self, location_name):
         """Return whether Show on CP is enabled for a location."""
         row = self.get_location_row(location_name)
-        switch = row.find_element(By.XPATH, ".//button[@role='switch']")
+        switch = row.find_element(By.XPATH, "(.//button[@role='switch'])[last()]")
 
         return switch.get_attribute("aria-checked") == "true"
 

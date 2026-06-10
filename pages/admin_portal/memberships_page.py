@@ -1,5 +1,6 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -547,6 +548,30 @@ class MembershipsPage(BasePage):
             self.driver.execute_script("arguments[0].click();", checkbox)
             self.wait.until(lambda driver: self.row_checkbox_is_checked(checkbox))
 
+    def unassign_location_by_index(self, row_index):
+        """Unassign one visible location row if it is checked."""
+        rows = self.get_location_rows()
+
+        if row_index >= len(rows):
+            raise AssertionError(
+                "Expected at least %s location rows, found %s"
+                % (row_index + 1, len(rows))
+            )
+
+        checkbox = rows[row_index].find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+        )
+
+        if self.row_checkbox_is_checked(checkbox):
+            self.driver.execute_script("arguments[0].click();", checkbox)
+            self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))
+
+    def unassign_locations_after_first(self):
+        """Keep only the first visible location assigned."""
+        for row_index in range(1, len(self.get_location_rows())):
+            self.unassign_location_by_index(row_index)
+
     def set_location_price_and_commission_by_index(
         self,
         row_index,
@@ -584,13 +609,49 @@ class MembershipsPage(BasePage):
         self.set_grid_input_value(commission_input, commission)
 
     def set_grid_input_value(self, element, value):
-        """Set a grid input using native typing, with JS fallback."""
-        try:
-            element.click()
-            element.clear()
-            element.send_keys(str(value))
-        except Exception:
+        """Set a React grid input value without appending to stale text."""
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({ block: 'center' });"
+            "arguments[0].focus();",
+            element
+        )
+        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(str(value))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element
+        )
+        if not self.grid_input_numeric_value_matches(element, value):
             self._set_input_value(element, str(value))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+            """,
+            element
+        )
+        self.wait.until(
+            lambda driver: self.grid_input_numeric_value_matches(element, value)
+        )
+
+    def grid_input_numeric_value_matches(self, element, value):
+        """Return whether a possibly formatted numeric input equals value."""
+        current_value = element.get_attribute("value") or ""
+        try:
+            current_number = float(
+                "".join(
+                    character
+                    for character in current_value
+                    if character.isdigit() or character in ".-"
+                )
+            )
+            expected_number = float(str(value))
+            return current_number == expected_number
+        except ValueError:
+            return current_value == str(value)
 
     def fill_required_unassigned_location_values(self):
         """Fill required grid inputs for unassigned locations without assigning."""
@@ -821,6 +882,7 @@ class MembershipsPage(BasePage):
             first_location_price,
             first_location_commission
         )
+        self.unassign_locations_after_first()
         self.configure_redemption_settings(0, "VK detail wash")
 
     def create_membership(

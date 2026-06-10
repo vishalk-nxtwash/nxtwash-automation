@@ -1,19 +1,17 @@
-from tests.admin_portal.test_create_membership import (
-    FIRST_LOCATION_COMMISSION,
-    FIRST_LOCATION_PRICE,
-    GLOBAL_COMMISSION,
-    GLOBAL_PRICE,
-    MEMBERSHIP_NAME,
-    PREPAID_MONTHS,
-    REDEEM_AS_SERVICE,
-    VISIBLE_PRICE,
-    create_membership_if_missing,
-)
-from tests.admin_portal.test_memberships import (
-    EXISTING_MEMBERSHIP,
-    MISSING_MEMBERSHIP,
-    open_memberships_page,
-)
+from pages.admin_portal.memberships_page import MembershipsPage
+from tests.admin_portal.admin_session import open_admin_path
+
+
+EXISTING_MEMBERSHIP = "Plus membership"
+MISSING_MEMBERSHIP = "membership-does-not-exist-automation"
+MEMBERSHIP_NAME = "VK MA2"
+GLOBAL_PRICE = "15"
+GLOBAL_COMMISSION = "2"
+FIRST_LOCATION_PRICE = "20"
+FIRST_LOCATION_COMMISSION = "3"
+PREPAID_MONTHS = "1"
+REDEEM_AS_SERVICE = "VK detail wash"
+VISIBLE_PRICE = "$15.00"
 
 
 BROKEN_STATE_TEXTS = [
@@ -28,3 +26,43 @@ def page_has_no_broken_state(page):
 
     body_text = page.get_body_text()
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
+
+
+def open_memberships_page(browser):
+
+    open_admin_path(browser, "/services/memberships")
+
+    memberships_page = MembershipsPage(browser)
+    memberships_page.wait_for_list_loaded()
+
+    return memberships_page
+
+
+def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
+
+    memberships_page = open_memberships_page(browser)
+
+    if memberships_page.membership_exists(membership_name):
+        memberships_page.open_edit_membership(membership_name)
+        memberships_page.fill_membership_form(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+        memberships_page.click_save_membership()
+        memberships_page.wait_for_list_loaded()
+        return memberships_page
+
+    memberships_page.create_membership(
+        membership_name,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        FIRST_LOCATION_PRICE,
+        FIRST_LOCATION_COMMISSION
+    )
+    memberships_page.search_membership(membership_name)
+    memberships_page.wait_for_membership_row(membership_name)
+
+    return memberships_page

@@ -38,7 +38,7 @@ class ServiceCategoriesPage(BasePage):
     )
     SAVE_CHANGES_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Save changes']"
+        "//button[contains(normalize-space(),'Save')]"
     )
     CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
     CATEGORY_NAME_INPUT = (By.NAME, "categoryName")
@@ -78,10 +78,30 @@ class ServiceCategoriesPage(BasePage):
         self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CHANGES_BUTTON))
+        self.wait.until(lambda driver: self.get_category_name_value() != "")
 
     def get_body_text(self):
         """Get visible text inside the current frame."""
         return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def _set_input_value(self, element, value):
+        """Set a React-controlled input value and dispatch change events."""
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            ).set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            value
+        )
 
     def get_category_row_locator(self, category_name):
         """Build a locator for a virtual-grid row by category name."""
@@ -114,13 +134,14 @@ class ServiceCategoriesPage(BasePage):
 
     def search_category(self, category_name):
         """Search category by name."""
-        self.enter_text(self.SEARCH_INPUT, category_name)
+        search_input = self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        )
+        self._set_input_value(search_input, category_name)
         self.wait.until(
-            lambda driver: (
-                category_name in self.get_body_text()
-                or "Showing 0" in self.get_body_text()
-                or "No records" in self.get_body_text()
-            )
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == category_name
         )
 
     def get_category_status(self, category_name):
@@ -151,7 +172,17 @@ class ServiceCategoriesPage(BasePage):
 
     def enter_category_name(self, category_name):
         """Enter category name."""
-        self.enter_text(self.CATEGORY_NAME_INPUT, category_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
+        )
+        self._set_input_value(element, category_name)
+
+    def get_category_name_value(self):
+        """Return current category name input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
+        )
+        return element.get_attribute("value")
 
     def get_category_name_validation_message(self):
         """Return native validation message for category name input."""

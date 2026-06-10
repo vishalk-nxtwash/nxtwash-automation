@@ -3,7 +3,15 @@ import pytest
 from core.driver_factory import DriverFactory
 
 
-@pytest.fixture
+def browser_scope(fixture_name, config):
+
+    if config.getoption("--single-window", default=False):
+        return "session"
+
+    return "function"
+
+
+@pytest.fixture(scope=browser_scope)
 def browser(request):
 
     driver = DriverFactory.get_driver()
