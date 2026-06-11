@@ -5,6 +5,8 @@ from tests.admin_portal.admin_session import open_admin_path
 EXISTING_MEMBERSHIP = "Plus membership"
 MISSING_MEMBERSHIP = "membership-does-not-exist-automation"
 MEMBERSHIP_NAME = "VK MA2"
+RECURRING_MEMBERSHIP_NAME = "VK MR1"
+UPDATED_MEMBERSHIP_NAME = "VK MA2 updated"
 GLOBAL_PRICE = "15"
 GLOBAL_COMMISSION = "2"
 FIRST_LOCATION_PRICE = "20"
@@ -56,6 +58,39 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         return memberships_page
 
     memberships_page.create_membership(
+        membership_name,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        FIRST_LOCATION_PRICE,
+        FIRST_LOCATION_COMMISSION
+    )
+    memberships_page.search_membership(membership_name)
+    memberships_page.wait_for_membership_row(membership_name)
+
+    return memberships_page
+
+
+def create_recurring_membership_if_missing(
+    browser,
+    membership_name=RECURRING_MEMBERSHIP_NAME
+):
+
+    memberships_page = open_memberships_page(browser)
+
+    if memberships_page.membership_exists(membership_name):
+        memberships_page.open_edit_membership(membership_name)
+        memberships_page.fill_recurring_membership_form(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+        memberships_page.click_save_membership()
+        memberships_page.wait_for_list_loaded()
+        return memberships_page
+
+    memberships_page.create_recurring_membership(
         membership_name,
         GLOBAL_PRICE,
         GLOBAL_COMMISSION,
