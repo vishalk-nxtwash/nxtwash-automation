@@ -1,4 +1,5 @@
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -24,7 +25,11 @@ class MembershipsPage(BasePage):
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Memberships']")
     SEARCH_INPUT = (By.NAME, "membershipName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (
+        By.XPATH,
+        "//button[contains(normalize-space(.), 'Filter by') "
+        "or contains(@class, 'filterButton')]"
+    )
     DOWNLOAD_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Filter by']/following-sibling::button[1]"
@@ -133,6 +138,23 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
         )
 
+    def wait_for_create_or_edit_form(self):
+        """Wait until the create/edit membership form remains visible."""
+        self.wait.until(
+            EC.visibility_of_element_located(self.MEMBERSHIP_NAME_INPUT)
+        )
+        self.wait.until(EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON))
+
+    def wait_for_form_save_blocked(self):
+        """Wait until save leaves the user on a membership form."""
+        self.wait.until(
+            lambda driver: (
+                "/services/memberships/new" in driver.current_url
+                or "/services/memberships/edit/" in driver.current_url
+            )
+        )
+        self.wait_for_create_or_edit_form()
+
     def wait_for_create_loaded(self):
         """Wait until the create membership form is visible."""
         self.driver.switch_to.default_content()
@@ -176,6 +198,49 @@ class MembershipsPage(BasePage):
             )
         )
 
+    def wait_for_no_membership_row(self, membership_name):
+        """Wait until a membership row is not visible."""
+        return self.wait.until(
+            EC.invisibility_of_element_located(
+                self.get_membership_row_locator(membership_name)
+            )
+        )
+
+    def get_visible_membership_rows(self):
+        """Return visible membership grid rows."""
+        return [
+            row
+            for row in self.driver.find_elements(
+                By.XPATH,
+                "//*[contains(@class,'InovuaReactDataGrid__row') "
+                "and .//*[@data-props-id='membershipName']]"
+            )
+            if row.is_displayed()
+        ]
+
+    def get_visible_membership_names(self):
+        """Return visible membership names from the list grid."""
+        names = []
+
+        for row in self.get_visible_membership_rows():
+            try:
+                cell = row.find_element(
+                    By.XPATH,
+                    ".//*[@data-props-id='membershipName']"
+                )
+                text = cell.text.strip()
+            except StaleElementReferenceException:
+                continue
+
+            if text:
+                names.append(text)
+
+        return names
+
+    def get_visible_membership_count(self):
+        """Return current visible membership row count."""
+        return len(self.get_visible_membership_names())
+
     def membership_exists(self, membership_name):
         """Return whether the membership exists in the list."""
         self.wait_for_list_loaded()
@@ -198,6 +263,24 @@ class MembershipsPage(BasePage):
                 *self.SEARCH_INPUT
             ).get_attribute("value") == membership_name
         )
+
+    def clear_membership_search(self):
+        """Clear membership search and wait for the grid to refresh."""
+        search_input = self.wait.until(
+            EC.element_to_be_clickable(self.SEARCH_INPUT)
+        )
+        self._set_input_value(search_input, "")
+        self.wait.until(
+            lambda driver: self.driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == ""
+        )
+
+    def search_input_value(self):
+        """Return current membership search input value."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        ).get_attribute("value")
 
     def get_membership_type(self, membership_name):
         """Return visible type for a membership row."""
@@ -246,6 +329,10 @@ class MembershipsPage(BasePage):
         return self.wait.until(
             EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
         ).is_displayed()
+
+    def click_download_memberships(self):
+        """Click the memberships download button."""
+        self.click(self.DOWNLOAD_BUTTON)
 
     def open_create_membership(self):
         """Open create membership form."""
@@ -326,6 +413,26 @@ class MembershipsPage(BasePage):
                 ).is_selected()
             )
 
+    def select_recurring_membership_type(self):
+        """Select Recurring membership type."""
+        radio = self.wait.until(
+            EC.presence_of_element_located(self.RECURRING_RADIO)
+        )
+        if not radio.is_selected():
+            radio.click()
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.RECURRING_RADIO
+                ).is_selected()
+            )
+
+    def recurring_membership_type_is_selected(self):
+        """Return whether Recurring membership type is selected."""
+        radio = self.wait.until(
+            EC.presence_of_element_located(self.RECURRING_RADIO)
+        )
+        return radio.is_selected()
+
     def prepaid_membership_type_is_selected(self):
         """Return whether Prepaid membership type is selected."""
         radio = self.wait.until(EC.presence_of_element_located(self.PREPAID_RADIO))
@@ -381,6 +488,26 @@ class MembershipsPage(BasePage):
         )
         return element.get_attribute("value")
 
+    def global_price_input_is_valid(self):
+        """Return native validity state for global price input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_global_price_validation_message(self):
+        """Return native validation message for global price input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
     def set_global_commission(self, commission):
         """Set membership global commission."""
         elements = self.wait.until(
@@ -395,6 +522,26 @@ class MembershipsPage(BasePage):
             EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
         )
         return elements[0].get_attribute("value")
+
+    def global_commission_input_is_valid(self):
+        """Return native validity state for global commission input."""
+        elements = self.wait.until(
+            EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            elements[0]
+        )
+
+    def get_global_commission_validation_message(self):
+        """Return native validation message for global commission input."""
+        elements = self.wait.until(
+            EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            elements[0]
+        )
 
     def switch_is_on(self, locator):
         """Return whether a switch is on."""
@@ -854,6 +1001,15 @@ class MembershipsPage(BasePage):
         """Click save membership."""
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
 
+    def duplicate_membership_error_is_visible(self):
+        """Return whether a duplicate membership error is visible."""
+        body_text = self.get_body_text().lower()
+        return "already exists" in body_text or "duplicate" in body_text
+
+    def wait_for_duplicate_membership_error(self):
+        """Wait until a duplicate membership validation/error is visible."""
+        self.wait.until(lambda driver: self.duplicate_membership_error_is_visible())
+
     def fill_membership_form(
         self,
         membership_name,
@@ -867,6 +1023,35 @@ class MembershipsPage(BasePage):
         self.enter_membership_name(membership_name)
         self.select_prepaid_membership_type()
         self.set_prepaid_months(prepaid_months)
+        self.ensure_active_switch_on()
+        self.ensure_customer_portal_switch_on()
+        self.set_global_price(global_price)
+        self.set_global_commission(global_commission)
+        self.set_location_price_and_commission_by_index(
+            0,
+            first_location_price,
+            first_location_commission
+        )
+        self.fill_required_unassigned_location_values()
+        self.assign_location_by_index_with_price_and_commission(
+            0,
+            first_location_price,
+            first_location_commission
+        )
+        self.unassign_locations_after_first()
+        self.configure_redemption_settings(0, "VK detail wash")
+
+    def fill_recurring_membership_form(
+        self,
+        membership_name,
+        global_price,
+        global_commission,
+        first_location_price,
+        first_location_commission
+    ):
+        """Fill membership settings for a recurring membership."""
+        self.enter_membership_name(membership_name)
+        self.select_recurring_membership_type()
         self.ensure_active_switch_on()
         self.ensure_customer_portal_switch_on()
         self.set_global_price(global_price)
@@ -902,5 +1087,32 @@ class MembershipsPage(BasePage):
             first_location_price,
             first_location_commission
         )
+        self.click_save_membership()
+        self.wait_for_list_loaded()
+
+    def create_recurring_membership(
+        self,
+        membership_name,
+        global_price,
+        global_commission,
+        first_location_price,
+        first_location_commission
+    ):
+        """Create an active recurring membership and return to list."""
+        self.open_create_membership()
+        self.fill_recurring_membership_form(
+            membership_name,
+            global_price,
+            global_commission,
+            first_location_price,
+            first_location_commission
+        )
+        self.click_save_membership()
+        self.wait_for_list_loaded()
+
+    def update_membership_name(self, current_name, updated_name):
+        """Update membership name and return to list."""
+        self.open_edit_membership(current_name)
+        self.enter_membership_name(updated_name)
         self.click_save_membership()
         self.wait_for_list_loaded()
