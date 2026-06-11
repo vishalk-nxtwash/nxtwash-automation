@@ -21,10 +21,13 @@ class AdminLoginPage(BasePage):
     )
     PASSWORD_VISIBILITY_BUTTON = (
         By.XPATH,
-        "//input[@name='password']/following::button[@type='button'][1]"
+        "//input[@name='password']/following::div["
+        ".//*[local-name()='svg' and contains(@class,'lucide-eye')]][1]"
     )
     OVERVIEW_TITLE = (By.XPATH, "//*[normalize-space()='Overview']")
     LOGIN_TITLE = (By.XPATH, "//*[normalize-space()='Log in']")
+    EMAIL_LABEL = (By.XPATH, "//*[normalize-space()='Email']")
+    PASSWORD_LABEL = (By.XPATH, "//*[normalize-space()='Password']")
     ERROR_TEXTS = [
         "invalid",
         "incorrect",
@@ -72,13 +75,33 @@ class AdminLoginPage(BasePage):
         elements = self.driver.find_elements(*self.LOGO_IMAGE)
         return bool(elements) and elements[0].is_displayed()
 
+    def get_logo_src(self):
+        """Return login logo image source."""
+        return self.driver.find_element(*self.LOGO_IMAGE).get_attribute("src")
+
+    def email_label_is_visible(self):
+        """Return whether the email field label is visible."""
+        return self.driver.find_element(*self.EMAIL_LABEL).is_displayed()
+
+    def password_label_is_visible(self):
+        """Return whether the password field label is visible."""
+        return self.driver.find_element(*self.PASSWORD_LABEL).is_displayed()
+
     def email_field_is_visible(self):
         """Return whether the email or phone field is visible."""
         return self.driver.find_element(*self.EMAIL_OR_PHONE_INPUT).is_displayed()
 
+    def email_field_is_enabled(self):
+        """Return whether the email or phone field is enabled."""
+        return self.driver.find_element(*self.EMAIL_OR_PHONE_INPUT).is_enabled()
+
     def password_field_is_visible(self):
         """Return whether the password field is visible."""
         return self.driver.find_element(*self.PASSWORD_INPUT).is_displayed()
+
+    def password_field_is_enabled(self):
+        """Return whether the password field is enabled."""
+        return self.driver.find_element(*self.PASSWORD_INPUT).is_enabled()
 
     def login_button_is_visible(self):
         """Return whether the login button is visible."""
@@ -95,6 +118,34 @@ class AdminLoginPage(BasePage):
     def get_browser_title(self):
         """Return current browser title."""
         return self.driver.title
+
+    def get_email_placeholder(self):
+        """Return email or phone field placeholder."""
+        return self.driver.find_element(
+            *self.EMAIL_OR_PHONE_INPUT
+        ).get_attribute("placeholder")
+
+    def get_password_placeholder(self):
+        """Return password field placeholder."""
+        return self.driver.find_element(
+            *self.PASSWORD_INPUT
+        ).get_attribute("placeholder")
+
+    def focus_email_field(self):
+        """Move focus to email or phone field."""
+        self.driver.find_element(*self.EMAIL_OR_PHONE_INPUT).click()
+
+    def active_element_name(self):
+        """Return the focused element name attribute."""
+        return self.driver.switch_to.active_element.get_attribute("name")
+
+    def active_element_type(self):
+        """Return the focused element type attribute."""
+        return self.driver.switch_to.active_element.get_attribute("type")
+
+    def press_tab(self):
+        """Press Tab from the currently focused element."""
+        self.driver.switch_to.active_element.send_keys(Keys.TAB)
 
     def enter_email_or_phone(self, email_or_phone):
         """Enter Admin email or phone."""
@@ -180,7 +231,7 @@ class AdminLoginPage(BasePage):
 
     def toggle_password_visibility(self):
         """Click password visibility toggle."""
-        self.click(self.PASSWORD_VISIBILITY_BUTTON)
+        self.driver.find_element(*self.PASSWORD_VISIBILITY_BUTTON).click()
 
     def open_protected_overview(self):
         """Open the protected Admin Overview URL directly."""
@@ -189,6 +240,12 @@ class AdminLoginPage(BasePage):
     def open_login_url(self):
         """Open login URL directly."""
         self.driver.get(self.config.get_url(self.PORTAL).rstrip("/") + "/login")
+
+    def open_overview_in_new_tab(self):
+        """Open protected Admin Overview in a second browser tab."""
+        overview_url = self.config.get_url(self.PORTAL)
+        self.driver.execute_script("window.open(arguments[0], '_blank');", overview_url)
+        self.driver.switch_to.window(self.driver.window_handles[-1])
 
     def local_storage_auth_keys(self):
         """Return localStorage keys related to auth/session."""

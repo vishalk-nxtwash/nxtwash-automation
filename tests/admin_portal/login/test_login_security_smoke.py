@@ -9,6 +9,7 @@ from tests.admin_portal.login.conftest import open_login_page
         ("' OR 1=1 --", "password"),
         ("admin@example.com", "' OR 1=1 --"),
         ("<script>alert(1)</script>", "password"),
+        ("admin@example.com", "<script>alert(1)</script>"),
     ]
 )
 def test_login_security_payloads_do_not_authenticate(browser, email, password):
