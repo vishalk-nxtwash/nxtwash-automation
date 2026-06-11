@@ -7,7 +7,18 @@ from pages.common.base_page import BasePage
 class AdminOverviewPage(BasePage):
 
     OVERVIEW_TITLE = (By.XPATH, "//*[normalize-space()='Overview']")
-    PROFILE_ROLE = (By.XPATH, "//*[normalize-space()='Admin Portal User']")
+    PROFILE_ROLE = (
+        By.XPATH,
+        "//*[contains(normalize-space(),'Admin Portal User')]"
+    )
+    LEGACY_DASHBOARD_IFRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'legacy-staging.nxtwash.com')]"
+    )
+    SUPPORT_IFRAME = (
+        By.XPATH,
+        "//iframe[contains(@title,'widget') or contains(@title,'information')]"
+    )
 
     EXPECTED_NAV_LINKS = {
         "Overview": "/",
@@ -31,6 +42,33 @@ class AdminOverviewPage(BasePage):
         "Unauthorized",
         "Failed to fetch"
     ]
+    DASHBOARD_FILTER_LABELS = [
+        "Site",
+        "Today",
+        "Yesterday",
+        "This Week",
+        "Last Week",
+        "This Month",
+        "Last Month",
+        "Custom",
+        "Single Day"
+    ]
+    DASHBOARD_WIDGET_LABELS = [
+        "Cars Washed",
+        "Revenue",
+        "Average Wash Ticket",
+        "Membership",
+        "Employees",
+        "Gift Cards",
+        "Labor"
+    ]
+    EXPORT_LABELS = ["XLSX", "CSV"]
+    FULL_REPORT_LABELS = [
+        "Cars Washed Full Report",
+        "Revenue Full Report",
+        "Employee Full Report",
+        "Labor Full Report"
+    ]
 
     def wait_for_loaded(self):
         """Wait until Overview shell is visible."""
@@ -47,7 +85,7 @@ class AdminOverviewPage(BasePage):
 
     def has_expected_url(self):
         """Return whether the browser is on the Admin Overview URL."""
-        return self.driver.current_url == "https://staging.nxtwash.com/"
+        return self.driver.current_url.rstrip("/") == "https://staging.nxtwash.com"
 
     def is_redirected_to_login(self):
         """Return whether the user was redirected back to login."""
@@ -92,6 +130,54 @@ class AdminOverviewPage(BasePage):
         """Return whether a known broken/error state is visible."""
         body_text = self.get_body_text()
         return any(text in body_text for text in self.BROKEN_STATE_TEXTS)
+
+    def legacy_dashboard_iframe_is_present(self):
+        """Return whether the legacy Overview iframe is mounted."""
+        return len(self.driver.find_elements(*self.LEGACY_DASHBOARD_IFRAME)) > 0
+
+    def get_legacy_dashboard_text(self):
+        """Return visible text from the legacy Overview iframe."""
+        iframe = self.wait.until(
+            EC.presence_of_element_located(self.LEGACY_DASHBOARD_IFRAME)
+        )
+        self.driver.switch_to.frame(iframe)
+        try:
+            return self.driver.find_element(By.TAG_NAME, "body").text
+        finally:
+            self.driver.switch_to.default_content()
+
+    def support_button_is_visible(self):
+        """Return whether the support widget iframe is visible."""
+        for iframe in self.driver.find_elements(*self.SUPPORT_IFRAME):
+            try:
+                self.driver.switch_to.frame(iframe)
+                if "Support" in self.driver.find_element(By.TAG_NAME, "body").text:
+                    return True
+            finally:
+                self.driver.switch_to.default_content()
+        return False
+
+    def dashboard_text_contains(self, expected_text):
+        """Return whether expected text is visible in the Overview dashboard."""
+        return expected_text in self.get_legacy_dashboard_text()
+
+    def dashboard_has_all_texts(self, expected_texts):
+        """Return whether all expected dashboard labels are visible."""
+        dashboard_text = self.get_legacy_dashboard_text()
+        return all(text in dashboard_text for text in expected_texts)
+
+    def dashboard_has_any_text(self, expected_texts):
+        """Return whether any expected dashboard label is visible."""
+        dashboard_text = self.get_legacy_dashboard_text()
+        return any(text in dashboard_text for text in expected_texts)
+
+    def open_overview_in_new_tab(self):
+        """Open Overview in a second browser tab."""
+        self.driver.execute_script(
+            "window.open(arguments[0], '_blank');",
+            "https://staging.nxtwash.com/"
+        )
+        self.driver.switch_to.window(self.driver.window_handles[-1])
 
     def shell_has_content(self):
         """Return whether the Overview shell has meaningful visible content."""
