@@ -1,0 +1,76 @@
+name: UI Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      marker:
+        description: "Pytest marker to run (e.g. smoke, admin, superadmin)"
+        required: false
+        default: "smoke"
+      environment:
+        description: "Target environment"
+        required: false
+        default: "staging"
+
+jobs:
+  ui-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests (headless)
+        env:
+          HEADLESS: "1"
+          TEST_ENV: ${{ github.event.inputs.environment || 'staging' }}
+          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
+          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
+          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
+          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+        run: |
+          pytest -m "${{ github.event.inputs.marker || 'smoke' }}" \
+            --close-browser \
+            --reruns 2 --reruns-delay 3 \
+            --alluredir=allure-results \
+            --html=report.html --self-contained-html \
+            --junitxml=results.xml
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            allure-results/
+            report.html
+            results.xml
+            screenshots/
+            logs/
+          if-no-files-found: ignore
+
+      - name: Publish test summary
+        if: always()
+        uses: test-summary/action@v2
+        with:
+          paths: results.xml
+        continue-on-error: true

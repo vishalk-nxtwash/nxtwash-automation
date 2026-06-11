@@ -16,9 +16,14 @@ class ConfigManager:
         }
     }
 
-    def __init__(self, env="staging"):
+    def __init__(self, env=None):
 
         self.load_dotenv()
+
+        # Resolve the target environment: explicit arg > TEST_ENV > staging.
+        if env is None:
+            env = os.getenv("TEST_ENV", "staging")
+        self.env = env
 
         # Load environment-specific settings.
         with open(f"config/{env}.yaml") as file:
