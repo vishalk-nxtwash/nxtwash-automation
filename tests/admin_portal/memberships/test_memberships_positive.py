@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 import allure
 import pytest
@@ -15,6 +16,7 @@ from tests.admin_portal.memberships.conftest import (
     VISIBLE_PRICE,
     create_membership_if_missing,
     create_recurring_membership_if_missing,
+    open_memberships_page,
 )
 
 
@@ -107,3 +109,51 @@ def test_membership_settings_persist(browser):
 
     assert memberships_page.redemption_location_is_assigned_by_index(0)
     assert REDEEM_AS_SERVICE.lower() in memberships_page.get_body_text().lower()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("CRUD")
+@allure.title("MEM-CRUD-011 Verify Active Service toggle blocks default-list visibility")
+@pytest.mark.regression
+def test_create_inactive_membership(browser):
+
+    membership_name = "VK inactive %s" % uuid.uuid4().hex[:6]
+    LOG.info("Creating inactive membership: %s", membership_name)
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_create_membership()
+    memberships_page.fill_membership_form(
+        membership_name,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        FIRST_LOCATION_PRICE,
+        FIRST_LOCATION_COMMISSION,
+        PREPAID_MONTHS
+    )
+    memberships_page.open_membership_settings()
+    memberships_page.ensure_active_switch_off()
+    memberships_page.click_save_membership()
+    memberships_page.wait_for_list_loaded()
+    memberships_page.search_membership(membership_name)
+
+    assert memberships_page.search_input_value() == membership_name
+    assert membership_name not in memberships_page.get_body_text()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("CRUD")
+@allure.title("MEM-CRUD-008 Verify Cancel button on create screen")
+@pytest.mark.regression
+def test_cancel_create_membership_discards_unsaved_changes(browser):
+
+    membership_name = "VK cancel %s" % uuid.uuid4().hex[:6]
+    LOG.info("Validating cancel discards new membership: %s", membership_name)
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_create_membership()
+    memberships_page.enter_membership_name(membership_name)
+    memberships_page.click_cancel()
+    memberships_page.search_membership(membership_name)
+
+    assert memberships_page.search_input_value() == membership_name
+    assert membership_name not in memberships_page.get_body_text()

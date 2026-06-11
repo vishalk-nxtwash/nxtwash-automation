@@ -40,6 +40,7 @@ def test_memberships_missing_search(browser):
     memberships_page.search_membership(MISSING_MEMBERSHIP)
 
     assert MISSING_MEMBERSHIP not in memberships_page.get_body_text()
+    assert memberships_page.search_input_value() == MISSING_MEMBERSHIP
     assert page_has_no_broken_state(memberships_page)
 
 
@@ -71,6 +72,24 @@ def test_memberships_case_insensitive_search(browser):
 
     search_text = EXISTING_MEMBERSHIP.upper()
     LOG.info("Searching membership using uppercase value: %s", search_text)
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(search_text)
+
+    assert memberships_page.wait_for_membership_row(
+        EXISTING_MEMBERSHIP
+    ).is_displayed()
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Search")
+@allure.title("MEM-SRCH-005 Verify search trims surrounding spaces")
+@pytest.mark.sanity
+def test_memberships_search_with_surrounding_spaces(browser):
+
+    search_text = "  %s  " % EXISTING_MEMBERSHIP
+    LOG.info("Searching membership with surrounding spaces: %r", search_text)
     memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(search_text)
 
@@ -133,3 +152,19 @@ def test_memberships_search_payloads_do_not_break_grid(browser):
         LOG.info("Searching membership with payload: %s", payload)
         memberships_page.search_membership(payload)
         assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Search")
+@allure.title("MEM-SRCH-007 Verify search with very long string")
+@pytest.mark.sanity
+def test_memberships_long_search_text_does_not_break_grid(browser):
+
+    search_text = "membership-" + ("x" * 256)
+    LOG.info("Searching membership with very long text")
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(search_text)
+
+    assert memberships_page.search_input_value() == search_text
+    assert page_has_no_broken_state(memberships_page)

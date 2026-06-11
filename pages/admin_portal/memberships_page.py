@@ -43,6 +43,26 @@ class MembershipsPage(BasePage):
         "//button[normalize-space()='Apply filters']"
     )
     RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
+    CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
+    SUPPORT_BUTTON = (
+        By.XPATH,
+        "//*[self::button or self::a][contains(normalize-space(.), 'Support')]"
+    )
+    PAGINATION_TEXT = (
+        By.XPATH,
+        "//*[contains(normalize-space(.), 'Showing') "
+        "or contains(normalize-space(.), 'Page')]"
+    )
+    RESULTS_PER_PAGE_SELECT = (
+        By.XPATH,
+        "//select | //*[@role='combobox' and contains(normalize-space(.), '100')]"
+    )
+    NO_RECORDS_TEXT = (
+        By.XPATH,
+        "//*[contains(normalize-space(.), 'No records') "
+        "or contains(normalize-space(.), 'No data') "
+        "or contains(normalize-space(.), 'No results')]"
+    )
     FILTER_SITE_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
@@ -81,6 +101,18 @@ class MembershipsPage(BasePage):
     GLOBAL_COMMISSION_INPUTS = (By.NAME, "commission")
     PREPAID_MONTHS_INPUT = (By.NAME, "prepaidMonths")
     POINTS_AWARDED_INPUT = (By.NAME, "pointsAwarded")
+    BARCODE_INPUT = (By.NAME, "barcode")
+    LIMIT_MEMBERSHIP_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Limit membership']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    DESCRIPTION_TEXTAREA = (
+        By.XPATH,
+        "//*[contains(normalize-space(), 'Membership description')]"
+        "/following::textarea[1]"
+    )
     ACTIVE_SWITCH = (
         By.XPATH,
         "//*[normalize-space()='Active service']"
@@ -180,6 +212,13 @@ class MembershipsPage(BasePage):
         """Get visible text inside the current iframe."""
         return self.driver.find_element(By.TAG_NAME, "body").text
 
+    def element_is_visible(self, locator):
+        """Return whether an element is visible without failing the test."""
+        return any(
+            element.is_displayed()
+            for element in self.driver.find_elements(*locator)
+        )
+
     def get_membership_row_locator(self, membership_name):
         """Build a locator for a membership row by name."""
         return (
@@ -240,6 +279,46 @@ class MembershipsPage(BasePage):
     def get_visible_membership_count(self):
         """Return current visible membership row count."""
         return len(self.get_visible_membership_names())
+
+    def no_records_message_is_visible(self):
+        """Return whether the grid empty-state message is visible."""
+        return self.element_is_visible(self.NO_RECORDS_TEXT)
+
+    def pagination_controls_are_visible(self):
+        """Return whether pagination or result count controls are visible."""
+        return self.element_is_visible(self.PAGINATION_TEXT)
+
+    def results_per_page_control_is_visible(self):
+        """Return whether results-per-page control is visible."""
+        body_text = self.get_body_text()
+        return (
+            "Results per page" in body_text
+            or "Show 100" in body_text
+            or self.element_is_visible(self.RESULTS_PER_PAGE_SELECT)
+        )
+
+    def support_button_is_visible(self):
+        """Return whether the support button is visible."""
+        self.driver.switch_to.default_content()
+        try:
+            return any(
+                element.is_displayed()
+                for element in self.driver.find_elements(*self.SUPPORT_BUTTON)
+            )
+        finally:
+            self.wait_for_list_loaded()
+
+    def every_visible_row_has_edit_action(self):
+        """Return whether every visible membership row has an Edit action."""
+        rows = self.get_visible_membership_rows()
+        if not rows:
+            return False
+
+        for row in rows:
+            if not row.find_elements(By.XPATH, ".//*[normalize-space()='Edit']"):
+                return False
+
+        return True
 
     def membership_exists(self, membership_name):
         """Return whether the membership exists in the list."""
@@ -339,6 +418,11 @@ class MembershipsPage(BasePage):
         self.wait_for_list_loaded()
         self.click(self.ADD_MEMBERSHIP_BUTTON)
         self.wait_for_create_loaded()
+
+    def click_cancel(self):
+        """Click cancel on create/edit form."""
+        self.click(self.CANCEL_BUTTON)
+        self.wait_for_list_loaded()
 
     def open_edit_membership(self, membership_name):
         """Open edit membership form."""
@@ -445,6 +529,32 @@ class MembershipsPage(BasePage):
         )
         element.clear()
         element.send_keys(str(months))
+
+    def set_barcode(self, barcode):
+        """Set membership barcode."""
+        element = self.wait.until(EC.visibility_of_element_located(self.BARCODE_INPUT))
+        element.clear()
+        element.send_keys(str(barcode))
+
+    def get_barcode_value(self):
+        """Return membership barcode value."""
+        element = self.wait.until(EC.visibility_of_element_located(self.BARCODE_INPUT))
+        return element.get_attribute("value")
+
+    def set_membership_description(self, description):
+        """Set membership description if the description section is expanded."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
+        )
+        element.clear()
+        element.send_keys(description)
+
+    def get_membership_description_value(self):
+        """Return membership description value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
+        )
+        return element.get_attribute("value")
 
     def get_prepaid_months_value(self):
         """Return prepaid membership duration months value."""
@@ -557,6 +667,15 @@ class MembershipsPage(BasePage):
                 lambda driver: switch.get_attribute("aria-checked") == "true"
             )
 
+    def ensure_switch_off(self, locator):
+        """Turn a switch off if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+        if switch.get_attribute("aria-checked") != "false":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") == "false"
+            )
+
     def active_switch_is_on(self):
         """Return whether Active service switch is on."""
         return self.switch_is_on(self.ACTIVE_SWITCH)
@@ -572,6 +691,18 @@ class MembershipsPage(BasePage):
     def ensure_customer_portal_switch_on(self):
         """Turn Show on customer portal on if needed."""
         self.ensure_switch_on(self.CUSTOMER_PORTAL_SWITCH)
+
+    def limit_membership_switch_is_on(self):
+        """Return whether Limit membership switch is on."""
+        return self.switch_is_on(self.LIMIT_MEMBERSHIP_SWITCH)
+
+    def ensure_limit_membership_switch_on(self):
+        """Turn Limit membership on if needed."""
+        self.ensure_switch_on(self.LIMIT_MEMBERSHIP_SWITCH)
+
+    def ensure_active_switch_off(self):
+        """Turn Active service off if needed."""
+        self.ensure_switch_off(self.ACTIVE_SWITCH)
 
     def open_membership_settings(self):
         """Open Membership settings tab."""
