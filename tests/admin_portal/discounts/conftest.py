@@ -1,4 +1,6 @@
 from pages.admin_portal.discounts_page import DiscountsPage
+from tests.admin_portal._managed import managed_name
+from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
 
 
@@ -67,3 +69,37 @@ def create_discount_if_missing(browser, discount_name=DISCOUNT_NAME):
     discounts_page.wait_for_discount_row(discount_name)
 
     return discounts_page
+
+
+# --- Managed (self-cleaning) discount --------------------------------------
+# A dedicated record reset to baseline before and after each test that mutates
+# it. Discounts cannot be deleted in the product, so teardown resets mutable
+# fields instead of deleting. See tests/admin_portal/_managed.py.
+
+MANAGED_DISCOUNT = managed_name("Discount")
+
+
+def reset_managed_discount(browser):
+    """Ensure the managed discount exists and reset its mutable fields."""
+    discounts_page = open_discounts_page(browser)
+
+    if not discounts_page.discount_exists(MANAGED_DISCOUNT):
+        discounts_page.create_discount(
+            MANAGED_DISCOUNT,
+            REQUESTED_SERVICE_CATEGORY,
+            DISCOUNT_AMOUNT,
+            START_DAY,
+            START_TIME,
+            SERVICE_CATEGORY
+        )
+
+    # Reset mutable fields touched by tests back to a known baseline.
+    discounts_page.open_edit_discount(MANAGED_DISCOUNT)
+    discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
+    discounts_page.click_save_discount()
+    discounts_page.wait_for_list_loaded()
+
+    return discounts_page
+
+
+managed_discount = managed_resource(reset_managed_discount)

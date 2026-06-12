@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from selenium.webdriver.common.by import By
 
 from pages.common.base_page import BasePage
@@ -61,6 +63,11 @@ class LoginPage(BasePage):
         print("Clicking login button...")
         self.click_login()
 
+    def base_url(self):
+        """SuperAdmin origin (scheme + host) for the active environment."""
+        parsed = urlparse(self.config.get_url("superadmin"))
+        return "%s://%s" % (parsed.scheme, parsed.netloc)
+
     def is_login_successful(self):
 
         current_url = self.driver.current_url
@@ -68,6 +75,6 @@ class LoginPage(BasePage):
         overview_text = self.get_overview_text()
 
         return (
-            current_url == "https://superadmin.nxtwash.com/"
+            current_url.rstrip("/") == self.base_url()
             and overview_text == "Overview"
     )

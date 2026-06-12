@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
+from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
 
 
@@ -203,10 +204,23 @@ class SitesPage(BasePage):
         self.click(self.RESET_FILTERS_BUTTON)
         self.wait_for_loaded()
 
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.config = ConfigManager()
+
+    @property
+    def api_url(self):
+        """Backend API base URL for the active environment (no trailing /)."""
+        return self.config.get_url("api").rstrip("/")
+
+    def _api_script(self, body):
+        """Prepend an API_BASE constant so JS uses the configured API host."""
+        return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
+
     def get_site_summary_with_api(self, site_name):
         """Return a site summary by exact name from the authenticated session."""
         result = self.driver.execute_async_script(
-            """
+            self._api_script("""
             const siteName = arguments[0];
             const done = arguments[arguments.length - 1];
             const root = JSON.parse(localStorage.getItem("persist:root"));
@@ -217,7 +231,7 @@ class SitesPage(BasePage):
                 pageNumber: "1"
             });
 
-            fetch("https://api.nxtwash.com:401/api/sites?" + params, {
+            fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
                     authorization: "Bearer " + auth.accessToken
@@ -232,7 +246,7 @@ class SitesPage(BasePage):
                     done(site || null);
                 })
                 .catch((error) => done({ error: String(error) }));
-            """,
+            """),
             site_name
         )
 
@@ -249,7 +263,7 @@ class SitesPage(BasePage):
             return None
 
         result = self.driver.execute_async_script(
-            """
+            self._api_script("""
             const siteId = arguments[0];
             const done = arguments[arguments.length - 1];
             const root = JSON.parse(localStorage.getItem("persist:root"));
@@ -259,7 +273,7 @@ class SitesPage(BasePage):
                 id: siteId
             });
 
-            fetch("https://api.nxtwash.com:401/api/sites?" + params, {
+            fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
                     authorization: "Bearer " + auth.accessToken
@@ -270,7 +284,7 @@ class SitesPage(BasePage):
                     body: await response.text()
                 }))
                 .catch((error) => done({ error: String(error) }));
-            """,
+            """),
             summary["siteId"]
         )
 
@@ -289,7 +303,7 @@ class SitesPage(BasePage):
 
         try:
             result = self.driver.execute_async_script(
-                """
+                self._api_script("""
                 const siteName = arguments[0];
                 const siteCode = arguments[1];
                 const done = arguments[arguments.length - 1];
@@ -299,7 +313,7 @@ class SitesPage(BasePage):
                     accept: "application/json",
                     authorization: "Bearer " + auth.accessToken
                 };
-                const baseUrl = "https://api.nxtwash.com:401/api/sites";
+                const baseUrl = API_BASE + "/api/sites";
                 const listParams = new URLSearchParams({
                     key: auth.key,
                     pageSize: "500",
@@ -342,7 +356,7 @@ class SitesPage(BasePage):
                         done(matches[0] || null);
                     })
                     .catch((error) => done({ error: String(error) }));
-                """,
+                """),
                 site_name,
                 site_code
             )
@@ -357,7 +371,7 @@ class SitesPage(BasePage):
     def create_site_from_reference_with_api(self, site_name, reference_site):
         """Create a site by copying a reference site's saved settings."""
         result = self.driver.execute_async_script(
-            """
+            self._api_script("""
             const siteName = arguments[0];
             const referenceSite = arguments[1];
             const done = arguments[arguments.length - 1];
@@ -384,7 +398,7 @@ class SitesPage(BasePage):
                 }));
             }
 
-            fetch("https://api.nxtwash.com:401/api/sites", {
+            fetch(API_BASE + "/api/sites", {
                 method: "POST",
                 headers: {
                     accept: "application/json",
@@ -398,7 +412,7 @@ class SitesPage(BasePage):
                     body: await response.text()
                 }))
                 .catch((error) => done({ error: String(error) }));
-            """,
+            """),
             site_name,
             reference_site
         )

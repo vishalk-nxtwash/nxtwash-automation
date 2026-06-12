@@ -1,10 +1,13 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
+from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
 
 
 class AdminOverviewPage(BasePage):
+
+    PORTAL = "admin_portal"
 
     OVERVIEW_TITLE = (By.XPATH, "//*[normalize-space()='Overview']")
     PROFILE_ROLE = (
@@ -13,7 +16,7 @@ class AdminOverviewPage(BasePage):
     )
     LEGACY_DASHBOARD_IFRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'legacy-staging.nxtwash.com')]"
+        "//iframe[contains(@src,'legacy')]"
     )
     SUPPORT_IFRAME = (
         By.XPATH,
@@ -70,10 +73,23 @@ class AdminOverviewPage(BasePage):
         "Labor Full Report"
     ]
 
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.config = ConfigManager()
+
+    @property
+    def base_url(self):
+        """Admin Portal base URL for the active environment (no trailing /)."""
+        return self.config.get_url(self.PORTAL).rstrip("/")
+
     def wait_for_loaded(self):
         """Wait until Overview shell is visible."""
         self.wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.PROFILE_ROLE))
+
+    def open_relative_path(self, path):
+        """Navigate to an Admin Portal path relative to the base URL."""
+        self.driver.get(self.base_url + path)
 
     def get_body_text(self):
         """Get visible page text."""
@@ -85,7 +101,7 @@ class AdminOverviewPage(BasePage):
 
     def has_expected_url(self):
         """Return whether the browser is on the Admin Overview URL."""
-        return self.driver.current_url.rstrip("/") == "https://staging.nxtwash.com"
+        return self.driver.current_url.rstrip("/") == self.base_url
 
     def is_redirected_to_login(self):
         """Return whether the user was redirected back to login."""
@@ -175,7 +191,7 @@ class AdminOverviewPage(BasePage):
         """Open Overview in a second browser tab."""
         self.driver.execute_script(
             "window.open(arguments[0], '_blank');",
-            "https://staging.nxtwash.com/"
+            self.base_url + "/"
         )
         self.driver.switch_to.window(self.driver.window_handles[-1])
 

@@ -1,6 +1,15 @@
+import allure
+
 from tests.admin_portal.memberships.conftest import MISSING_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import open_memberships_page
 from tests.admin_portal.memberships.conftest import page_has_no_broken_state
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Memberships"),
+    allure.story("Negative"),
+]
 
 
 def test_missing_membership_is_not_returned(browser):

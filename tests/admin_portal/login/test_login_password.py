@@ -1,6 +1,14 @@
+import allure
 import pytest
 
 from tests.admin_portal.login.conftest import open_login_page
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Login"),
+    allure.story("Password"),
+]
 
 
 def test_password_is_masked_by_default(browser):

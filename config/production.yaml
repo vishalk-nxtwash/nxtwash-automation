@@ -13,4 +13,7 @@ tunnel: #This URL is from Superadmin > Tunnel Production
   url: https://tunnel.nxtwash.com/wash-queue
 
 customer_portal: #Not sure about the URL yet.
-  url: 
+  url:
+
+api: #Backend API base used by reference-data tests. TODO: confirm production host.
+  url: https://api.nxtwash.com:401

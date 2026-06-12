@@ -8,7 +8,7 @@ import pytest
 @allure.title("OVERVIEW-NAV-002 Browser back returns to Overview")
 @pytest.mark.regression
 def test_overview_browser_back_returns_to_overview(overview_page):
-    overview_page.driver.get("https://staging.nxtwash.com/sites")
+    overview_page.open_relative_path("/sites")
     overview_page.driver.back()
     overview_page.wait_for_loaded()
 

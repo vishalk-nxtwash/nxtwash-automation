@@ -1,4 +1,13 @@
+import allure
+
 from tests.admin_portal.login.conftest import open_login_page
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Login"),
+    allure.story("Session"),
+]
 
 
 def test_direct_protected_url_without_login_redirects_to_login(browser):

@@ -1,5 +1,14 @@
+import allure
+
 from tests.admin_portal.login.conftest import configured_credentials
 from tests.admin_portal.login.conftest import open_login_page
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Login"),
+    allure.story("Negative"),
+]
 
 
 def test_login_invalid_email_valid_password_does_not_authenticate(browser):

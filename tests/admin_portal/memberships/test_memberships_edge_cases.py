@@ -1,5 +1,14 @@
+import allure
+
 from tests.admin_portal.memberships.conftest import MEMBERSHIP_NAME
 from tests.admin_portal.memberships.conftest import create_membership_if_missing
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Memberships"),
+    allure.story("Edge Cases"),
+]
 
 
 def test_membership_create_is_idempotent(browser):
