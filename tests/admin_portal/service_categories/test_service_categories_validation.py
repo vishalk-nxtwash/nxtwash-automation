@@ -1,7 +1,19 @@
+import allure
+import pytest
+
 from tests.admin_portal.service_categories.conftest import open_service_categories_page
 from tests.admin_portal.service_categories.conftest import page_has_no_broken_state
 
 
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Service Categories"),
+    allure.story("Validation"),
+]
+
+
+@allure.title("SC-VAL category name is mandatory")
+@pytest.mark.validation
 def test_service_category_required_name_validation(browser):
 
     page = open_service_categories_page(browser)
@@ -12,6 +24,8 @@ def test_service_category_required_name_validation(browser):
     assert page.get_category_name_validation_message() != ""
 
 
+@allure.title("SC-VAL blank required form remains on create page")
+@pytest.mark.validation
 def test_service_category_blank_required_form_stays_on_form(browser):
 
     page = open_service_categories_page(browser)

@@ -28,9 +28,19 @@ class ServiceCategoriesPage(BasePage):
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Service categories']")
     SEARCH_INPUT = (By.NAME, "categoryName")
     FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    DOWNLOAD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+    )
     ADD_CATEGORY_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='+ Add new category']"
+    )
+    EDIT_ACTIONS = (By.XPATH, "//*[normalize-space()='Edit']")
+    GRID_ROWS = (
+        By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row') "
+        "and .//*[@data-props-id='categoryName']]"
     )
     SAVE_NEW_BUTTON = (
         By.XPATH,
@@ -83,6 +93,82 @@ class ServiceCategoriesPage(BasePage):
     def get_body_text(self):
         """Get visible text inside the current frame."""
         return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def search_input_is_visible(self):
+        """Return whether the category search input is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        ).is_displayed()
+
+    def filter_button_is_clickable(self):
+        """Return whether the filter button is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.FILTER_BUTTON)
+        ).is_displayed()
+
+    def download_button_is_clickable(self):
+        """Return whether the download button is visible/clickable."""
+        return self.wait.until(
+            EC.presence_of_element_located(self.DOWNLOAD_BUTTON)
+        ).is_displayed()
+
+    def add_category_button_is_clickable(self):
+        """Return whether Add new category is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.ADD_CATEGORY_BUTTON)
+        ).is_displayed()
+
+    def save_new_button_is_clickable(self):
+        """Return whether Save new category is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.SAVE_NEW_BUTTON)
+        ).is_displayed()
+
+    def cancel_button_is_visible(self):
+        """Return whether Cancel is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.CANCEL_BUTTON)
+        ).is_displayed()
+
+    def get_visible_category_rows(self):
+        """Return visible service category rows."""
+        return [
+            row for row in self.driver.find_elements(*self.GRID_ROWS)
+            if row.is_displayed()
+        ]
+
+    def get_visible_category_names(self):
+        """Return visible category names from the grid."""
+        names = []
+        for row in self.get_visible_category_rows():
+            try:
+                names.append(
+                    row.find_element(
+                        By.XPATH,
+                        ".//*[@data-props-id='categoryName']"
+                    ).text.strip()
+                )
+            except Exception:  # noqa: BLE001
+                continue
+        return [name for name in names if name]
+
+    def every_visible_row_has_edit_action(self):
+        """Return whether every visible row exposes an Edit action."""
+        rows = self.get_visible_category_rows()
+        edits = [
+            edit for edit in self.driver.find_elements(*self.EDIT_ACTIONS)
+            if edit.is_displayed()
+        ]
+        return bool(rows) and len(edits) >= len(rows)
+
+    def pagination_controls_are_visible(self):
+        """Return whether pagination controls are visible."""
+        text = self.get_body_text()
+        return "Page" in text and "Results per page" in text
+
+    def results_per_page_control_is_visible(self):
+        """Return whether results-per-page control is visible."""
+        return "Results per page" in self.get_body_text()
 
     def _set_input_value(self, element, value):
         """Set a React-controlled input value and dispatch change events."""
@@ -142,6 +228,18 @@ class ServiceCategoriesPage(BasePage):
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == category_name
+        )
+
+    def clear_category_search(self):
+        """Clear category search and wait until input is empty."""
+        search_input = self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        )
+        self._set_input_value(search_input, "")
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == ""
         )
 
     def get_category_status(self, category_name):
