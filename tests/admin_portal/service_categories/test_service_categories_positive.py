@@ -12,7 +12,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-CRUD create active service category")
+@allure.title("SC-CRUD-001 Create active service category")
 @pytest.mark.sanity
 def test_create_active_service_category(browser):
 
@@ -23,7 +23,7 @@ def test_create_active_service_category(browser):
     assert page.get_category_status(CATEGORY_NAME) == "Active"
 
 
-@allure.title("SC-CRUD service category settings persist")
+@allure.title("SC-CRUD-002 Service category settings persist")
 @pytest.mark.regression
 def test_service_category_settings_persist(browser):
 

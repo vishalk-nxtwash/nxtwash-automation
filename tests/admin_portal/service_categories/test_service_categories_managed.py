@@ -16,7 +16,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SVCCAT-MANAGED-001 Managed category starts at baseline")
+@allure.title("SC-MANAGED-001 Managed category starts at baseline")
 @pytest.mark.sanity
 def test_managed_category_provided_at_baseline(managed_category):
     """The fixture hands over a dedicated record already at baseline name."""
@@ -24,9 +24,10 @@ def test_managed_category_provided_at_baseline(managed_category):
 
     assert page.category_exists(MANAGED_CATEGORY)
     assert not page.category_exists(MANAGED_CATEGORY_EDITED)
+    assert page.get_category_status(MANAGED_CATEGORY) == "Active"
 
 
-@allure.title("SVCCAT-MANAGED-002 Rename is reverted on teardown")
+@allure.title("SC-MANAGED-002 Rename is reverted on teardown")
 @pytest.mark.regression
 def test_managed_category_rename_is_reset_on_teardown(managed_category):
     """Rename the category; the fixture teardown restores the baseline name."""
