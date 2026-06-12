@@ -4,7 +4,7 @@ from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
 
 
-EXISTING_CATEGORY = CATEGORY_NAME = "VK ASC1"
+CATEGORY_NAME = "VK ASC1"
 MISSING_CATEGORY = "category-does-not-exist-automation"
 UPDATED_CATEGORY_NAME = "VK ASC1 edited"
 BROKEN_STATE_TEXTS = [
