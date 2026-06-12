@@ -1,4 +1,6 @@
 from pages.admin_portal.memberships_page import MembershipsPage
+from tests.admin_portal._managed import managed_name
+from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
 
 
@@ -101,3 +103,37 @@ def create_recurring_membership_if_missing(
     memberships_page.wait_for_membership_row(membership_name)
 
     return memberships_page
+
+
+# --- Managed (self-cleaning) membership ------------------------------------
+# A dedicated record reset to baseline before and after each test that mutates
+# it. Memberships cannot be deleted in the product, so teardown resets mutable
+# fields instead of deleting. See tests/admin_portal/_managed.py.
+
+MANAGED_MEMBERSHIP = managed_name("Membership")
+BASELINE_POINTS = "0"
+
+
+def reset_managed_membership(browser):
+    """Ensure the managed membership exists and reset its mutable fields."""
+    memberships_page = open_memberships_page(browser)
+
+    if not memberships_page.membership_exists(MANAGED_MEMBERSHIP):
+        memberships_page.create_membership(
+            MANAGED_MEMBERSHIP,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+
+    # Reset mutable fields touched by tests back to a known baseline.
+    memberships_page.open_edit_membership(MANAGED_MEMBERSHIP)
+    memberships_page.set_points_awarded(BASELINE_POINTS)
+    memberships_page.click_save_membership()
+    memberships_page.wait_for_list_loaded()
+
+    return memberships_page
+
+
+managed_membership = managed_resource(reset_managed_membership)

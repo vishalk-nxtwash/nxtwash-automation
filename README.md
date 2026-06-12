@@ -95,13 +95,20 @@ decorators:
 | `superadmin`  | everything under `tests/superadmin/`     |
 | `smoke`       | login flows, `*_positive`, `*_smoke`     |
 
+`admin`, `superadmin`, and `smoke` are applied automatically by path. Suites
+also tag tests by intent via decorators — `sanity`, `regression`, `validation`,
+`export`, `permissions`, `e2e` — so you can target a depth of coverage:
+
 ```bash
 pytest -m smoke
-pytest -m "admin and smoke"
+pytest -m "admin and sanity"
+pytest -m regression
 pytest -m superadmin
+pytest tests/admin_portal/memberships   # target a feature by path
 ```
 
 Marker hygiene is enforced (`--strict-markers`): unknown markers fail fast.
+All markers are registered in `pytest.ini`.
 
 ### Browser behavior
 
@@ -193,11 +200,65 @@ pytest.ini     Pytest settings, markers, report defaults
 .github/       CI workflow
 ```
 
+## Test Data Management (managed resources)
+
+Admin Portal catalog entities (memberships, discounts, sites, ...) **cannot be
+deleted** through the product, so tests can't create-and-delete throwaway data.
+Instead each feature keeps **one dedicated record** and **resets it to a known
+baseline before and after** every test that mutates it — no delete needed, no
+data accumulation, and parallel-safe as long as each test owns its own record.
+
+- Shared engine: `tests/admin_portal/_managed.py` (`managed_name`,
+  `managed_resource`). Records are named with the `AUTOTEST` prefix so they are
+  easy to identify and sweep.
+- Reference implementation: **Memberships** — see `reset_managed_membership` and
+  the `managed_membership` fixture in
+  `tests/admin_portal/memberships/conftest.py`, exercised by
+  `test_memberships_managed.py`.
+
+### Adding managed data to a new feature (the repeatable part)
+
+1. In the feature's `conftest.py`:
+   ```python
+   from tests.admin_portal._managed import managed_name, managed_resource
+
+   MANAGED_X = managed_name("Widget")          # -> "AUTOTEST Widget"
+
+   def reset_managed_x(browser):
+       page = open_x_page(browser)
+       if not page.x_exists(MANAGED_X):
+           page.create_x(MANAGED_X, ...)        # create once
+       # reset the fields tests mutate back to baseline
+       ...
+       return page
+
+   managed_widget = managed_resource(reset_managed_x)   # the fixture
+   ```
+2. Have mutating tests request the `managed_widget` fixture instead of
+   `create_*_if_missing`. Teardown is automatic.
+
+Each feature is ~30–50 lines to the same contract — see the rollout checklist
+below.
+
+### Rollout status
+
+| Feature            | Managed fixture |
+| ------------------ | --------------- |
+| memberships        | ✅ done (reference) |
+| discounts          | ✅ done |
+| service_categories | ✅ done (rename-reset) |
+| gift_cards         | ☐ |
+| coupon_packages    | ☐ |
+| wash_extras        | ☐ (UI delete available) |
+| wash_packages      | ☐ |
+| wash_books         | ☐ |
+| sites              | ⛔ blocked — page object has **no edit and no delete**, so a record can neither be reset nor removed. Needs an `open_edit_site`/`update_site` method (or a backend delete API). Today its tests create incrementing `VK AL0x` sites with no cleanup. |
+
 ## Roadmap / Known Limitations
 
-- **Test-data isolation**: some suites create records with fixed names
-  (`create_*_if_missing`) without teardown. Add per-feature cleanup fixtures
-  before relying on fully parallel (`-n auto`) runs against shared data.
+- **Backend purge**: with no product delete, deactivated/managed records persist.
+  A backend cleanup API/DB-purge (platform-team dependency) would unlock true
+  create-fresh-per-run isolation and reaping of `AUTOTEST` data.
 - **Cross-browser**: only Chrome is wired up today.
 - **Allure history/trends**: enable by publishing `allure-report` with history
   to GitHub Pages (or an Allure server) from CI.

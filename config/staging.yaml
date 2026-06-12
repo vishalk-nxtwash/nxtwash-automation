@@ -12,5 +12,8 @@ pos: #This URL is from Superadmin > POS App
 tunnel: #This URL is from Superadmin > Tunnel Stage
   url: https://devtunnel.nxtwash.com/wash-queue
 
-customer_portal: #Not sure about the URL yet. 
-  url: 
+customer_portal: #Not sure about the URL yet.
+  url:
+
+api: #Backend API base used by reference-data tests (authenticated fetch).
+  url: https://api.nxtwash.com:401
