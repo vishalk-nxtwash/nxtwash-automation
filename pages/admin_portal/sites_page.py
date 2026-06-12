@@ -37,6 +37,16 @@ class SitesPage(BasePage):
         "or normalize-space()='City name' or normalize-space()='Email' "
         "or normalize-space()='Lanes']"
     )
+    EDIT_ACTIONS = (By.XPATH, "//*[normalize-space()='Edit']")
+    TABLE_ROWS = (By.XPATH, "//tbody/tr")
+    FILTER_CLOSE_BUTTON = (
+        By.XPATH,
+        "//button[@aria-label='Close popup']"
+    )
+    ACTIVE_SITE_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active site']/following::*[@role='switch' or self::input][1]"
+    )
 
     def wait_for_loaded(self):
         """Wait until Sites / Locations is visible."""
@@ -69,6 +79,38 @@ class SitesPage(BasePage):
             EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
         ).is_displayed()
 
+    def filter_button_is_clickable(self):
+        """Return whether the filter button can be clicked."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.FILTER_BUTTON)
+        ).is_displayed()
+
+    def add_site_button_is_clickable(self):
+        """Return whether the Add site button can be clicked."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.ADD_SITE_BUTTON)
+        ).is_displayed()
+
+    def edit_actions_are_visible_for_rows(self):
+        """Return whether every visible site row has an Edit action."""
+        rows = [row for row in self.driver.find_elements(*self.TABLE_ROWS) if row.is_displayed()]
+        edits = [edit for edit in self.driver.find_elements(*self.EDIT_ACTIONS) if edit.is_displayed()]
+        return bool(rows) and len(edits) >= len(rows)
+
+    def visible_row_count(self):
+        """Return the number of visible site rows."""
+        return len([row for row in self.driver.find_elements(*self.TABLE_ROWS) if row.is_displayed()])
+
+    def pagination_is_visible(self):
+        """Return whether pagination controls are visible."""
+        body_text = self.get_body_text()
+        return "Page" in body_text and "records" in body_text
+
+    def page_size_selector_is_visible(self):
+        """Return whether the page-size selector is visible."""
+        body_text = self.get_body_text()
+        return "Show" in body_text and "100" in body_text
+
     def open_filters(self):
         """Open site filters."""
         visible_filters = [
@@ -82,11 +124,49 @@ class SitesPage(BasePage):
         self.click(self.FILTER_BUTTON)
         self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_FILTER))
 
+    def close_filters(self):
+        """Close the site filter drawer."""
+        self.open_filters()
+        close_button = self.wait.until(
+            EC.element_to_be_clickable(self.FILTER_CLOSE_BUTTON)
+        )
+        self.driver.execute_script("arguments[0].click();", close_button)
+        self.wait.until(
+            lambda driver: not any(
+                element.is_displayed()
+                for element in driver.find_elements(*self.SITE_NAME_FILTER)
+            )
+        )
+
+    def active_site_filter_is_visible(self):
+        """Return whether the Active site filter switch is visible."""
+        self.open_filters()
+        self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_SITE_FILTER_SWITCH)
+        )
+        return "Active site" in self.get_body_text()
+
     def filter_by_site_name(self, site_name):
         """Filter sites by site name."""
         self.open_filters()
         self.enter_text(self.SITE_NAME_FILTER, site_name)
         self.click(self.APPLY_FILTERS_BUTTON)
+
+    def filter_by_active_state(self, should_be_active=True):
+        """Apply the active-site filter state."""
+        self.open_filters()
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_SITE_FILTER_SWITCH)
+        )
+        is_checked = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.is_selected()
+            or switch.get_attribute("checked") is not None
+        )
+        if is_checked != should_be_active:
+            self.driver.execute_script("arguments[0].click();", switch)
+        self.click(self.APPLY_FILTERS_BUTTON)
+        self.wait_for_loaded()
 
     def get_site_row_locator(self, site_name):
         """Build a locator for a site row by exact visible site name."""
@@ -392,6 +472,14 @@ class CreateSitePage(BasePage):
         By.NAME,
         "isActive"
     )
+    TAB_BY_TEXT = (
+        By.XPATH,
+        "//*[normalize-space()='%s']"
+    )
+    ADD_LANE_BUTTON = (
+        By.XPATH,
+        "//button[contains(normalize-space(),'Add Lane') or contains(normalize-space(),'Add lane')]"
+    )
     CONFIRM_DIALOG = (By.XPATH, "//*[@role='dialog']")
     CONFIRM_DIALOG_PRIMARY_BUTTON = (
         By.XPATH,
@@ -446,29 +534,57 @@ class CreateSitePage(BasePage):
 
     def _select_combobox_option(self, combobox_locator, option_text, fallback=None):
         """Select an option from a React select combobox."""
-        combobox = self._scroll_to_locator(combobox_locator)
-        self.wait.until(EC.element_to_be_clickable(combobox_locator))
-        combobox.click()
-        input_elements = combobox.find_elements(By.XPATH, ".//input")
-        if input_elements:
-            input_elements[0].send_keys(Keys.CONTROL, "a")
-            input_elements[0].send_keys(option_text)
-        else:
-            self.driver.switch_to.active_element.send_keys(option_text)
-
-        option = self._find_select_option(option_text)
+        option = None
         selected_text = option_text
 
-        if option is None and fallback is not None:
+        for attempt in range(2):
+            combobox = self._scroll_to_locator(combobox_locator)
+            self.wait.until(EC.element_to_be_clickable(combobox_locator))
+            self.driver.execute_script("arguments[0].click();", combobox)
+            input_elements = [
+                element
+                for element in combobox.find_elements(By.XPATH, ".//input")
+                if element.is_displayed() and element.is_enabled()
+            ]
+
             if input_elements:
                 input_elements[0].send_keys(Keys.CONTROL, "a")
+                input_elements[0].send_keys(Keys.BACKSPACE)
+                input_elements[0].send_keys(option_text)
+            else:
+                option = self._find_select_option(option_text)
+                if option is not None:
+                    break
+
+            option = self._find_select_option(option_text)
+            if option is not None:
+                break
+
+            if attempt == 0:
+                self.driver.switch_to.active_element.send_keys(Keys.ESCAPE)
+
+        if option is None and fallback is not None:
+            combobox = self._scroll_to_locator(combobox_locator)
+            self.driver.execute_script("arguments[0].click();", combobox)
+            input_elements = [
+                element
+                for element in combobox.find_elements(By.XPATH, ".//input")
+                if element.is_displayed() and element.is_enabled()
+            ]
+            if input_elements:
+                input_elements[0].send_keys(Keys.CONTROL, "a")
+                input_elements[0].send_keys(Keys.BACKSPACE)
                 input_elements[0].send_keys(fallback)
             else:
-                self.driver.switch_to.active_element.send_keys(
-                    Keys.CONTROL,
-                    "a"
-                )
-                self.driver.switch_to.active_element.send_keys(fallback)
+                option = self._find_select_option(fallback)
+                selected_text = fallback
+                if option is not None:
+                    self.driver.execute_script("arguments[0].click();", option)
+                    self.wait.until(
+                        lambda driver: selected_text.lower()
+                        in self.get_body_text().lower()
+                    )
+                    return
             option = self._find_select_option(fallback)
             selected_text = fallback
 
@@ -507,7 +623,19 @@ class CreateSitePage(BasePage):
             if option:
                 return option
 
-        return None
+        visible_text_xpath = (
+            "//*[translate(normalize-space(), "
+            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
+            % normalized
+        )
+        try:
+            return self.wait.until(
+                lambda driver: self._get_clickable_option_after_scroll(
+                    visible_text_xpath
+                )
+            )
+        except TimeoutException:
+            return None
 
     def _get_clickable_option_after_scroll(self, option_xpath):
         """Return a select option, scrolling the open menu if needed."""
@@ -522,7 +650,8 @@ class CreateSitePage(BasePage):
 
         menus = self.driver.find_elements(
             By.XPATH,
-            "//*[contains(@class,'form-select__menu-list')]"
+            "//*[contains(@class,'form-select__menu-list') "
+            "or contains(@class,'nxt-select__menu-list')]"
         )
         for menu in menus:
             self.driver.execute_script(
@@ -573,10 +702,32 @@ class CreateSitePage(BasePage):
         """Return whether Active site switch is on."""
         return self.switch_is_on(self.ACTIVE_SITE_SWITCH)
 
+    def open_tab(self, tab_name):
+        """Open a create-site tab by visible text."""
+        locator = (self.TAB_BY_TEXT[0], self.TAB_BY_TEXT[1] % tab_name)
+        tab = self.wait.until(EC.element_to_be_clickable(locator))
+        self.driver.execute_script("arguments[0].click();", tab)
+        self.wait.until(lambda driver: tab_name in self.get_body_text())
+
+    def body_contains_all(self, labels):
+        """Return whether all labels are visible in the form body."""
+        body_text = self.get_body_text()
+        return all(label in body_text for label in labels)
+
+    def add_lane_button_is_visible(self):
+        """Return whether Add Lane button is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.ADD_LANE_BUTTON)
+        ).is_displayed()
+
     def enter_basic_information(self, site_name, site_code, email):
         """Enter the basic site information."""
         self._set_input_value(self.SITE_NAME_INPUT, site_name)
         self._set_input_value(self.SITE_CODE_INPUT, site_code)
+        self._set_input_value(self.EMAIL_INPUT, email)
+
+    def enter_email(self, email):
+        """Enter only the site email value."""
         self._set_input_value(self.EMAIL_INPUT, email)
 
     def get_site_name_value(self):
