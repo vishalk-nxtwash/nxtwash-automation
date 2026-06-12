@@ -36,6 +36,12 @@ class WashPackagesPage(BasePage):
         By.XPATH,
         "//button[normalize-space()='+ Add new wash package']"
     )
+    EDIT_ACTIONS = (By.XPATH, "//*[normalize-space()='Edit']")
+    GRID_ROWS = (
+        By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row') "
+        "and .//*[@data-props-id='serviceName']]"
+    )
     APPLY_FILTERS_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Apply filters']"
@@ -44,6 +50,11 @@ class WashPackagesPage(BasePage):
     FILTER_SITE_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
+    )
+    ACTIVE_SERVICE_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active service']"
+        "/following::*[@role='switch' or self::input][1]"
     )
 
     SAVE_PACKAGE_BUTTON = (
@@ -107,6 +118,77 @@ class WashPackagesPage(BasePage):
         """Get visible text inside the current iframe."""
         return self.driver.find_element(By.TAG_NAME, "body").text
 
+    def search_input_is_visible(self):
+        """Return whether the package search input is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        ).is_displayed()
+
+    def filter_button_is_clickable(self):
+        """Return whether the Filter by button is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.FILTER_BUTTON)
+        ).is_displayed()
+
+    def add_package_button_is_clickable(self):
+        """Return whether Add new wash package is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.ADD_PACKAGE_BUTTON)
+        ).is_displayed()
+
+    def save_package_button_is_clickable(self):
+        """Return whether Save wash package is clickable."""
+        return self.wait.until(
+            EC.element_to_be_clickable(self.SAVE_PACKAGE_BUTTON)
+        ).is_displayed()
+
+    def cancel_button_is_visible(self):
+        """Return whether Cancel is visible on the form."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.CANCEL_BUTTON)
+        ).is_displayed()
+
+    def get_visible_package_rows(self):
+        """Return visible package grid rows."""
+        return [
+            row for row in self.driver.find_elements(*self.GRID_ROWS)
+            if row.is_displayed()
+        ]
+
+    def get_visible_package_names(self):
+        """Return visible package names from the grid."""
+        names = []
+        for row in self.get_visible_package_rows():
+            try:
+                names.append(
+                    row.find_element(
+                        By.XPATH,
+                        ".//*[@data-props-id='serviceName']"
+                    ).text.strip()
+                )
+            except Exception:  # noqa: BLE001
+                continue
+        return [name for name in names if name]
+
+    def every_visible_row_has_edit_action(self):
+        """Return whether every visible row exposes an Edit action."""
+        rows = self.get_visible_package_rows()
+        edits = [
+            edit for edit in self.driver.find_elements(*self.EDIT_ACTIONS)
+            if edit.is_displayed()
+        ]
+        return bool(rows) and len(edits) >= len(rows)
+
+    def pagination_controls_are_visible(self):
+        """Return whether pagination controls are visible."""
+        text = self.get_body_text()
+        return "Page" in text and "Results per page" in text
+
+    def results_per_page_control_is_visible(self):
+        """Return whether results-per-page control is visible."""
+        text = self.get_body_text()
+        return "Results per page" in text
+
     def get_package_row_locator(self, package_name):
         """Build a locator for a package row by package name."""
         return (
@@ -148,6 +230,18 @@ class WashPackagesPage(BasePage):
             ).get_attribute("value") == package_name
         )
 
+    def clear_package_search(self):
+        """Clear package search input and wait until the grid refreshes."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        )
+        self._set_input_value(element, "")
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == ""
+        )
+
     def get_package_price(self, package_name):
         """Return visible price for a package row."""
         row = self.wait_for_package_row(package_name)
@@ -167,10 +261,35 @@ class WashPackagesPage(BasePage):
     def open_filter_panel(self):
         """Open the Wash Packages filter panel."""
         self.wait_for_list_loaded()
+        visible_site_inputs = [
+            element for element in self.driver.find_elements(*self.FILTER_SITE_INPUT)
+            if element.is_displayed()
+        ]
+        if visible_site_inputs:
+            return
+
         button = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+
+    def filter_panel_controls_are_visible(self):
+        """Return whether expected filter controls are visible."""
+        self.open_filter_panel()
+        return (
+            self.wait.until(
+                EC.visibility_of_element_located(self.FILTER_SITE_INPUT)
+            ).is_displayed()
+            and self.wait.until(
+                EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH)
+            ) is not None
+            and self.wait.until(
+                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+            ).is_displayed()
+            and self.wait.until(
+                EC.element_to_be_clickable(self.RESET_ALL_BUTTON)
+            ).is_displayed()
+        )
 
     def filter_site_option_is_visible(self, site_name):
         """Return whether a site option is visible in the opened filter panel."""
@@ -185,8 +304,10 @@ class WashPackagesPage(BasePage):
 
     def reset_filters(self):
         """Reset filters from the opened filter panel."""
-        self.click(self.RESET_ALL_BUTTON)
-        self.wait.until(EC.invisibility_of_element_located(self.RESET_ALL_BUTTON))
+        self.open_filter_panel()
+        button = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""
@@ -293,10 +414,30 @@ class WashPackagesPage(BasePage):
             element
         )
 
+    def get_global_price_validation_message(self):
+        """Return native validation message for global price input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
     def service_name_input_is_valid(self):
         """Return native validity state for service name input."""
         element = self.wait.until(
             EC.visibility_of_element_located(self.SERVICE_NAME_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def global_price_input_is_valid(self):
+        """Return native validity state for global price input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
         )
         return self.driver.execute_script(
             "return arguments[0].checkValidity();",
