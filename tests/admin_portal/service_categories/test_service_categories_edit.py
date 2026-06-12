@@ -1,8 +1,20 @@
+import allure
+import pytest
+
 from tests.admin_portal.service_categories.conftest import CATEGORY_NAME
 from tests.admin_portal.service_categories.conftest import UPDATED_CATEGORY_NAME
 from tests.admin_portal.service_categories.conftest import create_category_if_missing
 
 
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Service Categories"),
+    allure.story("CRUD"),
+]
+
+
+@allure.title("SC-CRUD edit service category name and restore baseline")
+@pytest.mark.regression
 def test_edit_service_category_name_and_restore(browser):
 
     page = create_category_if_missing(browser)
