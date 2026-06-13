@@ -1,3 +1,6 @@
+import allure
+import pytest
+
 from tests.admin_portal.discounts.conftest import (
     DISCOUNT_AMOUNT,
     DISCOUNT_NAME,
@@ -6,6 +9,15 @@ from tests.admin_portal.discounts.conftest import (
 )
 
 
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Discounts"),
+    allure.story("Happy Path"),
+]
+
+
+@allure.title("DS-HP-001 Create amount discount")
+@pytest.mark.sanity
 def test_create_amount_discount(browser):
 
     discounts_page = create_discount_if_missing(browser)
@@ -16,6 +28,8 @@ def test_create_amount_discount(browser):
     assert discounts_page.get_discount_status(DISCOUNT_NAME) == "Active"
 
 
+@allure.title("DS-PER-001 Discount settings persist after creation")
+@pytest.mark.regression
 def test_discount_settings_persist(browser):
 
     discounts_page = create_discount_if_missing(browser)

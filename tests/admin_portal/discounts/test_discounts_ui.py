@@ -1,7 +1,19 @@
+import allure
+import pytest
+
 from tests.admin_portal.discounts.conftest import open_discounts_page
 from tests.admin_portal.discounts.conftest import page_has_no_broken_state
 
 
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Discounts"),
+    allure.story("UI"),
+]
+
+
+@allure.title("Discounts page loads with primary controls")
+@pytest.mark.sanity
 def test_discounts_page_loads_with_primary_controls(browser):
 
     discounts_page = open_discounts_page(browser)
@@ -21,6 +33,8 @@ def test_discounts_page_loads_with_primary_controls(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
+@allure.title("Discounts grid columns are visible")
+@pytest.mark.sanity
 def test_discounts_grid_columns_are_visible(browser):
 
     discounts_page = open_discounts_page(browser)
@@ -30,6 +44,8 @@ def test_discounts_grid_columns_are_visible(browser):
     assert "Status" in body_text
 
 
+@allure.title("Add discount form loads")
+@pytest.mark.sanity
 def test_add_discount_form_loads(browser):
 
     discounts_page = open_discounts_page(browser)

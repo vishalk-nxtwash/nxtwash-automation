@@ -1,3 +1,4 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -164,6 +165,18 @@ class DiscountsPage(BasePage):
             ).get_attribute("value") == discount_name
         )
 
+    def clear_discount_search(self):
+        """Clear the discount search box."""
+        search_input = self.wait.until(
+            EC.element_to_be_clickable(self.SEARCH_INPUT)
+        )
+        self._set_input_value(search_input, "")
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == ""
+        )
+
     def discount_exists(self, discount_name):
         """Return whether the discount exists in the list."""
         self.wait_for_list_loaded()
@@ -196,6 +209,18 @@ class DiscountsPage(BasePage):
             EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
         ).is_displayed()
 
+    def get_visible_discount_names(self):
+        """Return visible discount names from the list grid."""
+        cells = self.driver.find_elements(
+            By.XPATH,
+            "//*[@data-props-id='discountName']//span[normalize-space()]"
+        )
+        return [
+            cell.text.strip()
+            for cell in cells
+            if cell.is_displayed() and cell.text.strip()
+        ]
+
     def open_create_discount(self):
         """Open create discount form."""
         self.wait_for_list_loaded()
@@ -206,12 +231,21 @@ class DiscountsPage(BasePage):
         """Open edit discount form."""
         self.wait_for_list_loaded()
         self.search_discount(discount_name)
-        row = self.wait_for_discount_row(discount_name)
-        edit_button = row.find_element(
-            By.XPATH,
-            ".//*[normalize-space()='Edit']/ancestor::a[1]"
-        )
-        edit_button.click()
+
+        for attempt in range(2):
+            try:
+                row = self.wait_for_discount_row(discount_name)
+                edit_button = row.find_element(
+                    By.XPATH,
+                    ".//*[normalize-space()='Edit']/ancestor::a[1]"
+                )
+                self.driver.execute_script("arguments[0].click();", edit_button)
+                break
+            except StaleElementReferenceException:
+                if attempt == 1:
+                    raise
+                self.search_discount(discount_name)
+
         self.wait_for_edit_loaded()
 
     def enter_discount_name(self, discount_name):
