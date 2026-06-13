@@ -1,15 +1,13 @@
 import allure
 import pytest
 
-from tests.admin_portal.discounts.conftest import (
-    DISCOUNT_AMOUNT,
-    DISCOUNT_NAME,
-    REQUESTED_SERVICE_CATEGORY,
-    SERVICE_CATEGORY,
-    START_DAY,
-    START_TIME,
-    create_discount_if_missing,
-)
+from tests.admin_portal.discounts.conftest import DISCOUNT_AMOUNT
+from tests.admin_portal.discounts.conftest import DISCOUNT_NAME
+from tests.admin_portal.discounts.conftest import REQUESTED_SERVICE_CATEGORY
+from tests.admin_portal.discounts.conftest import SERVICE_CATEGORY
+from tests.admin_portal.discounts.conftest import START_DAY
+from tests.admin_portal.discounts.conftest import START_TIME
+from tests.admin_portal.discounts.conftest import create_discount_if_missing
 
 
 pytestmark = [
@@ -19,7 +17,7 @@ pytestmark = [
 ]
 
 
-@allure.title("DS-HP-005 Edit discount value and reapply expected settings")
+@allure.title("DIS-EDIT-001 Edit discount value and reapply expected settings")
 @pytest.mark.regression
 def test_edit_discount_reapplies_expected_settings(browser):
 

@@ -12,7 +12,7 @@ pytestmark = [
 ]
 
 
-@allure.title("Discounts page loads with primary controls")
+@allure.title("DIS-UI-001 Discounts page loads with primary controls")
 @pytest.mark.sanity
 def test_discounts_page_loads_with_primary_controls(browser):
 
@@ -33,7 +33,7 @@ def test_discounts_page_loads_with_primary_controls(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
-@allure.title("Discounts grid columns are visible")
+@allure.title("DIS-UI-002 Discounts grid columns are visible")
 @pytest.mark.sanity
 def test_discounts_grid_columns_are_visible(browser):
 
@@ -44,7 +44,7 @@ def test_discounts_grid_columns_are_visible(browser):
     assert "Status" in body_text
 
 
-@allure.title("Add discount form loads")
+@allure.title("DIS-UI-003 Add discount form loads")
 @pytest.mark.sanity
 def test_add_discount_form_loads(browser):
 

@@ -16,7 +16,7 @@ pytestmark = [
 
 
 @allure.story("Search")
-@allure.title("DS-RG-001 Search exact discount")
+@allure.title("DIS-SRCH-001 Search exact discount")
 @pytest.mark.regression
 def test_discounts_existing_search(browser):
 
@@ -27,7 +27,7 @@ def test_discounts_existing_search(browser):
 
 
 @allure.story("Search")
-@allure.title("DS-FLT-007 Exact search clear restores records")
+@allure.title("DIS-SRCH-002 Exact search clear restores records")
 @pytest.mark.regression
 def test_discounts_exact_search_clear_restores_records(browser):
     discounts_page = create_discount_if_missing(browser)
@@ -44,12 +44,13 @@ def test_discounts_exact_search_clear_restores_records(browser):
 
 
 @allure.story("Search")
-@allure.title("DS-RG-002 Partial search requires product support")
+@allure.title("DIS-SRCH-003 Partial search requires product support")
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason=(
-        "Partial discount search currently returns no records for a known "
-        "managed/idempotent discount; keep as a visible product/contract gap."
+        "Known product defect (tracked under NXTDEV-2320): partial discount "
+        "search returns no records for an existing discount name. strict=True "
+        "so this flags as XPASS once the product supports partial matching."
     ),
     strict=True,
 )
@@ -61,7 +62,7 @@ def test_discounts_partial_search_blocker(browser):
 
 
 @allure.story("Search")
-@allure.title("DS-NG missing discount search returns no matching record")
+@allure.title("DIS-SRCH-004 Missing discount search returns no matching record")
 @pytest.mark.regression
 def test_discounts_missing_search(browser):
 
@@ -73,7 +74,7 @@ def test_discounts_missing_search(browser):
 
 
 @allure.story("Filter")
-@allure.title("DS-RG-003 Discounts filter panel shows controls")
+@allure.title("DIS-FLT-001 Discounts filter panel shows controls")
 @pytest.mark.regression
 def test_discounts_filter_panel_shows_controls(browser):
 
@@ -88,7 +89,7 @@ def test_discounts_filter_panel_shows_controls(browser):
 
 
 @allure.story("Search")
-@allure.title("DS-NG search payloads do not break grid")
+@allure.title("DIS-SRCH-005 Search payloads do not break grid")
 @pytest.mark.regression
 def test_discounts_search_payloads_do_not_break_grid(browser):
 
