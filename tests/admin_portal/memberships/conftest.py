@@ -129,7 +129,17 @@ def reset_managed_membership(browser):
 
     # Reset mutable fields touched by tests back to a known baseline.
     memberships_page.open_edit_membership(MANAGED_MEMBERSHIP)
+    memberships_page.fill_membership_form(
+        MANAGED_MEMBERSHIP,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        FIRST_LOCATION_PRICE,
+        FIRST_LOCATION_COMMISSION,
+        PREPAID_MONTHS
+    )
+    memberships_page.open_membership_settings()
     memberships_page.set_points_awarded(BASELINE_POINTS)
+    memberships_page.set_barcode("")
     memberships_page.click_save_membership()
     memberships_page.wait_for_list_loaded()
 

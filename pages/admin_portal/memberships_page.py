@@ -63,6 +63,10 @@ class MembershipsPage(BasePage):
         "or contains(normalize-space(.), 'No data') "
         "or contains(normalize-space(.), 'No results')]"
     )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
+    )
     FILTER_SITE_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
@@ -168,6 +172,16 @@ class MembershipsPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(
             EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
+        )
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
         )
 
     def wait_for_create_or_edit_form(self):
@@ -428,12 +442,14 @@ class MembershipsPage(BasePage):
         """Open edit membership form."""
         self.wait_for_list_loaded()
         self.search_membership(membership_name)
+        self.wait_for_grid_idle()
         row = self.wait_for_membership_row(membership_name)
         edit_button = row.find_element(
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.wait_for_grid_idle()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def enter_membership_name(self, membership_name):
@@ -533,8 +549,12 @@ class MembershipsPage(BasePage):
     def set_barcode(self, barcode):
         """Set membership barcode."""
         element = self.wait.until(EC.visibility_of_element_located(self.BARCODE_INPUT))
-        element.clear()
-        element.send_keys(str(barcode))
+        self._set_input_value(element, str(barcode))
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.BARCODE_INPUT
+            ).get_attribute("value") == str(barcode)
+        )
 
     def get_barcode_value(self):
         """Return membership barcode value."""
@@ -623,8 +643,12 @@ class MembershipsPage(BasePage):
         elements = self.wait.until(
             EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
         )
-        elements[0].clear()
-        elements[0].send_keys(str(commission))
+        self._set_input_value(elements[0], str(commission))
+        self.wait.until(
+            lambda driver: driver.find_elements(
+                *self.GLOBAL_COMMISSION_INPUTS
+            )[0].get_attribute("value") == str(commission)
+        )
 
     def get_global_commission_value(self):
         """Return membership global commission input value."""
@@ -691,6 +715,10 @@ class MembershipsPage(BasePage):
     def ensure_customer_portal_switch_on(self):
         """Turn Show on customer portal on if needed."""
         self.ensure_switch_on(self.CUSTOMER_PORTAL_SWITCH)
+
+    def ensure_customer_portal_switch_off(self):
+        """Turn Show on customer portal off if needed."""
+        self.ensure_switch_off(self.CUSTOMER_PORTAL_SWITCH)
 
     def limit_membership_switch_is_on(self):
         """Return whether Limit membership switch is on."""
