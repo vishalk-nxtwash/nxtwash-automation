@@ -1,3 +1,6 @@
+import allure
+import pytest
+
 from tests.admin_portal.discounts.conftest import (
     DISCOUNT_AMOUNT,
     DISCOUNT_NAME,
@@ -9,6 +12,15 @@ from tests.admin_portal.discounts.conftest import (
 )
 
 
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Discounts"),
+    allure.story("Edit Flow"),
+]
+
+
+@allure.title("DS-HP-005 Edit discount value and reapply expected settings")
+@pytest.mark.regression
 def test_edit_discount_reapplies_expected_settings(browser):
 
     discounts_page = create_discount_if_missing(browser)
