@@ -13,7 +13,7 @@ pytestmark = [
 ]
 
 
-@allure.title("Missing discount is not returned")
+@allure.title("DIS-NG-001 Missing discount is not returned")
 @pytest.mark.regression
 def test_missing_discount_is_not_returned(browser):
 
@@ -24,7 +24,7 @@ def test_missing_discount_is_not_returned(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
-@allure.title("Special-character discount search remains stable")
+@allure.title("DIS-NG-002 Special-character discount search remains stable")
 @pytest.mark.regression
 def test_discounts_special_character_search_stays_usable(browser):
 
