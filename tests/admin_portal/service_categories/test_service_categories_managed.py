@@ -24,6 +24,7 @@ def test_managed_category_provided_at_baseline(managed_category):
 
     assert page.category_exists(MANAGED_CATEGORY)
     assert not page.category_exists(MANAGED_CATEGORY_EDITED)
+    page.search_category(MANAGED_CATEGORY)
     assert page.get_category_status(MANAGED_CATEGORY) == "Active"
 
 
