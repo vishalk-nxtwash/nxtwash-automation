@@ -4,7 +4,10 @@ import allure
 import pytest
 
 from tests.admin_portal.memberships.conftest import EXISTING_MEMBERSHIP
+from tests.admin_portal.memberships.conftest import FILTER_SITE_LABEL
+from tests.admin_portal.memberships.conftest import FILTER_SITE_QUERY
 from tests.admin_portal.memberships.conftest import MISSING_MEMBERSHIP
+from tests.admin_portal.memberships.conftest import SITE_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import open_memberships_page
 from tests.admin_portal.memberships.conftest import page_has_no_broken_state
 
@@ -15,7 +18,7 @@ LOG = logging.getLogger(__name__)
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Search")
-@allure.title("MEM-SRCH-001 Verify search using exact membership name")
+@allure.title("MB-SRH-001 Verify search using exact membership name")
 @pytest.mark.sanity
 def test_memberships_existing_search(browser):
 
@@ -31,7 +34,7 @@ def test_memberships_existing_search(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Search")
-@allure.title("MEM-SRCH-006 Verify search with invalid membership name")
+@allure.title("MB-SRH-004 Verify search with invalid membership name")
 @pytest.mark.sanity
 def test_memberships_missing_search(browser):
 
@@ -47,7 +50,7 @@ def test_memberships_missing_search(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Search")
-@allure.title("MEM-SRCH-002 Verify search using partial membership name")
+@allure.title("MB-SRH-002 Verify search using partial membership name")
 @pytest.mark.sanity
 def test_memberships_partial_search(browser):
 
@@ -102,7 +105,7 @@ def test_memberships_search_with_surrounding_spaces(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Search")
-@allure.title("MEM-SRCH-008 Verify clearing search restores records")
+@allure.title("MB-SRH-005 Verify clearing search restores records")
 @pytest.mark.sanity
 def test_memberships_clear_search_restores_records(browser):
 
@@ -125,7 +128,7 @@ def test_memberships_clear_search_restores_records(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Filter")
-@allure.title("MEM-FLTR-001 Verify Filter popup opens successfully")
+@allure.title("MB-FLT-001 Verify Filter popup opens successfully")
 @pytest.mark.regression
 def test_memberships_filter_panel_shows_controls(browser):
 
@@ -167,4 +170,108 @@ def test_memberships_long_search_text_does_not_break_grid(browser):
     memberships_page.search_membership(search_text)
 
     assert memberships_page.search_input_value() == search_text
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-002 Filter by recurring type shows only recurring memberships")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_filter_by_recurring_type(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Recurring")
+    memberships_page.apply_filters()
+    screenshot("recurring-filtered grid")
+
+    types = memberships_page.get_visible_membership_types()
+    assert types, "expected at least one membership after filtering"
+    assert all(value == "Recurring" for value in types), types
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-003 Filter by site narrows to memberships on that site")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_filter_by_site(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    site_label = memberships_page.select_filter_site(FILTER_SITE_QUERY)
+    memberships_page.apply_filters()
+    screenshot("site-filtered grid: %s" % site_label)
+
+    assert FILTER_SITE_LABEL in site_label
+    assert memberships_page.wait_for_membership_row(SITE_MEMBERSHIP).is_displayed()
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-005 Filter by active shows only active memberships")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_filter_active_shows_only_active(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.set_active_membership_filter(True)
+    memberships_page.apply_filters()
+    screenshot("active-filtered grid")
+
+    statuses = memberships_page.get_visible_membership_statuses()
+    assert statuses, "expected at least one membership after filtering"
+    assert all(value == "Active" for value in statuses), statuses
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-006 Filter by inactive excludes active memberships")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_filter_inactive_excludes_active(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.set_active_membership_filter(False)
+    memberships_page.apply_filters()
+    screenshot("inactive-filtered grid")
+
+    statuses = memberships_page.get_visible_membership_statuses()
+    assert all(value != "Active" for value in statuses), statuses
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-008 Reset filters restores the full grid")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_reset_filters_restores_grid(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    initial_count = memberships_page.get_visible_membership_count()
+
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Recurring")
+    memberships_page.apply_filters()
+    filtered_count = memberships_page.get_visible_membership_count()
+    screenshot("filtered before reset")
+
+    memberships_page.reset_filters()
+    memberships_page.apply_filters()
+    screenshot("grid after reset")
+
+    assert memberships_page.get_visible_membership_count() >= filtered_count
+    assert memberships_page.get_visible_membership_count() >= min(initial_count, 1)
     assert page_has_no_broken_state(memberships_page)

@@ -18,7 +18,7 @@ LOG = logging.getLogger(__name__)
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-001 Verify Membership Name is mandatory")
+@allure.title("MB-NAM-002 Verify Membership Name is mandatory")
 @pytest.mark.validation
 def test_membership_required_name_validation(browser):
 
@@ -50,7 +50,7 @@ def test_membership_blank_required_form_stays_on_form(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-002 Verify Global Price is mandatory")
+@allure.title("MB-PRI-002 Verify Global Price is mandatory")
 @pytest.mark.validation
 def test_membership_requires_global_price(browser):
 
@@ -68,7 +68,7 @@ def test_membership_requires_global_price(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-004 Verify duplicate Membership Name is rejected")
+@allure.title("MB-NAM-003 Verify duplicate Membership Name is rejected")
 @pytest.mark.validation
 def test_duplicate_membership_name_is_rejected(browser):
 
@@ -92,7 +92,7 @@ def test_duplicate_membership_name_is_rejected(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-005 Verify Membership Name with only spaces")
+@allure.title("MB-NAM-005 Verify Membership Name with only spaces")
 @pytest.mark.validation
 def test_spaces_only_membership_name_is_rejected(browser):
 
@@ -112,7 +112,7 @@ def test_spaces_only_membership_name_is_rejected(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-007 Verify negative Global Price is rejected")
+@allure.title("MB-PRI-005 Verify negative Global Price is rejected")
 @pytest.mark.validation
 def test_negative_global_price_is_rejected(browser):
 
@@ -158,7 +158,7 @@ def test_alphabetic_global_price_is_rejected(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-010 Verify negative Global Commission is rejected")
+@allure.title("MB-COM-003 Verify negative Global Commission is rejected")
 @pytest.mark.validation
 def test_negative_global_commission_is_rejected(browser):
 
@@ -182,7 +182,7 @@ def test_negative_global_commission_is_rejected(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
-@allure.title("MEM-VAL-009 Verify decimal price value")
+@allure.title("MB-PRI-004 Verify decimal price value")
 @pytest.mark.validation
 def test_decimal_global_price_is_accepted_and_saved(browser):
 

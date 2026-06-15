@@ -1,3 +1,5 @@
+import re
+
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -46,6 +48,21 @@ class DiscountsPage(BasePage):
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
     )
+    ACTIVE_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active discount']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    FILTER_RESULT_AMOUNT = (
+        By.XPATH,
+        "//*[contains(@class,'filterFooterAmount')]"
+    )
+    FILTER_OPTION = (
+        By.XPATH,
+        "//*[contains(@class,'form-select__option')]"
+    )
+    GRID_STATUS_CELLS = (By.XPATH, "//*[@data-props-id='isActive']")
 
     DISCOUNT_NAME_INPUT = (By.NAME, "discountName")
     SERVICE_CATEGORY_COMBOBOX = (
@@ -220,6 +237,61 @@ class DiscountsPage(BasePage):
             for cell in cells
             if cell.is_displayed() and cell.text.strip()
         ]
+
+    def get_visible_discount_statuses(self):
+        """Return visible discount status values (e.g. 'Active') from the grid."""
+        return [
+            cell.text.strip()
+            for cell in self.driver.find_elements(*self.GRID_STATUS_CELLS)
+            if cell.is_displayed() and cell.text.strip()
+        ]
+
+    def set_active_discount_filter(self, on):
+        """Set the filter panel 'Active discount' switch to the desired state."""
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_FILTER_SWITCH)
+        )
+        desired = "true" if on else "false"
+        if switch.get_attribute("aria-checked") != desired:
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") == desired
+            )
+
+    def select_filter_site(self, site_name=None):
+        """Pick a site in the filter panel (first option if name omitted).
+
+        Returns the chosen site label.
+        """
+        box = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_INPUT))
+        box.click()
+        if site_name:
+            box.send_keys(site_name)
+        option = self.wait.until(EC.element_to_be_clickable(self.FILTER_OPTION))
+        label = option.text.strip()
+        option.click()
+        return label
+
+    def get_filter_result_count(self):
+        """Return the live 'Filter result: N Discounts' count from the panel."""
+        text = self.wait.until(
+            EC.visibility_of_element_located(self.FILTER_RESULT_AMOUNT)
+        ).text
+        match = re.search(r"\d+", text)
+        return int(match.group()) if match else 0
+
+    def apply_filters(self):
+        """Apply the configured filters and wait for the grid to refresh."""
+        self.click(self.APPLY_FILTERS_BUTTON)
+        self.wait.until(
+            EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+        )
+        self.wait_for_list_loaded()
+
+    def reset_filters(self):
+        """Open the filter panel and reset all filters back to defaults."""
+        self.open_filter_panel()
+        self.click(self.RESET_ALL_BUTTON)
 
     def open_create_discount(self):
         """Open create discount form."""

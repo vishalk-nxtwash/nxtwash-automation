@@ -12,7 +12,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-CRUD-001 Create active service category")
+@allure.title("SC-HP-001 Create active service category")
 @pytest.mark.sanity
 def test_create_active_service_category(browser):
 

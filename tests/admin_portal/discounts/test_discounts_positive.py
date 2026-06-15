@@ -14,7 +14,7 @@ pytestmark = [
 ]
 
 
-@allure.title("DIS-HP-001 Create amount discount")
+@allure.title("DS-HP-001 Create amount discount")
 @pytest.mark.sanity
 def test_create_amount_discount(browser):
 
@@ -26,7 +26,7 @@ def test_create_amount_discount(browser):
     assert discounts_page.get_discount_status(DISCOUNT_NAME) == "Active"
 
 
-@allure.title("DIS-HP-002 Discount settings persist after creation")
+@allure.title("DS-PER-001 Discount settings persist after creation")
 @pytest.mark.regression
 def test_discount_settings_persist(browser):
 
@@ -51,7 +51,7 @@ def test_discount_create_is_idempotent(browser):
     assert discounts_page.wait_for_discount_row(DISCOUNT_NAME).is_displayed()
 
 
-@allure.title("DIS-HP-004 Specific location settings persist")
+@allure.title("DS-HP-004 Specific location settings persist")
 @pytest.mark.regression
 def test_discount_first_location_settings_persist(browser):
 

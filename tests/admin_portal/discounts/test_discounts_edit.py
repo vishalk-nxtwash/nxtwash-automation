@@ -17,7 +17,7 @@ pytestmark = [
 ]
 
 
-@allure.title("DIS-EDIT-001 Edit discount value and reapply expected settings")
+@allure.title("DS-HP-005 Edit discount value and reapply expected settings")
 @pytest.mark.regression
 def test_edit_discount_reapplies_expected_settings(browser):
 

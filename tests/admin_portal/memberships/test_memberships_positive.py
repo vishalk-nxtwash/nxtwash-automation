@@ -26,7 +26,7 @@ LOG = logging.getLogger(__name__)
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MEM-CRUD-002 Verify creation of Prepaid membership")
+@allure.title("MB-TYP-002 Verify creation of Prepaid membership")
 @pytest.mark.smoke
 def test_create_prepaid_membership(browser):
 
@@ -44,7 +44,7 @@ def test_create_prepaid_membership(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MEM-CRUD-001 Verify creation of Recurring membership")
+@allure.title("MB-TYP-001 Verify creation of Recurring membership")
 @pytest.mark.smoke
 def test_create_recurring_membership(browser):
 
@@ -114,7 +114,7 @@ def test_membership_settings_persist(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MEM-CRUD-011 Verify Active Service toggle blocks default-list visibility")
+@allure.title("MB-TGL-002 Verify Active Service toggle blocks default-list visibility")
 @pytest.mark.regression
 def test_create_inactive_membership(browser):
 

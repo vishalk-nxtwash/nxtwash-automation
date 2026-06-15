@@ -20,7 +20,7 @@ pytestmark = [
 
 
 @allure.title(
-    "SC-SRCH-001 Search variants (exact, partial, case, trim, long, missing) "
+    "SC-RG-001/SC-RG-002 Search variants (exact, partial, case, trim, long, missing) "
     "and clear"
 )
 @pytest.mark.regression

@@ -13,7 +13,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-CRUD-003 Edit service category name and restore baseline")
+@allure.title("SC-HP-003/SC-EC-002 Edit service category name and restore baseline")
 @pytest.mark.regression
 def test_edit_service_category_name_and_restore(browser):
 
