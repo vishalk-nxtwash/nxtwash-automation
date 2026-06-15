@@ -14,7 +14,7 @@ LOG = logging.getLogger(__name__)
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("UI")
-@allure.title("MEM-UI-001/004/010/011/012/013 Memberships page primary controls")
+@allure.title("MB-LST-001 Memberships page primary controls")
 @pytest.mark.sanity
 def test_memberships_page_loads_with_primary_controls(browser):
 
@@ -39,7 +39,7 @@ def test_memberships_page_loads_with_primary_controls(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("UI")
-@allure.title("MEM-UI-005/006/007/008 Memberships grid columns")
+@allure.title("MB-LST-002 Memberships grid columns")
 @pytest.mark.sanity
 def test_memberships_grid_columns_are_visible(browser):
 

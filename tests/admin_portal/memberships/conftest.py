@@ -17,6 +17,11 @@ PREPAID_MONTHS = "1"
 REDEEM_AS_SERVICE = "VK detail wash"
 VISIBLE_PRICE = "$15.00"
 
+# Known filter data (a membership assigned to a specific site on staging).
+FILTER_SITE_QUERY = "carwash"
+FILTER_SITE_LABEL = "VK Test carwash 2"
+SITE_MEMBERSHIP = "VK MA1"
+
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",

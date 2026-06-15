@@ -35,7 +35,7 @@ def wait_for_membership_download(browser, download_dir, memberships_page):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Download")
-@allure.title("MEM-DL-001 Verify Download Memberships button functionality")
+@allure.title("MB-EXP-001 Verify Download Memberships button functionality")
 @pytest.mark.export
 def test_download_memberships_starts_file_download(browser, tmp_path):
 

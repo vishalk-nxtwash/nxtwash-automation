@@ -71,6 +71,26 @@ class MembershipsPage(BasePage):
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
     )
+    MEMBERSHIP_TYPE_FILTER = (
+        By.XPATH,
+        "//*[normalize-space()='Membership type']"
+        "/following::div[contains(@class,'form-select__control')][1]"
+    )
+    ACTIVE_MEMBERSHIP_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active membership']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    FILTER_OPTION = (
+        By.XPATH,
+        "//*[contains(@class,'form-select__option')]"
+    )
+    GRID_TYPE_CELLS = (
+        By.XPATH,
+        "//*[@data-props-id='membershipType' or @data-props-id='type']"
+    )
+    GRID_STATUS_CELLS = (By.XPATH, "//*[@data-props-id='isActive']")
 
     SAVE_MEMBERSHIP_BUTTON = (
         By.XPATH,
@@ -416,6 +436,74 @@ class MembershipsPage(BasePage):
         self.click(self.FILTER_BUTTON)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+
+    def get_visible_membership_types(self):
+        """Return visible membership type values (e.g. 'Recurring') from the grid."""
+        return [
+            cell.text.strip()
+            for cell in self.driver.find_elements(*self.GRID_TYPE_CELLS)
+            if cell.is_displayed() and cell.text.strip()
+        ]
+
+    def get_visible_membership_statuses(self):
+        """Return visible membership status values (e.g. 'Active') from the grid."""
+        return [
+            cell.text.strip()
+            for cell in self.driver.find_elements(*self.GRID_STATUS_CELLS)
+            if cell.is_displayed() and cell.text.strip()
+        ]
+
+    def select_membership_type_filter(self, type_text):
+        """Open the 'Membership type' filter select and choose an option."""
+        self.click(self.MEMBERSHIP_TYPE_FILTER)
+        option = (
+            By.XPATH,
+            "//*[contains(@class,'form-select__option') "
+            "and normalize-space()='%s']" % type_text,
+        )
+        self.wait.until(EC.element_to_be_clickable(option)).click()
+        self.wait.until(
+            lambda driver: type_text.lower()
+            in self.driver.find_element(*self.MEMBERSHIP_TYPE_FILTER).text.lower()
+        )
+
+    def select_filter_site(self, site_query):
+        """Type a query into the site filter and pick the matching option.
+
+        Returns the chosen site label.
+        """
+        box = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_INPUT))
+        box.click()
+        box.send_keys(site_query)
+        option = (
+            By.XPATH,
+            "//*[contains(@class,'form-select__option') "
+            "and contains(normalize-space(),'%s')]" % site_query,
+        )
+        chosen = self.wait.until(EC.element_to_be_clickable(option))
+        label = chosen.text.strip()
+        chosen.click()
+        return label
+
+    def set_active_membership_filter(self, on):
+        """Set the filter panel 'Active membership' switch to the desired state."""
+        if on:
+            self.ensure_switch_on(self.ACTIVE_MEMBERSHIP_FILTER_SWITCH)
+        else:
+            self.ensure_switch_off(self.ACTIVE_MEMBERSHIP_FILTER_SWITCH)
+
+    def apply_filters(self):
+        """Apply the configured filters and wait for the grid to refresh."""
+        self.click(self.APPLY_FILTERS_BUTTON)
+        self.wait.until(
+            EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+        )
+        self.wait_for_list_loaded()
+
+    def reset_filters(self):
+        """Open the filter panel and reset all filters back to defaults."""
+        self.open_filter_panel()
+        self.click(self.RESET_ALL_BUTTON)
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""

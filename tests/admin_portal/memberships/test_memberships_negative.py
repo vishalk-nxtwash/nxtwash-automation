@@ -24,7 +24,7 @@ def test_missing_membership_is_not_returned(browser):
     assert page_has_no_broken_state(memberships_page)
 
 
-@allure.title("MB-SRH-004 Membership search remains usable with special characters")
+@allure.title("Membership search remains usable with special characters")
 @pytest.mark.regression
 def test_memberships_special_character_search_stays_usable(browser):
 

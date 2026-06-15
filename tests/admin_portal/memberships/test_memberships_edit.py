@@ -22,7 +22,7 @@ APPLICABLE_DISCOUNT = "Plus discount"
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MEM-CRUD-006/MEM-CRUD-025 Edit loyalty points and discount")
+@allure.title("MB-EDT-005/MB-EDT-008 Edit loyalty points and discount")
 @pytest.mark.regression
 def test_edit_membership_loyalty_points_and_discount(browser):
 
@@ -46,7 +46,7 @@ def test_edit_membership_loyalty_points_and_discount(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MEM-CRUD-019 Verify Edit Membership functionality")
+@allure.title("MB-EDT-001 Verify Edit Membership functionality")
 @pytest.mark.regression
 def test_edit_membership_name_and_restore(browser):
 
