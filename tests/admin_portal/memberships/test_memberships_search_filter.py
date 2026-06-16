@@ -127,23 +127,6 @@ def test_memberships_clear_search_restores_records(browser):
 
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
-@allure.story("Filter")
-@allure.title("MB-FLT-001 Verify Filter popup opens successfully")
-@pytest.mark.regression
-def test_memberships_filter_panel_shows_controls(browser):
-
-    LOG.info("Opening memberships filter panel")
-    memberships_page = open_memberships_page(browser)
-    memberships_page.open_filter_panel()
-    body_text = memberships_page.get_body_text()
-
-    assert "Select site" in body_text
-    assert "Apply filters" in body_text
-    assert "Reset all" in body_text
-
-
-@allure.epic("Admin Portal")
-@allure.feature("Memberships")
 @allure.story("Search")
 @allure.title("MEM-SRCH-004 Verify search payloads do not break grid")
 @pytest.mark.sanity
@@ -175,8 +158,33 @@ def test_memberships_long_search_text_does_not_break_grid(browser):
 
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
+@allure.story("Search")
+@allure.title("MB-SRH-003 Search inactive membership returns it in results")
+@pytest.mark.regression
+def test_memberships_search_inactive_membership(browser):
+
+    LOG.info("Searching for an inactive membership")
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.set_active_membership_filter(False)
+    memberships_page.apply_filters()
+    inactive_names = memberships_page.get_visible_membership_names()
+
+    if not inactive_names:
+        pytest.skip("No inactive memberships available in current data set")
+
+    target = inactive_names[0]
+    LOG.info("Searching inactive membership by name: %s", target)
+    memberships_page.search_membership(target)
+
+    assert memberships_page.wait_for_membership_row(target).is_displayed()
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
 @allure.story("Filter")
-@allure.title("MB-FLT-002 Filter by recurring type shows only recurring memberships")
+@allure.title("MB-FLT-001 Filter by recurring type shows only recurring memberships")
 @pytest.mark.regression
 @pytest.mark.visual
 def test_memberships_filter_by_recurring_type(browser, screenshot):
@@ -190,6 +198,26 @@ def test_memberships_filter_by_recurring_type(browser, screenshot):
     types = memberships_page.get_visible_membership_types()
     assert types, "expected at least one membership after filtering"
     assert all(value == "Recurring" for value in types), types
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-002 Filter by prepaid type shows only prepaid memberships")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_filter_by_prepaid_type(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Prepaid")
+    memberships_page.apply_filters()
+    screenshot("prepaid-filtered grid")
+
+    types = memberships_page.get_visible_membership_types()
+    assert types, "expected at least one membership after filtering"
+    assert all(value == "Prepaid" for value in types), types
     assert page_has_no_broken_state(memberships_page)
 
 
@@ -248,6 +276,30 @@ def test_memberships_filter_inactive_excludes_active(browser, screenshot):
 
     statuses = memberships_page.get_visible_membership_statuses()
     assert all(value != "Active" for value in statuses), statuses
+    assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-007 Apply multiple filters together narrows results")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_combined_type_and_status_filter(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Recurring")
+    memberships_page.set_active_membership_filter(True)
+    memberships_page.apply_filters()
+    screenshot("recurring-active combined filter")
+
+    types = memberships_page.get_visible_membership_types()
+    statuses = memberships_page.get_visible_membership_statuses()
+    if types:
+        assert all(t == "Recurring" for t in types), types
+    if statuses:
+        assert all(s == "Active" for s in statuses), statuses
     assert page_has_no_broken_state(memberships_page)
 
 

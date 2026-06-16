@@ -9,6 +9,7 @@ from tests.admin_portal.memberships.conftest import (
     FIRST_LOCATION_PRICE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
+    MANAGED_MEMBERSHIP,
     MEMBERSHIP_NAME,
     PREPAID_MONTHS,
     RECURRING_MEMBERSHIP_NAME,
@@ -157,3 +158,55 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 
     assert memberships_page.search_input_value() == membership_name
     assert membership_name not in memberships_page.get_body_text()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("CRUD")
+@allure.title("MB-TGL-001 Activate membership updates Status in list")
+@pytest.mark.regression
+def test_activate_membership(managed_membership):
+
+    page = managed_membership
+    # Deactivate first so we have something to activate
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_active_switch_off()
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    # Inactive memberships are hidden from the default grid — use the inactive
+    # filter to surface the row so we can open its edit form
+    page.open_filter_panel()
+    page.set_active_membership_filter(False)
+    page.apply_filters()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_active_switch_on()
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    # Clear the inactive filter so the active membership is visible again
+    page.reset_filters()
+    page.apply_filters()
+
+    page.search_membership(MANAGED_MEMBERSHIP)
+    assert page.get_membership_status(MANAGED_MEMBERSHIP) == "Active"
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("CRUD")
+@allure.title("MB-TGL-003 Deactivate membership hides it from the default list")
+@pytest.mark.regression
+def test_deactivate_membership(managed_membership):
+
+    page = managed_membership
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_active_switch_off()
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    # Inactive memberships are hidden from the default grid — verify the row
+    # does not appear after searching for it without any filter applied
+    page.search_membership(MANAGED_MEMBERSHIP)
+    assert MANAGED_MEMBERSHIP not in page.get_body_text()

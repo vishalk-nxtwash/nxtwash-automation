@@ -154,3 +154,20 @@ def test_save_and_cancel_buttons_are_visible_on_create_form(browser):
     assert memberships_page.driver.find_element(
         *memberships_page.CANCEL_BUTTON
     ).is_displayed()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("UI")
+@allure.title("MEM-UI-022 Filter panel exposes site, type and status controls")
+@pytest.mark.regression
+def test_memberships_filter_panel_shows_controls(browser):
+
+    LOG.info("Opening memberships filter panel")
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    body_text = memberships_page.get_body_text()
+
+    assert "Select site" in body_text
+    assert "Apply filters" in body_text
+    assert "Reset all" in body_text

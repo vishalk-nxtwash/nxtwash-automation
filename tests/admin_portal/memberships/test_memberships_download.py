@@ -79,3 +79,30 @@ def test_download_memberships_file_format(browser, tmp_path):
         file.suffix.lower() in {".csv", ".xlsx", ".xls"}
         for file in downloaded_files
     )
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Download")
+@allure.title("MB-EXP-002 Export filtered memberships starts file download")
+@pytest.mark.export
+def test_download_filtered_memberships_starts_file_download(browser, tmp_path):
+
+    LOG.info("Verifying filtered membership export downloads a file")
+    browser.execute_cdp_cmd(
+        "Page.setDownloadBehavior",
+        {
+            "behavior": "allow",
+            "downloadPath": str(tmp_path),
+        }
+    )
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Recurring")
+    memberships_page.apply_filters()
+
+    downloaded_files = wait_for_membership_download(browser, tmp_path, memberships_page)
+
+    assert downloaded_files
+    assert all(file.stat().st_size > 0 for file in downloaded_files)
