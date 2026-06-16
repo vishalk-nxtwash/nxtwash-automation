@@ -13,7 +13,9 @@ class DiscountsPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/discounts?')]"
+        "//iframe[contains(@src,'/services/discounts')"
+        " and not(contains(@src,'/new'))"
+        " and not(contains(@src,'/edit/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -60,7 +62,7 @@ class DiscountsPage(BasePage):
     )
     FILTER_OPTION = (
         By.XPATH,
-        "//*[contains(@class,'form-select__option')]"
+        "//*[contains(@class,'select__option') and not(contains(@class,'No options'))]"
     )
     GRID_STATUS_CELLS = (By.XPATH, "//*[@data-props-id='isActive']")
 
@@ -100,11 +102,17 @@ class DiscountsPage(BasePage):
         "//*[contains(@class,'InovuaReactDataGrid__row') "
         "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
     )
+    SELECTED_CATEGORY = (
+        By.XPATH,
+        "//*[normalize-space()='Select service category']"
+        "/following::*[contains(@class,'form-select__single-value')][1]"
+    )
 
     def wait_for_list_loaded(self):
         """Wait until the Discounts list is visible."""
+        from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 30).until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -121,13 +129,16 @@ class DiscountsPage(BasePage):
 
     def wait_for_edit_loaded(self):
         """Wait until the edit discount form is visible."""
+        from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
         self.wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
-        self.wait.until(lambda driver: self.get_discount_name_value() != "")
+        WebDriverWait(self.driver, 30).until(
+            lambda driver: self.get_discount_name_value() != ""
+        )
 
     def get_body_text(self):
         """Get visible text inside the current iframe."""
@@ -216,7 +227,8 @@ class DiscountsPage(BasePage):
     def open_filter_panel(self):
         """Open the Discounts filter panel."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
+        btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
@@ -261,15 +273,21 @@ class DiscountsPage(BasePage):
     def select_filter_site(self, site_name=None):
         """Pick a site in the filter panel (first option if name omitted).
 
-        Returns the chosen site label.
+        Returns the chosen site label, or None if no matching options appear.
         """
+        import time
+        from selenium.common.exceptions import TimeoutException as _TE
         box = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_INPUT))
         box.click()
         if site_name:
             box.send_keys(site_name)
-        option = self.wait.until(EC.element_to_be_clickable(self.FILTER_OPTION))
+            time.sleep(1)
+        try:
+            option = self.wait.until(EC.visibility_of_element_located(self.FILTER_OPTION))
+        except _TE:
+            return None
         label = option.text.strip()
-        option.click()
+        self.driver.execute_script("arguments[0].click();", option)
         return label
 
     def get_filter_result_count(self):
@@ -351,17 +369,23 @@ class DiscountsPage(BasePage):
             element
         )
 
-    def select_service_category(self, service_category, fallback=None):
-        """Select discount service category from the React select."""
+    def open_service_category_dropdown(self):
+        """Click the service category combobox to open its dropdown."""
         combobox = self.wait.until(
             EC.element_to_be_clickable(self.SERVICE_CATEGORY_COMBOBOX)
         )
         combobox.click()
 
+    def select_service_category(self, service_category, fallback=None):
+        """Select discount service category from the React select."""
+        self.open_service_category_dropdown()
+
         option = self.find_select_option(service_category)
+        selected_label = service_category
 
         if option is None and fallback is not None:
             option = self.find_select_option(fallback)
+            selected_label = fallback
 
         if option is None:
             raise AssertionError(
@@ -369,9 +393,11 @@ class DiscountsPage(BasePage):
             )
 
         self.driver.execute_script("arguments[0].click();", option)
-        selected_label = fallback if fallback is not None else service_category
         self.wait.until(
-            lambda driver: selected_label.lower() in self.get_body_text().lower()
+            lambda driver: (
+                (body := self.get_body_text()) is not None
+                and selected_label.lower() in body.lower()
+            )
         )
 
     def find_select_option(self, option_text):
@@ -421,16 +447,18 @@ class DiscountsPage(BasePage):
 
         return False
 
+    def _is_radio_selected(self, locator):
+        try:
+            return self.driver.find_element(*locator).is_selected()
+        except StaleElementReferenceException:
+            return False
+
     def select_amount_discount_type(self):
         """Select Amount discount type."""
         radio = self.wait.until(EC.presence_of_element_located(self.AMOUNT_RADIO))
         if not radio.is_selected():
-            radio.click()
-            self.wait.until(
-                lambda driver: driver.find_element(
-                    *self.AMOUNT_RADIO
-                ).is_selected()
-            )
+            self.driver.execute_script("arguments[0].click();", radio)
+            self.wait.until(lambda driver: self._is_radio_selected(self.AMOUNT_RADIO))
 
     def amount_discount_type_is_selected(self):
         """Return whether Amount discount type is selected."""
@@ -593,7 +621,9 @@ class DiscountsPage(BasePage):
         if switch.get_attribute("aria-checked") != "true":
             self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                lambda driver: driver.find_element(
+                    *locator
+                ).get_attribute("aria-checked") == "true"
             )
 
     def active_switch_is_on(self):
@@ -635,7 +665,9 @@ class DiscountsPage(BasePage):
         )
         self.wait.until(EC.element_to_be_clickable(time_locator)).click()
         start_date.send_keys(Keys.ESCAPE)
-        self.wait.until(lambda driver: time_text in start_date.get_attribute("value"))
+        self.wait.until(
+            lambda driver: time_text in self._get_date_input_by_index(0).get_attribute("value")
+        )
 
     def get_discount_start_value(self):
         """Return discount start date value."""
@@ -715,3 +747,185 @@ class DiscountsPage(BasePage):
         )
         self.click_save_discount()
         self.wait_for_list_loaded()
+
+    def select_percentage_discount_type(self):
+        """Select Percentage discount type."""
+        radio = self.wait.until(EC.presence_of_element_located(self.PERCENTAGE_RADIO))
+        if not radio.is_selected():
+            self.driver.execute_script("arguments[0].click();", radio)
+            self.wait.until(lambda driver: self._is_radio_selected(self.PERCENTAGE_RADIO))
+
+    def percentage_discount_type_is_selected(self):
+        """Return whether Percentage discount type is selected."""
+        radio = self.wait.until(EC.presence_of_element_located(self.PERCENTAGE_RADIO))
+        return radio.is_selected()
+
+    def ensure_active_switch_off(self):
+        """Turn Active service switch off if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") == "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.ACTIVE_SWITCH
+                ).get_attribute("aria-checked") == "false"
+            )
+
+    def ensure_all_locations_switch_off(self):
+        """Turn Allow discount at all locations switch off if needed."""
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ALL_LOCATIONS_SWITCH)
+        )
+        if switch.get_attribute("aria-checked") == "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.ALL_LOCATIONS_SWITCH
+                ).get_attribute("aria-checked") == "false"
+            )
+
+    def _get_date_input_by_index(self, index):
+        """Return a date input element by zero-based index."""
+        inputs = self.wait.until(
+            EC.presence_of_all_elements_located(self.DATE_INPUTS)
+        )
+        if index >= len(inputs):
+            raise AssertionError(
+                "Expected at least %d date inputs, found %d" % (index + 1, len(inputs))
+            )
+        return inputs[index]
+
+    def set_discount_end(self, day, time_text):
+        """Set discount end date in the second date picker."""
+        end_date = self._get_date_input_by_index(1)
+        end_date.click()
+        day_locator = (
+            By.XPATH,
+            "//div[contains(@class,'react-datepicker__day--%03d') "
+            "and not(contains(@class,'outside-month'))]"
+            % int(day)
+        )
+        self.wait.until(EC.element_to_be_clickable(day_locator)).click()
+        time_locator = (
+            By.XPATH,
+            "//li[contains(@class,'react-datepicker__time-list-item') "
+            "and normalize-space()='%s']"
+            % time_text
+        )
+        self.wait.until(EC.element_to_be_clickable(time_locator)).click()
+        end_date.send_keys(Keys.ESCAPE)
+        self.wait.until(lambda driver: time_text in end_date.get_attribute("value"))
+
+    def get_discount_end_value(self):
+        """Return discount end date input value."""
+        return self._get_date_input_by_index(1).get_attribute("value")
+
+    def get_selected_service_category(self):
+        """Return the currently selected service category label."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self.SELECTED_CATEGORY)
+        ).text.strip()
+
+    def click_download_button(self):
+        """Click the export/download button."""
+        self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)).click()
+
+    def fill_percentage_discount_form(
+        self,
+        discount_name,
+        service_category,
+        discount_amount,
+        start_day,
+        start_time,
+        service_category_fallback=None
+    ):
+        """Fill the discount form for a percentage discount."""
+        self.enter_discount_name(discount_name)
+        self.select_service_category(service_category, service_category_fallback)
+        self.select_percentage_discount_type()
+        self.set_discount_amount(discount_amount)
+        self.set_discount_start(start_day, start_time)
+        self.ensure_active_switch_on()
+        self.set_location_discount_value_by_index(0, discount_amount)
+        self.select_location_discount_type_by_index(0, "Percentage")
+        self.fill_required_unassigned_location_values()
+        self.assign_location_by_index(0)
+
+    def create_percentage_discount(
+        self,
+        discount_name,
+        service_category,
+        discount_amount,
+        start_day,
+        start_time,
+        service_category_fallback=None
+    ):
+        """Create a percentage discount and return to list."""
+        self.open_create_discount()
+        self.fill_percentage_discount_form(
+            discount_name,
+            service_category,
+            discount_amount,
+            start_day,
+            start_time,
+            service_category_fallback
+        )
+        self.click_save_discount()
+        self.wait_for_list_loaded()
+
+    def fill_discount_form_all_locations(
+        self,
+        discount_name,
+        service_category,
+        discount_amount,
+        start_day,
+        start_time,
+        service_category_fallback=None
+    ):
+        """Fill the discount form targeting all locations."""
+        self.enter_discount_name(discount_name)
+        self.select_service_category(service_category, service_category_fallback)
+        self.select_amount_discount_type()
+        self.set_discount_amount(discount_amount)
+        self.set_discount_start(start_day, start_time)
+        self.ensure_active_switch_on()
+        self.ensure_all_locations_switch_on()
+
+    def create_discount_all_locations(
+        self,
+        discount_name,
+        service_category,
+        discount_amount,
+        start_day,
+        start_time,
+        service_category_fallback=None
+    ):
+        """Create an all-locations amount discount and return to list."""
+        self.open_create_discount()
+        self.fill_discount_form_all_locations(
+            discount_name,
+            service_category,
+            discount_amount,
+            start_day,
+            start_time,
+            service_category_fallback
+        )
+        self.click_save_discount()
+        self.wait_for_list_loaded()
+
+    def unassign_location_by_index(self, row_index):
+        """Unassign one visible location row (uncheck if currently checked)."""
+        rows = self.get_location_rows()
+        if row_index >= len(rows):
+            raise AssertionError(
+                "Expected at least %s location rows, found %s"
+                % (row_index + 1, len(rows))
+            )
+        checkbox = rows[row_index].find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+            "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+        )
+        if self.row_checkbox_is_checked(checkbox):
+            self.driver.execute_script("arguments[0].click();", checkbox)
+            self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))

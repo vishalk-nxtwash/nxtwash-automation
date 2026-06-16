@@ -32,7 +32,7 @@ class MembershipsPage(BasePage):
     )
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[starts-with(normalize-space(),'Filter by')]/following-sibling::button[1]"
     )
     ADD_MEMBERSHIP_BUTTON = (
         By.XPATH,
