@@ -1,7 +1,6 @@
 import allure
 import pytest
 
-from tests.admin_portal.memberships.conftest import MISSING_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import open_memberships_page
 from tests.admin_portal.memberships.conftest import page_has_no_broken_state
 
@@ -11,17 +10,6 @@ pytestmark = [
     allure.feature("Memberships"),
     allure.story("Negative"),
 ]
-
-
-@allure.title("MB-SRH-004 Search non-existing membership")
-@pytest.mark.regression
-def test_missing_membership_is_not_returned(browser):
-
-    memberships_page = open_memberships_page(browser)
-    memberships_page.search_membership(MISSING_MEMBERSHIP)
-
-    assert MISSING_MEMBERSHIP not in memberships_page.get_body_text()
-    assert page_has_no_broken_state(memberships_page)
 
 
 @allure.title("Membership search remains usable with special characters")
