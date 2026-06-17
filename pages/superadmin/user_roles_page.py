@@ -1,3 +1,5 @@
+import json
+
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import TimeoutException
@@ -5,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
 
 
@@ -36,6 +39,19 @@ class UserRolesPage(BasePage):
         By.XPATH,
         "//*[contains(.,'out of 0 records') or contains(.,'No records')]"
     )
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.config = ConfigManager()
+
+    @property
+    def api_url(self):
+        """Backend API base URL for the active environment (no trailing /)."""
+        return self.config.get_url("api").rstrip("/")
+
+    def _api_script(self, body):
+        """Prepend an API_BASE constant so JS uses the configured API host."""
+        return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -287,12 +303,12 @@ class CreateUserRolePage(BasePage):
         the logged-in SuperAdmin session.
         """
         result = self.driver.execute_async_script(
-            """
+            self._api_script("""
             const roleName = arguments[0];
             const done = arguments[arguments.length - 1];
             const root = JSON.parse(localStorage.getItem("persist:root"));
             const auth = JSON.parse(root.authSessionReducer);
-            const baseUrl = "https://api.nxtwash.com:401/api/SuperAdminUserRole";
+            const baseUrl = API_BASE + "/api/SuperAdminUserRole";
 
             const headers = {
                 accept: "application/json",
@@ -379,7 +395,7 @@ class CreateUserRolePage(BasePage):
                 })
                 .then(done)
                 .catch((error) => done({ error: String(error) }));
-            """,
+            """),
             role_name
         )
 
@@ -393,12 +409,12 @@ class CreateUserRolePage(BasePage):
 
     def get_role_permissions_with_api(self, role_name):
         result = self.driver.execute_async_script(
-            """
+            self._api_script("""
             const roleName = arguments[0];
             const done = arguments[arguments.length - 1];
             const root = JSON.parse(localStorage.getItem("persist:root"));
             const auth = JSON.parse(root.authSessionReducer);
-            const baseUrl = "https://api.nxtwash.com:401/api/SuperAdminUserRole";
+            const baseUrl = API_BASE + "/api/SuperAdminUserRole";
             const headers = {
                 accept: "application/json",
                 authorization: "Bearer " + auth.accessToken
@@ -434,7 +450,7 @@ class CreateUserRolePage(BasePage):
                 })
                 .then(done)
                 .catch((error) => done({ error: String(error) }));
-            """,
+            """),
             role_name
         )
 
