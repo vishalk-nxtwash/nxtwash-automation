@@ -41,3 +41,63 @@ Blocks reverting test data (e.g. `VK AL01`) used in DS-DEP-004.
 
 **Automation:** No automation currently covers the Sites module.
 Noted in `test_deactivate_assigned_site_reflects_in_discount` skip reason.
+
+---
+
+## BUG 4 — Discount: "all locations" create form does not submit
+- **Spec:** DS-HP-003
+- **Found:** 2026-06-17 (reproduces headless, non-headless, and CI)
+- **Module:** Admin Portal → Services → Discounts → Add new discount
+
+**Steps to reproduce**
+1. Add new discount; set name, category, Amount type, amount, start date.
+2. Turn on "Allow discount at all locations".
+3. Click **Save discount**.
+
+**Expected:** Discount saves and returns to the list.
+**Actual:** The form stays on `/services/discounts/new` — it never submits.
+Each per-location row shows an empty "Percentage 0%" value while the global
+type is Amount, which appears to block validation/submit.
+
+**Automation:** `test_create_discount_assign_all_locations` — marked `xfail`
+pending a page-object fix that fills per-location values (Phase 2).
+
+---
+
+## BUG 5 — Membership: re-activate edit form does not submit
+- **Spec:** MB-EDT-009
+- **Found:** 2026-06-17 (reproduces headless, non-headless, and CI)
+- **Module:** Admin Portal → Services → Memberships → Edit
+
+**Steps to reproduce**
+1. Deactivate a membership; use the inactive filter to reopen it.
+2. Turn the **Active service** toggle on.
+3. Click **Save membership**.
+
+**Expected:** Membership saves and returns to the list.
+**Actual:** The edit form stays open; the list iframe never reloads
+(`wait_for_list_loaded` times out even at 60s).
+
+**Automation:** `test_activate_membership` — marked `xfail` pending investigation
+of the save interaction (Phase 2).
+
+---
+
+## Phase 2 — managed-discount reset hardening (test-infra, not a product bug)
+`reset_managed_discount` cannot find the managed record when it is left
+**inactive** (the product hides inactive discounts from the default grid and
+search) or **renamed**. The rename case now self-heals; the **inactive** case
+still needs the reset to surface records via the inactive filter before
+reactivating, otherwise activate/deactivate discount tests can leave duplicate
+or stale state on teardown. Tracked for Phase 2.
+
+---
+
+## Phase 2 — execution-time: reuse login across tests (test-infra)
+The `browser` fixture is function-scoped, so every test launches a fresh Chrome
+**and** performs a full UI login. With ~75 smoke tests that is ~75 logins and is
+the dominant cost of the ~25-min run. Phase 2: log in once per xdist worker
+(session-scoped authenticated session, or inject the auth token into
+localStorage) so individual tests skip the login round-trip. Must preserve
+isolation for login-negative tests, which need a clean unauthenticated session.
+Quick wins already applied: PR/smoke runs use `-n 4` workers and `--reruns 1`.

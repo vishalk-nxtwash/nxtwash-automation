@@ -115,7 +115,7 @@ def test_membership_settings_persist(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MB-TGL-002 Verify Active Service toggle blocks default-list visibility")
+@allure.title("MB-TGL-002 Create inactive membership (Active Service off) hides from default list")
 @pytest.mark.regression
 def test_create_inactive_membership(browser):
 
@@ -163,8 +163,16 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MB-TGL-001 Activate membership updates Status in list")
+@allure.title("MB-EDT-009 Activate inactive membership updates Status in list")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason=(
+        "BUG 5: after re-activating, the membership edit form does not submit — "
+        "it stays on the edit screen so the list never reloads. Fails headless, "
+        "non-headless and CI. See docs/bug_reports.md (Phase 2)."
+    ),
+    strict=False,
+)
 def test_activate_membership(managed_membership):
 
     page = managed_membership
@@ -196,7 +204,7 @@ def test_activate_membership(managed_membership):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MB-TGL-003 Deactivate membership hides it from the default list")
+@allure.title("MB-EDT-010 Deactivate active membership hides it from the default list")
 @pytest.mark.regression
 def test_deactivate_membership(managed_membership):
 

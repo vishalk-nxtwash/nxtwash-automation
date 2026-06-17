@@ -14,7 +14,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-SRCH-003 Missing service category is not returned")
+@allure.title("SC-RG-006 Missing service category is not returned")
 @pytest.mark.regression
 def test_missing_service_category_is_not_returned(browser):
 

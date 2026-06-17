@@ -1,193 +1,130 @@
 # Test Coverage Matrix — Admin Portal
 
-Source of truth: **Services_Automation_Master_v2** Google Sheet
-(tabs: `ServiceCategories`, `Membership`, `Discounts_Master`).
+Source of truth: **Services_Automation_Master** Google Sheet
+(tabs: `Service Category`, `Membership`, `Discounts_Master`).
 
 Status key: ✅ Covered · ⚠️ Partial (under-verifies the expected result) ·
-❌ Missing · 🔮 Future (not expected yet).
+❌ Missing · 🔮 Future (not expected yet) · 🐞 Blocked by product defect.
 
-Mapping note: this is a manual cross-reference of doc TC IDs against the current
-automated tests. Script Allure IDs currently do **not** match the doc TC IDs
-(see the ID-alignment finding in the review) — the "Automated test" column lists
-the actual test function that satisfies each row.
+**ID alignment (Phase 1 — done 2026-06-17):** automated `@allure.title` IDs have
+been realigned to the sheet's TC IDs. The legacy `DIS-*`/`EXP-*` prefixes and the
+mis-numbered `DS-RG`/`DS-SRH`/`DS-FLT`/`DS-UPD` search/filter/update/export IDs are
+gone; Membership `MB-TGL-*` scenario mismatches are fixed (activate/deactivate now
+`MB-EDT-009/010`). Tests with no sheet row keep an `*-EXTRA`-style legacy label and
+are listed under "Extras" per module.
 
----
-
-## 1. Service Category — 6 / 20 covered (30%)
-
-| Doc TC | Scenario | Status | Automated test |
-|--------|----------|--------|----------------|
-| SC-HP-001 | Create Active Category | ✅ | `test_create_active_service_category` |
-| SC-HP-002 | Create Inactive Category | ❌ | — (page object always forces active) |
-| SC-HP-003 | Edit Category | ✅ | `test_edit_service_category_name_and_restore` |
-| SC-HP-004 | Activate Category | ❌ | — |
-| SC-HP-005 | Deactivate Category | ❌ | — |
-| SC-RG-001 | Search Exact Name | ✅ | `test_service_categories_search_variants_and_clear` |
-| SC-RG-002 | Search Partial Name | ✅ | `test_service_categories_search_variants_and_clear` |
-| SC-RG-003 | Filter Active | ❌ | — |
-| SC-RG-004 | Filter Inactive | ❌ | — |
-| SC-RG-005 | Export Categories | ❌ | — |
-| SC-NG-001 | Create Without Name | ✅ | `test_service_category_required_name_validation` |
-| SC-NG-002 | Create Duplicate Category | ❌ | — |
-| SC-EC-001 | Rename Category Linked To Discount | ❌ | — (P1, dependency) |
-| SC-EC-002 | Search After Rename | ⚠️ | partially via edit test |
-| SC-EC-003 | Activate-Deactivate-Activate | ❌ | — |
-| SC-EC-004 | Verify After Re-login | ❌ | — |
-| SC-EC-005 | Edit Inactive Category | ❌ | — |
-| SC-EC-006 | Deactivate Then Search/Filter | ❌ | — |
-| SC-DEP-001 | Category Available During Discount Creation | ❌ | — (**P0**) |
-| SC-DEP-002 | Deactivate Category Used By Discount | ❌ | — (**P0**) |
-
-**Script-only extras (no doc row):** settings-persist, long-name edge, managed
-baseline/rename, special-character search, UI shell/add-form, create-idempotent,
-missing-search.
-
-**Biggest gaps:** entire inactive/activate/deactivate lifecycle, filtering,
-export, duplicate rule, all edge cases, both P0 dependency cases.
+> ⚠️ The sheet's **"Automation: Yes"** column is aspirational, not factual, for
+> Service Category and Membership — many rows marked "Yes" are **not** automated
+> (see gaps below). Do not treat the sheet as sign-off evidence until either the
+> tests are built (Phase 2) or those rows are set to No/Partial.
 
 ---
 
-## 2. Discount — ~4 covered + 4 partial / 51 (~15%)
+## 1. Service Category — ~10 / 30 covered (~33%)
 
-| Doc TC | Scenario | Status | Automated test |
-|--------|----------|--------|----------------|
-| DS-HP-001 | Create Amount Discount | ✅ | `test_create_amount_discount` |
-| DS-HP-002 | Create Percentage Discount | ❌ | — (page object only does amount) |
-| DS-HP-003 | Assign All Locations | ❌ | — |
-| DS-HP-004 | Assign Specific Locations | ✅ | `test_discount_first_location_settings_persist` |
-| DS-HP-005 | Edit Discount Value | ✅ | `test_edit_discount_reapplies_expected_settings` |
-| DS-HP-006 | Activate Discount | ❌ | — |
-| DS-HP-007 | Deactivate Discount | ❌ | — |
-| DS-CMB-001 | Amount + All Locations + Active | ❌ | — |
-| DS-CMB-002 | Amount + Selected Locations + Active | ❌ | — |
-| DS-CMB-003 | Percentage + All Locations + Active | ❌ | — |
-| DS-CMB-004 | Percentage + Selected Locations + Active | ❌ | — |
-| DS-CMB-005 | Percentage + Future Start Date | ❌ | — |
-| DS-CMB-006 | Amount + End Date | ❌ | — |
-| DS-RG-001 | Search Exact Discount | ✅ | `test_discounts_existing_search` |
-| DS-RG-002 | Search Partial Discount | ⚠️ | `test_discounts_partial_search_blocker` (xfail — **product defect**, doc expects matching results) |
-| DS-RG-003 | Filter Active | ✅ | `test_discounts_filter_active_shows_only_active` (applies filter, asserts every visible row is Active; `@visual`) |
-| DS-RG-004 | Filter By Site | ⚠️🐞 | **blocked by suspected product defect** — the discount filter "Select site" returns "No options" for any query, incl. the known site `VK Test carwash 2`. The same select preloads 11 sites in the membership filter, so it's discount-specific. Automation (`select_filter_site()`) is ready once the dropdown populates. |
-| DS-RG-005 | Export Discounts | ❌ | — |
-| DS-NG-001 | Create Without Category | ❌ | — |
-| DS-NG-002 | Create Without Value | ❌ | — |
-| DS-NG-003 | Start Date After End Date | ❌ | — |
-| DS-NG-004 | Percentage Above Limit | ❌ | — |
-| DS-NG-005 | No Location When Required | ❌ | — |
-| DS-EC-001 | 0 Percent Discount | ❌ | — |
-| DS-EC-002 | 100 Percent Discount | ❌ | — |
-| DS-EC-003 | Future Start Date | ❌ | — |
-| DS-EC-004 | Discount Expiring Today | ❌ | — |
-| DS-EC-005 | Amount To Percentage | ❌ | — |
-| DS-EC-006 | Percentage To Amount | ❌ | — |
-| DS-EC-007 | Remove Assigned Location | ❌ | — |
-| DS-EC-008 | Add Location To Existing Discount | ❌ | — |
-| DS-UPD-006 | Change Discount Name | ❌ | — |
-| DS-UPD-007 | Change Start Date | ❌ | — |
-| DS-UPD-008 | Change End Date | ❌ | — |
-| DS-UPD-009 | Change Category Assignment | ❌ | — |
-| DS-UPD-010 | Selected Locations To All Locations | ❌ | — |
-| DS-UPD-011 | All Locations To Selected Locations | ❌ | — |
-| DS-PER-001 | Create Then Refresh | ⚠️ | `test_discount_settings_persist` (re-opens edit, not a true refresh) |
-| DS-PER-002 | Create Then Re-login | ❌ | — |
-| DS-PER-003 | Edit Then Refresh | ❌ | — |
-| DS-PER-004 | Deactivate Then Refresh | ❌ | — |
-| DS-SRH-004 | Search Inactive Discount | ❌ | — |
-| DS-SRH-005 | Search After Edit | ❌ | — |
-| DS-FLT-005 | Filter Active + Site | ❌ | — |
-| DS-FLT-006 | Filter Inactive + Site | ❌ | — |
-| DS-FLT-007 | Clear Filters | ⚠️ | `test_discounts_exact_search_clear_restores_records` (clears search box, not filter panel) |
-| DS-FLT-008 | Search + Filter Together | ❌ | — |
-| DS-DEP-001 | Category To Discount Flow | ❌ | — (**P0**) |
-| DS-DEP-002 | Rename Linked Category | ❌ | — (**P0**) |
-| DS-DEP-003 | Deactivate Linked Category | ❌ | — (**P0**) |
-| DS-DEP-004 | Deactivate Assigned Site | ❌ | — (**P0**) |
-| DS-DEP-005 | Edit Site Assignment | ❌ | — (**P0**) |
+| Suite | Covered | Missing |
+|-------|---------|---------|
+| Happy Path | SC-HP-001, SC-HP-003 | **SC-HP-002 (create inactive), SC-HP-004 (activate), SC-HP-005 (deactivate)** |
+| Search | SC-RG-001, SC-RG-002, SC-RG-006 | — |
+| Filter | — | **SC-RG-003 (active), SC-RG-004 (inactive), SC-RG-007 (toggle off)** |
+| Export | — | SC-RG-005 |
+| Negative | SC-NG-001, SC-NG-003 ⚠️ | SC-NG-002 (duplicate), SC-NG-004 (whitespace), SC-NG-005 (case-insensitive dup), SC-NG-006 (dup inactive) |
+| Edge | SC-EC-002 ⚠️ | SC-EC-001, SC-EC-003, SC-EC-004 (re-login), SC-EC-005, SC-EC-006, SC-EC-007/008 (cancel add/edit) |
+| Dependency (P0) | SC-DEP-001, SC-DEP-002 (from Discount side) | SC-DEP-003 (service assignment), SC-DEP-004 (rename w/ assigned services) |
 
-**Script-only extras (no doc row):** create-idempotent, long-name edge,
-missing-search, special-character/payload search, discount-name-mandatory
-validation, blank-form, negative-amount, managed baseline/mutation.
-
-**Biggest gaps:** percentage discounts entirely (incl. 0%/100% boundaries),
-all 6 combinations, activate/deactivate, all date/value negatives, all edit-flow
-specifics, all 5 P0 dependency cases, export, site filters.
+- ⚠️ `SC-NG-003` only asserts the form does not break; sheet expects reject/truncate.
+- ⚠️ `SC-EC-002` satisfied indirectly by the edit-and-restore test.
+- **Extras (no sheet row):** SC-SRCH-002 (special-char search), SC-CRUD-002
+  (settings persist), SC-CRUD-004 (idempotent), SC-VAL-002 (blank form stays),
+  SC-UI-001/002, SC-MANAGED-001/002 (framework).
+- **Biggest gaps:** entire activate/deactivate lifecycle, status filters, export,
+  duplicate-rule negatives, cancel flows, re-login persistence, P0 `SC-DEP-003/004`.
 
 ---
 
-## 3. Membership — ~35 / 93 automatable covered (~37%)
+## 2. Discount — ~67 / 67 automatable covered (100%); 5 `FUT-*` are Future
 
-(7 `MB-INT-*` integration rows are marked **Future** in the doc — correctly not
-automated yet.)
+All sheet rows now have a mapped, ID-aligned test.
 
-### Covered (representative)
-List: MB-LST-001/002 · Search: MB-SRH-001/002/004/005 · Name: MB-NAM-001..005 ·
-Type: MB-TYP-001/002/003 · Price: MB-PRI-001/002/004/005 · Commission: MB-COM-003 ·
-Barcode: MB-BAR-001/002 · Toggle: MB-TGL-001/002/004 · Location: MB-SIT-001/002 ·
-Edit: MB-EDT-001..006/008 · Export: MB-EXP-001 (download only) · Filter:
-MB-FLT-001 (panel) + MB-FLT-002/003/005/006/008 (type/site/active/inactive/reset,
-result-verified).
+| Suite | Status |
+|-------|--------|
+| Happy Path DS-HP-001..007 | ✅ (plus extra DS-HP-008 idempotent) |
+| Combination DS-CMB-001..006 | ✅ |
+| Edge DS-EC-001..009 | ✅ |
+| Negative DS-NG-001..006 | ✅ |
+| Persistence DS-PER-001..004 | ✅ |
+| Updates DS-UPD-001..006 | ✅ |
+| Search DS-SRH-001..006 | ✅ |
+| Filter DS-FLT-001..006 | ✅ |
+| Export DS-EXP-001..004 | DS-EXP-001 ⚠️ (button-clickable only; sheet expects "matches grid"), 002/003/004 ✅ |
+| Dependency DS-DEP-001..005 (P0) | DS-DEP-001 ✅; **DS-DEP-002..005 xfail** — stubs awaiting Service-Category / Sites page support |
+| UI DS-UI-001..003 | ✅ |
+| Validation DS-VAL-001..003 | ✅ |
+| Framework DS-FRM-001/002 | ✅ (managed baseline/reset) |
+| 🔮 FUT-001..005 (POS/Kiosk/Reports/Dashboard) | Future — correctly not automated |
 
-### Missing (by module)
+- **Extras (no sheet row):** DIS-SRCH-002 (clear search box restores), DS-HP-008
+  (create idempotent), DS-SRH-NEG-001 (duplicates DS-SRH-005 — collapse in Phase 2).
+- **Open item:** strengthen DS-EXP-001 to compare export content vs grid; wire up
+  DS-DEP-002..005 once cross-module page support lands.
+
+---
+
+## 3. Membership — ~46 / 93 automatable covered (~49%); 7 `MB-INT-*` are Future
+
+### Covered (by module)
+List MB-LST-001/002 · Search MB-SRH-001..005 · Filter MB-FLT-001/002/003/005/006/007/008 ·
+Export MB-EXP-001/002 · Name MB-NAM-002..005 · Type MB-TYP-001/002/003 ·
+Price MB-PRI-002/004/005 · Commission MB-COM-003 · Barcode MB-BAR-001/002 ·
+Toggle MB-TGL-002/004 · Location MB-SIT-001/002 ·
+Edit MB-EDT-001/003/004/005/006/008/009/010.
+
+### Missing (sheet says "Yes", not automated)
 | Module | Missing doc TCs |
 |--------|-----------------|
-| Search | MB-SRH-003 (inactive) |
-| Filter | MB-FLT-004 (barcode), MB-FLT-007 (multiple filters) — **002/003/005/006/008 now covered with result assertions + screenshots** |
-| Export | MB-EXP-002 (filtered), MB-EXP-003 (matches grid) |
-| Price/Commission | MB-PRI-003 (zero), MB-COM-001 (valid), MB-COM-002 (decimal) |
-| Loyalty | MB-LTY-001/002/003 |
+| Loyalty | **MB-LTY-001/002/003 (entire module)** |
+| Location price | **MB-LPR-001..004 (entire module)** |
+| Tax exemption | **MB-TAX-001/002** |
+| Location commission | **MB-LCM-001/002/003** |
+| Customer-portal location | **MB-CPV-001/002** |
+| Redemption | **MB-RED-001..004** (only the Redemption tab UI is checked) |
+| Wash package | **MB-WPK-001..005 (entire module)** |
+| Multi-month discount | **MB-MMD-001..009 (entire module)** |
+| Discount assignment | **MB-DIS-001..005** (only edit-discount-config MB-EDT-008 exists) |
+| Filter | MB-FLT-004 (barcode) |
+| Export | MB-EXP-003 (matches grid) |
+| Price/Commission | MB-PRI-003 (zero), MB-COM-001/002 (valid/decimal) |
 | Barcode | MB-BAR-003 (duplicate) |
-| Portal | MB-TGL-003 (show on portal), MB-CPV-001/002 |
-| Location | MB-SIT-003 (all), MB-SIT-004 (save w/o location), MB-LPR-002/003/004, MB-TAX-001/002, MB-LCM-001/002/003 |
-| Redemption | MB-RED-002/003/004 (RED-001 partial) |
-| Wash package | MB-WPK-001/002/003/004/005 (entire module) |
-| Discount settings | MB-DIS-002/003/004/005 |
-| Multi-month discount | MB-MMD-001..009 (entire module) |
-| Edit | MB-EDT-007 (redemption config), MB-EDT-009 (activate), MB-EDT-010 (deactivate) |
-| Integration | MB-INT-001..007 🔮 Future |
+| Toggle/Portal | MB-TGL-003 (show on portal) |
+| Location | MB-SIT-003 (all), MB-SIT-004 (save w/o location) |
+| Search | MB-SRH-003 covered ✅ |
+| Edit | MB-EDT-007 (redemption config) |
+| Integration | 🔮 MB-INT-001..007 (Future) |
 
-**Biggest gaps:** wash-package and multi-month-discount modules (entirely),
-most filter variants, loyalty, tax exemption, location commission/portal,
-redemption multi-location.
+- MB-HP create-active (MB-TGL-001) and MB-NAM-001 / MB-PRI-001 / MB-COM-001 "valid"
+  rows are exercised implicitly by the creation tests.
+- **Extras (no sheet row):** MEM-CRUD-003/004/005/011/012/013/015/016/018
+  (persistence), MEM-CRUD-008 (cancel), MEM-DL-002 (file format),
+  MEM-SRCH-003/004/005/007 (case/payload/trim/long), MEM-UI-009/014..022,
+  MEM-VAL-003/008, MEM-MANAGED-001/002, MEM-FLT-007b (multi-filter variant),
+  special-character search (negative).
+- **Biggest gaps:** wash-package, multi-month-discount, loyalty, redemption,
+  tax, location price/commission, customer-portal-location, discount-assignment —
+  all entire modules.
 
 ---
 
 ## Cross-feature themes
-1. **ID alignment (done for mapped tests)** — tests that map 1:1 to a doc TC have
-   been retitled to the doc IDs (`DS-`, `SC-HP/RG`, `MB-`). Tests that are extra
-   coverage with no doc row keep their old `DIS-`/`MEM-`/`SC-*` labels and are
-   listed under "Extras to add to the sheet" below.
-2. **Filters only assert the panel opens** — they don't verify the filtered subset,
-   so several "filter" rows are ⚠️ rather than ✅.
-3. **P0 dependency cases are uniformly missing** across Service Category and
-   Discount (cross-module reference behavior).
-4. **Discount partial search (DS-RG-002)** is a confirmed product defect vs. the
-   documented expected result — needs a bug, not just an xfail.
-5. **Discount filter "Select site" is empty (suspected defect)** — returns
-   "No options" for any query on staging, while the identical control in the
-   membership filter preloads sites. Blocks DS-RG-004, DS-FLT-005/006/008, and
-   the site-based discount dependency tests until fixed. Verified 2026-06-15.
+1. **ID alignment — done.** Automated IDs now match the sheet (Phase 1). Extras
+   keep distinct legacy labels and are listed per module above.
+2. **Sheet "Automation: Yes" overstates reality** for Service Category (~33% real)
+   and Membership (~49% real). Discount is genuinely complete (minus Future rows).
+3. **P0 dependency cases** are the highest-value gap: SC-DEP-003/004 and the
+   xfail DS-DEP-002..005 (cross-module reference behavior).
+4. **Known redundancy:** DS-SRH-NEG-001 duplicates DS-SRH-005 — collapse.
 
----
-
-## Extras to add to the sheet (automated, but no doc row yet)
-These tests provide real coverage beyond the doc. Add rows so the doc and
-automation converge:
-
-- **Service Category:** settings-persist, long-name boundary, special-character
-  search, blank-form-stays, create-idempotent, managed baseline/reset (framework).
-- **Discount:** create-idempotent, long-name boundary, missing-search,
-  special-character/payload search, discount-name-mandatory, blank-form-stays,
-  negative-amount, list/grid/add-form UI (`DIS-UI-*`), managed baseline/reset.
-- **Membership:** case-insensitive search, trim-spaces search, payload search,
-  long-string search, settings-persistence (`MEM-CRUD-003/…`), cancel-on-create,
-  download file-format, edit-action-present, pagination, add-form/redemption/
-  discount-tab UI, save/cancel buttons, alphabetic-price, special-character search,
-  managed baseline/reset (framework).
-
-## Known redundancies / fixes still open
-- Membership "search non-existing" is duplicated: both
-  `test_memberships_missing_search` (search_filter) and
-  `test_missing_membership_is_not_returned` (negative) map to **MB-SRH-004** —
-  collapse to one.
-- Membership special-character search was mis-tagged `MB-SRH-004`; now untitled as
-  an extra (needs its own doc row).
+## Phase 2 (build missing tests, after staging login is fixed & CI re-enabled)
+Priority order: **Service Category lifecycle** (HP-002/004/005, EC-003) →
+SC filters/negatives → Membership wash-package & multi-month-discount →
+remaining Membership modules. Each needs new page-object methods and must be
+verified against staging as written.
