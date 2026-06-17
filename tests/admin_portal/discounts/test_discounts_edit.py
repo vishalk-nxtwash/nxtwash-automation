@@ -42,7 +42,7 @@ def test_edit_discount_reapplies_expected_settings(browser):
     assert discounts_page.active_switch_is_on()
 
 
-@allure.title("DS-UPD-006 Change discount name persists")
+@allure.title("DS-UPD-001 Change discount name persists")
 @pytest.mark.regression
 def test_edit_discount_name_persists(managed_discount):
 
@@ -58,7 +58,7 @@ def test_edit_discount_name_persists(managed_discount):
     assert page.wait_for_discount_row(new_name).is_displayed()
 
 
-@allure.title("DS-UPD-007 Change start date persists")
+@allure.title("DS-UPD-002 Change start date persists")
 @pytest.mark.regression
 def test_edit_discount_start_date_persists(managed_discount):
 
@@ -75,7 +75,7 @@ def test_edit_discount_start_date_persists(managed_discount):
     assert new_time in page.get_discount_start_value()
 
 
-@allure.title("DS-UPD-008 Change end date persists")
+@allure.title("DS-UPD-003 Change end date persists")
 @pytest.mark.regression
 def test_edit_discount_end_date_persists(managed_discount):
 
@@ -90,7 +90,7 @@ def test_edit_discount_end_date_persists(managed_discount):
     assert END_TIME in page.get_discount_end_value()
 
 
-@allure.title("DS-UPD-009 Change service category assignment persists")
+@allure.title("DS-UPD-004 Change service category assignment persists")
 @pytest.mark.regression
 def test_edit_discount_category_assignment_persists(managed_discount):
 
@@ -105,7 +105,7 @@ def test_edit_discount_category_assignment_persists(managed_discount):
     assert page.get_selected_service_category() != ""
 
 
-@allure.title("DS-UPD-010 Change selected locations to all locations persists")
+@allure.title("DS-UPD-005 Change selected locations to all locations persists")
 @pytest.mark.regression
 def test_edit_discount_selected_to_all_locations(managed_discount):
 
@@ -120,7 +120,7 @@ def test_edit_discount_selected_to_all_locations(managed_discount):
     assert page.all_locations_switch_is_on()
 
 
-@allure.title("DS-UPD-011 Change all locations to selected locations persists")
+@allure.title("DS-UPD-006 Change all locations to selected locations persists")
 @pytest.mark.regression
 def test_edit_discount_all_to_selected_locations(managed_discount):
 

@@ -332,7 +332,7 @@ def test_memberships_reset_filters_restores_grid(browser, screenshot):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Filter")
-@allure.title("MB-FLT-007 Apply multiple filters together (type + active)")
+@allure.title("MEM-FLT-007b Apply multiple filters (type + active) [extra variant]")
 @pytest.mark.regression
 @pytest.mark.visual
 def test_memberships_apply_multiple_filters(browser, screenshot):

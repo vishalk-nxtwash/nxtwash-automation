@@ -18,7 +18,7 @@ pytestmark = [
 UPDATED_AMOUNT = "8"
 
 
-@allure.title("DIS-MANAGED-001 Managed discount starts at baseline")
+@allure.title("DS-FRM-001 Managed discount starts at baseline")
 @pytest.mark.sanity
 def test_managed_discount_provided_at_baseline(managed_discount):
     """The fixture hands over a dedicated record already reset to baseline."""
@@ -30,7 +30,7 @@ def test_managed_discount_provided_at_baseline(managed_discount):
     assert page.get_discount_amount_value() == DISCOUNT_AMOUNT
 
 
-@allure.title("DIS-MANAGED-002 Mutations are reverted on teardown")
+@allure.title("DS-FRM-002 Managed discount mutation resets on teardown")
 @pytest.mark.regression
 def test_managed_discount_mutation_is_reset_on_teardown(managed_discount):
     """Mutate the discount amount; the fixture teardown resets it to baseline."""

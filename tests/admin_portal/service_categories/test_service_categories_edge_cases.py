@@ -12,7 +12,7 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-EDGE-001 Long service category name does not break form")
+@allure.title("SC-NG-003 Long service category name does not break form")
 @pytest.mark.regression
 def test_service_category_long_name_does_not_break_form(browser):
 
