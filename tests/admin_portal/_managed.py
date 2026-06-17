@@ -25,7 +25,11 @@ Per-feature usage (the only part that repeats):
 
     managed_widget = managed_resource(reset_managed_x)   # the fixture
 """
+import logging
+
 import pytest
+
+LOG = logging.getLogger("nxtwash")
 
 AUTOTEST_PREFIX = "AUTOTEST"
 
@@ -46,10 +50,20 @@ def managed_resource(reset):
 
     @pytest.fixture
     def _managed_fixture(browser):
+        # Setup reset is strict: the test needs a known baseline to start.
         page = reset(browser)
         try:
             yield page
         finally:
-            reset(browser)
+            # Teardown reset is best-effort: a flaky cleanup (e.g. a slow
+            # save/list-reload under parallel load) must not turn an otherwise
+            # passing test into an ERROR. The next test's setup reset
+            # re-establishes the baseline regardless.
+            try:
+                reset(browser)
+            except Exception as error:  # noqa: BLE001
+                LOG.warning(
+                    "Managed teardown reset failed (non-fatal): %s", error
+                )
 
     return _managed_fixture
