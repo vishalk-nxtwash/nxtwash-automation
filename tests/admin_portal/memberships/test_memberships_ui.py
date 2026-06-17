@@ -16,6 +16,7 @@ LOG = logging.getLogger(__name__)
 @allure.story("UI")
 @allure.title("MB-LST-001 Memberships page primary controls")
 @pytest.mark.sanity
+@pytest.mark.prod_smoke
 def test_memberships_page_loads_with_primary_controls(browser):
 
     LOG.info("Verifying Memberships list page primary controls")
@@ -41,6 +42,7 @@ def test_memberships_page_loads_with_primary_controls(browser):
 @allure.story("UI")
 @allure.title("MB-LST-002 Memberships grid columns")
 @pytest.mark.sanity
+@pytest.mark.prod_smoke
 def test_memberships_grid_columns_are_visible(browser):
 
     LOG.info("Verifying Memberships grid columns")

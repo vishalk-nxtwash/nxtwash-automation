@@ -14,6 +14,7 @@ pytestmark = [
 
 @allure.title("DIS-UI-001 Discounts page loads with primary controls")
 @pytest.mark.sanity
+@pytest.mark.prod_smoke
 def test_discounts_page_loads_with_primary_controls(browser):
 
     discounts_page = open_discounts_page(browser)
@@ -35,6 +36,7 @@ def test_discounts_page_loads_with_primary_controls(browser):
 
 @allure.title("DIS-UI-002 Discounts grid columns are visible")
 @pytest.mark.sanity
+@pytest.mark.prod_smoke
 def test_discounts_grid_columns_are_visible(browser):
 
     discounts_page = open_discounts_page(browser)

@@ -7,6 +7,7 @@ import pytest
 @allure.story("UI")
 @allure.title("OVERVIEW-UI-001/002 Overview shell redirects and loads")
 @pytest.mark.smoke
+@pytest.mark.prod_smoke
 def test_overview_shell_redirects_and_loads(overview_page):
     assert overview_page.has_expected_url()
     assert not overview_page.is_redirected_to_login()

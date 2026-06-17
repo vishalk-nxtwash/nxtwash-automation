@@ -5,8 +5,20 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class DriverFactory:
 
-    @staticmethod
-    def get_driver(headless=False, detach=True):
+    # Resolve the chromedriver binary once per process and reuse the path.
+    # With a function-scoped browser fixture this otherwise runs a version
+    # check / download on every single test; cache it so each xdist worker
+    # pays the cost at most once.
+    _driver_path = None
+
+    @classmethod
+    def _chromedriver_path(cls):
+        if cls._driver_path is None:
+            cls._driver_path = ChromeDriverManager().install()
+        return cls._driver_path
+
+    @classmethod
+    def get_driver(cls, headless=False, detach=True):
 
         options = webdriver.ChromeOptions()
 
@@ -22,9 +34,7 @@ class DriverFactory:
             options.add_experimental_option("detach", True)
 
         driver = webdriver.Chrome(
-            service=Service(
-                ChromeDriverManager().install()
-            ),
+            service=Service(cls._chromedriver_path()),
             options=options
         )
 
