@@ -58,6 +58,18 @@ class ServiceCategoriesPage(BasePage):
         "/ancestor::*[contains(@class,'flex-toggler')][1]"
         "//button[@role='switch']"
     )
+    APPLY_FILTERS_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Apply filters']"
+    )
+    RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
+    ACTIVE_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active service category']"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+    GRID_STATUS_CELLS = (By.XPATH, "//*[@data-props-id='isActive']")
 
     def switch_to_module_frame(self):
         """Switch into the Service Categories iframe."""
