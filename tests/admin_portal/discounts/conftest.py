@@ -131,6 +131,16 @@ def reset_managed_discount(browser):
     """Ensure the managed discount exists and reset its mutable fields."""
     discounts_page = open_discounts_page(browser)
 
+    # Self-heal: a prior run of DS-UPD-001 may have left the record renamed.
+    # Row lookups are exact-match, so recover it before anything else.
+    renamed = MANAGED_DISCOUNT + " RENAMED"
+    if (not discounts_page.discount_exists(MANAGED_DISCOUNT)
+            and discounts_page.discount_exists(renamed)):
+        discounts_page.open_edit_discount(renamed)
+        discounts_page.enter_discount_name(MANAGED_DISCOUNT)
+        discounts_page.click_save_discount()
+        discounts_page.wait_for_list_loaded()
+
     if not discounts_page.discount_exists(MANAGED_DISCOUNT):
         discounts_page.create_discount(
             MANAGED_DISCOUNT,

@@ -57,6 +57,13 @@ def test_edit_discount_name_persists(managed_discount):
 
     assert page.wait_for_discount_row(new_name).is_displayed()
 
+    # Restore the baseline name so the shared managed record is not left
+    # renamed for later tests (row lookups are exact-match).
+    page.open_edit_discount(new_name)
+    page.enter_discount_name(MANAGED_DISCOUNT)
+    page.click_save_discount()
+    page.wait_for_list_loaded()
+
 
 @allure.title("DS-UPD-002 Change start date persists")
 @pytest.mark.regression

@@ -165,6 +165,14 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @allure.story("CRUD")
 @allure.title("MB-EDT-009 Activate inactive membership updates Status in list")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason=(
+        "BUG 5: after re-activating, the membership edit form does not submit — "
+        "it stays on the edit screen so the list never reloads. Fails headless, "
+        "non-headless and CI. See docs/bug_reports.md (Phase 2)."
+    ),
+    strict=False,
+)
 def test_activate_membership(managed_membership):
 
     page = managed_membership

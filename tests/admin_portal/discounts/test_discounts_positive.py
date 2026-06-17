@@ -82,6 +82,15 @@ def test_create_percentage_discount(browser):
 
 @allure.title("DS-HP-003 Assign all locations to a discount")
 @pytest.mark.sanity
+@pytest.mark.xfail(
+    reason=(
+        "BUG 4: the all-locations create form does not submit — with 'Allow "
+        "discount at all locations' on, each location row needs a per-location "
+        "value and the form stays on /discounts/new. Fails headless, "
+        "non-headless and CI. See docs/bug_reports.md (Phase 2)."
+    ),
+    strict=False,
+)
 def test_create_discount_assign_all_locations(browser):
 
     discounts_page = create_all_locations_discount_if_missing(browser)
@@ -95,10 +104,17 @@ def test_create_discount_assign_all_locations(browser):
 def test_activate_discount(managed_discount):
 
     page = managed_discount
+    # Deactivate first so we have something to activate.
     page.open_edit_discount(MANAGED_DISCOUNT)
     page.ensure_active_switch_off()
     page.click_save_discount()
     page.wait_for_list_loaded()
+
+    # Inactive discounts are hidden from the default grid — surface the row via
+    # the inactive filter so we can open its edit form and re-activate it.
+    page.open_filter_panel()
+    page.set_active_discount_filter(False)
+    page.apply_filters()
 
     page.open_edit_discount(MANAGED_DISCOUNT)
     page.ensure_active_switch_on()
