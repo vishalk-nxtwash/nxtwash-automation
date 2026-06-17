@@ -30,16 +30,8 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         ).text
 
-    from selenium.webdriver.support import expected_conditions as EC
-
     def wait_for_url(self, url):
 
         self.wait.until(
             EC.url_to_be(url)
-        )
-
-    def wait_for_url(self, url):
-
-        self.wait.until(
-            lambda driver: driver.current_url == url
         )

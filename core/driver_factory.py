@@ -5,24 +5,40 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class DriverFactory:
 
-    @staticmethod
-    def get_driver():
+    # Resolve the chromedriver binary once per process and reuse the path.
+    # With a function-scoped browser fixture this otherwise runs a version
+    # check / download on every single test; cache it so each xdist worker
+    # pays the cost at most once.
+    _driver_path = None
+
+    @classmethod
+    def _chromedriver_path(cls):
+        if cls._driver_path is None:
+            cls._driver_path = ChromeDriverManager().install()
+        return cls._driver_path
+
+    @classmethod
+    def get_driver(cls, headless=False, detach=True):
 
         options = webdriver.ChromeOptions()
 
-        # Keep browser open after script execution.
-        options.add_experimental_option(
-            "detach",
-            True
-        )
+        if headless:
+            # Headless flags suited for CI / servers without a display.
+            options.add_argument("--headless=new")
+            options.add_argument("--window-size=1920,1080")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-gpu")
+        elif detach:
+            # Keep the browser open after script execution (local debugging).
+            options.add_experimental_option("detach", True)
 
         driver = webdriver.Chrome(
-            service=Service(
-                ChromeDriverManager().install()
-            ),
+            service=Service(cls._chromedriver_path()),
             options=options
         )
 
-        driver.maximize_window()
+        if not headless:
+            driver.maximize_window()
 
         return driver

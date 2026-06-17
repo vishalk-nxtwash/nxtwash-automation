@@ -1,4 +1,13 @@
+import allure
+
 from pages.admin_portal.login_page import AdminLoginPage
+
+
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Login"),
+    allure.story("Smoke"),
+]
 
 
 def test_admin_login(browser):

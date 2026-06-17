@@ -1,6 +1,9 @@
 venv/
 __pycache__/
 .pytest_cache/
+.env
+.env.*
+!.env.example
 
 logs/
 reports/
@@ -8,6 +11,10 @@ screenshots/
 
 allure-results/
 allure-report/
+
+report.html
+results.xml
+assets/
 
 .DS_Store
 .vscode/
