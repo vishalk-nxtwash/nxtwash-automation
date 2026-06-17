@@ -31,9 +31,9 @@ on:
         required: false
         default: ""
       parallel:
-        description: "xdist workers: auto, a number, or 0 for serial"
+        description: "xdist workers: a number, auto, or 0 for serial"
         required: false
-        default: "auto"
+        default: "2"
 
 jobs:
   # Decide env + marker up front so the test job can bind to the right
@@ -117,9 +117,11 @@ jobs:
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
           ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
           MARKER: ${{ needs.determine.outputs.marker }}
-          PARALLEL: ${{ github.event.inputs.parallel || 'auto' }}
+          # 2 workers is the sweet spot for full Chrome on GitHub's runners;
+          # -n auto over-subscribes and starves the post-login redirect.
+          PARALLEL: ${{ github.event.inputs.parallel || '2' }}
         run: |
-          # Parallelism: -n auto by default, "0" forces serial.
+          # Parallelism: 2 workers by default, "0" forces serial.
           xdist="-n ${PARALLEL}"
           if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
 
@@ -188,7 +190,7 @@ jobs:
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
           ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
         run: |
-          pytest -m regression -n auto \
+          pytest -m regression -n 2 \
             --headless --close-browser \
             --reruns 2 --reruns-delay 3 \
             --alluredir=allure-results \
