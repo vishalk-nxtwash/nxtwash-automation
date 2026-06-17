@@ -112,7 +112,9 @@ class DiscountsPage(BasePage):
         """Wait until the Discounts list is visible."""
         from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 30).until(
+        # 60s: after a save the SPA reloads this iframe, which can exceed 30s
+        # on a loaded CI runner running parallel browsers.
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))

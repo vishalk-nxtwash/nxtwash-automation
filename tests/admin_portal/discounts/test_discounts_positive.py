@@ -119,5 +119,10 @@ def test_deactivate_discount(managed_discount):
     page.click_save_discount()
     page.wait_for_list_loaded()
 
-    page.search_discount(MANAGED_DISCOUNT)
+    # Inactive discounts are hidden from the default grid — apply the inactive
+    # filter to surface the row before asserting its status.
+    page.open_filter_panel()
+    page.set_active_discount_filter(False)
+    page.apply_filters()
+
     assert page.get_discount_status(MANAGED_DISCOUNT) == "Inactive"

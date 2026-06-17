@@ -185,8 +185,11 @@ class MembershipsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Memberships list is visible."""
+        from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        self.wait.until(
+        # 60s: after a save the SPA reloads this iframe, which can exceed the
+        # default wait on a loaded CI runner running parallel browsers.
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
