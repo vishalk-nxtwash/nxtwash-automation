@@ -1,0 +1,79 @@
+TC ID,Tab,Current,New,Reason
+DS-HP-003,Discounts_Master,Yes,Blocked (Defect),BUG 4 all-locations create form does not submit (xfail)
+MB-EDT-009,Membership,Yes,Blocked (Defect),BUG 5 re-activate edit form does not submit (xfail)
+DS-DEP-002,Discounts_Master,Yes,Partial (Manual),Verified manually; skipped pending Service Category page automation
+DS-DEP-003,Discounts_Master,Yes,Partial (Manual),Verified manually; skipped pending Service Category page automation
+DS-DEP-004,Discounts_Master,Yes,Partial (Manual),Verified manually; skipped pending Sites page automation
+DS-DEP-005,Discounts_Master,Yes,Partial (Manual),Verified manually; skipped pending Sites page automation
+DS-EXP-001,Discounts_Master,Yes,Partial,Asserts export button clickable only; not content-vs-grid
+SC-HP-002,Service Category,Yes,No,Create inactive category not automated
+SC-HP-004,Service Category,Yes,No,Activate category not automated
+SC-HP-005,Service Category,Yes,No,Deactivate category not automated
+SC-RG-003,Service Category,Yes,No,Filter active not automated
+SC-RG-004,Service Category,Yes,No,Filter inactive not automated
+SC-RG-007,Service Category,Yes,No,Toggle active filter off not automated
+SC-RG-005,Service Category,Yes,No,Export categories not automated
+SC-NG-002,Service Category,Yes,No,Duplicate category rule not automated
+SC-NG-003,Service Category,Yes,Partial,Only asserts form does not break; not reject/truncate
+SC-NG-004,Service Category,Yes,No,Whitespace handling not automated
+SC-NG-005,Service Category,Yes,No,Case-insensitive duplicate not automated
+SC-NG-006,Service Category,Yes,No,Duplicate inactive name not automated
+SC-EC-001,Service Category,Yes,No,Rename category linked to discount not automated (SC side)
+SC-EC-003,Service Category,Yes,No,Activate-deactivate-activate not automated
+SC-EC-004,Service Category,Yes,No,Verify after re-login not automated
+SC-EC-005,Service Category,Yes,No,Edit inactive category not automated
+SC-EC-006,Service Category,Yes,No,Deactivate then search/filter not automated
+SC-EC-007,Service Category,Yes,No,Cancel Add New screen not automated
+SC-EC-008,Service Category,Yes,No,Cancel Edit screen not automated
+SC-DEP-003,Service Category,Yes,No,Available in service assignment not automated (P0)
+SC-DEP-004,Service Category,Yes,No,Rename with assigned services not automated
+MB-TGL-001,Membership,Yes,Partial,Create active exercised implicitly by creation tests
+MB-TGL-003,Membership,Yes,No,Show membership on customer portal not automated
+MB-NAM-001,Membership,Yes,Partial,Valid name exercised implicitly by creation tests
+MB-PRI-001,Membership,Yes,Partial,Valid price exercised implicitly by creation tests
+MB-PRI-003,Membership,Yes,No,Zero global price not automated
+MB-COM-001,Membership,Yes,Partial,Valid commission exercised implicitly
+MB-COM-002,Membership,Yes,No,Decimal commission not automated
+MB-FLT-004,Membership,Yes,No,Filter by barcode not automated
+MB-EXP-003,Membership,Yes,No,Export matches grid not automated
+MB-BAR-003,Membership,Yes,No,Duplicate barcode not automated
+MB-SIT-003,Membership,Yes,No,Assign all locations not automated
+MB-SIT-004,Membership,Yes,No,Save without assigned location not automated
+MB-EDT-007,Membership,Yes,No,Edit redemption configuration not automated
+MB-LTY-001,Membership,Yes,No,Loyalty points module not automated
+MB-LTY-002,Membership,Yes,No,Loyalty points module not automated
+MB-LTY-003,Membership,Yes,No,Loyalty points module not automated
+MB-LPR-001,Membership,Yes,No,Location price module not automated
+MB-LPR-002,Membership,Yes,No,Location price module not automated
+MB-LPR-003,Membership,Yes,No,Location price module not automated
+MB-LPR-004,Membership,Yes,No,Location price module not automated
+MB-TAX-001,Membership,Yes,No,Tax exemption module not automated
+MB-TAX-002,Membership,Yes,No,Tax exemption module not automated
+MB-LCM-001,Membership,Yes,No,Location commission module not automated
+MB-LCM-002,Membership,Yes,No,Location commission module not automated
+MB-LCM-003,Membership,Yes,No,Location commission module not automated
+MB-CPV-001,Membership,Yes,No,Customer-portal location visibility not automated
+MB-CPV-002,Membership,Yes,No,Customer-portal location visibility not automated
+MB-RED-001,Membership,Yes,No,Redemption location module not automated
+MB-RED-002,Membership,Yes,No,Redemption location module not automated
+MB-RED-003,Membership,Yes,No,Redemption location module not automated
+MB-RED-004,Membership,Yes,No,Redemption location module not automated
+MB-WPK-001,Membership,Yes,No,Wash package module not automated
+MB-WPK-002,Membership,Yes,No,Wash package module not automated
+MB-WPK-003,Membership,Yes,No,Wash package module not automated
+MB-WPK-004,Membership,Yes,No,Wash package module not automated
+MB-WPK-005,Membership,Yes,No,Wash package module not automated
+MB-DIS-001,Membership,Yes,No,Discount assignment module not automated
+MB-DIS-002,Membership,Yes,No,Discount assignment module not automated
+MB-DIS-003,Membership,Yes,No,Discount assignment module not automated
+MB-DIS-004,Membership,Yes,No,Discount assignment module not automated
+MB-DIS-005,Membership,Yes,No,Discount assignment module not automated
+MB-MMD-001,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-002,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-003,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-004,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-005,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-006,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-007,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-008,Membership,Yes,No,Multi-month discount module not automated
+MB-MMD-009,Membership,Yes,No,Multi-month discount module not automated

@@ -33,7 +33,7 @@ on:
       parallel:
         description: "xdist workers: a number, auto, or 0 for serial"
         required: false
-        default: "2"
+        default: "4"
 
 jobs:
   # Decide env + marker up front so the test job can bind to the right
@@ -117,17 +117,17 @@ jobs:
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
           ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
           MARKER: ${{ needs.determine.outputs.marker }}
-          # 2 workers is the sweet spot for full Chrome on GitHub's runners;
-          # -n auto over-subscribes and starves the post-login redirect.
-          PARALLEL: ${{ github.event.inputs.parallel || '2' }}
+          # 4 workers matches the GitHub runner's 4 vCPUs; tune via the
+          # workflow_dispatch "parallel" input if a run shows flakiness.
+          PARALLEL: ${{ github.event.inputs.parallel || '4' }}
         run: |
-          # Parallelism: 2 workers by default, "0" forces serial.
+          # Parallelism: 4 workers by default, "0" forces serial.
           xdist="-n ${PARALLEL}"
           if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
 
-          # Prod smoke is read-only and fast: fewer reruns.
-          reruns=2
-          if [ "${MARKER}" = "prod_smoke" ]; then reruns=1; fi
+          # 1 rerun is enough for fast PR/smoke feedback; prod smoke is
+          # read-only so it also stays at 1.
+          reruns=1
 
           pytest -m "${MARKER}" $xdist \
             --headless --close-browser \

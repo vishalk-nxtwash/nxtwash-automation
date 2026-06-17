@@ -90,3 +90,14 @@ search) or **renamed**. The rename case now self-heals; the **inactive** case
 still needs the reset to surface records via the inactive filter before
 reactivating, otherwise activate/deactivate discount tests can leave duplicate
 or stale state on teardown. Tracked for Phase 2.
+
+---
+
+## Phase 2 — execution-time: reuse login across tests (test-infra)
+The `browser` fixture is function-scoped, so every test launches a fresh Chrome
+**and** performs a full UI login. With ~75 smoke tests that is ~75 logins and is
+the dominant cost of the ~25-min run. Phase 2: log in once per xdist worker
+(session-scoped authenticated session, or inject the auth token into
+localStorage) so individual tests skip the login round-trip. Must preserve
+isolation for login-negative tests, which need a clean unauthenticated session.
+Quick wins already applied: PR/smoke runs use `-n 4` workers and `--reruns 1`.
