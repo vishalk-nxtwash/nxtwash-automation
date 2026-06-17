@@ -18,6 +18,7 @@ pytestmark = [
 
 @allure.title("SC-UI-001 List shell, controls, grid, and pagination")
 @pytest.mark.sanity
+@pytest.mark.prod_smoke
 def test_service_categories_list_shell_controls_and_grid(browser):
     LOG.info("Verifying Service Categories list shell and controls")
     page = open_service_categories_page(browser)

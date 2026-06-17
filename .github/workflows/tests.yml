@@ -1,19 +1,29 @@
 name: UI Tests
 
+# Environment is chosen from the branch:
+#   main / master / production  -> PRODUCTION, read-only `prod_smoke` only
+#   anything else (development, staging, feature branches, PRs) -> STAGING
+# workflow_dispatch lets you override the environment, marker, and worker count.
+
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, production, development, staging]
   pull_request:
   workflow_dispatch:
     inputs:
-      marker:
-        description: "Pytest marker to run (e.g. smoke, admin, superadmin)"
-        required: false
-        default: "smoke"
       environment:
-        description: "Target environment"
+        description: "Target environment (auto = decide from branch)"
+        type: choice
+        options: [auto, staging, production]
+        default: auto
+      marker:
+        description: "Pytest marker to run (blank = decide from environment)"
         required: false
-        default: "staging"
+        default: ""
+      parallel:
+        description: "xdist workers: auto, a number, or 0 for serial"
+        required: false
+        default: "auto"
 
 jobs:
   ui-tests:
@@ -39,18 +49,64 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Resolve run configuration
+        id: cfg
+        env:
+          INPUT_ENV: ${{ github.event.inputs.environment }}
+          INPUT_MARKER: ${{ github.event.inputs.marker }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # 1) Environment: explicit input wins, else derive from the branch.
+          env_choice="${INPUT_ENV:-auto}"
+          if [ "$env_choice" = "auto" ] || [ -z "$env_choice" ]; then
+            case "$BRANCH" in
+              main|master|production) env_choice="production" ;;
+              *)                      env_choice="staging" ;;
+            esac
+          fi
+
+          # 2) Marker: explicit input wins, else a safe default per environment.
+          marker="${INPUT_MARKER}"
+          if [ -z "$marker" ]; then
+            if [ "$env_choice" = "production" ]; then
+              marker="prod_smoke"
+            else
+              marker="smoke"
+            fi
+          fi
+
+          # 3) Hard safety gate: PROD must never run mutating suites.
+          if [ "$env_choice" = "production" ] && [ "$marker" != "prod_smoke" ]; then
+            echo "::error::Refusing to run marker '$marker' against PRODUCTION. Only 'prod_smoke' is allowed (tests create data that cannot be deleted)."
+            exit 1
+          fi
+
+          echo "env=$env_choice" >> "$GITHUB_OUTPUT"
+          echo "marker=$marker" >> "$GITHUB_OUTPUT"
+          echo "Resolved: env=$env_choice  marker=$marker  (branch=$BRANCH)"
+
       - name: Run tests (headless)
         env:
           HEADLESS: "1"
-          TEST_ENV: ${{ github.event.inputs.environment || 'staging' }}
+          TEST_ENV: ${{ steps.cfg.outputs.env }}
           SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
           SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
           ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+          MARKER: ${{ steps.cfg.outputs.marker }}
+          PARALLEL: ${{ github.event.inputs.parallel || 'auto' }}
         run: |
-          pytest -m "${{ github.event.inputs.marker || 'smoke' }}" \
-            --close-browser \
-            --reruns 2 --reruns-delay 3 \
+          # Parallelism: -n auto by default, "0" forces serial.
+          xdist="-n ${PARALLEL}"
+          if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
+
+          # Prod smoke is read-only and fast: fewer reruns.
+          reruns=2
+          if [ "${MARKER}" = "prod_smoke" ]; then reruns=1; fi
+
+          pytest -m "${MARKER}" $xdist \
+            --headless --close-browser \
+            --reruns $reruns --reruns-delay 3 \
             --alluredir=allure-results \
             --html=report.html --self-contained-html \
             --junitxml=results.xml
@@ -59,7 +115,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: test-reports-${{ steps.cfg.outputs.env }}
           path: |
             allure-results/
             report.html
