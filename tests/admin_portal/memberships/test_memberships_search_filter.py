@@ -327,3 +327,26 @@ def test_memberships_reset_filters_restores_grid(browser, screenshot):
     assert memberships_page.get_visible_membership_count() >= filtered_count
     assert memberships_page.get_visible_membership_count() >= min(initial_count, 1)
     assert page_has_no_broken_state(memberships_page)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Filter")
+@allure.title("MB-FLT-007 Apply multiple filters together (type + active)")
+@pytest.mark.regression
+@pytest.mark.visual
+def test_memberships_apply_multiple_filters(browser, screenshot):
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_filter_panel()
+    memberships_page.select_membership_type_filter("Recurring")
+    memberships_page.set_active_membership_filter(True)
+    memberships_page.apply_filters()
+    screenshot("recurring + active filtered grid")
+
+    types = memberships_page.get_visible_membership_types()
+    statuses = memberships_page.get_visible_membership_statuses()
+    assert types, "expected at least one membership after filtering"
+    assert all(value == "Recurring" for value in types), types
+    assert all(value == "Active" for value in statuses), statuses
+    assert page_has_no_broken_state(memberships_page)
