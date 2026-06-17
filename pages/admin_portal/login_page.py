@@ -273,8 +273,12 @@ class AdminLoginPage(BasePage):
         )
 
     def wait_for_overview(self):
-        """Wait until Admin Portal overview is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        """Wait until Admin Portal overview is visible.
+
+        60s (not 30s) so the post-login redirect+render survives a loaded CI
+        runner where several headless Chrome instances compete for CPU.
+        """
+        long_wait = WebDriverWait(self.driver, 60)
 
         long_wait.until(
             lambda driver: driver.current_url == self.config.get_url(self.PORTAL)
