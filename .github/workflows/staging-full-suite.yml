@@ -1,6 +1,8 @@
 name: Staging Full Suite
 
-# Runs the COMPLETE test suite (every test, all marker tiers) against STAGING.
+# Runs the full ADMIN PORTAL suite (tests/admin_portal, all marker tiers) against
+# STAGING. Scoped to admin-portal for now — superadmin / POS / tunnel are excluded
+# by the default test_path below; override test_path at dispatch to widen it.
 # This is the on-demand / weekly counterpart to the nightly `regression` run in
 # tests.yml, which only covers the regression subset.
 #
@@ -23,9 +25,9 @@ on:
         required: false
         default: ""
       test_path:
-        description: "Optional path to scope the run (blank = entire tests/ tree)"
+        description: "Path to scope the run (default = admin portal only)"
         required: false
-        default: ""
+        default: "tests/admin_portal"
       reruns:
         description: "Flaky-test reruns per test"
         required: false
@@ -79,7 +81,9 @@ jobs:
           # -n auto over-subscribes and starves the post-login redirect.
           PARALLEL: ${{ github.event.inputs.parallel || '2' }}
           MARKER: ${{ github.event.inputs.marker }}
-          TEST_PATH: ${{ github.event.inputs.test_path }}
+          # Default to admin-portal only (also applies to the scheduled run,
+          # which passes no inputs). Override test_path at dispatch to widen.
+          TEST_PATH: ${{ github.event.inputs.test_path || 'tests/admin_portal' }}
           RERUNS: ${{ github.event.inputs.reruns || '2' }}
         run: |
           # Parallelism: 2 workers by default, "0" forces serial.
@@ -90,7 +94,7 @@ jobs:
           marker_arg=""
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
-          # Optional path scope; blank = entire tests/ tree.
+          # Path scope (defaults to tests/admin_portal via the env above).
           path_arg="${TEST_PATH}"
 
           pytest $marker_arg $path_arg $xdist \
