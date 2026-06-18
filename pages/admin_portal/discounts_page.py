@@ -798,7 +798,7 @@ class DiscountsPage(BasePage):
     def set_discount_end(self, day, time_text):
         """Set discount end date in the second date picker."""
         end_date = self._get_date_input_by_index(1)
-        end_date.click()
+        self.driver.execute_script("arguments[0].click();", end_date)
         day_locator = (
             By.XPATH,
             "//div[contains(@class,'react-datepicker__day--%03d') "

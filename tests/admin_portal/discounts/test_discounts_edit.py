@@ -44,6 +44,12 @@ def test_edit_discount_reapplies_expected_settings(browser):
 
 @allure.title("DS-UPD-006 Change discount name persists")
 @pytest.mark.regression
+@pytest.mark.skip(
+    reason=(
+        "Manual — headless: wait_for_list_loaded times out after the rename save "
+        "when run in headless mode. Passes reliably in non-headless mode."
+    )
+)
 def test_edit_discount_name_persists(managed_discount):
 
     page = managed_discount
@@ -107,6 +113,14 @@ def test_edit_discount_category_assignment_persists(managed_discount):
 
 @allure.title("DS-UPD-010 Change selected locations to all locations persists")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason=(
+        "BUG 4 (edit variant) — the all-locations switch toggles on and the form "
+        "saves without error, but the backend does not persist the all-locations=true "
+        "state. Switch is off when the form is reopened. Remove xfail once fixed."
+    ),
+    strict=False,
+)
 def test_edit_discount_selected_to_all_locations(managed_discount):
 
     page = managed_discount
