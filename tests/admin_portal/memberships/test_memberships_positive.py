@@ -163,7 +163,7 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MB-TGL-001 Activate membership updates Status in list")
+@allure.title("MB-EDT-009 Activate membership updates Status in list")
 @pytest.mark.smoke
 @pytest.mark.regression
 def test_activate_membership(managed_membership):
@@ -189,7 +189,7 @@ def test_activate_membership(managed_membership):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
-@allure.title("MB-TGL-003 Deactivate membership hides it from the default list")
+@allure.title("MB-EDT-010 Deactivate membership hides it from the default list")
 @pytest.mark.smoke
 @pytest.mark.regression
 def test_deactivate_membership(managed_membership):

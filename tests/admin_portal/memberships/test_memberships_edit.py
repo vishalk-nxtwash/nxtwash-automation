@@ -222,7 +222,7 @@ def test_applicable_discount_persists(managed_membership):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Discount Settings")
-@allure.title("MB-DIS-002 Remove applicable discount persists after save")
+@allure.title("MB-DIS-003 Remove applicable discount persists after save")
 @pytest.mark.regression
 def test_remove_applicable_discount_persists(managed_membership):
 
