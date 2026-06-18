@@ -11,12 +11,14 @@ from tests.admin_portal.memberships.conftest import GLOBAL_COMMISSION
 from tests.admin_portal.memberships.conftest import GLOBAL_PRICE
 from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import create_membership_if_missing
+from tests.admin_portal.memberships.conftest import managed_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import open_memberships_page
 
 
 LOG = logging.getLogger(__name__)
 POINTS_AWARDED = "5"
 APPLICABLE_DISCOUNT = "Plus discount"
+MEMBERSHIP_DESCRIPTION = "VK automation test description"
 
 
 @allure.epic("Admin Portal")
@@ -195,3 +197,102 @@ def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
     assert page.location_is_assigned_by_index(1)
     assert page.get_location_price_by_index(1) == GLOBAL_PRICE
     assert page.get_location_commission_by_index(1) == GLOBAL_COMMISSION
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Discount Settings")
+@allure.title("MB-DIS-001 Assign applicable discount persists after save")
+@pytest.mark.regression
+def test_applicable_discount_persists(managed_membership):
+
+    page = managed_membership
+    LOG.info("Assigning discount %s to %s", APPLICABLE_DISCOUNT, MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.select_applicable_discount(APPLICABLE_DISCOUNT)
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_discount_settings()
+
+    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Discount Settings")
+@allure.title("MB-DIS-002 Remove applicable discount persists after save")
+@pytest.mark.regression
+def test_remove_applicable_discount_persists(managed_membership):
+
+    page = managed_membership
+    LOG.info(
+        "Assigning then removing discount %s from %s",
+        APPLICABLE_DISCOUNT,
+        MANAGED_MEMBERSHIP
+    )
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.select_applicable_discount(APPLICABLE_DISCOUNT)
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.deselect_applicable_discount(APPLICABLE_DISCOUNT)
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_discount_settings()
+
+    assert not page.discount_is_selected(APPLICABLE_DISCOUNT)
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Membership Settings")
+@allure.title("MB-LMT-001 Limit membership toggle persists after save")
+@pytest.mark.regression
+def test_limit_membership_toggle_persists(managed_membership):
+    """Limit membership switch survives a save. Cleans itself up in finally."""
+    page = managed_membership
+    LOG.info("Enabling Limit Membership toggle for %s", MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_limit_membership_switch_on()
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    try:
+        page.open_edit_membership(MANAGED_MEMBERSHIP)
+        assert page.limit_membership_switch_is_on()
+    finally:
+        page.open_edit_membership(MANAGED_MEMBERSHIP)
+        page.ensure_switch_off(page.LIMIT_MEMBERSHIP_SWITCH)
+        page.click_save_membership()
+        page.wait_for_list_loaded()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Membership Settings")
+@allure.title("MB-DESC-001 Membership description saves and persists")
+@pytest.mark.regression
+def test_membership_description_saves(managed_membership):
+    """Description field survives a save. Clears itself in finally."""
+    page = managed_membership
+    LOG.info(
+        "Setting description '%s' on %s", MEMBERSHIP_DESCRIPTION, MANAGED_MEMBERSHIP
+    )
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.set_membership_description(MEMBERSHIP_DESCRIPTION)
+    page.click_save_membership()
+    page.wait_for_list_loaded()
+
+    try:
+        page.open_edit_membership(MANAGED_MEMBERSHIP)
+        assert page.get_membership_description_value() == MEMBERSHIP_DESCRIPTION
+    finally:
+        page.open_edit_membership(MANAGED_MEMBERSHIP)
+        page.set_membership_description("")
+        page.click_save_membership()
+        page.wait_for_list_loaded()

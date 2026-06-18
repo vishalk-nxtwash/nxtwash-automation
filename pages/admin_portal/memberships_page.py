@@ -430,6 +430,17 @@ class MembershipsPage(BasePage):
             ".//*[@data-props-id='isActive']"
         ).text.strip()
 
+    def _show_inactive_memberships(self):
+        """Apply the inactive filter so hidden inactive rows become visible.
+
+        Clears any active search first — the Filter button can be unavailable
+        when the grid is in an empty-results state from a no-match search.
+        """
+        self.clear_membership_search()
+        self.open_filter_panel()
+        self.set_active_membership_filter(False)
+        self.apply_filters()
+
     def open_filter_panel(self):
         """Open the Memberships filter panel."""
         self.wait_for_list_loaded()
@@ -527,11 +538,17 @@ class MembershipsPage(BasePage):
         self.wait_for_list_loaded()
 
     def open_edit_membership(self, membership_name):
-        """Open edit membership form."""
+        """Open edit membership form, falling back to inactive filter if needed."""
         self.wait_for_list_loaded()
         self.search_membership(membership_name)
         self.wait_for_grid_idle()
-        row = self.wait_for_membership_row(membership_name)
+        try:
+            row = self.wait_for_membership_row(membership_name)
+        except TimeoutException:
+            self._show_inactive_memberships()
+            self.search_membership(membership_name)
+            self.wait_for_grid_idle()
+            row = self.wait_for_membership_row(membership_name)
         edit_button = row.find_element(
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
@@ -1218,6 +1235,47 @@ class MembershipsPage(BasePage):
         )
         self.driver.execute_script("arguments[0].click();", option)
         self.wait.until(lambda driver: self.discount_is_selected(discount_name))
+
+    def deselect_applicable_discount(self, discount_name):
+        """Remove a previously selected applicable discount."""
+        self.open_discount_settings()
+        remove_button = (
+            By.XPATH,
+            "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+            "//*[contains(@class,'form-select__multi-value')"
+            " and .//*[normalize-space()='%s']]"
+            "//*[contains(@class,'form-select__multi-value__remove')]"
+            % discount_name
+        )
+        btn = self.wait.until(EC.element_to_be_clickable(remove_button))
+        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(
+            lambda driver: not self.discount_is_selected(discount_name)
+        )
+
+    def clear_applicable_discounts(self):
+        """Remove all applicable discounts from the Discount settings tab."""
+        self.open_discount_settings()
+        remove_locator = (
+            By.XPATH,
+            "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+            "//*[contains(@class,'form-select__multi-value__remove')]"
+        )
+        while True:
+            visible = [
+                b for b in self.driver.find_elements(*remove_locator)
+                if b.is_displayed()
+            ]
+            if not visible:
+                break
+            count_before = len(visible)
+            self.driver.execute_script("arguments[0].click();", visible[0])
+            self.wait.until(
+                lambda driver, n=count_before: len([
+                    b for b in driver.find_elements(*remove_locator)
+                    if b.is_displayed()
+                ]) < n
+            )
 
     def update_loyalty_points_and_discount(
         self,
