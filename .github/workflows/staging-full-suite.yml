@@ -1,0 +1,121 @@
+name: Staging Full Suite
+
+# Runs the COMPLETE test suite (every test, all marker tiers) against STAGING.
+# This is the on-demand / weekly counterpart to the nightly `regression` run in
+# tests.yml, which only covers the regression subset.
+#
+# Intentionally locked to STAGING: the full suite creates and mutates data and
+# must never touch PRODUCTION. There is no environment input here by design.
+#
+# Credentials come from the "staging" GitHub Environment's scoped secrets:
+#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD
+#   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+      marker:
+        description: "Optional pytest marker (blank = full suite, no filter)"
+        required: false
+        default: ""
+      test_path:
+        description: "Optional path to scope the run (blank = entire tests/ tree)"
+        required: false
+        default: ""
+      reruns:
+        description: "Flaky-test reruns per test"
+        required: false
+        default: "2"
+  schedule:
+    # Weekly full suite against staging (Sunday 03:00 UTC), offset from the
+    # 02:30 nightly regression so the two never overlap.
+    - cron: "0 3 * * 0"
+
+# One full staging run at a time — concurrent mutating runs would race on shared
+# staging data. Queue a new run rather than cancelling one already in flight.
+concurrency:
+  group: staging-full-suite
+  cancel-in-progress: false
+
+jobs:
+  full-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    # Binds to the "staging" GitHub Environment for its scoped secrets.
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run full suite (headless, staging)
+        env:
+          HEADLESS: "1"
+          TEST_ENV: "staging"
+          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
+          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
+          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
+          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+          # 2 workers is the sweet spot for full Chrome on GitHub's runners;
+          # -n auto over-subscribes and starves the post-login redirect.
+          PARALLEL: ${{ github.event.inputs.parallel || '2' }}
+          MARKER: ${{ github.event.inputs.marker }}
+          TEST_PATH: ${{ github.event.inputs.test_path }}
+          RERUNS: ${{ github.event.inputs.reruns || '2' }}
+        run: |
+          # Parallelism: 2 workers by default, "0" forces serial.
+          xdist="-n ${PARALLEL}"
+          if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
+
+          # Optional marker filter; blank = full suite (no -m).
+          marker_arg=""
+          if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
+
+          # Optional path scope; blank = entire tests/ tree.
+          path_arg="${TEST_PATH}"
+
+          pytest $marker_arg $path_arg $xdist \
+            --headless --close-browser \
+            --reruns "${RERUNS}" --reruns-delay 3 \
+            --alluredir=allure-results \
+            --html=report.html --self-contained-html \
+            --junitxml=results.xml
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-suite-staging-${{ github.run_number }}
+          path: |
+            allure-results/
+            report.html
+            results.xml
+            screenshots/
+            logs/
+          if-no-files-found: ignore
+
+      - name: Publish test summary
+        if: always()
+        uses: test-summary/action@v2
+        with:
+          paths: results.xml
+        continue-on-error: true
