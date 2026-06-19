@@ -1,9 +1,12 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite (tests/admin_portal) against STAGING.
-# Manual any time; runs weekly on Sunday 03:00 UTC.
+# Triggers: every push to the `staging` branch, manual dispatch, and weekly
+# on Sunday 03:00 UTC.
 
 on:
+  push:
+    branches: [staging]
   workflow_dispatch:
     inputs:
       marker:

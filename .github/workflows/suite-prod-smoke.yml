@@ -2,9 +2,12 @@ name: Prod Smoke
 
 # Read-only smoke checks (-m prod_smoke) against PRODUCTION.
 # Only the prod_smoke marker is permitted on production (enforced by the engine's
-# safety gate). Manual any time; runs daily at 06:00 UTC.
+# safety gate). Triggers: every push to the `production` branch, manual dispatch,
+# and daily at 06:00 UTC.
 
 on:
+  push:
+    branches: [production]
   workflow_dispatch:
     inputs:
       parallel:
