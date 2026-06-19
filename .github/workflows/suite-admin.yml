@@ -1,0 +1,40 @@
+name: Admin Suite (staging)
+
+# Full admin-portal suite (tests/admin_portal) against STAGING.
+# Manual any time; runs weekly on Sunday 03:00 UTC.
+
+on:
+  workflow_dispatch:
+    inputs:
+      marker:
+        description: "Optional marker (blank = full admin suite)"
+        required: false
+        default: ""
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+      reruns:
+        description: "Flaky-test reruns per test"
+        required: false
+        default: "2"
+  schedule:
+    - cron: "0 3 * * 0"
+
+# One admin staging run at a time — concurrent mutating runs race on shared data.
+concurrency:
+  group: admin-suite-staging
+  cancel-in-progress: false
+
+jobs:
+  admin:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-staging
+      environment: staging
+      test_path: tests/admin_portal
+      marker: ${{ github.event.inputs.marker || '' }}
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      reruns: ${{ github.event.inputs.reruns || '2' }}
+      timeout_minutes: 120
