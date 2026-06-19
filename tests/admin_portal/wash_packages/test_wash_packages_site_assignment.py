@@ -3,7 +3,6 @@ import pytest
 
 from tests.admin_portal.wash_packages.conftest import (
     ASSIGNMENT_SITE,
-    ASSIGNMENT_SITE_2,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     PACKAGE_NAME,
