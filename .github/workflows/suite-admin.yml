@@ -29,7 +29,8 @@ concurrency:
 jobs:
   admin:
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: admin-staging
       environment: staging

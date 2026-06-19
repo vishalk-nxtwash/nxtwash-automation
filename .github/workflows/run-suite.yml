@@ -40,14 +40,15 @@ on:
         description: "Job timeout in minutes"
         type: number
         default: 90
+    secrets:
+      dotenv:
+        description: "Full .env contents (KEY=value lines) for the target environment"
+        required: true
 
 jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ inputs.timeout_minutes }}
-    # Binds to the named GitHub Environment for its scoped secrets and any
-    # protection rules (e.g. required reviewers on production).
-    environment: ${{ inputs.environment }}
 
     steps:
       - uses: actions/checkout@v4
@@ -81,14 +82,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # The credentials secret is the full .env contents for this environment.
+      # ConfigManager.load_dotenv() picks these up automatically at runtime.
+      - name: Write .env from secret
+        env:
+          DOTENV: ${{ secrets.dotenv }}
+        run: |
+          printf '%s\n' "$DOTENV" > .env
+          echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
+
       - name: Run tests (headless)
         env:
           HEADLESS: "1"
           TEST_ENV: ${{ inputs.environment }}
-          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
-          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
-          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
-          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
           PARALLEL: ${{ inputs.parallel }}
           MARKER: ${{ inputs.marker }}
           TEST_PATH: ${{ inputs.test_path }}

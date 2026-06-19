@@ -26,7 +26,8 @@ concurrency:
 jobs:
   superadmin:
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: superadmin-staging
       environment: staging
