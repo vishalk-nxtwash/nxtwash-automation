@@ -1,0 +1,32 @@
+name: Prod Smoke
+
+# Read-only smoke checks (-m prod_smoke) against PRODUCTION.
+# Only the prod_smoke marker is permitted on production (enforced by the engine's
+# safety gate). Manual any time; runs daily at 06:00 UTC.
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+  schedule:
+    - cron: "0 6 * * *"
+
+concurrency:
+  group: prod-smoke
+  cancel-in-progress: false
+
+jobs:
+  prod-smoke:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: prod-smoke
+      environment: production
+      test_path: tests
+      marker: prod_smoke
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      reruns: "1"
+      timeout_minutes: 30

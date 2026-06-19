@@ -1,0 +1,36 @@
+name: Superadmin Suite (staging)
+
+# Superadmin-only suite (tests/superadmin) against STAGING.
+# Locked to staging: these tests create companies/users and must never run on
+# production. Manual any time; runs weekly on Sunday 03:30 UTC (offset from the
+# admin suite so the two don't compete for runners).
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+      reruns:
+        description: "Flaky-test reruns per test"
+        required: false
+        default: "2"
+  schedule:
+    - cron: "30 3 * * 0"
+
+concurrency:
+  group: superadmin-suite-staging
+  cancel-in-progress: false
+
+jobs:
+  superadmin:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: superadmin-staging
+      environment: staging
+      test_path: tests/superadmin
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      reruns: ${{ github.event.inputs.reruns || '2' }}
+      timeout_minutes: 60

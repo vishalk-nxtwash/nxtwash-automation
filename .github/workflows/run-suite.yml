@@ -1,0 +1,130 @@
+name: Run Suite (reusable)
+
+# Reusable test engine — the single place that knows HOW to run the suite.
+# Profile workflows (suite-admin / suite-superadmin / suite-prod-smoke) call this
+# with WHAT to run. Do not add triggers here other than workflow_call.
+#
+# Callers must pass `secrets: inherit` so the job can read the environment-scoped
+# secrets of the GitHub Environment it binds to:
+#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD
+#   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "GitHub Environment + config/<env>.yaml (staging | production)"
+        type: string
+        required: true
+      label:
+        description: "Short label used to name the artifact bundle"
+        type: string
+        required: true
+      test_path:
+        description: "Path(s) passed to pytest"
+        type: string
+        default: "tests"
+      marker:
+        description: "pytest -m expression (blank = no marker filter)"
+        type: string
+        default: ""
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        type: string
+        default: "2"
+      reruns:
+        description: "Flaky-test reruns per test"
+        type: string
+        default: "2"
+      timeout_minutes:
+        description: "Job timeout in minutes"
+        type: number
+        default: 90
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout_minutes }}
+    # Binds to the named GitHub Environment for its scoped secrets and any
+    # protection rules (e.g. required reviewers on production).
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Hard safety gate: PRODUCTION must never run mutating suites. Only the
+      # read-only `prod_smoke` marker is allowed (other tests create data that
+      # cannot be deleted).
+      - name: Safety gate (production is read-only)
+        if: inputs.environment == 'production'
+        env:
+          MARKER: ${{ inputs.marker }}
+        run: |
+          if [ "${MARKER}" != "prod_smoke" ]; then
+            echo "::error::Refusing to run marker '${MARKER:-<none>}' against PRODUCTION. Only 'prod_smoke' is allowed."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests (headless)
+        env:
+          HEADLESS: "1"
+          TEST_ENV: ${{ inputs.environment }}
+          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
+          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
+          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
+          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+          PARALLEL: ${{ inputs.parallel }}
+          MARKER: ${{ inputs.marker }}
+          TEST_PATH: ${{ inputs.test_path }}
+          RERUNS: ${{ inputs.reruns }}
+        run: |
+          # Parallelism: number of workers; "0" forces serial.
+          xdist="-n ${PARALLEL}"
+          if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
+
+          # Optional marker filter; blank = no -m.
+          marker_arg=""
+          if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
+
+          pytest $marker_arg ${TEST_PATH} $xdist \
+            --headless --close-browser \
+            --reruns "${RERUNS}" --reruns-delay 3 \
+            --alluredir=allure-results \
+            --html=report.html --self-contained-html \
+            --junitxml=results.xml
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ inputs.label }}-${{ github.run_number }}
+          path: |
+            allure-results/
+            report.html
+            results.xml
+            screenshots/
+            logs/
+          if-no-files-found: ignore
+
+      - name: Publish test summary
+        if: always()
+        uses: test-summary/action@v2
+        with:
+          paths: results.xml
+        continue-on-error: true
