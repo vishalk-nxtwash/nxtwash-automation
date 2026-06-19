@@ -142,10 +142,13 @@ def reset_managed_discount(browser):
         )
 
     # Reset mutable fields touched by tests back to a known baseline.
+    # ensure_all_locations_switch_off() must run before save: if a previous
+    # run left all-locations=on, saving with it on triggers BUG 4 and times out.
     discounts_page.open_edit_discount(MANAGED_DISCOUNT)
     discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
     discounts_page.select_amount_discount_type()
     discounts_page.ensure_active_switch_on()
+    discounts_page.ensure_all_locations_switch_off()
     discounts_page.click_save_discount()
     discounts_page.wait_for_list_loaded()
 
