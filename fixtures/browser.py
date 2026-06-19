@@ -13,8 +13,21 @@ def _is_headless(config):
 
 
 def browser_scope(fixture_name, config):
+    """Decide how often a browser is created.
 
+    Reuse one browser per worker in CI (headless) or when --single-window is
+    set: tests self-navigate and `admin_session` reuses the stored login
+    session (its fast path skips re-login when a session already exists), so a
+    fresh browser per test only adds cold Chrome start-up + a full re-login on
+    every test. Reusing it keeps login to once-per-worker.
+
+    Locally (non-headless) the default stays per-test, so each test opens in its
+    own window for easier debugging — pass --single-window to opt into reuse.
+    """
     if config.getoption("--single-window", default=False):
+        return "session"
+
+    if _is_headless(config):
         return "session"
 
     return "function"
