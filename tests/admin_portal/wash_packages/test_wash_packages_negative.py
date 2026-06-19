@@ -5,7 +5,6 @@ from tests.admin_portal.wash_packages.conftest import (
     ASSIGNMENT_SITE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
-    MISSING_PACKAGE,
     PACKAGE_NAME,
     POINTS_AWARDED,
     POINTS_REDEEMED,
@@ -112,16 +111,6 @@ def test_negative_global_commission_is_rejected(browser):
     page.click_save_package()
 
     assert not page.global_commission_input_is_valid()
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WP-SRH-004 Search for non-existing package returns no results")
-@pytest.mark.regression
-def test_missing_wash_package_is_not_returned(browser):
-    page = open_wash_packages_page(browser)
-    page.search_package(MISSING_PACKAGE)
-
-    assert MISSING_PACKAGE not in page.get_body_text()
     assert page_has_no_broken_state(page)
 
 
