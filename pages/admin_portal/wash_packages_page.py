@@ -87,6 +87,12 @@ class WashPackagesPage(BasePage):
         "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
         "//input[@role='combobox']"
     )
+    DESCRIPTION_TEXTAREA = (By.NAME, "description")
+    SITE_ASSIGNMENT_HEADER_CHECKBOX = (
+        By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__column-header--first')]"
+        "//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+    )
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Packages list is visible."""
@@ -571,6 +577,152 @@ class WashPackagesPage(BasePage):
     def click_save_package(self):
         """Click save package."""
         self.click(self.SAVE_PACKAGE_BUTTON)
+
+    def ensure_active_switch_off(self):
+        """Turn active switch off if needed."""
+        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") != "false":
+            switch.click()
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") == "false"
+            )
+
+    def global_commission_input_is_valid(self):
+        """Return native validity state for the first global commission input."""
+        elements = self.wait.until(
+            EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            elements[0]
+        )
+
+    def toggle_active_service_filter(self):
+        """Toggle the Active service filter switch inside the open filter panel."""
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH)
+        )
+        self.driver.execute_script("arguments[0].click();", switch)
+
+    def select_site_filter(self, site_name):
+        """Open the site dropdown in the filter panel and click the named option."""
+        self.open_filter_panel()
+        self.click(self.FILTER_SITE_INPUT)
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//*[normalize-space()='%s']" % site_name)
+            )
+        ).click()
+
+    def apply_filters(self):
+        """Click Apply filters and wait for the grid to refresh within the current frame."""
+        button = self.wait.until(
+            EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+        )
+        self.driver.execute_script("arguments[0].click();", button)
+        # Wait for the list to update without switching frames — we are already inside
+        # the list iframe; calling wait_for_list_loaded() would re-enter the frame and
+        # break subsequent calls to filter/download methods.
+        self.wait.until(EC.element_to_be_clickable(self.ADD_PACKAGE_BUTTON))
+
+    def enter_barcode(self, barcode):
+        """Set the barcode input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.BARCODE_INPUT)
+        )
+        self._set_input_value(element, barcode)
+
+    def get_barcode_value(self):
+        """Return the current barcode input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.BARCODE_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def get_points_awarded_value(self):
+        """Return the current points awarded input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.POINTS_AWARDED_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def get_points_redeemed_value(self):
+        """Return the current points redeemed input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.POINTS_REDEEMED_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def enter_description(self, text):
+        """Set the service description textarea value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
+        )
+        self._set_input_value(element, text)
+
+    def get_description_value(self):
+        """Return the current description textarea value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
+        )
+        return element.get_attribute("value")
+
+    def remove_applicable_discount(self, discount_name):
+        """Click the remove (×) button on a selected discount chip."""
+        remove_btn = self.wait.until(
+            EC.element_to_be_clickable((
+                By.XPATH,
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+                "//*[contains(@class,'form-select__multi-value__label')"
+                " and normalize-space()='%s']"
+                "/ancestor::*[contains(@class,'form-select__multi-value')][1]"
+                "/*[contains(@class,'form-select__multi-value__remove')]"
+                % discount_name
+            ))
+        )
+        remove_btn.click()
+        self.wait.until(lambda driver: not self.discount_is_selected(discount_name))
+
+    def unassign_site(self, site_name):
+        """Uncheck the site row checkbox in the site assignment grid."""
+        row = self.get_site_row(site_name)
+        checkbox = row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+        )
+
+        def checkbox_is_unchecked():
+            return "inovua-react-toolkit-checkbox--unchecked" in checkbox.get_attribute("class")
+
+        if not checkbox_is_unchecked():
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", checkbox
+            )
+            self.driver.execute_script("arguments[0].click();", checkbox)
+            self.wait.until(lambda driver: checkbox_is_unchecked())
+
+    def get_site_price_value(self, site_name):
+        """Return the site-level price input value for the given site row."""
+        row = self.get_site_row(site_name)
+        return row.find_element(By.NAME, "price").get_attribute("value")
+
+    def get_site_commission_value(self, site_name):
+        """Return the site-level commission input value for the given site row."""
+        row = self.get_site_row(site_name)
+        elements = row.find_elements(By.NAME, "commission")
+        return elements[0].get_attribute("value") if elements else ""
+
+    def select_all_sites(self):
+        """Click the Select All header checkbox in the site assignment grid."""
+        header_checkbox = self.wait.until(
+            EC.element_to_be_clickable(self.SITE_ASSIGNMENT_HEADER_CHECKBOX)
+        )
+        self.driver.execute_script("arguments[0].click();", header_checkbox)
+
+    def click_download_button(self):
+        """Click the export/download button."""
+        button = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
 
     def click_cancel(self):
         """Cancel create/edit package."""
