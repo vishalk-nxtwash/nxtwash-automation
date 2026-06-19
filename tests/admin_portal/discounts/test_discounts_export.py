@@ -13,7 +13,7 @@ pytestmark = [
 ]
 
 
-@allure.title("DS-RG-005 Export discounts button is clickable")
+@allure.title("DS-EXP-001 Export discounts button is clickable")
 @pytest.mark.regression
 def test_discounts_export_button_clickable(browser):
 
@@ -23,7 +23,7 @@ def test_discounts_export_button_clickable(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
-@allure.title("EXP-006 Export after filter does not break the grid")
+@allure.title("DS-EXP-002 Export after filter does not break the grid")
 @pytest.mark.regression
 def test_discounts_export_after_filter(browser):
 
@@ -36,7 +36,7 @@ def test_discounts_export_after_filter(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
-@allure.title("EXP-007 Export record count matches filtered grid count")
+@allure.title("DS-EXP-003 Export record count matches filtered grid count")
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason=(
@@ -55,7 +55,7 @@ def test_discounts_export_record_count_matches_grid(browser):
     assert page_has_no_broken_state(discounts_page)
 
 
-@allure.title("EXP-008 Export data matches grid data")
+@allure.title("DS-EXP-004 Export data matches grid data")
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason=(

@@ -11,7 +11,7 @@ pytestmark = [
 ]
 
 
-@allure.title("DIS-VAL-001 Discount name is mandatory")
+@allure.title("DS-VAL-001 Discount name is mandatory")
 @pytest.mark.validation
 def test_discount_required_name_validation(browser):
 
@@ -23,7 +23,7 @@ def test_discount_required_name_validation(browser):
     assert discounts_page.get_discount_name_validation_message() != ""
 
 
-@allure.title("DIS-VAL-002 Blank required discount form stays on form")
+@allure.title("DS-VAL-002 Blank required discount form stays on form")
 @pytest.mark.validation
 def test_discount_blank_required_form_stays_on_form(browser):
 
@@ -35,7 +35,7 @@ def test_discount_blank_required_form_stays_on_form(browser):
     assert "Discount name" in discounts_page.get_body_text()
 
 
-@allure.title("DIS-VAL-003 Invalid negative discount amount does not break form")
+@allure.title("DS-VAL-003 Invalid negative discount amount does not break form")
 @pytest.mark.validation
 def test_discount_invalid_amount_does_not_break_form(browser):
 

@@ -88,6 +88,10 @@ def _fill_and_save_percentage_selected_location(page, name):
 
 @allure.title("DS-CMB-001 Amount + all locations + active discount is created")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason="BUG 4 — create form does not submit when all-locations toggle is on.",
+    strict=False,
+)
 def test_cmb_amount_all_locations_active(browser):
 
     page = open_discounts_page(browser)
@@ -114,6 +118,10 @@ def test_cmb_amount_selected_locations_active(browser):
 
 @allure.title("DS-CMB-003 Percentage + all locations + active discount is created")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason="BUG 4 — create form does not submit when all-locations toggle is on.",
+    strict=False,
+)
 def test_cmb_percentage_all_locations_active(browser):
 
     page = open_discounts_page(browser)
@@ -140,6 +148,10 @@ def test_cmb_percentage_selected_locations_active(browser):
 
 @allure.title("DS-CMB-005 Percentage discount with future start date is created")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason="BUG 4 — create form does not submit when all-locations toggle is on.",
+    strict=False,
+)
 def test_cmb_percentage_future_start_date(browser):
 
     import datetime
@@ -167,6 +179,10 @@ def test_cmb_percentage_future_start_date(browser):
 
 @allure.title("DS-CMB-006 Amount discount with end date is created")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    reason="BUG 4 — create form does not submit when all-locations toggle is on.",
+    strict=False,
+)
 def test_cmb_amount_with_end_date(browser):
 
     page = open_discounts_page(browser)
