@@ -1,44 +1,52 @@
 name: Admin Suite (staging)
 
-# Full admin-portal suite (tests/admin_portal) against STAGING.
-# Triggers: every push to the `staging` branch, manual dispatch, and weekly
-# on Sunday 03:00 UTC.
+# Full admin-portal suite against STAGING, SHARDED across parallel runners.
+# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling and
+# the full 423-test suite on a single runner takes ~2h+. Splitting it across
+# parallel runners (one per shard) brings wall-clock down to ~the slowest shard.
+# Triggers: every push to `staging`, manual dispatch, weekly Sunday 03:00 UTC.
 
 on:
   push:
     branches: [staging]
   workflow_dispatch:
     inputs:
-      marker:
-        description: "Optional marker (blank = full admin suite)"
-        required: false
-        default: ""
-      parallel:
-        description: "xdist workers: a number, auto, or 0 for serial"
-        required: false
-        default: "2"
       reruns:
         description: "Flaky-test reruns per test"
         required: false
-        default: "2"
+        default: "1"
   schedule:
     - cron: "0 3 * * 0"
 
-# One admin staging run at a time — concurrent mutating runs race on shared data.
+# One admin staging run at a time (its shards run in parallel within the run);
+# a second run queues rather than racing on shared staging data.
 concurrency:
   group: admin-suite-staging
   cancel-in-progress: false
 
 jobs:
   admin:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          - name: wash-packages
+            path: tests/admin_portal/wash_packages
+          - name: discounts
+            path: tests/admin_portal/discounts tests/admin_portal/gift_cards
+          - name: memberships
+            path: tests/admin_portal/memberships tests/admin_portal/wash_extras
+          - name: services-login
+            path: tests/admin_portal/login tests/admin_portal/service_categories
+          - name: rest
+            path: tests/admin_portal/sites tests/admin_portal/coupon_packages tests/admin_portal/overview tests/admin_portal/wash_books
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.STAGING }}
     with:
-      label: admin-staging
+      label: admin-${{ matrix.shard.name }}
       environment: staging
-      test_path: tests/admin_portal
-      marker: ${{ github.event.inputs.marker || '' }}
-      parallel: ${{ github.event.inputs.parallel || '2' }}
-      reruns: ${{ github.event.inputs.reruns || '2' }}
-      timeout_minutes: 120
+      test_path: ${{ matrix.shard.path }}
+      parallel: "2"
+      reruns: ${{ github.event.inputs.reruns || '1' }}
+      timeout_minutes: 60
