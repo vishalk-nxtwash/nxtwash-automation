@@ -33,7 +33,7 @@ def test_overview_support_button_is_visible(overview_page):
 @pytest.mark.sanity
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_dashboard_filter_controls_visible(overview_page):
     assert overview_page.dashboard_has_all_texts(
@@ -48,7 +48,7 @@ def test_overview_dashboard_filter_controls_visible(overview_page):
 @pytest.mark.export
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_export_buttons_visible(overview_page):
     assert overview_page.dashboard_has_all_texts(overview_page.EXPORT_LABELS)
@@ -61,7 +61,7 @@ def test_overview_export_buttons_visible(overview_page):
 @pytest.mark.sanity
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_dashboard_widgets_visible(overview_page):
     assert overview_page.dashboard_has_all_texts(

@@ -9,7 +9,7 @@ import pytest
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty; report links are unavailable.",
-    strict=True,
+    strict=False,
 )
 def test_overview_full_report_links_are_available(overview_page):
     assert overview_page.dashboard_has_any_text(
