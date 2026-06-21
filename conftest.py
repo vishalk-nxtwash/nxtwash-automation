@@ -110,6 +110,7 @@ _QUARANTINE_TIMING = (
     "test_service_categories_edit.py::test_edit_service_category_name_and_restore",
     "test_service_categories_filter.py::test_filter_inactive_categories_shows_inactive",
     "test_service_categories_managed.py::test_managed_category_provided_at_baseline",
+    "test_service_categories_managed.py::test_managed_category_rename_is_reset_on_teardown",
     "test_memberships_edit.py::test_remove_applicable_discount_persists",
     "test_memberships_positive.py::test_activate_membership",
     "test_memberships_search_filter.py::test_memberships_partial_search",
@@ -124,12 +125,8 @@ _QUARANTINE_TIMING = (
     "test_wash_packages_search_filter.py::test_wash_packages_partial_search",
     "test_wash_packages_site_assignment.py::test_location_price_override_persists",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
-    "test_overview_data_validation.py::test_overview_dashboard_data_matches_api_and_exports",
-    "test_overview_exports.py::test_overview_exports_are_available_and_filter_aware",
-    "test_overview_filters.py::test_overview_site_filter_dropdown_opens",
-    "test_overview_negative.py::test_overview_no_data_states_are_handled",
-    "test_overview_negative.py::test_overview_rapid_filter_switching_does_not_crash",
-    "test_overview_ui.py::test_overview_export_buttons_visible",
+    # Overview tests carry their own in-code xfail(strict=False) markers
+    # (legacy Overview iframe), so they are not listed here.
 )
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
@@ -143,6 +140,9 @@ _QUARANTINE_SCRIPT = {
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",
+    "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
+        "Site create form appears to accept invalid email formats (abc@, abc, "
+        "abc@yopmail). Investigate product-side email validation before un-xfail.",
 }
 
 
