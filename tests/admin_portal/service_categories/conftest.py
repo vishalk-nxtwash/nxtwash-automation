@@ -54,9 +54,11 @@ def create_inactive_category_if_missing(browser, category_name=INACTIVE_CATEGORY
         return page
 
     if page.get_category_status(category_name) != "Inactive":
+        import time
         page.open_edit_category(category_name)
         page.ensure_active_switch_off()
         page.click_save_changes()
+        time.sleep(3)
         page = open_service_categories_page(browser)
 
     return page

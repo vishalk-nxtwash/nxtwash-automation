@@ -254,6 +254,10 @@ class ServiceCategoriesPage(BasePage):
     def _reset_to_default_view(self):
         """Remove any filter and return to the default list view."""
         try:
+            self.wait_for_list_loaded()
+            # Clear search before opening the filter panel — the Filter button
+            # is disabled when the grid is in an empty-results state.
+            self.clear_category_search()
             self.reset_filters()
             self.wait_for_list_loaded()
         except Exception:  # noqa: BLE001
@@ -316,7 +320,7 @@ class ServiceCategoriesPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     # ------------------------------------------------------------------ search
@@ -390,12 +394,27 @@ class ServiceCategoriesPage(BasePage):
     def apply_filters(self):
         """Apply filters — clicks Apply button if present, else auto-applies."""
         apply_btns = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+        sentinel = None
         if apply_btns:
+            # Capture a grid row before the click so we can detect DOM replacement.
+            sentinel_rows = self.driver.find_elements(*self.GRID_ROWS)
+            sentinel = sentinel_rows[0] if sentinel_rows else None
             self.driver.execute_script("arguments[0].click();", apply_btns[0])
             self.wait.until(
                 EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
             )
         self.wait_for_list_loaded()
+        # Wait for the pre-filter rows to go stale (grid re-rendered with new data).
+        if sentinel is not None:
+            try:
+                self.wait.until(EC.staleness_of(sentinel))
+            except Exception:  # noqa: BLE001
+                pass
+        # Wait for the filtered rows to be present (noop for empty result sets).
+        try:
+            self.wait.until(EC.presence_of_element_located(self.GRID_ROWS))
+        except Exception:  # noqa: BLE001
+            pass
 
     def reset_filters(self):
         """Open filter panel and reset all filters."""
