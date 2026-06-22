@@ -25,7 +25,14 @@ class WashBooksPage(BasePage):
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Wash books']")
     SEARCH_INPUT = (By.NAME, "washbookName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    # The button text includes a live filter count, e.g. "Filter by (1)".
+    # Use contains() so it matches regardless of the count suffix.
+    FILTER_BUTTON = (
+        By.XPATH,
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]"
+    )
     DOWNLOAD_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Filter by']/following-sibling::button[1]"
@@ -38,7 +45,7 @@ class WashBooksPage(BasePage):
         By.XPATH,
         "//button[normalize-space()='Apply filters']"
     )
-    RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
+    RESET_ALL_BUTTON = (By.XPATH, "//button[contains(normalize-space(),'Reset all')]")
     FILTER_SITE_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
@@ -100,10 +107,64 @@ class WashBooksPage(BasePage):
         "//input[@role='combobox']"
     )
 
+    # ── Customer Wash Books (CWB) ────────────────────────────────────────────
+    CUSTOMER_WASH_BOOKS_TAB = (
+        By.XPATH,
+        "//button[@role='tab' and normalize-space()='Customer wash books']"
+    )
+    CWB_LIST_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerWashBooks')"
+        " and not(contains(@src,'/new'))]"
+    )
+    CWB_CREATE_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerWashBooks/new')]"
+    )
+    CWB_EDIT_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerWashBooks/')"
+        " and not(contains(@src,'/new'))]"
+    )
+    CWB_PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Customer wash books']")
+    CWB_SEARCH_INPUT = (By.NAME, "washbookNumber")
+    CWB_ADD_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='+ Add customer wash book']"
+    )
+    CWB_SAVE_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Save customer wash book']"
+    )
+    SELECT_WASH_BOOK_COMBOBOX = (
+        By.XPATH,
+        "//*[contains(normalize-space(),'Select wash book')]"
+        "/following::input[@role='combobox'][1]"
+    )
+    CWB_WASH_BOOK_NUMBER_INPUT = (By.NAME, "washbookNumber")
+    CWB_NUMBER_OF_WASHES_INPUT = (By.NAME, "numberOfWashes")
+    SELECT_SITE_CWB_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select site']"
+        "/following::input[@role='combobox'][1]"
+    )
+    SELECT_CUSTOMER_COMBOBOX = (
+        By.XPATH,
+        "//*[normalize-space()='Select customer']"
+        "/following::input[@role='combobox'][1]"
+    )
+    CWB_ACTIVE_SWITCH = (
+        By.XPATH,
+        "//*[contains(normalize-space(),'Active customer wash book')]"
+        "/ancestor::*[contains(@class,'flex-toggler')][1]"
+        "//button[@role='switch']"
+    )
+
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
+        long_wait = WebDriverWait(self.driver, 30)
         self.driver.switch_to.default_content()
-        self.wait.until(
+        long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -193,11 +254,19 @@ class WashBooksPage(BasePage):
         )
 
     def search_wash_book(self, wash_book_name):
-        """Search wash book by name."""
+        """Search wash book by name.
+
+        Uses send_keys so React's onChange handler fires and the grid actually
+        filters.  _set_input_value (JS-only) sets the DOM value but does not
+        trigger the synthetic event React listens to for search.
+        """
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, wash_book_name)
+        search_input.click()
+        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(wash_book_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -242,8 +311,8 @@ class WashBooksPage(BasePage):
     def open_filter_panel(self):
         """Open the Wash Books filter panel."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
+        button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def download_button_is_clickable(self):
@@ -251,6 +320,31 @@ class WashBooksPage(BasePage):
         return self.wait.until(
             EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)
         ).is_displayed()
+
+    def clear_wash_book_search(self):
+        """Clear the wash book search field and wait for list to reset."""
+        element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        self._set_input_value(element, "")
+
+    def apply_filters(self):
+        """Click Apply filters button."""
+        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)).click()
+
+    def reset_filters(self):
+        """Click Reset all to clear active filters."""
+        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+
+    def set_filter_site(self, site_name):
+        """Type a site name into the filter panel and select the matching option."""
+        self.select_react_dropdown_option(self.FILTER_SITE_INPUT, site_name)
+
+    def get_visible_wash_book_names(self):
+        """Return a list of all visible wash book names in the grid."""
+        elements = self.driver.find_elements(
+            By.XPATH,
+            "//*[@data-props-id='washbookName']//span[normalize-space()]"
+        )
+        return [el.text.strip() for el in elements if el.text.strip()]
 
     def open_create_wash_book(self):
         """Open create wash book form."""
@@ -267,7 +361,8 @@ class WashBooksPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        # Use JS click to bypass any overlay/interceptor covering the button.
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def enter_wash_book_name(self, wash_book_name):
@@ -335,6 +430,9 @@ class WashBooksPage(BasePage):
             EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
         )
         self._set_input_value(element, str(price))
+        self.wait.until(
+            lambda driver: element.get_attribute("value") == str(price)
+        )
 
     def get_global_price_value(self):
         """Return global wash book price value."""
@@ -386,6 +484,15 @@ class WashBooksPage(BasePage):
     def ensure_customer_portal_switch_on(self):
         """Turn Show on customer portal on if needed."""
         self.ensure_switch_on(self.CUSTOMER_PORTAL_SWITCH)
+
+    def ensure_active_switch_off(self):
+        """Turn Active wash books off if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") == "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") != "true"
+            )
 
     def open_wash_book_description(self):
         """Expand the Wash book description section."""
@@ -444,9 +551,9 @@ class WashBooksPage(BasePage):
 
     def wait_for_service_location_rows(self):
         """Wait until service-setting location rows are hydrated."""
-        self.wait.until(
-            lambda driver: "VK Test carwash 2" in self.get_body_text()
-            and len(self.visible_location_price_inputs()) >= 2
+        long_wait = WebDriverWait(self.driver, 30)
+        long_wait.until(
+            lambda driver: len(self.visible_location_price_inputs()) >= 1
         )
 
     def visible_location_price_inputs(self):
@@ -772,15 +879,8 @@ class WashBooksPage(BasePage):
 
         comboboxes[row_index].click()
         comboboxes[row_index].send_keys(service_name)
-        option = self.wait.until(
-            EC.element_to_be_clickable(
-                (
-                    By.XPATH,
-                    "//*[@role='option' and translate(normalize-space(), "
-                    "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-                    % service_name.lower()
-                )
-            )
+        option = WebDriverWait(self.driver, 20).until(
+            lambda d: self._find_react_option(service_name)
         )
         self.driver.execute_script("arguments[0].click();", option)
         self.wait.until(
@@ -852,3 +952,257 @@ class WashBooksPage(BasePage):
         self.set_wash_book_description(description)
         self.click_save_wash_book()
         self.wait_for_list_loaded()
+
+    # ── Customer Wash Books (CWB) methods ────────────────────────────────────
+
+    def switch_to_customer_wash_books_tab(self):
+        """Click the Customer wash books tab on the Wash Books listing page."""
+        tab = self.wait.until(EC.element_to_be_clickable(self.CUSTOMER_WASH_BOOKS_TAB))
+        self.driver.execute_script("arguments[0].click();", tab)
+        self.wait_for_cwb_list_loaded()
+
+    def wait_for_cwb_list_loaded(self):
+        """Wait until the Customer Wash Books listing is ready."""
+        long_wait = WebDriverWait(self.driver, 30)
+        self.driver.switch_to.default_content()
+        long_wait.until(
+            EC.frame_to_be_available_and_switch_to_it(self.CWB_LIST_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
+        self.wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
+        # Wait for the grid header to render so column assertions don't run
+        # against an empty page (header appears even when there are no rows).
+        self.wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__header')]")
+            )
+        )
+
+    def wait_for_cwb_create_loaded(self):
+        """Wait until the CWB create form is ready.
+
+        The form may be rendered inside an iframe (same pattern as WB/WE forms)
+        or directly on the page. Try the iframe first; fall back to default content.
+        """
+        long_wait = WebDriverWait(self.driver, 30)
+        self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.frame_to_be_available_and_switch_to_it(self.CWB_CREATE_FRAME)
+            )
+        except TimeoutException:
+            pass  # No iframe — form rendered directly on the page
+        long_wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
+
+    def wait_for_cwb_edit_loaded(self):
+        """Wait until the CWB edit form is ready."""
+        long_wait = WebDriverWait(self.driver, 30)
+        self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.frame_to_be_available_and_switch_to_it(self.CWB_EDIT_FRAME)
+            )
+        except TimeoutException:
+            pass  # No iframe — form rendered directly on the page
+        long_wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
+        long_wait.until(lambda driver: self.get_cwb_wash_book_number_value() != "")
+
+    def search_cwb(self, wash_book_number):
+        """Search customer wash books by wash book number."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_SEARCH_INPUT)
+        )
+        self._set_input_value(element, wash_book_number)
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.CWB_SEARCH_INPUT
+            ).get_attribute("value") == wash_book_number
+        )
+
+    def get_cwb_row_locator(self, wash_book_number):
+        """Build a locator for a CWB row by wash book number."""
+        return (
+            By.XPATH,
+            "//*[@data-props-id='washbookNumber']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % wash_book_number
+        )
+
+    def wait_for_cwb_row(self, wash_book_number):
+        """Wait until a CWB row is visible."""
+        return self.wait.until(
+            EC.visibility_of_element_located(
+                self.get_cwb_row_locator(wash_book_number)
+            )
+        )
+
+    def cwb_exists(self, wash_book_number):
+        """Return whether a CWB row is visible for the given number.
+
+        The caller must have already called wait_for_cwb_list_loaded() so
+        we are already inside the CWB iframe; a second frame-switch attempt
+        would time-out if the src changed after initial load.
+        """
+        self.search_cwb(wash_book_number)
+        try:
+            self.wait_for_cwb_row(wash_book_number)
+            return True
+        except TimeoutException:
+            return False
+
+    def open_create_cwb(self):
+        """Open the create customer wash book form."""
+        self.wait_for_cwb_list_loaded()
+        self.click(self.CWB_ADD_BUTTON)
+        self.wait_for_cwb_create_loaded()
+
+    def open_edit_cwb(self, wash_book_number):
+        """Open the edit form for a customer wash book."""
+        self.wait_for_cwb_list_loaded()
+        self.search_cwb(wash_book_number)
+        row = self.wait_for_cwb_row(wash_book_number)
+        edit_btn = row.find_element(
+            By.XPATH,
+            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        edit_btn.click()
+        self.wait_for_cwb_edit_loaded()
+
+    def select_cwb_wash_book(self, wash_book_name):
+        """Select a wash book template from the dropdown in the CWB form."""
+        self.select_react_dropdown_option(
+            self.SELECT_WASH_BOOK_COMBOBOX, wash_book_name
+        )
+
+    def enter_cwb_wash_book_number(self, number):
+        """Enter a wash book number in the CWB form."""
+        self.enter_text(self.CWB_WASH_BOOK_NUMBER_INPUT, number)
+
+    def get_cwb_wash_book_number_value(self):
+        """Return the current wash book number input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_WASH_BOOK_NUMBER_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def set_cwb_number_of_washes(self, washes):
+        """Set the number of washes in the CWB form."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_NUMBER_OF_WASHES_INPUT)
+        )
+        self._set_input_value(element, str(washes))
+
+    def get_cwb_number_of_washes_value(self):
+        """Return the number of washes input value from the CWB form."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_NUMBER_OF_WASHES_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def click_save_cwb(self):
+        """Click the Save customer wash book button."""
+        button = self.wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+
+    def cwb_active_switch_is_on(self):
+        """Return whether the Active customer wash book switch is on."""
+        return self.switch_is_on(self.CWB_ACTIVE_SWITCH)
+
+    def ensure_cwb_active_switch_on(self):
+        """Turn the Active customer wash book switch on if needed."""
+        self.ensure_switch_on(self.CWB_ACTIVE_SWITCH)
+
+    def ensure_cwb_active_switch_off(self):
+        """Turn the Active customer wash book switch off if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(self.CWB_ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") == "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: switch.get_attribute("aria-checked") != "true"
+            )
+
+    def get_cwb_status(self, wash_book_number):
+        """Return the status text for a CWB row."""
+        row = self.wait_for_cwb_row(wash_book_number)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='isActive']"
+        ).text.strip()
+
+    def get_cwb_wash_book_name_from_row(self, wash_book_number):
+        """Return the wash book name displayed in a CWB row."""
+        row = self.wait_for_cwb_row(wash_book_number)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='washbookName']"
+        ).text.strip()
+
+    def get_cwb_number_of_washes_from_row(self, wash_book_number):
+        """Return the number of washes displayed in a CWB row."""
+        row = self.wait_for_cwb_row(wash_book_number)
+        return row.find_element(
+            By.XPATH,
+            ".//*[@data-props-id='numberOfWashes']"
+        ).text.strip()
+
+    def cwb_wash_book_number_input_is_valid(self):
+        """Return the native validity state of the wash book number input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_WASH_BOOK_NUMBER_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_cwb_wash_book_number_validation_message(self):
+        """Return the native validation message for the wash book number input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_WASH_BOOK_NUMBER_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def cwb_number_of_washes_input_is_valid(self):
+        """Return the native validity state of the CWB number of washes input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_NUMBER_OF_WASHES_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_cwb_number_of_washes_validation_message(self):
+        """Return the native validation message for the CWB number of washes input."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CWB_NUMBER_OF_WASHES_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def create_customer_wash_book(
+        self,
+        wash_book_template_name,
+        wash_book_number,
+        number_of_washes
+    ):
+        """Create a customer wash book and return to the listing."""
+        self.open_create_cwb()
+        self.select_cwb_wash_book(wash_book_template_name)
+        self.enter_cwb_wash_book_number(wash_book_number)
+        self.set_cwb_number_of_washes(number_of_washes)
+        self.click_save_cwb()
+        self.wait_for_cwb_list_loaded()
+
+    def open_cwb_filter_panel(self):
+        """Open the filter panel while on the CWB list page."""
+        self.wait_for_cwb_list_loaded()
+        button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
