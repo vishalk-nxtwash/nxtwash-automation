@@ -30,16 +30,20 @@ jobs:
       fail-fast: false
       matrix:
         shard:
+          # Balanced ~83–106 tests each (full admin_portal = 574). Every module
+          # is covered exactly once across the six shards.
+          - name: wash-books
+            path: tests/admin_portal/wash_books
+          - name: wash-extras
+            path: tests/admin_portal/wash_extras
           - name: wash-packages
-            path: tests/admin_portal/wash_packages
+            path: tests/admin_portal/wash_packages tests/admin_portal/gift_cards
           - name: discounts
-            path: tests/admin_portal/discounts tests/admin_portal/gift_cards
+            path: tests/admin_portal/discounts tests/admin_portal/overview
           - name: memberships
-            path: tests/admin_portal/memberships tests/admin_portal/wash_extras
+            path: tests/admin_portal/memberships tests/admin_portal/sites
           - name: services-login
-            path: tests/admin_portal/login tests/admin_portal/service_categories
-          - name: rest
-            path: tests/admin_portal/sites tests/admin_portal/coupon_packages tests/admin_portal/overview tests/admin_portal/wash_books
+            path: tests/admin_portal/login tests/admin_portal/service_categories tests/admin_portal/coupon_packages
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.STAGING }}
