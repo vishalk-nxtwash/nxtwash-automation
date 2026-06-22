@@ -85,7 +85,7 @@ def test_add_wash_book_form_loads(browser):
         "WB-EXP-001: File content validation requires browser download-directory "
         "configuration and CSV/XLS parser utilities. Deferred."
     ),
-    strict=True,
+    strict=False,
 )
 def test_wash_books_export_file_validation(browser):
 

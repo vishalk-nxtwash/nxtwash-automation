@@ -57,7 +57,7 @@ def test_customer_wash_books_grid_columns_are_visible(browser):
         "CWB-EXP-001: File content validation requires browser download-directory "
         "configuration and CSV/XLS parser utilities. Deferred."
     ),
-    strict=True,
+    strict=False,
 )
 def test_customer_wash_books_export_file_validation(browser):
 

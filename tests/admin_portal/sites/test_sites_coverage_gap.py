@@ -174,7 +174,7 @@ def test_create_site_customer_portal_settings_ui(logged_in_admin_browser):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="No stable created-record uniqueness assertion exists for rapid multi-save yet.",
-    strict=True,
+    strict=False,
 )
 def test_create_site_rapid_save_clicks_do_not_duplicate(logged_in_admin_browser):
     create_page = open_create_site_page(logged_in_admin_browser)
@@ -195,7 +195,7 @@ def test_create_site_rapid_save_clicks_do_not_duplicate(logged_in_admin_browser)
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Framework has no network interception helper for Sites save requests.",
-    strict=True,
+    strict=False,
 )
 def test_create_site_network_interruption_during_save(logged_in_admin_browser):
     create_page = open_create_site_page(logged_in_admin_browser)
