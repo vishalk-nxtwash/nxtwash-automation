@@ -13,10 +13,12 @@ def _is_headless(config):
 
 
 def browser_scope(fixture_name, config):
-    # Per-test browser by default (isolation); --single-window opts into a
-    # single shared session. NOTE: session reuse was trialled as a CI speed-up
-    # but caused a fixture-failure cascade (a poisoned shared browser failed
-    # every following test), so it stays opt-in only.
+    """Decide how often a browser is created.
+
+    Always uses function scope (one browser per test) so that a Chrome crash
+    in one test never cascades to the rest of the suite.  Pass --single-window
+    to opt into session scope when you explicitly want one shared window.
+    """
     if config.getoption("--single-window", default=False):
         return "session"
 
@@ -27,15 +29,12 @@ def browser_scope(fixture_name, config):
 def browser(request):
 
     headless = _is_headless(request.config)
-    close_browser = request.config.getoption("--close-browser")
 
     driver = DriverFactory.get_driver(
         headless=headless,
-        detach=not close_browser,
+        detach=False,
     )
 
     yield driver
 
-    # Always quit in headless mode (no window to keep) or when requested.
-    if close_browser or headless:
-        driver.quit()
+    driver.quit()

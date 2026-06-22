@@ -362,16 +362,12 @@ class GiftCardsPage(BasePage):
         """Select a React Select option by field label."""
         select_input = self.get_select_input_by_label(label)
         select_input.click()
-        option_element = self.wait.until(
-            EC.element_to_be_clickable(
-                (
-                    By.XPATH,
-                    "//*[@role='option' and normalize-space()='%s']"
-                    % option
-                )
-            )
+        select_input.send_keys(option)
+        from selenium.webdriver.support.ui import WebDriverWait
+        option_element = WebDriverWait(self.driver, 20).until(
+            lambda d: self._find_react_option(option)
         )
-        option_element.click()
+        self.driver.execute_script("arguments[0].click();", option_element)
         self.wait.until(
             EC.visibility_of_element_located(
                 (

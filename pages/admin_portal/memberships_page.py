@@ -3,6 +3,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
@@ -1177,15 +1178,8 @@ class MembershipsPage(BasePage):
 
         comboboxes[row_index].click()
         comboboxes[row_index].send_keys(service_name)
-        option = self.wait.until(
-            EC.presence_of_element_located(
-                (
-                    By.XPATH,
-                    "//*[@role='option' and translate(normalize-space(), "
-                    "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-                    % service_name.lower()
-                )
-            )
+        option = WebDriverWait(self.driver, 20).until(
+            lambda d: self._find_react_option(service_name)
         )
         self.driver.execute_script("arguments[0].click();", option)
         self.wait.until(
@@ -1218,22 +1212,9 @@ class MembershipsPage(BasePage):
         if self.discount_is_selected(discount_name):
             return
 
-        combobox = self.wait.until(
-            EC.element_to_be_clickable(self.APPLICABLE_DISCOUNTS_COMBOBOX)
+        self.select_react_dropdown_option(
+            self.APPLICABLE_DISCOUNTS_COMBOBOX, discount_name, clear_first=False
         )
-        combobox.click()
-
-        option = self.wait.until(
-            EC.element_to_be_clickable(
-                (
-                    By.XPATH,
-                    "//*[@role='option' and translate(normalize-space(), "
-                    "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-                    % discount_name.lower()
-                )
-            )
-        )
-        self.driver.execute_script("arguments[0].click();", option)
         self.wait.until(lambda driver: self.discount_is_selected(discount_name))
 
     def deselect_applicable_discount(self, discount_name):

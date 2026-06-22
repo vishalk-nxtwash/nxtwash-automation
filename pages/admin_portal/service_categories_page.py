@@ -449,7 +449,7 @@ class ServiceCategoriesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
         )
-        return element.get_attribute("value")
+        return (element.get_attribute("value") or "").strip()
 
     def get_category_name_validation_message(self):
         """Return native validation message for category name input."""

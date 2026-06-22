@@ -50,6 +50,7 @@ def create_discount_if_missing(browser, discount_name=DISCOUNT_NAME):
     discounts_page = open_discounts_page(browser)
 
     if discounts_page.discount_exists(discount_name):
+        discounts_page = open_discounts_page(browser)
         discounts_page.open_edit_discount(discount_name)
         discounts_page.fill_discount_form(
             discount_name,

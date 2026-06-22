@@ -1,8 +1,6 @@
 import allure
 import pytest
 
-from tests.admin_portal.login.conftest import open_login_page
-
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -11,9 +9,7 @@ pytestmark = [
 ]
 
 
-def test_password_is_masked_by_default(browser):
-
-    login_page = open_login_page(browser)
+def test_password_is_masked_by_default(login_page):
 
     assert login_page.password_input_type() == "password"
 
@@ -22,9 +18,7 @@ def test_password_is_masked_by_default(browser):
     reason="Known product gap: password visibility icon disappears after typing.",
     strict=True,
 )
-def test_password_visibility_toggle_shows_password(browser):
-
-    login_page = open_login_page(browser)
+def test_password_visibility_toggle_shows_password(login_page):
 
     if not login_page.password_visibility_toggle_exists():
         pytest.skip("Password visibility toggle is not present on login page.")
@@ -39,9 +33,7 @@ def test_password_visibility_toggle_shows_password(browser):
     reason="Known product gap: password visibility icon disappears after typing.",
     strict=True,
 )
-def test_password_visibility_toggle_hides_password_again(browser):
-
-    login_page = open_login_page(browser)
+def test_password_visibility_toggle_hides_password_again(login_page):
 
     if not login_page.password_visibility_toggle_exists():
         pytest.skip("Password visibility toggle is not present on login page.")
@@ -53,9 +45,7 @@ def test_password_visibility_toggle_hides_password_again(browser):
     assert login_page.password_input_type() == "password"
 
 
-def test_very_long_password_does_not_break_login_ui(browser):
-
-    login_page = open_login_page(browser)
+def test_very_long_password_does_not_break_login_ui(login_page):
 
     login_page.enter_password("A" * 512)
 
