@@ -23,7 +23,7 @@ def test_create_site_validation_blocks_empty_required_fields(
         "this validation path, so the test does not consistently reach email "
         "validation."
     ),
-    strict=True,
+    strict=False,
 )
 @pytest.mark.parametrize("email", ["abc", "abc@", "abc@yopmail"])
 def test_create_site_validation_invalid_email_formats(

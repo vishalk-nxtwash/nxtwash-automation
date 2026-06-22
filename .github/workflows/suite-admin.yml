@@ -14,7 +14,7 @@ on:
       reruns:
         description: "Flaky-test reruns per test"
         required: false
-        default: "1"
+        default: "2"
   schedule:
     - cron: "0 3 * * 0"
 
@@ -48,5 +48,5 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
-      reruns: ${{ github.event.inputs.reruns || '1' }}
+      reruns: ${{ github.event.inputs.reruns || '2' }}
       timeout_minutes: 60

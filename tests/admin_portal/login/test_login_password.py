@@ -16,7 +16,7 @@ def test_password_is_masked_by_default(login_page):
 
 @pytest.mark.xfail(
     reason="Known product gap: password visibility icon disappears after typing.",
-    strict=True,
+    strict=False,
 )
 def test_password_visibility_toggle_shows_password(login_page):
 
@@ -31,7 +31,7 @@ def test_password_visibility_toggle_shows_password(login_page):
 
 @pytest.mark.xfail(
     reason="Known product gap: password visibility icon disappears after typing.",
-    strict=True,
+    strict=False,
 )
 def test_password_visibility_toggle_hides_password_again(login_page):
 

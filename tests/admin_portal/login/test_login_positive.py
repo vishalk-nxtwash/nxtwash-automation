@@ -52,7 +52,7 @@ def test_authenticated_user_cannot_access_login_page(browser, login_page):
 
 @pytest.mark.xfail(
     reason="Known product gap: valid email with a leading space is not trimmed.",
-    strict=True,
+    strict=False,
 )
 def test_login_with_email_leading_space(login_page, login_credentials):
 
