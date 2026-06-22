@@ -7,9 +7,46 @@ suite stays green. **Remove a test's entry from `conftest.py` the moment it is
 fixed.**
 
 Context: the full admin suite never finished before (2h DNF on a single 2-vCPU
-runner). It now runs sharded across parallel runners (~42 min). Once it ran to
-completion, ~44 pre-existing failures became visible. These were always failing;
-they were just never reached.
+runner). It now runs sharded across parallel runners (~12–47 min/shard). Once it
+ran to completion, a large body of pre-existing failures became visible. These
+were always failing; they were just never reached.
+
+## Current state & strategy (2026-06-22)
+
+**Infra / speed work — DONE and mergeable (PR #8):**
+- Sharded the admin suite across 5 parallel runners (2-vCPU runner = `-n 2`
+  ceiling, so more runners is the only way to cut wall-clock). 2h-DNF → completes.
+- Per-test `--timeout` (no test can hang the run forever).
+- Dropped the obsolete `--close-browser` flag (option removed upstream).
+- `reruns=2`; all `xfail` markers set `strict=False`.
+- Real bug fixes: sites react-select dropdowns + the strict-xfail mislabels.
+- Proven green: `discounts` and `wash-packages` shards pass reliably.
+
+**The remaining failures are ONE systemic problem: post-save / grid-reload
+timing races.** They hit a *different* ~25 tests each run, across every module,
+so reruns + quarantine are only band-aids. **The proven cure is the
+re-navigate-after-save pattern**: after a save, re-navigate to the list instead
+of relying on `wait_for_list_loaded` to survive the iframe/grid re-render. Your
+teammate applied it to `wash_packages/conftest.py` → **the wash-packages shard is
+now green.** Roll that same pattern into the other modules' page objects /
+conftests, verifying each:
+
+| Module | Apply re-navigate pattern to |
+| --- | --- |
+| Service Categories | `service_categories_page.py` save flows + managed fixture |
+| Memberships | `memberships_page.py` save flows + managed fixture |
+| **Wash Books** (new) | `wash_books` conftest/page object — *no quarantine yet* |
+| Sites / Overview | post-save list reloads |
+
+**Caveats for whoever picks this up:**
+- `xfail` only catches **call-phase** failures. Several SC/managed tests fail in
+  **fixture setup** (ERROR), which `xfail` does NOT convert — those need the
+  re-navigate fix or a `skip`, not an `xfail` entry.
+- Some "failures" are environmental: staging can be slow at off-hours, and heavy
+  back-to-back runs leave test data behind. Judge green from a clean run during
+  normal hours, not from rapid re-dispatches.
+- `wash_books` is a newly merged module with the same timing-race class and is
+  **not yet quarantined or re-navigate-fixed** — biggest current red surface.
 
 ## ✅ Fixed (real bugs)
 
