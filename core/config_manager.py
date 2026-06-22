@@ -1,6 +1,7 @@
 import os
 
 import yaml
+from dotenv import load_dotenv
 
 
 class ConfigManager:
@@ -18,7 +19,7 @@ class ConfigManager:
 
     def __init__(self, env=None):
 
-        self.load_dotenv()
+        load_dotenv(override=False)
 
         # Resolve the target environment: explicit arg > TEST_ENV > staging.
         if env is None:
@@ -29,28 +30,7 @@ class ConfigManager:
         with open(f"config/{env}.yaml") as file:
             self.config = yaml.safe_load(file)
 
-    def load_dotenv(self, path=".env"):
-        if not os.path.exists(path):
-            return
-
-        with open(path) as file:
-            for line in file:
-                line = line.strip()
-
-                if not line or line.startswith("#") or "=" not in line:
-                    continue
-
-                key, value = line.split("=", 1)
-                key = key.strip()
-                value = value.strip().strip('"').strip("'")
-
-                if not value:
-                    continue
-
-                os.environ.setdefault(key, value)
-
     def get_url(self, portal):
-        # Get the URL for the staging.
         return self.config[portal]["url"]
 
     def get_credential(self, portal, credential_type):

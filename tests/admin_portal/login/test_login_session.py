@@ -1,7 +1,5 @@
 import allure
 
-from tests.admin_portal.login.conftest import open_login_page
-
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -10,9 +8,8 @@ pytestmark = [
 ]
 
 
-def test_direct_protected_url_without_login_redirects_to_login(browser):
+def test_direct_protected_url_without_login_redirects_to_login(browser, login_page):
 
-    login_page = open_login_page(browser)
     browser.delete_all_cookies()
     browser.execute_script("window.localStorage.clear();")
     browser.execute_script("window.sessionStorage.clear();")
@@ -23,9 +20,7 @@ def test_direct_protected_url_without_login_redirects_to_login(browser):
     assert login_page.is_login_page()
 
 
-def test_auth_token_is_stored_after_login(browser):
-
-    login_page = open_login_page(browser)
+def test_auth_token_is_stored_after_login(login_page):
 
     login_page.login()
     login_page.wait_for_overview()

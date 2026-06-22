@@ -46,6 +46,7 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
     page = open_wash_packages_page(browser)
 
     if page.package_exists(package_name):
+        page = open_wash_packages_page(browser)
         page.open_edit_package(package_name)
         page.fill_package_form(
             package_name,

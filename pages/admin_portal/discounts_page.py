@@ -5,6 +5,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
@@ -275,20 +276,28 @@ class DiscountsPage(BasePage):
 
         Returns the chosen site label, or None if no matching options appear.
         """
-        import time
         from selenium.common.exceptions import TimeoutException as _TE
         box = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_INPUT))
-        box.click()
+        self.driver.execute_script("arguments[0].click();", box)
         if site_name:
             box.send_keys(site_name)
-            time.sleep(1)
+            try:
+                option = WebDriverWait(self.driver, 20).until(
+                    lambda d: self._find_react_option(site_name)
+                )
+                label = option.text.strip()
+                self.driver.execute_script("arguments[0].click();", option)
+                return label
+            except _TE:
+                return None
+        # No site_name given — click the first available option
         try:
             option = self.wait.until(EC.visibility_of_element_located(self.FILTER_OPTION))
+            label = option.text.strip()
+            self.driver.execute_script("arguments[0].click();", option)
+            return label
         except _TE:
             return None
-        label = option.text.strip()
-        self.driver.execute_script("arguments[0].click();", option)
-        return label
 
     def get_filter_result_count(self):
         """Return the live 'Filter result: N Discounts' count from the panel."""
@@ -401,51 +410,13 @@ class DiscountsPage(BasePage):
         )
 
     def find_select_option(self, option_text):
-        """Return a visible select option by case-insensitive text."""
-        xpath = (
-            "//*[@role='option' and translate(normalize-space(), "
-            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-            % option_text.lower()
-        )
-        option_locator = (
-            By.XPATH,
-            xpath
-        )
-
+        """Return a visible React Select option by case-insensitive text."""
         try:
             return self.wait.until(
-                lambda driver: self.get_clickable_option_after_scroll(xpath)
+                lambda d: self._find_react_option(option_text)
             )
-        except TimeoutException:
+        except Exception:
             return None
-
-    def get_clickable_option_after_scroll(self, option_xpath):
-        """Return a select option, scrolling the open menu if needed."""
-        options = self.driver.find_elements(By.XPATH, option_xpath)
-
-        if options:
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({ block: 'nearest' });",
-                options[0]
-            )
-            if options[0].is_displayed() and options[0].is_enabled():
-                return options[0]
-
-        menus = self.driver.find_elements(
-            By.XPATH,
-            "//*[contains(@class,'form-select__menu-list')]"
-        )
-        if menus:
-            self.driver.execute_script(
-                "arguments[0].scrollTop = arguments[0].scrollHeight;",
-                menus[0]
-            )
-
-        options = self.driver.find_elements(By.XPATH, option_xpath)
-        if options and options[0].is_displayed() and options[0].is_enabled():
-            return options[0]
-
-        return False
 
     def _is_radio_selected(self, locator):
         try:
@@ -518,15 +489,9 @@ class DiscountsPage(BasePage):
         row = rows[row_index]
         combobox = row.find_element(By.XPATH, ".//input[@role='combobox']")
         combobox.click()
-        option = self.wait.until(
-            EC.element_to_be_clickable(
-                (
-                    By.XPATH,
-                    "//*[@role='option' and translate(normalize-space(), "
-                    "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-                    % discount_type.lower()
-                )
-            )
+        combobox.send_keys(discount_type)
+        option = WebDriverWait(self.driver, 20).until(
+            lambda d: self._find_react_option(discount_type)
         )
         self.driver.execute_script("arguments[0].click();", option)
         self.wait.until(

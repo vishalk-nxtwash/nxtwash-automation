@@ -52,6 +52,7 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     memberships_page = open_memberships_page(browser)
 
     if memberships_page.membership_exists(membership_name):
+        memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
         memberships_page.fill_membership_form(
             membership_name,
@@ -85,6 +86,7 @@ def create_recurring_membership_if_missing(
     memberships_page = open_memberships_page(browser)
 
     if memberships_page.membership_exists(membership_name):
+        memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
         memberships_page.fill_recurring_membership_form(
             membership_name,

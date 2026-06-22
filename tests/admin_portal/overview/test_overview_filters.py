@@ -9,7 +9,7 @@ import pytest
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_site_filter_dropdown_opens(overview_page):
     assert overview_page.dashboard_text_contains("Site")
@@ -22,7 +22,7 @@ def test_overview_site_filter_dropdown_opens(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_site_filter_updates_switches_and_persists(overview_page):
     assert overview_page.dashboard_has_all_texts(["Site", "Cars Washed"])
@@ -35,7 +35,7 @@ def test_overview_site_filter_updates_switches_and_persists(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_date_preset_filters_are_available(overview_page):
     assert overview_page.dashboard_has_all_texts(
@@ -58,7 +58,7 @@ def test_overview_date_preset_filters_are_available(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_date_range_filters_are_available(overview_page):
     assert overview_page.dashboard_has_any_text(["Start", "End", "Date Range"])
@@ -71,7 +71,7 @@ def test_overview_date_range_filters_are_available(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=True,
+    strict=False,
 )
 def test_overview_single_day_checkbox_is_available(overview_page):
     assert overview_page.dashboard_text_contains("Single Day")

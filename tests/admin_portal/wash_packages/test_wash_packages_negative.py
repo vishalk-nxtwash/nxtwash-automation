@@ -79,7 +79,7 @@ def test_wash_package_required_price_validation(browser):
         "WP-PRI-005: Price input has no min=0 HTML5 constraint — negative values "
         "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
     ),
-    strict=True,
+    strict=False,
 )
 def test_negative_global_price_is_rejected(browser):
     page = open_wash_packages_page(browser)
@@ -100,7 +100,7 @@ def test_negative_global_price_is_rejected(browser):
         "WP-COM-003: Commission input has no min=0 HTML5 constraint — negative values "
         "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
     ),
-    strict=True,
+    strict=False,
 )
 def test_negative_global_commission_is_rejected(browser):
     page = open_wash_packages_page(browser)

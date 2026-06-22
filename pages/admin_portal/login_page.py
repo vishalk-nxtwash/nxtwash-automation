@@ -66,10 +66,6 @@ class AdminLoginPage(BasePage):
         """Return whether the browser is on the login page."""
         return "/login" in self.driver.current_url
 
-    def logo_is_present(self):
-        """Return whether the logo image is present in the DOM."""
-        return len(self.driver.find_elements(*self.LOGO_IMAGE)) > 0
-
     def logo_is_visible(self):
         """Return whether the logo image is visible."""
         elements = self.driver.find_elements(*self.LOGO_IMAGE)
@@ -133,7 +129,7 @@ class AdminLoginPage(BasePage):
 
     def focus_email_field(self):
         """Move focus to email or phone field."""
-        self.driver.find_element(*self.EMAIL_OR_PHONE_INPUT).click()
+        self.click(self.EMAIL_OR_PHONE_INPUT)
 
     def active_element_name(self):
         """Return the focused element name attribute."""
@@ -175,10 +171,8 @@ class AdminLoginPage(BasePage):
     def submit_with_enter(self, email_or_phone, password):
         """Submit login form using Enter from password field."""
         self.enter_email_or_phone(email_or_phone)
-        password_input = self.driver.find_element(*self.PASSWORD_INPUT)
-        password_input.clear()
-        password_input.send_keys(password)
-        password_input.send_keys(Keys.ENTER)
+        self.enter_password(password)
+        self.driver.find_element(*self.PASSWORD_INPUT).send_keys(Keys.ENTER)
 
     def get_email_value(self):
         """Return email or phone field value."""
@@ -218,8 +212,14 @@ class AdminLoginPage(BasePage):
 
     def wait_for_login_failure(self):
         """Wait until login remains on login page after a failed attempt."""
-        long_wait = WebDriverWait(self.driver, 10)
-        long_wait.until(lambda driver: "/login" in driver.current_url)
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(lambda driver: "/login" in driver.current_url)
+
+    def wait_for_auth_error(self, timeout=10):
+        """Wait until a server-side login error message is visible."""
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: bool(self.visible_error_text())
+        )
 
     def password_input_type(self):
         """Return password input type."""
@@ -231,10 +231,15 @@ class AdminLoginPage(BasePage):
 
     def toggle_password_visibility(self):
         """Click password visibility toggle."""
-        self.driver.find_element(*self.PASSWORD_VISIBILITY_BUTTON).click()
+        self.click(self.PASSWORD_VISIBILITY_BUTTON)
 
     def open_protected_overview(self):
-        """Open the protected Admin Overview URL directly."""
+        """Open the protected Admin Overview URL directly.
+
+        Intentionally identical to open() — the portal root is the overview
+        page. The distinction is semantic: this method is called after clearing
+        auth state to verify the redirect-to-login guard.
+        """
         self.driver.get(self.config.get_url(self.PORTAL))
 
     def open_login_url(self):
