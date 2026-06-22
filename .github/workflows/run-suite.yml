@@ -116,7 +116,7 @@ jobs:
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
           pytest $marker_arg ${TEST_PATH} $xdist \
-            --headless --close-browser \
+            --headless \
             --reruns "${RERUNS}" --reruns-delay 3 \
             --alluredir=allure-results \
             --html=report.html --self-contained-html \

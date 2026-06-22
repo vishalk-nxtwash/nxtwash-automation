@@ -546,6 +546,18 @@ class CreateSitePage(BasePage):
         )
         return element
 
+    def _real_click(self, element):
+        """Click via the real mouse event chain (mousedown+mouseup).
+
+        react-select opens its menu on mousedown, which a synthetic
+        execute_script('click') does not dispatch — so a JS click never opens
+        the dropdown. Use a native click; fall back to JS only if intercepted.
+        """
+        try:
+            element.click()
+        except Exception:  # noqa: BLE001
+            self.driver.execute_script("arguments[0].click();", element)
+
     def _select_combobox_option(self, combobox_locator, option_text, fallback=None):
         """Select an option from a React select combobox."""
         option = None
@@ -554,7 +566,7 @@ class CreateSitePage(BasePage):
         for attempt in range(2):
             combobox = self._scroll_to_locator(combobox_locator)
             self.wait.until(EC.element_to_be_clickable(combobox_locator))
-            self.driver.execute_script("arguments[0].click();", combobox)
+            self._real_click(combobox)
             input_elements = [
                 element
                 for element in combobox.find_elements(By.XPATH, ".//input")
@@ -579,7 +591,7 @@ class CreateSitePage(BasePage):
 
         if option is None and fallback is not None:
             combobox = self._scroll_to_locator(combobox_locator)
-            self.driver.execute_script("arguments[0].click();", combobox)
+            self._real_click(combobox)
             input_elements = [
                 element
                 for element in combobox.find_elements(By.XPATH, ".//input")
@@ -593,7 +605,7 @@ class CreateSitePage(BasePage):
                 option = self._find_select_option(fallback)
                 selected_text = fallback
                 if option is not None:
-                    self.driver.execute_script("arguments[0].click();", option)
+                    self._real_click(option)
                     self.wait.until(
                         lambda driver: selected_text.lower()
                         in self.get_body_text().lower()
@@ -605,50 +617,18 @@ class CreateSitePage(BasePage):
         if option is None:
             raise AssertionError("Dropdown option was not found: %s" % option_text)
 
-        self.driver.execute_script("arguments[0].click();", option)
+        self._real_click(option)
         self.wait.until(
             lambda driver: selected_text.lower() in self.get_body_text().lower()
         )
 
     def _find_select_option(self, option_text):
-        """Return a visible select option by exact or contains text."""
-        normalized = option_text.lower()
-        exact_xpath = (
-            "//*[@role='option' and translate(normalize-space(), "
-            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-            % normalized
-        )
-        contains_xpath = (
-            "//*[@role='option' and contains(translate(normalize-space(), "
-            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')]"
-            % normalized
-        )
-
-        for option_xpath in (exact_xpath, contains_xpath):
-            try:
-                option = self.wait.until(
-                    lambda driver: self._get_clickable_option_after_scroll(
-                        option_xpath
-                    )
-                )
-            except TimeoutException:
-                option = None
-
-            if option:
-                return option
-
-        visible_text_xpath = (
-            "//*[translate(normalize-space(), "
-            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='%s']"
-            % normalized
-        )
+        """Return a visible React Select option via JavaScript."""
         try:
             return self.wait.until(
-                lambda driver: self._get_clickable_option_after_scroll(
-                    visible_text_xpath
-                )
+                lambda d: self._find_react_option(option_text)
             )
-        except TimeoutException:
+        except Exception:
             return None
 
     def _get_clickable_option_after_scroll(self, option_xpath):

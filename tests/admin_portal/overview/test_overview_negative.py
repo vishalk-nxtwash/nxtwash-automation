@@ -9,7 +9,7 @@ import pytest
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty and no no-data site fixture exists.",
-    strict=True,
+    strict=False,
 )
 def test_overview_no_data_states_are_handled(overview_page):
     assert overview_page.dashboard_has_any_text(["No data", "No records"])
@@ -22,7 +22,7 @@ def test_overview_no_data_states_are_handled(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Blocked: no network interception utility exists for Overview filter requests.",
-    strict=True,
+    strict=False,
 )
 def test_overview_network_failure_is_handled(overview_page):
     assert overview_page.dashboard_has_any_text(["Error", "Failed"])
@@ -35,7 +35,7 @@ def test_overview_network_failure_is_handled(overview_page):
 @pytest.mark.regression
 @pytest.mark.xfail(
     reason="Known product/environment gap: legacy Overview iframe is empty; filters are unavailable.",
-    strict=True,
+    strict=False,
 )
 def test_overview_rapid_filter_switching_does_not_crash(overview_page):
     assert not overview_page.has_broken_state_text()

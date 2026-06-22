@@ -38,6 +38,7 @@ def create_wash_extra_if_missing(browser, extra_name=WASH_EXTRA_NAME):
     page = open_wash_extras_page(browser)
 
     if page.extra_exists(extra_name):
+        page = open_wash_extras_page(browser)
         page.open_edit_extra(extra_name)
         page.fill_extra_form(extra_name, GLOBAL_PRICE, GLOBAL_COMMISSION)
         page.open_discount_settings()

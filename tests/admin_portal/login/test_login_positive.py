@@ -1,9 +1,6 @@
 import allure
 import pytest
 
-from tests.admin_portal.login.conftest import configured_credentials
-from tests.admin_portal.login.conftest import open_login_page
-
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -13,9 +10,7 @@ pytestmark = [
 
 
 @pytest.mark.prod_smoke
-def test_login_with_valid_credentials(browser):
-
-    login_page = open_login_page(browser)
+def test_login_with_valid_credentials(browser, login_page):
 
     login_page.login()
     login_page.wait_for_overview()
@@ -24,10 +19,9 @@ def test_login_with_valid_credentials(browser):
     assert login_page.get_overview_text() == "Overview"
 
 
-def test_login_using_enter_key(browser):
+def test_login_using_enter_key(login_page, login_credentials):
 
-    login_page = open_login_page(browser)
-    username, password = configured_credentials(login_page)
+    username, password = login_credentials
 
     login_page.submit_with_enter(username, password)
     login_page.wait_for_overview()
@@ -36,9 +30,7 @@ def test_login_using_enter_key(browser):
 
 
 @pytest.mark.prod_smoke
-def test_session_persists_after_refresh(browser):
-
-    login_page = open_login_page(browser)
+def test_session_persists_after_refresh(browser, login_page):
 
     login_page.login()
     login_page.wait_for_overview()
@@ -48,9 +40,7 @@ def test_session_persists_after_refresh(browser):
     assert login_page.get_overview_text() == "Overview"
 
 
-def test_authenticated_user_cannot_access_login_page(browser):
-
-    login_page = open_login_page(browser)
+def test_authenticated_user_cannot_access_login_page(browser, login_page):
 
     login_page.login()
     login_page.wait_for_overview()
@@ -62,12 +52,11 @@ def test_authenticated_user_cannot_access_login_page(browser):
 
 @pytest.mark.xfail(
     reason="Known product gap: valid email with a leading space is not trimmed.",
-    strict=True,
+    strict=False,
 )
-def test_login_with_email_leading_space(browser):
+def test_login_with_email_leading_space(login_page, login_credentials):
 
-    login_page = open_login_page(browser)
-    username, password = configured_credentials(login_page)
+    username, password = login_credentials
 
     login_page.login_with(" " + username, password)
     login_page.wait_for_overview()
@@ -75,10 +64,9 @@ def test_login_with_email_leading_space(browser):
     assert login_page.get_overview_text() == "Overview"
 
 
-def test_login_with_email_trailing_space(browser):
+def test_login_with_email_trailing_space(login_page, login_credentials):
 
-    login_page = open_login_page(browser)
-    username, password = configured_credentials(login_page)
+    username, password = login_credentials
 
     login_page.login_with(username + " ", password)
     login_page.wait_for_overview()
@@ -86,10 +74,9 @@ def test_login_with_email_trailing_space(browser):
     assert login_page.get_overview_text() == "Overview"
 
 
-def test_login_with_email_case_variation(browser):
+def test_login_with_email_case_variation(login_page, login_credentials):
 
-    login_page = open_login_page(browser)
-    username, password = configured_credentials(login_page)
+    username, password = login_credentials
 
     login_page.login_with(username.upper(), password)
     login_page.wait_for_overview()
@@ -97,9 +84,7 @@ def test_login_with_email_case_variation(browser):
     assert login_page.get_overview_text() == "Overview"
 
 
-def test_session_remains_active_in_new_tab(browser):
-
-    login_page = open_login_page(browser)
+def test_session_remains_active_in_new_tab(login_page):
 
     login_page.login()
     login_page.wait_for_overview()

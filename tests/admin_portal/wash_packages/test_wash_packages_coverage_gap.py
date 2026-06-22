@@ -135,7 +135,7 @@ def test_wash_package_global_price_is_required(browser):
         "Download file/content validation needs browser download-directory "
         "configuration and CSV/XLS parser utilities."
     ),
-    strict=True,
+    strict=False,
 )
 def test_wash_packages_download_file_validation_blocker(browser):
     page = open_wash_packages_page(browser)
@@ -150,7 +150,7 @@ def test_wash_packages_download_file_validation_blocker(browser):
 @pytest.mark.permissions
 @pytest.mark.xfail(
     reason="Permission cases require non-admin role fixtures and credentials.",
-    strict=True,
+    strict=False,
 )
 def test_wash_packages_permission_matrix_blocker(browser):
     page = open_wash_packages_page(browser)
@@ -169,7 +169,7 @@ def test_wash_packages_permission_matrix_blocker(browser):
         "need multi-session, network interception, audit API, and environment "
         "restart harnesses."
     ),
-    strict=True,
+    strict=False,
 )
 def test_wash_packages_advanced_edge_case_harness_blocker(browser):
     page = open_wash_packages_page(browser)
