@@ -1,8 +1,6 @@
 import allure
 import pytest
 
-from tests.admin_portal.login.conftest import open_login_page
-
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -20,9 +18,7 @@ pytestmark = [
         ("admin@example.com", "<script>alert(1)</script>"),
     ]
 )
-def test_login_security_payloads_do_not_authenticate(browser, email, password):
-
-    login_page = open_login_page(browser)
+def test_login_security_payloads_do_not_authenticate(login_page, email, password):
 
     login_page.login_with(email, password)
     login_page.wait_for_login_failure()

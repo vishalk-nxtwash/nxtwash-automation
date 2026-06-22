@@ -41,6 +41,7 @@ def create_gift_card_if_missing(browser, update_existing=False):
 
     if page.gift_card_exists(GIFT_CARD_NAME):
         if update_existing:
+            page = open_gift_cards_page(browser)
             page.update_gift_card_settings(
                 GIFT_CARD_NAME,
                 GIFT_CARD_AMOUNT,
@@ -48,6 +49,7 @@ def create_gift_card_if_missing(browser, update_existing=False):
                 ASSIGNMENT_LOCATIONS
             )
 
+        page = open_gift_cards_page(browser)
         page.search_gift_card(GIFT_CARD_NAME)
         page.wait_for_gift_card_row(GIFT_CARD_NAME)
         return page

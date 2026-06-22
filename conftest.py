@@ -23,12 +23,6 @@ LOGS_DIR = "logs"
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--close-browser",
-        action="store_true",
-        default=False,
-        help="Close the browser after test execution (default: stay open)",
-    )
-    parser.addoption(
         "--single-window",
         action="store_true",
         default=False,

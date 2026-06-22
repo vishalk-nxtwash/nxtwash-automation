@@ -623,41 +623,13 @@ class CreateSitePage(BasePage):
         )
 
     def _find_select_option(self, option_text):
-        """Return a visible select option by exact or contains text.
-
-        Tries react-select option nodes (class *select__option*) first, then
-        role='option' nodes, then any element whose visible text matches. The
-        pay-week-start-day / state / city dropdowns render react-select options
-        that do not carry role='option', so the class-based match is needed.
-        """
-        normalized = option_text.lower()
-        lc = (
-            "translate(normalize-space(), "
-            "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
-        )
-        candidate_xpaths = (
-            "//*[contains(@class,'select__option') and %s='%s']" % (lc, normalized),
-            "//*[contains(@class,'select__option') and contains(%s, '%s')]"
-            % (lc, normalized),
-            "//*[@role='option' and %s='%s']" % (lc, normalized),
-            "//*[@role='option' and contains(%s, '%s')]" % (lc, normalized),
-            "//*[%s='%s']" % (lc, normalized),
-        )
-
-        for option_xpath in candidate_xpaths:
-            try:
-                option = self.wait.until(
-                    lambda driver: self._get_clickable_option_after_scroll(
-                        option_xpath
-                    )
-                )
-            except TimeoutException:
-                option = None
-
-            if option:
-                return option
-
-        return None
+        """Return a visible React Select option via JavaScript."""
+        try:
+            return self.wait.until(
+                lambda d: self._find_react_option(option_text)
+            )
+        except Exception:
+            return None
 
     def _get_clickable_option_after_scroll(self, option_xpath):
         """Return a select option, scrolling the open menu if needed."""

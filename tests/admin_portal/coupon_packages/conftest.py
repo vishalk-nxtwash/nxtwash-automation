@@ -32,6 +32,7 @@ def create_coupon_package_if_missing(browser):
     page = open_coupon_packages_page(browser)
 
     if page.coupon_package_exists(COUPON_PACKAGE_NAME):
+        page = open_coupon_packages_page(browser)
         page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
         page.ensure_active_switch_on()
         page.click_save_coupon_package()
