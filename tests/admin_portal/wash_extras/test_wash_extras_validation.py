@@ -66,7 +66,7 @@ def test_wash_extra_max_length_name_handled(browser):
     assert "Service name" in page.get_body_text()
 
 
-@allure.title("WE-VAL Invalid numeric inputs do not break the create form")
+@allure.title("Invalid numeric inputs do not break the create form")
 @pytest.mark.extended
 def test_wash_extra_invalid_numeric_values_do_not_break_form(browser):
 
