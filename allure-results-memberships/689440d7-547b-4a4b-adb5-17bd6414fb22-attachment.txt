@@ -1,0 +1,1 @@
+2026-06-25 11:58:33,218 INFO tests.admin_portal.memberships.test_memberships_positive: Validating cancel discards new membership: VK cancel 8f332c

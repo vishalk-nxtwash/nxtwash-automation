@@ -9,12 +9,13 @@ from tests.admin_portal.memberships.conftest import managed_membership  # noqa: 
 
 
 LOG = logging.getLogger(__name__)
+pytestmark = pytest.mark.timeout(900)
 
 
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Redemption Settings")
-@allure.title("MB-RDM-001 Redemption single location assignment persists")
+@allure.title("MB-RED-001 Redemption single location assignment persists")
 @pytest.mark.regression
 def test_redemption_single_location_persists(managed_membership):
 
@@ -26,8 +27,7 @@ def test_redemption_single_location_persists(managed_membership):
     )
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.configure_redemption_settings(0, REDEEM_AS_SERVICE)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_redemption_settings()
@@ -39,7 +39,7 @@ def test_redemption_single_location_persists(managed_membership):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Redemption Settings")
-@allure.title("MB-RDM-002 Redemption multiple locations persist")
+@allure.title("MB-RED-002 Redemption multiple locations persist")
 @pytest.mark.regression
 def test_redeem_at_multiple_locations_persists(managed_membership):
 
@@ -53,8 +53,7 @@ def test_redeem_at_multiple_locations_persists(managed_membership):
     page.select_redeem_as_option(REDEEM_AS_SERVICE, 0)
     page.assign_redemption_location_by_index(1)
     page.select_redeem_as_option(REDEEM_AS_SERVICE, 1)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_redemption_settings()

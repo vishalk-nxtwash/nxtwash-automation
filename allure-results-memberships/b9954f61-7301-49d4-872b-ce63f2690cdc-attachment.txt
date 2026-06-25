@@ -1,0 +1,1 @@
+2026-06-25 12:10:40,047 INFO tests.admin_portal.memberships.test_memberships_validation: Validating required global price

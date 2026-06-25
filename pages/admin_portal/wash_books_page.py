@@ -51,6 +51,10 @@ class WashBooksPage(BasePage):
         "//*[normalize-space()='Select site']/following::input[1]"
     )
 
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
+    )
     SAVE_WASH_BOOK_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Save wash book']"
@@ -169,6 +173,16 @@ class WashBooksPage(BasePage):
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create wash book form is visible."""
@@ -264,7 +278,7 @@ class WashBooksPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(Keys.COMMAND + "a")
         search_input.send_keys(Keys.BACKSPACE)
         search_input.send_keys(wash_book_name)
         self.wait.until(
@@ -272,6 +286,7 @@ class WashBooksPage(BasePage):
                 *self.SEARCH_INPUT
             ).get_attribute("value") == wash_book_name
         )
+        self.wait_for_grid_idle()
 
     def wash_book_exists(self, wash_book_name):
         """Return whether the wash book exists in the list."""
@@ -323,8 +338,16 @@ class WashBooksPage(BasePage):
 
     def clear_wash_book_search(self):
         """Clear the wash book search field and wait for list to reset."""
-        element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        self._set_input_value(element, "")
+        search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        search_input.click()
+        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value") == ""
+        )
+        self.wait_for_grid_idle()
 
     def apply_filters(self):
         """Click Apply filters button."""
@@ -977,6 +1000,7 @@ class WashBooksPage(BasePage):
                 (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__header')]")
             )
         )
+        self.wait_for_grid_idle()
 
     def wait_for_cwb_create_loaded(self):
         """Wait until the CWB create form is ready.
@@ -1009,15 +1033,19 @@ class WashBooksPage(BasePage):
 
     def search_cwb(self, wash_book_number):
         """Search customer wash books by wash book number."""
-        element = self.wait.until(
-            EC.visibility_of_element_located(self.CWB_SEARCH_INPUT)
+        search_input = self.wait.until(
+            EC.element_to_be_clickable(self.CWB_SEARCH_INPUT)
         )
-        self._set_input_value(element, wash_book_number)
+        search_input.click()
+        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(str(wash_book_number))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.CWB_SEARCH_INPUT
-            ).get_attribute("value") == wash_book_number
+            ).get_attribute("value") == str(wash_book_number)
         )
+        self.wait_for_grid_idle()
 
     def get_cwb_row_locator(self, wash_book_number):
         """Build a locator for a CWB row by wash book number."""

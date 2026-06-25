@@ -1,0 +1,1 @@
+2026-06-24 23:16:16,410 INFO tests.admin_portal.memberships.test_memberships_edit: Editing membership loyalty points and discount: VK MA2

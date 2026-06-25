@@ -6,6 +6,7 @@ import pytest
 from tests.admin_portal.wash_packages.conftest import ASSIGNMENT_SITE
 from tests.admin_portal.wash_packages.conftest import EXISTING_PACKAGE
 from tests.admin_portal.wash_packages.conftest import MISSING_PACKAGE
+from tests.admin_portal.wash_packages.conftest import create_wash_package_if_missing
 from tests.admin_portal.wash_packages.conftest import open_wash_packages_page
 from tests.admin_portal.wash_packages.conftest import page_has_no_broken_state
 
@@ -44,7 +45,7 @@ def test_wash_packages_list_shell_controls_and_grid(browser):
 @pytest.mark.regression
 def test_wash_packages_search_variants_and_clear(browser):
     LOG.info("Verifying Wash Packages search variants")
-    page = open_wash_packages_page(browser)
+    page = create_wash_package_if_missing(browser)
     original_count = len(page.get_visible_package_names())
 
     page.search_package(EXISTING_PACKAGE)

@@ -7,8 +7,10 @@ import pytest
 from tests.admin_portal.memberships.conftest import GLOBAL_COMMISSION
 from tests.admin_portal.memberships.conftest import FIRST_LOCATION_COMMISSION
 from tests.admin_portal.memberships.conftest import FIRST_LOCATION_PRICE
+from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import MEMBERSHIP_NAME
 from tests.admin_portal.memberships.conftest import create_membership_if_missing
+from tests.admin_portal.memberships.conftest import managed_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import open_memberships_page
 
 
@@ -19,6 +21,8 @@ LOG = logging.getLogger(__name__)
 @allure.feature("Memberships")
 @allure.story("Validation")
 @allure.title("MB-NAM-002 Verify Membership Name is mandatory")
+@pytest.mark.smoke
+@pytest.mark.regression
 @pytest.mark.validation
 def test_membership_required_name_validation(browser):
 
@@ -51,6 +55,7 @@ def test_membership_blank_required_form_stays_on_form(browser):
 @allure.feature("Memberships")
 @allure.story("Validation")
 @allure.title("MB-PRI-002 Verify Global Price is mandatory")
+@pytest.mark.regression
 @pytest.mark.validation
 def test_membership_requires_global_price(browser):
 
@@ -69,6 +74,7 @@ def test_membership_requires_global_price(browser):
 @allure.feature("Memberships")
 @allure.story("Validation")
 @allure.title("MB-NAM-003 Verify duplicate Membership Name is rejected")
+@pytest.mark.regression
 @pytest.mark.validation
 def test_duplicate_membership_name_is_rejected(browser):
 
@@ -113,6 +119,7 @@ def test_spaces_only_membership_name_is_rejected(browser):
 @allure.feature("Memberships")
 @allure.story("Validation")
 @allure.title("MB-PRI-005 Verify negative Global Price is rejected")
+@pytest.mark.regression
 @pytest.mark.validation
 def test_negative_global_price_is_rejected(browser):
 
@@ -201,3 +208,35 @@ def test_decimal_global_price_is_accepted_and_saved(browser):
 
     assert memberships_page.wait_for_membership_row(membership_name).is_displayed()
     assert memberships_page.get_membership_price(membership_name) == "$15.50"
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Validation")
+@allure.title("MB-BAR-003 Duplicate barcode is rejected on save")
+@pytest.mark.regression
+@pytest.mark.validation
+@pytest.mark.timeout(900)
+def test_duplicate_barcode_is_rejected(managed_membership):
+
+    page = managed_membership
+    duplicate_barcode = "AUTO-DUP-BAR-001"
+    LOG.info(
+        "Validating duplicate barcode '%s' is rejected", duplicate_barcode
+    )
+    # Assign the barcode to the managed membership and save
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.set_barcode(duplicate_barcode)
+    page.save_and_return_to_list()
+
+    # Try to set the same barcode on a second membership — expect rejection
+    create_membership_if_missing(page.driver)
+    page.open_edit_membership(MEMBERSHIP_NAME)
+    page.set_barcode(duplicate_barcode)
+    page.click_save_membership()
+    page.wait_for_form_save_blocked()
+
+    body = page.get_body_text().lower()
+    assert (
+        "already" in body or "duplicate" in body or "barcode" in body
+    ), "Expected a barcode-conflict error but none was visible"

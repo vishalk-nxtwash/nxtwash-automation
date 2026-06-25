@@ -41,7 +41,7 @@ def test_download_memberships_starts_file_download(browser, tmp_path):
 
     LOG.info("Configuring Chrome download directory: %s", tmp_path)
     browser.execute_cdp_cmd(
-        "Page.setDownloadBehavior",
+        "Browser.setDownloadBehavior",
         {
             "behavior": "allow",
             "downloadPath": str(tmp_path),
@@ -58,13 +58,13 @@ def test_download_memberships_starts_file_download(browser, tmp_path):
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Download")
-@allure.title("MEM-DL-002 Verify downloaded file format")
+@allure.title("MB-EXP-003 Verify downloaded file format is CSV or Excel")
 @pytest.mark.export
 def test_download_memberships_file_format(browser, tmp_path):
 
     LOG.info("Verifying membership export file format")
     browser.execute_cdp_cmd(
-        "Page.setDownloadBehavior",
+        "Browser.setDownloadBehavior",
         {
             "behavior": "allow",
             "downloadPath": str(tmp_path),
@@ -90,7 +90,7 @@ def test_download_filtered_memberships_starts_file_download(browser, tmp_path):
 
     LOG.info("Verifying filtered membership export downloads a file")
     browser.execute_cdp_cmd(
-        "Page.setDownloadBehavior",
+        "Browser.setDownloadBehavior",
         {
             "behavior": "allow",
             "downloadPath": str(tmp_path),

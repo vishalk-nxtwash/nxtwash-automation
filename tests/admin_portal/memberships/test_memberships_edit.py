@@ -20,6 +20,10 @@ POINTS_AWARDED = "5"
 APPLICABLE_DISCOUNT = "Plus discount"
 MEMBERSHIP_DESCRIPTION = "VK automation test description"
 
+# Managed-fixture tests run reset_managed_membership in setup AND teardown;
+# each pass takes ~5 min, so the default 180s is not enough.
+pytestmark = pytest.mark.timeout(900)
+
 
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
@@ -50,6 +54,7 @@ def test_edit_membership_loyalty_points_and_discount(browser):
 @allure.story("CRUD")
 @allure.title("MB-EDT-001 Verify Edit Membership functionality")
 @pytest.mark.regression
+@pytest.mark.timeout(300)
 def test_edit_membership_name_and_restore(browser):
 
     LOG.info(
@@ -97,8 +102,7 @@ def test_edit_managed_membership_type(managed_membership):
     page = managed_membership
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.select_recurring_membership_type()
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
 
@@ -119,8 +123,7 @@ def test_edit_managed_membership_global_price_and_commission(managed_membership)
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.set_global_price(updated_price)
     page.set_global_commission(updated_commission)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
 
@@ -142,8 +145,7 @@ def test_edit_managed_membership_barcode_persists(managed_membership):
     assert page.get_barcode_value() == ""
 
     page.set_barcode(barcode)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
 
@@ -160,12 +162,33 @@ def test_edit_managed_membership_customer_portal_toggle_off(managed_membership):
     page = managed_membership
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.ensure_customer_portal_switch_off()
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
 
     assert not page.customer_portal_switch_is_on()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
+@allure.story("Membership Settings")
+@allure.title("MB-TGL-003 Show membership on customer portal persists after save")
+@pytest.mark.regression
+def test_edit_managed_membership_customer_portal_toggle_on(managed_membership):
+
+    page = managed_membership
+    # Baseline is portal ON; turn it OFF first so the ON→save→verify cycle is real
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_customer_portal_switch_off()
+    page.save_and_return_to_list()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.ensure_customer_portal_switch_on()
+    page.save_and_return_to_list()
+
+    page.open_edit_membership(MANAGED_MEMBERSHIP)
+
+    assert page.customer_portal_switch_is_on()
 
 
 @allure.epic("Admin Portal")
@@ -188,8 +211,7 @@ def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
         GLOBAL_COMMISSION
     )
     page.set_location_price_and_commission_by_index(1, GLOBAL_PRICE, GLOBAL_COMMISSION)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
 
@@ -210,8 +232,7 @@ def test_applicable_discount_persists(managed_membership):
     LOG.info("Assigning discount %s to %s", APPLICABLE_DISCOUNT, MANAGED_MEMBERSHIP)
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_discount_settings()
@@ -234,13 +255,11 @@ def test_remove_applicable_discount_persists(managed_membership):
     )
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.deselect_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_discount_settings()
@@ -259,8 +278,8 @@ def test_limit_membership_toggle_persists(managed_membership):
     LOG.info("Enabling Limit Membership toggle for %s", MANAGED_MEMBERSHIP)
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.ensure_limit_membership_switch_on()
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.set_redemption_limits()
+    page.save_and_return_to_list()
 
     try:
         page.open_edit_membership(MANAGED_MEMBERSHIP)
@@ -268,8 +287,7 @@ def test_limit_membership_toggle_persists(managed_membership):
     finally:
         page.open_edit_membership(MANAGED_MEMBERSHIP)
         page.ensure_switch_off(page.LIMIT_MEMBERSHIP_SWITCH)
-        page.click_save_membership()
-        page.wait_for_list_loaded()
+        page.save_and_return_to_list()
 
 
 @allure.epic("Admin Portal")
@@ -285,8 +303,7 @@ def test_membership_description_saves(managed_membership):
     )
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.set_membership_description(MEMBERSHIP_DESCRIPTION)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     try:
         page.open_edit_membership(MANAGED_MEMBERSHIP)
@@ -294,5 +311,4 @@ def test_membership_description_saves(managed_membership):
     finally:
         page.open_edit_membership(MANAGED_MEMBERSHIP)
         page.set_membership_description("")
-        page.click_save_membership()
-        page.wait_for_list_loaded()
+        page.save_and_return_to_list()

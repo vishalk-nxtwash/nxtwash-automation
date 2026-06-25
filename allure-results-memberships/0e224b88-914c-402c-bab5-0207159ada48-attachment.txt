@@ -1,0 +1,2 @@
+2026-06-25 11:34:51,950 INFO tests.admin_portal.memberships.test_memberships_download: Verifying membership export file format
+2026-06-25 11:35:00,371 INFO tests.admin_portal.memberships.test_memberships_download: Waiting for membership export download

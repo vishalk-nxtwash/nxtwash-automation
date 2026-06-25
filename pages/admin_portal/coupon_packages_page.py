@@ -1,6 +1,7 @@
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -31,6 +32,10 @@ class CouponPackagesPage(BasePage):
     ADD_COUPON_PACKAGE_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='+ Add new coupon package']"
+    )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
     )
     SAVE_COUPON_PACKAGE_BUTTON = (
         By.XPATH,
@@ -66,6 +71,16 @@ class CouponPackagesPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(
             EC.element_to_be_clickable(self.ADD_COUPON_PACKAGE_BUTTON)
+        )
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
         )
 
     def wait_for_create_loaded(self):
@@ -140,12 +155,16 @@ class CouponPackagesPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, coupon_package_name)
+        search_input.click()
+        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(coupon_package_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == coupon_package_name
         )
+        self.wait_for_grid_idle()
 
     def coupon_package_exists(self, coupon_package_name):
         """Return whether the coupon package exists in the list."""
