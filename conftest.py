@@ -43,7 +43,35 @@ def pytest_addoption(parser):
     )
 
 
+def _patch_pytest_ast_source():
+    # Python 3.11.0-3.11.3 CPython bug: ast.parse raises SystemError on deeply
+    # nested source files.  Pytest's _code/code.py calls getstatementrange_ast
+    # (imported into its own namespace) when formatting failure tracebacks.  By
+    # patching the name in that module we convert SystemError → IndexError, which
+    # pytest already handles gracefully, before it can propagate to third-party
+    # plugins (pytest-html, pytest-rerunfailures) that call outcome.get_result()
+    # and would re-raise it as INTERNALERROR.
+    try:
+        import _pytest._code.code as _code_mod
+
+        _orig = _code_mod.getstatementrange_ast
+
+        def _safe(*args, **kwargs):
+            try:
+                return _orig(*args, **kwargs)
+            except SystemError:
+                # getsource() catches SyntaxError and falls back gracefully;
+                # IndexError is NOT caught in this pytest version and propagates.
+                raise SyntaxError("ast.parse failed: Python 3.11 CPython AST bug")
+
+        _code_mod.getstatementrange_ast = _safe
+    except (ImportError, AttributeError):
+        pass
+
+
 def pytest_configure(config):
+    _patch_pytest_ast_source()
+
     # Propagate the chosen environment so ConfigManager picks it up everywhere.
     env = config.getoption("--env") or os.getenv("TEST_ENV", "staging")
     os.environ["TEST_ENV"] = env
@@ -105,8 +133,6 @@ _QUARANTINE_TIMING = (
     "test_service_categories_filter.py::test_filter_inactive_categories_shows_inactive",
     "test_service_categories_managed.py::test_managed_category_provided_at_baseline",
     "test_service_categories_managed.py::test_managed_category_rename_is_reset_on_teardown",
-    "test_memberships_edit.py::test_remove_applicable_discount_persists",
-    "test_memberships_positive.py::test_activate_membership",
     "test_memberships_search_filter.py::test_memberships_partial_search",
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
@@ -125,12 +151,6 @@ _QUARANTINE_TIMING = (
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
 _QUARANTINE_SCRIPT = {
-    "test_memberships_edit.py::test_limit_membership_toggle_persists":
-        "MB-LMT-001 script issue: Limit toggle reveals required per-day/week/month "
-        "fields the test does not fill. Fix: fill them before save.",
-    "test_memberships_edit.py::test_membership_description_saves":
-        "MB-DESC-001 script issue: description accordion is collapsed so the "
-        "textarea is hidden. Fix: expand the accordion before typing.",
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",
@@ -246,7 +266,16 @@ def _capture_failure(item, driver):
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
-    report = outcome.get_result()
+    try:
+        report = outcome.get_result()
+    except SystemError:
+        # Python 3.11.0–3.11.3 has a CPython bug (AST constructor recursion
+        # depth mismatch) that fires when pytest formats a traceback through
+        # a source file with complex nested expressions.  Catching it here
+        # prevents the INTERNALERROR that would otherwise crash the entire
+        # suite; the test is still recorded as failed by pytest's inner
+        # runner — we just skip our screenshot/capture step for that one.
+        return
 
     if report.when != "call":
         return

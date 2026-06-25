@@ -1,0 +1,1 @@
+2026-06-25 12:12:25,674 INFO tests.admin_portal.memberships.test_memberships_validation: Validating alphabetic global price

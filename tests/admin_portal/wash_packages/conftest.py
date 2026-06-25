@@ -4,9 +4,9 @@ from pages.admin_portal.wash_packages_page import WashPackagesPage
 from tests.admin_portal.admin_session import open_admin_path
 
 
-EXISTING_PACKAGE = "Plus Wash"
+EXISTING_PACKAGE = "VK AWP1"
 MISSING_PACKAGE = "wash-package-does-not-exist-automation"
-ASSIGNMENT_SITE = "VK Test carwash 2"
+ASSIGNMENT_SITE = "VK AL11"
 PACKAGE_NAME = "VK AWP1"
 UPDATED_PACKAGE_NAME = "VK AWP1 edited"
 POINTS_AWARDED = "3"

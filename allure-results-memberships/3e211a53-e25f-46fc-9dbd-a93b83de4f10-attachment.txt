@@ -1,0 +1,1 @@
+2026-06-24 23:40:33,272 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership by exact name: VK MA2

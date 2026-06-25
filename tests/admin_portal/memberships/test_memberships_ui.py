@@ -15,6 +15,8 @@ LOG = logging.getLogger(__name__)
 @allure.feature("Memberships")
 @allure.story("UI")
 @allure.title("MB-LST-001 Memberships page primary controls")
+@pytest.mark.smoke
+@pytest.mark.regression
 @pytest.mark.sanity
 @pytest.mark.prod_smoke
 def test_memberships_page_loads_with_primary_controls(browser):

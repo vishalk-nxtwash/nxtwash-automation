@@ -13,6 +13,9 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Memberships"),
     allure.story("Managed data"),
+    # The managed fixture runs reset_managed_membership in both setup and
+    # teardown; each pass takes ~5 min, so the default 180s is not enough.
+    pytest.mark.timeout(900),
 ]
 
 UPDATED_POINTS = "5"
@@ -38,9 +41,9 @@ def test_managed_membership_mutation_is_reset_on_teardown(managed_membership):
 
     LOG.info("Mutating managed membership points to %s", UPDATED_POINTS)
     page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_membership_settings()
     page.set_points_awarded(UPDATED_POINTS)
-    page.click_save_membership()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     assert page.get_points_awarded_value() == UPDATED_POINTS

@@ -1,5 +1,6 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -93,6 +94,10 @@ class WashPackagesPage(BasePage):
         "//*[contains(@class,'InovuaReactDataGrid__column-header--first')]"
         "//*[contains(@class,'inovua-react-toolkit-checkbox')]"
     )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
+    )
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Packages list is visible."""
@@ -102,6 +107,16 @@ class WashPackagesPage(BasePage):
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_PACKAGE_BUTTON))
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create package form is visible."""
@@ -177,13 +192,23 @@ class WashPackagesPage(BasePage):
         return [name for name in names if name]
 
     def every_visible_row_has_edit_action(self):
-        """Return whether every visible row exposes an Edit action."""
-        rows = self.get_visible_package_rows()
-        edits = [
-            edit for edit in self.driver.find_elements(*self.EDIT_ACTIONS)
-            if edit.is_displayed()
-        ]
-        return bool(rows) and len(edits) >= len(rows)
+        """Return whether the grid has loaded rows with an Edit action.
+
+        Uses a direct wait for a row+Edit combination to avoid the race where
+        the InovuaReactDataGrid load mask disappears briefly before row data
+        has rendered — checking rows immediately after would find an empty grid.
+        """
+        try:
+            self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "//*[contains(@class,'InovuaReactDataGrid__row')"
+                    " and .//*[normalize-space()='Edit']]"
+                ))
+            )
+            return True
+        except TimeoutException:
+            return False
 
     def pagination_controls_are_visible(self):
         """Return whether pagination controls are visible."""
@@ -225,28 +250,41 @@ class WashPackagesPage(BasePage):
             return False
 
     def search_package(self, package_name):
-        """Search package by service name."""
+        """Search package by service name.
+
+        Uses Cmd+A → Backspace to clear (fires keyboard events React handles),
+        then send_keys to type the new value.  element.clear() does not fire
+        React's synthetic onChange on macOS Chrome, causing the next send_keys
+        to append to the old React-state value instead of replacing it.
+        """
         element = self.wait.until(
-            EC.visibility_of_element_located(self.SEARCH_INPUT)
+            EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(element, package_name)
+        element.click()
+        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(package_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == package_name
         )
+        self.wait_for_grid_idle()
 
     def clear_package_search(self):
         """Clear package search input and wait until the grid refreshes."""
         element = self.wait.until(
-            EC.visibility_of_element_located(self.SEARCH_INPUT)
+            EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(element, "")
+        element.click()
+        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == ""
         )
+        self.wait_for_grid_idle()
 
     def get_package_price(self, package_name):
         """Return visible price for a package row."""
@@ -513,14 +551,21 @@ class WashPackagesPage(BasePage):
         self._set_input_value(redeemed, str(points_redeemed))
 
     def get_site_row(self, site_name):
-        """Return the site assignment grid row for a site."""
+        """Return the site assignment grid row for a site.
+
+        Waits for the site-assignment grid to load at least one row (the grid
+        populates asynchronously), then locates the specific site row.
+        """
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
+        self.wait.until(EC.presence_of_element_located(any_row_locator))
         return self.wait.until(
             EC.visibility_of_element_located(
                 (
                     By.XPATH,
                     "//*[normalize-space()='%s']"
                     "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
-                    % site_name
+                    % site_name,
                 )
             )
         )

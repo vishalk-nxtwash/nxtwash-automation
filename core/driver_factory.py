@@ -1,6 +1,22 @@
+import os
+import socket
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
+# Set a 60-second default socket timeout so ChromeDriver HTTP requests don't
+# block indefinitely when Chrome freezes.  Without this, a frozen Chrome
+# prevents both thread-based and signal-based pytest timeouts from firing.
+socket.setdefaulttimeout(60)
+
+# Pinned path for the ChromeDriver binary that matches Chrome 149.0.7827.196.
+# WDM auto-detection fetches the closest cached minor build (155) which doesn't
+# match the installed Chrome (196), causing InvalidSessionIdException crashes.
+_PINNED_CHROMEDRIVER = os.path.expanduser(
+    "~/.wdm/drivers/chromedriver/mac-arm64/"
+    "149.0.7827.196/chromedriver-mac-arm64/chromedriver"
+)
 
 
 class DriverFactory:
@@ -14,7 +30,10 @@ class DriverFactory:
     @classmethod
     def _chromedriver_path(cls):
         if cls._driver_path is None:
-            cls._driver_path = ChromeDriverManager().install()
+            if os.path.isfile(_PINNED_CHROMEDRIVER):
+                cls._driver_path = _PINNED_CHROMEDRIVER
+            else:
+                cls._driver_path = ChromeDriverManager().install()
         return cls._driver_path
 
     @classmethod

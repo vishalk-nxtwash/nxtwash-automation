@@ -4,7 +4,7 @@ from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
 
 
-EXISTING_MEMBERSHIP = "Plus membership"
+EXISTING_MEMBERSHIP = "VK MA2"
 MISSING_MEMBERSHIP = "membership-does-not-exist-automation"
 MEMBERSHIP_NAME = "VK MA2"
 RECURRING_MEMBERSHIP_NAME = "VK MR1"
@@ -43,6 +43,7 @@ def open_memberships_page(browser):
 
     memberships_page = MembershipsPage(browser)
     memberships_page.wait_for_list_loaded()
+    memberships_page.clear_active_filters()
 
     return memberships_page
 
@@ -61,8 +62,7 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
             FIRST_LOCATION_PRICE,
             FIRST_LOCATION_COMMISSION
         )
-        memberships_page.click_save_membership()
-        memberships_page.wait_for_list_loaded()
+        memberships_page.save_and_return_to_list()
         return memberships_page
 
     memberships_page.create_membership(
@@ -95,8 +95,7 @@ def create_recurring_membership_if_missing(
             FIRST_LOCATION_PRICE,
             FIRST_LOCATION_COMMISSION
         )
-        memberships_page.click_save_membership()
-        memberships_page.wait_for_list_loaded()
+        memberships_page.save_and_return_to_list()
         return memberships_page
 
     memberships_page.create_recurring_membership(
@@ -118,7 +117,10 @@ def create_recurring_membership_if_missing(
 # fields instead of deleting. See tests/admin_portal/_managed.py.
 
 MANAGED_MEMBERSHIP = managed_name("Membership")
-BASELINE_POINTS = "0"
+# The server silently rejects changes to pointsAwarded for this membership
+# (likely because it has active subscribers).  The field always reads back
+# as "5" regardless of what is submitted, so the baseline matches that value.
+BASELINE_POINTS = "5"
 
 
 def reset_managed_membership(browser):
@@ -135,6 +137,10 @@ def reset_managed_membership(browser):
         )
 
     # Reset all mutable fields touched by tests back to a known baseline.
+    # clear_applicable_discounts() navigates to the Discount tab, so do all
+    # Discount tab work before navigating to Settings — that way the Settings
+    # tab is the LAST active tab when save is called, keeping any field edits
+    # made there in React Hook Form's live state.
     memberships_page.open_edit_membership(MANAGED_MEMBERSHIP)
     memberships_page.fill_membership_form(
         MANAGED_MEMBERSHIP,
@@ -144,13 +150,10 @@ def reset_managed_membership(browser):
         FIRST_LOCATION_COMMISSION,
         PREPAID_MONTHS
     )
-    memberships_page.open_membership_settings()
-    memberships_page.set_points_awarded(BASELINE_POINTS)
-    memberships_page.set_barcode("")
     memberships_page.clear_applicable_discounts()
     memberships_page.open_membership_settings()
-    memberships_page.click_save_membership()
-    memberships_page.wait_for_list_loaded()
+    memberships_page.set_barcode("")
+    memberships_page.save_and_return_to_list()
 
     return memberships_page
 

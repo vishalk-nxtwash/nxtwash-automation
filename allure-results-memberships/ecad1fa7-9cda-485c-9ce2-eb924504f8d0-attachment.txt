@@ -1,0 +1,1 @@
+2026-06-25 11:56:37,675 INFO tests.admin_portal.memberships.test_memberships_positive: Verifying membership settings persist: VK MA2

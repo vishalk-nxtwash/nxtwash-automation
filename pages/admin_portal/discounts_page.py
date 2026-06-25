@@ -38,6 +38,10 @@ class DiscountsPage(BasePage):
         By.XPATH,
         "//button[normalize-space()='+ Add new discount']"
     )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
+    )
     SAVE_DISCOUNT_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Save discount']"
@@ -118,6 +122,16 @@ class DiscountsPage(BasePage):
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create discount form is visible."""
@@ -187,24 +201,31 @@ class DiscountsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, discount_name)
+        search_input.click()
+        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(discount_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == discount_name
         )
+        self.wait_for_grid_idle()
 
     def clear_discount_search(self):
         """Clear the discount search box."""
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, "")
+        search_input.click()
+        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == ""
         )
+        self.wait_for_grid_idle()
 
     def discount_exists(self, discount_name):
         """Return whether the discount exists in the list."""

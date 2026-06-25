@@ -1,5 +1,8 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -133,11 +136,15 @@ class MembershipsPage(BasePage):
         "/ancestor::*[contains(@class,'flex-toggler')][1]"
         "//button[@role='switch']"
     )
-    DESCRIPTION_TEXTAREA = (
+    LIMIT_PER_DAY_INPUT = (By.NAME, "redemptionLimitPerDay")
+    LIMIT_PER_WEEK_INPUT = (By.NAME, "redemptionLimitPerWeek")
+    LIMIT_PER_MONTH_INPUT = (By.NAME, "redemptionLimitPerMonth")
+    DESCRIPTION_ACCORDION_HEADER = (
         By.XPATH,
-        "//*[contains(normalize-space(), 'Membership description')]"
-        "/following::textarea[1]"
+        "//*[normalize-space()='Membership description']"
+        "/parent::*[contains(@style,'cursor: pointer')]"
     )
+    DESCRIPTION_TEXTAREA = (By.NAME, "description")
     ACTIVE_SWITCH = (
         By.XPATH,
         "//*[normalize-space()='Active service']"
@@ -345,6 +352,13 @@ class MembershipsPage(BasePage):
 
     def every_visible_row_has_edit_action(self):
         """Return whether every visible membership row has an Edit action."""
+        try:
+            self.wait.until(
+                lambda driver: len(self.get_visible_membership_rows()) > 0
+            )
+        except TimeoutException:
+            return False
+
         rows = self.get_visible_membership_rows()
         if not rows:
             return False
@@ -367,28 +381,53 @@ class MembershipsPage(BasePage):
             return False
 
     def search_membership(self, membership_name):
-        """Search membership by name."""
+        """Search membership by name.
+
+        Uses Cmd+A → Backspace to clear so React's onChange fires correctly.
+        Ctrl+A on macOS Chrome moves the cursor to start of line rather than
+        selecting all text, causing repeated searches to append instead of replace.
+        """
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, membership_name)
+        search_input.click()
+        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(membership_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == membership_name
         )
+        self.wait_for_grid_idle()
+        # React may update the controlled input asynchronously after the grid
+        # renders a zero-results state (deferred setState clears the value).
+        # Poll until two consecutive reads agree so the caller sees the final
+        # stable value rather than a transient intermediate state.
+        prev = object()
+        for _ in range(8):
+            curr = self.driver.find_element(
+                *self.SEARCH_INPUT
+            ).get_attribute("value")
+            if curr == prev:
+                break
+            prev = curr
+            time.sleep(0.1)
 
     def clear_membership_search(self):
         """Clear membership search and wait for the grid to refresh."""
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self._set_input_value(search_input, "")
+        search_input.click()
+        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == ""
         )
+        self.wait_for_grid_idle()
 
     def search_input_value(self):
         """Return current membership search input value."""
@@ -504,13 +543,38 @@ class MembershipsPage(BasePage):
         else:
             self.ensure_switch_off(self.ACTIVE_MEMBERSHIP_FILTER_SWITCH)
 
+    def has_active_filters(self):
+        """Return whether any filters are currently active."""
+        try:
+            btn = self.driver.find_element(*self.FILTER_BUTTON)
+            return "(" in btn.text
+        except Exception:
+            return False
+
+    def clear_active_filters(self):
+        """Reset and apply filters if any are currently active."""
+        if self.has_active_filters():
+            self.reset_filters()
+            self.apply_filters()
+
     def apply_filters(self):
         """Apply the configured filters and wait for the grid to refresh."""
+        sentinel_rows = self.driver.find_elements(
+            By.XPATH,
+            "//*[contains(@class,'InovuaReactDataGrid__row') "
+            "and .//*[@data-props-id='membershipName']]"
+        )
+        sentinel = sentinel_rows[0] if sentinel_rows else None
         self.click(self.APPLY_FILTERS_BUTTON)
         self.wait.until(
             EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
         )
         self.wait_for_list_loaded()
+        if sentinel is not None:
+            try:
+                self.wait.until(EC.staleness_of(sentinel))
+            except Exception:
+                pass
 
     def reset_filters(self):
         """Open the filter panel and reset all filters back to defaults."""
@@ -649,13 +713,26 @@ class MembershipsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.PREPAID_MONTHS_INPUT)
         )
-        element.clear()
-        element.send_keys(str(months))
+        self.set_grid_input_value(element, months)
 
     def set_barcode(self, barcode):
         """Set membership barcode."""
         element = self.wait.until(EC.visibility_of_element_located(self.BARCODE_INPUT))
-        self._set_input_value(element, str(barcode))
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({ block: 'center' }); arguments[0].focus();",
+            element
+        )
+        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(str(barcode))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+            """,
+            element
+        )
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.BARCODE_INPUT
@@ -667,8 +744,20 @@ class MembershipsPage(BasePage):
         element = self.wait.until(EC.visibility_of_element_located(self.BARCODE_INPUT))
         return element.get_attribute("value")
 
+    def _expand_description_accordion(self):
+        """Expand the Membership description accordion if it is collapsed."""
+        textarea_els = self.driver.find_elements(*self.DESCRIPTION_TEXTAREA)
+        if textarea_els and textarea_els[0].is_displayed():
+            return
+        header = self.wait.until(
+            EC.element_to_be_clickable(self.DESCRIPTION_ACCORDION_HEADER)
+        )
+        header.click()
+        self.wait.until(EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA))
+
     def set_membership_description(self, description):
-        """Set membership description if the description section is expanded."""
+        """Expand the description accordion and set the textarea value."""
+        self._expand_description_accordion()
         element = self.wait.until(
             EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
         )
@@ -676,11 +765,22 @@ class MembershipsPage(BasePage):
         element.send_keys(description)
 
     def get_membership_description_value(self):
-        """Return membership description value."""
+        """Expand the description accordion and return the textarea value."""
+        self._expand_description_accordion()
         element = self.wait.until(
             EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
         )
         return element.get_attribute("value")
+
+    def set_redemption_limits(self, per_day="1", per_week="7", per_month="30"):
+        """Fill the per-period redemption limit inputs revealed by the Limit Membership toggle."""
+        for locator, value in [
+            (self.LIMIT_PER_DAY_INPUT, per_day),
+            (self.LIMIT_PER_WEEK_INPUT, per_week),
+            (self.LIMIT_PER_MONTH_INPUT, per_month),
+        ]:
+            element = self.wait.until(EC.visibility_of_element_located(locator))
+            self.set_grid_input_value(element, value)
 
     def get_prepaid_months_value(self):
         """Return prepaid membership duration months value."""
@@ -694,13 +794,7 @@ class MembershipsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.POINTS_AWARDED_INPUT)
         )
-        element.clear()
-        element.send_keys(str(points))
-        self.wait.until(
-            lambda driver: driver.find_element(
-                *self.POINTS_AWARDED_INPUT
-            ).get_attribute("value") == str(points)
-        )
+        self.set_grid_input_value(element, points)
 
     def get_points_awarded_value(self):
         """Return loyalty points awarded on purchase/sale value."""
@@ -714,8 +808,7 @@ class MembershipsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.GLOBAL_PRICE_INPUT)
         )
-        element.clear()
-        element.send_keys(str(price))
+        self.set_grid_input_value(element, price)
 
     def get_global_price_value(self):
         """Return membership global price input value."""
@@ -747,14 +840,10 @@ class MembershipsPage(BasePage):
     def set_global_commission(self, commission):
         """Set membership global commission."""
         elements = self.wait.until(
-            EC.presence_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
+            EC.visibility_of_all_elements_located(self.GLOBAL_COMMISSION_INPUTS)
         )
-        self._set_input_value(elements[0], str(commission))
-        self.wait.until(
-            lambda driver: driver.find_elements(
-                *self.GLOBAL_COMMISSION_INPUTS
-            )[0].get_attribute("value") == str(commission)
-        )
+        element = elements[0]
+        self.set_grid_input_value(element, commission)
 
     def get_global_commission_value(self):
         """Return membership global commission input value."""
@@ -847,6 +936,7 @@ class MembershipsPage(BasePage):
         self.wait.until(
             EC.visibility_of_element_located(self.MEMBERSHIP_NAME_INPUT)
         )
+        self.wait_for_grid_idle()
 
     def open_redemption_settings(self):
         """Open Redemption settings tab."""
@@ -867,7 +957,7 @@ class MembershipsPage(BasePage):
     def open_discount_settings(self):
         """Open Discount settings tab."""
         tab = self.wait.until(
-            EC.presence_of_element_located(self.DISCOUNT_SETTINGS_TAB)
+            EC.element_to_be_clickable(self.DISCOUNT_SETTINGS_TAB)
         )
         self.driver.execute_script("arguments[0].click();", tab)
         self.wait.until(
@@ -931,8 +1021,31 @@ class MembershipsPage(BasePage):
 
     def location_is_assigned_by_index(self, row_index):
         """Return whether one visible location row is assigned."""
-        checkbox = self.get_location_checkbox_by_index(row_index)
-        return self.row_checkbox_is_checked(checkbox)
+        self.open_membership_settings()
+        try:
+            checkbox = self.get_location_checkbox_by_index(row_index)
+            return self.row_checkbox_is_checked(checkbox)
+        except AssertionError:
+            return False
+
+    def _click_location_checkbox(self, checkbox):
+        """Toggle a location assignment checkbox via its Inovua grid cell.
+
+        Inovua React Data Grid processes cell clicks through its own event
+        delegation at the InovuaReactDataGrid__cell level.  Clicking the
+        checkbox wrapper directly never reaches that handler; clicking the
+        cell does.  We scroll to centre first so the sticky header cannot
+        obscure the target before elementFromPoint resolves it.
+        """
+        self.driver.execute_script(
+            """
+            const el = arguments[0];
+            const cell = el.closest('.InovuaReactDataGrid__cell') || el;
+            cell.scrollIntoView({block: 'center', inline: 'center'});
+            cell.click();
+            """,
+            checkbox,
+        )
 
     def assign_location_by_index_with_price_and_commission(
         self,
@@ -949,16 +1062,21 @@ class MembershipsPage(BasePage):
                 % (row_index + 1, len(rows))
             )
 
-        row = rows[row_index]
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", row)
-        checkbox = row.find_element(
+        checkbox = rows[row_index].find_element(
             By.XPATH,
             ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
         )
 
         if not self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: self.row_checkbox_is_checked(checkbox))
+            self._click_location_checkbox(checkbox)
+            self.wait.until(
+                lambda driver: self.row_checkbox_is_checked(
+                    self.get_location_rows()[row_index].find_element(
+                        By.XPATH,
+                        ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+                    )
+                )
+            )
 
     def unassign_location_by_index(self, row_index):
         """Unassign one visible location row if it is checked."""
@@ -976,7 +1094,7 @@ class MembershipsPage(BasePage):
         )
 
         if self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
+            self._click_location_checkbox(checkbox)
             self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))
 
     def unassign_locations_after_first(self):
@@ -1193,6 +1311,7 @@ class MembershipsPage(BasePage):
     ):
         """Set required redemption location and redeem-as service."""
         self.open_redemption_settings()
+        self.wait_for_grid_idle()
         self.assign_redemption_location_by_index(redemption_row_index)
         self.select_redeem_as_option(redeem_as_service, redemption_row_index)
 
@@ -1268,8 +1387,7 @@ class MembershipsPage(BasePage):
         self.open_edit_membership(membership_name)
         self.set_points_awarded(points_awarded)
         self.select_applicable_discount(discount_name)
-        self.click_save_membership()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def get_location_price_by_index(self, row_index):
         """Return one visible location row price by zero-based row index."""
@@ -1286,6 +1404,42 @@ class MembershipsPage(BasePage):
     def click_save_membership(self):
         """Click save membership."""
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
+
+    def save_and_return_to_list(self):
+        """Save the current membership form and return to the list page.
+
+        Patches window.confirm so deactivation dialogs are auto-accepted.
+        The app no longer auto-redirects after save, so we force-navigate fresh.
+        Waits for the save button to go disabled then re-enabled so we know the
+        API call completed before we navigate away.
+        """
+        import time
+        self.driver.execute_script("window.confirm = () => true;")
+        self.click(self.SAVE_MEMBERSHIP_BUTTON)
+        # Wait for button to go disabled (save in progress), then re-enabled
+        # (save done).  Fall back to a fixed 8-second sleep if the button
+        # never disables (i.e., the app doesn't reflect save state on it).
+        try:
+            self.wait.until(
+                lambda driver: not driver.find_element(
+                    *self.SAVE_MEMBERSHIP_BUTTON
+                ).is_enabled()
+            )
+            self.wait.until(
+                EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON)
+            )
+        except Exception:
+            time.sleep(8)
+        # Switch to the top-level document first so current_url is the main
+        # page URL (the iframe URL can be null after a form submission).
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url or ""
+        if "/services/" in current:
+            base_url = current.split("/services/")[0]
+        else:
+            base_url = current.rstrip("/")
+        self.driver.get(base_url + "/services/memberships")
+        self.wait_for_list_loaded()
 
     def duplicate_membership_error_is_visible(self):
         """Return whether a duplicate membership error is visible."""
@@ -1311,6 +1465,7 @@ class MembershipsPage(BasePage):
         self.set_prepaid_months(prepaid_months)
         self.ensure_active_switch_on()
         self.ensure_customer_portal_switch_on()
+        self.ensure_switch_off(self.LIMIT_MEMBERSHIP_SWITCH)
         self.set_global_price(global_price)
         self.set_global_commission(global_commission)
         self.set_location_price_and_commission_by_index(
@@ -1340,6 +1495,7 @@ class MembershipsPage(BasePage):
         self.select_recurring_membership_type()
         self.ensure_active_switch_on()
         self.ensure_customer_portal_switch_on()
+        self.ensure_switch_off(self.LIMIT_MEMBERSHIP_SWITCH)
         self.set_global_price(global_price)
         self.set_global_commission(global_commission)
         self.set_location_price_and_commission_by_index(
@@ -1373,8 +1529,7 @@ class MembershipsPage(BasePage):
             first_location_price,
             first_location_commission
         )
-        self.click_save_membership()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def create_recurring_membership(
         self,
@@ -1393,12 +1548,10 @@ class MembershipsPage(BasePage):
             first_location_price,
             first_location_commission
         )
-        self.click_save_membership()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def update_membership_name(self, current_name, updated_name):
         """Update membership name and return to list."""
         self.open_edit_membership(current_name)
         self.enter_membership_name(updated_name)
-        self.click_save_membership()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
