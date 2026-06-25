@@ -64,7 +64,7 @@ def test_customer_wash_books_tab_is_accessible(browser):
     assert page_has_no_broken_state(cwb_page)
 
 
-@allure.title("WB-ADD Add wash book form loads with required fields")
+@allure.title("Add wash book form loads with required fields")
 @pytest.mark.smoke
 def test_add_wash_book_form_loads(browser):
 

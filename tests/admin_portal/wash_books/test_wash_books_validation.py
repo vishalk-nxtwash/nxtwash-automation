@@ -26,7 +26,7 @@ def test_wash_book_required_name_validation(browser):
     assert wash_books_page.get_wash_book_name_validation_message() != ""
 
 
-@allure.title("WB-NAM-002 Submitting a blank form keeps the user on the Add form")
+@allure.title("WB-NAM-006 Submitting a blank form keeps the user on the Add form")
 @pytest.mark.smoke
 def test_wash_book_blank_required_form_stays_on_form(browser):
 
@@ -134,7 +134,7 @@ def test_wash_book_max_length_name_handled(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-BAR-001 Wash book with a barcode saves correctly")
+@allure.title("Invalid numeric inputs do not break the create form")
 @pytest.mark.extended
 def test_wash_book_invalid_numeric_values_do_not_break_form(browser):
 

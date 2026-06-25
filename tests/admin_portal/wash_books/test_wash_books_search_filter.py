@@ -62,7 +62,7 @@ def test_wash_books_clear_search_restores_list(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-FLT panel shows site dropdown, Apply filters, and Reset all controls")
+@allure.title("Filter panel shows site dropdown, Apply filters, and Reset all controls")
 @pytest.mark.regression
 def test_wash_books_filter_panel_shows_controls(browser):
 
@@ -138,7 +138,7 @@ def test_wash_books_filter_reset_all_restores_list(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-SRH injection payloads in search do not produce a broken page state")
+@allure.title("Injection payloads in search do not produce a broken page state")
 @pytest.mark.regression
 def test_wash_books_search_payloads_do_not_break_grid(browser):
 

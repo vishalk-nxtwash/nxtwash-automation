@@ -42,7 +42,7 @@ def test_customer_wash_books_grid_columns_are_visible(browser):
     body_text = page.get_body_text()
 
     assert "Number of washes" in body_text
-    assert "Status" in body_text
+    assert "Expiration date" in body_text
     # "Wash book number" column header text may vary by environment;
     # verify the search input (which uses the same field) is present instead.
     assert page.wait.until(

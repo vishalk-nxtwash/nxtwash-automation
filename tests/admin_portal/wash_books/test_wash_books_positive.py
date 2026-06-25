@@ -51,7 +51,9 @@ def test_wash_book_settings_persist(browser):
     assert wash_books_page.get_global_price_value() == GLOBAL_PRICE
     assert wash_books_page.get_global_commission_value() == GLOBAL_COMMISSION
 
-    for row_index in range(2):
+    wash_books_page.wait_for_service_location_rows()
+    location_count = len(wash_books_page.visible_service_location_rows())
+    for row_index in range(location_count):
         assert wash_books_page.location_is_assigned_by_index(row_index)
         assert wash_books_page.get_location_price_by_index(row_index) == GLOBAL_PRICE
         assert (

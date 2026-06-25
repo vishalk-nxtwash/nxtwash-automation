@@ -20,7 +20,7 @@ pytestmark = [
 ]
 
 
-@allure.title("WB-DSC-001 Editing the wash book description persists after save")
+@allure.title("WB-DSC-004 Editing the wash book description persists after save")
 @pytest.mark.regression
 def test_edit_wash_book_description(browser):
 
