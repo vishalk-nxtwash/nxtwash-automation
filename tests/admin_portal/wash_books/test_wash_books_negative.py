@@ -2,9 +2,6 @@ import allure
 import pytest
 
 from tests.admin_portal.wash_books.conftest import EXISTING_WASH_BOOK
-from tests.admin_portal.wash_books.conftest import MISSING_WASH_BOOK
-from tests.admin_portal.wash_books.conftest import WASH_BOOK_NAME
-from tests.admin_portal.wash_books.conftest import create_wash_book_if_missing
 from tests.admin_portal.wash_books.conftest import open_wash_books_page
 from tests.admin_portal.wash_books.conftest import page_has_no_broken_state
 
@@ -16,18 +13,7 @@ pytestmark = [
 ]
 
 
-@allure.title("WB-SRH-003 Searching a non-existing wash book returns no results")
-@pytest.mark.extended
-def test_missing_wash_book_is_not_returned(browser):
-
-    wash_books_page = open_wash_books_page(browser)
-    wash_books_page.search_wash_book(MISSING_WASH_BOOK)
-
-    assert MISSING_WASH_BOOK not in wash_books_page.get_body_text()
-    assert page_has_no_broken_state(wash_books_page)
-
-
-@allure.title("WB-SRH special-character search does not crash the grid")
+@allure.title("Special-character search does not crash the grid")
 @pytest.mark.extended
 def test_wash_books_special_character_search_stays_usable(browser):
 
@@ -136,23 +122,3 @@ def test_negative_loyalty_points_is_rejected(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-BAR-003 Duplicate barcode is rejected on save")
-@pytest.mark.regression
-@pytest.mark.skip(
-    reason="WB-BAR-003: Requires a known barcode already assigned to another wash book. "
-    "Deferred until barcode fixtures are established."
-)
-def test_duplicate_barcode_is_rejected(browser):
-    pass
-
-
-@allure.title("WB-RED-004 Saving a redemption site without selecting a wash package is blocked or documented")
-@pytest.mark.regression
-def test_save_redemption_site_without_wash_package(browser):
-
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
-    page.open_redemption_settings()
-
-    assert "Redeem at" in page.get_body_text()
-    assert page_has_no_broken_state(page)

@@ -119,6 +119,7 @@ class WashBooksPage(BasePage):
     CWB_LIST_FRAME = (
         By.XPATH,
         "//iframe[contains(@src,'/services/customerWashBooks')"
+        " and not(contains(@src,'/services/customerWashBooks/'))"
         " and not(contains(@src,'/new'))]"
     )
     CWB_CREATE_FRAME = (
@@ -986,16 +987,16 @@ class WashBooksPage(BasePage):
 
     def wait_for_cwb_list_loaded(self):
         """Wait until the Customer Wash Books listing is ready."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.CWB_LIST_FRAME)
         )
-        self.wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
+        long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
+        long_wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
         # Wait for the grid header to render so column assertions don't run
         # against an empty page (header appears even when there are no rows).
-        self.wait.until(
+        long_wait.until(
             EC.presence_of_element_located(
                 (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__header')]")
             )

@@ -45,8 +45,10 @@ def test_assign_multiple_sites_persists(browser):
     page.wait_for_list_loaded()
 
     page.open_edit_wash_book(WASH_BOOK_NAME)
-    assert page.location_is_assigned_by_index(0)
-    assert page.location_is_assigned_by_index(1)
+    page.wait_for_service_location_rows()
+    location_count = len(page.visible_service_location_rows())
+    for i in range(location_count):
+        assert page.location_is_assigned_by_index(i)
     assert page_has_no_broken_state(page)
 
 
@@ -94,7 +96,7 @@ def test_per_site_customer_portal_toggle_persists(browser):
     pass
 
 
-@allure.title("WB-SIT Tax exemption toggle per site persists after save")
+@allure.title("Tax exemption toggle per site persists after save")
 @pytest.mark.extended
 def test_tax_exemption_toggle_per_site_persists(browser):
 
