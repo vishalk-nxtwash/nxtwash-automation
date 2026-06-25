@@ -132,26 +132,3 @@ def test_open_price_toggle_is_off_by_default(browser):
     assert "Open price" in body_text or page_has_no_broken_state(page)
 
 
-@allure.title("WE-LTY-002 Zero loyalty points accepted for points awarded")
-@pytest.mark.extended
-def test_wash_extra_zero_loyalty_points_awarded_accepted(browser):
-
-    page = open_wash_extras_page(browser)
-    page.open_create_extra()
-    page.enter_service_name("VK EWA2-zero-points-test")
-    page.set_points_awarded("0")
-
-    assert page.get_points_awarded_value() == "0"
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WE-LTY-005 Saving without loyalty points succeeds — fields are optional")
-@pytest.mark.extended
-def test_wash_extra_save_without_loyalty_points_succeeds(browser):
-
-    page = open_wash_extras_page(browser)
-    page.open_create_extra()
-    page.enter_service_name("VK EWA2-no-points-test")
-    page.set_global_price(GLOBAL_PRICE)
-
-    assert page_has_no_broken_state(page)

@@ -6,7 +6,7 @@ from tests.admin_portal.wash_extras.conftest import MISSING_EXTRA
 from tests.admin_portal.wash_extras.conftest import open_wash_extras_page
 from tests.admin_portal.wash_extras.conftest import page_has_no_broken_state
 
-ASSIGNMENT_SITE = "VK Test carwash 2"
+ASSIGNMENT_SITE = "VK AL11"
 
 pytestmark = [
     allure.epic("Admin Portal"),
