@@ -28,8 +28,9 @@ def test_edit_gift_card_name(browser):
 
     original_name = "VK EDT001-%s" % uuid.uuid4().hex[:6]
     updated_name = original_name + "-upd"
+    lp_code = "VKEDT" + uuid.uuid4().hex[:5].upper()
     page = open_gift_cards_page(browser)
-    page.create_gift_card(original_name, GIFT_CARD_AMOUNT, "VKTEMP", ASSIGNMENT_LOCATIONS)
+    page.create_gift_card(original_name, GIFT_CARD_AMOUNT, lp_code, ASSIGNMENT_LOCATIONS)
 
     page.open_edit_gift_card(original_name)
     page.enter_gift_card_name(updated_name)
@@ -79,15 +80,16 @@ def test_activate_inactive_gift_card(browser):
 def test_deactivate_active_gift_card(browser):
 
     temp_name = "VK deact-%s" % uuid.uuid4().hex[:6]
+    lp_code = "VKDCT" + uuid.uuid4().hex[:5].upper()
     page = open_gift_cards_page(browser)
-    page.create_gift_card(temp_name, GIFT_CARD_AMOUNT, "VKTEMP2", ASSIGNMENT_LOCATIONS)
+    page.create_gift_card(temp_name, GIFT_CARD_AMOUNT, lp_code, ASSIGNMENT_LOCATIONS)
     page.search_gift_card(temp_name)
     assert page.wait_for_gift_card_row(temp_name).is_displayed()
 
     page.open_edit_gift_card(temp_name)
     page.ensure_switch_off(page.ACTIVE_SERVICE_SWITCH)
     page.click_save_gift_card()
-    page.wait_for_list_loaded()
+    page.wait_for_list_after_edit_save()
     page.search_gift_card(temp_name)
 
     assert temp_name not in page.get_body_text()
