@@ -38,6 +38,7 @@ def test_active_toggle_shows_active_gift_cards_only(browser):
 
     create_gift_card_if_missing(browser)
     page = open_gift_cards_page(browser)
+    page.reset_all_filters()
     page.open_filter_panel()
     page.toggle_active_filter()
     page.apply_filters()
@@ -55,8 +56,6 @@ def test_reset_all_clears_gift_card_filters(browser):
     page = open_gift_cards_page(browser)
     page.select_site_filter(ASSIGNMENT_LOCATIONS[0])
     page.apply_filters()
-
-    page = open_gift_cards_page(browser)
     page.reset_all_filters()
 
     assert page_has_no_broken_state(page)

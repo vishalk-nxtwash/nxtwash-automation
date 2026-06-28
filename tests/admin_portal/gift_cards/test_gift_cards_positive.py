@@ -4,6 +4,7 @@ import allure
 import pytest
 
 from tests.admin_portal.gift_cards.conftest import ASSIGNMENT_LOCATIONS
+from tests.admin_portal.gift_cards.conftest import CUSTOMER_GIFT_CARD_AMOUNT
 from tests.admin_portal.gift_cards.conftest import CUSTOMER_GIFT_CARD_NUMBER
 from tests.admin_portal.gift_cards.conftest import CUSTOMER_GIFT_CARD_SITE
 from tests.admin_portal.gift_cards.conftest import GIFT_CARD_AMOUNT
@@ -40,10 +41,13 @@ def test_create_gift_card_with_required_settings(browser):
 def test_create_inactive_gift_card(browser):
 
     inactive_name = "VK inactive-%s" % uuid.uuid4().hex[:6]
+    lp_code = "VKINACT" + uuid.uuid4().hex[:4].upper()
     page = open_gift_cards_page(browser)
     page.open_create_gift_card()
     page.enter_gift_card_name(inactive_name)
     page.enter_gift_card_amount(GIFT_CARD_AMOUNT)
+    page.enter_landing_page_code(lp_code)
+    page.assign_location(ASSIGNMENT_LOCATIONS[0])
     page.ensure_switch_off(page.ACTIVE_SERVICE_SWITCH)
     page.click_save_gift_card()
     page.wait_for_list_loaded()
