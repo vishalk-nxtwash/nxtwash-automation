@@ -1,3 +1,4 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -23,7 +24,8 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        element.clear()
+        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.BACKSPACE)
         element.send_keys(text)
 
     def get_text(self, locator):
@@ -76,6 +78,13 @@ class BasePage:
         combobox = self.wait.until(EC.element_to_be_clickable(combobox_locator))
         self.driver.execute_script("arguments[0].click();", combobox)
 
+        def _get_inner_input():
+            el = self.wait.until(EC.element_to_be_clickable(combobox_locator))
+            if el.tag_name.lower() == "input":
+                return el
+            inputs = el.find_elements(By.XPATH, ".//input")
+            return inputs[0] if inputs else el
+
         # Locate the typeable input — either the element itself or a child.
         if combobox.tag_name.lower() == "input":
             inner_input = combobox
@@ -83,10 +92,17 @@ class BasePage:
             inputs = combobox.find_elements(By.XPATH, ".//input")
             inner_input = inputs[0] if inputs else combobox
 
-        if clear_first:
-            inner_input.send_keys(Keys.CONTROL, "a")
-            inner_input.send_keys(Keys.BACKSPACE)
-        inner_input.send_keys(option_text)
+        try:
+            if clear_first:
+                inner_input.send_keys(Keys.CONTROL, "a")
+                inner_input.send_keys(Keys.BACKSPACE)
+            inner_input.send_keys(option_text)
+        except StaleElementReferenceException:
+            inner_input = _get_inner_input()
+            if clear_first:
+                inner_input.send_keys(Keys.CONTROL, "a")
+                inner_input.send_keys(Keys.BACKSPACE)
+            inner_input.send_keys(option_text)
 
         option = WebDriverWait(self.driver, 20).until(
             lambda d: self._find_react_option(option_text)
