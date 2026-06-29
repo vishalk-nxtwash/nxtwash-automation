@@ -1,0 +1,1 @@
+{"uuid": "5f5ed919-a0c4-4954-9d3d-98f07d24b6b6", "children": ["fff49de3-0aa5-4b8f-b91b-d9d0e6bedec5"], "befores": [{"name": "managed_bank_drop", "status": "passed", "start": 1782652282713, "stop": 1782652288943}], "afters": [{"name": "managed_bank_drop::0", "status": "passed", "start": 1782652294806, "stop": 1782652306829}], "start": 1782652282713, "stop": 1782652306829}

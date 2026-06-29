@@ -98,8 +98,9 @@ class BankDropPage(BasePage):
         """Build a locator for a Bank Drop row by name."""
         return (
             By.XPATH,
-            "//*[contains(@class,'InovuaReactDataGrid__row')]"
-            "[.//*[normalize-space()='%s'] or contains(normalize-space(),'%s')]"
+            "//*[@data-props-id='bankDropCategoryName']"
+            "[.//span[normalize-space()='%s'] or normalize-space()='%s']"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
             % (name, name)
         )
 
