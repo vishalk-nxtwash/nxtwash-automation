@@ -194,6 +194,39 @@ class SitesPage(BasePage):
         except TimeoutException:
             return False
 
+    def open_edit_site(self, site_name, include_inactive=False):
+        """Filter to a specific site and click its Edit button."""
+        if include_inactive:
+            self.filter_by_name_and_active(site_name, should_be_active=False)
+        else:
+            self.filter_by_site_name(site_name)
+        self.wait_for_site_row(site_name)
+        locator = (
+            By.XPATH,
+            "//*[normalize-space()='%s']/ancestor::tr[1]"
+            "//*[@id='table-edit-button']//button"
+            % site_name
+        )
+        button = self.wait.until(EC.element_to_be_clickable(locator))
+        self.driver.execute_script("arguments[0].click();", button)
+
+    def filter_by_name_and_active(self, site_name, should_be_active=True):
+        """Enter site-name filter and set the active toggle, then apply once."""
+        self.open_filters()
+        self.enter_text(self.SITE_NAME_FILTER, site_name)
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_SITE_FILTER_SWITCH)
+        )
+        is_checked = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.is_selected()
+            or switch.get_attribute("checked") is not None
+        )
+        if is_checked != should_be_active:
+            self.driver.execute_script("arguments[0].click();", switch)
+        self.click(self.APPLY_FILTERS_BUTTON)
+        self.wait_for_loaded()
+
     def click_add_site(self):
         """Open the create site page."""
         self.click(self.ADD_SITE_BUTTON)
@@ -660,37 +693,62 @@ class CreateSitePage(BasePage):
         return None
 
     def switch_is_on(self, locator):
-        """Return whether a switch is on."""
+        """Return whether a switch is on.
+
+        Uses aria-checked for ARIA-role switches and is_selected() for
+        checkbox-based toggles.  get_attribute("checked") is intentionally
+        excluded: it reads the HTML *attribute* (frozen at page-load time),
+        not the live DOM *property*, so it stays "true" even after unchecking.
+        """
         switch = self.wait.until(EC.presence_of_element_located(locator))
         return (
             switch.get_attribute("aria-checked") == "true"
             or switch.is_selected()
-            or switch.get_attribute("checked") is not None
+        )
+
+    def _get_switch_clickable(self, locator):
+        """Return the clickable element for a switch.
+
+        The active-site toggle is a hidden <input type="checkbox"> inside a
+        <label>.  Clicking the label is the correct way to toggle it — traversing
+        further up the tree and picking an arbitrary <button> would hit Cancel or
+        Save instead.
+        """
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+        return self.driver.execute_script(
+            """
+            let input = arguments[0];
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                if (input.parentElement && input.parentElement.tagName === 'LABEL') {
+                    return input.parentElement;
+                }
+            }
+            let current = input;
+            let depth = 0;
+            while (current && current.parentElement && depth < 8) {
+                const btn = current.parentElement.querySelector('button[role="switch"]');
+                if (btn) return btn;
+                current = current.parentElement;
+                depth++;
+            }
+            return input;
+            """,
+            switch
         )
 
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
-        switch = self.wait.until(EC.presence_of_element_located(locator))
         if not self.switch_is_on(locator):
-            clickable = self.driver.execute_script(
-                """
-                let input = arguments[0];
-                let current = input;
-                while (current && current.parentElement) {
-                    const button = current.parentElement.querySelector(
-                        'button[role="switch"], button'
-                    );
-                    if (button) return button;
-                    current = current.parentElement;
-                }
-                return input;
-                """,
-                switch
-            )
+            clickable = self._get_switch_clickable(locator)
             self.driver.execute_script("arguments[0].click();", clickable)
-            self.wait.until(
-                lambda driver: self.switch_is_on(locator)
-            )
+            self.wait.until(lambda driver: self.switch_is_on(locator))
+
+    def ensure_switch_off(self, locator):
+        """Turn a switch off if needed."""
+        if self.switch_is_on(locator):
+            clickable = self._get_switch_clickable(locator)
+            self.driver.execute_script("arguments[0].click();", clickable)
+            self.wait.until(lambda driver: not self.switch_is_on(locator))
 
     def active_site_switch_is_on(self):
         """Return whether Active site switch is on."""
@@ -707,6 +765,33 @@ class CreateSitePage(BasePage):
         """Return whether all labels are visible in the form body."""
         body_text = self.get_body_text()
         return all(label in body_text for label in labels)
+
+    _REACT_FIRST_OPTION_JS = """
+        var candidates = Array.from(document.querySelectorAll(
+            '[role="option"],'
+            + '[class*="__option"],'
+            + '[class*="-option"],'
+            + '[class*="select__option"]'
+        ));
+        return candidates.find(function(el) {
+            return el.offsetParent !== null;
+        }) || null;
+    """
+
+    def _find_first_react_option(self):
+        """Return any currently visible React Select option element."""
+        return self.driver.execute_script(self._REACT_FIRST_OPTION_JS)
+
+    def select_pay_week_start_day(self, day):
+        """Select the pay week start day; falls back to the first available option."""
+        try:
+            self._select_combobox_option(self.PAY_WEEK_START_DAY_COMBOBOX, day)
+        except AssertionError:
+            combobox = self._scroll_to_locator(self.PAY_WEEK_START_DAY_COMBOBOX)
+            self.wait.until(EC.element_to_be_clickable(self.PAY_WEEK_START_DAY_COMBOBOX))
+            self._real_click(combobox)
+            option = self.wait.until(lambda d: self._find_first_react_option())
+            self._real_click(option)
 
     def add_lane_button_is_visible(self):
         """Return whether Add Lane button is visible."""
@@ -749,10 +834,6 @@ class CreateSitePage(BasePage):
             time_zone,
             "Eastern"
         )
-
-    def select_pay_week_start_day(self, day):
-        """Select the pay week start day."""
-        self._select_combobox_option(self.PAY_WEEK_START_DAY_COMBOBOX, day)
 
     def enter_tax_settings(self, state_sales_tax, city_sales_tax):
         """Enter site tax settings."""
@@ -862,3 +943,61 @@ class CreateSitePage(BasePage):
             pay_week_start_day
         )
         self.click_save_new()
+
+
+class EditSitePage(CreateSitePage):
+    """Edit form for an existing site. Same layout as create; save button differs."""
+
+    SAVE_BUTTON = (
+        By.XPATH,
+        "//button["
+        "normalize-space()='Save' "
+        "or normalize-space()='Save site' "
+        "or normalize-space()='Save changes' "
+        "or normalize-space()='Update'"
+        "]"
+    )
+
+    def wait_for_loaded(self):
+        """Wait until the edit form is ready and form data has been populated."""
+        self.driver.switch_to.default_content()
+        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
+        self.wait.until(
+            lambda d: (
+                d.find_element(*self.SITE_NAME_INPUT).get_attribute("value") or ""
+            ) != ""
+        )
+
+    def ensure_active_switch_off(self):
+        """Deactivate the site if currently active."""
+        self.ensure_switch_off(self.ACTIVE_SITE_SWITCH)
+
+    def ensure_active_switch_on(self):
+        """Activate the site if currently inactive."""
+        self.ensure_switch_on(self.ACTIVE_SITE_SWITCH)
+
+    def enter_site_name(self, name):
+        """Update the site name field using keyboard events so React state updates."""
+        self.enter_text(self.SITE_NAME_INPUT, name)
+
+    LANE_ROWS = (
+        By.XPATH,
+        "//tr[.//input["
+        "contains(@name,'lane') or contains(@name,'Lane') "
+        "or contains(@placeholder,'lane') or contains(@placeholder,'Lane')"
+        "]]"
+    )
+
+    def get_lane_count(self):
+        """Return the number of visible lane rows in the Lanes settings tab."""
+        return len(self.driver.find_elements(*self.LANE_ROWS))
+
+    def add_lane(self):
+        """Click Add Lane to append a new empty lane row."""
+        self.click(self.ADD_LANE_BUTTON)
+
+    def click_save(self):
+        """Save changes to the edited site."""
+        button = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
