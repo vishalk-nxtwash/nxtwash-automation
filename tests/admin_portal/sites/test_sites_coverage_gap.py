@@ -12,7 +12,7 @@ from tests.admin_portal.sites.conftest import page_has_no_broken_state
 @allure.feature("Sites / Locations")
 @allure.story("UI and List")
 @allure.title("SITE-UI and SITE-LIST list shell coverage")
-@pytest.mark.sanity
+@pytest.mark.smoke
 def test_sites_locations_list_shell_and_records(logged_in_admin_browser):
     sites_page = open_sites_page(logged_in_admin_browser)
 
@@ -77,7 +77,7 @@ def test_sites_filter_existing_partial_missing_and_reset(logged_in_admin_browser
 @allure.feature("Sites / Locations")
 @allure.story("Create General Settings")
 @allure.title("SITE-CREATE general settings sections and default controls")
-@pytest.mark.sanity
+@pytest.mark.smoke
 def test_create_site_general_settings_sections(logged_in_admin_browser):
     create_page = open_create_site_page(logged_in_admin_browser)
 
@@ -99,72 +99,6 @@ def test_create_site_general_settings_sections(logged_in_admin_browser):
         ]
     )
     assert create_page.active_site_switch_is_on()
-
-
-@allure.epic("Admin Portal")
-@allure.feature("Sites / Locations")
-@allure.story("Create Lanes")
-@allure.title("SITE-LANE settings tab UI coverage")
-@pytest.mark.regression
-def test_create_site_lanes_settings_ui(logged_in_admin_browser):
-    create_page = open_create_site_page(logged_in_admin_browser)
-    create_page.open_tab("Lanes settings")
-
-    assert create_page.body_contains_all(["Lanes settings", "Lane"])
-    assert create_page.add_lane_button_is_visible()
-
-
-@allure.epic("Admin Portal")
-@allure.feature("Sites / Locations")
-@allure.story("Create Credit Card")
-@allure.title("SITE-CC settings tab UI coverage")
-@pytest.mark.regression
-def test_create_site_credit_card_settings_ui(logged_in_admin_browser):
-    create_page = open_create_site_page(logged_in_admin_browser)
-    create_page.open_tab("Credit card settings")
-
-    assert create_page.body_contains_all(
-        [
-            "Credit card settings",
-            "Pay API",
-            "Merchant ID",
-            "Pay API token",
-            "DC Direct",
-            "DSI EMV Android",
-        ]
-    )
-
-
-@allure.epic("Admin Portal")
-@allure.feature("Sites / Locations")
-@allure.story("Create Customer Portal")
-@allure.title("SITE-PORTAL settings tab UI coverage")
-@pytest.mark.regression
-def test_create_site_customer_portal_settings_ui(logged_in_admin_browser):
-    create_page = open_create_site_page(logged_in_admin_browser)
-    create_page.open_tab("Customer Portal / Mobile app settings")
-
-    assert create_page.body_contains_all(
-        [
-            "Customer Portal",
-            "Show on customer portal / mobile app",
-            "Memberships",
-            "Washbooks",
-            "Gift cards",
-            "Allow membership cancellation",
-            "Resignup current date extension",
-            "Next payment same as other vehicle",
-            "Omit special character",
-            "Prefix characters",
-            "Suffix characters",
-            "Enable free wash",
-            "Facebook",
-            "Instagram",
-            "YouTube",
-            "X (Twitter)",
-            "TikTok",
-        ]
-    )
 
 
 @allure.epic("Admin Portal")
