@@ -23,6 +23,19 @@ def test_sites_filter_by_existing_site_name(logged_in_admin_browser):
     assert sites_page.site_exists_in_ui(site_data["site_name"])
 
 
+@allure.title("SL-FLT-003 Filter by partial site name returns matching records")
+@pytest.mark.regression
+def test_sites_filter_by_partial_site_name(logged_in_admin_browser):
+    site_data = create_site_if_missing(logged_in_admin_browser)
+    partial_name = site_data["site_name"][:-1]
+
+    sites_page = open_sites_page(logged_in_admin_browser)
+    sites_page.filter_by_site_name(partial_name)
+
+    assert site_data["site_name"] in sites_page.get_body_text()
+    assert page_has_no_broken_state(sites_page)
+
+
 @allure.title("SL-FLT-007 Filter by non-matching name returns empty state")
 @pytest.mark.regression
 def test_sites_filter_by_missing_site_name_shows_no_match(

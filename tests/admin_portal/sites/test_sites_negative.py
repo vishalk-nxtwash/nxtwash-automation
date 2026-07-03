@@ -34,7 +34,7 @@ def test_create_site_duplicate_site_name_or_code_is_rejected(
     assert "create" in logged_in_admin_browser.current_url
 
 
-@allure.title("SL-CRT-018 Cancel on create does not persist the new site")
+@allure.title("SL-NEG-001 Cancel on create does not persist the new site")
 @pytest.mark.regression
 def test_create_site_cancel_does_not_save_record(logged_in_admin_browser):
     site_data = site_data_for_number(96)

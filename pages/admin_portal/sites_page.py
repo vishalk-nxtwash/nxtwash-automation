@@ -61,12 +61,26 @@ class SitesPage(BasePage):
         return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_site_count_from_title(self):
-        """Return the visible site count from the page title."""
-        title = self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        text = title.text.strip()
-        if "(" not in text or ")" not in text:
-            return None
-        return int(text.split("(")[-1].split(")")[0])
+        """Return the visible site count from the page title.
+
+        Waits until the count is non-zero so the async title update has settled.
+        """
+        def _parse_count(text):
+            if "(" not in text or ")" not in text:
+                return None
+            raw = text.split("(")[-1].split(")")[0].strip()
+            return int(raw) if raw.isdigit() else None
+
+        title_el = self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        try:
+            self.wait.until(
+                lambda d: _parse_count(
+                    d.find_element(*self.PAGE_TITLE).text.strip()
+                ) not in (None, 0)
+            )
+        except TimeoutException:
+            pass  # fall through and return whatever is there (may be 0 / None)
+        return _parse_count(title_el.text.strip())
 
     def table_headers_are_visible(self):
         """Return whether the expected list columns are visible."""
@@ -564,11 +578,57 @@ class CreateSitePage(BasePage):
             setter.call(input, value);
             input.dispatchEvent(new Event('input', { bubbles: true }));
             input.dispatchEvent(new Event('change', { bubbles: true }));
+            input.dispatchEvent(new FocusEvent('blur', { bubbles: true }));
             """,
             element,
             str(value)
         )
         self.wait.until(lambda driver: element.get_attribute("value") == str(value))
+
+    def _set_checkbox_state(self, locator, checked):
+        """Set a React-controlled checkbox to the desired state.
+
+        Uses a native Selenium click on the visible label/button associated with
+        the hidden checkbox.  Native clicks produce isTrusted=true events that
+        React's synthetic event system fully processes, unlike programmatic JS
+        clicks whose isTrusted=false events React may ignore.
+        """
+        el = self.wait.until(EC.presence_of_element_located(locator))
+        if bool(el.is_selected()) == bool(checked):
+            return
+        clickable = self.driver.execute_script(
+            """
+            const cb = arguments[0];
+            // Prefer parent <label> — that is the visible styled toggle area
+            if (cb.parentElement && cb.parentElement.tagName === 'LABEL') {
+                return cb.parentElement;
+            }
+            // Fall back to label[for=id] association
+            if (cb.id) {
+                const lbl = document.querySelector('label[for="' + cb.id + '"]');
+                if (lbl) return lbl;
+            }
+            // Search up to 8 ancestors for a button[role='switch']
+            let node = cb;
+            for (let i = 0; i < 8; i++) {
+                if (!node.parentElement) break;
+                node = node.parentElement;
+                const btn = node.querySelector('button[role="switch"]');
+                if (btn) return btn;
+            }
+            return cb;
+            """,
+            el,
+        )
+        try:
+            clickable.click()  # native Selenium click → isTrusted=true
+        except Exception:  # noqa: BLE001
+            self.driver.execute_script("arguments[0].click();", clickable)
+        self.wait.until(
+            lambda d: bool(
+                d.find_elements(*locator) and d.find_elements(*locator)[0].is_selected()
+            ) == bool(checked)
+        )
 
     def _scroll_to_locator(self, locator):
         """Scroll a field into view."""
@@ -699,12 +759,24 @@ class CreateSitePage(BasePage):
         checkbox-based toggles.  get_attribute("checked") is intentionally
         excluded: it reads the HTML *attribute* (frozen at page-load time),
         not the live DOM *property*, so it stays "true" even after unchecking.
+
+        Deliberately uses find_element (no inner wait) so this method is safe
+        to call from inside a wait.until() lambda — a nested wait.until would
+        consume the outer timeout budget and cause spurious TimeoutExceptions
+        after React re-renders the element.
         """
-        switch = self.wait.until(EC.presence_of_element_located(locator))
-        return (
-            switch.get_attribute("aria-checked") == "true"
-            or switch.is_selected()
-        )
+        from selenium.common.exceptions import StaleElementReferenceException
+        try:
+            elements = self.driver.find_elements(*locator)
+            if not elements:
+                return False
+            switch = elements[0]
+            return (
+                switch.get_attribute("aria-checked") == "true"
+                or switch.is_selected()
+            )
+        except StaleElementReferenceException:
+            return False
 
     def _get_switch_clickable(self, locator):
         """Return the clickable element for a switch.
@@ -739,16 +811,12 @@ class CreateSitePage(BasePage):
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
         if not self.switch_is_on(locator):
-            clickable = self._get_switch_clickable(locator)
-            self.driver.execute_script("arguments[0].click();", clickable)
-            self.wait.until(lambda driver: self.switch_is_on(locator))
+            self._set_checkbox_state(locator, True)
 
     def ensure_switch_off(self, locator):
         """Turn a switch off if needed."""
         if self.switch_is_on(locator):
-            clickable = self._get_switch_clickable(locator)
-            self.driver.execute_script("arguments[0].click();", clickable)
-            self.wait.until(lambda driver: not self.switch_is_on(locator))
+            self._set_checkbox_state(locator, False)
 
     def active_site_switch_is_on(self):
         """Return whether Active site switch is on."""
@@ -959,10 +1027,22 @@ class EditSitePage(CreateSitePage):
     )
 
     def wait_for_loaded(self):
-        """Wait until the edit form is ready and form data has been populated."""
+        """Wait until the edit form is ready and form data has been populated.
+
+        During SPA navigation from the sites list, the list page's filter panel
+        (which also contains an input[name='siteName']) may remain mounted briefly.
+        We wait until only one such input is visible before proceeding so that
+        enter_site_name() targets the edit form field, not the filter input.
+        """
         self.driver.switch_to.default_content()
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
+        # Wait for the filter panel's duplicate siteName input to unmount
+        self.wait.until(
+            lambda d: sum(
+                1 for el in d.find_elements(By.NAME, "siteName") if el.is_displayed()
+            ) <= 1
+        )
         self.wait.until(
             lambda d: (
                 d.find_element(*self.SITE_NAME_INPUT).get_attribute("value") or ""
@@ -978,8 +1058,8 @@ class EditSitePage(CreateSitePage):
         self.ensure_switch_on(self.ACTIVE_SITE_SWITCH)
 
     def enter_site_name(self, name):
-        """Update the site name field using keyboard events so React state updates."""
-        self.enter_text(self.SITE_NAME_INPUT, name)
+        """Update the site name field via the React-compatible JS setter."""
+        self._set_input_value(self.SITE_NAME_INPUT, name)
 
     LANE_ROWS = (
         By.XPATH,
@@ -998,6 +1078,13 @@ class EditSitePage(CreateSitePage):
         self.click(self.ADD_LANE_BUTTON)
 
     def click_save(self):
-        """Save changes to the edited site."""
+        """Save changes and wait for navigation back to the sites list."""
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
+        # After save the app navigates back to the list. Wait until the Save
+        # button is gone (i.e. we've left the edit form) before returning so
+        # callers aren't racing against an in-flight save.
+        try:
+            self.wait.until(EC.invisibility_of_element(button))
+        except TimeoutException:
+            pass  # if the button is already gone the wait resolves immediately
