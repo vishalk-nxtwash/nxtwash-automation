@@ -1,8 +1,6 @@
 import allure
 import pytest
 
-import pytest
-
 from tests.admin_portal.wash_packages.conftest import (
     ASSIGNMENT_SITE,
     EXISTING_PACKAGE,

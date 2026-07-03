@@ -1,0 +1,104 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","369","OVERVIEW-UI-003 Dashboard filter controls visible","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_ui","",""
+"","366","OVERVIEW-FILTER-002/003/004 Site filter dashboard behavior","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","40","OV-FLT-017 Custom range end date before start date — document behaviour","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_filters","",""
+"","628","OVERVIEW-FILTER-001 Site filter dropdown is present in the dashboard","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","339","OV-MB-002 Sales, Cancellations, Re-signups, and Recharges counts update when filters change","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","542","OV-FLT-016 Unchecking Single day checkbox reverts to date range mode","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","40865","OVERVIEW-FILTER-002/003/004 Selecting 'Vk test carwash 2' updates dashboard cards","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","513","OV-LAB-002 $ per car and Cars per labor hour values calculate correctly","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"Percentages in Usage Breakdown must follow a documented rounding rule.
+
+    Acceptable: values that add to exactly 100 %, or a visible rounding footnote.
+    ","381","OV-RPT-CW-008 Usage Breakdown per-service percentages obey the rounding rule","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","353","OV-CW-002 Cars Washed breakdown legend shows Single Washes, Membership Redemptions, and Comp Washes","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","366","OV-GC-001 Gift Cards Sales and Redemptions totals match the Gift Cards module","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","40873","OVERVIEW-FILTER-013 Custom date range 2026-06-01 → 2026-06-30 updates dashboard cards","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","343","OVERVIEW-FILTER-005 through 011 Date preset options are available","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","440","OV-AWT-002 Average Wash Ticket info icon shows calculation formula tooltip","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","514","OV-CON-002 Revenue daily figure on the dashboard matches the Revenue Report Total Revenue for the same filter","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_data_validation","",""
+"","417","OV-RPT-RV-002 Total Revenue, New Members, Recharges, Re-signups, and Retail Sales cards update correctly","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","494","OV-AWT-001 Average Wash Ticket Washes/Membership/Combined/Retail tiles are clickable","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","571","OVERVIEW-FILTER-016/017 Single Day checkbox is available in the filter bar","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","497","OV-AWT-004 Average Wash Ticket breakdown bar shows per-service contribution","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","338","OV-CW-003 Cars Washed hourly distribution bar chart renders","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","359","OV-RV-004 Revenue Full Report link navigates to the detail report","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","40820","OVERVIEW-FILTER-008 Selecting 'Last Month' preset updates all dashboard cards","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","460","OV-CON-001 Cars Washed Total on the dashboard matches the Cars Washed Report Total Cars for the same filter","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_data_validation","",""
+"","40625","OV-FLT-005 Selected site is shown as a removable chip in the filter bar","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"","470","OV-EMP-002 Employee shift status reflects current clock-in state","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","514","OV-LST-003 Employees table shows empty state when no shift data exists for the period","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","96","OVERVIEW-UI-001/002 Overview shell redirects and loads","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_ui","",""
+"","463","OV-AWT-003 Average Wash Ticket formula-derived values match displayed figures","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","329","OVERVIEW-NAV-001/003 Report navigation","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_navigation","",""
+"","1042","OV-CON-005 Both Full Report pages accept the same site and date filter inputs as the Overview dashboard","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_data_validation","",""
+"","560","OV-RPT-CW-004 Hourly Distribution chart legend matches categories","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","462","OVERVIEW-UI-004/005 Export buttons visible","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_ui","",""
+"","485","OV-RV-003 Revenue Memberships toggle switch changes the revenue view","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","0","OV-FLT-019 Single day mode for today shows consistent data with the Today preset","","2026-07-02","skipped","2026-07-02","","","",""
+"","404","OV-RPT-CW-003 Total Redemptions, Total Paid, and Total Comp Washes cards display","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","369","OVERVIEW-NEG-003 Network failure while applying filters","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","356","OV-LAB-001 Total labor percentage calculates correctly","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","496","OV-RPT-CW-002 Total Cars, Daily Average, and Hourly Average cards update on Apply filters","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","402","OV-MB-003 Recurring and Prepaid breakdown bars sum to Active total","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","40839","OV-FLT-006 Clearing all site chips reverts to all-sites aggregated view","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"Document known bug: labor % can render as an extreme/invalid number.
+
+    When total revenue is very low or calculation overflows, the Labor % card
+    displays a nonsensical large value instead of a bounded percentage.
+    The test asserts the value is NOT present — a pass here means the bug is
+    fixed; an xfail means the environment cannot be tested yet.
+    ","2182","OV-BUG-001 Labor % shows an extreme value instead of a valid percentage","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_known_bugs","",""
+"","368","OVERVIEW-UI-006 through OVERVIEW-UI-012 dashboard widgets visible","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_ui","",""
+"With zero revenue the Labor % denominator is zero.
+
+    Expected: the card shows '--' or '0%' rather than a calculation error or
+    divide-by-zero crash.
+    ","393","OV-BUG-002 Labor % displays '--' or 0% when no revenue exists for the period","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_known_bugs","",""
+"","41","OV-FLT-015 Single day checkbox with no date selected — document behaviour","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_filters","",""
+"","1587","OVERVIEW-NAV-004 Overview opens in new tab","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_navigation","",""
+"","504","OV-RPT-RV-003 Revenue distribution donut chart updates when categories are clicked","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","358","OV-RPT-RV-004 Membership Revenue tab shows membership-specific breakdown","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","510","OV-EMP-003 Employee Full Report link navigates to the Labor/Employees report","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","373","OVERVIEW-NEG-005 Rapid filter switching","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","366","OVERVIEW-FILTER-012 through 015 Date range inputs are available under Custom","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"Empty state must not look like a spinner or skeleton loader.
+
+    Acceptable: cards show '--' or '0' with no visible loading indicator.
+    ","405","OV-EST-003 Zero-data state is visually distinct from a loading state","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","395","OVERVIEW-EXPORT-001 through OVERVIEW-EXPORT-009","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_exports","",""
+"","31","OVERVIEW-UI-013 Support button visible","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_ui","",""
+"","556","OV-LAB-003 Labor Full Report link navigates to the detailed Labor report","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","352","OV-CW-001 Cars Washed totals update when site/date filters change","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","495","OV-EMP-001 Employees card table shows correct columns and data","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","342","OV-MB-001 Active membership count matches the Memberships module total","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","945","OV-MB-005 Memberships active count info icon shows explanation tooltip","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","382","OV-RV-002 Revenue donut chart reflects distribution by category","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","378","OVERVIEW-NEG-001/002/004 No-data states","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","383","OV-CON-003 Site and date filter selections persist when navigating to a Full Report and returning","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_data_validation","",""
+"","651","OV-RPT-CW-001 Cars Washed detail report loads with a modal filter panel","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","794","OVERVIEW-NAV-002 Browser back returns to Overview","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_navigation","",""
+"","400","OV-EST-004 Employees table shows 'No records available' when no employees are assigned to the selected site","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","1772","OV-EST-002 Future date range with no data shows clean empty state on all cards","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_negative","",""
+"","38","OV-FLT-018 Single day with no date selected — verify no broken state shown","tests.admin_portal.overview","2026-07-02","passed","2026-07-02","","test_overview_filters","",""
+"","369","OV-LST-002 All dashboard card widgets render in the default state","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","338","OV-RPT-CW-005 Usage Breakdown tabs filter to Memberships, Paid Washes, and Comp Washes","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","1448","OV-RPT-CW-006 Per-service percentages sum to 100 % within the selected tab","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","563","OV-FLT-019 Single day mode for today shows consistent data with the Today preset","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_filters","",""
+"Edge: toggling Memberships on/off should change the displayed subtotals.
+
+    Documents current behaviour; exact values are environment-dependent.
+    ","365","OV-RV-005 Revenue card Memberships toggle — document exact effect (edge)","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","1185","OV-RPT-RV-001 Revenue detail report loads with an inline filter panel","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_reports","",""
+"","409","OV-RV-001 Revenue totals update when site/date filters change","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","364","OV-MB-004 Canceled Recurring and Canceled Total bars display correctly","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","349","OV-CW-004 Cars Washed Full Report link navigates to the detail report","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"","393","OV-WB-001 Wash Books Sales and Redemptions counts match the Wash Books module","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_widgets","",""
+"Usage Breakdown per-service rows should total 100 %.
+
+    Due to floating-point rounding some implementations display 99 % or 101 %.
+    Acceptable outcomes: exactly '100%' visible, or an explicit rounding note.
+    The test documents current behaviour; fix the xfail reason once the iframe
+    environment is live.
+    ","1372","OV-BUG-003 Usage Breakdown percentages sum to exactly 100 % or show a rounding note","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_known_bugs","",""
+"","951","OV-CON-004 Cars Washed modal filter and Revenue inline filter return matching totals for the same site/date inputs","tests.admin_portal.overview","2026-07-02","skipped","2026-07-02","","test_overview_data_validation","",""

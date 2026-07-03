@@ -586,29 +586,21 @@ class CreateSitePage(BasePage):
         self.wait.until(lambda driver: element.get_attribute("value") == str(value))
 
     def _set_checkbox_state(self, locator, checked):
-        """Set a React-controlled checkbox to the desired state.
+        """Set a React-controlled checkbox/switch to the desired state.
 
-        Uses a native Selenium click on the visible label/button associated with
-        the hidden checkbox.  Native clicks produce isTrusted=true events that
-        React's synthetic event system fully processes, unlike programmatic JS
-        clicks whose isTrusted=false events React may ignore.
+        Uses switch_is_on() as the single source of truth for both the
+        pre-click guard and the post-click confirmation wait.  switch_is_on()
+        prefers aria-checked on a nearby button[role=switch] over is_selected()
+        on the hidden checkbox, so state-checking and state-changing are
+        always consistent regardless of the underlying DOM pattern.
         """
-        el = self.wait.until(EC.presence_of_element_located(locator))
-        if bool(el.is_selected()) == bool(checked):
+        if self.switch_is_on(locator) == bool(checked):
             return
+        el = self.wait.until(EC.presence_of_element_located(locator))
         clickable = self.driver.execute_script(
             """
             const cb = arguments[0];
-            // Prefer parent <label> — that is the visible styled toggle area
-            if (cb.parentElement && cb.parentElement.tagName === 'LABEL') {
-                return cb.parentElement;
-            }
-            // Fall back to label[for=id] association
-            if (cb.id) {
-                const lbl = document.querySelector('label[for="' + cb.id + '"]');
-                if (lbl) return lbl;
-            }
-            // Search up to 8 ancestors for a button[role='switch']
+            // Prefer the nearby button[role=switch] — the visual toggle button
             let node = cb;
             for (let i = 0; i < 8; i++) {
                 if (!node.parentElement) break;
@@ -616,19 +608,25 @@ class CreateSitePage(BasePage):
                 const btn = node.querySelector('button[role="switch"]');
                 if (btn) return btn;
             }
+            // Fall back: parent <label>
+            if (cb.parentElement && cb.parentElement.tagName === 'LABEL') {
+                return cb.parentElement;
+            }
+            // Last resort: label[for=id] or the element itself
+            if (cb.id) {
+                const lbl = document.querySelector('label[for="' + cb.id + '"]');
+                if (lbl) return lbl;
+            }
             return cb;
             """,
             el,
         )
         try:
-            clickable.click()  # native Selenium click → isTrusted=true
+            clickable.click()  # native Selenium click → isTrusted=true events
         except Exception:  # noqa: BLE001
             self.driver.execute_script("arguments[0].click();", clickable)
-        self.wait.until(
-            lambda d: bool(
-                d.find_elements(*locator) and d.find_elements(*locator)[0].is_selected()
-            ) == bool(checked)
-        )
+        # Confirm via the same state-checking logic used in the pre-click guard
+        self.wait.until(lambda d: self.switch_is_on(locator) == bool(checked))
 
     def _scroll_to_locator(self, locator):
         """Scroll a field into view."""
@@ -755,15 +753,17 @@ class CreateSitePage(BasePage):
     def switch_is_on(self, locator):
         """Return whether a switch is on.
 
-        Uses aria-checked for ARIA-role switches and is_selected() for
-        checkbox-based toggles.  get_attribute("checked") is intentionally
-        excluded: it reads the HTML *attribute* (frozen at page-load time),
-        not the live DOM *property*, so it stays "true" even after unchecking.
+        React toggle switches often render as a hidden <input type="checkbox">
+        paired with a visible <button role="switch" aria-checked="..."> whose
+        aria-checked reflects the live state.  We prefer aria-checked on a
+        nearby button (searched via DOM traversal) over is_selected() on the
+        hidden checkbox, because the checkbox's checked property is only synced
+        to the form-submission value, not to every visual toggle interaction.
 
-        Deliberately uses find_element (no inner wait) so this method is safe
-        to call from inside a wait.until() lambda — a nested wait.until would
-        consume the outer timeout budget and cause spurious TimeoutExceptions
-        after React re-renders the element.
+        Falls back to aria-checked on the element itself, then is_selected().
+
+        Safe to call from inside a wait.until() lambda — uses find_elements
+        (no inner wait) to avoid burning the outer timeout budget.
         """
         from selenium.common.exceptions import StaleElementReferenceException
         try:
@@ -771,6 +771,24 @@ class CreateSitePage(BasePage):
             if not elements:
                 return False
             switch = elements[0]
+            # Look for a button[role=switch] in nearby ancestors — it carries
+            # the authoritative aria-checked state for React switch components.
+            btn = self.driver.execute_script(
+                """
+                const el = arguments[0];
+                let node = el;
+                for (let i = 0; i < 8; i++) {
+                    if (!node.parentElement) break;
+                    node = node.parentElement;
+                    const btn = node.querySelector('button[role="switch"]');
+                    if (btn) return btn;
+                }
+                return null;
+                """,
+                switch,
+            )
+            if btn is not None:
+                return btn.get_attribute("aria-checked") == "true"
             return (
                 switch.get_attribute("aria-checked") == "true"
                 or switch.is_selected()
@@ -1058,7 +1076,15 @@ class EditSitePage(CreateSitePage):
         self.ensure_switch_on(self.ACTIVE_SITE_SWITCH)
 
     def enter_site_name(self, name):
-        """Update the site name field via the React-compatible JS setter."""
+        """Update the site name field.
+
+        Clicks the field first to ensure native focus (which the JS setter
+        alone does not always trigger), then sets the value via the native
+        property setter with input/change/blur events so React registers the
+        change before the save button is clicked.
+        """
+        el = self.wait.until(EC.element_to_be_clickable(self.SITE_NAME_INPUT))
+        el.click()
         self._set_input_value(self.SITE_NAME_INPUT, name)
 
     LANE_ROWS = (
