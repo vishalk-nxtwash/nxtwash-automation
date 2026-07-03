@@ -1,0 +1,1 @@
+{"uuid": "bac9943a-8151-4279-b615-00c4127cdebe", "children": ["4d7801ec-150c-490e-b705-cb76fc900a4a"], "befores": [{"name": "managed_site", "status": "passed", "start": 1783028932237, "stop": 1783028937864}], "afters": [{"name": "managed_site::0", "status": "passed", "start": 1783028945806, "stop": 1783028957753}], "start": 1783028932236, "stop": 1783028957754}
