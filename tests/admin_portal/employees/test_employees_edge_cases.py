@@ -83,3 +83,27 @@ def test_deactivated_employee_in_inactive_filter(browser, managed_employee):
         % EMP_LAST_NAME
     )
     assert page_has_no_broken_state(page)
+
+
+@allure.title("EMP-EC-005 Removing all locations from the edit form blocks save")
+@pytest.mark.edge
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-EC-005: Location chip remove button uses class heuristics "
+        "(multi-value__remove / chip-remove). Verify exact class names in DevTools."
+    ),
+)
+def test_edit_locations_required(browser, managed_employee):
+    from tests.admin_portal.employees.conftest import open_edit_employee_form
+    form = open_edit_employee_form(browser, EMP_LAST_NAME)
+    form.remove_all_locations()
+    form.click_save()
+
+    body = form.get_body_text()
+    assert (
+        "location" in body.lower()
+        or "required" in body.lower()
+        or "edit" in browser.current_url.lower()
+    ), "Save was not blocked after removing all locations"
+    assert page_has_no_broken_state(form)

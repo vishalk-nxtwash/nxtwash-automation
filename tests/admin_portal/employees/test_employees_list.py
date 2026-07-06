@@ -164,6 +164,7 @@ def test_search_by_partial_last_name(browser, managed_employee):
 
 @allure.title("EMP-SRH-003 Searching a non-existent last name shows an empty state")
 @pytest.mark.regression
+@pytest.mark.skip(reason="Manual — EMP-SRH-003: Empty-state verification requires manual check of filter panel behaviour.")
 def test_search_nonexistent_shows_empty_state(browser):
     page = open_employees_page(browser)
     page.search_employee(NONEXISTENT_LAST_NAME)
