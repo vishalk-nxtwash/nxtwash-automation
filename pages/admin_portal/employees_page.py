@@ -1,0 +1,707 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
+from pages.common.base_page import BasePage
+
+
+class AdminEmployeesPage(BasePage):
+    """Employees tab list page — /users/employees"""
+
+    EMP_LIST_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employees') "
+        "and not(contains(@src,'/users/employees/'))]")
+    EMP_CREATE_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employees/new')]")
+    EMP_EDIT_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employees/') "
+        "and not(contains(@src,'/users/employees/new'))]")
+
+    PAGE_TITLE = (By.XPATH,
+        "//*[normalize-space()='Employees' and (self::h1 or self::h2 or "
+        "contains(@class,'title') or contains(@class,'heading'))]")
+    ADD_EMPLOYEE_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Add employee')] | "
+        "//*[contains(normalize-space(),'Add employee') and @role='button']")
+    EMPLOYEE_SHIFT_TAB = (By.XPATH,
+        "//*[@role='tab' and contains(normalize-space(),'Employee shift')] | "
+        "//button[contains(normalize-space(),'Employee shift')]")
+
+    SEARCH_INPUT = (By.XPATH,
+        "//input[@name='lastName' or @name='last_name' "
+        "or @placeholder='Last Name' or @placeholder='Search by last name']")
+
+    FILTER_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Filter by'] | "
+        "//button[contains(normalize-space(),'Filter')]")
+    FILTER_STATUS_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='Status' or normalize-space()='Active']"
+        "/following::*[@role='combobox'][1]")
+    APPLY_FILTERS_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Apply filters'] | "
+        "//button[normalize-space()='Apply']")
+    RESET_ALL_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Reset all')] | "
+        "//button[contains(normalize-space(),'Reset All')]")
+    EXPORT_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Export'] | "
+        "//button[contains(@aria-label,'export') or contains(@aria-label,'Export')] | "
+        "//button[normalize-space()='Filter by']/following-sibling::button[1]")
+
+    GRID_ROWS = (By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row')] | "
+        "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
+    LOAD_MASK = (By.XPATH,
+        "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
+
+    def wait_for_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EMP_LIST_FRAME))
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def search_employee(self, last_name):
+        el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(last_name)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
+        )
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def clear_search(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
+        )
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def _row_locator(self, last_name):
+        return (By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//a[contains(@href,'edit')] or "
+            ".//button[normalize-space()='Edit']][1]" % last_name)
+
+    def wait_for_employee_row(self, last_name, timeout=None):
+        locator = self._row_locator(last_name)
+        if timeout:
+            from selenium.webdriver.support.ui import WebDriverWait
+            return WebDriverWait(self.driver, timeout).until(
+                EC.visibility_of_element_located(locator)
+            )
+        return self.wait.until(EC.visibility_of_element_located(locator))
+
+    def employee_exists(self, last_name):
+        self.search_employee(last_name)
+        try:
+            self.wait_for_employee_row(last_name, timeout=5)
+            return True
+        except TimeoutException:
+            return False
+
+    def get_employee_status(self, last_name):
+        self.search_employee(last_name)
+        row = self.wait_for_employee_row(last_name)
+        try:
+            badge = row.find_element(By.XPATH,
+                ".//*[normalize-space()='Active' or normalize-space()='Inactive']")
+            return badge.text.strip()
+        except Exception:
+            return ""
+
+    def get_visible_row_count(self):
+        rows = self.driver.find_elements(*self.GRID_ROWS)
+        return len([r for r in rows if r.is_displayed()])
+
+    def click_add_employee(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def open_edit_employee(self, last_name):
+        self.search_employee(last_name)
+        row = self.wait_for_employee_row(last_name)
+        edit_link = row.find_element(By.XPATH,
+            ".//a[contains(@href,'edit')] | .//button[normalize-space()='Edit']")
+        self.driver.execute_script("arguments[0].click();", edit_link)
+
+    def filter_panel_is_open(self):
+        els = self.driver.find_elements(*self.FILTER_STATUS_COMBOBOX)
+        return any(e.is_displayed() for e in els)
+
+    def open_filter_panel(self):
+        if self.filter_panel_is_open():
+            return
+        self.click(self.FILTER_BUTTON)
+        self.wait.until(EC.visibility_of_element_located(self.FILTER_STATUS_COMBOBOX))
+
+    def filter_by_status(self, status):
+        """status: 'Active' or 'Inactive'"""
+        self.open_filter_panel()
+        self.select_react_dropdown_option(self.FILTER_STATUS_COMBOBOX, status)
+
+    def apply_filters(self):
+        btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def reset_filters(self):
+        self.open_filter_panel()
+        btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def filter_result_count_text(self):
+        try:
+            el = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//*[contains(normalize-space(),'Filter result')]")
+            ))
+            return el.text.strip()
+        except TimeoutException:
+            return ""
+
+    def click_export_button(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.EXPORT_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def page_header_columns_text(self):
+        try:
+            headers = self.driver.find_elements(By.XPATH,
+                "//*[contains(@class,'header') or @role='columnheader']")
+            return [h.text.strip() for h in headers if h.text.strip()]
+        except Exception:
+            return []
+
+
+class AdminEmployeeFormPage(BasePage):
+    """Employee create/edit form — /users/employees/new or /users/employees/edit/{id}"""
+
+    FIRST_NAME_INPUT = (By.XPATH,
+        "//input[@name='firstName' or @name='first_name' or "
+        "@placeholder='First name' or @placeholder='First Name']")
+    LAST_NAME_INPUT = (By.XPATH,
+        "//input[@name='lastName' or @name='last_name' or "
+        "@placeholder='Last name' or @placeholder='Last Name']")
+    EMAIL_INPUT = (By.XPATH,
+        "//input[@name='email' or @name='emailId' or "
+        "@name='email_id' or @type='email']")
+    PHONE_INPUT = (By.XPATH,
+        "//input[@name='phone' or @name='phoneNumber' or "
+        "@name='phone_number' or @placeholder='Phone number']")
+    EMPLOYEE_CODE_INPUT = (By.XPATH,
+        "//input[@name='employeeCode' or @name='empCode' or "
+        "@name='employee_code' or @placeholder='Employee code']")
+    HOURLY_WAGE_INPUT = (By.XPATH,
+        "//input[@name='hourlyWage' or @name='wage' or "
+        "@name='hourly_wage' or @placeholder='Hourly wage']")
+    HIRE_DATE_INPUT = (By.XPATH,
+        "//input[@name='hireDate' or @name='hire_date' or "
+        "@placeholder='Hire date' or (@type='date' and not(@name='startTime') "
+        "and not(@name='endTime'))]")
+
+    LOCATIONS_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='Locations' or normalize-space()='Location']"
+        "/following::*[@role='combobox'][1]")
+    STATE_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='State']/following::*[@role='combobox'][1]")
+    CITY_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='City']/following::*[@role='combobox'][1]")
+
+    ACTIVE_SWITCH = (By.XPATH,
+        "//*[contains(normalize-space(),'Active employee')]"
+        "/ancestor::*[.//button[@role='switch']][1]"
+        "//button[@role='switch'] | "
+        "//form//button[@role='switch'][1]")
+
+    SAVE_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Save employee')] | "
+        "//button[normalize-space()='Save'] | "
+        "//*[@data-type='primary' and (contains(normalize-space(),'Save'))]")
+    CANCEL_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Cancel'] | "
+        "//*[@data-type and normalize-space()='Cancel']")
+
+    def wait_for_create_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_CREATE_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+
+    def wait_for_edit_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_EDIT_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait.until(
+            lambda d: d.find_element(*self.FIRST_NAME_INPUT).get_attribute("value") != ""
+        )
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def _set_input_value(self, element, value):
+        self.driver.execute_script("""
+            var input = arguments[0]; var value = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', {bubbles: true}));
+            input.dispatchEvent(new Event('change', {bubbles: true}));
+        """, element, value)
+
+    def enter_first_name(self, name):
+        self.enter_text(self.FIRST_NAME_INPUT, name)
+
+    def enter_last_name(self, name):
+        self.enter_text(self.LAST_NAME_INPUT, name)
+
+    def clear_first_name(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+
+    def clear_last_name(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+
+    def get_first_name_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.FIRST_NAME_INPUT)
+        ).get_attribute("value")
+
+    def get_last_name_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.LAST_NAME_INPUT)
+        ).get_attribute("value")
+
+    def enter_email(self, email):
+        self.enter_text(self.EMAIL_INPUT, email)
+
+    def clear_email(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+
+    def get_email_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.EMAIL_INPUT)
+        ).get_attribute("value")
+
+    def enter_phone(self, phone):
+        self.enter_text(self.PHONE_INPUT, phone)
+
+    def clear_phone(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+
+    def get_phone_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.PHONE_INPUT)
+        ).get_attribute("value")
+
+    def enter_employee_code(self, code):
+        self.enter_text(self.EMPLOYEE_CODE_INPUT, code)
+
+    def get_employee_code_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.EMPLOYEE_CODE_INPUT)
+        ).get_attribute("value")
+
+    def enter_hourly_wage(self, wage):
+        el = self.wait.until(EC.visibility_of_element_located(self.HOURLY_WAGE_INPUT))
+        self._set_input_value(el, str(wage))
+
+    def get_hourly_wage_value(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.HOURLY_WAGE_INPUT)
+        ).get_attribute("value")
+
+    def assign_location(self, site_name):
+        self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
+
+    def remove_all_locations(self):
+        """Remove all selected location chips by clicking their X buttons."""
+        remove_btns = self.driver.find_elements(By.XPATH,
+            "//*[contains(@class,'multi-value__remove') or "
+            "contains(@class,'chip-remove') or "
+            "contains(@aria-label,'remove') or "
+            "contains(@aria-label,'Remove')]")
+        for btn in remove_btns:
+            try:
+                self.driver.execute_script("arguments[0].click();", btn)
+            except Exception:
+                pass
+
+    def get_location_chips_text(self):
+        chips = self.driver.find_elements(By.XPATH,
+            "//*[contains(@class,'multi-value__label') or "
+            "contains(@class,'chip__label') or "
+            "contains(@class,'tag-label')]")
+        return [c.text.strip() for c in chips if c.text.strip()]
+
+    def select_state(self, state_name):
+        self.select_react_dropdown_option(self.STATE_COMBOBOX, state_name)
+
+    def get_city_dropdown_options(self):
+        self.driver.execute_script(
+            "arguments[0].click();",
+            self.wait.until(EC.element_to_be_clickable(self.CITY_COMBOBOX))
+        )
+        opts = self.wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//*[@role='option']")
+        ))
+        return [o.text.strip() for o in opts if o.text.strip()]
+
+    def ensure_active_switch_on(self):
+        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") != "true":
+            switch.click()
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "true")
+
+    def ensure_active_switch_off(self):
+        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") != "false":
+            switch.click()
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "false")
+
+    def active_switch_is_on(self):
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        return switch.get_attribute("aria-checked") == "true"
+
+    def fill_create_form(self, first_name, last_name, email, phone, site_name):
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        self.enter_email(email)
+        self.enter_phone(phone)
+        self.assign_location(site_name)
+        self.ensure_active_switch_on()
+
+    def click_save(self):
+        el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def click_cancel(self):
+        el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def _input_is_valid(self, locator):
+        el = self.wait.until(EC.presence_of_element_located(locator))
+        return self.driver.execute_script("return arguments[0].checkValidity();", el)
+
+    def first_name_input_is_valid(self):
+        return self._input_is_valid(self.FIRST_NAME_INPUT)
+
+    def last_name_input_is_valid(self):
+        return self._input_is_valid(self.LAST_NAME_INPUT)
+
+    def email_input_is_valid(self):
+        return self._input_is_valid(self.EMAIL_INPUT)
+
+    def phone_input_is_valid(self):
+        return self._input_is_valid(self.PHONE_INPUT)
+
+    def hourly_wage_input_is_valid(self):
+        return self._input_is_valid(self.HOURLY_WAGE_INPUT)
+
+
+class AdminEmployeeShiftPage(BasePage):
+    """Employee Shift tab list page — /users/employeeShift"""
+
+    SHIFT_LIST_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employeeShift') "
+        "and not(contains(@src,'/users/employeeShift/'))]")
+    SHIFT_CREATE_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employeeShift/new')]")
+    SHIFT_EDIT_FRAME = (By.XPATH,
+        "//iframe[contains(@src,'/users/employeeShift/') "
+        "and not(contains(@src,'/users/employeeShift/new'))]")
+
+    SHIFT_PAGE_TITLE = (By.XPATH,
+        "//*[contains(normalize-space(),'Employee shift') and "
+        "(self::h1 or self::h2 or contains(@class,'title') or contains(@class,'heading'))]")
+    ADD_SHIFT_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Add new employee shift')] | "
+        "//button[contains(normalize-space(),'Add employee shift')] | "
+        "//*[contains(normalize-space(),'Add new employee shift') and @role='button']")
+    SHIFT_SEARCH_INPUT = (By.XPATH,
+        "//input[@name='lastName' or @name='last_name' "
+        "or @placeholder='Last Name' or @placeholder='Search by last name']")
+
+    FILTER_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Filter by'] | "
+        "//button[contains(normalize-space(),'Filter')]")
+    FILTER_FIRST_NAME = (By.XPATH,
+        "//input[@name='firstName' or @name='first_name' "
+        "or @placeholder='First name' or @placeholder='First Name']")
+    FILTER_SITE_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='Select site' or normalize-space()='Site' "
+        "or normalize-space()='Location']/following::*[@role='combobox'][1]")
+    FILTER_ACTIVE_SHIFT_SWITCH = (By.XPATH,
+        "//*[contains(normalize-space(),'Active shift')]"
+        "/following::*[@role='switch'][1] | "
+        "//*[contains(normalize-space(),'Active shift')]"
+        "/following::button[@role='switch'][1]")
+    FILTER_START_DATE = (By.XPATH,
+        "//input[@name='startDate' or @name='start_date' "
+        "or @placeholder='Start date' or @placeholder='From']")
+    FILTER_END_DATE = (By.XPATH,
+        "//input[@name='endDate' or @name='end_date' "
+        "or @placeholder='End date' or @placeholder='To']")
+    APPLY_FILTERS_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Apply filters'] | "
+        "//button[normalize-space()='Apply']")
+    RESET_ALL_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Reset all')] | "
+        "//button[contains(normalize-space(),'Reset All')]")
+    EXPORT_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Export'] | "
+        "//button[normalize-space()='Filter by']/following-sibling::button[1]")
+
+    GRID_ROWS = (By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row')] | "
+        "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
+    LOAD_MASK = (By.XPATH,
+        "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
+
+    def wait_for_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(self.SHIFT_LIST_FRAME)
+        )
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def get_visible_row_count(self):
+        rows = self.driver.find_elements(*self.GRID_ROWS)
+        return len([r for r in rows if r.is_displayed()])
+
+    def search_shift(self, last_name):
+        el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(last_name)
+        self.wait.until(
+            lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == last_name
+        )
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def clear_search(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        self.wait.until(
+            lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == ""
+        )
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def click_add_shift(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.ADD_SHIFT_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def filter_panel_is_open(self):
+        els = self.driver.find_elements(*self.FILTER_FIRST_NAME)
+        return any(e.is_displayed() for e in els)
+
+    def open_filter_panel(self):
+        if self.filter_panel_is_open():
+            return
+        self.click(self.FILTER_BUTTON)
+        self.wait.until(EC.visibility_of_element_located(self.FILTER_FIRST_NAME))
+
+    def filter_panel_has_expected_controls(self):
+        self.open_filter_panel()
+        body = self.get_body_text().lower()
+        return all(label in body for label in ["first name", "active shift", "start date", "end date"])
+
+    def filter_by_first_name(self, first_name):
+        self.open_filter_panel()
+        el = self.wait.until(EC.element_to_be_clickable(self.FILTER_FIRST_NAME))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(first_name)
+
+    def filter_by_site(self, site_name):
+        self.open_filter_panel()
+        self.select_react_dropdown_option(self.FILTER_SITE_COMBOBOX, site_name)
+
+    def get_active_shift_filter_state(self):
+        self.open_filter_panel()
+        switch = self.wait.until(EC.presence_of_element_located(self.FILTER_ACTIVE_SHIFT_SWITCH))
+        return switch.get_attribute("aria-checked") == "true"
+
+    def toggle_active_shift_filter(self):
+        self.open_filter_panel()
+        switch = self.wait.until(EC.element_to_be_clickable(self.FILTER_ACTIVE_SHIFT_SWITCH))
+        self.driver.execute_script("arguments[0].click();", switch)
+
+    def apply_filters(self):
+        btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def reset_filters(self):
+        self.open_filter_panel()
+        btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def filter_result_count_text(self):
+        try:
+            el = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//*[contains(normalize-space(),'Filter result')]")
+            ))
+            return el.text.strip()
+        except TimeoutException:
+            return ""
+
+    def click_export_button(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.EXPORT_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def open_first_shift_edit(self):
+        edit_btn = self.wait.until(EC.element_to_be_clickable(
+            (By.XPATH,
+             "(.//a[contains(@href,'edit')])[1] | "
+             "(.//button[normalize-space()='Edit'])[1]")
+        ))
+        self.driver.execute_script("arguments[0].click();", edit_btn)
+
+
+class AdminEmployeeShiftFormPage(BasePage):
+    """Employee Shift create/edit form — /users/employeeShift/new or edit"""
+
+    EMPLOYEE_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='Employee']/following::*[@role='combobox'][1]")
+    SITE_COMBOBOX = (By.XPATH,
+        "//*[normalize-space()='Site' or normalize-space()='Location' "
+        "or normalize-space()='Site/Location']/following::*[@role='combobox'][1]")
+
+    START_TIME_INPUT = (By.XPATH,
+        "//input[@name='startTime' or @name='start_time' or "
+        "contains(@placeholder,'Start time') or contains(@placeholder,'start')]")
+    END_TIME_INPUT = (By.XPATH,
+        "//input[@name='endTime' or @name='end_time' or "
+        "contains(@placeholder,'End time') or contains(@placeholder,'end')]")
+    DATE_INPUT = (By.XPATH,
+        "//input[@name='date' or @name='shiftDate' or @name='shift_date']")
+
+    ACTIVE_SWITCH = (By.XPATH,
+        "//*[contains(normalize-space(),'Active shift')]"
+        "/ancestor::*[.//button[@role='switch']][1]//button[@role='switch'] | "
+        "//form//button[@role='switch'][1]")
+
+    SAVE_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Save shift')] | "
+        "//button[normalize-space()='Save'] | "
+        "//*[@data-type='primary' and contains(normalize-space(),'Save')]")
+    CANCEL_BUTTON = (By.XPATH,
+        "//button[normalize-space()='Cancel'] | "
+        "//*[@data-type and normalize-space()='Cancel']")
+
+    def wait_for_create_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_CREATE_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_COMBOBOX))
+        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+
+    def wait_for_edit_loaded(self):
+        self.driver.switch_to.default_content()
+        self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
+        )
+        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def _set_input_value(self, element, value):
+        self.driver.execute_script("""
+            var input = arguments[0]; var value = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', {bubbles: true}));
+            input.dispatchEvent(new Event('change', {bubbles: true}));
+        """, element, value)
+
+    def select_employee(self, employee_name):
+        self.select_react_dropdown_option(self.EMPLOYEE_COMBOBOX, employee_name)
+
+    def select_site(self, site_name):
+        self.select_react_dropdown_option(self.SITE_COMBOBOX, site_name)
+
+    def set_start_time(self, time_str):
+        el = self.wait.until(EC.presence_of_element_located(self.START_TIME_INPUT))
+        self._set_input_value(el, time_str)
+
+    def set_end_time(self, time_str):
+        el = self.wait.until(EC.presence_of_element_located(self.END_TIME_INPUT))
+        self._set_input_value(el, time_str)
+
+    def ensure_active_switch_on(self):
+        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") != "true":
+            switch.click()
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "true")
+
+    def ensure_active_switch_off(self):
+        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
+        if switch.get_attribute("aria-checked") != "false":
+            switch.click()
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "false")
+
+    def active_switch_is_on(self):
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        return switch.get_attribute("aria-checked") == "true"
+
+    def get_employee_dropdown_options(self):
+        self.driver.execute_script(
+            "arguments[0].click();",
+            self.wait.until(EC.element_to_be_clickable(self.EMPLOYEE_COMBOBOX))
+        )
+        opts = self.wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//*[@role='option']")
+        ))
+        return [o.text.strip() for o in opts if o.text.strip()]
+
+    def get_site_dropdown_options(self):
+        self.driver.execute_script(
+            "arguments[0].click();",
+            self.wait.until(EC.element_to_be_clickable(self.SITE_COMBOBOX))
+        )
+        opts = self.wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//*[@role='option']")
+        ))
+        return [o.text.strip() for o in opts if o.text.strip()]
+
+    def click_save(self):
+        el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
+
+    def click_cancel(self):
+        el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", el)
