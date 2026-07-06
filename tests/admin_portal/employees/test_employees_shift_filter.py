@@ -150,6 +150,46 @@ def test_shift_filter_active_off(browser):
     assert page_has_no_broken_state(page)
 
 
+@allure.title("EMP-SH-FLT-007 An invalid date range (end before start) shows an error or empty result")
+@pytest.mark.edge
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-SH-FLT-007: Whether an invalid date range is rejected at the filter level "
+        "is a product decision. Verify expected behaviour in DevTools."
+    ),
+)
+def test_shift_filter_invalid_date_range(browser):
+    from pages.admin_portal.employees_page import AdminEmployeeShiftPage
+    from selenium.webdriver.common.keys import Keys
+    from selenium.webdriver.support import expected_conditions as EC
+
+    page = open_shift_page(browser)
+    page.open_filter_panel()
+
+    start_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_START_DATE))
+    start_el.click()
+    start_el.send_keys(Keys.COMMAND + "a")
+    start_el.send_keys(Keys.BACKSPACE)
+    start_el.send_keys("2025-12-31")
+
+    end_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_END_DATE))
+    end_el.click()
+    end_el.send_keys(Keys.COMMAND + "a")
+    end_el.send_keys(Keys.BACKSPACE)
+    end_el.send_keys("2025-01-01")   # end before start
+
+    page.apply_filters()
+
+    body = page.get_body_text()
+    assert (
+        "invalid" in body.lower()
+        or "no record" in body.lower()
+        or page.get_visible_row_count() == 0
+    ), "Expected error or empty result for invalid date range (end before start)"
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("EMP-SH-FLT-008 Filter result count matches the rendered row count")
 @pytest.mark.regression
 @_FILTER_XFAIL

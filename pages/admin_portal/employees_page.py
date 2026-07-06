@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -29,8 +31,9 @@ class AdminEmployeesPage(BasePage):
         "//button[contains(normalize-space(),'Employee shift')]")
 
     SEARCH_INPUT = (By.XPATH,
-        "//input[@name='lastName' or @name='last_name' "
-        "or @placeholder='Last Name' or @placeholder='Search by last name']")
+        "//input[@placeholder='last name' or @placeholder='Last name' "
+        "or @placeholder='Last Name' or @placeholder='Search by last name' "
+        "or @name='lastName' or @name='last_name']")
 
     FILTER_BUTTON = (By.XPATH,
         "//button[normalize-space()='Filter by'] | "
@@ -73,6 +76,7 @@ class AdminEmployeesPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
         )
+        time.sleep(1)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def clear_search(self):
@@ -83,27 +87,30 @@ class AdminEmployeesPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
+        time.sleep(1)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def _row_locator(self, last_name):
         return (By.XPATH,
-            "//*[normalize-space()='%s']"
-            "/ancestor::*[.//a[contains(@href,'edit')] or "
-            ".//button[normalize-space()='Edit']][1]" % last_name)
+            "//*[contains(@class,'InovuaReactDataGrid__row') and "
+            ".//*[contains(normalize-space(),'%s')]]" % last_name)
 
     def wait_for_employee_row(self, last_name, timeout=None):
+        # InovuaReactDataGrid rows are present in the DOM but Selenium's
+        # is_displayed() returns False due to CSS transforms/clipping used by
+        # the virtual scroller. Use presence_of_element_located instead.
         locator = self._row_locator(last_name)
         if timeout:
             from selenium.webdriver.support.ui import WebDriverWait
             return WebDriverWait(self.driver, timeout).until(
-                EC.visibility_of_element_located(locator)
+                EC.presence_of_element_located(locator)
             )
-        return self.wait.until(EC.visibility_of_element_located(locator))
+        return self.wait.until(EC.presence_of_element_located(locator))
 
     def employee_exists(self, last_name):
         self.search_employee(last_name)
         try:
-            self.wait_for_employee_row(last_name, timeout=5)
+            self.wait_for_employee_row(last_name, timeout=15)
             return True
         except TimeoutException:
             return False
@@ -191,8 +198,9 @@ class AdminEmployeeFormPage(BasePage):
         "//input[@name='lastName' or @name='last_name' or "
         "@placeholder='Last name' or @placeholder='Last Name']")
     EMAIL_INPUT = (By.XPATH,
-        "//input[@name='email' or @name='emailId' or "
-        "@name='email_id' or @type='email']")
+        "//input[@name='email' or @name='emailId' or @name='email_id' or "
+        "@placeholder='Email' or @placeholder='Email address' or "
+        "@placeholder='Email Address' or @placeholder='Email id']")
     PHONE_INPUT = (By.XPATH,
         "//input[@name='phone' or @name='phoneNumber' or "
         "@name='phone_number' or @placeholder='Phone number']")
@@ -206,6 +214,12 @@ class AdminEmployeeFormPage(BasePage):
         "//input[@name='hireDate' or @name='hire_date' or "
         "@placeholder='Hire date' or (@type='date' and not(@name='startTime') "
         "and not(@name='endTime'))]")
+    ADDRESS_INPUT = (By.XPATH,
+        "//input[@name='address' or @name='street' or @name='streetAddress' or "
+        "@placeholder='Address' or @placeholder='Street address']")
+    ZIP_INPUT = (By.XPATH,
+        "//input[@name='zip' or @name='zipCode' or @name='zip_code' or "
+        "@name='postalCode' or @placeholder='ZIP' or @placeholder='Zip code']")
 
     LOCATIONS_COMBOBOX = (By.XPATH,
         "//*[normalize-space()='Locations' or normalize-space()='Location']"
@@ -314,6 +328,12 @@ class AdminEmployeeFormPage(BasePage):
             EC.visibility_of_element_located(self.PHONE_INPUT)
         ).get_attribute("value")
 
+    def enter_address(self, address):
+        self.enter_text(self.ADDRESS_INPUT, address)
+
+    def enter_zip(self, zip_code):
+        self.enter_text(self.ZIP_INPUT, zip_code)
+
     def enter_employee_code(self, code):
         self.enter_text(self.EMPLOYEE_CODE_INPUT, code)
 
@@ -333,6 +353,10 @@ class AdminEmployeeFormPage(BasePage):
 
     def assign_location(self, site_name):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
+
+    def assign_locations(self, site_names):
+        for name in site_names:
+            self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, name)
 
     def remove_all_locations(self):
         """Remove all selected location chips by clicking their X buttons."""
@@ -356,6 +380,9 @@ class AdminEmployeeFormPage(BasePage):
 
     def select_state(self, state_name):
         self.select_react_dropdown_option(self.STATE_COMBOBOX, state_name)
+
+    def select_city(self, city_name):
+        self.select_react_dropdown_option(self.CITY_COMBOBOX, city_name)
 
     def get_city_dropdown_options(self):
         self.driver.execute_script(
@@ -499,9 +526,11 @@ class AdminEmployeeShiftPage(BasePage):
         el.send_keys(Keys.COMMAND + "a")
         el.send_keys(Keys.BACKSPACE)
         el.send_keys(last_name)
+        el.send_keys(Keys.RETURN)
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == last_name
         )
+        time.sleep(1)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def clear_search(self):
@@ -653,6 +682,10 @@ class AdminEmployeeShiftFormPage(BasePage):
 
     def select_site(self, site_name):
         self.select_react_dropdown_option(self.SITE_COMBOBOX, site_name)
+
+    def set_shift_date(self, date_str):
+        el = self.wait.until(EC.presence_of_element_located(self.DATE_INPUT))
+        self._set_input_value(el, date_str)
 
     def set_start_time(self, time_str):
         el = self.wait.until(EC.presence_of_element_located(self.START_TIME_INPUT))

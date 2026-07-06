@@ -5,6 +5,9 @@ from tests.admin_portal.employees.conftest import (
     ASSIGNMENT_SITE,
     EMP_FULL_NAME,
     EMP_LAST_NAME,
+    SHIFT_DATE,
+    SHIFT_END_TIME,
+    SHIFT_START_TIME,
     open_create_shift_form,
     open_shift_page,
     page_has_no_broken_state,
@@ -47,8 +50,9 @@ def test_create_active_shift(browser, managed_employee):
     form = open_create_shift_form(browser)
     form.select_employee(EMP_FULL_NAME)
     form.select_site(ASSIGNMENT_SITE)
-    form.set_start_time("09:00")
-    form.set_end_time("17:00")
+    form.set_shift_date(SHIFT_DATE)
+    form.set_start_time(SHIFT_START_TIME)
+    form.set_end_time(SHIFT_END_TIME)
     form.ensure_active_switch_on()
     form.click_save()
 
@@ -186,6 +190,75 @@ def test_create_shift_datetime_picker_present(browser):
     assert page_has_no_broken_state(form)
 
 
+@allure.title("EMP-SH-CRT-010 A shift with end time before start time shows a validation error")
+@pytest.mark.edge
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-SH-CRT-010: Whether end-before-start is rejected depends on whether the app "
+        "supports overnight shifts. Verify expected product behaviour in DevTools."
+    ),
+)
+def test_create_shift_end_before_start(browser, managed_employee):
+    form = open_create_shift_form(browser)
+    form.select_employee(EMP_FULL_NAME)
+    form.select_site(ASSIGNMENT_SITE)
+    form.set_start_time("17:00")
+    form.set_end_time("09:00")   # end before start on same day
+    form.ensure_active_switch_on()
+    form.click_save()
+
+    body = form.get_body_text()
+    assert (
+        "time" in body.lower()
+        or "invalid" in body.lower()
+        or "before" in body.lower()
+        or "employeeShift/new" in browser.current_url
+    ), "Expected validation error for end time before start time"
+    assert page_has_no_broken_state(form)
+
+
+@allure.title("EMP-SH-CRT-011 A midnight-spanning shift (22:00–06:00) saves correctly")
+@pytest.mark.edge
+@_SHIFT_FORM_XFAIL
+def test_create_shift_midnight_spanning(browser, managed_employee):
+    form = open_create_shift_form(browser)
+    form.select_employee(EMP_FULL_NAME)
+    form.select_site(ASSIGNMENT_SITE)
+    form.set_start_time("22:00")
+    form.set_end_time("06:00")   # crosses midnight
+    form.ensure_active_switch_on()
+    form.click_save()
+
+    page = open_shift_page(browser)
+    assert page_has_no_broken_state(page), (
+        "Page shows error state after saving a midnight-spanning shift"
+    )
+
+
+@allure.title("EMP-SH-CRT-012 Creating a shift that overlaps an existing one is a product decision")
+@pytest.mark.edge
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-SH-CRT-012: Whether overlapping shifts are blocked is a product decision. "
+        "Verify expected server behaviour before implementing the assertion."
+    ),
+)
+def test_create_shift_overlapping_shifts(browser, managed_shift):
+    form = open_create_shift_form(browser)
+    form.select_employee(EMP_FULL_NAME)
+    form.select_site(ASSIGNMENT_SITE)
+    form.set_start_time("09:00")   # same window used in other shift tests
+    form.set_end_time("17:00")
+    form.ensure_active_switch_on()
+    form.click_save()
+
+    assert page_has_no_broken_state(form), (
+        "Page shows broken state after creating overlapping shift"
+    )
+
+
 @allure.title("EMP-SH-CRT-013 Clicking Cancel discards the shift form and returns to the list")
 @pytest.mark.regression
 def test_create_shift_cancel_discards_form(browser):
@@ -206,8 +279,9 @@ def test_newly_created_shift_appears_immediately(browser, managed_employee):
     form = open_create_shift_form(browser)
     form.select_employee(EMP_FULL_NAME)
     form.select_site(ASSIGNMENT_SITE)
-    form.set_start_time("10:00")
-    form.set_end_time("18:00")
+    form.set_shift_date(SHIFT_DATE)
+    form.set_start_time(SHIFT_START_TIME)
+    form.set_end_time(SHIFT_END_TIME)
     form.ensure_active_switch_on()
     form.click_save()
 

@@ -100,18 +100,15 @@ class AdminUserRolesPage(BasePage):
         )
 
     def _role_row_locator(self, role_name):
-        # Find the closest ancestor that contains both the role name text
-        # and the edit link — works for <tr>-based and div-based tables.
         return (
             By.XPATH,
-            "//*[normalize-space()='%s']"
-            "/ancestor::*[.//a[@role='button' and contains(@class,'edit')]][1]"
-            % role_name
+            "//*[contains(@class,'InovuaReactDataGrid__row') and "
+            ".//*[contains(normalize-space(),'%s')]]" % role_name
         )
 
     def wait_for_role_row(self, role_name):
         return self.wait.until(
-            EC.visibility_of_element_located(self._role_row_locator(role_name))
+            EC.presence_of_element_located(self._role_row_locator(role_name))
         )
 
     def role_exists(self, role_name):

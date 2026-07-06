@@ -128,7 +128,7 @@ class AdminUsersPage(BasePage):
 
     def wait_for_user_row(self, email):
         return self.wait.until(
-            EC.visibility_of_element_located(self._user_email_cell_locator(email))
+            EC.presence_of_element_located(self._user_email_cell_locator(email))
         )
 
     def get_user_status(self, email):
