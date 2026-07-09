@@ -2,6 +2,8 @@ import uuid
 
 import allure
 import pytest
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.admin_portal.sites_page import CreateSitePage
 from pages.admin_portal.sites_page import SitesPage
@@ -166,10 +168,19 @@ def test_site_count_increments_after_create(logged_in_admin_browser):
     create_page.wait_for_loaded()
     create_page.create_site(**site_data)
 
-    sites_page = SitesPage(logged_in_admin_browser)
-    sites_page.wait_for_loaded()
-    new_count = sites_page.get_site_count_from_title()
+    # Navigate back explicitly — create_site() may land on an edit/detail page.
+    sites_page = open_sites_page(logged_in_admin_browser)
 
+    # Wait up to 30s for the title count to reflect the newly created site.
+    if initial_count is not None:
+        try:
+            WebDriverWait(logged_in_admin_browser, 30).until(
+                lambda d: (sites_page.get_site_count_from_title() or 0) > initial_count
+            )
+        except TimeoutException:
+            pass
+
+    new_count = sites_page.get_site_count_from_title()
     assert new_count is not None
     if initial_count is not None:
         assert new_count > initial_count
