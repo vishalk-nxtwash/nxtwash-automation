@@ -108,3 +108,9 @@ class BasePage:
             lambda d: self._find_react_option(option_text)
         )
         self.driver.execute_script("arguments[0].click();", option)
+
+    def hover_element(self, locator):
+        """Move the pointer to the centre of the element matched by locator."""
+        from selenium.webdriver.common.action_chains import ActionChains
+        el = self.wait.until(EC.visibility_of_element_located(locator))
+        ActionChains(self.driver).move_to_element(el).perform()
