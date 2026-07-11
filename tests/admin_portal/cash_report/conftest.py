@@ -237,3 +237,35 @@ def csh_single_day(browser):
     page.check_modal_single_day()
     time.sleep(0.5)
     return page
+
+
+# ── SingleDaySyncMixin fixture aliases (sdm_* names) ─────────────────────────
+# These satisfy the fixture names expected by SingleDaySyncMixin in mixins.py.
+
+@pytest.fixture
+def sdm_modal(browser):
+    return open_csh_page(browser)
+
+
+@pytest.fixture
+def sdm_single_day(browser):
+    page = open_csh_page(browser)
+    page.select_site(CSH_SITE)
+    page.check_modal_single_day()
+    time.sleep(0.5)
+    return page
+
+
+@pytest.fixture
+def sdm_page(browser):
+    page = open_csh_page(browser)
+    page.select_site(CSH_SITE)
+    page.select_date_preset("Last month")
+    try:
+        WebDriverWait(page.driver, 10).until(
+            lambda d: page.get_date_range_value() != ""
+        )
+    except Exception:
+        time.sleep(2.0)
+    page.apply_modal_filters()
+    return page

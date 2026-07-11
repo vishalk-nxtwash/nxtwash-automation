@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from tests.admin_portal.mixins import SingleDaySyncMixin
 from tests.admin_portal.cash_report.conftest import (
     CSH_SITE,
     CSH_DATE_START,
@@ -313,74 +314,20 @@ class TestDateFilter:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 @allure.story("Single Day Mode")
-class TestSingleDayMode:
+class TestSingleDayMode(SingleDaySyncMixin):
+    """Single-day-mode tests inherited from SingleDaySyncMixin.
 
-    @allure.title("CSH-SDM-001 Single day checkbox is visible inside the filter modal")
-    @pytest.mark.smoke
-    def test_modal_single_day_checkbox_visible(self, csh_modal):
-        assert csh_modal.modal_single_day_checkbox_visible(), (
-            "Single day checkbox not found inside the filter modal"
-        )
-        assert page_has_no_broken_state(csh_modal)
+    Fixture wiring: sdm_modal / sdm_single_day / sdm_page are defined in
+    this module's conftest.py as CSH-specific aliases.
 
-    @allure.title("CSH-SDM-002 Checking modal single day changes the date field to single-date mode")
-    @pytest.mark.regression
-    def test_modal_single_day_changes_date_field(self, csh_single_day):
-        assert csh_single_day.modal_single_day_is_checked(), (
-            "Single day checkbox not checked after check_modal_single_day()"
-        )
-        placeholder = csh_single_day.date_range_input_placeholder()
-        date_val    = csh_single_day.get_date_range_value()
-        # Either the placeholder text changes (e.g. 'Select date') or the
-        # input value collapses to a single date (no ' - ' separator).
-        placeholder_changed = "range" not in placeholder.lower()
-        single_value = date_val != "" and " - " not in date_val
-        assert placeholder_changed or single_value or csh_single_day.modal_single_day_is_checked(), (
-            "Checking Single day did not affect date field.  "
-            "Placeholder: '%s'  Value: '%s'" % (placeholder, date_val)
-        )
-        assert page_has_no_broken_state(csh_single_day)
+    TC IDs generated dynamically via allure.dynamic.title in the mixin:
+        CSH-SDM-001  Single day checkbox visible in modal            (smoke)
+        CSH-SDM-002  Checking SDM changes the date field             (regression)
+        CSH-SDM-003  Modal SDM checked → page bar SDM checked        (regression, xfail)
+        CSH-SDM-004  Page bar SDM uncheck → modal reflects uncheck   (regression, xfail)
+    """
 
-    @allure.title("CSH-SDM-003 Modal SDM checked → page bar SDM also checked after apply")
-    @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known gap CSH-SDM-003: cannot confirm that the page-bar single day "
-            "checkbox DOM element exists and syncs with the modal checkbox without "
-            "DevTools inspection.  PAGE_BAR_SINGLE_DAY_CHECKBOX locator relies on "
-            "an ancestor-exclusion heuristic that may not match the actual DOM. "
-            "Mark as xfail pending first live run."
-        ),
-        strict=False,
-    )
-    def test_modal_sdm_syncs_to_page_bar(self, csh_single_day):
-        csh_single_day.select_date_preset("Today")
-        csh_single_day.apply_modal_filters()
-        assert csh_single_day.page_bar_single_day_is_checked(), (
-            "Page-bar single day checkbox not checked after applying modal with SDM on"
-        )
-        assert page_has_no_broken_state(csh_single_day)
-
-    @allure.title("CSH-SDM-004 Unchecking page-bar SDM reflects unchecked on modal re-open")
-    @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known gap CSH-SDM-004: page-bar single day checkbox DOM element "
-            "unconfirmed (same as CSH-SDM-003).  Additionally, the re-open mechanism "
-            "for the filter modal when triggered from the page bar has not been "
-            "verified via DevTools."
-        ),
-        strict=False,
-    )
-    def test_page_bar_sdm_uncheck_syncs_to_modal(self, csh_page):
-        assert csh_page.page_bar_single_day_checkbox_visible(), (
-            "Page-bar single day checkbox not visible on metrics screen"
-        )
-        csh_page.check_page_bar_single_day()  # toggle (assumes it starts unchecked)
-        time.sleep(0.5)
-        # Re-open the filter modal to verify sync
-        # TODO: Confirm re-open mechanism (click compact bar element?) via DevTools
-        assert page_has_no_broken_state(csh_page)
+    SDM_TC_PREFIX = "CSH-SDM"
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
