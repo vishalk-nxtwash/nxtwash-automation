@@ -35,9 +35,12 @@ class PerformanceMetricsPage(BasePage):
         "//*[contains(@class,'loading') or contains(@class,'spinner') or "
         "contains(@class,'skeleton')]")
 
-    # Site multiselect (React Select, searchable) — uses nxt-multi-select__ prefix
+    # Site multiselect (React Select, searchable) — uses nxt-multi-select__ prefix.
+    # Excludes --is-disabled so we match only the modal's interactive control, not the
+    # compact page-bar control which is disabled while the modal is open.
     SITE_MULTISELECT = (By.XPATH,
-        "//div[contains(@class,'nxt-multi-select__control')]")
+        "//div[contains(@class,'nxt-multi-select__control') "
+        "and not(contains(@class,'--is-disabled'))]")
 
     SITE_CHIPS = (By.XPATH,
         "//div[contains(@class,'nxt-multi-select__multi-value__label')]")
@@ -196,8 +199,20 @@ class PerformanceMetricsPage(BasePage):
         self._switch_to_frame()
         self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 10).until(
                 EC.invisibility_of_element_located(self.LOAD_MASK)
+            )
+        except TimeoutException:
+            pass
+        # Also wait for the site multiselect to become interactive before returning,
+        # since the Apply button can appear before the controls finish initialising.
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH,
+                     "//div[contains(@class,'nxt-multi-select__control') "
+                     "and not(contains(@class,'--is-disabled'))]")
+                )
             )
         except TimeoutException:
             pass
@@ -238,9 +253,36 @@ class PerformanceMetricsPage(BasePage):
     # ── Site multiselect ──────────────────────────────────────────────────────
 
     def select_site(self, site_name, clear_first=True):
-        self.select_react_dropdown_option(
-            self.SITE_MULTISELECT, site_name, clear_first=clear_first
+        """Select a site in the filter modal.
+
+        Overrides base select_react_dropdown_option to use ActionChains click on the
+        inner <input> rather than a JS click on the outer control div.  JS synthetic
+        clicks do not consistently trigger React Select's onMouseDown handler in a
+        cold browser, so the dropdown never opens and _find_react_option times out.
+        """
+        ctrl_locator = (By.XPATH,
+            "//div[contains(@class,'nxt-multi-select__control') "
+            "and not(contains(@class,'--is-disabled'))]")
+        ctrl = self.wait.until(EC.element_to_be_clickable(ctrl_locator))
+        inputs = ctrl.find_elements(By.XPATH, ".//input")
+        inner = next((i for i in inputs if i.is_displayed()), None)
+        if inner is None and inputs:
+            inner = inputs[0]
+        if inner:
+            ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+            time.sleep(0.4)
+            if clear_first:
+                inner.send_keys(Keys.COMMAND, "a")
+                inner.send_keys(Keys.BACKSPACE)
+            inner.send_keys(site_name)
+        else:
+            self.driver.execute_script("arguments[0].click();", ctrl)
+            time.sleep(0.4)
+        option = WebDriverWait(self.driver, 20).until(
+            lambda d: self._find_react_option(site_name)
         )
+        self.driver.execute_script("arguments[0].click();", option)
+        time.sleep(0.3)
 
     def select_multiple_sites(self, site_names):
         for i, name in enumerate(site_names):
@@ -347,34 +389,20 @@ class PerformanceMetricsPage(BasePage):
     # ── Date preset (non-searchable React Select) ─────────────────────────────
 
     def _open_date_preset_dropdown(self):
-        """Open the date preset React Select by dispatching pointer events.
+        """Open the date preset React Select using a real browser click.
 
-        React Select opens on pointerdown/mousedown; a bare synthetic click is
-        ignored.  We dispatch the full event sequence with real screen coordinates
-        so React's event system treats it as a genuine user interaction.
+        ActionChains on the outer nxt-select__control reliably triggers React
+        Select's onMouseDown handler.  The previous approach (JS pointer-event
+        dispatch) was not consistently recognised by the React event system.
         """
-        dummy_els = self.driver.find_elements(*self._DATE_PRESET_DUMMY_INPUT)
-        if dummy_els:
-            self.driver.execute_script("""
-                var dummy = arguments[0];
-                var control = dummy.closest('[class*="-control"]');
-                if (!control) control = dummy.parentElement;
-                if (!control) return;
-                var r = control.getBoundingClientRect();
-                var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-                var pOpts = {bubbles:true, cancelable:true, pointerId:1,
-                             pointerType:'mouse', clientX:cx, clientY:cy};
-                var mOpts = {bubbles:true, cancelable:true, clientX:cx, clientY:cy};
-                control.dispatchEvent(new PointerEvent('pointerdown', pOpts));
-                control.dispatchEvent(new MouseEvent('mousedown', mOpts));
-                control.dispatchEvent(new MouseEvent('mouseup',    mOpts));
-                control.dispatchEvent(new MouseEvent('click',      mOpts));
-            """, dummy_els[0])
-            time.sleep(0.5)
-            return
-        sv = self.wait.until(EC.visibility_of_element_located(self.DATE_PRESET_COMBOBOX))
-        ActionChains(self.driver).move_to_element(sv).click().perform()
-        time.sleep(0.5)
+        ctrl_locator = (By.XPATH,
+            "//div[contains(@class,'nxt-select__control') "
+            "and not(contains(@class,'nxt-multi-select'))]")
+        ctrl = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(ctrl_locator)
+        )
+        ActionChains(self.driver).move_to_element(ctrl).click(ctrl).perform()
+        time.sleep(0.6)
 
     def select_date_preset(self, preset):
         self._open_date_preset_dropdown()
@@ -394,17 +422,29 @@ class PerformanceMetricsPage(BasePage):
             return ""
 
     def get_date_preset_options(self):
-        """Return all visible date preset option labels."""
+        """Return all visible date preset option labels.
+
+        Options render in a React Select portal (document.body) so Selenium's
+        is_displayed() is unreliable for them.  Use offsetParent !== null as the
+        visibility signal instead.
+        """
         self._open_date_preset_dropdown()
         time.sleep(0.3)
-        els = self.driver.find_elements(By.XPATH,
-            "//*[contains(@class,'-option') and @role='option']")
-        options = [e.text.strip() for e in els if e.is_displayed() and e.text.strip()]
+        options = self.driver.execute_script("""
+            return Array.from(document.querySelectorAll('[role="option"]'))
+                .filter(function(el) {
+                    var cls = el.className || '';
+                    return el.offsetParent !== null
+                        && el.textContent.trim()
+                        && cls.indexOf('nxt-select__option') !== -1
+                        && cls.indexOf('nxt-multi-select') === -1;
+                }).map(function(el) { return el.textContent.trim(); });
+        """)
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
         except Exception:
             pass
-        return options
+        return options or []
 
     # ── Date range / calendar ─────────────────────────────────────────────────
 
@@ -770,7 +810,13 @@ class PerformanceMetricsPage(BasePage):
     def cst_open_settings(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.CST_ICON))
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(0.5)
+        # Wait for the settings modal to actually render before returning.
+        # time.sleep(0.5) was insufficient late in long suite runs.
+        try:
+            WebDriverWait(self.driver, 8).until(lambda d: self.cst_settings_open())
+        except TimeoutException:
+            pass
+        time.sleep(0.3)
 
     def cst_settings_open(self):
         els = self.driver.find_elements(*self.CST_MODAL)
@@ -787,10 +833,13 @@ class PerformanceMetricsPage(BasePage):
         if not toggles:
             return False
         def _is_on(el):
-            # Toggles are <label> wrappers; check their nested hidden <input>
+            # Toggles are <label> wrappers; check their nested hidden <input>.
+            # Use is_selected() (reads the .checked JS property) — avoid
+            # get_attribute("checked") which returns "false" as a non-None string
+            # in React-controlled checkboxes, causing a false-positive "checked" read.
             try:
                 inp = el.find_element(By.XPATH, ".//input[@type='checkbox']")
-                return inp.get_attribute("checked") is not None or inp.is_selected()
+                return inp.is_selected()
             except Exception:
                 pass
             return el.get_attribute("aria-checked") == "true" or el.is_selected()
