@@ -114,3 +114,22 @@ class BasePage:
         from selenium.webdriver.common.action_chains import ActionChains
         el = self.wait.until(EC.visibility_of_element_located(locator))
         ActionChains(self.driver).move_to_element(el).perform()
+
+    def pagination_controls_present(self, context_el=None):
+        """Return True if any pagination controls are visible.
+
+        Searches for prev/next buttons, numbered page buttons, or elements
+        with class names containing 'pagination' or 'pager'.  Pass a
+        WebElement as *context_el* to restrict the search to that subtree.
+        """
+        root = context_el if context_el is not None else self.driver
+        candidates = root.find_elements(By.XPATH,
+            "//*[contains(@class,'pagination') or contains(@class,'pager')] | "
+            "//button[@aria-label='Next page' or @aria-label='Previous page' or "
+            "@aria-label='Next' or @aria-label='Previous' or "
+            "@aria-label='next' or @aria-label='previous'] | "
+            "//button[contains(normalize-space(),'Next') or "
+            "contains(normalize-space(),'Previous') or "
+            "contains(normalize-space(),'Prev')]"
+        )
+        return any(c.is_displayed() for c in candidates)
