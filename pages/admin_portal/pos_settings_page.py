@@ -135,6 +135,38 @@ class AdminPOSSettingsPage(BasePage):
         rows = self.driver.find_elements(*self.GRID_ROWS)
         return len([r for r in rows if r.is_displayed()])
 
+    def get_used_lanes_for_site(self, site):
+        """Return the set of lane names already assigned to POS units at `site`."""
+        self.filter_by_site(site)
+        self.apply_filters()
+        time.sleep(1.5)
+        lanes = self.driver.execute_script("""
+            // Detect lane column index from header text
+            var headers = Array.from(document.querySelectorAll(
+                '[class*="InovuaReactDataGrid__column-header"] span, ' +
+                '[class*="column-header"] [class*="text"]'
+            )).map(function(el) { return el.textContent.trim().toLowerCase(); });
+            var laneIdx = headers.indexOf('lane');
+            if (laneIdx < 0) laneIdx = 2; // fallback: Name(0) Site(1) Lane(2) Status(3)
+
+            var rows = document.querySelectorAll(
+                '[class*="InovuaReactDataGrid__row--regular"], ' +
+                '[class*="InovuaReactDataGrid__row"][class*="--even"], ' +
+                '[class*="InovuaReactDataGrid__row"][class*="--odd"]'
+            );
+            var result = [];
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll('span[class*="table-cell-ellipsis"]');
+                if (cells.length > laneIdx) {
+                    var val = cells[laneIdx].getAttribute('title') ||
+                              cells[laneIdx].textContent.trim();
+                    if (val) result.push(val);
+                }
+            });
+            return result;
+        """)
+        return set(lanes or [])
+
     def click_add_pos(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_POS_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
@@ -245,6 +277,7 @@ class AdminPOSFormPage(BasePage):
         "//form//button[@role='switch'][1]")
 
     SAVE_BUTTON = (By.XPATH,
+        "//button[contains(@class,'nxt-button') and .//span[contains(normalize-space(),'Save')]] | "
         "//button[contains(normalize-space(),'Save POS')] | "
         "//button[normalize-space()='Save'] | "
         "//*[@data-type='primary' and contains(normalize-space(),'Save')] | "
@@ -318,6 +351,23 @@ class AdminPOSFormPage(BasePage):
         "//button[@aria-controls='mainPosSettings-tab-pane'] | "
         "//button[@role='tab' and normalize-space()='Main settings']")
 
+    # ── Generate connection code ──────────────────────────────────────────────
+
+    GENERATE_CODE_BUTTON = (By.XPATH,
+        "//span[@data-type='primary' and "
+        "contains(normalize-space(),'Generate connection code')] | "
+        "//button[contains(normalize-space(),'Generate connection code')]")
+
+    CONNECTION_CODE_VALUE = (By.XPATH,
+        "//div[contains(@class,'generate-code-modal__code_qr-descr__value')]")
+
+    GENERATE_CODE_CLOSE = (By.XPATH,
+        "//button[@type='button' and ("
+        "contains(@class,'btn-close') or contains(@class,'modal-close') or "
+        "contains(@class,'close') or normalize-space()='Close' or "
+        "normalize-space()='Done' or normalize-space()='OK')] | "
+        "//*[@aria-label='Close' or @aria-label='close']")
+
     # ── Service Settings tab ──────────────────────────────────────────────────
 
     RESTORE_DEFAULT_BUTTON = (By.XPATH,
@@ -379,7 +429,21 @@ class AdminPOSFormPage(BasePage):
     # ── Core form actions ─────────────────────────────────────────────────────
 
     def enter_pos_name(self, name):
-        self.enter_text(self.POS_NAME_INPUT, name)
+        el = self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
+        el.click()
+        from selenium.webdriver.common.keys import Keys as _Keys
+        el.send_keys(_Keys.COMMAND + "a")
+        el.send_keys(_Keys.BACKSPACE)
+        el.send_keys(name)
+        # Fire React synthetic events so React state sees the new value
+        self.driver.execute_script("""
+            var el = arguments[0];
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            nativeInputValueSetter.call(el, arguments[1]);
+            el.dispatchEvent(new Event('input', {bubbles: true}));
+            el.dispatchEvent(new Event('change', {bubbles: true}));
+        """, el, name)
 
     def select_site(self, site):
         self.select_react_dropdown_option(self.SITE_COMBOBOX, site)
@@ -405,7 +469,41 @@ class AdminPOSFormPage(BasePage):
         return self._get_dropdown_options(self.SITE_COMBOBOX)
 
     def get_lane_options(self):
-        return self._get_dropdown_options(self.LANE_COMBOBOX)
+        """Return all lane option texts for the currently selected site."""
+        combobox = self.wait.until(EC.element_to_be_clickable(self.LANE_COMBOBOX))
+        self.driver.execute_script("arguments[0].click();", combobox)
+        # Also click the inner input to ensure the React dropdown opens
+        try:
+            inner = combobox.find_element(By.XPATH, ".//input")
+            inner.click()
+        except Exception:
+            pass
+        _NOISE = {"no options", "loading...", "loading", "no results"}
+        _OPT_JS = """
+            var opts = Array.from(document.querySelectorAll(
+                '[role="option"], [class*="__option"], [class*="-option"], [class*="select__option"]'
+            )).filter(function(el) {
+                var cls = el.className || "";
+                if (cls.indexOf("notice") >= 0 || cls.indexOf("no-option") >= 0
+                        || cls.indexOf("noOption") >= 0) return false;
+                return el.offsetParent !== null && el.textContent.trim();
+            });
+            return opts.length > 0 ? opts.map(function(el) { return el.textContent.trim(); }) : null;
+        """
+        try:
+            options = WebDriverWait(self.driver, 6).until(
+                lambda d: d.execute_script(_OPT_JS)
+            )
+        except Exception:
+            options = []
+        try:
+            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            time.sleep(0.3)
+        except Exception:
+            pass
+        if options:
+            options = [o for o in options if o.lower() not in _NOISE]
+        return options or []
 
     def ensure_cash_checked(self):
         el = self.wait.until(EC.presence_of_element_located(self.CASH_CHECKBOX))
@@ -461,13 +559,15 @@ class AdminPOSFormPage(BasePage):
 
     def click_save(self):
         url_before = self.driver.current_url
-        el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
         self.driver.execute_script("arguments[0].click();", el)
+        # Wait up to 20 s for the shell to redirect after save (covers "Pos connected!" delay)
         try:
-            WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
-            self.driver.switch_to.default_content()
+            WebDriverWait(self.driver, 20).until(lambda d: d.current_url != url_before)
         except Exception:
             pass
+        self.driver.switch_to.default_content()
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
@@ -490,44 +590,60 @@ class AdminPOSFormPage(BasePage):
 
     # ── Section accordion helpers ─────────────────────────────────────────────
 
+    _SECTION_XPATH = (
+        "//button[contains(normalize-space(),'%s')] | "
+        "//*[@role='button' and contains(normalize-space(),'%s')] | "
+        "//*[contains(@class,'accordion') and contains(normalize-space(),'%s')] | "
+        "//div[contains(@class,'color-dark') and contains(normalize-space(),'%s')]"
+    )
+
     def _section_header(self, section_name):
         els = self.driver.find_elements(By.XPATH,
-            "//button[contains(normalize-space(),'%s')] | "
-            "//*[@role='button' and contains(normalize-space(),'%s')] | "
-            "//*[contains(@class,'accordion') and contains(normalize-space(),'%s')]"
-            % (section_name, section_name, section_name))
+            self._SECTION_XPATH % ((section_name,) * 4))
         if not els:
             raise TimeoutException("Section header not found: %s" % section_name)
         return els[0]
 
     def section_is_expanded(self, section_name):
         els = self.driver.find_elements(By.XPATH,
-            "//button[contains(normalize-space(),'%s')] | "
-            "//*[@role='button' and contains(normalize-space(),'%s')] | "
-            "//*[contains(@class,'accordion') and contains(normalize-space(),'%s')]"
-            % (section_name, section_name, section_name))
+            self._SECTION_XPATH % ((section_name,) * 4))
         if not els:
             return False
-        expanded = els[0].get_attribute("aria-expanded")
+        el = els[0]
+        expanded = el.get_attribute("aria-expanded")
+        if expanded is None:
+            try:
+                parent = el.find_element(By.XPATH, "..")
+                expanded = parent.get_attribute("aria-expanded")
+            except Exception:
+                pass
         return expanded == "true" if expanded is not None else False
 
     def expand_section(self, section_name):
-        if not self.section_is_expanded(section_name):
-            header = self._section_header(section_name)
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", header
-            )
-            self.driver.execute_script("arguments[0].click();", header)
+        header = self._section_header(section_name)
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", header
+        )
+        if self.section_is_expanded(section_name):
+            return
+        self.driver.execute_script("arguments[0].click();", header)
+        if header.get_attribute("aria-expanded") is not None:
             self.wait.until(lambda d: self.section_is_expanded(section_name))
+        else:
+            time.sleep(0.8)
 
     def collapse_section(self, section_name):
-        if self.section_is_expanded(section_name):
-            header = self._section_header(section_name)
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", header
-            )
-            self.driver.execute_script("arguments[0].click();", header)
+        header = self._section_header(section_name)
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", header
+        )
+        if not self.section_is_expanded(section_name):
+            return
+        self.driver.execute_script("arguments[0].click();", header)
+        if header.get_attribute("aria-expanded") is not None:
             self.wait.until(lambda d: not self.section_is_expanded(section_name))
+        else:
+            time.sleep(0.8)
 
     # ── Tunnel Settings ───────────────────────────────────────────────────────
 
@@ -633,7 +749,53 @@ class AdminPOSFormPage(BasePage):
         if toggle.get_attribute("aria-checked") != "false":
             self.driver.execute_script("arguments[0].click();", toggle)
 
-    def fill_create_form(self, pos_name, site, lane):
+    # ── Connection code ───────────────────────────────────────────────────────
+
+    def click_generate_connection_code(self):
+        btn = self.wait.until(EC.element_to_be_clickable(self.GENERATE_CODE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        time.sleep(1.0)
+
+    def get_connection_code(self):
+        try:
+            el = WebDriverWait(self.driver, 8).until(
+                EC.presence_of_element_located(self.CONNECTION_CODE_VALUE)
+            )
+            return el.text.strip()
+        except Exception:
+            return ""
+
+    def close_connection_code_modal(self):
+        try:
+            btn = WebDriverWait(self.driver, 4).until(
+                EC.element_to_be_clickable(self.GENERATE_CODE_CLOSE)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+            time.sleep(0.5)
+        except Exception:
+            try:
+                from selenium.webdriver.common.keys import Keys as _Keys
+                self.driver.find_element(By.TAG_NAME, "body").send_keys(_Keys.ESCAPE)
+                time.sleep(0.5)
+            except Exception:
+                pass
+
+    def fill_create_form(self, pos_name, site, lane,
+                         payment_serial=None, middleware_ip=None):
         self.enter_pos_name(pos_name)
         self.select_site(site)
         self.select_lane(lane)
+        code = ""
+        try:
+            self.click_generate_connection_code()
+            code = self.get_connection_code()
+            self.close_connection_code_modal()
+        except Exception:
+            pass
+        if payment_serial:
+            self.expand_section("Device settings")
+            self.enter_payment_serial(payment_serial)
+        if middleware_ip:
+            self.expand_section("Middleware settings")
+            self.enter_middleware_ip(middleware_ip)
+        return code

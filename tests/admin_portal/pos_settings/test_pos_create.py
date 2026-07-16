@@ -1,17 +1,19 @@
 import allure
 import pytest
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
 
 from tests.admin_portal.pos_settings.conftest import (
     NONEXISTENT_POS_NAME,
     POS_ALLOW_CHECKOUT,
     POS_ALLOW_CHECKOUT_NO_CUSTOMER,
     POS_LANE,
+    POS_MIDDLEWARE_IP,
     POS_NAME,
     POS_NEW_NAME,
+    POS_PAYMENT_SERIAL,
     POS_SITE,
     create_pos_if_missing,
+    get_free_lane,
+    get_next_available_pos_name,
     open_create_pos_form,
     open_pos_page,
     page_has_no_broken_state,
@@ -64,18 +66,29 @@ def test_add_pos_button_opens_form(browser):
 @_SITE_LANE_XFAIL
 def test_create_active_pos_saves(browser):
     # Dependency: Sites & Locations module
+    page = open_pos_page(browser)
+    pos_name = get_next_available_pos_name(page, POS_NEW_NAME)
+
+    lane = get_free_lane(browser, POS_SITE)
+    if lane is None:
+        pytest.skip("No free lanes available for site '%s' — all lanes are in use." % POS_SITE)
+
     form = open_create_pos_form(browser)
-    form.enter_pos_name(POS_NEW_NAME)
-    form.select_site(POS_SITE)
-    form.select_lane(POS_LANE)
+    form.fill_create_form(pos_name, POS_SITE, lane,
+                          payment_serial=POS_PAYMENT_SERIAL,
+                          middleware_ip=POS_MIDDLEWARE_IP)
     form.ensure_active_pos_on()
     form.click_save()
 
     page = open_pos_page(browser)
-    assert page.pos_exists(POS_NEW_NAME), (
-        "POS '%s' not found in list after save" % POS_NEW_NAME
-    )
-    assert page.get_pos_status(POS_NEW_NAME) == "Active"
+    page.search_pos(pos_name)
+    try:
+        page.wait_for_pos_row(pos_name, timeout=30)
+    except Exception:
+        assert False, (
+            "POS '%s' not found in list after save (lane used: %s)" % (pos_name, lane)
+        )
+    assert page.get_pos_status(pos_name) == "Active"
     assert page_has_no_broken_state(page)
 
 
