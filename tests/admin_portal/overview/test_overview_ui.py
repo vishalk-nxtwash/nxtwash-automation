@@ -46,10 +46,6 @@ def test_overview_dashboard_filter_controls_visible(overview_page):
 @allure.story("UI")
 @allure.title("OVERVIEW-UI-004/005 Export buttons visible")
 @pytest.mark.export
-@pytest.mark.xfail(
-    reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=False,
-)
 def test_overview_export_buttons_visible(overview_page):
     assert overview_page.dashboard_has_all_texts(overview_page.EXPORT_LABELS)
 

@@ -16,7 +16,6 @@ _IFRAME_XFAIL = pytest.mark.xfail(
 
 @allure.title("OV-BUG-001 Labor % shows an extreme value instead of a valid percentage")
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_labor_percent_extreme_value_bug(overview_page):
     """Document known bug: labor % can render as an extreme/invalid number.
 
@@ -26,7 +25,6 @@ def test_overview_labor_percent_extreme_value_bug(overview_page):
     fixed; an xfail means the environment cannot be tested yet.
     """
     dashboard_text = overview_page.get_legacy_dashboard_text()
-    # Bug: value like "999999%" or negative infinity appears
     assert "999999" not in dashboard_text
     assert not overview_page.has_broken_state_text()
 
@@ -35,7 +33,6 @@ def test_overview_labor_percent_extreme_value_bug(overview_page):
     "OV-BUG-002 Labor % displays '--' or 0% when no revenue exists for the period"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_labor_percent_no_revenue_shows_placeholder(overview_page):
     """With zero revenue the Labor % denominator is zero.
 

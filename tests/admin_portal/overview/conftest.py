@@ -16,7 +16,7 @@
 import pytest
 
 from pages.admin_portal.overview_page import AdminOverviewPage
-from tests.admin_portal.admin_session import ensure_admin_logged_in
+from tests.admin_portal.admin_session import open_admin_path
 
 # ── Filter test data ──────────────────────────────────────────────────────────
 # Site used across all filter and widget tests.
@@ -33,7 +33,7 @@ OVERVIEW_DATE_TO = "2026-06-30"
 
 @pytest.fixture
 def overview_page(browser):
-    ensure_admin_logged_in(browser)
+    open_admin_path(browser, "/")
     page = AdminOverviewPage(browser)
     page.wait_for_loaded()
     return page

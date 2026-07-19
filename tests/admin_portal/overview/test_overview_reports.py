@@ -41,7 +41,6 @@ def test_overview_cars_washed_report_summary_cards_update(overview_page):
     "OV-RPT-CW-003 Total Redemptions, Total Paid, and Total Comp Washes cards display"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_cars_washed_report_redemption_cards(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Total Redemptions", "Total Paid", "Total Comp", "Comp Washes"]
@@ -50,7 +49,6 @@ def test_overview_cars_washed_report_redemption_cards(overview_page):
 
 @allure.title("OV-RPT-CW-004 Hourly Distribution chart legend matches categories")
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_cars_washed_report_hourly_chart_legend(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Hourly Distribution", "Single Washes", "Membership", "Comp"]
@@ -61,7 +59,6 @@ def test_overview_cars_washed_report_hourly_chart_legend(overview_page):
     "OV-RPT-CW-005 Usage Breakdown tabs filter to Memberships, Paid Washes, and Comp Washes"
 )
 @pytest.mark.smoke
-@_IFRAME_XFAIL
 def test_overview_cars_washed_report_usage_breakdown_tabs(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Memberships", "Paid Washes", "Comp Washes", "Usage Breakdown"]
@@ -92,7 +89,6 @@ def test_overview_cars_washed_report_rounding_rule(overview_page):
 
 @allure.title("OV-RPT-RV-001 Revenue detail report loads with an inline filter panel")
 @pytest.mark.smoke
-@_IFRAME_XFAIL
 def test_overview_revenue_report_loads(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Revenue Full Report", "Full Report", "Revenue"]
@@ -104,7 +100,6 @@ def test_overview_revenue_report_loads(overview_page):
     "and Retail Sales cards update correctly"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_revenue_report_summary_cards_update(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Total Revenue", "New Members", "Recharges", "Re-signups", "Retail Sales"]
@@ -115,14 +110,12 @@ def test_overview_revenue_report_summary_cards_update(overview_page):
     "OV-RPT-RV-003 Revenue distribution donut chart updates when categories are clicked"
 )
 @pytest.mark.smoke
-@_IFRAME_XFAIL
 def test_overview_revenue_report_donut_updates_on_click(overview_page):
     assert overview_page.dashboard_has_any_text(["Revenue", "Membership", "Retail"])
 
 
 @allure.title("OV-RPT-RV-004 Membership Revenue tab shows membership-specific breakdown")
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_revenue_report_membership_tab(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Membership Revenue", "Memberships", "Revenue"]
