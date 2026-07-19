@@ -1,22 +1,18 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING, SHARDED across parallel runners.
-# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling and
-# the full 423-test suite on a single runner takes ~2h+. Splitting it across
-# parallel runners (one per shard) brings wall-clock down to ~the slowest shard.
-# Triggers: every push to `staging`, manual dispatch, weekly Sunday 03:00 UTC.
+# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling.
+# Splitting across parallel runners (one per shard) brings wall-clock down to
+# ~the slowest shard.
+# Trigger: manual dispatch only (workflow_dispatch).
 
 on:
-  push:
-    branches: [staging]
   workflow_dispatch:
     inputs:
       reruns:
         description: "Flaky-test reruns per test"
         required: false
         default: "2"
-  schedule:
-    - cron: "0 3 * * 0"
 
 # One admin staging run at a time (its shards run in parallel within the run);
 # a second run queues rather than racing on shared staging data.
@@ -30,6 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         shard:
+          # ── Original modules ──────────────────────────────────────────────
           - name: wash-packages
             path: tests/admin_portal/wash_packages
           - name: discounts
@@ -39,7 +36,39 @@ jobs:
           - name: services-login
             path: tests/admin_portal/login tests/admin_portal/service_categories
           - name: rest
-            path: tests/admin_portal/sites tests/admin_portal/coupon_packages tests/admin_portal/overview tests/admin_portal/wash_books
+            path: >-
+              tests/admin_portal/sites
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/overview
+              tests/admin_portal/wash_books
+          # ── Reports ───────────────────────────────────────────────────────
+          - name: reports-revenue
+            path: tests/admin_portal/revenue_overview tests/admin_portal/performance_metrics
+          - name: reports-sales
+            path: tests/admin_portal/general_sales_report tests/admin_portal/card_declines
+          - name: reports-financial
+            path: tests/admin_portal/cash_report tests/admin_portal/transactions
+          # ── People & HR ───────────────────────────────────────────────────
+          - name: people
+            path: >-
+              tests/admin_portal/labor_shifts
+              tests/admin_portal/employees
+              tests/admin_portal/users
+              tests/admin_portal/user_roles
+          # ── Settings (new modules) ────────────────────────────────────────
+          - name: settings-new
+            path: >-
+              tests/admin_portal/tunnel_settings
+              tests/admin_portal/pos_settings
+              tests/admin_portal/kiosk_settings
+          # ── Customers & misc ──────────────────────────────────────────────
+          - name: customers-misc
+            path: >-
+              tests/admin_portal/customers
+              tests/admin_portal/bank_drop
+              tests/admin_portal/custom_services
+              tests/admin_portal/redemptions
+              tests/admin_portal/wash_activity
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.STAGING }}
@@ -49,4 +78,4 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
       reruns: ${{ github.event.inputs.reruns || '2' }}
-      timeout_minutes: 60
+      timeout_minutes: 90
