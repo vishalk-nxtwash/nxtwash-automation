@@ -25,7 +25,6 @@ _IFRAME_XFAIL = pytest.mark.xfail(
 
 @allure.title("OVERVIEW-FILTER-001 Site filter dropdown is present in the dashboard")
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_site_filter_dropdown_opens(overview_page):
     assert overview_page.dashboard_text_contains("Site")
 
@@ -117,7 +116,6 @@ def test_overview_single_day_checkbox_is_available(overview_page):
 
 @allure.title("OV-FLT-015 Single day checkbox with no date selected — document behaviour")
 @pytest.mark.edge
-@_IFRAME_XFAIL
 def test_overview_single_day_no_date_documents_behaviour(overview_page):
     assert not overview_page.has_broken_state_text()
 
@@ -131,14 +129,12 @@ def test_overview_uncheck_single_day_reverts_to_range_mode(overview_page):
 
 @allure.title("OV-FLT-017 Custom range end date before start date — document behaviour")
 @pytest.mark.edge
-@_IFRAME_XFAIL
 def test_overview_end_date_before_start_documents_behaviour(overview_page):
     assert not overview_page.has_broken_state_text()
 
 
 @allure.title("OV-FLT-018 Single day with no date selected — verify no broken state shown")
 @pytest.mark.edge
-@_IFRAME_XFAIL
 def test_overview_single_day_no_date_no_broken_state(overview_page):
     assert not overview_page.has_broken_state_text()
 
@@ -147,6 +143,5 @@ def test_overview_single_day_no_date_no_broken_state(overview_page):
     "OV-FLT-019 Single day mode for today shows consistent data with the Today preset"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_single_day_today_matches_today_preset(overview_page):
     assert overview_page.dashboard_has_any_text(["Today", "Cars Washed", "Revenue"])

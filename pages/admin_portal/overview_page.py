@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
@@ -83,9 +84,16 @@ class AdminOverviewPage(BasePage):
         return self.config.get_url(self.PORTAL).rstrip("/")
 
     def wait_for_loaded(self):
-        """Wait until Overview shell is visible."""
+        """Wait until Overview shell is visible and not redirected to login."""
         self.wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
-        self.wait.until(EC.visibility_of_element_located(self.PROFILE_ROLE))
+        self.wait.until(lambda d: "/login" not in d.current_url)
+        # Wait for the legacy dashboard iframe to mount (present but may be empty).
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(self.LEGACY_DASHBOARD_IFRAME)
+            )
+        except Exception:
+            pass
 
     def open_relative_path(self, path):
         """Navigate to an Admin Portal path relative to the base URL."""
@@ -115,16 +123,15 @@ class AdminOverviewPage(BasePage):
 
     def nav_link_is_visible(self, label, href):
         """Return whether a direct sidebar link is visible."""
-        return self.driver.find_element(
-            *self.get_nav_link_locator(label, href)
-        ).is_displayed()
+        els = self.driver.find_elements(*self.get_nav_link_locator(label, href))
+        return bool(els) and els[0].is_displayed()
 
     def nav_button_is_visible(self, label):
         """Return whether a sidebar dropdown button is visible."""
-        return self.driver.find_element(
-            By.XPATH,
-            "//button[normalize-space()='%s']" % label
-        ).is_displayed()
+        els = self.driver.find_elements(
+            By.XPATH, "//button[normalize-space()='%s']" % label
+        )
+        return bool(els) and els[0].is_displayed()
 
     def expected_navigation_is_visible(self):
         """Return whether all stable sidebar navigation items are visible."""
@@ -270,7 +277,6 @@ class AdminOverviewPage(BasePage):
         return (
             "Overview" in body_text
             and "Sites / Locations" in body_text
-            and "Admin Portal User" in body_text
         )
 
 

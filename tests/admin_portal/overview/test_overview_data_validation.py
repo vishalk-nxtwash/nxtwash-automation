@@ -29,7 +29,6 @@ def test_overview_cars_washed_total_matches_report(overview_page):
     "Revenue Report Total Revenue for the same filter"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_revenue_daily_matches_report(overview_page):
     assert overview_page.dashboard_has_any_text(["Revenue", "Total Revenue"])
 
@@ -39,7 +38,6 @@ def test_overview_revenue_daily_matches_report(overview_page):
     "to a Full Report and returning"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_filters_persist_navigating_to_report(overview_page):
     assert overview_page.dashboard_has_any_text(["Full Report", "Site", "Today"])
     assert not overview_page.has_broken_state_text()
@@ -50,7 +48,6 @@ def test_overview_filters_persist_navigating_to_report(overview_page):
     "return matching totals for the same site/date inputs"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_modal_and_inline_filters_return_matching_totals(overview_page):
     assert overview_page.dashboard_has_any_text(["Cars Washed", "Revenue"])
     assert not overview_page.has_broken_state_text()
