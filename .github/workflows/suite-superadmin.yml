@@ -2,8 +2,7 @@ name: Superadmin Suite (staging)
 
 # Superadmin-only suite (tests/superadmin) against STAGING.
 # Locked to staging: these tests create companies/users and must never run on
-# production. Manual any time; runs weekly on Sunday 03:30 UTC (offset from the
-# admin suite so the two don't compete for runners).
+# production. Trigger: manual dispatch only (workflow_dispatch).
 
 on:
   workflow_dispatch:
@@ -16,8 +15,6 @@ on:
         description: "Flaky-test reruns per test"
         required: false
         default: "2"
-  schedule:
-    - cron: "30 3 * * 0"
 
 concurrency:
   group: superadmin-suite-staging
