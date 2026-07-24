@@ -9,7 +9,8 @@ class BankDropPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/bankDrop?')]"
+        "//iframe[contains(@src,'/services/bankDrop') "
+        "and not(contains(@src,'/services/bankDrop/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -105,19 +106,24 @@ class BankDropPage(BasePage):
         )
 
     def wait_for_bank_drop_row(self, name):
-        """Wait until a Bank Drop row is visible."""
-        return self.wait.until(
-            EC.visibility_of_element_located(self.get_bank_drop_row_locator(name))
+        """Wait until a Bank Drop row is present; scroll it into view if needed."""
+        row = self.wait.until(
+            EC.presence_of_element_located(self.get_bank_drop_row_locator(name))
         )
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", row)
+        return row
 
     def bank_drop_exists(self, name):
-        """Return whether a Bank Drop exists in the list."""
+        """Return whether a Bank Drop exists in the list.
+
+        Uses find_elements (no wait) after the grid is idle so the call returns
+        immediately for items already in the DOM.  Falls back to body-text scan
+        for rows the virtual grid has rendered but scrolled out of the viewport.
+        """
         self.wait_for_list_loaded()
-        try:
-            self.wait_for_bank_drop_row(name)
+        if self.driver.find_elements(*self.get_bank_drop_row_locator(name)):
             return True
-        except TimeoutException:
-            return False
+        return name in self.get_body_text()
 
     def get_bank_drop_order(self, name):
         """Return visible order for a Bank Drop row."""
@@ -259,12 +265,26 @@ class BankDropPage(BasePage):
         element = self.wait.until(EC.visibility_of_element_located(self.ORDER_INPUT))
         return self.driver.execute_script("return arguments[0].validationMessage;", element)
 
+    def deactivate_bank_drop(self, name):
+        """Open edit for name, set active off, save, and return to the list."""
+        self.open_edit(name)
+        self.ensure_active_off()
+        self.click_save()
+        self.wait_for_list_loaded()
+
     def create_bank_drop(self, name, order):
-        """Create an active Bank Drop and return to the list."""
+        """Create an active Bank Drop and return to the list.
+
+        Returns True when the save succeeded and the list re-loaded.
+        Returns False when the server rejected the save (e.g. duplicate name)
+        and the list did not reload — the driver is left at default_content.
+        """
         self.open_create()
         self.fill_form(name, order)
         self.click_save()
         try:
             self.wait_for_list_loaded()
+            return True
         except TimeoutException:
-            return
+            self.driver.switch_to.default_content()
+            return False

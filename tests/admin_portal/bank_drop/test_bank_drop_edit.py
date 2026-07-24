@@ -6,11 +6,14 @@ import pytest
 from tests.admin_portal.bank_drop.conftest import (
     BANK_DROP_NAME,
     BANK_DROP_ORDER,
+    EDIT_BANK_DROP_NAME,
+    EDIT_BANK_DROP_UPDATED_NAME,
     SECOND_BANK_DROP_NAME,
     SECOND_BANK_DROP_ORDER,
     VISIBLE_BANK_DROP_ORDER,
     create_bank_drop_if_missing,
     managed_bank_drop,
+    managed_edit_bank_drop,
     open_bank_drop_page,
     page_has_no_broken_state,
 )
@@ -25,19 +28,16 @@ pytestmark = [
 
 @allure.title("BD-EDT-001 Edit bank drop name persists after save")
 @pytest.mark.regression
-def test_edit_bank_drop_name_persists(browser):
+def test_edit_bank_drop_name_persists(managed_edit_bank_drop, browser):
 
-    original_name = "VK EDT001-%s" % uuid.uuid4().hex[:6]
-    updated_name = original_name + "-upd"
-    page = open_bank_drop_page(browser)
-    page.create_bank_drop(original_name, "98")
-
-    page.open_edit(original_name)
-    page.enter_name(updated_name)
+    page = managed_edit_bank_drop
+    page.open_edit(EDIT_BANK_DROP_NAME)
+    page.enter_name(EDIT_BANK_DROP_UPDATED_NAME)
     page.click_save()
+    page.wait_for_list_loaded()  # confirm save committed before fresh navigation
     page = open_bank_drop_page(browser)
 
-    assert page.wait_for_bank_drop_row(updated_name).is_displayed()
+    assert page.wait_for_bank_drop_row(EDIT_BANK_DROP_UPDATED_NAME).is_displayed()
 
 
 @allure.title("BD-EDT-002 Edit order value persists after save")
@@ -58,9 +58,18 @@ def test_edit_bank_drop_order_persists(managed_bank_drop):
 
 @allure.title("BD-EDT-003 Activate an inactive bank drop updates its status to Active")
 @pytest.mark.smoke
-def test_activate_inactive_bank_drop(browser):
+def test_activate_inactive_bank_drop(browser, request):
 
     inactive_name = "VK act-%s" % uuid.uuid4().hex[:6]
+
+    def _teardown():
+        try:
+            open_bank_drop_page(browser).deactivate_bank_drop(inactive_name)
+        except Exception:  # noqa: BLE001
+            pass  # best-effort; item may not be visible if staging has >100 records
+
+    request.addfinalizer(_teardown)
+
     page = open_bank_drop_page(browser)
     page.open_create()
     page.enter_name(inactive_name)

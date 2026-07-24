@@ -115,12 +115,13 @@ jobs:
           marker_arg=""
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
+          mkdir -p reports/allure-results reports/screenshots reports/logs
           pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
             --reruns "${RERUNS}" --reruns-delay 3 \
-            --alluredir=allure-results \
-            --html=report.html --self-contained-html \
-            --junitxml=results.xml
+            --alluredir=reports/allure-results \
+            --html=reports/report.html --self-contained-html \
+            --junitxml=reports/results.xml
 
       # Render the raw allure-results into a browsable HTML report. Runs even
       # when tests fail so a report is always produced.
@@ -128,7 +129,7 @@ jobs:
         if: always()
         run: |
           npm install -g allure-commandline --silent
-          allure generate allure-results --clean -o allure-report
+          allure generate reports/allure-results --clean -o reports/allure-report
 
       - name: Upload test artifacts
         if: always()
@@ -136,12 +137,12 @@ jobs:
         with:
           name: test-reports-${{ inputs.label }}-${{ github.run_number }}
           path: |
-            allure-report/
-            allure-results/
-            report.html
-            results.xml
-            screenshots/
-            logs/
+            reports/allure-report/
+            reports/allure-results/
+            reports/report.html
+            reports/results.xml
+            reports/screenshots/
+            reports/logs/
           if-no-files-found: ignore
 
       - name: Publish test summary

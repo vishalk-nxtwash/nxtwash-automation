@@ -1,0 +1,28 @@
+{
+  "_comment": "Cross-module reference data — staging records that already exist and are never mutated by tests",
+  "sites": {
+    "assignment_primary": "VK AL22",
+    "wash_book":          "VK AL11",
+    "user":               "VK AL11",
+    "user_role":          "VK AL11",
+    "employee_primary":   "VK test carwash 2",
+    "tunnel":             "VK test carwash 2",
+    "kiosk":              "VK Test carwash2",
+    "pos":                "VK AL03"
+  },
+  "service_categories": {
+    "active":   "VK ASC1",
+    "inactive": "VK ASC2"
+  },
+  "discounts": {
+    "basic":          "Basic Discount",
+    "vk_ad01":        "VK AD01",
+    "plus":           "Plus discount",
+    "basic_lower":    "Basic discount"
+  },
+  "services": {
+    "tire_wash":      "Tire wash",
+    "detail_wash":    "vk detail wash",
+    "detail_clean":   "Detail cleaning"
+  }
+}

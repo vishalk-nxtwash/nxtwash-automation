@@ -13,9 +13,13 @@ socket.setdefaulttimeout(60)
 # Pinned path for the ChromeDriver binary that matches Chrome 149.0.7827.196.
 # WDM auto-detection fetches the closest cached minor build (155) which doesn't
 # match the installed Chrome (196), causing InvalidSessionIdException crashes.
-_PINNED_CHROMEDRIVER = os.path.expanduser(
-    "~/.wdm/drivers/chromedriver/mac-arm64/"
-    "149.0.7827.196/chromedriver-mac-arm64/chromedriver"
+# CI can override with CHROMEDRIVER_PATH env var pointing to the system binary.
+_PINNED_CHROMEDRIVER = os.environ.get(
+    "CHROMEDRIVER_PATH",
+    os.path.expanduser(
+        "~/.wdm/drivers/chromedriver/mac-arm64/"
+        "149.0.7827.196/chromedriver-mac-arm64/chromedriver"
+    ),
 )
 
 

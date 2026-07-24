@@ -13,19 +13,23 @@ from tests.admin_portal.admin_session import open_admin_path
 LOG = logging.getLogger("nxtwash")
 
 
-BASE_SITE_NAME = "VK AL"
-BASE_SITE_CODE = "AL"
-BASE_SITE_NUMBER = 1
-SITE_EMAIL_TEMPLATE = "vkal%02d@yopmail.com"
-SITE_CONTACT_EMAIL_TEMPLATE = "vkal%dsite@yopmail.com"
-STATE = "California"
-CITY = "Columbia"
-ZIP_CODE = "95310"
-TIME_ZONE = "(UTC-05:00) Eastern Time (US & Canada)"
-PAY_WEEK_START_DAY = "Monday"
-STATE_SALES_TAX = "5"
-CITY_SALES_TAX = "3"
-MISSING_SITE = "VK SITE DOES NOT EXIST"
+from tests.admin_portal._data import load as _load
+
+_D = _load("sites")
+
+BASE_SITE_NAME              = _D["template"]["base_name"]
+BASE_SITE_CODE              = _D["template"]["base_code"]
+BASE_SITE_NUMBER            = _D["template"]["base_number"]
+SITE_EMAIL_TEMPLATE         = _D["template"]["email_template"]
+SITE_CONTACT_EMAIL_TEMPLATE = _D["template"]["contact_email_template"]
+STATE                       = _D["template"]["state"]
+CITY                        = _D["template"]["city"]
+ZIP_CODE                    = _D["template"]["zip_code"]
+TIME_ZONE                   = _D["template"]["time_zone"]
+PAY_WEEK_START_DAY          = _D["template"]["pay_week_start_day"]
+STATE_SALES_TAX = _D["template"]["state_sales_tax"]
+CITY_SALES_TAX  = _D["template"]["city_sales_tax"]
+MISSING_SITE    = _D["search"]["nonexistent"]
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
     "Internal Server Error",

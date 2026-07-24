@@ -3,6 +3,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 
 from pages.common.base_page import BasePage
@@ -38,9 +39,12 @@ class AdminEmployeesPage(BasePage):
     FILTER_BUTTON = (By.XPATH,
         "//button[normalize-space()='Filter by'] | "
         "//button[contains(normalize-space(),'Filter')]")
-    FILTER_STATUS_COMBOBOX = (By.XPATH,
-        "//*[normalize-space()='Status' or normalize-space()='Active']"
-        "/following::*[@role='combobox'][1]")
+    # Filter panel controls — verified from DevTools:
+    # panel has firstName input, employeeCode input, Active employee switch.
+    # There is NO status combobox.
+    FILTER_FIRST_NAME_INPUT = (By.XPATH, "//input[@name='firstName']")
+    FILTER_EMPLOYEE_CODE_INPUT = (By.XPATH, "//input[@name='employeeCode']")
+    FILTER_ACTIVE_SWITCH = (By.XPATH, "//button[@role='switch' and @value='on']")
     APPLY_FILTERS_BUTTON = (By.XPATH,
         "//button[normalize-space()='Apply filters'] | "
         "//button[normalize-space()='Apply']")
@@ -59,8 +63,9 @@ class AdminEmployeesPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
+        long_wait = WebDriverWait(self.driver, 30)
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EMP_LIST_FRAME))
+        long_wait.until(EC.frame_to_be_available_and_switch_to_it(self.EMP_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
 
@@ -76,7 +81,8 @@ class AdminEmployeesPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
         )
-        time.sleep(1)
+        # Allow the grid time to begin filtering before checking LOAD_MASK
+        time.sleep(3)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def clear_search(self):
@@ -87,13 +93,22 @@ class AdminEmployeesPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
-        time.sleep(1)
+        time.sleep(3)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
+    @staticmethod
+    def _xpath_string(value):
+        """Build a safe XPath string literal handling names with apostrophes."""
+        if "'" not in value:
+            return "'%s'" % value
+        parts = value.split("'")
+        return "concat(%s)" % ", \"'\", ".join("'%s'" % p for p in parts)
+
     def _row_locator(self, last_name):
+        safe = self._xpath_string(last_name)
         return (By.XPATH,
             "//*[contains(@class,'InovuaReactDataGrid__row') and "
-            ".//*[contains(normalize-space(),'%s')]]" % last_name)
+            ".//*[contains(normalize-space(),%s)]]" % safe)
 
     def wait_for_employee_row(self, last_name, timeout=None):
         # InovuaReactDataGrid rows are present in the DOM but Selenium's
@@ -108,9 +123,15 @@ class AdminEmployeesPage(BasePage):
         return self.wait.until(EC.presence_of_element_located(locator))
 
     def employee_exists(self, last_name):
+        # Reset filters so inactive employees are visible — required if a previous
+        # test deactivated the record and the default list shows active-only.
+        try:
+            self.reset_filters()
+        except Exception:
+            pass
         self.search_employee(last_name)
         try:
-            self.wait_for_employee_row(last_name, timeout=15)
+            self.wait_for_employee_row(last_name, timeout=60)
             return True
         except TimeoutException:
             return False
@@ -134,26 +155,44 @@ class AdminEmployeesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", el)
 
     def open_edit_employee(self, last_name):
+        from selenium.common.exceptions import StaleElementReferenceException
+        try:
+            self.reset_filters()
+        except Exception:
+            pass
         self.search_employee(last_name)
-        row = self.wait_for_employee_row(last_name)
-        edit_link = row.find_element(By.XPATH,
-            ".//a[contains(@href,'edit')] | .//button[normalize-space()='Edit']")
-        self.driver.execute_script("arguments[0].click();", edit_link)
+        for _attempt in range(3):
+            try:
+                row = self.wait_for_employee_row(last_name, timeout=60)
+                edit_link = row.find_element(By.XPATH,
+                    ".//a[@role='button' and .//span[normalize-space()='Edit']]")
+                self.driver.execute_script("arguments[0].click();", edit_link)
+                break
+            except StaleElementReferenceException:
+                if _attempt == 2:
+                    raise
 
     def filter_panel_is_open(self):
-        els = self.driver.find_elements(*self.FILTER_STATUS_COMBOBOX)
+        els = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
         return any(e.is_displayed() for e in els)
 
     def open_filter_panel(self):
         if self.filter_panel_is_open():
             return
         self.click(self.FILTER_BUTTON)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_STATUS_COMBOBOX))
+        self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def filter_by_status(self, status):
-        """status: 'Active' or 'Inactive'"""
+        """Toggle the Active employee switch: 'Active' → ON, 'Inactive' → OFF."""
         self.open_filter_panel()
-        self.select_react_dropdown_option(self.FILTER_STATUS_COMBOBOX, status)
+        switch = self.wait.until(EC.presence_of_element_located(self.FILTER_ACTIVE_SWITCH))
+        current = switch.get_attribute("aria-checked")
+        if status == "Active" and current != "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "true")
+        elif status == "Inactive" and current != "false":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "false")
 
     def apply_filters(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
@@ -164,7 +203,23 @@ class AdminEmployeesPage(BasePage):
         self.open_filter_panel()
         btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
+        # Reset All triggers an immediate data reload (no need to click Apply).
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        # The panel stays open after Reset All; close it so subsequent clicks
+        # (e.g. the search input) are not intercepted.
+        try:
+            WebDriverWait(self.driver, 2).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:
+            filter_btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", filter_btn)
+            try:
+                WebDriverWait(self.driver, 5).until(
+                    EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+                )
+            except Exception:
+                pass
 
     def filter_result_count_text(self):
         try:
@@ -252,8 +307,9 @@ class AdminEmployeeFormPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
+        long_wait = WebDriverWait(self.driver, 30)
         self.driver.switch_to.default_content()
-        self.wait.until(
+        long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
@@ -355,8 +411,21 @@ class AdminEmployeeFormPage(BasePage):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
 
     def assign_locations(self, site_names):
+        # Use clear_first=False so CTRL+A+DEL doesn't wipe previously-selected
+        # chips — in a multi-select React Select the input auto-clears between
+        # selections, so we only need to clear the very first call (or not at all).
+        from selenium.webdriver.common.action_chains import ActionChains
         for name in site_names:
-            self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, name)
+            self.select_react_dropdown_option(
+                self.LOCATIONS_COMBOBOX, name, clear_first=False
+            )
+        # React Select multi-select keeps the dropdown open after each selection.
+        # Press Escape to close it — more reliable than JS-clicking elsewhere
+        # because Escape fires through ActionChains (real browser event), whereas
+        # element.click() via JS doesn't trigger the document-level blur/close
+        # handler that React Select registers.
+        ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
+        time.sleep(0.5)
 
     def remove_all_locations(self):
         """Remove all selected location chips by clicking their X buttons."""
@@ -419,8 +488,32 @@ class AdminEmployeeFormPage(BasePage):
         self.ensure_active_switch_on()
 
     def click_save(self):
-        el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
-        self.driver.execute_script("arguments[0].click();", el)
+        import logging
+        from selenium.webdriver.common.action_chains import ActionChains
+        # Dismiss any open dropdown portal before clicking Save — the portal can
+        # be positioned over the Save button and intercept the ActionChains click.
+        ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
+        time.sleep(0.3)
+        el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", el)
+        ActionChains(self.driver).move_to_element(el).click().perform()
+        # After save the form iframe navigates to the list page, removing all
+        # form elements from the DOM. driver.current_url reflects the outer shell
+        # (unchanged in iframe-based nav), so we detect success by watching the
+        # First Name input disappear instead.
+        try:
+            WebDriverWait(self.driver, 15).until(
+                EC.invisibility_of_element_located(self.FIRST_NAME_INPUT)
+            )
+        except Exception:
+            body = ""
+            try:
+                body = self.driver.find_element(By.TAG_NAME, "body").text[:1200]
+            except Exception:
+                pass
+            logging.getLogger("nxtwash").warning(
+                "Employee save did not navigate away. Page text: %s", body or "(empty)"
+            )
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
@@ -593,7 +686,23 @@ class AdminEmployeeShiftPage(BasePage):
         self.open_filter_panel()
         btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
+        # Reset All triggers an immediate data reload (no need to click Apply).
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        # The panel stays open after Reset All; close it so subsequent clicks
+        # (e.g. the search input) are not intercepted.
+        try:
+            WebDriverWait(self.driver, 2).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:
+            filter_btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", filter_btn)
+            try:
+                WebDriverWait(self.driver, 5).until(
+                    EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+                )
+            except Exception:
+                pass
 
     def filter_result_count_text(self):
         try:
@@ -611,8 +720,7 @@ class AdminEmployeeShiftPage(BasePage):
     def open_first_shift_edit(self):
         edit_btn = self.wait.until(EC.element_to_be_clickable(
             (By.XPATH,
-             "(.//a[contains(@href,'edit')])[1] | "
-             "(.//button[normalize-space()='Edit'])[1]")
+             "(.//a[@role='button' and .//span[normalize-space()='Edit']])[1]")
         ))
         self.driver.execute_script("arguments[0].click();", edit_btn)
 

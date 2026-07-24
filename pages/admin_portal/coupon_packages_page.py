@@ -669,7 +669,14 @@ class CouponPackagesPage(BasePage):
         self.select_coupon_giveaway(giveaway_service_name)
         self.ensure_active_switch_on()
         self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Coupon package save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def update_coupon_giveaway_services(
         self,

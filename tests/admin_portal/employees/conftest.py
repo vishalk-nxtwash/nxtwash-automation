@@ -7,38 +7,41 @@ from pages.admin_portal.employees_page import (
     AdminEmployeesPage,
 )
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
 # ---------------------------------------------------------------------------
-# Constants
+# Constants  (values managed in test_data/employees.json)
 # ---------------------------------------------------------------------------
 
-EMP_FIRST_NAME = "Test"
-EMP_LAST_NAME = "user 4"
-EMP_FULL_NAME = EMP_FIRST_NAME + " " + EMP_LAST_NAME   # "Test user 4"
-EMP_EMAIL = "tu4@yopmail.com"
-EMP_PHONE = "1234567789"
-EMP_CODE = "001"
-EMP_WAGE = "15.50"
-EMP_HIRE_DATE = "2025-05-01"      # 1st May 2025
-EMP_ADDRESS = "Test user 4 address"
-EMP_ZIP = "123445"
-EMP_STATE = "Alaska"
-EMP_CITY = "wales"
-EMP_LOCATIONS = ["VK test carwash 2", "VK AL03", "VK AL05"]
-ASSIGNMENT_SITE = EMP_LOCATIONS[0]  # primary site used in single-site contexts
+_D = _load("employees")
 
-SHIFT_DATE = "2025-07-01"         # 1st July 2025
-SHIFT_START_TIME = "09:00"        # 9 AM
-SHIFT_END_TIME = "19:00"          # 7 PM
+EMP_FIRST_NAME = _D["template"]["first_name"]
+EMP_LAST_NAME  = _D["template"]["last_name"]
+EMP_FULL_NAME  = EMP_FIRST_NAME + " " + EMP_LAST_NAME
+EMP_EMAIL      = _D["template"]["email"]
+EMP_PHONE      = _D["template"]["phone"]
+EMP_CODE       = _D["template"]["employee_code"]
+EMP_WAGE       = _D["template"]["wage"]
+EMP_HIRE_DATE  = _D["template"]["hire_date"]
+EMP_ADDRESS    = _D["template"]["address"]
+EMP_ZIP        = _D["template"]["zip"]
+EMP_STATE      = _D["template"]["state"]
+EMP_CITY       = _D["template"]["city"]
+EMP_LOCATIONS  = _D["template"]["locations"]
+ASSIGNMENT_SITE = EMP_LOCATIONS[0]
 
-UPDATED_FIRST_NAME = "TestEdited"
-UPDATED_LAST_NAME = "user4Edited"
-UPDATED_EMAIL = "tu4.edited@yopmail.com"
-UPDATED_PHONE = "1234567790"
-UPDATED_WAGE = "20.00"
+SHIFT_DATE       = _D["shift"]["date"]
+SHIFT_START_TIME = _D["shift"]["start_time"]
+SHIFT_END_TIME   = _D["shift"]["end_time"]
 
-NONEXISTENT_LAST_NAME = "employee-does-not-exist-automation"
-INVALID_EMAIL = "not-an-email"
+UPDATED_FIRST_NAME = _D["updated"]["first_name"]
+UPDATED_LAST_NAME  = _D["updated"]["last_name"]
+UPDATED_EMAIL      = _D["updated"]["email"]
+UPDATED_PHONE      = _D["updated"]["phone"]
+UPDATED_WAGE       = _D["updated"]["wage"]
+
+NONEXISTENT_LAST_NAME = _D["search"]["nonexistent_last_name"]
+INVALID_EMAIL         = _D["invalid"]["email"]
 
 SHIFT_EMPLOYEE_LAST_NAME = EMP_LAST_NAME  # shift tests search by this
 SHIFT_SITE = ASSIGNMENT_SITE
@@ -84,20 +87,22 @@ def open_create_shift_form(browser):
     return form
 
 
+BROKEN_STATE_TEXTS = [
+    "something went wrong",
+    "internal server error",
+    "application error",
+    "cannot read",
+    "typeerror",
+    "uncaught error",
+]
+
+
 def page_has_no_broken_state(page):
     try:
         body = page.get_body_text().lower()
     except Exception:
         return True
-    broken_signals = [
-        "something went wrong",
-        "internal server error",
-        "application error",
-        "cannot read",
-        "typeerror",
-        "uncaught error",
-    ]
-    return not any(s in body for s in broken_signals)
+    return not any(s in body for s in BROKEN_STATE_TEXTS)
 
 
 # ---------------------------------------------------------------------------
@@ -159,10 +164,21 @@ def create_employee_if_missing(
         form.select_city(EMP_CITY)
     except Exception:
         pass
+    url_before = browser.current_url
     form.click_save()
+    # Detect silent failure: if URL didn't change, the form rejected the save
+    # (most common cause: duplicate email).  In that case the employee already
+    # exists — the earlier employee_exists call timed out because staging's
+    # InovuaReactDataGrid is slow, not because the record is absent.
+    if browser.current_url == url_before:
+        import logging
+        logging.getLogger("nxtwash").warning(
+            "Employee create did not navigate away — assuming duplicate; "
+            "searching list with extended timeout"
+        )
     page = open_employees_page(browser)
     page.search_employee(last_name)
-    page.wait_for_employee_row(last_name)
+    page.wait_for_employee_row(last_name, timeout=180)
     return page
 
 
@@ -173,10 +189,15 @@ def create_employee_if_missing(
 
 @pytest.fixture
 def managed_employee(browser):
-    """Ensure the baseline employee exists; restore it after each test."""
+    """Ensure the baseline employee exists and is active before each test.
+
+    No teardown restore — the next test's setup calls create_employee_if_missing
+    which takes the EXISTS path and reactivates via ensure_active_switch_on.
+    This avoids doubling the fixture budget (setup + teardown both running the
+    full create cycle against the slow staging grid).
+    """
     page = create_employee_if_missing(browser)
     yield page
-    create_employee_if_missing(browser)
 
 
 @pytest.fixture

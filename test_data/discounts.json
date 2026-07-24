@@ -1,0 +1,23 @@
+{
+  "reference": {
+    "existing_discount":       "Basic Discount",
+    "all_locations_discount":  "VK AL01",
+    "service_category":        "VK ASC1"
+  },
+  "template": {
+    "discount_name":     "VK AD02",
+    "amount":            "5",
+    "start_day":         "9",
+    "start_time":        "10:00 AM",
+    "start_value":       "June 9, 2026 10:00 AM",
+    "end_day":           "28",
+    "end_time":          "11:00 PM"
+  },
+  "percentage": {
+    "discount_name":  "VK PD02",
+    "amount":         "10"
+  },
+  "search": {
+    "nonexistent": "discount-does-not-exist-automation"
+  }
+}

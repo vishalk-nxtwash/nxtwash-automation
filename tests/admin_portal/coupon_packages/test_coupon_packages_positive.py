@@ -37,7 +37,7 @@ def test_coupon_package_settings_persist(browser):
 
     assert page.get_coupon_package_name_value() == COUPON_PACKAGE_NAME
     assert DISCOUNT_NAME.lower() in body_text
-    assert GIVEAWAY_SERVICE.lower() in body_text
+    assert GIVEAWAY_SERVICE.lower() in page.checked_giveaway_values()
     assert page.active_switch_is_on()
 
 

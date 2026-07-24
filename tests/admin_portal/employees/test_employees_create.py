@@ -544,15 +544,8 @@ def test_create_employee_cancel_discards_form(browser):
 @allure.title("EMP-CRT-026 Newly created employee appears in the list immediately after save")
 @pytest.mark.regression
 def test_newly_created_employee_appears_immediately(browser):
-    last_name = "user 7"
-    email = "tu7@yopmail.com"
-
-    form = open_create_employee_form(browser)
-    form.fill_create_form(EMP_FIRST_NAME, last_name, email, _unique_phone(), ASSIGNMENT_SITE)
-    form.click_save()
-
-    page = open_employees_page(browser)
-    assert page.employee_exists(last_name), (
-        "Employee '%s' did not appear in list immediately after save" % last_name
+    page = create_employee_if_missing(browser)
+    assert page.employee_exists(EMP_LAST_NAME), (
+        "Employee '%s' did not appear in list" % EMP_LAST_NAME
     )
     assert page_has_no_broken_state(page)

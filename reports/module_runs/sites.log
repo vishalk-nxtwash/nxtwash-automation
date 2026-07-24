@@ -1,0 +1,3542 @@
+2026-07-23 04:52:43,771 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 66 items
+
+tests/admin_portal/sites/test_sites_dependency.py::test_active_site_in_services_dropdowns SKIPPED [  1%]
+tests/admin_portal/sites/test_sites_dependency.py::test_active_site_in_customers_assign_dropdown SKIPPED [  3%]
+tests/admin_portal/sites/test_sites_dependency.py::test_site_tax_rates_visible_in_service_assignment SKIPPED [  4%]
+tests/admin_portal/sites/test_sites_dependency.py::test_deactivated_site_removed_from_dropdowns SKIPPED [  6%]
+tests/admin_portal/sites/test_sites_dependency.py::test_pay_api_token_gates_card_saving SKIPPED [  7%]
+tests/admin_portal/sites/test_sites_dependency.py::test_lane_count_in_list_matches_saved_lanes SKIPPED [  9%]
+tests/admin_portal/sites/test_sites_dependency.py::test_customer_portal_toggle_controls_ecommerce_listing SKIPPED [ 10%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_create_site_long_site_name_does_not_break_ui PASSED [ 12%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_sites_list_handles_refresh PASSED [ 13%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_create_site_form_handles_random_address_value PASSED [ 15%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_form_prepopulates 2026-07-23 04:53:31,152 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_form_prepopulates (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_form_prepopulates (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:53:31,840 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 16%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_name_persists SKIPPED [ 18%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_tax_settings_persist ERROR [ 19%]
+tests/admin_portal/sites/test_sites_edit.py::test_activate_site_shows_in_list ERROR [ 21%]
+tests/admin_portal/sites/test_sites_edit.py::test_deactivate_site_hides_from_list ERROR [ 22%]
+tests/admin_portal/sites/test_sites_edit.py::test_cancel_edit_does_not_save ERROR [ 24%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_lanes_settings_tab_accessible 2026-07-23 04:54:28,779 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_lanes_settings_tab_accessible (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_lanes_settings_tab_accessible (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:54:29,435 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 25%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_credit_card_tab_accessible 2026-07-23 04:54:42,087 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_credit_card_tab_accessible (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_credit_card_tab_accessible (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:54:42,760 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 27%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_tab_accessible 2026-07-23 04:54:55,399 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_tab_accessible (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_tab_accessible (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:54:56,117 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 28%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_lane_persists XFAIL [ 30%]
+tests/admin_portal/sites/test_sites_edit.py::test_remove_lane_persists SKIPPED [ 31%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_contact_email_persists_after_refresh ERROR [ 33%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_lane_creates_visible_row XFAIL [ 34%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_multiple_lanes_succeeds XFAIL [ 36%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_input_fields_are_displayed 2026-07-23 04:55:56,995 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_input_fields_are_displayed (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_input_fields_are_displayed (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:55:57,666 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 37%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_processor_labels_visible 2026-07-23 04:56:09,203 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_processor_labels_visible (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_processor_labels_visible (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:56:09,886 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 39%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_memberships_toggle XFAIL [ 40%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_washbooks_toggle XFAIL [ 42%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_gift_cards_toggle XFAIL [ 43%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_show_toggle XFAIL [ 45%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_settings_persist XFAIL [ 46%]
+tests/admin_portal/sites/test_sites_export.py::test_sites_export_button_clickable PASSED [ 48%]
+tests/admin_portal/sites/test_sites_export.py::test_sites_export_file_content XFAIL [ 50%]
+tests/admin_portal/sites/test_sites_negative.py::test_create_site_duplicate_site_name_or_code_is_rejected 2026-07-23 04:57:41,351 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_negative.py::test_create_site_duplicate_site_name_or_code_is_rejected (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_negative.py::test_create_site_duplicate_site_name_or_code_is_rejected (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:57:42,026 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 51%]
+tests/admin_portal/sites/test_sites_negative.py::test_create_site_cancel_does_not_save_record 2026-07-23 04:57:52,237 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_negative.py::test_create_site_cancel_does_not_save_record (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_negative.py::test_create_site_cancel_does_not_save_record (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:57:52,916 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 53%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_new_site_with_required_general_settings 2026-07-23 04:58:04,569 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_create_new_site_with_required_general_settings (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_create_new_site_with_required_general_settings (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:58:05,247 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 54%]
+tests/admin_portal/sites/test_sites_positive.py::test_created_site_persists_after_refresh 2026-07-23 04:58:18,170 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_created_site_persists_after_refresh (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_created_site_persists_after_refresh (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:58:18,837 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 56%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_inactive_site_hidden_from_list PASSED [ 57%]
+tests/admin_portal/sites/test_sites_positive.py::test_created_site_shows_state_and_city_in_list 2026-07-23 04:59:00,875 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_created_site_shows_state_and_city_in_list (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_created_site_shows_state_and_city_in_list (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:59:01,535 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (32)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.com 2
+Edit
+VK Test Wash 01 Texas League city vk@carwash.co 1
+Edi
+FAILED                                                                   [ 59%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_site_with_zero_tax_rates PASSED [ 60%]
+tests/admin_portal/sites/test_sites_positive.py::test_site_count_increments_after_create 2026-07-23 04:59:33,497 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_site_count_increments_after_create (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_positive.py::test_site_count_increments_after_create (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:59:34,236 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+FAILED                                                                   [ 62%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_existing_site_name 2026-07-23 04:59:45,312 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_existing_site_name (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_existing_site_name (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:59:45,988 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+FAILED                                                                   [ 63%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_partial_site_name 2026-07-23 04:59:57,572 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_partial_site_name (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_partial_site_name (url: https://staging.nxtwash.com/sites)
+2026-07-23 04:59:58,231 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+FAILED                                                                   [ 65%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_missing_site_name_shows_no_match PASSED [ 66%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_reset_filter_restores_list PASSED [ 68%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_on_shows_active_only 2026-07-23 05:00:37,693 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_on_shows_active_only (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_on_shows_active_only (url: https://staging.nxtwash.com/sites)
+2026-07-23 05:00:38,359 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+FAILED                                                                   [ 69%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_off_shows_all PASSED [ 71%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_name_and_active_combined 2026-07-23 05:01:02,508 ERROR nxtwash: Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_name_and_active_combined (url: https://staging.nxtwash.com/sites)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_name_and_active_combined (url: https://staging.nxtwash.com/sites)
+2026-07-23 05:01:03,166 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+Sites/Locations (33)
+Filter by
++ Add site
+Site name
+State name
+City name
+Email
+Lanes
+VK ZT 9eaa54 California Columbia vkzt9eaa54@yopmail.com 0
+Edit
+VK ZT ae9b9c California Columbia vkztae9b9c@yopmail.com 0
+Edit
+test 12 Arizona Clifton 0
+Edit
+VK AL22 California Columbia vkal22@yopmail.com 0
+Edit
+VK AL21 California Columbia vkal21@yopmail.com 0
+Edit
+VK AL20 California Columbia vkal20@yopmail.com 0
+Edit
+VK ZT c26508 California Columbia vkztc26508@yopmail.com 0
+Edit
+VK AL19 California Columbia vkal19@yopmail.com 0
+Edit
+VK AL18 California Columbia vkal18@yopmail.com 0
+Edit
+VK ZT c54675 California Columbia vkztc54675@yopmail.com 0
+Edit
+VK AL17 California Columbia vkal17@yopmail.com 0
+Edit
+VK AL16 California Columbia vkal16@yopmail.com 0
+Edit
+VK ZT 2b4279 California Columbia vkzt2b4279@yopmail.com 0
+Edit
+VK AL15 California Columbia vkal15@yopmail.com 0
+Edit
+VK AL14 California Columbia vkal14@yopmail.com 0
+Edit
+VK ZT 146465 California Columbia vkzt146465@yopmail.com 0
+Edit
+VK AL13 California Columbia vkal13@yopmail.com 0
+Edit
+VK AL12 California Columbia vkal12@yopmail.com 0
+Edit
+VK AL11 California Columbia vkal11@yopmail.com 0
+Edit
+VK AL10 California Columbia vkal10@yopmail.com 0
+Edit
+VK AL09 California Columbia vkal09@yopmail.com 0
+Edit
+VK AL08 California Columbia vkal08@yopmail.com 0
+Edit
+VK AL01 California Columbia vkal01@yopmail.com 0
+Edit
+vkauto1 Texas Canyon lake vkauto1@yopmail.com 1
+Edit
+VK AL07 California Columbia vkal07@yopmail.com 0
+Edit
+VK AL06 California Columbia vkal06@yopmail.com 0
+Edit
+VK AL05 California Columbia vkal05@yopmail.com 0
+Edit
+VK AL04 California Columbia vkal04@yopmail.com 0
+Edit
+VK AL03 California Columbia vkal03@yopmail.com 2
+Edit
+VK AL02 California Columbia vkal02@yopmail.com 3
+Edit
+test123 udpated California Columbia teset@yopmail.com 0
+Edit
+VK Test carwash 2 Texas Canyon lake test2@carwash.c
+FAILED                                                                   [ 72%]
+tests/admin_portal/sites/test_sites_ui.py::test_sites_locations_page_ui_elements PASSED [ 74%]
+tests/admin_portal/sites/test_sites_ui.py::test_sites_filter_panel_ui_elements PASSED [ 75%]
+tests/admin_portal/sites/test_sites_ui.py::test_create_site_general_settings_ui_elements PASSED [ 77%]
+tests/admin_portal/sites/test_sites_ui.py::test_create_site_cancel_returns_to_list PASSED [ 78%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_blocks_empty_required_fields PASSED [ 80%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc] XPASS [ 81%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc@] XPASS [ 83%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc@yopmail] XPASS [ 84%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax--1] PASSED [ 86%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax--1] PASSED [ 87%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax-abc] PASSED [ 89%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax-abc] PASSED [ 90%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax-101] PASSED [ 92%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax-101] PASSED [ 93%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_missing_address_blocks_save PASSED [ 95%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_blank_name_with_complete_form_blocks_save PASSED [ 96%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_special_chars_in_name_do_not_break_form PASSED [ 98%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_very_long_name_does_not_crash_form PASSED [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at setup of test_edit_site_tax_settings_persist _____________
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000104ec5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104ebdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049672a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010496fde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001049f02b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001049ef030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001049a5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000104e82c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000104e863b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000104e690f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000104e86c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000104e5a3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000104eac1f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000104eac354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000104ebd7a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+______________ ERROR at setup of test_activate_site_shows_in_list ______________
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000100ff9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100ff1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100a9b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100aa3de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000100b242b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000100b23030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000100ad9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000100fb6c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000100fba3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000100f9d0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000100fbac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000100f8e3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000100fe01f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000100fe0354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000100ff17a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+____________ ERROR at setup of test_deactivate_site_hides_from_list ____________
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000100e29a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100e21b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001008cb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001008d3de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001009542b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000100953030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000100909434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000100de6c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000100dea3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000100dcd0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000100deac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000100dbe3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000100e101f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000100e10354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000100e217a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_______________ ERROR at setup of test_cancel_edit_does_not_save _______________
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000101561a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101559b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001010032a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010100bde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x000000010108c2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x000000010108b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000101041434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010151ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001015223b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001015050f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000101522c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001014f63b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001015481f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000101548354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001015597a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+____ ERROR at setup of test_edit_site_contact_email_persists_after_refresh _____
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x000000010089da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100895b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010033f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100347de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001003c82b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001003c7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x000000010037d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010085ac40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x000000010085e3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001008410f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x000000010085ec4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001008323b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001008841f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000100884354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001008957a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000104c29a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104c21b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001046cb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001046d3de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001047542b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000104753030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000104709434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000104be6c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000104bea3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000104bcd0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000104beac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000104bbe3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000104c101f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000104c10354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000104c217a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x000000010110da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101105b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100baf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100bb7de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000100c382b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000100c37030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000100bed434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x00000001010cac40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001010ce3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001010b10f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x00000001010cec4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001010a23b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001010f41f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x00000001010f4354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001011057a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000100841a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100839b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001002e32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001002ebde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x000000010036c2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x000000010036b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000100321434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x00000001007fec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001008023b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001007e50f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000100802c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001007d63b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001008281f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000100828354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001008397a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000104f89a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104f81b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104a2b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104a33de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000104ab42b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000104ab3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000104a69434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000104f46c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000104f4a3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000104f2d0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000104f4ac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000104f1e3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000104f701f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000104f70354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000104f817a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000100d15a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100d0db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001007b72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001007bfde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001008402b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x000000010083f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001007f5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000100cd2c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000100cd63b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000100cb90f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000100cd6c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000100caa3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000100cfc1f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000100cfc354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000100d0d7a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x00000001053ada84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001053a5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104e4f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104e57de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000104ed82b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000104ed7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000104e8d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010536ac40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x000000010536e3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001053510f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x000000010536ec4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001053423b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001053941f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000105394354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001053a57a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000102ba1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102b99b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001026432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010264bde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001026cc2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001026cb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000102681434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000102b5ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000102b623b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000102b450f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000102b62c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000102b363b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000102b881f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000102b88354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000102b997a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x000000010348da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103485b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102f2f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102f37de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000102fb82b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000102fb7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000102f6d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010344ac40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x000000010344e3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001034310f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x000000010344ec4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001034223b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001034741f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000103474354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001034857a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x00000001025c5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001025bdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001020672a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010206fde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001020f02b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001020ef030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001020a5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000102582c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001025863b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001025690f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000102586c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x000000010255a3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001025ac1f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x00000001025ac354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001025bd7a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000103109a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103101b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102bab2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102bb3de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000102c342b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000102c33030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000102be9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x00000001030c6c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001030ca3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001030ad0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x00000001030cac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x000000010309e3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001030f01f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x00000001030f0354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001031017a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x00000001006e1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001006d9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001001832a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010018bde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x000000010020c2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x000000010020b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001001c1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010069ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001006a23b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001006850f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x00000001006a2c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001006763b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001006c81f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x00000001006c8354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001006d97a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000103069a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103061b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102b0b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102b13de4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000102b942b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000102b93030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000102b49434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000103026c40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x000000010302a3b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x000000010300d0f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x000000010302ac4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000102ffe3b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001030501f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000103050354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001030617a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000102ac1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102ab9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001025632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010256bde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001025ec2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001025eb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001025a1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000102a7ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000102a823b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000102a650f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000102a82c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000102a563b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000102aa81f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000102aa8354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000102ab97a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000105551a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000105549b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104ff32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104ffbde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x000000010507c2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x000000010507b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000105031434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x000000010550ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001055123b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x00000001054f50f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000105512c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x00000001054e63b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001055381f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000105538354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001055497a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000104ec1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104eb9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010496bde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x00000001049ec2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x00000001049eb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x00000001049a1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000104e7ec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x0000000104e823b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000104e650f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000104e82c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000104e563b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x0000000104ea81f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000104ea8354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x0000000104eb97a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+E   selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+    JavaScript stack:
+    TypeError: Cannot read properties of null (reading 'authSessionReducer')
+        at eval (eval at <anonymous> (:457:26), <anonymous>:8:42)
+        at eval (eval at <anonymous> (:457:26), <anonymous>:31:4)
+        at <anonymous>:457:47
+        at new Promise (<anonymous>)
+        at executeAsyncScript (<anonymous>:451:17)
+        at <anonymous>:481:29
+        at callFunction (<anonymous>:386:22)
+        at <anonymous>:400:23
+        at <anonymous>:401:3
+      (Session info: chrome=150.0.7871.129)
+    Stacktrace:
+    0   chromedriver                        0x0000000103041a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103039b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102ae32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102aebde4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 109484
+    4   chromedriver                        0x0000000102b6c2b8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635008
+    5   chromedriver                        0x0000000102b6b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    6   chromedriver                        0x0000000102b21434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    7   chromedriver                        0x0000000102ffec40 cxxbridge1$str$ptr + 2921304
+    8   chromedriver                        0x00000001030023b8 cxxbridge1$str$ptr + 2935504
+    9   chromedriver                        0x0000000102fe50f8 cxxbridge1$str$ptr + 2816016
+    10  chromedriver                        0x0000000103002c4c cxxbridge1$str$ptr + 2937700
+    11  chromedriver                        0x0000000102fd63b0 cxxbridge1$str$ptr + 2755272
+    12  chromedriver                        0x00000001030281f4 cxxbridge1$str$ptr + 3090700
+    13  chromedriver                        0x0000000103028354 cxxbridge1$str$ptr + 3091052
+    14  chromedriver                        0x00000001030397a4 cxxbridge1$str$ptr + 3161788
+    15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of null (reading 'authSessionReducer')
+=========================== short test summary info ============================
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_form_prepopulates
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_lanes_settings_tab_accessible
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_credit_card_tab_accessible
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_tab_accessible
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_input_fields_are_displayed
+FAILED tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_processor_labels_visible
+FAILED tests/admin_portal/sites/test_sites_negative.py::test_create_site_duplicate_site_name_or_code_is_rejected
+FAILED tests/admin_portal/sites/test_sites_negative.py::test_create_site_cancel_does_not_save_record
+FAILED tests/admin_portal/sites/test_sites_positive.py::test_create_new_site_with_required_general_settings
+FAILED tests/admin_portal/sites/test_sites_positive.py::test_created_site_persists_after_refresh
+FAILED tests/admin_portal/sites/test_sites_positive.py::test_created_site_shows_state_and_city_in_list
+FAILED tests/admin_portal/sites/test_sites_positive.py::test_site_count_increments_after_create
+FAILED tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_existing_site_name
+FAILED tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_partial_site_name
+FAILED tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_on_shows_active_only
+FAILED tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_name_and_active_combined
+ERROR tests/admin_portal/sites/test_sites_edit.py::test_edit_site_tax_settings_persist
+ERROR tests/admin_portal/sites/test_sites_edit.py::test_activate_site_shows_in_list
+ERROR tests/admin_portal/sites/test_sites_edit.py::test_deactivate_site_hides_from_list
+ERROR tests/admin_portal/sites/test_sites_edit.py::test_cancel_edit_does_not_save
+ERROR tests/admin_portal/sites/test_sites_edit.py::test_edit_site_contact_email_persists_after_refresh
+= 16 failed, 24 passed, 9 skipped, 9 xfailed, 3 xpassed, 5 errors in 737.49s (0:12:17) =

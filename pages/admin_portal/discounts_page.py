@@ -154,6 +154,7 @@ class DiscountsPage(BasePage):
         WebDriverWait(self.driver, 30).until(
             lambda driver: self.get_discount_name_value() != ""
         )
+        self.wait_for_grid_idle()
 
     def get_body_text(self):
         """Get visible text inside the current iframe."""
@@ -691,8 +692,8 @@ class DiscountsPage(BasePage):
         self.ensure_active_switch_on()
         self.set_location_discount_value_by_index(0, discount_amount)
         self.select_location_discount_type_by_index(0, "Amount")
-        self.fill_required_unassigned_location_values()
         self.assign_location_by_index(0)
+        self.fill_required_unassigned_location_values()
 
     def create_discount(
         self,
@@ -714,7 +715,14 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def update_discount(
         self,
@@ -838,8 +846,8 @@ class DiscountsPage(BasePage):
         self.ensure_active_switch_on()
         self.set_location_discount_value_by_index(0, discount_amount)
         self.select_location_discount_type_by_index(0, "Percentage")
-        self.fill_required_unassigned_location_values()
         self.assign_location_by_index(0)
+        self.fill_required_unassigned_location_values()
 
     def create_percentage_discount(
         self,
@@ -861,7 +869,14 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Percentage discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def fill_discount_form_all_locations(
         self,
@@ -901,7 +916,14 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "All-locations discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def unassign_location_by_index(self, row_index):
         """Unassign one visible location row (uncheck if currently checked)."""

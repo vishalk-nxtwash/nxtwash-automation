@@ -1,1 +1,0 @@
-2026-06-24 23:48:11,956 INFO tests.admin_portal.memberships.test_memberships_ui: Verifying Redemption Settings tab

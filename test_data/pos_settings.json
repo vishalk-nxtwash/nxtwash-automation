@@ -1,0 +1,25 @@
+{
+  "reference": {
+    "existing_pos":         "VK POS 1",
+    "site":                 "VK AL03",
+    "lane":                 "L1",
+    "allow_checkout":       "With assigned customer only",
+    "allow_checkout_no_customer": "No customer assigned"
+  },
+  "template": {
+    "pos_name":         "VK POS 1",
+    "middleware_ip":    "https://middleware-zeus.nxtwash.info/",
+    "payment_serial":   "1.1.1.1",
+    "controller_id":    "RTC",
+    "controller_ip":    "192.168.1.180:502"
+  },
+  "updated": {
+    "pos_name": "VK POS 1 edited"
+  },
+  "create": {
+    "pos_name": "VK APOS02"
+  },
+  "search": {
+    "nonexistent": "pos-does-not-exist-automation"
+  }
+}

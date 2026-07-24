@@ -1,1 +1,0 @@
-2026-06-25 11:40:37,979 INFO tests.admin_portal.memberships.test_memberships_edit: Editing membership name from VK MA2 and restoring it

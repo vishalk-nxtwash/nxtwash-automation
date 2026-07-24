@@ -2,22 +2,24 @@ from pages.admin_portal.discounts_page import DiscountsPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
+_D = _load("discounts")
 
-EXISTING_DISCOUNT = "Basic Discount"
-MISSING_DISCOUNT = "discount-does-not-exist-automation"
-DISCOUNT_NAME = "VK AD02"
-REQUESTED_SERVICE_CATEGORY = "VK ASC1"
-SERVICE_CATEGORY = "VK ASC1"
-DISCOUNT_AMOUNT = "5"
-START_DAY = "9"
-START_TIME = "10:00 AM"
-START_VALUE = "June 9, 2026 10:00 AM"
-PERCENTAGE_DISCOUNT_NAME = "VK PD02"
-PERCENTAGE_AMOUNT = "10"
-ALL_LOC_DISCOUNT_NAME = "VK AL01"
-END_DAY = "28"
-END_TIME = "11:00 PM"
+EXISTING_DISCOUNT          = _D["reference"]["existing_discount"]
+MISSING_DISCOUNT           = _D["search"]["nonexistent"]
+DISCOUNT_NAME              = _D["template"]["discount_name"]
+REQUESTED_SERVICE_CATEGORY = _D["reference"]["service_category"]
+SERVICE_CATEGORY           = _D["reference"]["service_category"]
+DISCOUNT_AMOUNT            = _D["template"]["amount"]
+START_DAY                  = _D["template"]["start_day"]
+START_TIME                 = _D["template"]["start_time"]
+START_VALUE                = _D["template"]["start_value"]
+PERCENTAGE_DISCOUNT_NAME   = _D["percentage"]["discount_name"]
+PERCENTAGE_AMOUNT          = _D["percentage"]["amount"]
+ALL_LOC_DISCOUNT_NAME      = _D["reference"]["all_locations_discount"]
+END_DAY                    = _D["template"]["end_day"]
+END_TIME                   = _D["template"]["end_time"]
 MANAGED_PERCENTAGE_DISCOUNT = managed_name("Pct Discount")
 
 

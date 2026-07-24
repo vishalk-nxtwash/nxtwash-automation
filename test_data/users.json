@@ -1,0 +1,22 @@
+{
+  "template": {
+    "email":         "vkuser02@yopmail.com",
+    "phone":         "1234567890",
+    "password":      "test",
+    "employee_name": "test user 2",
+    "role":          "VK UR01",
+    "first_name":    "test",
+    "last_name":     "user 2",
+    "employee_code": "1234",
+    "assignment_site": "VK AL11"
+  },
+  "updated": {
+    "email": "vkuser02.edited@yopmail.com",
+    "phone": "1234567891",
+    "role":  "VK UR01"
+  },
+  "invalid": {
+    "email": "not-an-email",
+    "phone": "0000000000"
+  }
+}

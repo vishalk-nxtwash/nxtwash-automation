@@ -39,5 +39,5 @@ def test_cwb_washes_reflect_template_wash_book(browser):
     page.search_cwb(CWB_WASH_BOOK_NUMBER)
     row_washes = page.get_cwb_number_of_washes_from_row(CWB_WASH_BOOK_NUMBER)
 
-    assert row_washes == CWB_NUMBER_OF_WASHES
+    assert str(row_washes).strip() == str(CWB_NUMBER_OF_WASHES).strip()
     assert page_has_no_broken_state(page)
