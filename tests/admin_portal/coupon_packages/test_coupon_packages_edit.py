@@ -50,6 +50,8 @@ def test_edit_coupon_package_discount(browser):
     page = create_coupon_package_if_missing(browser)
     page.update_assigned_discount(COUPON_PACKAGE_NAME, SECOND_DISCOUNT_NAME)
     page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+    # Assign discount hydrates after the name field; wait before asserting.
+    page.wait.until(lambda d: SECOND_DISCOUNT_NAME.lower() in page.get_body_text().lower())
 
     assert SECOND_DISCOUNT_NAME.lower() in page.get_body_text().lower()
 
