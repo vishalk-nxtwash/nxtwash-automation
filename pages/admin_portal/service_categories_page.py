@@ -542,7 +542,14 @@ class ServiceCategoriesPage(BasePage):
         self.enter_category_name(category_name)
         self.ensure_active_switch_on()
         self.click_save_new()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Service category save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def create_inactive_category(self, category_name):
         """Create a category with Active switch OFF and return to list."""
@@ -550,7 +557,14 @@ class ServiceCategoriesPage(BasePage):
         self.enter_category_name(category_name)
         self.ensure_active_switch_off()
         self.click_save_new()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Inactive service category save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def update_category_name(self, old_name, new_name):
         """Rename a category and return to list."""

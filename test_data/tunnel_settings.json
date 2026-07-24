@@ -1,0 +1,21 @@
+{
+  "reference": {
+    "existing_tunnel":   "VK AT02",
+    "site":              "VK test carwash 2",
+    "retract_service":   "Tire wash",
+    "behavior_default":  "Sequence stacking"
+  },
+  "template": {
+    "tunnel_name":      "VK AT02",
+    "controller_ip":    "1.1.1.1:502",
+    "middleware_ip":    "http://localhost:5000",
+    "controller_id":    "RTC",
+    "behavior":         "Retrieve wash via plate"
+  },
+  "create": {
+    "tunnel_name": "VK AT02 auto"
+  },
+  "search": {
+    "nonexistent": "tunnel-does-not-exist-automation"
+  }
+}

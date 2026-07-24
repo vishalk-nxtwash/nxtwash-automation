@@ -1,0 +1,829 @@
+2026-07-23 13:47:45,655 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 83 items
+
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gsr_page_loads PASSED [  1%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_default_filter_state PASSED [  2%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_report_sections_present PASSED [  3%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_site_dropdown_lists_sites PASSED [  4%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_single_site_filter PASSED [  6%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multiple_sites_filter PASSED [  7%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_sites_filter PASSED [  8%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_clearing_site_reverts_to_all XPASS [  9%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_dropdown_shows_options PASSED [ 10%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-007] PASSED [ 12%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-008] PASSED [ 13%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-009] PASSED [ 14%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-010] PASSED [ 15%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-011] PASSED [ 16%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-012] PASSED [ 18%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_picker_opens PASSED [ 19%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_applies PASSED [ 20%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_range_clears_preset PASSED [ 21%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_apply_filters_refreshes_data PASSED [ 22%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_reapply_same_filter_identical PASSED [ 24%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_four_revenue_cards_displayed PASSED [ 25%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-002] XPASS [ 26%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-003] XPASS [ 27%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-004] XPASS [ 28%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-005] XPASS [ 30%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_data_revenue_cards PASSED [ 31%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_cards_update_on_filter_change PASSED [ 32%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_overview_displayed PASSED [ 33%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_full_report_link PASSED [ 34%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_update_on_filter_change PASSED [ 36%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_comparison_visible PASSED [ 37%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_shows_site_rows XPASS [ 38%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_filtered_single_site XPASS [ 39%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_column_headers_sort XFAIL [ 40%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_breakdown_payment_channels XPASS [ 42%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_card_distribution_no_data PASSED [ 43%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_breakdown_updates PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_retail_sales_columns XPASS [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_retail_sales_category_expands XPASS [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_memberships_breakdown_columns XPASS [ 48%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_membership_bar_chart PASSED [ 49%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_sales_activity_no_data PASSED [ 50%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_sales_activity_updates PASSED [ 51%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_prepaid_liability_columns XPASS [ 53%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_liability_composition_bar PASSED [ 54%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_three_summary_tiles PASSED [ 55%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gift_card_section_collapsible XPASS [ 56%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gift_card_three_sub_cards XPASS [ 57%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gift_card_net_revenue_formula PASSED [ 59%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gift_cards_sold_table PASSED [ 60%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gift_cards_redeemed_table PASSED [ 61%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbook_section_collapsible XPASS [ 62%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbook_three_sub_cards XFAIL [ 63%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbook_net_revenue_formula PASSED [ 65%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbook_reconciliation_accordion XPASS [ 66%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbooks_sold_table PASSED [ 67%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_washbooks_redeemed_table PASSED [ 68%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_total_invoices_count PASSED [ 69%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_transaction_breakdown_updates PASSED [ 71%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_export_button_present PASSED [ 72%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_export_modal_four_options XFAIL [ 73%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_transaction_renders_cleanly PASSED [ 74%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_transaction_day_renders PASSED [ 75%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_single_day_date_range PASSED [ 77%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_month_boundary_date_range PASSED [ 78%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_rapid_preset_switching PASSED [ 79%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_sites_dropdown_reflects_module PASSED [ 80%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_link_navigates PASSED [ 81%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_redemption_details_page_loads PASSED [ 83%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_filter_panel_auto_opened PASSED [ 84%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_site_filter_works 2026-07-23 14:11:32,807 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_site_filter_works (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_site_filter_works (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:11:33,619 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 85%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_date_presets_dropdown 2026-07-23 14:12:02,178 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_date_presets_dropdown (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_date_presets_dropdown (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:12:02,986 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 86%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[today]] 2026-07-23 14:12:31,986 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[today]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[today]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:12:32,835 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 87%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[yesterday]] 2026-07-23 14:13:03,587 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[yesterday]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[yesterday]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:13:04,389 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 89%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-week]] 2026-07-23 14:13:34,482 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-week]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-week]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:13:35,263 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 90%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-week]] 2026-07-23 14:14:04,968 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-week]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-week]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:14:05,723 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 91%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-month]] 2026-07-23 14:14:35,046 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-month]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-month]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:14:35,832 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 92%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-month]] 2026-07-23 14:15:04,786 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-month]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-month]] (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:15:05,560 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 93%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_custom_option_enables_manual_entry XFAIL [ 95%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_single_day_checkbox_constrains_range XPASS [ 96%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_apply_filters_updates_metrics 2026-07-23 14:16:15,059 ERROR nxtwash: Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_apply_filters_updates_metrics (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/general_sales_report/test_redemption_details.py::test_apply_filters_updates_metrics (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-23 14:16:15,831 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 97%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_five_sections_visible PASSED [ 98%]
+tests/admin_portal/general_sales_report/test_redemption_details.py::test_expand_all_button XPASS [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001012b5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001012adb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100d572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100d9fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100ddf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100d95434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000101272c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001012763b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001012590f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000101276c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010124a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010129c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010129c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001012ad7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104d59a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104d51b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001047fb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104843a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104883030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104839434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104d16c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104d1a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104cfd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104d1ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104cee3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104d401f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104d40354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104d517a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001025c1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001025b9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001020632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001020aba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001020eb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001020a1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010257ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001025823b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001025650f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102582c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001025563b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001025a81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001025a8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001025b97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x000000010295da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102955b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001023ff2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102447a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102487030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010243d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010291ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010291e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001029010f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010291ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001028f23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001029441f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102944354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001029557a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103525a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010351db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102fc72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010300fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010304f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000103005434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001034e2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001034e63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001034c90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001034e6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001034ba3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010350c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010350c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010351d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000101005a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100ffdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100aa72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100aefa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100b2f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100ae5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100fc2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100fc63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100fa90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100fc6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100f9a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100fec1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100fec354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100ffd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001045f1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001045e9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001040932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001040dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010411b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001040d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001045aec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001045b23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001045950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001045b2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001045863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001045d81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001045d8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001045e97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001028d9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001028d1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010237b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001023c3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102403030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001023b9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102896c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010289a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010287d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010289ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010286e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001028c01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001028c0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001028d17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001013a5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010139db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100e472a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100e8fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100ecf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100e85434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000101362c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001013663b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001013490f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000101366c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010133a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010138c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010138c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010139d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_site_filter_works
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_date_presets_dropdown
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[today]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[yesterday]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-week]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-week]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[this-month]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_each_date_preset_applies[GSR-RDT-005[last-month]]
+FAILED tests/admin_portal/general_sales_report/test_redemption_details.py::test_apply_filters_updates_metrics
+======= 9 failed, 52 passed, 4 xfailed, 18 xpassed in 1729.02s (0:28:49) =======

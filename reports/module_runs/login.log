@@ -1,0 +1,88 @@
+2026-07-23 04:37:59,936 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 45 items
+
+tests/admin_portal/login/test_login.py::test_admin_login PASSED          [  2%]
+tests/admin_portal/login/test_login_negative.py::test_login_invalid_email_valid_password_does_not_authenticate PASSED [  4%]
+tests/admin_portal/login/test_login_negative.py::test_login_valid_email_invalid_password_does_not_authenticate PASSED [  6%]
+tests/admin_portal/login/test_login_negative.py::test_login_invalid_email_invalid_password_does_not_authenticate PASSED [  8%]
+tests/admin_portal/login/test_login_password.py::test_password_is_masked_by_default PASSED [ 11%]
+tests/admin_portal/login/test_login_password.py::test_password_visibility_toggle_shows_password XFAIL [ 13%]
+tests/admin_portal/login/test_login_password.py::test_password_visibility_toggle_hides_password_again XPASS [ 15%]
+tests/admin_portal/login/test_login_password.py::test_very_long_password_does_not_break_login_ui PASSED [ 17%]
+tests/admin_portal/login/test_login_positive.py::test_login_with_valid_credentials PASSED [ 20%]
+tests/admin_portal/login/test_login_positive.py::test_login_using_enter_key PASSED [ 22%]
+tests/admin_portal/login/test_login_positive.py::test_session_persists_after_refresh PASSED [ 24%]
+tests/admin_portal/login/test_login_positive.py::test_authenticated_user_cannot_access_login_page PASSED [ 26%]
+tests/admin_portal/login/test_login_positive.py::test_login_with_email_leading_space XFAIL [ 28%]
+tests/admin_portal/login/test_login_positive.py::test_login_with_email_trailing_space PASSED [ 31%]
+tests/admin_portal/login/test_login_positive.py::test_login_with_email_case_variation PASSED [ 33%]
+tests/admin_portal/login/test_login_positive.py::test_session_remains_active_in_new_tab PASSED [ 35%]
+tests/admin_portal/login/test_login_security_smoke.py::test_login_security_payloads_do_not_authenticate[' OR 1=1 ---password] PASSED [ 37%]
+tests/admin_portal/login/test_login_security_smoke.py::test_login_security_payloads_do_not_authenticate[admin@example.com-' OR 1=1 --] PASSED [ 40%]
+tests/admin_portal/login/test_login_security_smoke.py::test_login_security_payloads_do_not_authenticate[<script>alert(1)</script>-password] PASSED [ 42%]
+tests/admin_portal/login/test_login_security_smoke.py::test_login_security_payloads_do_not_authenticate[admin@example.com-<script>alert(1)</script>] PASSED [ 44%]
+tests/admin_portal/login/test_login_session.py::test_direct_protected_url_without_login_redirects_to_login PASSED [ 46%]
+tests/admin_portal/login/test_login_session.py::test_auth_token_is_stored_after_login 2026-07-23 04:41:03,914 ERROR nxtwash: Test FAILED: tests/admin_portal/login/test_login_session.py::test_auth_token_is_stored_after_login (url: https://staging.nxtwash.com/)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/login/test_login_session.py::test_auth_token_is_stored_after_login (url: https://staging.nxtwash.com/)
+2026-07-23 04:41:04,551 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 48%]
+tests/admin_portal/login/test_login_ui.py::test_login_page_loads PASSED  [ 51%]
+tests/admin_portal/login/test_login_ui.py::test_login_page_url_is_correct PASSED [ 53%]
+tests/admin_portal/login/test_login_ui.py::test_login_logo_is_available SKIPPED [ 55%]
+tests/admin_portal/login/test_login_ui.py::test_login_fields_and_button_are_visible PASSED [ 57%]
+tests/admin_portal/login/test_login_ui.py::test_password_visibility_icon_is_displayed PASSED [ 60%]
+tests/admin_portal/login/test_login_ui.py::test_login_field_labels_are_displayed PASSED [ 62%]
+tests/admin_portal/login/test_login_ui.py::test_login_footer_is_displayed PASSED [ 64%]
+tests/admin_portal/login/test_login_ui.py::test_login_browser_title PASSED [ 66%]
+tests/admin_portal/login/test_login_ui.py::test_login_layout_renders_after_refresh SKIPPED [ 68%]
+tests/admin_portal/login/test_login_ui.py::test_login_tab_order_email_password_login_button PASSED [ 71%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_both_fields_empty PASSED [ 73%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_email_empty PASSED [ 75%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_password_empty PASSED [ 77%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_email_spaces_only PASSED [ 80%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_password_spaces_only PASSED [ 82%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc] PASSED [ 84%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc@] PASSED [ 86%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[@gmail.com] PASSED [ 88%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc@gmail] PASSED [ 91%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc.gmail.com] PASSED [ 93%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc@@gmail.com] PASSED [ 95%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_invalid_email_formats[abc @gmail.com] PASSED [ 97%]
+tests/admin_portal/login/test_login_validation.py::test_login_validation_maximum_email_length_does_not_break_ui PASSED [100%]
+
+=================================== FAILURES ===================================
+E   assert False
+     +  where False = authenticated_session_is_stored()
+     +    where authenticated_session_is_stored = <pages.admin_portal.login_page.AdminLoginPage object at 0x1037fe010>.authenticated_session_is_stored
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/login/test_login_session.py:28: assert False
+=========================== short test summary info ============================
+FAILED tests/admin_portal/login/test_login_session.py::test_auth_token_is_stored_after_login
+== 1 failed, 39 passed, 2 skipped, 2 xfailed, 1 xpassed in 264.61s (0:04:24) ===

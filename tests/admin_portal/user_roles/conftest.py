@@ -6,20 +6,20 @@ from pages.admin_portal.user_roles_page import AdminUserRoleFormPage, AdminUserR
 from tests.admin_portal.admin_session import open_admin_path
 
 
-# ── Test data constants ───────────────────────────────────────────────────────
+# ── Test data constants  (values managed in test_data/user_roles.json) ────────
 
-ROLE_NAME = "VK UR01"
-ROLE_PRIORITY = "5"
-UPDATED_ROLE_NAME = "VK UR01 edited"
-UPDATED_ROLE_PRIORITY = "8"
+from tests.admin_portal._data import load as _load
 
-# A default role expected to exist in every environment after initial seeding.
-DEFAULT_ROLE_NAME = "Admin Portal User"
+_D = _load("user_roles")
 
-# Site used for location-assignment tests — must exist in staging.
-ASSIGNMENT_SITE = "VK AL11"
+ROLE_NAME             = _D["template"]["role_name"]
+ROLE_PRIORITY         = _D["template"]["priority"]
+UPDATED_ROLE_NAME     = _D["updated"]["role_name"]
+UPDATED_ROLE_PRIORITY = _D["updated"]["priority"]
+DEFAULT_ROLE_NAME     = _D["reference"]["default_role"]
+ASSIGNMENT_SITE       = _D["reference"]["assignment_site"]
 
-NONEXISTENT_ROLE = "role-does-not-exist-automation"
+NONEXISTENT_ROLE = _D["search"]["nonexistent"]
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",

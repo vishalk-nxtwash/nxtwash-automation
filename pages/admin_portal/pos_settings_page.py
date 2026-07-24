@@ -566,7 +566,12 @@ class AdminPOSFormPage(BasePage):
         try:
             WebDriverWait(self.driver, 20).until(lambda d: d.current_url != url_before)
         except Exception:
-            pass
+            error = self.get_visible_error()
+            if error:
+                import logging
+                logging.getLogger("nxtwash").warning(
+                    "POS save did not navigate away. Page message: %s", error
+                )
         self.driver.switch_to.default_content()
 
     def click_cancel(self):

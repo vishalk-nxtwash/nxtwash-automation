@@ -158,32 +158,33 @@ class CardDeclinesPage(BasePage):
 
         React Select may render options in a portal outside the control's
         subtree, so we query by role='option' rather than by CSS class.
-        JS mousedown dispatch is used (same as date preset) because
-        ActionChains.click() does not reliably fire React's onMouseDown
-        handler in headless Chrome.
+        React Select requires a real user-like interaction to open the menu.
+        JS mousedown dispatch does not trigger React's synthetic event handler;
+        ActionChains click (which generates real browser events) is used instead.
         """
-        self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
-        self.driver.execute_script("""
-            var ctrl = document.querySelector('.overview__site-select__control');
-            if (ctrl) {
-                ctrl.dispatchEvent(new MouseEvent('mousedown', {
-                    bubbles: true, cancelable: true, view: window
-                }));
-            }
-        """)
+        ctrl = self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+        inputs = ctrl.find_elements(By.XPATH, ".//input")
+        target = inputs[0] if inputs else ctrl
+        ActionChains(self.driver).move_to_element(target).click(target).perform()
         time.sleep(0.5)
         try:
             WebDriverWait(self.driver, 8).until(
                 lambda d: d.execute_script(
-                    "return document.querySelectorAll('[role=\"option\"]').length > 0;"
+                    "return document.querySelectorAll("
+                    "  '[role=\"option\"], [class*=\"__option\"], [class*=\"-option\"]'"
+                    ").length > 0;"
                 )
             )
         except TimeoutException:
             pass
         options = self.driver.execute_script("""
-            return Array.from(document.querySelectorAll('[role="option"]'))
-                .filter(function(el) { return el.textContent.trim(); })
-                .map(function(el) { return el.textContent.trim(); });
+            return Array.from(document.querySelectorAll(
+                '[role="option"], [class*="__option"], [class*="-option"]'
+            ))
+            .filter(function(el) {
+                return el.offsetParent !== null && el.textContent.trim();
+            })
+            .map(function(el) { return el.textContent.trim(); });
         """)
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
@@ -275,28 +276,19 @@ class CardDeclinesPage(BasePage):
     # ── Date filter ───────────────────────────────────────────────────────────
 
     def _open_date_preset_dropdown(self):
-        """Open the date preset dropdown by dispatching mousedown on the control.
+        """Open the date preset dropdown using an ActionChains click.
 
-        React Select's onMouseDown handler toggles the menu; a plain click()
-        via ActionChains is not always sufficient because the synthetic React
-        event may not fire in headless Chrome.  JS mousedown dispatch is
-        reliable across browser/driver versions.
+        The date preset uses a read-only React Select control (aria-readonly input).
+        JS mousedown dispatch does not trigger React's synthetic event handler.
+        Clicking the read-only input directly (not its ancestor) is the most
+        reliable trigger for React Select's onMouseDown handler.
         """
-        self.driver.execute_script("""
-            var input = document.querySelector(
-                'input[aria-readonly="true"][role="combobox"]'
-            );
-            if (!input) return;
-            var el = input.parentElement;
-            while (el && !el.className.includes('-control')) {
-                el = el.parentElement;
-            }
-            if (el) {
-                el.dispatchEvent(new MouseEvent('mousedown', {
-                    bubbles: true, cancelable: true, view: window
-                }));
-            }
-        """)
+        date_input = self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//input[@inputmode='none' and @role='combobox']")
+            )
+        )
+        ActionChains(self.driver).move_to_element(date_input).click(date_input).perform()
         time.sleep(0.5)
 
     def select_date_preset(self, preset):

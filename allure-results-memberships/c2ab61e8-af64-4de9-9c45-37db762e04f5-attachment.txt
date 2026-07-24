@@ -1,2 +1,0 @@
-2026-06-25 12:04:20,153 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership with payload: ' OR 1=1 --
-2026-06-25 12:04:20,456 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership with payload: <script>alert(1)</script>

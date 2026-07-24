@@ -1,0 +1,1508 @@
+2026-07-23 15:46:24,551 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 86 items
+
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens 2026-07-23 15:47:46,610 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 15:47:47,297 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  2%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_opens_with_no_site_default PASSED [  4%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal 2026-07-23 15:49:33,000 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 15:49:33,667 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  5%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack ERROR [  6%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible ERROR [  8%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar ERROR [  9%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_level_changes_do_not_reopen_modal PASSED [ 10%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state SKIPPED [ 11%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_commission_transactions_subtitle_spelling XFAIL [ 12%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_sites_dropdown_lists_active_sites PASSED [ 13%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data PASSED [ 15%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation 2026-07-23 15:55:48,305 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6175748096) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 15:55:49,004 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 16%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_shows_chips_with_overflow PASSED [ 17%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown 2026-07-23 15:57:16,022 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 15:57:16,641 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$0.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$0.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$0.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$0.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$0.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$0.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 18%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deselecting_site_removes_chip SKIPPED [ 19%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_chip_x_clear_returns_empty_state PASSED [ 20%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable 2026-07-23 15:59:11,963 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 15:59:12,619 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 22%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh ERROR [ 23%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent 2026-07-23 16:02:07,425 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 16:02:08,075 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 24%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_date_preset_dropdown_lists_all_options XFAIL [ 25%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_selecting_preset_fills_date_range PASSED [ 26%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal ERROR [ 27%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002] PASSED [ 29%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-003] PASSED [ 30%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] 2026-07-23 16:06:45,090 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 16:06:45,801 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 31%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-005] PASSED [ 32%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006] PASSED [ 33%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-007] PASSED [ 34%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click PASSED [ 36%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates 2026-07-23 16:07:42,749 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-23 16:07:43,362 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$0.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$0.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$0.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$0.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$0.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$0.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 37%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report ERROR [ 38%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_uncheck_single_day_reverts_to_range PASSED [ 39%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_custom_range_renders PASSED [ 40%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_range_spanning_month_boundary_renders PASSED [ 41%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-01] PASSED [ 43%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02] ERROR [ 44%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-03] PASSED [ 45%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-04] PASSED [ 46%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employees_summary_card_content PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data ERROR [ 48%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change ERROR [ 50%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_date_change PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_count_reconciliation SKIPPED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_summary_matches_table_count XPASS [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_total_hours_format PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_currency_and_percentage_format PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01] PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02] ERROR [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-03] PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04] ERROR [ 60%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05] PASSED [ 61%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-06] PASSED [ 62%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-07] PASSED [ 63%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08] PASSED [ 65%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state ERROR [ 66%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates XFAIL [ 67%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_filters_table PASSED [ 68%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_no_match PASSED [ 69%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all] ERROR [ 70%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-active] PASSED [ 72%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-inactive] PASSED [ 73%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_four_commission_cards_visible PASSED [ 74%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data ERROR [ 75%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change ERROR [ 76%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format PASSED [ 77%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_reconciliation_chain PASSED [ 79%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01] ERROR [ 80%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-02] PASSED [ 81%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-03] PASSED [ 82%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-04] PASSED [ 83%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05] ERROR [ 84%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-06] PASSED [ 86%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-07] PASSED [ 87%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-08] PASSED [ 88%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows ERROR [ 89%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state PASSED [ 90%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_search_filters_table PASSED [ 91%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values ERROR [ 93%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-EMP-012] SKIPPED [ 94%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011] SKIPPED [ 95%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 96%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 97%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar XPASS [ 98%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal XPASS [100%]
+
+==================================== ERRORS ====================================
+_____ ERROR at setup of TestLaborShiftsNav.test_page_renders_widget_stack ______
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001054e5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001054ddb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104f872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104fcfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010500f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104fc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001054a2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001054a63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001054890f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001054a6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010547a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001054cc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001054cc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001054dd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001054e5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001054ddb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104f872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104fcfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010500f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104fc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001054a2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001054a63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001054890f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001054a6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010547a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001054cc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001054cc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001054dd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsNav.test_employee_summary_and_commission_visible _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104cf1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104ce9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001047932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001047dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010481b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001047d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104caec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104cb23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104c950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104cb2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104c863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104cd81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104cd8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104ce97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104cf1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104ce9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001047932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001047dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010481b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001047d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104caec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104cb23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104c950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104cb2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104c863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104cd81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104cd8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104ce97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsNav.test_filter_values_reflected_in_page_bar _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x000000010466da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104665b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010410f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104115464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000104117678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000104117730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000104158724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x00000001041587b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x0000000104151b18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+    9   chromedriver                        0x000000010414e934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x0000000104197030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x000000010414d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x000000010462ac40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x000000010462e3b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x00000001046110f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x000000010462ec4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x00000001046023b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x00000001046541f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x0000000104654354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x00000001046657a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of TestLaborShiftsSiteFilter.test_page_level_site_refresh ___
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102749a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102741b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001021eb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102233a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102273030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102229434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102706c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010270a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001026ed0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010270ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001026de3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001027301f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102730354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001027417a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102749a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102741b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001021eb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102233a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102273030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102229434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102706c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010270a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001026ed0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010270ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001026de3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001027301f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102730354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001027417a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsDateFilter.test_page_level_preset_matches_modal _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100af1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100ae9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001005932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001005dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010061b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001005d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100aaec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100ab23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100a950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100ab2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100a863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100ad81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100ad8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100ae97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100af1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100ae9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001005932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001005dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010061b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001005d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100aaec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100ab23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100a950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100ab2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100a863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100ad81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100ad8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100ae97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsDateFilter.test_single_day_mode_renders_report _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000105025a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010501db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104ac72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104acd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000104acf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000104acf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000104b10724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x0000000104b107b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x0000000104b09b18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+    9   chromedriver                        0x0000000104b06934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x0000000104b4f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x0000000104b05434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x0000000104fe2c40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x0000000104fe63b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x0000000104fc90f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x0000000104fe6c4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x0000000104fba3b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x000000010500c1f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x000000010500c354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x000000010501d7a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of TestLaborShiftsKPI.test_kpi_card_visible[LAB-KPI-001-02] __
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104eb5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104eadb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010499fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001049df030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104995434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104e72c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104e763b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104e590f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104e76c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104e4a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104e9c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104e9c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104ead7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104eb5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104eadb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010499fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001049df030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104995434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104e72c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104e763b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104e590f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104e76c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104e4a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104e9c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104e9c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104ead7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of TestLaborShiftsKPI.test_all_metrics_zero_with_no_data ____
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100781a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100779b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001002232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010026ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001002ab030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100261434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010073ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001007423b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001007250f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100742c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001007163b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001007681f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100768354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001007797a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100781a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100779b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001002232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010026ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001002ab030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100261434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010073ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001007423b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001007250f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100742c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001007163b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001007681f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100768354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001007797a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of TestLaborShiftsKPI.test_widgets_refresh_on_site_change ___
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001053f9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001053f1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104e9b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104ee3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104f23030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104ed9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001053b6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001053ba3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010539d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001053bac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010538e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001053e01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001053e0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001053f17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001053f9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001053f1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104e9b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104ee3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104f23030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104ed9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001053b6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001053ba3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010539d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001053bac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010538e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001053e01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001053e0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001053f17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-02] _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000101415a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010140db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100eb72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100effa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100f3f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100ef5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001013d2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001013d63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001013b90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001013d6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001013aa3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001013fc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001013fc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010140d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000101415a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010140db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100eb72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100effa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100f3f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100ef5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001013d2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001013d63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001013b90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001013d6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001013aa3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001013fc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001013fc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010140d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-04] _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104e41a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104e39b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048e32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010492ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010496b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104921434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104dfec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104e023b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104de50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104e02c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104dd63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104e281f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104e28354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104e397a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104e41a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104e39b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048e32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010492ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010496b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104921434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104dfec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104e023b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104de50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104e02c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104dd63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104e281f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104e28354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104e397a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_empty_state _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001027cda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001027c5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010226f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001022b7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001022f7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001022ad434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010278ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010278e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001027710f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010278ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001027623b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001027b41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001027b4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001027c57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001027cda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001027c5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010226f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001022b7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001022f7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001022ad434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010278ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010278e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001027710f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010278ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001027623b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001027b41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001027b4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001027c57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_status_filter[LAB-EMP-006-all] _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102e29a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102e21b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001028cb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102913a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102953030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102909434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102de6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102dea3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102dcd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102deac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102dbe3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102e101f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102e10354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102e217a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102e29a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102e21b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001028cb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102913a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102953030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102909434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102de6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102dea3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102dcd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102deac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102dbe3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102e101f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102e10354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102e217a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionCards.test_commission_cards_zero_with_no_data _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102875a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010286db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001023172a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010235fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010239f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102355434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102832c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001028363b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001028190f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102836c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010280a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010285c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010285c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010286d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102875a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010286db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001023172a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010235fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010239f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102355434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102832c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001028363b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001028190f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102836c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010280a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010285c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010285c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010286d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionCards.test_commission_cards_update_on_filter_change _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102dc9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102dc1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010286b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001028b3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001028f3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001028a9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102d86c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102d8a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102d6d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102d8ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102d5e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102db01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102db0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102dc17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102dc9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102dc1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010286b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001028b3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001028f3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001028a9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102d86c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102d8a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102d6d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102d8ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102d5e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102db01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102db0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102dc17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionTransactions.test_ctx_table_column_present[LAB-CTX-001-01] _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000101505a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001014fdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100fa72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100fefa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010102f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100fe5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001014c2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001014c63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001014a90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001014c6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010149a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001014ec1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001014ec354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001014fd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x0000000101505a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001014fdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100fa72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100fefa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010102f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100fe5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001014c2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001014c63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001014a90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001014c6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010149a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001014ec1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001014ec354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001014fd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionTransactions.test_ctx_table_column_present[LAB-CTX-001-05] _
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x000000010530da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000105305b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104daf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104df7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104e37030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104ded434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001052cac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001052ce3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001052b10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001052cec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001052a23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001052f41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001052f4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001053057a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x000000010530da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000105305b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104daf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104df7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104e37030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104ded434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001052cac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001052ce3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001052b10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001052cec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001052a23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001052f41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001052f4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001053057a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionTransactions.test_ctx_table_has_rows _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100a25a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100a1db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001004c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001004cd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001004cf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001004cf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000100510724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x00000001005107b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x000000010050a280 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348232
+    9   chromedriver                        0x0000000100506934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x000000010054f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x0000000100505434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x00000001009e2c40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x00000001009e63b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x00000001009c90f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x00000001009e6c4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x00000001009ba3b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x0000000100a0c1f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x0000000100a0c354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x0000000100a1d7a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestLaborShiftsCommissionTransactions.test_ctx_type_column_has_values _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001034c9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001034c1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102f6b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102f71464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000102f73678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000102f73730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000102fb4724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x0000000102fb47b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x0000000102fae280 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348232
+    9   chromedriver                        0x0000000102faa934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x0000000102ff3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x0000000102fa9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x0000000103486c40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x000000010348a3b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x000000010346d0f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x000000010348ac4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x000000010345e3b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x00000001034b01f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x00000001034b0354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x00000001034c17a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=================================== FAILURES ===================================
+E   AssertionError: Blocking filter modal (Apply filters button) not visible on page load
+    assert False
+     +  where False = modal_is_open()
+     +    where modal_is_open = <pages.admin_portal.labor_shifts_page.LaborShiftsPage object at 0x103c9a590>.modal_is_open
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/labor_shifts/test_labor_shifts.py:130: AssertionError: Blocking filter modal (Apply filters button) not visible on page load
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//input[not(@type='hidden') and (contains(@class,'site-select__input') or contains(@class,'nxt-multi-select__input'))]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001046eda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001046e5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010418f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001041d7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104217030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001041cd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001046aac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001046ae3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001046910f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001046aec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001046823b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001046d41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001046d4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001046e57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+During handling of the above exception, another exception occurred:
+E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+    Stacktrace:
+    0   chromedriver                        0x00000001046eda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001046e5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010418f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001041d7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104217030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001041cd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001046aac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001046ae3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001046910f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001046aec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001046823b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001046d41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001046d4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001046e57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(@class,'overview__site-select__control')] | //div[contains(@class,'nxt-multi-select__control')] | //div[contains(@class,'__control') and .//input[not(@aria-readonly='true') and not(@inputmode='none') and not(@type='hidden')]]"}
+E   Failed: Timeout (>120.0s) from pytest-timeout.
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:120: Failed: Timeout (>120.0s) from pytest-timeout.
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100d09a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100d01b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001007ab2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001007b1464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001007b3678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001007b3730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001007f4724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x00000001007f47b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x00000001007edb18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+    9   chromedriver                        0x00000001007ea934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x0000000100833030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x00000001007e9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x0000000100cc6c40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x0000000100cca3b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x0000000100cad0f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x0000000100ccac4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x0000000100c9e3b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x0000000100cf01f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x0000000100cf0354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x0000000100d017a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E   AssertionError: Fewer than 4 options returned — cannot verify scrollability. Got: []
+    assert 0 > 3
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/labor_shifts/test_labor_shifts.py:445: AssertionError: Fewer than 4 options returned — cannot verify scrollability. Got: []
+E   AssertionError: Site dropdown returned no options — cannot test exclusion
+    assert 0 > 0
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/labor_shifts/test_labor_shifts.py:485: AssertionError: Site dropdown returned no options — cannot test exclusion
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001006cda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001006c5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010016f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100175464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000100177678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000100177730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001001b8724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x00000001001b87b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x00000001001b2280 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348232
+    9   chromedriver                        0x00000001001ae934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x00000001001f7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x00000001001ad434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x000000010068ac40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x000000010068e3b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x00000001006710f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x000000010068ec4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x00000001006623b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x00000001006b41f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x00000001006b4354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x00000001006c57a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+=========================== short test summary info ============================
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004]
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values
+= 8 failed, 48 passed, 5 skipped, 3 xfailed, 3 xpassed, 19 errors in 2846.71s (0:47:26) =

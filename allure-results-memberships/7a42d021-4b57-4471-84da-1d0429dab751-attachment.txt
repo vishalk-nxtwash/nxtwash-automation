@@ -1,1 +1,0 @@
-[32mINFO    [0m tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:152 Validating cancel discards new membership: VK cancel 8f332c

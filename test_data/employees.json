@@ -1,0 +1,34 @@
+{
+  "template": {
+    "first_name":    "Test A",
+    "last_name":     "user 2",
+    "email":         "tau2@yopmail.com",
+    "phone":         "2321334454",
+    "employee_code": "0033",
+    "wage":          "15.50",
+    "hire_date":     "2025-05-01",
+    "address":       "Test user 4 address",
+    "zip":           "123445",
+    "state":         "Alaska",
+    "city":          "wales",
+    "locations":     ["VK test carwash 2", "VK AL03", "VK AL05"]
+  },
+  "updated": {
+    "first_name": "TestEdited a",
+    "last_name":  "user02Edited",
+    "email":      "tau4.edited@yopmail.com",
+    "phone":      "1234567790",
+    "wage":       "20.00"
+  },
+  "invalid": {
+    "email": "not-an-email"
+  },
+  "shift": {
+    "date":       "2025-07-01",
+    "start_time": "09:00",
+    "end_time":   "19:00"
+  },
+  "search": {
+    "nonexistent_last_name": "employee-does-not-exist-automation"
+  }
+}

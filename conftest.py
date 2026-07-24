@@ -17,8 +17,8 @@ except ImportError:  # pragma: no cover
 
 LOG = logging.getLogger("nxtwash")
 
-SCREENSHOTS_DIR = "screenshots"
-LOGS_DIR = "logs"
+SCREENSHOTS_DIR = "reports/screenshots"
+LOGS_DIR = "reports/logs"
 
 
 def pytest_addoption(parser):
@@ -241,6 +241,21 @@ def _capture_failure(item, driver):
     LOG.error("Test FAILED: %s (url: %s)", item.nodeid, url)
 
     _attach_screenshot(driver, "failure-%s" % _safe_name(item.nodeid))
+
+    # Capture visible text from the active frame — error messages in this app
+    # appear inside iframes, so page_source (outer shell) is nearly empty.
+    try:
+        from selenium.webdriver.common.by import By
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        if allure is not None:
+            allure.attach(
+                body_text,
+                name="visible_page_text",
+                attachment_type=allure.attachment_type.TEXT,
+            )
+        LOG.error("Visible page text at failure:\n%s", body_text[:2000])
+    except Exception as _err:  # noqa: BLE001
+        LOG.warning("Could not capture body text: %s", _err)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     base = "%s_%s" % (_safe_name(item.nodeid), timestamp)

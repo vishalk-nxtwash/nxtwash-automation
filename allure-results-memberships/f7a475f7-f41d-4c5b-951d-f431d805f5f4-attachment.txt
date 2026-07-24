@@ -1,1 +1,0 @@
-[32mINFO    [0m tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:62 Validating required global price

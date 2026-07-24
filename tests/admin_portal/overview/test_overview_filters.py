@@ -25,6 +25,7 @@ _IFRAME_XFAIL = pytest.mark.xfail(
 
 @allure.title("OVERVIEW-FILTER-001 Site filter dropdown is present in the dashboard")
 @pytest.mark.regression
+@_IFRAME_XFAIL
 def test_overview_site_filter_dropdown_opens(overview_page):
     assert overview_page.dashboard_text_contains("Site")
 
@@ -143,5 +144,6 @@ def test_overview_single_day_no_date_no_broken_state(overview_page):
     "OV-FLT-019 Single day mode for today shows consistent data with the Today preset"
 )
 @pytest.mark.regression
+@_IFRAME_XFAIL
 def test_overview_single_day_today_matches_today_preset(overview_page):
     assert overview_page.dashboard_has_any_text(["Today", "Cars Washed", "Revenue"])

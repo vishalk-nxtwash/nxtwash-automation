@@ -1,1 +1,0 @@
-2026-06-24 23:35:25,232 INFO tests.admin_portal.memberships.test_memberships_positive: Creating inactive membership: VK inactive 4fe25d

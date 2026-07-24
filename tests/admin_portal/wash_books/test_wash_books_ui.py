@@ -41,6 +41,9 @@ def test_wash_books_page_loads_with_primary_controls(browser):
 def test_wash_books_grid_columns_are_visible(browser):
 
     page = open_wash_books_page(browser)
+    # Column header text renders after the grid container; wait until it
+    # appears in the DOM before reading body_text.
+    page.wait.until(lambda d: "Wash book name" in page.get_body_text())
     body_text = page.get_body_text()
 
     assert "ID" in body_text

@@ -1,0 +1,224 @@
+2026-07-23 04:42:38,018 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 76 items
+
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_cars_washed_total_matches_report XFAIL [  1%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_revenue_daily_matches_report PASSED [  2%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_filters_persist_navigating_to_report PASSED [  3%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_modal_and_inline_filters_return_matching_totals PASSED [  5%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_both_report_pages_accept_same_filter_inputs XFAIL [  6%]
+tests/admin_portal/overview/test_overview_exports.py::test_overview_exports_are_available_and_filter_aware PASSED [  7%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens 2026-07-23 04:43:41,818 ERROR nxtwash: Test FAILED: tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens (url: https://staging.nxtwash.com/)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens (url: https://staging.nxtwash.com/)
+2026-07-23 04:43:42,402 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  9%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_updates_dashboard XFAIL [ 10%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_selected_site_shows_as_chip XFAIL [ 11%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_clearing_sites_reverts_to_aggregated XFAIL [ 13%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_preset_filters_are_available XFAIL [ 14%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_last_month_preset_updates_dashboard XFAIL [ 15%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_range_filters_are_available XFAIL [ 17%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_custom_date_range_updates_dashboard XFAIL [ 18%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_checkbox_is_available XFAIL [ 19%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_documents_behaviour PASSED [ 21%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_uncheck_single_day_reverts_to_range_mode XFAIL [ 22%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_end_date_before_start_documents_behaviour PASSED [ 23%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_no_broken_state PASSED [ 25%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_today_matches_today_preset PASSED [ 26%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_extreme_value_bug PASSED [ 27%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_no_revenue_shows_placeholder PASSED [ 28%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_usage_breakdown_percentages_sum_to_100 XFAIL [ 30%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_browser_back_returns_to_overview PASSED [ 31%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_opens_in_new_tab PASSED [ 32%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_report_navigation_is_available XFAIL [ 34%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_no_data_states_are_handled PASSED [ 35%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_network_failure_is_handled XFAIL [ 36%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_rapid_filter_switching_does_not_crash PASSED [ 38%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_empty_state_with_no_shift_data PASSED [ 39%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_future_date_range_shows_empty_state PASSED [ 40%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_zero_data_visually_distinct_from_loading PASSED [ 42%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_no_records_label_when_no_assignments PASSED [ 43%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_loads XFAIL [ 44%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_summary_cards_update XFAIL [ 46%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_redemption_cards PASSED [ 47%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_hourly_chart_legend PASSED [ 48%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_usage_breakdown_tabs PASSED [ 50%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_percentages_sum_to_100 XFAIL [ 51%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_rounding_rule XPASS [ 52%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_loads PASSED [ 53%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_summary_cards_update PASSED [ 55%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_donut_updates_on_click PASSED [ 56%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_membership_tab PASSED [ 57%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_shell_redirects_and_loads PASSED [ 59%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_support_button_is_visible PASSED [ 60%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_filter_controls_visible XFAIL [ 61%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_export_buttons_visible PASSED [ 63%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_widgets_visible XFAIL [ 64%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_all_dashboard_cards_render XFAIL [ 65%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_totals_update_with_filters XFAIL [ 67%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_breakdown_legend PASSED [ 68%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders 2026-07-23 04:53:53,390 ERROR nxtwash: Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders (url: https://staging.nxtwash.com/)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders (url: https://staging.nxtwash.com/)
+2026-07-23 04:53:53,994 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 69%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_full_report_link PASSED [ 71%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters 2026-07-23 04:54:13,876 ERROR nxtwash: Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters (url: https://staging.nxtwash.com/)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters (url: https://staging.nxtwash.com/)
+2026-07-23 04:54:14,536 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 72%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_donut_chart_renders PASSED [ 73%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle PASSED [ 75%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_full_report_link PASSED [ 76%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle_effect_documented PASSED [ 77%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_tiles_are_clickable PASSED [ 78%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_info_tooltip_shows_formula XFAIL [ 80%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display 2026-07-23 04:55:27,227 ERROR nxtwash: Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display (url: https://staging.nxtwash.com/)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display (url: https://staging.nxtwash.com/)
+2026-07-23 04:55:27,846 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 81%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_breakdown_bar_renders XFAIL [ 82%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_active_count PASSED [ 84%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_transaction_counts_update PASSED [ 85%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_recurring_prepaid_breakdown PASSED [ 86%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_canceled_bars_display XFAIL [ 88%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_info_tooltip_visible PASSED [ 89%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_table_columns PASSED [ 90%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_shift_status PASSED [ 92%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_full_report_link PASSED [ 93%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_gift_cards_totals PASSED [ 94%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_wash_books_totals PASSED [ 96%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_percent_calculates PASSED [ 97%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_per_car_and_per_hour PASSED [ 98%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_full_report_link PASSED [100%]
+
+=================================== FAILURES ===================================
+E   AssertionError: assert False
+     +  where False = dashboard_text_contains('Site')
+     +    where dashboard_text_contains = <pages.admin_portal.overview_page.AdminOverviewPage object at 0x100839e10>.dashboard_text_contains
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/overview/test_overview_filters.py:29: AssertionError: assert False
+E   AssertionError: assert False
+     +  where False = dashboard_has_any_text(['Hourly Distribution', 'Hourly'])
+     +    where dashboard_has_any_text = <pages.admin_portal.overview_page.AdminOverviewPage object at 0x102f962d0>.dashboard_has_any_text
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/overview/test_overview_widgets.py:49: AssertionError: assert False
+E   AssertionError: assert False
+     +  where False = dashboard_text_contains('Revenue')
+     +    where dashboard_text_contains = <pages.admin_portal.overview_page.AdminOverviewPage object at 0x102fba790>.dashboard_text_contains
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/overview/test_overview_widgets.py:66: AssertionError: assert False
+E   AssertionError: assert False
+     +  where False = dashboard_has_any_text(['Average Wash Ticket', 'Total'])
+     +    where dashboard_has_any_text = <pages.admin_portal.overview_page.AdminOverviewPage object at 0x10311b3d0>.dashboard_has_any_text
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/overview/test_overview_widgets.py:121: AssertionError: assert False
+=========================== short test summary info ============================
+FAILED tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens
+FAILED tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders
+FAILED tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters
+FAILED tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display
+======= 4 failed, 47 passed, 24 xfailed, 1 xpassed in 897.64s (0:14:57) ========

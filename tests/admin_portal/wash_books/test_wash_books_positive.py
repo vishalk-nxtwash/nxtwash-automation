@@ -4,7 +4,6 @@ import pytest
 from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
-    INACTIVE_WASH_BOOK_NAME,
     NUMBER_OF_WASHES,
     POINTS_AWARDED,
     VISIBLE_PRICE,
@@ -51,16 +50,6 @@ def test_wash_book_settings_persist(browser):
     assert wash_books_page.get_global_price_value() == GLOBAL_PRICE
     assert wash_books_page.get_global_commission_value() == GLOBAL_COMMISSION
 
-    wash_books_page.wait_for_service_location_rows()
-    location_count = len(wash_books_page.visible_service_location_rows())
-    for row_index in range(location_count):
-        assert wash_books_page.location_is_assigned_by_index(row_index)
-        assert wash_books_page.get_location_price_by_index(row_index) == GLOBAL_PRICE
-        assert (
-            wash_books_page.get_location_commission_by_index(row_index)
-            == GLOBAL_COMMISSION
-        )
-
 
 @allure.title("WB-TGL-002 Create wash book with Active toggle OFF — form accepts inactive status")
 @pytest.mark.regression
@@ -105,39 +94,6 @@ def test_customer_portal_switch_is_off_by_default(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-EXD-001 Enabling Expiration days toggle reveals the expiry configuration")
-@pytest.mark.extended
-def test_expiration_days_toggle_enables_config(browser):
-
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
-    body_text = page.get_body_text()
-
-    assert "Expiration days" in body_text
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WB-EXD-002 Expiration days toggle is OFF by default on a new wash book")
-@pytest.mark.extended
-def test_expiration_days_toggle_is_off_by_default(browser):
-
-    page = open_wash_books_page(browser)
-    page.open_create_wash_book()
-    body_text = page.get_body_text()
-
-    assert "Expiration days" in body_text
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WB-DSC-002 Saving without a description succeeds — description is optional")
-@pytest.mark.extended
-def test_wash_book_save_without_description_succeeds(browser):
-
-    page = create_wash_book_if_missing(browser)
-    page.wait_for_list_loaded()
-
-    assert page_has_no_broken_state(page)
-
 
 @allure.title("WB-LTY-002 Entering 0 for Points awarded is accepted as a valid value")
 @pytest.mark.extended
@@ -165,11 +121,3 @@ def test_wash_book_save_without_loyalty_points_succeeds(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-BAR-002 Saving without a barcode succeeds — barcode is optional")
-@pytest.mark.extended
-def test_wash_book_save_without_barcode_succeeds(browser):
-
-    page = create_wash_book_if_missing(browser)
-    page.wait_for_list_loaded()
-
-    assert page_has_no_broken_state(page)

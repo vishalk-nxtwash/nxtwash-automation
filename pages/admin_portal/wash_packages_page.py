@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
@@ -14,7 +15,8 @@ class WashPackagesPage(BasePage):
     )
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/washPackages?')]"
+        "//iframe[contains(@src,'/services/washPackages') "
+        "and not(contains(@src,'/services/washPackages/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -26,7 +28,8 @@ class WashPackagesPage(BasePage):
         "and not(contains(@src,'/services/washPackages/new'))]"
     )
 
-    PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Wash packages']")
+    PAGE_TITLE = (By.XPATH,
+        "//*[normalize-space()='Wash packages' or normalize-space()='Wash Packages']")
     SEARCH_INPUT = (By.NAME, "serviceName")
     FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
     DOWNLOAD_BUTTON = (
@@ -35,7 +38,7 @@ class WashPackagesPage(BasePage):
     )
     ADD_PACKAGE_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='+ Add new wash package']"
+        "//button[contains(normalize-space(),'Add new wash package')]"
     )
     EDIT_ACTIONS = (By.XPATH, "//*[normalize-space()='Edit']")
     GRID_ROWS = (
@@ -101,8 +104,9 @@ class WashPackagesPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Packages list is visible."""
+        long_wait = WebDriverWait(self.driver, 30)
         self.driver.switch_to.default_content()
-        self.wait.until(
+        long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -553,22 +557,47 @@ class WashPackagesPage(BasePage):
     def get_site_row(self, site_name):
         """Return the site assignment grid row for a site.
 
-        Waits for the site-assignment grid to load at least one row (the grid
-        populates asynchronously), then locates the specific site row.
+        InovuaReactDataGrid rows have is_displayed()=False even when rendered
+        (the grid uses CSS transforms/clipping for its virtual scroller).
+        Uses EC.presence_of_element_located (DOM presence) instead of visibility.
+        Scrolls the page to ensure the grid is in the browser viewport before
+        querying, then dispatches WheelEvents if the row is not immediately found.
         """
+        import time as _time
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
         self.wait.until(EC.presence_of_element_located(any_row_locator))
-        return self.wait.until(
-            EC.visibility_of_element_located(
-                (
-                    By.XPATH,
-                    "//*[normalize-space()='%s']"
-                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
-                    % site_name,
-                )
-            )
+
+        row_xpath = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % site_name,
         )
+
+        # InovuaReactDataGrid: is_displayed() is unreliable. Check DOM presence.
+        els = self.driver.find_elements(*row_xpath)
+        if els:
+            return els[0]
+
+        # Row not in DOM yet — try scrolling to load deferred rows.
+        # Uses WheelEvent (300ms gap so React processes each event before next).
+        _scroll_js = """
+var grid = document.querySelector('[class*="InovuaReactDataGrid__virtual-list"]');
+if (grid) {
+    grid.dispatchEvent(
+        new WheelEvent('wheel', {deltaY: 2000, bubbles: true, cancelable: true})
+    );
+}
+"""
+        for _i in range(30):
+            self.driver.execute_script(_scroll_js)
+            _time.sleep(0.3)
+            els = self.driver.find_elements(*row_xpath)
+            if els:
+                return els[0]
+
+        return self.wait.until(EC.presence_of_element_located(row_xpath))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a package to a site and set site-level price/commission."""
@@ -807,4 +836,8 @@ class WashPackagesPage(BasePage):
         try:
             self.wait_for_list_loaded()
         except TimeoutException:
-            return
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Wash package save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None

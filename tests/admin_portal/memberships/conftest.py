@@ -2,25 +2,25 @@ from pages.admin_portal.memberships_page import MembershipsPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
+_D = _load("memberships")
 
-EXISTING_MEMBERSHIP = "VK MA2"
-MISSING_MEMBERSHIP = "membership-does-not-exist-automation"
-MEMBERSHIP_NAME = "VK MA2"
-RECURRING_MEMBERSHIP_NAME = "VK MR1"
-UPDATED_MEMBERSHIP_NAME = "VK MA2 updated"
-GLOBAL_PRICE = "15"
-GLOBAL_COMMISSION = "2"
-FIRST_LOCATION_PRICE = "20"
-FIRST_LOCATION_COMMISSION = "3"
-PREPAID_MONTHS = "1"
-REDEEM_AS_SERVICE = "VK detail wash"
-VISIBLE_PRICE = "$15.00"
-
-# Known filter data (a membership assigned to a specific site on staging).
-FILTER_SITE_QUERY = "carwash"
-FILTER_SITE_LABEL = "VK Test carwash 2"
-SITE_MEMBERSHIP = "VK MA1"
+EXISTING_MEMBERSHIP        = _D["reference"]["existing_membership"]
+MISSING_MEMBERSHIP         = _D["search"]["nonexistent"]
+MEMBERSHIP_NAME            = _D["reference"]["existing_membership"]
+RECURRING_MEMBERSHIP_NAME  = _D["reference"]["recurring_membership"]
+UPDATED_MEMBERSHIP_NAME    = _D["updated"]["membership_name"]
+GLOBAL_PRICE               = _D["template"]["global_price"]
+GLOBAL_COMMISSION          = _D["template"]["global_commission"]
+FIRST_LOCATION_PRICE       = _D["template"]["first_location_price"]
+FIRST_LOCATION_COMMISSION  = _D["template"]["first_location_commission"]
+PREPAID_MONTHS             = _D["template"]["prepaid_months"]
+REDEEM_AS_SERVICE          = _D["reference"]["redeem_as_service"]
+VISIBLE_PRICE              = _D["template"]["visible_price"]
+FILTER_SITE_QUERY          = _D["reference"]["filter_site_query"]
+FILTER_SITE_LABEL          = _D["reference"]["filter_site_label"]
+SITE_MEMBERSHIP            = _D["reference"]["site_membership"]
 
 
 BROKEN_STATE_TEXTS = [

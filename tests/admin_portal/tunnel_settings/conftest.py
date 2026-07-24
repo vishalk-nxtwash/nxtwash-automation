@@ -9,17 +9,21 @@ from tests.admin_portal.admin_session import open_admin_path
 # Constants
 # ---------------------------------------------------------------------------
 
-TUNNEL_NAME = "VK AT02"
-TUNNEL_CRT_NAME = "VK AT02 auto"
-TUNNEL_SITE = "VK test carwash 2"
-TUNNEL_CONTROLLER_IP = "1.1.1.1:502"
-TUNNEL_MIDDLEWARE_IP = "http://localhost:5000"
-TUNNEL_CONTROLLER_ID = "RTC"
-TUNNEL_RETRACT_SERVICE = "Tire wash"
-TUNNEL_BEHAVIOR_DEFAULT = "Sequence stacking"   # default shown on /new form
-TUNNEL_BEHAVIOR = "Retrieve wash via plate"      # selected for the fixture tunnel
+from tests.admin_portal._data import load as _load
 
-NONEXISTENT_TUNNEL_NAME = "tunnel-does-not-exist-automation"
+_D = _load("tunnel_settings")
+
+TUNNEL_NAME             = _D["template"]["tunnel_name"]
+TUNNEL_CRT_NAME         = _D["create"]["tunnel_name"]
+TUNNEL_SITE             = _D["reference"]["site"]
+TUNNEL_CONTROLLER_IP    = _D["template"]["controller_ip"]
+TUNNEL_MIDDLEWARE_IP    = _D["template"]["middleware_ip"]
+TUNNEL_CONTROLLER_ID    = _D["template"]["controller_id"]
+TUNNEL_RETRACT_SERVICE  = _D["reference"]["retract_service"]
+TUNNEL_BEHAVIOR_DEFAULT = _D["reference"]["behavior_default"]
+TUNNEL_BEHAVIOR         = _D["template"]["behavior"]
+
+NONEXISTENT_TUNNEL_NAME = _D["search"]["nonexistent"]
 
 # ---------------------------------------------------------------------------
 # Navigation helpers

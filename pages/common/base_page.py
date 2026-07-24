@@ -51,7 +51,8 @@ class BasePage:
             + '[class*="select__option"]'
         ));
         return candidates.find(function(el) {
-            return el.offsetParent !== null
+            var r = el.getBoundingClientRect();
+            return r.height > 0
                 && el.textContent.trim().toLowerCase() === text;
         }) || null;
     """
@@ -92,17 +93,17 @@ class BasePage:
             inputs = combobox.find_elements(By.XPATH, ".//input")
             inner_input = inputs[0] if inputs else combobox
 
-        try:
-            if clear_first:
-                inner_input.send_keys(Keys.CONTROL, "a")
-                inner_input.send_keys(Keys.BACKSPACE)
-            inner_input.send_keys(option_text)
-        except StaleElementReferenceException:
-            inner_input = _get_inner_input()
-            if clear_first:
-                inner_input.send_keys(Keys.CONTROL, "a")
-                inner_input.send_keys(Keys.BACKSPACE)
-            inner_input.send_keys(option_text)
+        for _attempt in range(3):
+            try:
+                if clear_first:
+                    inner_input.send_keys(Keys.CONTROL, "a")
+                    inner_input.send_keys(Keys.BACKSPACE)
+                inner_input.send_keys(option_text)
+                break
+            except StaleElementReferenceException:
+                if _attempt == 2:
+                    raise
+                inner_input = _get_inner_input()
 
         option = WebDriverWait(self.driver, 20).until(
             lambda d: self._find_react_option(option_text)
@@ -114,6 +115,38 @@ class BasePage:
         from selenium.webdriver.common.action_chains import ActionChains
         el = self.wait.until(EC.visibility_of_element_located(locator))
         ActionChains(self.driver).move_to_element(el).perform()
+
+    # ── Error / duplicate detection ─────────────────────────────────────────
+
+    _DUPLICATE_KEYWORDS = (
+        "already exists", "duplicate", "already in use",
+        "name is taken", "must be unique", "already been taken",
+        "already used", "conflict",
+    )
+    _SERVER_ERROR_KEYWORDS = (
+        "something went wrong", "internal server error",
+        "failed to fetch", "unauthorized", "application error",
+    )
+
+    def get_visible_error(self):
+        """Return the first visible error text from the current frame body, or None.
+
+        Checks both duplicate-record keywords and generic server-error signals.
+        Safe to call at any time; never raises.
+        """
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text.lower()
+            for kw in self._DUPLICATE_KEYWORDS + self._SERVER_ERROR_KEYWORDS:
+                if kw in body:
+                    return body[:600]
+        except Exception:  # noqa: BLE001
+            pass
+        return None
+
+    def duplicate_error_is_visible(self):
+        """Return True when a known duplicate-record message is visible on the page."""
+        body = (self.get_visible_error() or "")
+        return any(kw in body for kw in self._DUPLICATE_KEYWORDS)
 
     def pagination_controls_present(self, context_el=None):
         """Return True if any pagination controls are visible.

@@ -15,7 +15,8 @@ class WashExtrasPage(BasePage):
     )
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/washExtras?')]"
+        "//iframe[contains(@src,'/services/washExtras') "
+        "and not(contains(@src,'/services/washExtras/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -27,7 +28,8 @@ class WashExtrasPage(BasePage):
         "and not(contains(@src,'/services/washExtras/new'))]"
     )
 
-    PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Wash extras']")
+    PAGE_TITLE = (By.XPATH,
+        "//*[normalize-space()='Wash extras' or normalize-space()='Wash Extras']")
     SEARCH_INPUT = (By.NAME, "serviceName")
     # The button text includes a live filter count, e.g. "Filter by (1)".
     # Use contains() so it matches regardless of the count suffix.
@@ -43,7 +45,7 @@ class WashExtrasPage(BasePage):
     )
     ADD_EXTRA_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='+ Add new wash extra']"
+        "//button[contains(normalize-space(),'Add new wash extra')]"
     )
     GRID_LOAD_MASK = (
         By.CSS_SELECTOR,

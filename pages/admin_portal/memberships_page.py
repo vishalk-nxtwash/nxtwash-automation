@@ -1430,6 +1430,9 @@ class MembershipsPage(BasePage):
             )
         except Exception:
             time.sleep(8)
+        # Capture any visible error before navigating away — if save was rejected
+        # (duplicate name, validation) the error shows in the iframe body here.
+        save_error = self.get_visible_error()
         # Switch to the top-level document first so current_url is the main
         # page URL (the iframe URL can be null after a form submission).
         self.driver.switch_to.default_content()
@@ -1440,6 +1443,11 @@ class MembershipsPage(BasePage):
             base_url = current.rstrip("/")
         self.driver.get(base_url + "/services/memberships")
         self.wait_for_list_loaded()
+        if save_error:
+            import logging
+            logging.getLogger("nxtwash").warning(
+                "Membership save completed with page error: %s", save_error
+            )
 
     def duplicate_membership_error_is_visible(self):
         """Return whether a duplicate membership error is visible."""

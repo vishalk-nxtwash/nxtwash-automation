@@ -1,1 +1,0 @@
-2026-06-24 23:47:33,800 INFO tests.admin_portal.memberships.test_memberships_ui: Verifying Memberships grid columns

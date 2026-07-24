@@ -7,20 +7,23 @@ from tests.admin_portal.admin_session import open_admin_path
 # Constants
 # ---------------------------------------------------------------------------
 
-POS_NAME = "VK POS 1"
-POS_SITE = "VK AL03"
-POS_LANE = "L1"
-POS_UPDATED_NAME = "VK POS 1 edited"
-POS_NEW_NAME = "VK APOS02"
+from tests.admin_portal._data import load as _load
 
-POS_MIDDLEWARE_IP = "https://middleware-zeus.nxtwash.info/"
-POS_PAYMENT_SERIAL = "1.1.1.1"
-POS_CONTROLLER_ID = "RTC"
-POS_CONTROLLER_IP = "192.168.1.180:502"
-POS_ALLOW_CHECKOUT = "With assigned customer only"
-POS_ALLOW_CHECKOUT_NO_CUSTOMER = "No customer assigned"
+_D = _load("pos_settings")
 
-NONEXISTENT_POS_NAME = "pos-does-not-exist-automation"
+POS_NAME           = _D["reference"]["existing_pos"]
+POS_SITE           = _D["reference"]["site"]
+POS_LANE           = _D["reference"]["lane"]
+POS_UPDATED_NAME   = _D["updated"]["pos_name"]
+POS_NEW_NAME       = _D["create"]["pos_name"]
+POS_MIDDLEWARE_IP  = _D["template"]["middleware_ip"]
+POS_PAYMENT_SERIAL = _D["template"]["payment_serial"]
+POS_CONTROLLER_ID  = _D["template"]["controller_id"]
+POS_CONTROLLER_IP  = _D["template"]["controller_ip"]
+POS_ALLOW_CHECKOUT = _D["reference"]["allow_checkout"]
+POS_ALLOW_CHECKOUT_NO_CUSTOMER = _D["reference"]["allow_checkout_no_customer"]
+
+NONEXISTENT_POS_NAME = _D["search"]["nonexistent"]
 
 # ---------------------------------------------------------------------------
 # Navigation helpers
@@ -99,20 +102,22 @@ def open_edit_pos_form(browser, name=POS_NAME):
     return form
 
 
+BROKEN_STATE_TEXTS = [
+    "something went wrong",
+    "internal server error",
+    "application error",
+    "cannot read",
+    "typeerror",
+    "uncaught error",
+]
+
+
 def page_has_no_broken_state(page):
     try:
         body = page.get_body_text().lower()
     except Exception:
         return True
-    broken_signals = [
-        "something went wrong",
-        "internal server error",
-        "application error",
-        "cannot read",
-        "typeerror",
-        "uncaught error",
-    ]
-    return not any(s in body for s in broken_signals)
+    return not any(s in body for s in BROKEN_STATE_TEXTS)
 
 
 # ---------------------------------------------------------------------------

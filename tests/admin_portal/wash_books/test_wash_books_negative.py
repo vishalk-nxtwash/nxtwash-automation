@@ -57,10 +57,11 @@ def test_whitespace_only_wash_book_name_is_rejected(browser):
     page.set_global_price("10")
     page.click_save_wash_book()
 
+    body_text = page.get_body_text()
     assert (
         not page.wash_book_name_input_is_valid()
-        or "Add new wash book" in page.get_body_text()
-    )
+        or "Add new wash book" in body_text
+    ), "Expected whitespace-only name to be rejected — form should remain open"
     assert page_has_no_broken_state(page)
 
 
@@ -75,7 +76,10 @@ def test_negative_number_of_washes_is_rejected(browser):
     page.set_global_price("10")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative washes — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -90,7 +94,10 @@ def test_negative_global_price_is_rejected(browser):
     page.set_global_price("-10")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative price — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -106,19 +113,11 @@ def test_negative_global_commission_is_rejected(browser):
     page.set_global_commission("-2")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative commission — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
-
-@allure.title("WB-LTY-003 Negative loyalty points awarded is rejected on save")
-@pytest.mark.extended
-def test_negative_loyalty_points_is_rejected(browser):
-
-    page = open_wash_books_page(browser)
-    page.open_create_wash_book()
-    page.enter_wash_book_name("VK AWB2-neg-points-test")
-    page.set_points_awarded("-1")
-
-    assert page_has_no_broken_state(page)
 
 

@@ -1,0 +1,12 @@
+{
+  "reference": {
+    "existing_package":          "VK ACC2",
+    "inactive_package":          "VK ACC2 Inactive",
+    "giveaway_service":          "vk detail wash",
+    "giveaway_services":         ["vk detail wash", "Detail cleaning"],
+    "expiration_days":           "30"
+  },
+  "search": {
+    "nonexistent": "coupon-package-does-not-exist-automation"
+  }
+}

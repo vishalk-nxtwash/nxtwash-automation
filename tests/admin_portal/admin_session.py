@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.admin_portal.login_page import AdminLoginPage
@@ -57,6 +57,16 @@ def ensure_admin_logged_in(browser, attempts=LOGIN_ATTEMPTS):
     if not _on_login_page(browser) and _session_stored(login_page):
         return
 
+    # _session_stored() can return False after frame switches or error
+    # recovery even when the session is still alive (e.g. after a failed
+    # create-form save leaves the driver in an unusual frame state).
+    # Navigate to the portal root and check whether the SPA bounces us to
+    # /login.  If it does not, the session is valid and no login is needed.
+    if not _on_login_page(browser):
+        browser.get(base_url)
+        if not _bounced_to_login(browser):
+            return  # Session confirmed alive via SPA redirect probe
+
     last_error = None
     for _ in range(attempts):
         if not _on_login_page(browser):
@@ -66,9 +76,12 @@ def ensure_admin_logged_in(browser, attempts=LOGIN_ATTEMPTS):
             login_page.login()
             login_page.wait_for_overview()
             return
-        except TimeoutException as error:
+        except (TimeoutException, WebDriverException) as error:
             last_error = error
-            browser.get(base_url)  # reset to a clean login form and retry
+            try:
+                browser.get(base_url)
+            except (TimeoutException, WebDriverException):
+                pass
 
     if last_error is not None:
         raise last_error

@@ -10,7 +10,8 @@ class GiftCardsPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/giftCards?')]"
+        "//iframe[contains(@src,'/services/giftCards')"
+        " and not(contains(@src,'/services/giftCards/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -23,7 +24,8 @@ class GiftCardsPage(BasePage):
     )
     CUSTOMER_LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/customerGiftCards?')]"
+        "//iframe[contains(@src,'/services/customerGiftCards')"
+        " and not(contains(@src,'/services/customerGiftCards/'))]"
     )
     CUSTOMER_CREATE_FRAME = (
         By.XPATH,
@@ -155,6 +157,21 @@ class GiftCardsPage(BasePage):
         )
         self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
         self.wait.until(lambda driver: self.get_gift_card_name_value() != "")
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.GIFT_CARD_AMOUNT_INPUT
+            ).get_attribute("value") != ""
+        )
+        # Wait for the assign-to grid to finish its async render before filling
+        # the form — the grid's data load triggers a React re-render that can
+        # reset controlled inputs (amount, landing page code) to their server
+        # values if we type into them before the grid settles.
+        self.wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR,
+                 ".service-sites-table .InovuaReactDataGrid__row")
+            )
+        )
 
     def wait_for_customer_list_loaded(self):
         """Wait until the Customer Gift Cards list is visible."""
@@ -392,8 +409,18 @@ class GiftCardsPage(BasePage):
         self.enter_text(self.GIFT_CARD_NAME_INPUT, gift_card_name)
 
     def enter_gift_card_amount(self, amount):
-        """Enter gift card amount."""
-        self.enter_text(self.GIFT_CARD_AMOUNT_INPUT, str(amount))
+        """Enter gift card amount via the native JS setter so React state is updated."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
+        )
+        self.driver.execute_script(
+            "var s=Object.getOwnPropertyDescriptor("
+            "window.HTMLInputElement.prototype,'value').set;"
+            "s.call(arguments[0],arguments[1]);"
+            "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
+            "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
+            element, str(amount)
+        )
 
     def enter_landing_page_code(self, landing_page_code):
         """Enter landing page code."""
@@ -517,29 +544,37 @@ class GiftCardsPage(BasePage):
         )
 
     def get_location_row(self, location_name):
-        """Return the location assignment row.
+        """Return the location assignment row, scrolling the virtual grid as needed.
 
-        Waits for the assign-to grid to load at least one row (the grid
-        populates asynchronously), then locates the specific location row.
+        InovuaReactDataGrid uses virtual scrolling — only rows near the current
+        viewport are rendered in the DOM.  Scroll the grid's own scroller element
+        (data-name="scroller" inside .service-sites-table) 300 px per poll until
+        the target row becomes visible.
         """
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
-        self.wait.until(EC.presence_of_element_located(any_row_locator))
-        return self.wait.until(
-            EC.visibility_of_element_located(
-                (
-                    By.XPATH,
-                    "//*[normalize-space()='%s']"
-                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
-                    % location_name
-                )
+        scroller = self.wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, ".service-sites-table [data-name='scroller']")
             )
         )
+        row_locator = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % location_name
+        )
+
+        def _find_or_scroll(driver):
+            rows = driver.find_elements(*row_locator)
+            if rows and rows[0].is_displayed():
+                return rows[0]
+            driver.execute_script("arguments[0].scrollTop += 300;", scroller)
+            return False
+
+        return self.wait.until(_find_or_scroll)
 
     def assign_location(self, location_name):
         """Assign a gift card to one location."""
         row = self.get_location_row(location_name)
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", row)
         checkbox = row.find_element(
             By.XPATH,
             ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
@@ -562,7 +597,6 @@ class GiftCardsPage(BasePage):
     def enable_location_show_on_cp(self, location_name):
         """Enable Show on CP for one assigned location."""
         row = self.get_location_row(location_name)
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", row)
         switch = row.find_element(By.XPATH, "(.//button[@role='switch'])[last()]")
 
         if switch.get_attribute("aria-checked") != "true":
@@ -600,7 +634,8 @@ class GiftCardsPage(BasePage):
 
     def click_save_gift_card(self):
         """Click save gift card."""
-        self.click(self.SAVE_GIFT_CARD_BUTTON)
+        button = self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
 
     def click_save_customer_gift_card(self):
         """Click save customer gift card."""
@@ -626,7 +661,14 @@ class GiftCardsPage(BasePage):
             location_names
         )
         self.click_save_gift_card()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Gift card save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def wait_for_list_after_edit_save(self):
         """Wait for the gift card list after an edit save.
@@ -691,7 +733,14 @@ class GiftCardsPage(BasePage):
             amount
         )
         self.click_save_customer_gift_card()
-        self.wait_for_customer_list_loaded()
+        try:
+            self.wait_for_customer_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Customer gift card save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def ensure_switch_off(self, locator):
         """Turn a switch off if needed."""

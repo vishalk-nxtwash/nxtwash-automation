@@ -468,7 +468,12 @@ class AdminUserFormPage(BasePage):
             WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
             self.driver.switch_to.default_content()
         except Exception:
-            pass
+            error = self.get_visible_error()
+            if error:
+                import logging
+                logging.getLogger("nxtwash").warning(
+                    "User save did not navigate away. Page message: %s", error
+                )
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
