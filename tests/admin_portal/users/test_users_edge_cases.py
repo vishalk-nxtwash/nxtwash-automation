@@ -96,14 +96,6 @@ def test_long_email_at_boundary(browser):
 
 @allure.title("USR-EC-007 User data persists correctly after logout and re-login")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-EC-007: After clearing cookies and storage, ensure_admin_logged_in cannot "
-        "reliably re-authenticate in the staging environment (redirects to / instead of the "
-        "login form). Verify manually: clear session and confirm user data is present after re-login."
-    ),
-)
 def test_user_data_persists_after_relogin(browser, managed_user):
     page = open_users_page(browser)
     assert page.user_exists(USER_EMAIL)
