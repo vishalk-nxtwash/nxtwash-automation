@@ -147,7 +147,8 @@ class CustomServicesPage(BasePage):
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is gone."""
-        self.wait.until(
+        from selenium.webdriver.support.ui import WebDriverWait
+        WebDriverWait(self.driver, 60).until(
             lambda driver: not any(
                 mask.is_displayed()
                 for mask in driver.find_elements(*self.GRID_LOAD_MASK)
