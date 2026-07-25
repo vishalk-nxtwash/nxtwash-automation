@@ -46,7 +46,6 @@ def create_service_if_missing(browser, service_name=SERVICE_NAME):
     page = open_custom_services_page(browser)
 
     if page.service_exists(service_name):
-        page = open_custom_services_page(browser)
         page.open_edit_service(service_name)
         page.fill_service_form(
             service_name,
