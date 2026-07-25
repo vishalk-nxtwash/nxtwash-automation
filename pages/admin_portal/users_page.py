@@ -19,7 +19,11 @@ class AdminUsersPage(BasePage):
     CREATE_FRAME = (By.XPATH, "//iframe[contains(@src,'/users/users/new')]")
     EDIT_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'users/users') and contains(@src,'userId=')]",
+        "//iframe["
+        "contains(@src,'users/users') and ("
+        "contains(@src,'userId=') or "
+        "(contains(@src,'/users/users/') and not(contains(@src,'/users/users/new')))"
+        ")]",
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Users']")

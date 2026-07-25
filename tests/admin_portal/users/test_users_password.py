@@ -27,7 +27,6 @@ _PWD_XFAIL = pytest.mark.xfail(
 
 @allure.title("USR-PWD-001 Change password button on the edit form opens the password flow")
 @pytest.mark.smoke
-@_PWD_XFAIL
 def test_change_password_button_opens_flow(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.click_change_password_button()
@@ -40,7 +39,6 @@ def test_change_password_button_opens_flow(browser, managed_user):
 
 @allure.title("USR-PWD-002 Matching new passwords save successfully")
 @pytest.mark.regression
-@_PWD_XFAIL
 def test_change_password_matching_passwords_save(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.click_change_password_button()
