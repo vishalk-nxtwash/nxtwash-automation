@@ -68,7 +68,6 @@ def test_filter_active_pos_on(browser, managed_pos):
 
 @allure.title("POS-FLT-004 Filter Active POS OFF shows all units")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_active_pos_off(browser):
     page = open_pos_page(browser)
     page.filter_active_pos_off()

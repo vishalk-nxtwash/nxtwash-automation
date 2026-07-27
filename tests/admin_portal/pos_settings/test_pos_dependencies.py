@@ -42,13 +42,6 @@ def test_site_dropdown_from_sites_locations(browser):
 
 @allure.title("POS-DEP-002 Lane dropdown lists lanes configured for selected site")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-DEP-002: Lane combobox locator uses positional heuristics — "
-        "verify exact React Select element in DevTools before removing xfail."
-    ),
-)
 def test_lane_dropdown_from_site_lanes(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)

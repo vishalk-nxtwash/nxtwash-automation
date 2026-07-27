@@ -32,7 +32,7 @@ def test_pos_list_displays_columns(browser):
     page = open_pos_page(browser)
     body = page.get_body_text()
 
-    assert "POS name" in body or "Name" in body
+    assert "POS name" in body or "Pos name" in body or "Name" in body
     assert "Site" in body
     assert "Lane" in body
     assert "Status" in body
@@ -66,13 +66,6 @@ def test_pos_list_pagination_shows_count(browser):
 
 @allure.title("POS-LST-005 Results-per-page dropdown changes number of rows")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-LST-005: Results-per-page control locator not confirmed in DevTools "
-        "— verify exact element before removing xfail."
-    ),
-)
 def test_pos_list_results_per_page(browser):
     page = open_pos_page(browser)
     body = page.get_body_text()

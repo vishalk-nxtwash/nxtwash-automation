@@ -65,13 +65,45 @@ class AdminPOSSettingsPage(BasePage):
 
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))] | "
-        "//*[contains(@class,'inovua-react-toolkit-load-mask')]")
+        "//*[contains(@class,'inovua-react-toolkit-load-mask') "
+        "and not(contains(@class,'--hidden')) "
+        "and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
         self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.POS_LIST_FRAME))
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.invisibility_of_element_located(self.LOAD_MASK)
+            )
+        except Exception:
+            pass  # fall through to ADD_POS_BUTTON which is the real readiness gate
         self.wait.until(EC.element_to_be_clickable(self.ADD_POS_BUTTON))
+        self._reset_stale_filters()
+
+    def _reset_stale_filters(self):
+        filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
+        filter_active = any(
+            "(" in (btn.text or "")
+            for btn in filter_buttons
+            if btn.is_displayed()
+        )
+        if not filter_active:
+            return
+        self.reset_filters()
+        apply_open = [
+            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+            if el.is_displayed()
+        ]
+        if apply_open:
+            btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", btn)
+            self.wait.until(
+                lambda d: not any(
+                    el.is_displayed()
+                    for el in d.find_elements(*self.APPLY_FILTERS_BUTTON)
+                )
+            )
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -173,8 +205,30 @@ class AdminPOSSettingsPage(BasePage):
 
     def open_edit_pos(self, name):
         self.search_pos(name)
-        self.wait_for_pos_row(name)
-        edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
+        row_cell = self.wait_for_pos_row(name)
+        # inovua grid keeps non-visible rows in the DOM; find the edit button
+        # that is (a) visible and (b) vertically closest to the matched name cell
+        edit_link = self.driver.execute_script("""
+            var cell = arguments[0];
+            var cellMid = cell.getBoundingClientRect().top
+                        + cell.getBoundingClientRect().height / 2;
+            var links = Array.from(document.querySelectorAll(
+                'a[role="button"][class*="table-page__page-content__table__edit"]'
+            )).filter(function(el) {
+                var r = el.getBoundingClientRect();
+                return r.width > 0 && r.height > 0;
+            });
+            if (!links.length) return null;
+            return links.reduce(function(a, b) {
+                var ra = a.getBoundingClientRect();
+                var rb = b.getBoundingClientRect();
+                var da = Math.abs(ra.top + ra.height / 2 - cellMid);
+                var db = Math.abs(rb.top + rb.height / 2 - cellMid);
+                return da <= db ? a : b;
+            });
+        """, row_cell)
+        if edit_link is None:
+            edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
         self.driver.execute_script("arguments[0].click();", edit_link)
 
     def filter_panel_is_open(self):
@@ -565,6 +619,8 @@ class AdminPOSFormPage(BasePage):
         # Wait up to 20 s for the shell to redirect after save (covers "Pos connected!" delay)
         try:
             WebDriverWait(self.driver, 20).until(lambda d: d.current_url != url_before)
+            # Only switch out of frame when navigation actually happened
+            self.driver.switch_to.default_content()
         except Exception:
             error = self.get_visible_error()
             if error:
@@ -572,11 +628,15 @@ class AdminPOSFormPage(BasePage):
                 logging.getLogger("nxtwash").warning(
                     "POS save did not navigate away. Page message: %s", error
                 )
-        self.driver.switch_to.default_content()
+            # Stay in the form frame — validation error is still showing
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+
+    def get_pos_name(self):
+        el = self.wait.until(EC.presence_of_element_located(self.POS_NAME_INPUT))
+        return el.get_attribute("value") or ""
 
     def pos_name_input_is_valid(self):
         el = self.wait.until(EC.presence_of_element_located(self.POS_NAME_INPUT))

@@ -180,13 +180,6 @@ def test_create_inactive_pos(browser):
 
 @allure.title("POS-CRT-008 Allow checkout defaults to assigned customer only")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-CRT-008: Allow checkout combobox locator uses label heuristics — "
-        "verify exact React Select element in DevTools before removing xfail."
-    ),
-)
 def test_allow_checkout_default(browser):
     form = open_create_pos_form(browser)
     body = form.get_body_text()

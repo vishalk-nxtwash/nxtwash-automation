@@ -31,6 +31,9 @@ def open_gift_cards_page(browser):
 
     page = GiftCardsPage(browser)
     page.wait_for_list_loaded()
+    # Clear any filter the SPA restored from localStorage (left by a prior
+    # test or session).  reset_all_filters fast-returns when nothing is active.
+    page.reset_all_filters()
 
     return page
 
