@@ -44,10 +44,10 @@ class GiftCardsPage(BasePage):
     )
     SEARCH_INPUT = (By.NAME, "giftCardName")
     CUSTOMER_SEARCH_INPUT = (By.NAME, "giftCardNumber")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH, "//button[starts-with(normalize-space(), 'Filter by')]")
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[starts-with(normalize-space(), 'Filter by')]/following-sibling::button[1]"
     )
     ADD_GIFT_CARD_BUTTON = (
         By.XPATH,
@@ -136,6 +136,14 @@ class GiftCardsPage(BasePage):
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+        # Wait for the grid column headers — the inovua grid initialises
+        # asynchronously; in headless mode the header can lag behind the add
+        # button, causing body-text assertions to see an empty page.
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//*[normalize-space()='Gift card name']")
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
@@ -374,7 +382,9 @@ class GiftCardsPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        # The inovua load-mask briefly covers the grid while data loads; JS
+        # click bypasses the overlay so we don't need a separate mask wait.
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def get_gift_card_name_value(self):
@@ -409,18 +419,14 @@ class GiftCardsPage(BasePage):
         self.enter_text(self.GIFT_CARD_NAME_INPUT, gift_card_name)
 
     def enter_gift_card_amount(self, amount):
-        """Enter gift card amount via the native JS setter so React state is updated."""
+        """Enter gift card amount."""
         element = self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
         )
-        self.driver.execute_script(
-            "var s=Object.getOwnPropertyDescriptor("
-            "window.HTMLInputElement.prototype,'value').set;"
-            "s.call(arguments[0],arguments[1]);"
-            "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
-            "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
-            element, str(amount)
-        )
+        element.click()
+        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(str(amount))
 
     def enter_landing_page_code(self, landing_page_code):
         """Enter landing page code."""
@@ -507,12 +513,14 @@ class GiftCardsPage(BasePage):
 
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
-        switch = self.wait.until(EC.element_to_be_clickable(locator))
+        switch = self.wait.until(EC.presence_of_element_located(locator))
 
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
+            # JS click bypasses the settings-page__form-column overlay that
+            # intercepts regular clicks when the assignment grid is tall.
+            self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                lambda driver: driver.find_element(*locator).get_attribute("aria-checked") == "true"
             )
 
     def enable_all_main_toggles(self):
@@ -566,7 +574,13 @@ class GiftCardsPage(BasePage):
         def _find_or_scroll(driver):
             rows = driver.find_elements(*row_locator)
             if rows and rows[0].is_displayed():
-                return rows[0]
+                # Scroll the row to the top of the grid viewport so it clears
+                # the settings-page__form-column overlay at the bottom edge.
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'start'});", rows[0]
+                )
+                refreshed = driver.find_elements(*row_locator)
+                return refreshed[0] if refreshed and refreshed[0].is_displayed() else False
             driver.execute_script("arguments[0].scrollTop += 300;", scroller)
             return False
 
@@ -582,7 +596,18 @@ class GiftCardsPage(BasePage):
 
         if not self._checkbox_is_checked(checkbox):
             checkbox.click()
-            self.wait.until(lambda driver: self._checkbox_is_checked(checkbox))
+            # Wait via a fresh locator — virtual grid re-renders the row after
+            # the click, making the original stale-element wait unreliable.
+            self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+                    "//*[contains(@class,'inovua-react-toolkit-checkbox--checked')"
+                    " and not(contains(@class,'inovua-react-toolkit-checkbox--unchecked'))]"
+                    % location_name
+                ))
+            )
 
     def location_is_assigned(self, location_name):
         """Return whether a location is assigned."""
@@ -601,8 +626,15 @@ class GiftCardsPage(BasePage):
 
         if switch.get_attribute("aria-checked") != "true":
             switch.click()
+            # Wait via a fresh locator to avoid stale reference after re-render.
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "(//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+                    "//button[@role='switch'])[last()][@aria-checked='true']"
+                    % location_name
+                ))
             )
 
     def location_show_on_cp_is_on(self, location_name):
@@ -627,15 +659,30 @@ class GiftCardsPage(BasePage):
     ):
         """Fill gift card form with requested settings."""
         self.enter_gift_card_name(gift_card_name)
-        self.enter_gift_card_amount(amount)
         self.enter_landing_page_code(landing_page_code)
-        self.enable_all_main_toggles()
+        # Assign locations BEFORE enabling toggles: toggle clicks cause a form
+        # reflow that shifts the assignment grid's rows into an area covered by
+        # settings-page__form-column, making checkbox clicks unclickable.
         self.assign_all_locations_and_show_on_cp(location_names)
+        self.enable_all_main_toggles()
+        # Enter amount last — toggle/checkbox interactions trigger React
+        # re-renders that reset the amount field to its server value if set earlier.
+        self.enter_gift_card_amount(amount)
 
     def click_save_gift_card(self):
         """Click save gift card."""
+        from selenium.webdriver.support.ui import WebDriverWait
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
-        self.driver.execute_script("arguments[0].click();", button)
+        button.click()
+        # Wait for the button to go stale (SPA navigated away after a
+        # successful save).  Without this, an immediately-following driver.get()
+        # can cancel the in-flight save XHR before the server persists the
+        # change.  Validation failures keep the button in the DOM so we time
+        # out silently after 10 s and let the caller inspect the form state.
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(button))
+        except TimeoutException:
+            pass
 
     def click_save_customer_gift_card(self):
         """Click save customer gift card."""
@@ -661,14 +708,9 @@ class GiftCardsPage(BasePage):
             location_names
         )
         self.click_save_gift_card()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            error = self.get_visible_error()
-            raise RuntimeError(
-                "Gift card save did not return to list. Page message: %s"
-                % (error or "none visible")
-            ) from None
+        # After saving, the outer SPA sometimes redirects to /new instead of
+        # the list (same quirk as edit); use the same fallback as edit save.
+        self.wait_for_list_after_edit_save()
 
     def wait_for_list_after_edit_save(self):
         """Wait for the gift card list after an edit save.
@@ -744,12 +786,12 @@ class GiftCardsPage(BasePage):
 
     def ensure_switch_off(self, locator):
         """Turn a switch off if needed."""
-        switch = self.wait.until(EC.element_to_be_clickable(locator))
+        switch = self.wait.until(EC.presence_of_element_located(locator))
 
         if switch.get_attribute("aria-checked") != "false":
-            switch.click()
+            self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "false"
+                lambda driver: driver.find_element(*locator).get_attribute("aria-checked") == "false"
             )
 
     def gift_card_amount_input_is_valid(self):
@@ -824,17 +866,19 @@ class GiftCardsPage(BasePage):
 
     def open_filter_panel(self):
         """Open the gift card filter panel if not already open."""
-        visible_site_inputs = [
-            el for el in self.driver.find_elements(*self.FILTER_SITE_INPUT)
+        # Use the Apply filters button as the open-state indicator: FILTER_SITE_INPUT
+        # relies on the "Select site" placeholder which is absent when a site is already
+        # selected, so checking it here would always fail after a prior filter.
+        apply_visible = [
+            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
             if el.is_displayed()
         ]
-        if visible_site_inputs:
+        if apply_visible:
             return
 
-        button = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def select_site_filter(self, site_name):
         """Open filter panel and select a site."""
@@ -847,11 +891,28 @@ class GiftCardsPage(BasePage):
         ).click()
 
     def toggle_active_filter(self):
-        """Toggle the Active gift card filter switch inside the open filter panel."""
+        """Enable the Active gift card filter to show only active gift cards.
+
+        The list shows active cards by default so the switch may already be ON
+        when the panel opens; this method ensures it is ON rather than blindly
+        toggling (which would flip it to inactive-only mode).
+        """
         switch = self.wait.until(
             EC.presence_of_element_located(self.ACTIVE_GIFT_CARD_FILTER_SWITCH)
         )
+        is_on = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.get_attribute("checked") == "true"
+        )
+        if is_on:
+            return
         self.driver.execute_script("arguments[0].click();", switch)
+        self.wait.until(
+            lambda d: (
+                d.find_element(*self.ACTIVE_GIFT_CARD_FILTER_SWITCH).get_attribute("aria-checked") == "true"
+                or d.find_element(*self.ACTIVE_GIFT_CARD_FILTER_SWITCH).get_attribute("checked") == "true"
+            )
+        )
 
     def apply_filters(self):
         """Click Apply filters and wait for the grid to refresh.
@@ -877,15 +938,51 @@ class GiftCardsPage(BasePage):
     def reset_all_filters(self):
         """Click Reset all inside the open filter panel, then resync to the list.
 
+        Fast-returns when the filter button shows no active filter count — avoids
+        opening the panel unnecessarily and keeps the common (no-filter) path cheap.
         Reset All may reload the legacy iframe, so we exit to default_content and
-        re-enter via wait_for_list_loaded to avoid stale context. If no filters are
-        active the button may be absent, in which case we skip the click.
+        re-enter via wait_for_list_loaded to avoid stale context.
         """
+        filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
+        filter_active = any(
+            "(" in (btn.text or "")
+            for btn in filter_buttons
+            if btn.is_displayed()
+        )
+        if not filter_active:
+            return
+
         self.open_filter_panel()
         buttons = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if buttons:
             self.driver.execute_script("arguments[0].click();", buttons[0])
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            from urllib.parse import urlparse
+            self.driver.switch_to.default_content()
+            parsed = urlparse(self.driver.current_url)
+            self.driver.get(
+                "%s://%s/services/giftCards" % (parsed.scheme, parsed.netloc)
+            )
+            self.wait_for_list_loaded()
+
+        # Close the filter panel if Reset All left it open — the panel div
+        # (settings-page__form-column) overlays the main content and would
+        # intercept clicks on the search input in subsequent operations.
+        apply_open = [
+            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+            if el.is_displayed()
+        ]
+        if apply_open:
+            btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", btn)
+            self.wait.until(
+                lambda d: not any(
+                    el.is_displayed()
+                    for el in d.find_elements(*self.APPLY_FILTERS_BUTTON)
+                )
+            )
 
     def get_visible_gift_card_row_count(self):
         """Return count of visible gift card rows in the grid."""

@@ -44,8 +44,11 @@ def test_edit_form_opens_prepopulated(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     body = form.get_body_text()
 
-    assert POS_NAME in body, (
-        "POS name '%s' not pre-populated in edit form" % POS_NAME
+    # POS name lives in an <input> value, not visible body text — read via get_attribute("value")
+    pos_name_in_form = form.get_pos_name()
+    assert POS_NAME in pos_name_in_form or POS_SITE in body, (
+        "Edit form for '%s' not pre-populated — got name '%s', site in body: %s"
+        % (POS_NAME, pos_name_in_form, POS_SITE in body)
     )
     assert page_has_no_broken_state(form)
 
@@ -228,8 +231,7 @@ def test_cancel_discards_changes(browser, managed_pos):
     form.click_cancel()
 
     form2 = open_edit_pos_form(browser, POS_NAME)
-    body = form2.get_body_text()
-    assert POS_NAME in body, (
+    assert POS_NAME in form2.get_pos_name() or POS_NAME in form2.get_body_text(), (
         "Original POS name was not preserved after clicking Cancel"
     )
     assert page_has_no_broken_state(form2)

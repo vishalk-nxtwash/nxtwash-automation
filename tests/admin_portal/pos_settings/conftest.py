@@ -169,11 +169,28 @@ def create_pos_if_missing(browser, name=POS_NAME, site=POS_SITE, lane=None,
 # ---------------------------------------------------------------------------
 
 
+def _restore_managed_pos(browser):
+    """Restore the managed POS to its expected name and active state."""
+    page = open_pos_page(browser)
+    if page.pos_exists(POS_NAME):
+        form = open_edit_pos_form(browser, POS_NAME)
+        form.enter_pos_name(POS_NAME)
+        form.ensure_active_pos_on()
+        form.click_save()
+    elif page.pos_exists(POS_UPDATED_NAME):
+        form = open_edit_pos_form(browser, POS_UPDATED_NAME)
+        form.enter_pos_name(POS_NAME)
+        form.ensure_active_pos_on()
+        form.click_save()
+    else:
+        create_pos_if_missing(browser)
+
+
 @pytest.fixture
 def managed_pos(browser):
     page = create_pos_if_missing(browser)
     yield page
-    create_pos_if_missing(browser)
+    _restore_managed_pos(browser)
 
 
 @pytest.fixture
