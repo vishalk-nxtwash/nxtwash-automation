@@ -83,8 +83,7 @@ class AdminUserRolesPage(BasePage):
     def search_role(self, role_name):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
         element.send_keys(role_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == role_name
@@ -93,8 +92,7 @@ class AdminUserRolesPage(BasePage):
     def clear_search(self):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -337,8 +335,7 @@ class AdminUserRoleFormPage(BasePage):
 
     def clear_role_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a")
-        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
 
     def get_role_name_value(self):
         return self.wait.until(

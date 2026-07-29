@@ -394,8 +394,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a")
-        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
         search_input.send_keys(membership_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
@@ -423,8 +422,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a")
-        search_input.send_keys(Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT

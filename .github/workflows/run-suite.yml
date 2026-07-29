@@ -143,5 +143,5 @@ jobs:
         if: always()
         uses: test-summary/action@v2
         with:
-          paths: results.xml
+          paths: reports/results.xml
         continue-on-error: true
