@@ -15,14 +15,6 @@ pytestmark = [
     allure.story("Active Status"),
 ]
 
-_TOGGLE_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Active tunnel configuration toggle locator uses label-proximity XPath — "
-        "verify aria-checked attribute in DevTools before removing xfail."
-    ),
-)
-
 _ACTIVE_TOGGLE = "Active tunnel configuration"
 
 
@@ -32,10 +24,18 @@ _ACTIVE_TOGGLE = "Active tunnel configuration"
 
 @allure.title("TUN-ACT Active configuration toggle drives list status badge")
 @pytest.mark.smoke
-@_TOGGLE_XFAIL
 @pytest.mark.parametrize("active,expected_status", [
     pytest.param(True, "Active", id="TUN-ACT-001"),
-    pytest.param(False, "Inactive", id="TUN-ACT-002"),
+    pytest.param(False, "Inactive", id="TUN-ACT-002",
+        marks=pytest.mark.xfail(
+            strict=False,
+            reason=(
+                "TUN-ACT-002: setting Active=False appears to hide the tunnel from the "
+                "list (list may filter to active tunnels only); wait_for_tunnel_row times "
+                "out. Verify list filtering behavior in DevTools before removing xfail."
+            ),
+        )
+    ),
 ])
 def test_active_configuration_toggle_saves(browser, managed_tunnel, active, expected_status):
     form = open_edit_tunnel_form(browser, TUNNEL_NAME)
@@ -57,7 +57,6 @@ def test_active_configuration_toggle_saves(browser, managed_tunnel, active, expe
 
 @allure.title("TUN-ACT-003 Active status badge is green; Inactive badge is not")
 @pytest.mark.regression
-@_TOGGLE_XFAIL
 def test_status_badge_color_reflects_state(browser, managed_tunnel):
     from selenium.webdriver.common.by import By
 
