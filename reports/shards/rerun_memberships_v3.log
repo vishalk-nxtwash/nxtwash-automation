@@ -1,0 +1,1640 @@
+2026-07-29 03:43:34,137 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 66 items
+
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-28/test_download_memberships_star0
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  1%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_file_format 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  3%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_filtered_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:91 Verifying filtered membership export downloads a file
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  4%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent 2026-07-29 03:48:50,451 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 03:48:51,542 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  6%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned 2026-07-29 03:53:39,540 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 03:53:41,430 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  7%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form 2026-07-29 03:58:16,630 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 03:58:19,325 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  9%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA5
+2026-07-29 04:01:18,763 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 04:01:20,571 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 10%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA5 and restoring it
+2026-07-29 04:04:42,279 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 04:04:44,409 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 12%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type PASSED [ 13%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission PASSED [ 15%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists 2026-07-29 04:20:26,243 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 04:20:28,157 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+FAILED                                                                   [ 16%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_off PASSED [ 18%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on 2026-07-29 04:31:43,004 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 04:31:44,669 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+FAILED                                                                   [ 19%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations 2026-07-29 04:38:22,805 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 04:38:24,015 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+FAILED                                                                   [ 21%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_applicable_discount_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:232 Assigning discount Plus discount to AUTOTEST Membership
+PASSED                                                                   [ 22%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:251 Assigning then removing discount Plus discount from AUTOTEST Membership
+2026-07-29 04:48:45,517 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 04:48:45,889 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount
+Adaptive discounts
+Coming soon...
+Multiple months discount
+Multiple cars discount
+Discount profile
+Create custom discount profiles and apply to your memberships by importing them
++ Add multi-month discount
+Discount
+Months number
+From date
+To date
+No records available
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount
+Adaptive discounts
+Coming soon...
+Multiple months discount
+Multiple cars discount
+Discount profile
+Create custom discount profiles and apply to your memberships by importing them
++ Add multi-month discount
+Discount
+Months number
+From date
+To date
+No records available
+FAILED                                                                   [ 24%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:278 Enabling Limit Membership toggle for AUTOTEST Membership
+2026-07-29 04:54:52,487 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 04:54:52,975 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+VK inactive c0981f
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive ef7914
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive c8d5bc
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive 7eb220
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive 013f2b
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 62 of 62
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+VK inactive c0981f
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive ef7914
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive c8d5bc
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive 7eb220
+Prepaid
+$15.00
+Inactive
+Edit
+VK inactive 013f2b
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 62 of 62
+FAILED                                                                   [ 25%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:301 Setting description 'VK automation test description' on AUTOTEST Membership
+2026-07-29 04:58:52,090 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 04:58:52,666 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+You can add your membership description and it will show on ecommerce website
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL09
+Columbia
+5%
+3%
+VK AL10
+Columbia
+5%
+3%
+VK ZT 146465
+Columbia
+0%
+0%
+VK Test Wash 01
+League city
+0%
+0%
+VK Test carwash 2
+Canyon lake
+5%
+2%
+test123 udpated
+Columbia
+0%
+0%
+VK AL04
+Columbia
+5%
+3%
+VK AL12
+Columbia
+5%
+3%
+vkauto1
+Canyon lake
+5%
+2%
+VK AL07
+Columbia
+5%
+3%
+VK AL05
+Columbia
+5%
+3%
+VK AL06
+Columbia
+5%
+3%
+VK AL11
+Columbia
+5%
+3%
+VK AL02
+Columbia
+5%
+3%
+VK AL01
+Columbia
+5%
+3%
+VK AL14
+Columbia
+5%
+3%
+VK AL03
+Columbia
+5%
+3%
+VK AL08
+Columbia
+5%
+3%
+VK AL13
+Columbia
+5%
+3%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+You can add your membership description and it will show on ecommerce website
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL09
+Columbia
+5%
+3%
+VK AL10
+Columbia
+5%
+3%
+VK ZT 146465
+Columbia
+0%
+0%
+VK Test Wash 01
+League city
+0%
+0%
+VK Test carwash 2
+Canyon lake
+5%
+2%
+test123 udpated
+Columbia
+0%
+0%
+VK AL04
+Columbia
+5%
+3%
+VK AL12
+Columbia
+5%
+3%
+vkauto1
+Canyon lake
+5%
+2%
+VK AL07
+Columbia
+5%
+3%
+VK AL05
+Columbia
+5%
+3%
+VK AL06
+Columbia
+5%
+3%
+VK AL11
+Columbia
+5%
+3%
+VK AL02
+Columbia
+5%
+3%
+VK AL01
+Columbia
+5%
+3%
+VK AL14
+Columbia
+5%
+3%
+VK AL03
+Columbia
+5%
+3%
+VK AL08
+Columbia
+5%
+3%
+VK AL13
+Columbia
+5%
+3%
+FAILED                                                                   [ 27%]
+tests/admin_portal/memberships/test_memberships_managed.py::test_managed_membership_provided_at_baseline PASSED [ 28%]
+tests/admin_portal/memberships/test_memberships_managed.py::test_managed_membership_mutation_is_reset_on_teardown 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_managed:test_memberships_managed.py:42 Mutating managed membership points to 5
+PASSED                                                                   [ 30%]
+tests/admin_portal/memberships/test_memberships_negative.py::test_memberships_special_character_search_stays_usable PASSED [ 31%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:35 Creating/verifying prepaid membership: VK MA5
+2026-07-29 05:22:56,133 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:22:59,099 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 33%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:53 Creating/verifying recurring membership: VK MR4
+2026-07-29 05:26:06,421 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:26:06,876 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 34%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:92 Verifying membership settings persist: VK MA5
+2026-07-29 05:29:09,431 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:29:10,867 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 36%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_inactive_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:124 Creating inactive membership: VK inactive e3ef11
+PASSED                                                                   [ 37%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_cancel_create_membership_discards_unsaved_changes 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:152 Validating cancel discards new membership: VK cancel e7b340
+PASSED                                                                   [ 39%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership 2026-07-29 05:37:02,539 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:37:03,311 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+FAILED                                                                   [ 40%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership 2026-07-29 05:47:15,627 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:47:17,441 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+FAILED                                                                   [ 42%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership ERROR [ 42%]
+tests/admin_portal/memberships/test_memberships_redemption.py::test_redemption_single_location_persists ERROR [ 43%]
+tests/admin_portal/memberships/test_memberships_redemption.py::test_redeem_at_multiple_locations_persists XFAILing location, so multi-location
+redemption cannot be exercised.)                                         [ 45%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:26 Searching membership by exact name: VK MA5
+2026-07-29 06:00:36,622 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 06:00:40,024 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 46%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_missing_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:43 Searching missing membership: membership-does-not-exist-automation
+PASSED                                                                   [ 48%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_partial_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:60 Searching membership by partial text: Plus
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render
+race); reproduces locally. Pending individual fix — see
+docs/admin_test_burndown.md)                                             [ 50%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:79 Searching membership using uppercase value: VK MA5
+2026-07-29 06:03:32,052 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 06:03:39,461 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 51%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:97 Searching membership with surrounding spaces: '  VK MA5  '
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render
+race); reproduces locally. Pending individual fix — see
+docs/admin_test_burndown.md)                                             [ 53%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_clear_search_restores_records 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:114 Validating clear search restores membership records
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render
+race); reproduces locally. Pending individual fix — see
+docs/admin_test_burndown.md)                                             [ 54%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_search_payloads_do_not_break_grid 

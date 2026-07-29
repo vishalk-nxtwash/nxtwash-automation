@@ -1,0 +1,815 @@
+2026-07-27 05:33:51,864 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 83 items
+
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply ERROR [  4%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal 2026-07-27 05:34:57,767 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-27 05:34:58,569 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [  6%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal ERROR [  8%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites PASSED [  9%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted 2026-07-27 05:36:31,008 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-27 05:36:31,688 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip PASSED [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data ERROR [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state ERROR [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal PASSED [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites PASSED [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown PASSED [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] ERROR [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] PASSED [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] PASSED [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count PASSED [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] PASSED [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] PASSED [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] PASSED [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] PASSED [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] PASSED [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] PASSED [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available PASSED [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range PASSED [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range PASSED [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal PASSED [ 39%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date PASSED [ 40%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range 2026-07-27 05:43:22,046 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-27 05:43:22,698 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 42%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state PASSED [ 43%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] PASSED [ 44%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] ERROR [ 45%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] ERROR [ 46%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] PASSED [ 48%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] PASSED [ 49%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] PASSED [ 50%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] PASSED [ 51%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] PASSED [ 53%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] PASSED [ 54%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero ERROR [ 55%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state ERROR [ 56%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum PASSED [ 57%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_daily_average_non_zero XFAIL [ 59%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero XFAIL [ 60%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] PASSED [ 61%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] ERROR [ 62%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] ERROR [ 63%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab XFAIL [ 65%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_section_visible PASSED [ 66%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data SKIPPED [ 67%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data ERROR [ 68%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_renders_for_test_dataset PASSED [ 69%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off ERROR [ 71%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_on SKIPPED [ 72%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible ERROR [ 73%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_all_three_tabs_visible PASSED [ 74%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships ERROR [ 75%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] PASSED [ 77%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] PASSED [ 78%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] ERROR [ 79%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] PASSED [ 80%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] PASSED [ 81%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present PASSED [ 83%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_empty_state PASSED [ 84%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi PASSED [ 85%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present SKIPPED [ 86%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count PASSED [ 87%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch XFAIL [ 89%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present PASSED [ 90%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_empty_state PASSED [ 91%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi PASSED [ 92%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible ERROR [ 93%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_initiates_download PASSED [ 95%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 96%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 97%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar PASSED [ 98%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestWashActivityNav.test_page_content_visible_after_apply __
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001047a9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001047a1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010424b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104251464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000104253678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000104253730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010429887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000104298294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001042da2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x00000001042d3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000104289434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000104766c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x000000010476a3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x000000010474d0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x000000010476ac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x000000010473e3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001047901f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000104790354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001047a17a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityNav.test_page_bar_changes_do_not_reopen_modal _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104ef9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104ef1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010499b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001049a1464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001049a3678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001049a3730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001049e887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001049e8294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000104a2a2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000104a23030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001049d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000104eb6c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000104eba3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000104e9d0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000104ebac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000104e8e3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000104ee01f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000104ee0354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000104ef17a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of TestWashActivitySiteFilter.test_single_site_scopes_data ___
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100fe5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100fddb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100a872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100a8d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000100a8f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000100a8f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000100ad487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000100ad4294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000100b162e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000100b0f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000100ac5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000100fa2c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000100fa63b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000100f890f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000100fa6c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000100f7a3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000100fcc1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000100fcc354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000100fdd7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivitySiteFilter.test_chip_x_and_clear_returns_empty_state _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001033d1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001033c9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102e732a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102e79464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000102e7b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000102e7b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000102ec087c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102ec0294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000102f022e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000102efb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000102eb1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x000000010338ec40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001033923b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001033750f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000103392c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x00000001033663b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001033b81f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x00000001033b8354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001033c97a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivitySiteFilter.test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001015a5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010159db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001010472a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010104d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x000000010104f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x000000010104f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010109487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000101094294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001010d62e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x00000001010cf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000101085434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000101562c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001015663b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001015490f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000101566c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x000000010153a3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x000000010158c1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x000000010158c354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x000000010159d7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityDateFilter.test_widgets_refresh_on_date_change[WAC-CHT-010-chart] _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x000000010329da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103295b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102d3f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102d45464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000102d47678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000102d47730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000102d8c87c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102d8c294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000102dce2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000102dc7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000102d7d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x000000010325ac40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x000000010325e3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001032410f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x000000010325ec4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x00000001032323b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001032841f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000103284354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001032957a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityDateFilter.test_widgets_refresh_on_date_change[WAC-TAB-005-tab] _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102d45a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102d3db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001027e72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001027ed464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001027ef678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001027ef730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010283487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102834294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001028762e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x000000010286f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000102825434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000102d02c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000102d063b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000102ce90f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000102d06c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000102cda3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000102d2c1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000102d2c354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000102d3d7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+________ ERROR at setup of TestWashActivityKPI.test_kpi_values_non_zero ________
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000101469a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101461b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100f0b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100f11464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000100f13678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000100f13730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000100f5887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000100f58294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000100f9a2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000100f93030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000100f49434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000101426c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x000000010142a3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x000000010140d0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x000000010142ac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x00000001013fe3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001014501f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000101450354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001014617a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+________ ERROR at setup of TestWashActivityKPI.test_kpi_zero_data_state ________
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001006c5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001006bdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001001672a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010016d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x000000010016f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x000000010016f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001001b487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001001b4294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001001f62e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x00000001001ef030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001001a5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000100682c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001006863b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001006690f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000100686c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x000000010065a3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001006ac1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x00000001006ac354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001006bd7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of TestWashActivityKPI.test_kpi_card_sublabels[WAC-KPI-009] __
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102d25a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102d1db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001027c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001027cd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001027cf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001027cf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010281487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102814294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001028562e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x000000010284f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000102805434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000102ce2c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000102ce63b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000102cc90f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000102ce6c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000102cba3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000102d0c1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000102d0c354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000102d1d7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of TestWashActivityKPI.test_kpi_card_sublabels[WAC-KPI-010] __
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x000000010090da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100905b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001003af2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001003b5464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001003b7678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001003b7730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001003fc87c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001003fc294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x000000010043e2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000100437030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001003ed434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x00000001008cac40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001008ce3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001008b10f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x00000001008cec4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x00000001008a23b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001008f41f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x00000001008f4354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001009057a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityChart.test_chart_empty_state_for_zero_data _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100cb5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100cadb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001007572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010075d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x000000010075f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x000000010075f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001007a487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001007a4294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001007e62e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x00000001007df030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000100795434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000100c72c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000100c763b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000100c590f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000100c76c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000100c4a3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000100c9c1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000100c9c354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000100cad7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_____ ERROR at setup of TestWashActivityChart.test_chart_legend_toggle_off _____
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100ee1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100ed9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001009832a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100995308 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 147664
+    4   chromedriver                        0x0000000100993f38 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 142592
+    5   chromedriver                        0x0000000100989cc0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 101000
+    6   chromedriver                        0x00000001009884a0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 94824
+    7   chromedriver                        0x000000010098b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    8   chromedriver                        0x000000010098b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    9   chromedriver                        0x00000001009d087c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    10  chromedriver                        0x00000001009d0294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    11  chromedriver                        0x0000000100a122e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    12  chromedriver                        0x0000000100a0b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    13  chromedriver                        0x00000001009c1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    14  chromedriver                        0x0000000100e9ec40 cxxbridge1$str$ptr + 2921304
+    15  chromedriver                        0x0000000100ea23b8 cxxbridge1$str$ptr + 2935504
+    16  chromedriver                        0x0000000100e850f8 cxxbridge1$str$ptr + 2816016
+    17  chromedriver                        0x0000000100ea2c4c cxxbridge1$str$ptr + 2937700
+    18  chromedriver                        0x0000000100e763b0 cxxbridge1$str$ptr + 2755272
+    19  chromedriver                        0x0000000100ec81f4 cxxbridge1$str$ptr + 3090700
+    20  chromedriver                        0x0000000100ec8354 cxxbridge1$str$ptr + 3091052
+    21  chromedriver                        0x0000000100ed97a4 cxxbridge1$str$ptr + 3161788
+    22  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    23  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityTabs.test_usage_breakdown_section_visible __
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102c75a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102c6db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001027172a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010271d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x000000010271f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x000000010271f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010276487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102764294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001027a62e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x000000010279f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000102755434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000102c32c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000102c363b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000102c190f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000102c36c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000102c0a3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000102c5c1f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000102c5c354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000102c6d7a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestWashActivityTabs.test_default_active_tab_is_memberships _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x00000001005f9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001005f1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010009b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001000a1464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001000a3678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001000a3730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001000e887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001000e8294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x000000010012a2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000100123030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001000d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x00000001005b6c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001005ba3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x000000010059d0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x00000001005bac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x000000010058e3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001005e01f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x00000001005e0354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001005f17a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of TestWashActivityTabs.test_tab_switching[WAC-TAB-004-cmp] __
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102b11a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102b09b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001025b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001025b9464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001025bb678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001025bb730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010260087c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000102600294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x00000001026422e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x000000010263b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001025f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000102acec40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000102ad23b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000102ab50f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000102ad2c4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000102aa63b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000102af81f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000102af8354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000102b097a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of TestWashActivityExport.test_export_xlsx_button_visible ___
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000105139a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000105131b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104bdb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104be1464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000104be3678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000104be3730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000104c2887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x0000000104c28294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x0000000104c6a2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000104c63030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x0000000104c19434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x00000001050f6c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x00000001050fa3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x00000001050dd0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x00000001050fac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x00000001050ce3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x00000001051201f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000105120354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x00000001051317a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100b09a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100b01b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001005ab2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001005b1464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001005b3678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001005b3730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001005f887c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+    7   chromedriver                        0x00000001005f8294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+    8   chromedriver                        0x000000010063a2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+    9   chromedriver                        0x0000000100633030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001005e9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000100ac6c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000100aca3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000100aad0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000100acac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000100a9e3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000100af01f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000100af0354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000100b017a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102985a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010297db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001024272a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010242d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x000000010242f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x000000010242f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x0000000102470724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+    7   chromedriver                        0x00000001024707b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+    8   chromedriver                        0x0000000102469b18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+    9   chromedriver                        0x0000000102466934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    10  chromedriver                        0x00000001024af030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    11  chromedriver                        0x0000000102465434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    12  chromedriver                        0x0000000102942c40 cxxbridge1$str$ptr + 2921304
+    13  chromedriver                        0x00000001029463b8 cxxbridge1$str$ptr + 2935504
+    14  chromedriver                        0x00000001029290f8 cxxbridge1$str$ptr + 2816016
+    15  chromedriver                        0x0000000102946c4c cxxbridge1$str$ptr + 2937700
+    16  chromedriver                        0x000000010291a3b0 cxxbridge1$str$ptr + 2755272
+    17  chromedriver                        0x000000010296c1f4 cxxbridge1$str$ptr + 3090700
+    18  chromedriver                        0x000000010296c354 cxxbridge1$str$ptr + 3091052
+    19  chromedriver                        0x000000010297d7a4 cxxbridge1$str$ptr + 3161788
+    20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible
+== 3 failed, 56 passed, 3 skipped, 4 xfailed, 17 errors in 1437.28s (0:23:57) ==

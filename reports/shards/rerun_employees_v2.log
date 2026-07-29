@@ -1,0 +1,3202 @@
+2026-07-29 03:02:26,321 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 300.0s
+timeout method: signal
+timeout func_only: False
+collected 98 items
+
+tests/admin_portal/employees/test_employees_create.py::test_add_employee_form_opens PASSED [  1%]
+tests/admin_portal/employees/test_employees_create.py::test_create_active_employee XFAIL [  2%]
+tests/admin_portal/employees/test_employees_create.py::test_create_inactive_employee XFAIL [  3%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_first_name_required 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [  4%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_last_name_required 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [  5%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_locations_required 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+XPASS (Location multi-select combobox locator uses label heuristics....) [  6%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_email_required 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [  7%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_phone_required 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [  8%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_invalid_email_rejected 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [  9%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_duplicate_email_rejected XFAIL [ 10%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_single_location_persists PASSED [ 11%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_multiple_locations PASSED [ 12%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_hire_date_persists XFAIL [ 13%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_hire_date_optional PASSED [ 14%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_future_hire_date XFAIL [ 15%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_code_optional PASSED [ 16%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_duplicate_code_behavior SKIPPED [ 17%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_hourly_wage_decimal PASSED [ 18%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_hourly_wage_optional PASSED [ 19%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_negative_wage_rejected 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+XPASS (EMP-CRT-020: Browser checkValidity() on the wage input depend...) [ 20%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_state_dropdown_has_options XFAIL [ 21%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_city_populates_after_state XFAIL [ 22%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_state_change_clears_city XFAIL [ 23%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_address_fields_optional PASSED [ 24%]
+tests/admin_portal/employees/test_employees_create.py::test_create_employee_cancel_discards_form PASSED [ 25%]
+tests/admin_portal/employees/test_employees_create.py::test_newly_created_employee_appears_immediately SKIPPED [ 26%]
+tests/admin_portal/employees/test_employees_edge_cases.py::test_employee_name_with_special_characters 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city
+PASSED                                                                   [ 27%]
+tests/admin_portal/employees/test_employees_edge_cases.py::test_employee_data_persists_after_relogin 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 28%]
+tests/admin_portal/employees/test_employees_edge_cases.py::test_deactivated_employee_in_inactive_filter 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EC-004: Inactive filter combo locator uses label heuristi...) [ 29%]
+tests/admin_portal/employees/test_employees_edge_cases.py::test_edit_locations_required 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EC-005: Location chip remove button uses class heuristics...) [ 30%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_form_opens_prepopulated 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 31%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_first_name_persists ERROR [ 32%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_last_name_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 33%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_locations_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EDT-004: Location multi-select combobox locator uses labe...) [ 34%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_email_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 35%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_phone_persists ERROR [ 36%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_hourly_wage_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EDT-007: Hourly wage field uses JS React setter (_set_inp...) [ 37%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_hire_date_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EDT-008: Hire date calendar picker interaction not yet mo...) [ 38%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_employee_code_persists 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-EDT-009: Employee code input locator uses name heuristics...) [ 39%]
+tests/admin_portal/employees/test_employees_edit.py::test_activate_inactive_employee SKIPPED [ 40%]
+tests/admin_portal/employees/test_employees_edit.py::test_deactivate_active_employee 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 41%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_clear_first_name_blocked 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 42%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_clear_last_name_blocked 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 43%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_invalid_email_blocked 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 44%]
+tests/admin_portal/employees/test_employees_edit.py::test_edit_cancel_discards_changes 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 45%]
+tests/admin_portal/employees/test_employees_export.py::test_export_button_clickable SKIPPED [ 46%]
+tests/admin_portal/employees/test_employees_filter.py::test_filter_panel_opens PASSED [ 47%]
+tests/admin_portal/employees/test_employees_filter.py::test_filter_by_active_status 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Filter panel locators (status combobox, apply button) use lab...) [ 48%]
+tests/admin_portal/employees/test_employees_filter.py::test_filter_by_inactive_status XPASS [ 50%]
+tests/admin_portal/employees/test_employees_filter.py::test_filter_result_count_matches_rows XFAIL [ 51%]
+tests/admin_portal/employees/test_employees_filter.py::test_reset_all_clears_filters 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Filter panel locators (status combobox, apply button) use lab...) [ 52%]
+tests/admin_portal/employees/test_employees_list.py::test_employees_page_loads PASSED [ 53%]
+tests/admin_portal/employees/test_employees_list.py::test_employees_list_displays_correct_columns PASSED [ 54%]
+tests/admin_portal/employees/test_employees_list.py::test_shift_status_inactive_when_no_active_shift 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 55%]
+tests/admin_portal/employees/test_employees_list.py::test_status_column_shows_badge 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 56%]
+tests/admin_portal/employees/test_employees_list.py::test_employees_pagination_shows_count SKIPPED [ 57%]
+tests/admin_portal/employees/test_employees_list.py::test_results_per_page_updates_rows XFAIL [ 58%]
+tests/admin_portal/employees/test_employees_list.py::test_search_by_exact_last_name 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 59%]
+tests/admin_portal/employees/test_employees_list.py::test_search_by_partial_last_name 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 60%]
+tests/admin_portal/employees/test_employees_list.py::test_search_nonexistent_shows_empty_state SKIPPED [ 61%]
+tests/admin_portal/employees/test_employees_list.py::test_clear_search_restores_full_list 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR                                                                    [ 62%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_add_shift_form_opens PASSED [ 63%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_active_shift 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 64%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_inactive_shift 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 65%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_employee_required XFAIL [ 66%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_site_required 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 67%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_time_required 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 68%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_employee_dropdown_lists_active_employees 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 69%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_site_dropdown_lists_sites XFAIL [ 70%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_datetime_picker_present XFAIL [ 71%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_end_before_start 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (EMP-SH-CRT-010: Whether end-before-start is rejected depends ...) [ 72%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_midnight_spanning 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6185349120) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+XFAIL (Shift form locators (Employee combobox, Site combobox, start/...) [ 73%]
+tests/admin_portal/employees/test_employees_shift_create.py::test_create_shift_overlapping_shifts 
+-------------------------------- live log setup --------------------------------
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL37
+VK ZT ab24bb
+VK AL36
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+WARNING  nxtwash:conftest.py:175 Employee create did not navigate away — assuming duplicate; searching list with extended timeout

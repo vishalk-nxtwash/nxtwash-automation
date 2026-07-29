@@ -1,0 +1,599 @@
+2026-07-29 10:44:38,548 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 419 items
+
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [  0%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [  0%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [  0%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_page_content_visible_after_apply PASSED [  0%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_apply_filters_closes_modal SKIPPED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted SKIPPED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip XFAILming race when
+iterating all options on staging.)                                       [  2%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_single_site_scopes_data PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_clear_all_sites PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal ERROR [  4%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites XPASSming
+race during modal open on staging.)                                      [  4%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown XPASSpen on staging.) [  4%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] XFAIL [  4%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] XPASS [  5%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] XPASS [  5%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_date_preset_count XPASSace during modal open.) [  5%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] XFAILw to
+populate on staging.)                                                    [  5%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] XPASSw to
+populate on staging.)                                                    [  5%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] XPASSw to
+populate on staging.)                                                    [  6%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] XPASSw to
+populate on staging.)                                                    [  6%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] XPASSw to
+populate on staging.)                                                    [  6%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] XPASSw to
+populate on staging.)                                                    [  6%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_custom_preset_available XPASS; timing race during
+modal open on staging.)                                                  [  7%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range XPASSaging
+date preset rendering is intermittently slow.)                           [  7%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date PASSED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_last_month_date_range SKIPPED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_zero_data_state PASSED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] XPASS [  8%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] XPASS [  9%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] XPASS [  9%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] PASSED [  9%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] PASSED [  9%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_values_non_zero PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_zero_data_state PASSED [ 11%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum PASSED [ 11%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_daily_average_non_zero XFAILoduct defect) [ 11%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero XFAILormula not computing.
+See also WAC-KPI-005, WAC-KPI-011.)                                      [ 11%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab XFAILmatch. Same root cause as
+WAC-KPI-005, WAC-PWS-006.)                                               [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_section_visible PASSED [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data SKIPPEDinst live DOM) [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_empty_state_for_zero_data PASSED [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_renders_for_test_dataset XPASS [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_legend_toggle_off SKIPPEDe removing skip.) [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityChart::test_chart_legend_toggle_on SKIPPED [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_usage_breakdown_section_visible XPASS [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_all_three_tabs_visible PASSED [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_default_active_tab_is_memberships PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityMemberships::test_memberships_empty_state PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present SKIPPEDools
+verification)                                                            [ 17%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count XPASS [ 17%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch XFAIL [ 17%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present PASSED [ 17%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityCompWashes::test_comp_washes_empty_state PASSED [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi PASSED [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityExport::test_export_xlsx_button_visible XPASS) [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestWashActivityExport::test_export_xlsx_initiates_download XPASS [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestSingleDaySync::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestSingleDaySync::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar <- tests/admin_portal/mixins.py PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity 2.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal <- tests/admin_portal/mixins.py PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply XPASSnceException during
+filter application on staging.)                                          [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal SKIPPED [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal PASSED [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites XPASSuring modal
+open on staging.)                                                        [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted SKIPPED [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip XFAILming race when
+iterating all options on staging.)                                       [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data XPASSnceException during
+filter application on staging.)                                          [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter PASSED [ 23%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state PASSED [ 23%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites PASSED [ 23%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal XPASSite() when
+called from the page-bar on staging.)                                    [ 23%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites XPASSing race during
+modal open on staging.)                                                  [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown XPASSpen on staging.) [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] XPASS [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] XPASS [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] XPASS [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count XPASSace during modal open.) [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] XPASSw to
+populate on staging.)                                                    [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] XPASSw to
+populate on staging.)                                                    [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] XPASSw to
+populate on staging.)                                                    [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] XPASSw to
+populate on staging.)                                                    [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] XPASSw to
+populate on staging.)                                                    [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] XPASSw to
+populate on staging.)                                                    [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available XPASS; timing race during modal
+open on staging.)                                                        [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range PASSED [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range XPASSaging
+date preset rendering is intermittently slow.)                           [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal PASSED [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date PASSED [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range SKIPPED [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state PASSED [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] XPASS [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] XPASS [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] XPASS [ 29%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] PASSED [ 29%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] PASSED [ 29%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] PASSED [ 29%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] PASSED [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] PASSED [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] PASSED [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero PASSED [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state PASSED [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum PASSED [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_daily_average_non_zero XFAILoduct defect) [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero XFAILormula not computing. See
+also WAC-KPI-005, WAC-KPI-011.)                                          [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] PASSED [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] PASSED [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] PASSED [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab XFAILmatch. Same root cause as
+WAC-KPI-005, WAC-PWS-006.)                                               [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_section_visible PASSED [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data SKIPPEDinst live DOM) [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data PASSED [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_renders_for_test_dataset XPASS [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off SKIPPEDe removing skip.) [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_on SKIPPED [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible XPASS [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_all_three_tabs_visible PASSED [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships PASSED [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] PASSED [ 35%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] PASSED [ 35%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] PASSED [ 35%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] PASSED [ 35%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] PASSED [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present ERROR [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_empty_state PASSED [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi PASSED [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present SKIPPEDools
+verification)                                                            [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count XPASS [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch XFAIL [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present PASSED [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_empty_state PASSED [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi PASSED [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible XPASS) [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_initiates_download XFAIL [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 39%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar <- tests/admin_portal/mixins.py PASSED [ 39%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal <- tests/admin_portal/mixins.py PASSED [ 39%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_loads_at_correct_url PASSED [ 39%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens PASSED [ 40%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_contains_all_controls PASSED [ 40%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_opens_with_no_site_default PASSED [ 40%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal PASSED [ 40%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack PASSED [ 41%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible PASSED [ 41%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar PASSED [ 41%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_level_changes_do_not_reopen_modal PASSED [ 41%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state SKIPPEDnfirmed) — same pattern as NAV-007 in
+other modules. Verify via DevTools whether a semantic active attribute
+is set.)                                                                 [ 42%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_commission_transactions_subtitle_spelling XFAILissing second
+'m'). Expected: 'Commission Transactions'. xfail until copy defect is
+fixed; auto-passes when corrected.)                                      [ 42%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_sites_dropdown_lists_active_sites PASSED [ 42%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data PASSED [ 42%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation PASSED [ 42%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_shows_chips_with_overflow PASSED [ 43%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown SKIPPED — verify
+React Select selected state attribute via DevTools.)                     [ 43%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deselecting_site_removes_chip SKIPPEDdown may not
+have opened or option uses different ARIA structure. TODO: verify React
+Select de-select mechanism via DevTools.)                                [ 43%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_chip_x_clear_returns_empty_state PASSED [ 43%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable PASSED [ 44%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh PASSED [ 44%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent PASSED [ 44%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_date_preset_dropdown_lists_all_options XPASSate preset
+dropdown does not open reliably via JS when no site is selected. Needs
+DevTools inspection to confirm the control's CSS class prefix and
+whether options use role='option' or a custom class. Manual check
+required.)                                                               [ 44%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_selecting_preset_fills_date_range PASSED [ 45%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal PASSED [ 45%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002] PASSED [ 45%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-003] PASSED [ 45%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] PASSED [ 46%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-005] PASSED [ 46%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006] PASSED [ 46%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-007] PASSED [ 46%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_uncheck_single_day_reverts_to_range PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_custom_range_renders PASSED [ 47%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_range_spanning_month_boundary_renders PASSED [ 48%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-01] PASSED [ 48%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02] PASSED [ 48%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-03] PASSED [ 48%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-04] PASSED [ 49%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employees_summary_card_content PASSED [ 49%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data PASSED [ 49%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change PASSED [ 49%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_date_change PASSED [ 50%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_count_reconciliation SKIPPEDoyees summary card.
+TODO: confirm card DOM structure via DevTools and tighten
+get_employee_summary_count().)                                           [ 50%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_summary_matches_table_count PASSED [ 50%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_total_hours_format PASSED [ 50%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_currency_and_percentage_format PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01] PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02] PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-03] PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04] PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05] PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-06] PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-07] PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08] PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state PASSED [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates SKIPPED) [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_filters_table PASSED [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_no_match PASSED [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all] PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-active] PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-inactive] PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_four_commission_cards_visible PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_reconciliation_chain PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01] PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-02] PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-03] PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-04] PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05] PASSED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-06] PASSED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-07] PASSED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-08] PASSED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows PASSED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state PASSED [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_search_filters_table PASSED [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values SKIPPED,
+'membership']; got: ['Vishal Kumar']. TODO: confirm column index and
+type labels via DevTools.)                                               [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-EMP-012] SKIPPED threshold.  Re-run with a wider date range that produces more rows,
+or verify the pagination component class via DevTools.)                  [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011] SKIPPED threshold.  Re-run with a wider date range that produces more rows,
+or verify the pagination component class via DevTools.)                  [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar <- tests/admin_portal/mixins.py PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal <- tests/admin_portal/mixins.py PASSED [ 60%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_loads_at_correct_url PASSED [ 60%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_modal_auto_opens PASSED [ 60%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_contains_all_controls PASSED [ 60%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_opens_with_no_default_site PASSED [ 61%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_apply_filters_closes_modal SKIPPED [ 61%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_values_reflected_in_page_bar PASSED [ 61%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_bar_changes_do_not_navigate_away PASSED [ 61%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_content_visible_after_apply PASSED [ 62%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites 2026-07-29 12:39:26,154 ERROR nxtwash: Test FAILED: tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-29 12:39:27,012 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 62%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_no_default_site_selected PASSED [ 62%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip 2026-07-29 12:39:56,323 ERROR nxtwash: Test FAILED: tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip (url: https://staging.nxtwash.com/reports/detailed/redemption_details)
+2026-07-29 12:39:57,097 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export CSV
+Today
+Select date range
+Single day
+Redemption Details
+Total Redemptions
+0
+Total Value
+$0.00
+Avg Per Redemption
+$0.00
+Expand All
+Loyalty points
+Comp Washes
+Memberships
+Gift cards
+Wash books
+Discounts
+Coupon codes
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 62%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_multi_site_selection_accepted PASSED [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_single_site_scopes_data PASSED [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_removing_chip_reduces_site_filter PASSED [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_clear_all_sites PASSED [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_uses_multiselect PASSED [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_lists_multiple_sites PASSED [ 64%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_no_modal PASSED [ 64%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_rdm_site_present_in_dropdown PASSED [ 64%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_does_not_reopen_modal PASSED [ 64%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_count PASSED [ 65%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_dropdown_options PASSED [ 65%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_selecting_preset_fills_date_range PASSED [ 65%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-002] PASSED [ 65%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-003] PASSED [ 66%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-004] PASSED [ 66%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-005] PASSED [ 66%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-006] PASSED [ 66%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-007] PASSED [ 67%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_range_field_shows_dates PASSED [ 67%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_future_dates_disabled_in_calendar SKIPPEDefine day-cell
+selector via DevTools and re-run.)                                       [ 67%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_mode_changes_date_field PASSED [ 67%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_calendar_date_range_sets_field PASSED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_checkbox_visible PASSED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_zero_data_date_range_state PASSED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_clears_custom_date_range PASSED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_total_redemptions_card_visible PASSED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_all_summary_cards_visible PASSED [ 69%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-01] PASSED [ 69%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-02] PASSED [ 69%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_expand_all_opens_all_sections XFAILss checks that
+don't match the actual RDM accordion DOM. Expand All button works
+correctly (label toggles to 'Collapse All' — first assert passes). Needs
+DevTools inspection of expanded vs collapsed accordion section to fix
+body-visibility detection.)                                              [ 69%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_collapse_all_hides_all_sections PASSED [ 70%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-loyalty-points] XFAILal
+RDM accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 70%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-comp-washes] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 70%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-memberships] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 70%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-gift-cards] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 71%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-wash-books] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 71%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-discounts] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 71%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-coupon-codes] XFAILuses
+heuristic aria-expanded / class checks that don't match the actual RDM
+accordion DOM. Needs DevTools inspection of expanded vs collapsed
+section to fix detection.)                                               [ 71%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_summary_cards_visible_without_expanding PASSED [ 72%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-loyalty-points] PASSED [ 72%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-comp-washes] PASSED [ 72%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-memberships] PASSED [ 72%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-gift-cards] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-wash-books] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-loyalty-points] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-comp-washes] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-memberships] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-gift-cards] PASSED [ 74%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-wash-books] PASSED [ 74%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-loyalty-points] XFAILn of expanded vs collapsed section to fix detection.) [ 74%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-comp-washes] XFAILn
+of expanded vs collapsed section to fix detection.)                      [ 74%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-memberships] XFAILn
+of expanded vs collapsed section to fix detection.)                      [ 75%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-gift-cards] XFAILon
+of expanded vs collapsed section to fix detection.)                      [ 75%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-wash-books] XFAILon
+of expanded vs collapsed section to fix detection.)                      [ 75%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-loyalty-points] SKIPPED [ 75%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-comp-washes] SKIPPEDbe
+too small for this section))                                             [ 76%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-memberships] SKIPPEDbe
+too small for this section))                                             [ 76%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-gift-cards] SKIPPEDe too
+small for this section))                                                 [ 76%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-wash-books] SKIPPEDe too
+small for this section))                                                 [ 76%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-loyalty-points] PASSED [ 77%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-comp-washes] PASSED [ 77%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-memberships] PASSED [ 77%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-gift-cards] PASSED [ 77%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-wash-books] PASSED [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-loyalty-points] XFAILn of expanded vs collapsed section to fix detection.) [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-comp-washes] XFAILon
+of expanded vs collapsed section to fix detection.)                      [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-memberships] XFAILon
+of expanded vs collapsed section to fix detection.)                      [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-gift-cards] XFAILion
+of expanded vs collapsed section to fix detection.)                      [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-wash-books] XFAILion
+of expanded vs collapsed section to fix detection.)                      [ 79%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-site] PASSED [ 79%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-date] PASSED [ 79%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_summary_cards PASSED [ 79%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_breakdown_columns XFAIL' but columns are Points
+Range / Count / Percentage — title does not match content.  Flagged for
+product fix; xfail until resolved.)                                      [ 80%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_detail_columns XFAILading text or
+container class doesn't match — blocked by accordion DOM structure gap.
+Needs DevTools inspection to confirm table heading and container
+selectors.)                                                              [ 80%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_summary_cards PASSED [ 80%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_breakdown_columns XFAILext or
+container class doesn't match — blocked by accordion DOM structure gap.
+Needs DevTools inspection to confirm table heading and container
+selectors.)                                                              [ 80%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_detail_has_data XFAIL RDM accordion
+DOM — first assert always fails. Needs DevTools inspection of expanded
+vs collapsed section to fix detection.)                                  [ 81%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_summary_cards PASSED [ 81%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_breakdown_columns XFAILext or
+container class doesn't match — blocked by accordion DOM structure gap.
+Needs DevTools inspection to confirm table heading and container
+selectors.)                                                              [ 81%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_detail_has_data XFAIL RDM accordion
+DOM — first assert always fails. Needs DevTools inspection of expanded
+vs collapsed section to fix detection.)                                  [ 81%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_summary_cards PASSED [ 82%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_breakdown_columns XFAILext or
+container class doesn't match — blocked by accordion DOM structure gap.
+Needs DevTools inspection to confirm table heading and container
+selectors.)                                                              [ 82%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_detail_has_data XFAIL RDM accordion
+DOM — first assert always fails. Needs DevTools inspection of expanded
+vs collapsed section to fix detection.)                                  [ 82%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_summary_cards PASSED [ 82%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_breakdown_columns XFAILext or
+container class doesn't match — blocked by accordion DOM structure gap.
+Needs DevTools inspection to confirm table heading and container
+selectors.)                                                              [ 83%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_detail_has_data XFAIL RDM accordion
+DOM — first assert always fails. Needs DevTools inspection of expanded
+vs collapsed section to fix detection.)                                  [ 83%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 83%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 83%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar <- tests/admin_portal/mixins.py PASSED [ 84%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal <- tests/admin_portal/mixins.py 

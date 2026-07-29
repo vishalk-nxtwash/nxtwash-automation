@@ -1,0 +1,2747 @@
+2026-07-27 05:06:24,609 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 66 items
+
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-9/test_download_memberships_star0
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  1%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_file_format 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  3%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_filtered_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:91 Verifying filtered membership export downloads a file
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  4%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent 2026-07-27 05:10:40,438 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 05:10:41,157 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  6%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned 2026-07-27 05:13:08,527 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 05:13:09,175 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  7%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form 2026-07-27 05:13:42,121 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 05:13:42,832 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by
++ Add new membership
+Membership Name
+Type
+Price
+Status
+Wash 2 basic membership 1
+Recurring
+$32.00
+Active
+Edit
+VK decimal 32f485 e1
+Prepaid
+$15.50
+Active
+Edit
+VK decimal dad24e
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 56ac3c
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 5579d4
+Prepaid
+$15.50
+Active
+Edit
+VK decimal cac3b4
+Prepaid
+$15.50
+Active
+Edit
+VK decimal d7faa6
+Prepaid
+$15.50
+Active
+Edit
+VK decimal f3b0aa
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 8a5084
+Prepaid
+$15.50
+Active
+Edit
+VK decimal e1fa2e
+Prepaid
+$15.50
+Active
+Edit
+VK decimal f968f0
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 0af799
+Prepaid
+$15.50
+Active
+Edit
+VK decimal a0ea91
+Prepaid
+$15.50
+Active
+Edit
+VK active 65cae3
+Prepaid
+$15.00
+Active
+Edit
+VK valid cf5ba8
+Prepaid
+$15.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 31 of 31
+Please wait
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by
++ Add new membership
+Membership Name
+Type
+Price
+Status
+Wash 2 basic membership 1
+Recurring
+$32.00
+Active
+Edit
+VK decimal 32f485 e1
+Prepaid
+$15.50
+Active
+Edit
+VK decimal dad24e
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 56ac3c
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 5579d4
+Prepaid
+$15.50
+Active
+Edit
+VK decimal cac3b4
+Prepaid
+$15.50
+Active
+Edit
+VK decimal d7faa6
+Prepaid
+$15.50
+Active
+Edit
+VK decimal f3b0aa
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 8a5084
+Prepaid
+$15.50
+Active
+Edit
+VK decimal e1fa2e
+Prepaid
+$15.50
+Active
+Edit
+VK decimal f968f0
+Prepaid
+$15.50
+Active
+Edit
+VK decimal 0af799
+Prepaid
+$15.50
+Active
+Edit
+VK decimal a0ea91
+Prepaid
+$15.50
+Active
+Edit
+VK active 65cae3
+Prepaid
+$15.00
+Active
+Edit
+VK valid cf5ba8
+Prepaid
+$15.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 31 of 31
+Please wait
+FAILED                                                                   [  9%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA3
+2026-07-27 05:16:27,604 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 05:16:28,283 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 10%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA3 and restoring it
+2026-07-27 05:19:24,546 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 05:19:25,167 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 12%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type PASSED [ 13%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type ERROR [ 13%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission PASSED [ 15%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission ERROR [ 15%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists 2026-07-27 05:41:59,704 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-27 05:42:01,015 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+VK ZT 71c6f6
+Columbia
+0%
+0%
+VK ZT 9eaa54
+Columbia
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+VK ZT 71c6f6
+Columbia
+0%
+0%
+VK ZT 9eaa54
+Columbia
+0%
+0%
+FAILED                                                                   [ 16%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_off PASSED [ 18%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on ERROR [ 19%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations 2026-07-27 06:03:11,121 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-27 06:03:12,324 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+FAILED                                                                   [ 21%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_applicable_discount_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:232 Assigning discount Plus discount to AUTOTEST Membership
+PASSED                                                                   [ 22%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_applicable_discount_persists ERROR [ 22%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:251 Assigning then removing discount Plus discount from AUTOTEST Membership
+2026-07-27 06:21:51,827 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-27 06:21:52,559 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount
+Adaptive discounts
+Coming soon...
+Multiple months discount
+Multiple cars discount
+Discount profile
+Create custom discount profiles and apply to your memberships by importing them
++ Add multi-month discount
+Discount
+Months number
+From date
+To date
+No records available
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount
+Adaptive discounts
+Coming soon...
+Multiple months discount
+Multiple cars discount
+Discount profile
+Create custom discount profiles and apply to your memberships by importing them
++ Add multi-month discount
+Discount
+Months number
+From date
+To date
+No records available
+FAILED                                                                   [ 24%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists ERROR [ 24%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:278 Enabling Limit Membership toggle for AUTOTEST Membership
+2026-07-27 06:29:36,561 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 06:29:37,179 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+FAILED                                                                   [ 25%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:301 Setting description 'VK automation test description' on AUTOTEST Membership
+2026-07-27 06:37:51,192 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-27 06:37:51,944 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+You can add your membership description and it will show on ecommerce website
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+VK ZT 71c6f6
+Columbia
+0%
+0%
+VK ZT 9eaa54
+Columbia
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+You can add your membership description and it will show on ecommerce website
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+VK ZT c4a124
+Columbia
+0%
+0%
+VK ZT d4ccd8
+Columbia
+0%
+0%
+VK ZT 71c6f6
+Columbia
+0%
+0%
+VK ZT 9eaa54
+Columbia
+0%
+0%
+FAILED                                                                   [ 27%]
+tests/admin_portal/memberships/test_memberships_managed.py::test_managed_membership_provided_at_baseline PASSED [ 28%]
+tests/admin_portal/memberships/test_memberships_managed.py::test_managed_membership_mutation_is_reset_on_teardown 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_managed:test_memberships_managed.py:42 Mutating managed membership points to 5
+PASSED                                                                   [ 30%]
+tests/admin_portal/memberships/test_memberships_negative.py::test_memberships_special_character_search_stays_usable PASSED [ 31%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:35 Creating/verifying prepaid membership: VK MA3
+2026-07-27 06:58:44,325 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 06:58:44,928 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 33%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:53 Creating/verifying recurring membership: VK MR2
+2026-07-27 07:00:41,999 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:00:42,616 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 34%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:92 Verifying membership settings persist: VK MA3
+2026-07-27 07:02:42,003 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:02:42,612 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 36%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_create_inactive_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:124 Creating inactive membership: VK inactive d93bb3
+PASSED                                                                   [ 37%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_cancel_create_membership_discards_unsaved_changes 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:152 Validating cancel discards new membership: VK cancel c35c09
+PASSED                                                                   [ 39%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership 2026-07-27 07:08:34,047 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:08:34,719 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+FAILED                                                                   [ 40%]
+tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership 2026-07-27 07:15:33,605 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:15:34,245 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+AUTOTEST Membership
+Recurring
+$25.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+AUTOTEST Membership
+Prepaid
+$15.00
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 29 of 29
+FAILED                                                                   [ 42%]
+tests/admin_portal/memberships/test_memberships_redemption.py::test_redemption_single_location_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_redemption:test_memberships_redemption.py:23 Configuring single redemption location for AUTOTEST Membership with service VK detail wash
+2026-07-27 07:23:00,886 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_redemption.py::test_redemption_single_location_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_redemption.py::test_redemption_single_location_persists (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-27 07:23:01,625 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Redeem at
+Redeem as
+VK AL31
+Los angeles
+Select...
+VK ZT c6d556
+Los angeles
+Select...
+VK AL30
+Los angeles
+Select...
+VK AL29
+Los angeles
+Select...
+VK ZT 9e7bdf
+Los angeles
+Select...
+VK AL28
+Los angeles
+Select...
+VK AL27
+Los angeles
+Select...
+VK ZT 4e248f
+Los angeles
+Select...
+VK AL26
+Los angeles
+Select...
+VK ZT 8f811b
+Columbia
+Select...
+VK AL25
+Columbia
+Select...
+VK AL24
+Columbia
+Select...
+VK ZT 46d34b
+Columbia
+Select...
+VK AL23
+Columbia
+Select...
+VK ZT c4a124
+Columbia
+Select...
+VK ZT d4ccd8
+Columbia
+Select...
+VK ZT 71c6f6
+Columbia
+Select...
+VK ZT 9eaa54
+Columbia
+Select...
+VK ZT ae9b9c
+Columbia
+Select...
+test 12
+Clifton
+Select...
+VK AL22
+Columbia
+Select...
+VK AL21
+Columbia
+Select...
+VK AL20
+Columbia
+Select...
+VK ZT c26508
+Columbia
+Select...
+VK AL19
+Columbia
+Select...
+VK AL18
+Columbia
+Select...
+VK ZT c54675
+Columbia
+Select...
+VK AL17
+Columbia
+Select...
+VK AL16
+Columbia
+Select...
+VK ZT 2b4279
+Columbia
+Select...
+VK AL15
+Columbia
+Select...
+VK AL14
+Columbia
+Select...
+VK ZT 146465
+Columbia
+Select...
+VK AL13
+Columbia
+Select...
+VK AL12
+Columbia
+Select...
+VK AL11
+Columbia
+Select...
+VK AL10
+Columbia
+Vk detail wash
+VK AL09
+Columbia
+Select...
+VK AL08
+Columbia
+Select...
+VK AL01
+Columbia
+Select...
+vkauto1
+Canyon lake
+Select...
+VK AL07
+Columbia
+Select...
+VK AL06
+Columbia
+Select...
+VK AL05
+Columbia
+Select...
+VK AL04
+Columbia
+Select...
+VK AL03
+Columbia
+Select...
+VK AL02
+Columbia
+Select...
+test123 udpated
+Columbia
+Select...
+VK Test carwash 2
+Canyon lake
+Select...
+VK Test Wash 01
+League city
+Select...
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Redeem at
+Redeem as
+VK AL31
+Los angeles
+Select...
+VK ZT c6d556
+Los angeles
+Select...
+VK AL30
+Los angeles
+Select...
+VK AL29
+Los angeles
+Select...
+VK ZT 9e7bdf
+Los angeles
+Select...
+VK AL28
+Los angeles
+Select...
+VK AL27
+Los angeles
+Select...
+VK ZT 4e248f
+Los angeles
+Select...
+VK AL26
+Los angeles
+Select...
+VK ZT 8f811b
+Columbia
+Select...
+VK AL25
+Columbia
+Select...
+VK AL24
+Columbia
+Select...
+VK ZT 46d34b
+Columbia
+Select...
+VK AL23
+Columbia
+Select...
+VK ZT c4a124
+Columbia
+Select...
+VK ZT d4ccd8
+Columbia
+Select...
+VK ZT 71c6f6
+Columbia
+Select...
+VK ZT 9eaa54
+Columbia
+Select...
+VK ZT ae9b9c
+Columbia
+Select...
+test 12
+Clifton
+Select...
+VK AL22
+Columbia
+Select...
+VK AL21
+Columbia
+Select...
+VK AL20
+Columbia
+Select...
+VK ZT c26508
+Columbia
+Select...
+VK AL19
+Columbia
+Select...
+VK AL18
+Columbia
+Select...
+VK ZT c54675
+Columbia
+Select...
+VK AL17
+Columbia
+Select...
+VK AL16
+Columbia
+Select...
+VK ZT 2b4279
+Columbia
+Select...
+VK AL15
+Columbia
+Select...
+VK AL14
+Columbia
+Select...
+VK ZT 146465
+Columbia
+Select...
+VK AL13
+Columbia
+Select...
+VK AL12
+Columbia
+Select...
+VK AL11
+Columbia
+Select...
+VK AL10
+Columbia
+Vk detail wash
+VK AL09
+Columbia
+Select...
+VK AL08
+Columbia
+Select...
+VK AL01
+Columbia
+Select...
+vkauto1
+Canyon lake
+Select...
+VK AL07
+Columbia
+Select...
+VK AL06
+Columbia
+Select...
+VK AL05
+Columbia
+Select...
+VK AL04
+Columbia
+Select...
+VK AL03
+Columbia
+Select...
+VK AL02
+Columbia
+Select...
+test123 udpated
+Columbia
+Select...
+VK Test carwash 2
+Canyon lake
+Select...
+VK Test Wash 01
+League city
+Select...
+FAILED                                                                   [ 43%]
+tests/admin_portal/memberships/test_memberships_redemption.py::test_redeem_at_multiple_locations_persists 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_redemption:test_memberships_redemption.py:47 Configuring two redemption locations for AUTOTEST Membership
+XFAIL (MB-RDM-002 test-data issue: the service is only configured at...) [ 45%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:26 Searching membership by exact name: VK MA3
+2026-07-27 07:33:56,984 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:33:57,589 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 46%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_missing_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:43 Searching missing membership: membership-does-not-exist-automation
+PASSED                                                                   [ 48%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_partial_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:60 Searching membership by partial text: Plus
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render ...) [ 50%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:79 Searching membership using uppercase value: VK MA3
+2026-07-27 07:34:46,477 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:34:47,086 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 51%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:97 Searching membership with surrounding spaces: '  VK MA3  '
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render ...) [ 53%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_clear_search_restores_records 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:114 Validating clear search restores membership records
+XFAIL (Headless post-save/navigation timeout (grid/iframe re-render ...) [ 54%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_search_payloads_do_not_break_grid 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:140 Searching membership with payload: ' OR 1=1 --
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:140 Searching membership with payload: <script>alert(1)</script>
+PASSED                                                                   [ 56%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_long_search_text_does_not_break_grid 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:153 Searching membership with very long text
+PASSED                                                                   [ 57%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_search_inactive_membership 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:168 Searching for an inactive membership
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:179 Searching inactive membership by name: AUTOTEST Membership
+PASSED                                                                   [ 59%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_filter_by_recurring_type PASSED [ 60%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_filter_by_prepaid_type PASSED [ 62%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_filter_by_site PASSED [ 63%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_filter_active_shows_only_active PASSED [ 65%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_filter_inactive_excludes_active SKIPPED [ 66%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_combined_type_and_status_filter PASSED [ 68%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_reset_filters_restores_grid PASSED [ 69%]
+tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_apply_multiple_filters PASSED [ 71%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_memberships_page_loads_with_primary_controls 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:24 Verifying Memberships list page primary controls
+PASSED                                                                   [ 72%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_memberships_grid_columns_are_visible 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:50 Verifying Memberships grid columns
+PASSED                                                                   [ 74%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_visible_membership_rows_have_edit_action 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:67 Verifying visible membership rows expose Edit action
+PASSED                                                                   [ 75%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_memberships_pagination_results_and_support_controls 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:80 Verifying Memberships pagination/results controls
+PASSED                                                                   [ 77%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_add_membership_form_loads 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:94 Verifying Add Membership form loads
+PASSED                                                                   [ 78%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_redemption_settings_tab_loads 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:117 Verifying Redemption Settings tab
+PASSED                                                                   [ 80%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_discount_settings_tab_loads 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:134 Verifying Discount Settings tab
+PASSED                                                                   [ 81%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_save_and_cancel_buttons_are_visible_on_create_form 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:151 Verifying Save and Cancel buttons on Add Membership form
+PASSED                                                                   [ 83%]
+tests/admin_portal/memberships/test_memberships_ui.py::test_memberships_filter_panel_shows_controls 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_ui:test_memberships_ui.py:170 Opening memberships filter panel
+PASSED                                                                   [ 84%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_membership_required_name_validation 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:29 Validating required membership name
+PASSED                                                                   [ 86%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_membership_blank_required_form_stays_on_form 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:45 Validating blank required membership form stays on create page
+PASSED                                                                   [ 87%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_membership_requires_global_price 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:62 Validating required global price
+PASSED                                                                   [ 89%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_membership_name_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:81 Validating duplicate membership name is rejected
+2026-07-27 07:44:53,854 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_membership_name_is_rejected (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_membership_name_is_rejected (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:44:54,466 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 90%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_spaces_only_membership_name_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:105 Validating spaces-only membership name is rejected
+PASSED                                                                   [ 92%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_negative_global_price_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:126 Validating negative global price
+PASSED                                                                   [ 93%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_alphabetic_global_price_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:149 Validating alphabetic global price
+PASSED                                                                   [ 95%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_negative_global_commission_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:172 Validating negative global commission
+PASSED                                                                   [ 96%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_decimal_global_price_is_accepted_and_saved 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:198 Validating decimal global price is accepted: VK decimal 650596
+2026-07-27 07:47:22,234 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_decimal_global_price_is_accepted_and_saved (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_decimal_global_price_is_accepted_and_saved (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:47:22,844 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 98%]
+tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_barcode_is_rejected 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:224 Validating duplicate barcode 'AUTO-DUP-BAR-001' is rejected
+2026-07-27 07:53:10,489 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_barcode_is_rejected (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_barcode_is_rejected (url: https://staging.nxtwash.com/services/memberships)
+2026-07-27 07:53:11,137 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at teardown of test_edit_managed_membership_type ____________
+E   selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
+      (Session info: chrome=150.0.7871.182)
+    Stacktrace:
+    0   chromedriver                        0x00000001052d1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001052c9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104d730a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000104e02594 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 660316
+    4   chromedriver                        0x0000000104dfb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104db1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010528ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001052923b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001052750f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000105292c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001052663b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001052b81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001052b8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001052c97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at teardown of test_edit_managed_membership_global_price_and_commission _
+E   selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
+      (Session info: chrome=150.0.7871.182)
+    Stacktrace:
+    0   chromedriver                        0x0000000102895a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010288db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001023370a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x00000001023c6594 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 660316
+    4   chromedriver                        0x00000001023bf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102375434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102852c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001028563b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001028390f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102856c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010282a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010287c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010287c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010288d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of test_edit_managed_membership_customer_portal_toggle_on ___
+E   selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
+      (Session info: chrome=150.0.7871.182)
+    Stacktrace:
+    0   chromedriver                        0x00000001049f5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001049edb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001044970a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000104526594 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 660316
+    4   chromedriver                        0x000000010451f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001044d5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001049b2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001049b63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001049990f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001049b6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010498a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001049dc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001049dc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001049ed7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+____________ ERROR at teardown of test_applicable_discount_persists ____________
+E   selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
+      (Session info: chrome=150.0.7871.182)
+    Stacktrace:
+    0   chromedriver                        0x00000001031f9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001031f1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102c9b0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000102d2a594 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 660316
+    4   chromedriver                        0x0000000102d23030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102cd9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001031b6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001031ba3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010319d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001031bac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010318e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001031e01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001031e0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001031f17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:12:18,383 INFO tests.admin_portal.memberships.test_memberships_edit: Assigning discount Plus discount to AUTOTEST Membership
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:232 Assigning discount Plus discount to AUTOTEST Membership
+________ ERROR at teardown of test_remove_applicable_discount_persists _________
+E   selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
+      (Session info: chrome=150.0.7871.182)
+    Stacktrace:
+    0   chromedriver                        0x00000001050d9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001050d1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104b7b0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000104c0a594 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 660316
+    4   chromedriver                        0x0000000104c03030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104bb9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000105096c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010509a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010507d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010509ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010506e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001050c01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001050c0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001050d17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:20:49,379 INFO tests.admin_portal.memberships.test_memberships_edit: Assigning then removing discount Plus discount from AUTOTEST Membership
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:251 Assigning then removing discount Plus discount from AUTOTEST Membership
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100f9da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100f95b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100a3f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100a87a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100ac7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100a7d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100f5ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100f5e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100f410f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100f5ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100f323b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100f841f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100f84354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100f957a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103579a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103571b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010301b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000103063a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001030a3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000103059434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000103536c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010353a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010351d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010353ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010350e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001035601f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103560354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001035717a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104c45a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104c3db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001046e72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010472fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010476f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104725434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104c02c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104c063b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104be90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104c06c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104bda3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104c2c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104c2c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104c3d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 05:13:46,056 INFO tests.admin_portal.memberships.test_memberships_edit: Editing membership loyalty points and discount: VK MA3
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA3
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x000000010531da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000105315b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104dbf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104e07a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104e47030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104dfd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001052dac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001052de3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001052c10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001052dec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001052b23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001053041f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000105304354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001053157a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 05:16:29,961 INFO tests.admin_portal.memberships.test_memberships_edit: Editing membership name from VK MA3 and restoring it
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA3 and restoring it
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   AssertionError: assert 'AUTO-MB-BAR-001' == ''
+      
+      + AUTO-MB-BAR-001
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_edit.py:145: AssertionError: assert 'AUTO-MB-BAR-001' == ''
+E   assert False
+     +  where False = location_is_assigned_by_index(0)
+     +    where location_is_assigned_by_index = <pages.admin_portal.memberships_page.MembershipsPage object at 0x104971c50>.location_is_assigned_by_index
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_edit.py:218: assert False
+E   selenium.common.exceptions.TimeoutException: Message:
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:20:49,379 INFO tests.admin_portal.memberships.test_memberships_edit: Assigning then removing discount Plus discount from AUTOTEST Membership
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:251 Assigning then removing discount Plus discount from AUTOTEST Membership
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   assert False
+     +  where False = limit_membership_switch_is_on()
+     +    where limit_membership_switch_is_on = <pages.admin_portal.memberships_page.MembershipsPage object at 0x1053a7290>.limit_membership_switch_is_on
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:28:26,537 INFO tests.admin_portal.memberships.test_memberships_edit: Enabling Limit Membership toggle for AUTOTEST Membership
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:278 Enabling Limit Membership toggle for AUTOTEST Membership
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_edit.py:286: assert False
+E   selenium.common.exceptions.TimeoutException: Message:
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:37:28,510 INFO tests.admin_portal.memberships.test_memberships_edit: Setting description 'VK automation test description' on AUTOTEST Membership
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:301 Setting description 'VK automation test description' on AUTOTEST Membership
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000101461a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101459b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100f032a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100f4ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100f8b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100f41434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010141ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001014223b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001014050f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000101422c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001013f63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001014481f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000101448354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001014597a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:56:47,985 INFO tests.admin_portal.memberships.test_memberships_positive: Creating/verifying prepaid membership: VK MA3
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:35 Creating/verifying prepaid membership: VK MA3
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102625a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010261db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001020c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010210fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010214f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102105434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001025e2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001025e63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001025c90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001025e6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001025ba3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010260c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010260c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010261d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 06:58:46,143 INFO tests.admin_portal.memberships.test_memberships_positive: Creating/verifying recurring membership: VK MR2
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:53 Creating/verifying recurring membership: VK MR2
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103541a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103539b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102fe32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010302ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010306b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000103021434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001034fec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001035023b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001034e50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000103502c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001034d63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001035281f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103528354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001035397a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:00:44,155 INFO tests.admin_portal.memberships.test_memberships_positive: Verifying membership settings persist: VK MA3
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:92 Verifying membership settings persist: VK MA3
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   AssertionError: assert 'Inactive' == 'Active'
+      
+      - Active
+      + Inactive
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_positive.py:184: AssertionError: assert 'Inactive' == 'Active'
+E   AssertionError: assert 'AUTOTEST Membership' not in 'Memberships...1 - 29 of 29'
+      
+      'AUTOTEST Membership' is contained here:
+        Memberships
+        Filter by (1)
+        + Add new membership
+        Membership Name
+        Type...
+      
+      ...Full output truncated (83 lines hidden), use '-vv' to show
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_positive.py:203: AssertionError: assert 'AUTOTEST Membership' not in 'Memberships...1 - 29 of 29'
+E   assert False
+     +  where False = redemption_location_is_assigned_by_index(0)
+     +    where redemption_location_is_assigned_by_index = <pages.admin_portal.memberships_page.MembershipsPage object at 0x1057624d0>.redemption_location_is_assigned_by_index
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:22:21,997 INFO tests.admin_portal.memberships.test_memberships_redemption: Configuring single redemption location for AUTOTEST Membership with service VK detail wash
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_redemption:test_memberships_redemption.py:23 Configuring single redemption location for AUTOTEST Membership with service VK detail wash
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/memberships/test_memberships_redemption.py:35: assert False
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102bf9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102bf1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010269b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001026e3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102723030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001026d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102bb6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102bba3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102b9d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102bbac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102b8e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102be01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102be0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102bf17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:33:29,454 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership by exact name: VK MA3
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:26 Searching membership by exact name: VK MA3
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102c89a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102c81b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010272b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102773a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001027b3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102769434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102c46c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102c4a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102c2d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102c4ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102c1e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102c701f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102c70354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102c817a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:34:17,719 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership using uppercase value: VK MA3
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_search_filter:test_memberships_search_filter.py:79 Searching membership using uppercase value: VK MA3
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100bf5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100bedb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001006972a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001006dfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010071f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001006d5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100bb2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100bb63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100b990f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100bb6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100b8a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100bdc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100bdc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100bed7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:43:01,139 INFO tests.admin_portal.memberships.test_memberships_validation: Validating duplicate membership name is rejected
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:81 Validating duplicate membership name is rejected
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104b39a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104b31b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001045db2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104623a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104663030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104619434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104af6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104afa3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104add0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104afac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104ace3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104b201f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104b20354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104b317a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:45:46,440 INFO tests.admin_portal.memberships.test_memberships_validation: Validating decimal global price is accepted: VK decimal 650596
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:198 Validating decimal global price is accepted: VK decimal 650596
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100b7da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100b75b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010061f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100667a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001006a7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010065d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100b3ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100b3e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100b210f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100b3ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100b123b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100b641f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100b64354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100b757a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+----------------------------- Captured stderr call -----------------------------
+2026-07-27 07:50:28,264 INFO tests.admin_portal.memberships.test_memberships_validation: Validating duplicate barcode 'AUTO-DUP-BAR-001' is rejected
+------------------------------ Captured log call -------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:224 Validating duplicate barcode 'AUTO-DUP-BAR-001' is rejected
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent
+FAILED tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned
+FAILED tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_limit_membership_toggle_persists
+FAILED tests/admin_portal/memberships/test_memberships_edit.py::test_membership_description_saves
+FAILED tests/admin_portal/memberships/test_memberships_positive.py::test_create_prepaid_membership
+FAILED tests/admin_portal/memberships/test_memberships_positive.py::test_create_recurring_membership
+FAILED tests/admin_portal/memberships/test_memberships_positive.py::test_membership_settings_persist
+FAILED tests/admin_portal/memberships/test_memberships_positive.py::test_activate_membership
+FAILED tests/admin_portal/memberships/test_memberships_positive.py::test_deactivate_membership
+FAILED tests/admin_portal/memberships/test_memberships_redemption.py::test_redemption_single_location_persists
+FAILED tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_existing_search
+FAILED tests/admin_portal/memberships/test_memberships_search_filter.py::test_memberships_case_insensitive_search
+FAILED tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_membership_name_is_rejected
+FAILED tests/admin_portal/memberships/test_memberships_validation.py::test_decimal_global_price_is_accepted_and_saved
+FAILED tests/admin_portal/memberships/test_memberships_validation.py::test_duplicate_barcode_is_rejected
+ERROR tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type
+ERROR tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission
+ERROR tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on
+ERROR tests/admin_portal/memberships/test_memberships_edit.py::test_applicable_discount_persists
+ERROR tests/admin_portal/memberships/test_memberships_edit.py::test_remove_applicable_discount_persists
+= 21 failed, 39 passed, 1 skipped, 4 xfailed, 5 errors in 10185.65s (2:49:45) ==

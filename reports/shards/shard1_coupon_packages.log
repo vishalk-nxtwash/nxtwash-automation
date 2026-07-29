@@ -1,0 +1,405 @@
+2026-07-27 05:57:50,793 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 45 items
+
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_packages_tab_loads PASSED [  2%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_packages_grid_columns_visible PASSED [  4%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_exact_search SKIPPED [  6%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_partial_search SKIPPED [  8%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_missing_search SKIPPED [ 11%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_used SKIPPED [ 13%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_not_used SKIPPED [ 15%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_all SKIPPED [ 17%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_active SKIPPED [ 20%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_combined_filter SKIPPED [ 22%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_reset_filters SKIPPED [ 24%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_code_is_unique SKIPPED [ 26%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_expired_coupon_code_is_inactive SKIPPED [ 28%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_long_name_does_not_break_form PASSED [ 31%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_valid_expiration_days PASSED [ 33%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_zero_expiration_days PASSED [ 35%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_negative_expiration_days_rejected SKIPPED [ 37%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_save_without_giveaway PASSED [ 40%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_remove_giveaway_service 2026-07-27 06:05:23,933 ERROR nxtwash: Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_remove_giveaway_service (url: https://staging.nxtwash.com/services/couponPackages/edit/10087)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_remove_giveaway_service (url: https://staging.nxtwash.com/services/couponPackages/edit/10087)
+2026-07-27 06:05:24,599 ERROR nxtwash: Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK AD03
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
++ 1
+VK AWP1
+VK no-dis f09dd0
+VK no-lty f26826
+VK no-bar 72053d
+VK no-dis 86a4e4
+VK no-lty 91d7cd
+VK no-bar e7dbd6
+VK no-dis cc0aea
+VK no-lty 02c09d
+VK no-bar f99e4b
+VK no-dis e5585b
+VK no-lty 94bd70
+VK no-bar 1dfc9c
+VK no-dis 76ee86
+VK no-lty 738d4a
+VK no-bar 5af56c
+VK no-dis 282587
+VK no-lty d02512
+VK no-bar c54817
+VK no-dis 4a9ffd
+VK no-lty b7289c
+VK no-bar 76d8e8
+VK no-lty 0d0101
+VK no-dis 6db3fb
+VK no-lty f4eeec
+VK no-bar 9dad35
+VK no-dis 7728b5
+VK no-lty db62c5
+VK no-bar e95a9a
+VK no-dis c729f9
+VK no-lty ef84d0
+VK no-bar e5ed18
+VK no-dis 3273a4
+VK no-lty 134c2b
+VK no-bar 55737f
+VK no-dis cb885b
+VK no-lty 17fe3a
+VK no-bar 042618
+VK no-lty f51e99
+VK no-dis a9e601
+VK no-bar 5f4876
+VK no-lty 661e69
+VK no-bar b42aff
+VK no-dis 2b199e
+VK no-dis 4b2434
+VK no-bar e04f19
+VK no-dis aea771
+VK no-lty 5ead01
+VK no-bar d661db
+VK no-dis da38f6
+VK no-lty f24946
+VK no-bar 6ab1da
+VK no-dis 4ab4db
+VK no-lty 6df60d
+VK no-bar a28c02
+VK no-lty e3afb7
+VK no-bar 021bf6
+VK no-dis d5bfac
+VK no-lty 3b6468
+VK no-bar 38a855
+VK no-dis 6c33ba
+VK no-dis 4d896e
+VK no-lty 4f5110
+VK no-bar 82dc6e
+VK no-dis a05354
+VK no-lty 73f88d
+VK no-bar 416be8
+VK no-dis 189c20
+VK no-lty c8bedc
+VK no-bar 204ff3
+VK no-dis 113ca1
+VK no-lty 0df593
+VK no-bar 935080
+VK AWP1 edited
+Vk detail wash
+Detail cleaning
+vk wash 2 package
+Plus Wash
+Detail wash and clean
+VK ACS3
+VK cat-c792f3
+VK EDT001-0dd20a
+VK ACS1
+VK cat-f6c204
+VK EDT001-b72a2a
+VK barcode-e5c4e0
+VK receipt-066963
+VK openprice-4511a0
+VK siteprice-ac8ca1
+VK taxex-6abcf4
+VK discount-947303
+VK cat-44534e
+VK EDT001-ce40a2
+VK receipt-86f8f7
+VK openprice-0bd07c
+VK siteprice-8ddc4f
+VK taxex-fe66a0
+VK discount-da1ba2
+VK cat-c032f4
+VK EDT001-982069
+VK receipt-afd766
+VK openprice-8cffd4
+VK siteprice-10813f
+VK taxex-76747d
+VK discount-ebc467
+VK barcode-5e8c0f
+VK barcode-9bfd2b
+VK desc-
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK AD03
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
++ 1
+VK AWP1
+VK no-dis f09dd0
+VK no-lty f26826
+VK no-bar 72053d
+VK no-dis 86a4e4
+VK no-lty 91d7cd
+VK no-bar e7dbd6
+VK no-dis cc0aea
+VK no-lty 02c09d
+VK no-bar f99e4b
+VK no-dis e5585b
+VK no-lty 94bd70
+VK no-bar 1dfc9c
+VK no-dis 76ee86
+VK no-lty 738d4a
+VK no-bar 5af56c
+VK no-dis 282587
+VK no-lty d02512
+VK no-bar c54817
+VK no-dis 4a9ffd
+VK no-lty b7289c
+VK no-bar 76d8e8
+VK no-lty 0d0101
+VK no-dis 6db3fb
+VK no-lty f4eeec
+VK no-bar 9dad35
+VK no-dis 7728b5
+VK no-lty db62c5
+VK no-bar e95a9a
+VK no-dis c729f9
+VK no-lty ef84d0
+VK no-bar e5ed18
+VK no-dis 3273a4
+VK no-lty 134c2b
+VK no-bar 55737f
+VK no-dis cb885b
+VK no-lty 17fe3a
+VK no-bar 042618
+VK no-lty f51e99
+VK no-dis a9e601
+VK no-bar 5f4876
+VK no-lty 661e69
+VK no-bar b42aff
+VK no-dis 2b199e
+VK no-dis 4b2434
+VK no-bar e04f19
+VK no-dis aea771
+VK no-lty 5ead01
+VK no-bar d661db
+VK no-dis da38f6
+VK no-lty f24946
+VK no-bar 6ab1da
+VK no-dis 4ab4db
+VK no-lty 6df60d
+VK no-bar a28c02
+VK no-lty e3afb7
+VK no-bar 021bf6
+VK no-dis d5bfac
+VK no-lty 3b6468
+VK no-bar 38a855
+VK no-dis 6c33ba
+VK no-dis 4d896e
+VK no-lty 4f5110
+VK no-bar 82dc6e
+VK no-dis a05354
+VK no-lty 73f88d
+VK no-bar 416be8
+VK no-dis 189c20
+VK no-lty c8bedc
+VK no-bar 204ff3
+VK no-dis 113ca1
+VK no-lty 0df593
+VK no-bar 935080
+VK AWP1 edited
+Vk detail wash
+Detail cleaning
+vk wash 2 package
+Plus Wash
+Detail wash and clean
+VK ACS3
+VK cat-c792f3
+VK EDT001-0dd20a
+VK ACS1
+VK cat-f6c204
+VK EDT001-b72a2a
+VK barcode-e5c4e0
+VK receipt-066963
+VK openprice-4511a0
+VK siteprice-ac8ca1
+VK taxex-6abcf4
+VK discount-947303
+VK cat-44534e
+VK EDT001-ce40a2
+VK receipt-86f8f7
+VK openprice-0bd07c
+VK siteprice-8ddc4f
+VK taxex-fe66a0
+VK discount-da1ba2
+VK cat-c032f4
+VK EDT001-982069
+VK receipt-afd766
+VK openprice-8cffd4
+VK siteprice-10813f
+VK taxex-76747d
+VK discount-ebc467
+VK barcode-5e8c0f
+VK barcode-9bfd2b
+VK desc-
+FAILED                                                                   [ 42%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_name PASSED [ 44%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_discount PASSED [ 46%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_expiration_days PASSED [ 48%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_giveaway_services PASSED [ 51%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_activate_inactive_coupon_package SKIPPED [ 53%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_deactivate_active_coupon_package PASSED [ 55%]
+tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_package_duplicate_name_is_blocked 2026-07-27 06:16:04,987 ERROR nxtwash: Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_package_duplicate_name_is_blocked (url: https://staging.nxtwash.com/services/couponPackages/edit/10087)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_package_duplicate_name_is_blocked (url: https://staging.nxtwash.com/services/couponPackages/edit/10087)
+2026-07-27 06:16:05,584 ERROR nxtwash: Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+Select discount
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Coupon giveaway on receipt
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+Select discount
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Coupon giveaway on receipt
+FAILED                                                                   [ 57%]
+tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_packages_special_character_search_stays_usable PASSED [ 60%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_coupon_package PASSED [ 62%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_coupon_package_settings_persist PASSED [ 64%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_inactive_coupon_package 2026-07-27 06:21:10,856 ERROR nxtwash: Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_inactive_coupon_package (url: https://staging.nxtwash.com/services/couponPackages)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_inactive_coupon_package (url: https://staging.nxtwash.com/services/couponPackages)
+2026-07-27 06:21:11,518 ERROR nxtwash: Visible page text at failure:
+Coupon packages
+Filter by (1)
++ Add new coupon package
+Coupon packages
+Customer coupon packages
+ID
+Coupon package name
+Discount assigned
+Services assigned
+Expiration days
+Status
+10088
+VK ACC3 Inactive
+VK AD03
+Vk detail wash
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Coupon packages
+Filter by (1)
++ Add new coupon package
+Coupon packages
+Customer coupon packages
+ID
+Coupon package name
+Discount assigned
+Services assigned
+Expiration days
+Status
+10088
+VK ACC3 Inactive
+VK AD03
+Vk detail wash
+Inactive
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+FAILED                                                                   [ 66%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_exact_search PASSED [ 68%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_partial_search PASSED [ 71%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_missing_search PASSED [ 73%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_clear_search_restores_list PASSED [ 75%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_active_coupon_package_filter_shows_active_only PASSED [ 77%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_active_toggle_off_shows_all_packages PASSED [ 80%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_reset_all_restores_unfiltered_list PASSED [ 82%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_search_payloads_do_not_break_grid PASSED [ 84%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_coupon_packages_page_loads_with_primary_controls PASSED [ 86%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_coupon_packages_grid_columns_are_visible PASSED [ 88%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_customer_coupon_packages_tab_is_accessible PASSED [ 91%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_add_coupon_package_form_loads PASSED [ 93%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_blank_name_is_blocked PASSED [ 95%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_whitespace_name_is_rejected PASSED [ 97%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_blank_discount_is_blocked PASSED [100%]
+
+=================================== FAILURES ===================================
+E   AssertionError: assert 'detail cleaning' not in ['vk detail wash', 'detail cleaning']
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py:109: AssertionError: assert 'detail cleaning' not in ['vk detail wash', 'detail cleaning']
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103349a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103341b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102deb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102e33a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102e73030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102e29434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000103306c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010330a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001032ed0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010330ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001032de3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001033301f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103330354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001033417a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_remove_giveaway_service
+FAILED tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_package_duplicate_name_is_blocked
+FAILED tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_inactive_coupon_package
+============ 3 failed, 29 passed, 13 skipped in 2009.55s (0:33:29) =============

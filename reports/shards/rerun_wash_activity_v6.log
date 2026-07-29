@@ -1,0 +1,27 @@
+2026-07-29 05:58:06,941 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 83 items
+
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply XPASSnceException during
+filter application on staging.)                                          [  4%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal SKIPPED [  6%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal PASSED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites XFAILuring modal
+open on staging.)                                                        [  9%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted SKIPPED [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip 

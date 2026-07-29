@@ -1,0 +1,16 @@
+[shard1] Started: Mon Jul 27 03:54:21 IST 2026
+[shard1] START bank_drop — 03:54:21
+[shard1] DONE  bank_drop — ============= 22 passed, 3 skipped, 2 xfailed in 734.82s (0:12:14) =============
+[shard1] START login — 04:06:37
+[shard1] DONE  login — ============= 40 passed, 2 skipped, 2 xfailed in 336.48s (0:05:36) =============
+[shard1] START service_categories — 04:12:15
+[shard1] DONE  service_categories — ======= 6 failed, 15 passed, 7 skipped, 8 xfailed in 1191.00s (0:19:50) ========
+[shard1] START gift_cards — 04:32:07
+[shard1] DONE  gift_cards — ================== 35 passed, 1 skipped in 1586.81s (0:26:26) ==================
+[shard1] START wash_extras — 04:58:35
+[shard1] DONE  wash_extras — = 4 failed, 56 passed, 17 skipped, 1 xfailed, 1 xpassed in 2113.09s (0:35:13) ==
+[shard1] START wash_activity — 05:33:50
+[shard1] DONE  wash_activity — == 3 failed, 56 passed, 3 skipped, 4 xfailed, 17 errors in 1437.28s (0:23:57) ==
+[shard1] START coupon_packages — 05:57:49
+[shard1] DONE  coupon_packages — ============ 3 failed, 29 passed, 13 skipped in 2009.55s (0:33:29) =============
+[shard1] Finished: Mon Jul 27 06:31:20 IST 2026

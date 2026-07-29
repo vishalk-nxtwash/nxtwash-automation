@@ -1,0 +1,17 @@
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0

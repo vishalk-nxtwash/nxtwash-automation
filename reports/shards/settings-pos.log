@@ -1,0 +1,619 @@
+2026-07-28 02:42:15,925 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:42:22,900 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:42:22,964 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+created: 2/2 workers
+2 workers [138 items]
+
+scheduling tests via LoadScheduling
+
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_on_saves 
+tests/admin_portal/pos_settings/test_pos_create.py::test_new_pos_appears_immediately 2026-07-28 02:44:41,710 ERROR nxtwash: Test FAILED: tests/admin_portal/pos_settings/test_pos_create.py::test_new_pos_appears_immediately (url: https://staging.nxtwash.com/pos_settings/pos)
+2026-07-28 02:44:43,952 ERROR nxtwash: Visible page text at failure:
+POS Settings
+Filter by
+Add new POS
+Pos name
+Site/Location
+Lane
+Status
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+Please wait
+Select site
+Select site
+Active POS
+Filter result:
+0 POS
+Reset all
+Apply filters
+
+[gw1] [  0%] FAILED tests/admin_portal/pos_settings/test_pos_create.py::test_new_pos_appears_immediately 
+tests/admin_portal/pos_settings/test_pos_dependencies.py::test_site_dropdown_from_sites_locations 
+[gw1] [  1%] XFAIL tests/admin_portal/pos_settings/test_pos_dependencies.py::test_site_dropdown_from_sites_locations 
+tests/admin_portal/pos_settings/test_pos_dependencies.py::test_lane_dropdown_from_site_lanes 
+[gw0] [  2%] PASSED tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_on_saves 
+[gw1] [  2%] PASSED tests/admin_portal/pos_settings/test_pos_dependencies.py::test_lane_dropdown_from_site_lanes 
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_section_expand_collapse 
+[gw0] [  2%] ERROR tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_on_saves 
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_off_saves 
+[gw0] [  3%] XFAIL tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_off_saves 
+tests/admin_portal/pos_settings/test_pos_create.py::test_add_pos_button_opens_form 
+[gw1] [  4%] XFAIL tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_section_expand_collapse 
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_required 
+[gw0] [  5%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_add_pos_button_opens_form 
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_active_pos_saves 
+[gw1] [  5%] PASSED tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_required 
+[gw0] [  6%] SKIPPED tests/admin_portal/pos_settings/test_pos_create.py::test_create_active_pos_saves 
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_name_required 
+[gw1] [  6%] ERROR tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_required 
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_accepts_valid_input 
+[gw0] [  7%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_name_required 
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_site_required 
+[gw0] [  7%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_site_required 
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_lane_required 
+[gw1] [  8%] PASSED tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_accepts_valid_input 
+[gw0] [  9%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_lane_required 
+tests/admin_portal/pos_settings/test_pos_create.py::test_lane_dropdown_populates_on_site_selection 2026-07-28 03:07:05,301 ERROR nxtwash: Test FAILED: tests/admin_portal/pos_settings/test_pos_create.py::test_lane_dropdown_populates_on_site_selection (url: about:blank)
+
+[gw1] [  9%] ERROR tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_accepts_valid_input 
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_persists 2026-07-28 03:08:10,230 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_pos_settings_test_pos_create.py_test_lane_dropdown_populates_on_site_selection': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000102d09a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000102d01b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001027ab2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000102795d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000102795a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000102793818 chromedriver + 227352
+6   chromedriver                        0x000000010279440c chromedriver + 230412
+7   chromedriver                        0x00000001027b87bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x000000010283e268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000102833030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x00000001027e9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000102cc6c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x0000000102cca3b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x0000000102cad0f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000102ccac4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x0000000102c9e3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000102cf01f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000102cf0354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000102d017a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 03:08:13,808 ERROR nxtwash: Visible page text at failure:
+
+
+[gw0] [ 10%] FAILED tests/admin_portal/pos_settings/test_pos_create.py::test_lane_dropdown_populates_on_site_selection 
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_inactive_pos 
+[gw1] [ 10%] ERROR tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_persists 
+tests/admin_portal/pos_settings/test_pos_edge_cases.py::test_pos_name_whitespace_trimmed 
+[gw0] [ 11%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_create_inactive_pos 
+tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_default 
+[gw0] [ 12%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_default 
+tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_no_customer 2026-07-28 03:14:38,883 ERROR nxtwash: Test FAILED: tests/admin_portal/pos_settings/test_pos_edge_cases.py::test_pos_name_whitespace_trimmed (url: https://staging.nxtwash.com/pos_settings/pos)
+2026-07-28 03:14:42,913 ERROR nxtwash: Visible page text at failure:
+POS Settings
+Filter by
+Add new POS
+Pos name
+Site/Location
+Lane
+Status
+VK APOS03 EDIT
+VK AL03
+L2
+Active
+Edit
+VK APOS03
+VK AL03
+L1
+Active
+Edit
+VK APOS02
+VK AL02
+L3
+Active
+Edit
+VK APOS1
+VK AL02
+L1
+Active
+Edit
+VK wash 2
+VK Test carwash 2
+Wash lane 1
+Active
+Edit
+POS Outsidee1
+VK Test Wash 01
+Wash lane 1
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 6 of 6
+
+[gw1] [ 13%] FAILED tests/admin_portal/pos_settings/test_pos_edge_cases.py::test_pos_name_whitespace_trimmed 
+[gw0] [ 13%] XFAIL tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_no_customer 
+tests/admin_portal/pos_settings/test_pos_create.py::test_card_checked_by_default 
+[gw0] [ 14%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_card_checked_by_default 
+tests/admin_portal/pos_settings/test_pos_create.py::test_cash_checked_by_default 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_form_opens_prepopulated 
+[gw0] [ 15%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_cash_checked_by_default 
+tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_card_persists 
+[gw1] [ 15%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_form_opens_prepopulated 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_pos_name_persists 
+[gw0] [ 16%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_card_persists 
+tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_cash_persists 
+[gw1] [ 17%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_pos_name_persists 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_site_persists 
+[gw1] [ 18%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_site_persists 
+[gw0] [ 18%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_cash_persists 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_lane_persists 
+tests/admin_portal/pos_settings/test_pos_create.py::test_settings_accordions_collapsed 
+[gw0] [ 19%] PASSED tests/admin_portal/pos_settings/test_pos_create.py::test_settings_accordions_collapsed 
+tests/admin_portal/pos_settings/test_pos_create.py::test_cancel_discards_form 
+[gw1] [ 20%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_lane_persists 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_changing_site_clears_lane 2026-07-28 03:28:12,993 ERROR nxtwash: Test FAILED: tests/admin_portal/pos_settings/test_pos_create.py::test_cancel_discards_form (url: about:blank)
+2026-07-28 03:29:18,001 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_pos_settings_test_pos_create.py_test_cancel_discards_form': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x00000001050e1a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001050d9b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104b832a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104b6dd20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000104b6da80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000104b6b818 chromedriver + 227352
+6   chromedriver                        0x0000000104b6c40c chromedriver + 230412
+7   chromedriver                        0x0000000104b907bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x0000000104c16268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000104c0b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000104bc1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x000000010509ec40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001050a23b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x00000001050850f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x00000001050a2c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x00000001050763b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x00000001050c81f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x00000001050c8354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x00000001050d97a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 03:29:20,144 ERROR nxtwash: Visible page text at failure:
+
+
+[gw0] [ 21%] FAILED tests/admin_portal/pos_settings/test_pos_create.py::test_cancel_discards_form 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_deactivate_active_pos 
+[gw1] [ 21%] PASSED tests/admin_portal/pos_settings/test_pos_edit.py::test_changing_site_clears_lane 
+[gw0] [ 22%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_deactivate_active_pos 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_cancel_discards_changes 
+[gw1] [ 22%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_changing_site_clears_lane 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_allow_checkout_persists 
+[gw0] [ 23%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_cancel_discards_changes 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_main_and_service_tabs_visible 
+[gw1] [ 23%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_allow_checkout_persists 
+[gw0] [ 24%] PASSED tests/admin_portal/pos_settings/test_pos_edit.py::test_main_and_service_tabs_visible 
+[gw1] [ 24%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_allow_checkout_persists 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_payment_methods_persists 
+[gw1] [ 25%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_payment_methods_persists 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_blank_name_blocked 
+[gw0] [ 25%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_main_and_service_tabs_visible 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_panel_opens 
+[gw0] [ 26%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_panel_opens 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_by_site 
+[gw1] [ 26%] ERROR tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_blank_name_blocked 
+tests/admin_portal/pos_settings/test_pos_edit.py::test_activate_inactive_pos 
+[gw0] [ 27%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_by_site 
+[gw1] [ 28%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_activate_inactive_pos 
+[gw0] [ 28%] ERROR tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_by_site 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_on 
+[gw1] [ 28%] XFAIL tests/admin_portal/pos_settings/test_pos_edit.py::test_activate_inactive_pos 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_section_expand_collapse 
+[gw0] [ 28%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_on 
+[gw1] [ 29%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_section_expand_collapse 
+[gw0] [ 29%] ERROR tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_on 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_off 
+[gw0] [ 30%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_off 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_result_count_matches_rows 
+[gw1] [ 30%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_section_expand_collapse 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_send_invoice_toggle_saves 
+[gw0] [ 31%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_result_count_matches_rows 
+[gw0] [ 31%] ERROR tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_result_count_matches_rows 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_site_and_active_combined 
+[gw1] [ 31%] PASSED tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_send_invoice_toggle_saves 
+[gw0] [ 32%] ERROR tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_site_and_active_combined 
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_reset_all 
+[gw1] [ 32%] ERROR tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_send_invoice_toggle_saves 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_operational_toggle_saves 
+[gw1] [ 33%] ERROR tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_operational_toggle_saves 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_required 
+[gw0] [ 34%] PASSED tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_reset_all 
+[gw1] [ 34%] ERROR tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_required 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_saves_persists 
+[gw0] [ 34%] ERROR tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_reset_all 
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_page_loads 
+[gw0] [ 35%] PASSED tests/admin_portal/pos_settings/test_pos_list.py::test_pos_page_loads 
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_displays_columns 
+[gw1] [ 36%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_saves_persists 
+[gw0] [ 36%] PASSED tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_displays_columns 
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_status_column 
+[gw1] [ 36%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_saves_persists 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_controller_ip_required 
+[gw0] [ 37%] PASSED tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_status_column 
+[gw1] [ 38%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_controller_ip_required 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_ip_valid_format_saves 
+[gw0] [ 38%] ERROR tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_status_column 
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_pagination_shows_count 2026-07-28 04:23:27,346 ERROR nxtwash: Test FAILED: tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_pagination_shows_count (url: https://staging.nxtwash.com/pos_settings/pos)
+2026-07-28 04:23:30,201 ERROR nxtwash: Visible page text at failure:
+POS Settings
+Filter by
+Add new POS
+Pos name
+Site/Location
+Lane
+Status
+VK APOS03 EDIT
+VK AL03
+L2
+Active
+Edit
+VK APOS03
+VK AL03
+L1
+Active
+Edit
+VK APOS02
+VK AL02
+L3
+Active
+Edit
+VK APOS1
+VK AL02
+L1
+Active
+Edit
+VK wash 2
+VK Test carwash 2
+Wash lane 1
+Active
+Edit
+POS Outsidee1
+VK Test Wash 01
+Wash lane 1
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 6 of 6
+
+[gw0] [ 39%] FAILED tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_pagination_shows_count 
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_results_per_page 
+[gw0] [ 39%] PASSED tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_results_per_page 
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_section_expand_collapse 
+[gw1] [ 40%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_ip_valid_format_saves 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_required 
+[gw0] [ 41%] XFAIL tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_section_expand_collapse 
+[gw1] [ 42%] PASSED tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_required 
+[gw1] [ 42%] ERROR tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_required 
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_persists 
+[gw0] [ 42%] XFAIL tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_section_expand_collapse 
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_required 
+[gw1] [ 42%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_persists 
+[gw0] [ 43%] PASSED tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_required 
+[gw1] [ 43%] XFAIL tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_persists 
+tests/admin_portal/user_roles/test_user_roles_create.py::test_user_roles_add_form_opens 
+[gw1] [ 44%] PASSED tests/admin_portal/user_roles/test_user_roles_create.py::test_user_roles_add_form_opens 
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_active_user_role 
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_accepts_valid_url 
+[gw1] [ 44%] PASSED tests/admin_portal/user_roles/test_user_roles_create.py::test_create_active_user_role 
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_inactive_user_role 
+[gw0] [ 45%] PASSED tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_accepts_valid_url 
+[gw0] [ 45%] ERROR tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_accepts_valid_url 
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_persists 2026-07-28 04:44:05,961 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62653): Read timed out. (read timeout=120)")': /session/02869f6aac463c2a090168833744e45d/url
+
+[gw0] [ 46%] PASSED tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_persists 2026-07-28 04:46:06,428 WARNING urllib3.connectionpool: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62653): Read timed out. (read timeout=120)")': /session/02869f6aac463c2a090168833744e45d/url
+
+INTERNALERROR> def worker_internal_error(
+INTERNALERROR>         self, node: WorkerController, formatted_error: str
+INTERNALERROR>     ) -> None:
+INTERNALERROR>         """
+INTERNALERROR>         pytest_internalerror() was called on the worker.
+INTERNALERROR>     
+INTERNALERROR>         pytest_internalerror() arguments are an excinfo and an excrepr, which can't
+INTERNALERROR>         be serialized, so we go with a poor man's solution of raising an exception
+INTERNALERROR>         here ourselves using the formatted message.
+INTERNALERROR>         """
+INTERNALERROR>         self._active_nodes.remove(node)
+INTERNALERROR>         try:
+INTERNALERROR> >           assert False, formatted_error
+INTERNALERROR> E           AssertionError: Traceback (most recent call last):
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR> E                 session.exitstatus = doit(config, session) or 0
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR> E                 config.hook.pytest_runtestloop(session=session)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR> E                 return (yield)  # Run all the tests.
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR> E                 result = yield
+INTERNALERROR> E                          ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 206, in pytest_runtestloop
+INTERNALERROR> E                 self.run_one_test()
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 227, in run_one_test
+INTERNALERROR> E                 self.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/warnings.py", line 89, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/assertion/__init__.py", line 192, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/unittest.py", line 591, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/faulthandler.py", line 102, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+INTERNALERROR> E                 runtestprotocol(item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 137, in runtestprotocol
+INTERNALERROR> E                 reports.append(call_and_report(item, "call", log))
+INTERNALERROR> E                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 249, in call_and_report
+INTERNALERROR> E                 report: TestReport = ihook.pytest_runtest_makereport(item=item, call=call)
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_html/plugin.py", line 129, in pytest_runtest_makereport
+INTERNALERROR> E                 report = outcome.get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/tmpdir.py", line 333, in pytest_runtest_makereport
+INTERNALERROR> E                 rep = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/allure_pytest/listener.py", line 198, in pytest_runtest_makereport
+INTERNALERROR> E                 report = (yield).get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 152, in _multicall
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 303, in pytest_runtest_makereport
+INTERNALERROR> E                 _capture_failure(item, driver)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 238, in _capture_failure
+INTERNALERROR> E                 url = driver.current_url
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 602, in current_url
+INTERNALERROR> E                 return self.execute(Command.GET_CURRENT_URL)["value"]
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 465, in execute
+INTERNALERROR> E                 response = cast(RemoteConnection, self.command_executor).execute(driver_command, params)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 407, in execute
+INTERNALERROR> E                 return self._request(command_info[0], url, body=data)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 431, in _request
+INTERNALERROR> E                 response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 135, in request
+INTERNALERROR> E                 return self.request_encode_url(
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 182, in request_encode_url
+INTERNALERROR> E                 return self.urlopen(method, url, **extra_kw)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/poolmanager.py", line 457, in urlopen
+INTERNALERROR> E                 response = conn.urlopen(method, u.request_uri, **kw)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+INTERNALERROR> E                 return self.urlopen(
+INTERNALERROR> E                        ^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+INTERNALERROR> E                 return self.urlopen(
+INTERNALERROR> E                        ^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+INTERNALERROR> E                 response = self._make_request(
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+INTERNALERROR> E                 response = conn.getresponse()
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connection.py", line 571, in getresponse
+INTERNALERROR> E                 httplib_response = super().getresponse()
+INTERNALERROR> E                                    ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
+INTERNALERROR> E                 response.begin()
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
+INTERNALERROR> E                 version, status, reason = self._read_status()
+INTERNALERROR> E                                           ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 279, in _read_status
+INTERNALERROR> E                 line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 706, in readinto
+INTERNALERROR> E                 return self._sock.recv_into(b)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 317, in handler
+INTERNALERROR> E                 timeout_sigalrm(item, settings)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 502, in timeout_sigalrm
+INTERNALERROR> E                 pytest.fail(PYTEST_FAILURE_MESSAGE % settings.timeout)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/outcomes.py", line 163, in __call__
+INTERNALERROR> E                 raise Failed(msg=reason, pytrace=pytrace)
+INTERNALERROR> E             Failed: Timeout (>420.0s) from pytest-timeout.
+INTERNALERROR> E           assert False
+INTERNALERROR> 
+INTERNALERROR> venv/lib/python3.11/site-packages/xdist/dsession.py:232: AssertionError
+[gw0] [ 46%] ERROR tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_persists 
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_exact_name 
+[gw0] [ 47%] PASSED tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_exact_name 2026-07-28 04:50:21,508 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62653): Read timed out. (read timeout=120)")': /session/02869f6aac463c2a090168833744e45d
+
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_partial_name 2026-07-28 04:52:21,814 WARNING urllib3.connectionpool: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62653): Read timed out. (read timeout=120)")': /session/02869f6aac463c2a090168833744e45d
+
+[gw0] [ 47%] PASSED tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_partial_name 2026-07-28 04:54:22,266 WARNING urllib3.connectionpool: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62653): Read timed out. (read timeout=120)")': /session/02869f6aac463c2a090168833744e45d
+
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_nonmatching_shows_empty 
+[gw0] [ 48%] PASSED tests/admin_portal/pos_settings/test_pos_search.py::test_search_nonmatching_shows_empty 
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_clear_restores_list /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>                          ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR>     config.hook.pytest_runtestloop(session=session)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR>     raise exception
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR>     return (yield)  # Run all the tests.
+INTERNALERROR>             ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR>     result = yield
+INTERNALERROR>              ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 138, in pytest_runtestloop
+INTERNALERROR>     self.loop_once()
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 163, in loop_once
+INTERNALERROR>     call(**kwargs)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 217, in worker_workerfinished
+INTERNALERROR>     assert not crashitem, (crashitem, node)
+INTERNALERROR> AssertionError: ('tests/admin_portal/user_roles/test_user_roles_create.py::test_create_inactive_user_role', <WorkerController gw1>)
+INTERNALERROR> assert not 'tests/admin_portal/user_roles/test_user_roles_create.py::test_create_inactive_user_role'
+
+= 5 failed, 37 passed, 1 skipped, 20 xfailed, 3 warnings, 24 errors in 8067.92s (2:14:27) =
+EXIT:0

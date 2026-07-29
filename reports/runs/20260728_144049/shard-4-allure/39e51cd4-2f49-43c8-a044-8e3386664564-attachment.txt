@@ -1,0 +1,80 @@
+2026-07-28 17:29:30,713 WARNING nxtwash: Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+VK Test carwash 2
++ 2
+VK AL35
+VK ZT 9344b0
+VK AL34
+VK AL92
+VK AL33
+VK AL32
+VK AL31
+VK ZT c6d556
+VK AL30
+VK AL29
+VK ZT 9e7bdf
+VK AL28
+VK AL27
+VK ZT 4e248f
+VK AL26
+VK ZT 8f811b
+VK AL25
+VK AL24
+VK ZT 46d34b
+VK AL23
+VK ZT c4a124
+VK ZT d4ccd8
+VK ZT 71c6f6
+VK ZT 9eaa54
+VK ZT ae9b9c
+test 12
+VK AL22
+VK AL21
+VK AL20
+VK ZT c26508
+VK AL19
+VK AL18
+VK ZT c54675
+VK AL17
+VK AL16
+VK ZT 2b4279
+VK AL15
+VK AL14
+VK ZT 146465
+VK AL13
+VK AL12
+VK AL11
+VK AL10
+VK AL09
+VK AL08
+VK AL01
+vkauto1
+VK AL07
+VK AL06
+VK AL05
+VK AL04
+VK AL03
+VK AL02
+test123 udpated
+VK Test carwash 2
+VK Test Wash 01
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Alaska
+City
+Wales
+2026-07-28 17:29:30,928 WARNING nxtwash: Employee create did not navigate away — assuming duplicate; searching list with extended timeout

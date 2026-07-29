@@ -1,0 +1,50 @@
+2026-07-29 05:40:56,083 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 100 items
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render PASSED [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item PASSED [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites XFAILing modal open.) [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options ERROR [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range PASSED [ 10%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics XPASS [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar PASSED [ 13%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar PASSED [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites XPASSsame timing race as modal site
+dropdown (options not fully populated when read).)                       [ 15%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips PASSED [ 18%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites ERROR [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown XFAIL_site-select__option--is-
+selected) — verify in DevTools before removing xfail.)                   [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it PASSED [ 21%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips XFAIL_site-select__clear-indicator) — verify
+in DevTools before removing xfail.)                                      [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state PASSED [ 23%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites SKIPPED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button PASSED [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown PASSED [ 26%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options PASSED [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] PASSED [ 28%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] PASSED [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] PASSED [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] PASSED [ 31%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] PASSED [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] 
