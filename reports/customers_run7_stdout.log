@@ -1,0 +1,1302 @@
+2026-07-26 12:36:08,931 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 93 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_accessible_on_existing_customer XPASS [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_shows_add_car_button XPASS [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field PASSED [  3%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field PASSED [  4%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields PASSED [  5%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls PASSED [  6%]
+tests/admin_portal/customers/test_customers_cars.py::test_license_plate_field_is_present_and_required XPASS [  7%]
+tests/admin_portal/customers/test_customers_cars.py::test_rfid_field_is_present_and_required XPASS [  8%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_assign_membership_button SKIPPED [  9%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_list_shows_membership_details SKIPPED [ 10%]
+tests/admin_portal/customers/test_customers_cars.py::test_blacklist_a_car SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_cars.py::test_deactivate_a_car SKIPPED [ 12%]
+tests/admin_portal/customers/test_customers_cars.py::test_update_vehicle_token SKIPPED [ 13%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_license_plate_documents_behaviour SKIPPED [ 15%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_rfid_documents_behaviour SKIPPED [ 16%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_then_refresh_car_persists SKIPPED [ 17%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_appears_in_gift_cards_dropdown SKIPPED [ 18%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_membership_status_reflects_memberships_module SKIPPED [ 19%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [ 20%]
+tests/admin_portal/customers/test_customers_dependency.py::test_car_rfid_links_to_pos_tunnel_entry SKIPPED [ 21%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists PASSED [ 22%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists PASSED [ 23%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values PASSED [ 24%]
+tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer 2026-07-26 12:41:49,791 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer (url: https://staging.nxtwash.com/customers/51557)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer (url: https://staging.nxtwash.com/customers/51557)
+2026-07-26 12:41:49,930 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 25%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer 2026-07-26 12:42:27,760 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer (url: https://staging.nxtwash.com/customers/51557)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer (url: https://staging.nxtwash.com/customers/51557)
+2026-07-26 12:42:27,932 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Select city
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Select city
+FAILED                                                                   [ 26%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer ERROR [ 26%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_allow_invoicing_persists PASSED [ 27%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_send_text_and_email_persists SKIPPED [ 29%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes PASSED [ 30%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist PASSED [ 31%]
+tests/admin_portal/customers/test_customers_export.py::test_export_button_triggers_customer_list_download SKIPPED [ 32%]
+tests/admin_portal/customers/test_customers_payment.py::test_payment_settings_tab_accessible_on_existing_customer XPASS [ 33%]
+tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible PASSED [ 34%]
+tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present PASSED [ 35%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present PASSED [ 36%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present PASSED [ 37%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_loads_all_time SKIPPED [ 38%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_today_filter SKIPPED [ 39%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_select_range_filter SKIPPED [ 40%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_export SKIPPED [ 41%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_details_link_navigates_to_invoice SKIPPED [ 43%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_pagination_defaults_to_ten SKIPPED [ 44%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only PASSED [ 45%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields PASSED [ 46%]
+tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date PASSED [ 47%]
+tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites PASSED [ 48%]
+tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection PASSED [ 49%]
+tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state PASSED [ 50%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer 2026-07-26 12:47:45,111 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 12:47:45,278 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+FAILED                                                                   [ 51%]
+tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer PASSED [ 52%]
+tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list PASSED [ 53%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [ 54%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate PASSED [ 55%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate PASSED [ 56%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number 2026-07-26 12:49:24,464 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+2026-07-26 12:49:24,618 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+FAILED                                                                   [ 58%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number PASSED [ 59%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent PASSED [ 60%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state PASSED [ 61%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible PASSED [ 62%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default PASSED [ 63%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying PASSED [ 64%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name PASSED [ 65%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name 2026-07-26 12:51:40,939 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/customers)
+2026-07-26 12:51:41,299 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+FAILED                                                                   [ 66%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email 2026-07-26 12:52:21,068 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 12:52:21,391 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 67%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid PASSED [ 68%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_site XFAIL [ 69%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_membership SKIPPED [ 70%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_signup_date_range XPASS [ 72%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_next_payment_date_range SKIPPED [ 73%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_number SKIPPED [ 74%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_type SKIPPED [ 75%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_number_of_cars_range SKIPPED [ 76%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_allow_invoicing_yes XPASS [ 77%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_card_on_file XPASS [ 78%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_recurring_yes SKIPPED [ 79%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_prepaid_yes SKIPPED [ 80%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_canceled_yes SKIPPED [ 81%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_declined_yes XPASS [ 82%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all PASSED [ 83%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_multiple_filters_combined_narrow_results XFAIL [ 84%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_signup_date_from_after_to_documents_behaviour XPASS [ 86%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields PASSED [ 87%]
+tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls PASSED [ 88%]
+tests/admin_portal/customers/test_customers_ui.py::test_grid_membership_status_column_visible SKIPPED [ 89%]
+tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible PASSED [ 90%]
+tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls PASSED [ 91%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save PASSED [ 92%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save PASSED [ 93%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save PASSED [ 94%]
+tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour PASSED [ 95%]
+tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour PASSED [ 96%]
+tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour PASSED [ 97%]
+tests/admin_portal/customers/test_customers_validation.py::test_negative_loyalty_points_documents_behaviour SKIPPED [ 98%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page PASSED [100%]
+
+==================================== ERRORS ====================================
+_____________ ERROR at teardown of test_deactivate_active_customer _____________
+
+self = <allure_commons._allure.fixture object at 0x1033b2d10>, args = ()
+kwargs = {}
+
+    def __call__(self, *args, **kwargs):
+        self.parameters = func_parameters(self._fixture_function, *args, **kwargs)
+    
+        with self:
+>           return self._fixture_function(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../.venv/lib/python3.11/site-packages/allure_commons/_allure.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:203: in managed_customer
+    create_customer_if_missing(browser)
+tests/admin_portal/customers/conftest.py:137: in create_customer_if_missing
+    rows_with_name = [
+tests/admin_portal/customers/conftest.py:143: in <listcomp>
+    if el.is_displayed()
+       ^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:308: in is_displayed
+    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:578: in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x103659950>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104821a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104819b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001042c32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001042c9464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x00000001042cb92c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 108276
+E       5   chromedriver                        0x000000010434bd54 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 633628
+E       6   chromedriver                        0x000000010434b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x0000000104301434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x00000001047dec40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x00000001047e23b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x00000001047c50f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x00000001047e2c4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x00000001047b63b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x00000001048081f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x0000000104808354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x00000001048197a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+=================================== FAILURES ===================================
+_______________________ test_activate_inactive_customer ________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="4f152351d9beba87c5ab496455abaa73")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x10351fed0>
+
+    @allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
+    @pytest.mark.smoke
+    def test_activate_inactive_customer(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+        # Deactivate first, then reactivate within the same session to avoid
+        # the inactive-not-searchable race condition (mirrors the WP pattern).
+>       page.ensure_active_switch_off()
+
+tests/admin_portal/customers/test_customers_edit.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:815: in ensure_active_switch_off
+    self._click_react_switch(switch, False)
+pages/admin_portal/customers_page.py:785: in _click_react_switch
+    switch = self.driver.find_element(*self.ACTIVE_SWITCH)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:868: in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x10356c4d0>
+response = {'status': 500, 'value': '{"value":{"data":{"text":"Are you sure you want to deactivate this customer?"},"error":"unex...000199325c08 _pthread_start + 136\\n14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+>           raise exception_class(message, screen, stacktrace, alert_text)
+E           selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to deactivate this customer?
+E           Message: unexpected alert open: {Alert text : Are you sure you want to deactivate this customer?}
+E             (Session info: chrome=150.0.7871.182)
+E           Stacktrace:
+E           0   chromedriver                        0x00000001033e9a84 cxxbridge1$str$ptr + 3195292
+E           1   chromedriver                        0x00000001033e1b4c cxxbridge1$str$ptr + 3162724
+E           2   chromedriver                        0x0000000102e8b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E           3   chromedriver                        0x0000000102f1375c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 632100
+E           4   chromedriver                        0x0000000102ec9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E           5   chromedriver                        0x00000001033a6c40 cxxbridge1$str$ptr + 2921304
+E           6   chromedriver                        0x00000001033aa3b8 cxxbridge1$str$ptr + 2935504
+E           7   chromedriver                        0x000000010338d0f8 cxxbridge1$str$ptr + 2816016
+E           8   chromedriver                        0x00000001033aac4c cxxbridge1$str$ptr + 2937700
+E           9   chromedriver                        0x000000010337e3b0 cxxbridge1$str$ptr + 2755272
+E           10  chromedriver                        0x00000001033d01f4 cxxbridge1$str$ptr + 3090700
+E           11  chromedriver                        0x00000001033d0354 cxxbridge1$str$ptr + 3091052
+E           12  chromedriver                        0x00000001033e17a4 cxxbridge1$str$ptr + 3161788
+E           13  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E           14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:231: UnexpectedAlertPresentException
+_______________________ test_deactivate_active_customer ________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="1755d84012fea934bd7b96b2811f2e1d")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x1034edcd0>
+
+    @allure.title("CUST-EDT-005 Deactivate an active customer hides them from the default list")
+    @pytest.mark.regression
+    def test_deactivate_active_customer(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+>       page.ensure_active_switch_off()
+
+tests/admin_portal/customers/test_customers_edit.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:815: in ensure_active_switch_off
+    self._click_react_switch(switch, False)
+pages/admin_portal/customers_page.py:785: in _click_react_switch
+    switch = self.driver.find_element(*self.ACTIVE_SWITCH)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:868: in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x103659950>
+response = {'status': 500, 'value': '{"value":{"data":{"text":"Are you sure you want to deactivate this customer?"},"error":"unex...000199325c08 _pthread_start + 136\\n14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+>           raise exception_class(message, screen, stacktrace, alert_text)
+E           selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to deactivate this customer?
+E           Message: unexpected alert open: {Alert text : Are you sure you want to deactivate this customer?}
+E             (Session info: chrome=150.0.7871.182)
+E           Stacktrace:
+E           0   chromedriver                        0x0000000104821a84 cxxbridge1$str$ptr + 3195292
+E           1   chromedriver                        0x0000000104819b4c cxxbridge1$str$ptr + 3162724
+E           2   chromedriver                        0x00000001042c32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E           3   chromedriver                        0x000000010434b75c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 632100
+E           4   chromedriver                        0x0000000104301434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E           5   chromedriver                        0x00000001047dec40 cxxbridge1$str$ptr + 2921304
+E           6   chromedriver                        0x00000001047e23b8 cxxbridge1$str$ptr + 2935504
+E           7   chromedriver                        0x00000001047c50f8 cxxbridge1$str$ptr + 2816016
+E           8   chromedriver                        0x00000001047e2c4c cxxbridge1$str$ptr + 2937700
+E           9   chromedriver                        0x00000001047b63b0 cxxbridge1$str$ptr + 2755272
+E           10  chromedriver                        0x00000001048081f4 cxxbridge1$str$ptr + 3090700
+E           11  chromedriver                        0x0000000104808354 cxxbridge1$str$ptr + 3091052
+E           12  chromedriver                        0x00000001048197a4 cxxbridge1$str$ptr + 3161788
+E           13  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E           14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:231: UnexpectedAlertPresentException
+________________________ test_create_inactive_customer _________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="3a416df166f82774db77f8514b81dcc4")>
+
+    @allure.title("CUST-CRT-007 Create inactive customer — hidden from default active-only list")
+    @pytest.mark.regression
+    def test_create_inactive_customer(browser):
+        last = "TInact-%s" % uuid.uuid4().hex[:6]
+        page = open_customers_page(browser)
+        page.open_create_customer()
+        page.enter_first_name(CUSTOMER_FIRST)
+        page.enter_last_name(last)
+        page.select_site(CUSTOMER_SITE)
+>       page.ensure_active_switch_off()
+
+tests/admin_portal/customers/test_customers_positive.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:815: in ensure_active_switch_off
+    self._click_react_switch(switch, False)
+pages/admin_portal/customers_page.py:785: in _click_react_switch
+    switch = self.driver.find_element(*self.ACTIVE_SWITCH)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:868: in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1034b3d90>
+response = {'status': 500, 'value': '{"value":{"data":{"text":"Are you sure you want to deactivate this customer?"},"error":"unex...000199325c08 _pthread_start + 136\\n14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+>           raise exception_class(message, screen, stacktrace, alert_text)
+E           selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to deactivate this customer?
+E           Message: unexpected alert open: {Alert text : Are you sure you want to deactivate this customer?}
+E             (Session info: chrome=150.0.7871.182)
+E           Stacktrace:
+E           0   chromedriver                        0x00000001025c1a84 cxxbridge1$str$ptr + 3195292
+E           1   chromedriver                        0x00000001025b9b4c cxxbridge1$str$ptr + 3162724
+E           2   chromedriver                        0x00000001020632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E           3   chromedriver                        0x00000001020eb75c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 632100
+E           4   chromedriver                        0x00000001020a1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E           5   chromedriver                        0x000000010257ec40 cxxbridge1$str$ptr + 2921304
+E           6   chromedriver                        0x00000001025823b8 cxxbridge1$str$ptr + 2935504
+E           7   chromedriver                        0x00000001025650f8 cxxbridge1$str$ptr + 2816016
+E           8   chromedriver                        0x0000000102582c4c cxxbridge1$str$ptr + 2937700
+E           9   chromedriver                        0x00000001025563b0 cxxbridge1$str$ptr + 2755272
+E           10  chromedriver                        0x00000001025a81f4 cxxbridge1$str$ptr + 3090700
+E           11  chromedriver                        0x00000001025a8354 cxxbridge1$str$ptr + 3091052
+E           12  chromedriver                        0x00000001025b97a4 cxxbridge1$str$ptr + 3161788
+E           13  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E           14  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:231: UnexpectedAlertPresentException
+______________________ test_search_by_exact_phone_number _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="f8267ced7629ef9fe84562c0b61c92b7")>
+
+    @allure.title("CUST-SRH-003 Search by exact phone number returns the correct customer")
+    @pytest.mark.regression
+    def test_search_by_exact_phone_number(browser):
+        create_customer_if_missing(browser)
+        page = open_customers_page(browser)
+        page.search_by_phone(CUSTOMER_PHONE)
+    
+>       assert CUSTOMER_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x103437510>.get_body_text
+
+tests/admin_portal/customers/test_customers_search_filter.py:55: AssertionError
+___________________________ test_filter_by_last_name ___________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="51cb35cc4c212ad744f9bd8ed7b22d96")>
+
+    @allure.title("CUST-FLT-005 Filter by last name narrows results to matching customers")
+    @pytest.mark.regression
+    def test_filter_by_last_name(browser):
+        create_customer_if_missing(browser)
+        page = open_customers_page(browser)
+        page.filter_by_last_name(CUSTOMER_LAST)
+        page.apply_filters()
+    
+>       assert CUSTOMER_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by (1)\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by (1)\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x1029cab10>.get_body_text
+
+tests/admin_portal/customers/test_customers_search_filter.py:146: AssertionError
+_____________________________ test_filter_by_email _____________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="2a5517c80efd5391a9d10dfee139e665")>
+
+    @allure.title("CUST-FLT-006 Filter by email narrows results")
+    @pytest.mark.regression
+    def test_filter_by_email(browser):
+        from tests.admin_portal.customers.conftest import CUSTOMER_EMAIL
+>       create_customer_if_missing(browser)
+
+tests/admin_portal/customers/test_customers_search_filter.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:161: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x103525550>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+    def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+        """Open the create form and fill every provided field before saving."""
+        self.open_create_customer()
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        if phone:
+            self.enter_phone(phone)
+        if dob:
+            self.enter_dob(dob)
+        if address:
+            self.enter_address(address)
+        if zip_code:
+            self.enter_zip(zip_code)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+        if state:
+            try:
+                self.select_state(state)
+                if city:
+                    self.select_react_dropdown_option(self.CITY_COMBOBOX, city)
+            except Exception:  # noqa: BLE001
+                pass  # state/city cascade may vary by environment
+        self.click_save_customer()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+>           raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+E           RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:1180: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+=========================== short test summary info ============================
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer
+FAILED tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer
+= 6 failed, 46 passed, 29 skipped, 2 xfailed, 10 xpassed, 1 error in 1299.08s (0:21:39) =

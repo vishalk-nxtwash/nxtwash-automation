@@ -1,0 +1,19 @@
+2026-07-29 10:42:00,933 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 212 items
+
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_only_active_wash_books_in_cwb_dropdown PASSED [  0%]
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book PASSED [  0%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_customer_search_requires_two_characters PASSED [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_past_expiration_date_behaviour SKIPPEDuire additional page
+object support. Deferred.)                                               [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists 

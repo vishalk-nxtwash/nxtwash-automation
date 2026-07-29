@@ -1,0 +1,27 @@
+Wash extras
+Edit wash extra
+Cancel
+Save wash extra
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Select discounts
+VK PD04
+VK AD04
+VK PD03
+VK AD03
+AUTOTEST Discount
+AUTOTEST Discount RENAMED
+VK EC 100 Pct
+VK EC Exp Today
+VK EC Future Start
+VK EC Zero Pct
+VK PD02
+AUTOTEST Pct Discount
+VK CMB004
+VK CMB002
+VK AD02
+VK AD01
+Basic Discount
+Plus discount

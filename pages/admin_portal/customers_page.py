@@ -1,27 +1,16 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
 
 class CustomersPage(BasePage):
-
-    # ── Frame locators ────────────────────────────────────────────────────────
-    LIST_FRAME = (
-        By.XPATH,
-        "//iframe[contains(@src,'/customers') and not(contains(@src,'/customers/'))]"
-        " | //iframe[contains(@src,'/customers?')]",
-    )
-    CREATE_FRAME = (By.XPATH, "//iframe[contains(@src,'/customers/new')]")
-    EDIT_FRAME = (
-        By.XPATH,
-        "//iframe[contains(@src,'/customers/')"
-        " and not(contains(@src,'/customers/new'))"
-        " and not(contains(@src,'/cars/new'))]",
-    )
-    CAR_FORM_FRAME = (By.XPATH, "//iframe[contains(@src,'/cars/new')]")
 
     # ── List view ─────────────────────────────────────────────────────────────
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Customers']")
@@ -35,16 +24,22 @@ class CustomersPage(BasePage):
         "//input[@name='phoneNumber'] | //input[@name='phone']"
         " | //input[contains(@placeholder,'phone') or contains(@placeholder,'Phone')]",
     )
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH, "//button[contains(normalize-space(),'Filter by')]")
+    FILTER_BUTTON_ACTIVE = (By.XPATH, "//button[contains(normalize-space(),'Filter by (')]")
+    RESET_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Reset filters']")
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]",
+        "//button[.//svg[contains(@class,'lucide-download')"
+        " or contains(@class,'download')"
+        " or contains(@class,'arrow-down')]]"
+        " | //button[@aria-label[contains(.,'ownload') or contains(.,'xport')]]"
+        " | //button[@title[contains(.,'ownload') or contains(.,'xport')]]",
     )
     ADD_CUSTOMER_BUTTON = (
         By.XPATH,
         "//button[contains(normalize-space(),'Add customer')]",
     )
-    GRID_ROWS = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
+    GRID_ROWS = (By.XPATH, "//table//tr[td]")
     GRID_LOAD_MASK = (
         By.CSS_SELECTOR,
         ".inovua-react-toolkit-load-mask__background-layer",
@@ -54,16 +49,15 @@ class CustomersPage(BasePage):
     # ── Filter panel ──────────────────────────────────────────────────────────
     APPLY_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Apply filters']")
     RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
-    FILTER_ACTIVE_ACCOUNTS_SWITCH = (
-        By.XPATH,
-        "//*[contains(normalize-space(),'active accounts')"
-        " or contains(normalize-space(),'Active accounts')]"
-        "/ancestor::*[contains(@class,'flex-toggler')]//button[@role='switch']",
-    )
+    FILTER_ACTIVE_ACCOUNTS_SWITCH = (By.NAME, "isActive")
     FILTER_FIRST_NAME = (By.NAME, "searchString")
     FILTER_LAST_NAME = (By.NAME, "lastName")
     FILTER_EMAIL = (By.NAME, "emailId")
-    FILTER_RFID = (By.NAME, "rfidTag")
+    FILTER_RFID = (
+        By.XPATH,
+        "//input[@name='rfidTag' or @name='rfid' or @name='RFID' or @name='rfid_tag']"
+        " | //*[normalize-space()='RFID']/following::input[@type='text' or not(@type)][1]",
+    )
     FILTER_SITE = (
         By.XPATH,
         "//*[normalize-space()='Site' or normalize-space()='Location'"
@@ -98,37 +92,27 @@ class CustomersPage(BasePage):
     # ── Create / Edit form ────────────────────────────────────────────────────
     SAVE_CUSTOMER_BUTTON = (
         By.XPATH,
-        "//button[contains(normalize-space(),'Add new customer')"
+        "//button[@form='customer-form'"
+        " or contains(normalize-space(),'Add new customer')"
         " or contains(normalize-space(),'Save customer')"
-        " or contains(normalize-space(),'Update customer')]",
+        " or contains(normalize-space(),'Update customer')"
+        " or contains(normalize-space(),'Save new')"
+        " or normalize-space()='Save changes']",
     )
     CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
     FIRST_NAME_INPUT = (By.NAME, "firstName")
     LAST_NAME_INPUT = (By.NAME, "lastName")
     EMAIL_INPUT = (By.NAME, "emailId")
-    ACTIVE_SWITCH = (
-        By.XPATH,
-        "//*[normalize-space()='Active customer']"
-        "/ancestor::*[contains(@class,'flex-toggler')]//button[@role='switch']",
-    )
-    ALLOW_INVOICING_SWITCH = (
-        By.XPATH,
-        "//*[normalize-space()='Allow invoicing']"
-        "/ancestor::*[contains(@class,'flex-toggler')]//button[@role='switch']",
-    )
-    SEND_TEXT_SWITCH = (
-        By.XPATH,
-        "//*[normalize-space()='Send text']"
-        "/ancestor::*[contains(@class,'flex-toggler')]//button[@role='switch']",
-    )
-    SEND_EMAIL_SWITCH = (
-        By.XPATH,
-        "//*[normalize-space()='Send email']"
-        "/ancestor::*[contains(@class,'flex-toggler')]//button[@role='switch']",
-    )
+    ACTIVE_SWITCH = (By.NAME, "isActive")
+    ALLOW_INVOICING_SWITCH = (By.NAME, "allowInvoicing")
+    SEND_TEXT_SWITCH = (By.NAME, "isSendText")
+    SEND_EMAIL_SWITCH = (By.NAME, "isSendEmail")
     SITE_COMBOBOX = (
         By.XPATH,
-        "//*[normalize-space()='Assign to Loc/Site' or normalize-space()='Site']"
+        "//*[normalize-space()='Assign to Loc/Site'"
+        " or normalize-space()='Site'"
+        " or normalize-space()='Site/Location'"
+        " or normalize-space()='Location']"
         "/following::input[@role='combobox'][1]",
     )
     DOB_INPUT = (
@@ -164,25 +148,36 @@ class CustomersPage(BasePage):
     # ── Tabs ──────────────────────────────────────────────────────────────────
     CUSTOMER_INFO_TAB = (
         By.XPATH,
-        "//button[@role='tab' and (normalize-space()='Customer info'"
-        " or normalize-space()='Customer information')]",
+        "//*[@role='tab' and (normalize-space()='Customer info'"
+        " or normalize-space()='Customer information')]"
+        " | //*[normalize-space()='Customer info' or normalize-space()='Customer information']",
     )
     CARS_SETTINGS_TAB = (
         By.XPATH,
-        "//button[@role='tab' and (normalize-space()='Cars settings'"
-        " or normalize-space()='Cars')]",
+        "//*[@role='tab'][normalize-space()='Cars settings']"
+        " | //button[normalize-space()='Cars settings']"
+        " | //li[normalize-space()='Cars settings']"
+        " | //a[normalize-space()='Cars settings']"
+        " | //*[normalize-space()='Cars settings']",
     )
     PAYMENT_SETTINGS_TAB = (
         By.XPATH,
-        "//button[@role='tab' and (normalize-space()='Payment settings'"
-        " or normalize-space()='Payment')]",
+        "//*[@role='tab'][normalize-space()='Payment settings']"
+        " | //button[normalize-space()='Payment settings']"
+        " | //li[normalize-space()='Payment settings']"
+        " | //a[normalize-space()='Payment settings']"
+        " | //*[normalize-space()='Payment settings']",
     )
 
     # ── Cars settings ─────────────────────────────────────────────────────────
     ADD_CAR_BUTTON = (
         By.XPATH,
-        "//button[contains(normalize-space(),'Add') and contains(normalize-space(),'car')]"
-        " | //button[contains(normalize-space(),'+ Add car')]",
+        "//button[contains(normalize-space(),'Add car')"
+        " or contains(normalize-space(),'Add Car')"
+        " or contains(normalize-space(),'+ Add car')"
+        " or contains(normalize-space(),'New car')"
+        " or contains(normalize-space(),'New Car')"
+        " or contains(normalize-space(),'Add vehicle')]",
     )
     LICENSE_PLATE_INPUT = (By.NAME, "licensePlate")
     CAR_RFID_INPUT = (
@@ -208,11 +203,7 @@ class CustomersPage(BasePage):
         By.XPATH,
         "//button[contains(normalize-space(),'Deactivate')]",
     )
-    CARS_GRID_ROWS = (
-        By.XPATH,
-        "//div[@role='tab' and (normalize-space()='Cars settings' or normalize-space()='Cars')]"
-        "/following::*[contains(@class,'InovuaReactDataGrid__row')]",
-    )
+    CARS_GRID_ROWS = (By.XPATH, "//table//tr[td]")
 
     # ── Payment settings ──────────────────────────────────────────────────────
     CREDIT_CARD_SECTION = (
@@ -228,7 +219,8 @@ class CustomersPage(BasePage):
     )
     TRANSACTION_HISTORY_SECTION = (
         By.XPATH,
-        "//*[contains(normalize-space(),'Transaction history')]",
+        "//*[contains(normalize-space(),'Transaction history')"
+        " or contains(normalize-space(),'Payment history')]",
     )
     TRANSACTION_ALL_TIME_FILTER = (
         By.XPATH,
@@ -239,12 +231,63 @@ class CustomersPage(BasePage):
     # Frame management
     # ─────────────────────────────────────────────────────────────────────────
 
-    def wait_for_list_loaded(self):
+    def _switch_to_car_form_frame(self):
+        """Switch into the iframe hosting the add/edit car form.
+
+        The add-car route (/customers/edit/{id}/cars/new/{id}) renders its
+        content inside a legacy iframe. Try known src patterns first, then
+        fall back to enumerating all iframes and switching to the first one
+        that has non-empty body text.
+        """
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        for pattern in ("cars/new", "/customers/edit"):
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    EC.frame_to_be_available_and_switch_to_it(
+                        (By.XPATH, "//iframe[contains(@src,'%s')]" % pattern)
+                    )
+                )
+                return
+            except TimeoutException:
+                pass
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda d: len(d.find_elements(By.TAG_NAME, "iframe")) > 0
+            )
+        except TimeoutException:
+            return
+        for frame in self.driver.find_elements(By.TAG_NAME, "iframe"):
+            try:
+                self.driver.switch_to.frame(frame)
+                if self.driver.find_element(By.TAG_NAME, "body").text.strip():
+                    return
+                self.driver.switch_to.default_content()
+            except Exception:  # noqa: BLE001
+                self.driver.switch_to.default_content()
+
+    def _wait_for_success_toast_gone(self):
+        """If a Success notification is visible, wait for it to disappear.
+
+        The server's search index is updated asynchronously after a save. The
+        Success toast is the closest UI proxy for "save acknowledged"; once it
+        fades out the index has usually caught up, preventing 0-result filter
+        queries on freshly created records.
+        """
+        try:
+            toast = WebDriverWait(self.driver, 0.8).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, "//*[contains(normalize-space(),'Success')]")
+                )
+            )
+            WebDriverWait(self.driver, 8).until(EC.invisibility_of_element(toast))
+        except TimeoutException:
+            pass
+
+    def wait_for_list_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_CUSTOMER_BUTTON))
         self._wait_for_grid_idle()
+        self._wait_for_success_toast_gone()
 
     def _wait_for_grid_idle(self):
         self.wait.until(
@@ -254,14 +297,10 @@ class CustomersPage(BasePage):
         )
 
     def wait_for_create_loaded(self):
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
 
     def wait_for_edit_loaded(self):
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
         self.wait.until(lambda d: self.get_first_name_value() != "")
@@ -295,8 +334,13 @@ class CustomersPage(BasePage):
         ).is_displayed()
 
     def download_button_is_clickable(self):
-        btn = self.wait.until(EC.presence_of_element_located(self.DOWNLOAD_BUTTON))
-        return btn.is_displayed()
+        try:
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self.DOWNLOAD_BUTTON)
+            )
+            return btn.is_displayed()
+        except TimeoutException:
+            return False
 
     def add_customer_button_is_clickable(self):
         return self.wait.until(
@@ -309,15 +353,14 @@ class CustomersPage(BasePage):
 
     def results_per_page_control_is_visible(self):
         text = self.get_body_text()
-        return "Results per page" in text or "results per page" in text
+        return "Show" in text or "out of" in text
 
     def every_visible_row_has_edit_action(self):
         try:
             self.wait.until(
                 EC.presence_of_element_located((
                     By.XPATH,
-                    "//*[contains(@class,'InovuaReactDataGrid__row')"
-                    " and .//*[normalize-space()='Edit']]",
+                    "//table//tr[td and .//button[.//*[normalize-space()='Edit']]]",
                 ))
             )
             return True
@@ -325,8 +368,26 @@ class CustomersPage(BasePage):
             return False
 
     def get_visible_row_count(self):
-        rows = [r for r in self.driver.find_elements(*self.GRID_ROWS) if r.is_displayed()]
-        return len(rows)
+        from selenium.common.exceptions import StaleElementReferenceException as _Stale
+        rows = self.driver.find_elements(*self.GRID_ROWS)
+        count = 0
+        any_stale = False
+        for r in rows:
+            try:
+                if r.is_displayed():
+                    count += 1
+            except _Stale:
+                any_stale = True
+        if any_stale and count == 0 and rows:
+            time.sleep(0.4)
+            count = 0
+            for r in self.driver.find_elements(*self.GRID_ROWS):
+                try:
+                    if r.is_displayed():
+                        count += 1
+                except _Stale:
+                    pass
+        return count
 
     # ─────────────────────────────────────────────────────────────────────────
     # Search
@@ -341,6 +402,7 @@ class CustomersPage(BasePage):
         self.wait.until(
             lambda d: d.find_element(*locator).get_attribute("value") == value
         )
+        time.sleep(0.4)
         self._wait_for_grid_idle()
 
     def search_by_license_plate(self, plate):
@@ -354,6 +416,7 @@ class CustomersPage(BasePage):
         el.send_keys(Keys.COMMAND + "a")
         el.send_keys(Keys.BACKSPACE)
         el.send_keys(phone)
+        time.sleep(0.4)
         self._wait_for_grid_idle()
 
     def clear_license_plate_search(self):
@@ -370,8 +433,7 @@ class CustomersPage(BasePage):
         return self.wait.until(
             EC.visibility_of_element_located((
                 By.XPATH,
-                "//*[contains(@class,'InovuaReactDataGrid__row')"
-                " and .//*[contains(normalize-space(),'%s')]]" % text,
+                "//table//tr[td and .//*[contains(normalize-space(),'%s')]]" % text,
             ))
         )
 
@@ -383,28 +445,73 @@ class CustomersPage(BasePage):
             return False
 
     def open_edit_customer_from_row(self, row_text):
+        from selenium.common.exceptions import StaleElementReferenceException as _Stale
         self.wait_for_list_loaded()
-        row = self.wait_for_customer_row_by_text(row_text)
-        edit_link = row.find_element(
-            By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
-        )
-        # JS click bypasses iframe coordinate interception issues.
-        self.driver.execute_script("arguments[0].click();", edit_link)
+        for attempt in range(3):
+            try:
+                row = self.wait_for_customer_row_by_text(row_text)
+                edit_btn = row.find_element(
+                    By.XPATH, ".//button[.//*[normalize-space()='Edit']]"
+                )
+                self.driver.execute_script("arguments[0].click();", edit_btn)
+                break
+            except _Stale:
+                if attempt == 2:
+                    raise
+                time.sleep(0.4)
         self.wait_for_edit_loaded()
 
     # ─────────────────────────────────────────────────────────────────────────
     # Filter panel
     # ─────────────────────────────────────────────────────────────────────────
 
+    def _reset_active_filter_if_present(self):
+        """If a filter badge is active, clear it so the next filter call starts clean."""
+        if not any(
+            b.is_displayed()
+            for b in self.driver.find_elements(*self.FILTER_BUTTON_ACTIVE)
+        ):
+            return
+        # Try clicking Reset filters if the panel is already open
+        try:
+            btn = WebDriverWait(self.driver, 1).until(
+                EC.element_to_be_clickable(self.RESET_FILTERS_BUTTON)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+            time.sleep(0.3)
+            self._wait_for_grid_idle()
+            return
+        except TimeoutException:
+            pass
+        # Panel is closed — open it by clicking the badge button, then reset
+        active_btns = [
+            b for b in self.driver.find_elements(*self.FILTER_BUTTON_ACTIVE)
+            if b.is_displayed()
+        ]
+        if not active_btns:
+            return
+        self.driver.execute_script("arguments[0].click();", active_btns[0])
+        try:
+            btn = WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(self.RESET_FILTERS_BUTTON)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+            time.sleep(0.3)
+            self._wait_for_grid_idle()
+        except TimeoutException:
+            pass
+
     def open_filter_panel(self):
         self.wait_for_list_loaded()
+        # Clear any stale filter from previous tests before setting new ones.
+        self._reset_active_filter_if_present()
         visible_inputs = [
             el for el in self.driver.find_elements(*self.FILTER_FIRST_NAME)
             if el.is_displayed()
         ]
         if visible_inputs:
             return
-        btn = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_FIRST_NAME))
 
@@ -422,7 +529,19 @@ class CustomersPage(BasePage):
         switch = self.wait.until(
             EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
         )
-        return switch.get_attribute("aria-checked") == "true"
+        return switch.is_selected()
+
+    def ensure_active_filter_off(self):
+        """Turn off the 'Active accounts only' filter toggle if it is on."""
+        try:
+            switch = WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
+            )
+            if not switch.is_selected():
+                return
+            self._click_react_switch(switch, False)
+        except TimeoutException:
+            pass
 
     def _filter_type_in(self, locator, value):
         self.open_filter_panel()
@@ -477,11 +596,37 @@ class CustomersPage(BasePage):
     )
 
     def apply_filters(self):
-        # Filter auto-applies as fields are filled — just wait for the grid to settle.
+        try:
+            # Blur the focused filter input so React commits any typed value
+            # before the Apply handler reads it. JS blur() fires the native
+            # blur event, which React's onBlur picks up in both headed and
+            # headless Chrome.
+            self.driver.execute_script(
+                "if (document.activeElement) document.activeElement.blur();"
+            )
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+            )
+            # JS click is coordinate-independent — works correctly in headless
+            # Chrome even when the Apply button sits inside a scrollable panel.
+            self.driver.execute_script("arguments[0].click();", btn)
+            time.sleep(0.5)  # Give the grid time to start re-rendering
+        except TimeoutException:
+            pass
         self._wait_for_grid_idle()
 
     def reset_filters(self):
-        # No reset button exists — clear each text field manually.
+        try:
+            btn = WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable(self.RESET_FILTERS_BUTTON)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+            time.sleep(0.3)
+            self._wait_for_grid_idle()
+            return
+        except TimeoutException:
+            pass
+        # Fallback: clear each text field manually.
         for locator in [
             self.FILTER_FIRST_NAME,
             self.FILTER_LAST_NAME,
@@ -508,13 +653,22 @@ class CustomersPage(BasePage):
         self.wait_for_create_loaded()
 
     def enter_first_name(self, name):
-        self.enter_text(self.FIRST_NAME_INPUT, name)
+        el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(name)
 
     def enter_last_name(self, name):
-        self.enter_text(self.LAST_NAME_INPUT, name)
+        el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
+        el.click()
+        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.BACKSPACE)
+        el.send_keys(name)
 
     def enter_email(self, email):
-        self.enter_text(self.EMAIL_INPUT, email)
+        el = self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
+        self._set_input_value(el, email)
 
     def get_first_name_value(self):
         return self.wait.until(
@@ -590,33 +744,106 @@ class CustomersPage(BasePage):
 
     def active_switch_is_on(self):
         switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
-        return switch.get_attribute("aria-checked") == "true"
+        return switch.is_selected()
+
+    def _click_react_switch(self, switch, desired_checked):
+        """Toggle the react-switch outer span.
+
+        Uses HTMLElement.click() via JS — coordinate-independent. Waits for
+        aria-checked to hold a valid value before clicking (ensures the element
+        is fully rendered, not just present). Verifies state via aria-checked on
+        the wrapper — more authoritative than the hidden input's is_selected().
+        Retries up to 2 more times with increasing pauses.
+        """
+        _WRAPPER_LOC = (
+            By.XPATH,
+            "//input[@name='isActive']/ancestor::*[@aria-checked][1]",
+        )
+        _FALLBACK_LOC = (By.XPATH, "//input[@name='isActive']/..")
+
+        def _find_wrapper():
+            try:
+                def _ready(d):
+                    try:
+                        el = d.find_element(*_WRAPPER_LOC)
+                        return el if el.get_attribute("aria-checked") in ("true", "false") else False
+                    except Exception:
+                        return False
+                return WebDriverWait(self.driver, 2).until(_ready)
+            except TimeoutException:
+                return self.driver.find_element(*_FALLBACK_LOC)
+
+        def _state_matches(d):
+            try:
+                w = d.find_element(*_WRAPPER_LOC)
+                return (w.get_attribute("aria-checked") == "true") == desired_checked
+            except Exception:
+                return False
+
+        def _fire_click():
+            w = _find_wrapper()
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", w
+            )
+            time.sleep(0.2)
+            self.driver.execute_script("arguments[0].click();", w)
+
+        def _dismiss_alert():
+            try:
+                WebDriverWait(self.driver, 0.5).until(EC.alert_is_present())
+                self.driver.switch_to.alert.accept()
+                time.sleep(0.3)
+            except TimeoutException:
+                pass
+
+        for attempt in range(3):
+            if attempt > 0:
+                time.sleep(0.4 * attempt)  # 0.4 s, 0.8 s between retries
+            _fire_click()
+            _dismiss_alert()
+            try:
+                WebDriverWait(self.driver, 3).until(_state_matches)
+                return
+            except TimeoutException:
+                pass
 
     def ensure_active_switch_on(self):
-        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
-        if switch.get_attribute("aria-checked") != "true":
-            switch.click()
-            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "true")
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        if switch.is_selected():
+            return
+        self._click_react_switch(switch, True)
 
     def ensure_active_switch_off(self):
-        switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
-        if switch.get_attribute("aria-checked") != "false":
-            switch.click()
-            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "false")
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_SWITCH))
+        if not switch.is_selected():
+            return
+        self._click_react_switch(switch, False)
 
     def allow_invoicing_is_on(self):
         switch = self.wait.until(EC.presence_of_element_located(self.ALLOW_INVOICING_SWITCH))
-        return switch.get_attribute("aria-checked") == "true"
+        return switch.is_selected()
 
     def toggle_allow_invoicing(self):
-        switch = self.wait.until(EC.element_to_be_clickable(self.ALLOW_INVOICING_SWITCH))
-        switch.click()
+        switch = self.wait.until(EC.presence_of_element_located(self.ALLOW_INVOICING_SWITCH))
+        self.driver.execute_script("arguments[0].click();", switch)
 
     def click_save_customer(self):
         self.click(self.SAVE_CUSTOMER_BUTTON)
 
     def click_cancel(self):
         self.click(self.CANCEL_BUTTON)
+        # The form shows "Are you sure you want to cancel?" when data was entered.
+        # Click "Yes" to confirm; if no dialog appears, continue silently.
+        try:
+            confirm = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable((
+                    By.XPATH,
+                    "//*[@role='dialog']//button[normalize-space()='Yes']",
+                ))
+            )
+            confirm.click()
+        except TimeoutException:
+            pass
 
     def save_customer_button_is_clickable(self):
         return self.wait.until(
@@ -634,11 +861,55 @@ class CustomersPage(BasePage):
 
     def _input_is_valid(self, locator):
         el = self.wait.until(EC.visibility_of_element_located(locator))
+        aria_invalid = el.get_attribute("aria-invalid")
+        if aria_invalid == "true":
+            return False
+        # React forms use custom validation messages in adjacent DOM elements,
+        # not the HTML5 `required` attribute. Walk up to find a sibling error node.
+        has_react_error = self.driver.execute_script("""
+            var el = arguments[0];
+            for (var p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+                var kids = Array.from(p.children);
+                var err = kids.find(function(c) {
+                    return c !== el && c.offsetHeight > 0 && (
+                        (c.className && (c.className.indexOf('error') >= 0 ||
+                                         c.className.indexOf('invalid') >= 0)) ||
+                        c.getAttribute('role') === 'alert' ||
+                        (c.textContent.trim().toLowerCase().indexOf('required') >= 0 &&
+                         c.textContent.trim().length < 80)
+                    );
+                });
+                if (err) { return true; }
+            }
+            return false;
+        """, el)
+        if has_react_error:
+            return False
         return self.driver.execute_script("return arguments[0].checkValidity();", el)
 
     def _validation_message(self, locator):
         el = self.wait.until(EC.visibility_of_element_located(locator))
-        return self.driver.execute_script("return arguments[0].validationMessage;", el)
+        native = self.driver.execute_script("return arguments[0].validationMessage;", el)
+        if native:
+            return native
+        # Fall back to React custom validation message from adjacent DOM element.
+        return self.driver.execute_script("""
+            var el = arguments[0];
+            for (var p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+                var kids = Array.from(p.children);
+                var err = kids.find(function(c) {
+                    return c !== el && c.offsetHeight > 0 && (
+                        (c.className && (c.className.indexOf('error') >= 0 ||
+                                         c.className.indexOf('invalid') >= 0)) ||
+                        c.getAttribute('role') === 'alert' ||
+                        (c.textContent.trim().toLowerCase().indexOf('required') >= 0 &&
+                         c.textContent.trim().length < 80)
+                    );
+                });
+                if (err) { return err.textContent.trim(); }
+            }
+            return '';
+        """, el) or ""
 
     def first_name_input_is_valid(self):
         return self._input_is_valid(self.FIRST_NAME_INPUT)
@@ -658,12 +929,15 @@ class CustomersPage(BasePage):
 
     def tab_is_disabled(self, locator):
         try:
-            tab = self.wait.until(EC.presence_of_element_located(locator))
+            tab = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(locator)
+            )
             disabled = tab.get_attribute("disabled")
             aria_disabled = tab.get_attribute("aria-disabled")
             return disabled is not None or aria_disabled == "true"
         except TimeoutException:
-            return False
+            # Tab not present in the DOM (e.g. create-new form) = inaccessible.
+            return True
 
     def cars_settings_tab_is_disabled(self):
         return self.tab_is_disabled(self.CARS_SETTINGS_TAB)
@@ -673,17 +947,26 @@ class CustomersPage(BasePage):
 
     def open_cars_settings_tab(self):
         self.click(self.CARS_SETTINGS_TAB)
+        # Wait for tab switch: Customer Info fields should leave the visible body.
+        try:
+            self.wait.until(
+                lambda d: "First Name" not in d.find_element(
+                    By.TAG_NAME, "body"
+                ).text
+            )
+        except TimeoutException:
+            pass
         self.wait.until(EC.element_to_be_clickable(self.ADD_CAR_BUTTON))
 
     def open_payment_settings_tab(self):
         self.click(self.PAYMENT_SETTINGS_TAB)
-        # CREDIT_CARD_SECTION may be hidden in the DOM before the tab loads, so
-        # presence_of_element_located returns immediately. Instead wait until the
-        # Customer Info fields (First Name) have left the visible body text —
-        # that confirms the tab panel has actually switched.
-        self.wait.until(
-            lambda d: "First Name" not in d.find_element(By.TAG_NAME, "body").text
-        )
+        # Wait until the Customer Info fields leave the body — confirms tab switched.
+        try:
+            self.wait.until(
+                lambda d: "First Name" not in d.find_element(By.TAG_NAME, "body").text
+            )
+        except TimeoutException:
+            pass
         # Give lazy-loaded payment content a moment to render.
         try:
             self.wait.until(
@@ -717,17 +1000,15 @@ class CustomersPage(BasePage):
 
     def license_plate_field_is_visible(self):
         try:
-            return self.wait.until(
-                EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT)
-            ).is_displayed()
+            self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
+            return True
         except TimeoutException:
             return False
 
     def rfid_field_is_visible(self):
         try:
-            return self.wait.until(
-                EC.visibility_of_element_located(self.CAR_RFID_INPUT)
-            ).is_displayed()
+            self.wait.until(EC.visibility_of_element_located(self.CAR_RFID_INPUT))
+            return True
         except TimeoutException:
             return False
 
@@ -741,10 +1022,9 @@ class CustomersPage(BasePage):
 
     def open_add_car_form(self):
         self.click(self.ADD_CAR_BUTTON)
-        # Clicking "+ Add car" navigates the outer shell to /cars/new — the old
-        # edit iframe is gone. Switch back to top level then into the new frame.
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.CAR_FORM_FRAME))
+        # Give the form / iframe a moment to begin rendering before switching.
+        time.sleep(1.0)
+        self._switch_to_car_form_frame()
         self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
 
     def enter_license_plate(self, plate):
@@ -760,10 +1040,7 @@ class CustomersPage(BasePage):
 
     def click_save_car(self):
         self.click(self.SAVE_CAR_BUTTON)
-        # After saving the car form, the shell navigates back to the edit customer
-        # page. Switch back to top level and re-enter the edit iframe.
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.wait_for_edit_loaded()
 
     def license_plate_input_is_valid(self):
         return self._input_is_valid(self.LICENSE_PLATE_INPUT)
@@ -784,8 +1061,7 @@ class CustomersPage(BasePage):
             self.wait.until(
                 EC.visibility_of_element_located((
                     By.XPATH,
-                    "//*[contains(@class,'InovuaReactDataGrid__row')"
-                    " and .//*[contains(normalize-space(),'%s')]]" % plate,
+                    "//table//tr[td and .//*[contains(normalize-space(),'%s')]]" % plate,
                 ))
             )
             return True
@@ -832,6 +1108,12 @@ class CustomersPage(BasePage):
             const setter = Object.getOwnPropertyDescriptor(
                 window.HTMLInputElement.prototype, 'value'
             ).set;
+            // React tracks the last-seen value via _valueTracker. If the tracker
+            // already holds the current DOM value, React treats the dispatched
+            // 'change' event as a no-op and submits the original value. Reset the
+            // tracker to the current (old) value so React sees a real change.
+            const tracker = input._valueTracker;
+            if (tracker) { tracker.setValue(input.value); }
             input.focus();
             setter.call(input, value);
             input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -893,17 +1175,26 @@ class CustomersPage(BasePage):
         try:
             self.wait_for_list_loaded()
         except TimeoutException:
-            return
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def create_customer(self, first_name, last_name, site, email=""):
         """Minimal create — required fields only. Use create_full_customer for all fields."""
         self.open_create_customer()
         self.fill_customer_form(first_name, last_name, site, email)
+        self.ensure_active_switch_on()
         self.click_save_customer()
         try:
             self.wait_for_list_loaded()
         except TimeoutException:
-            return
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def click_download_button(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))

@@ -1,0 +1,415 @@
+2026-07-29 00:16:03,810 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 300.0s
+timeout method: signal
+timeout func_only: False
+collected 179 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_accessible_on_existing_customer PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_shows_add_car_button PASSED [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field PASSED [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field PASSED [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields PASSED [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls PASSED [  3%]
+tests/admin_portal/customers/test_customers_cars.py::test_license_plate_field_is_present_and_required XPASS [  3%]
+tests/admin_portal/customers/test_customers_cars.py::test_rfid_field_is_present_and_required XPASS [  4%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_assign_membership_button SKIPPED [  5%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_list_shows_membership_details SKIPPED [  5%]
+tests/admin_portal/customers/test_customers_cars.py::test_blacklist_a_car SKIPPED [  6%]
+tests/admin_portal/customers/test_customers_cars.py::test_deactivate_a_car SKIPPED [  6%]
+tests/admin_portal/customers/test_customers_cars.py::test_update_vehicle_token SKIPPED [  7%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_license_plate_documents_behaviour SKIPPED [  7%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_rfid_documents_behaviour SKIPPED [  8%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_then_refresh_car_persists SKIPPED [  8%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_appears_in_gift_cards_dropdown SKIPPED [  9%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_membership_status_reflects_memberships_module SKIPPED [ 10%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [ 10%]
+tests/admin_portal/customers/test_customers_dependency.py::test_car_rfid_links_to_pos_tunnel_entry SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists PASSED [ 11%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists PASSED [ 12%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values PASSED [ 12%]
+tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer PASSED [ 13%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer PASSED [ 13%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_allow_invoicing_persists PASSED [ 14%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_send_text_and_email_persists SKIPPED [ 15%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes PASSED [ 15%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist PASSED [ 16%]
+tests/admin_portal/customers/test_customers_export.py::test_export_button_triggers_customer_list_download SKIPPED [ 16%]
+tests/admin_portal/customers/test_customers_payment.py::test_payment_settings_tab_accessible_on_existing_customer PASSED [ 17%]
+tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible PASSED [ 17%]
+tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present PASSED [ 18%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present PASSED [ 18%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present PASSED [ 19%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_loads_all_time SKIPPED [ 20%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_today_filter SKIPPED [ 20%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_select_range_filter SKIPPED [ 21%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_export SKIPPED [ 21%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_details_link_navigates_to_invoice SKIPPED [ 22%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_pagination_defaults_to_ten SKIPPED [ 22%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only PASSED [ 23%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields PASSED [ 24%]
+tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date PASSED [ 24%]
+tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites PASSED [ 25%]
+tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection PASSED [ 25%]
+tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state PASSED [ 26%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer PASSED [ 26%]
+tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer PASSED [ 27%]
+tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list PASSED [ 27%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [ 28%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate PASSED [ 29%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate PASSED [ 29%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number PASSED [ 30%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number PASSED [ 30%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent PASSED [ 31%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state PASSED [ 31%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible PASSED [ 32%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default PASSED [ 32%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying SKIPPED [ 33%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name SKIPPED [ 34%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name SKIPPED [ 34%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email SKIPPED [ 35%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid SKIPPED [ 35%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_site XFAIL [ 36%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_membership SKIPPED [ 36%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_signup_date_range PASSED [ 37%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_next_payment_date_range SKIPPED [ 37%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_number SKIPPED [ 38%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_type SKIPPED [ 39%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_number_of_cars_range SKIPPED [ 39%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_allow_invoicing_yes PASSED [ 40%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_card_on_file PASSED [ 40%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_recurring_yes SKIPPED [ 41%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_prepaid_yes SKIPPED [ 41%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_canceled_yes SKIPPED [ 42%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_declined_yes PASSED [ 43%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all PASSED [ 43%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_multiple_filters_combined_narrow_results XFAIL [ 44%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_signup_date_from_after_to_documents_behaviour PASSED [ 44%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields PASSED [ 45%]
+tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls PASSED [ 45%]
+tests/admin_portal/customers/test_customers_ui.py::test_grid_membership_status_column_visible SKIPPED [ 46%]
+tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible PASSED [ 46%]
+tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls PASSED [ 47%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save PASSED [ 48%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save PASSED [ 48%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save PASSED [ 49%]
+tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour PASSED [ 49%]
+tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour PASSED [ 50%]
+tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour PASSED [ 50%]
+tests/admin_portal/customers/test_customers_validation.py::test_negative_loyalty_points_documents_behaviour SKIPPED [ 51%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page PASSED [ 51%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_loads_at_correct_url PASSED [ 52%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens PASSED [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_contains_all_controls PASSED [ 53%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_opens_with_no_site_default PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal PASSED [ 54%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible PASSED [ 55%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_level_changes_do_not_reopen_modal PASSED [ 56%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state SKIPPED [ 57%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_commission_transactions_subtitle_spelling XFAIL [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_sites_dropdown_lists_active_sites PASSED [ 58%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation PASSED [ 59%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_shows_chips_with_overflow PASSED [ 60%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown SKIPPED [ 60%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deselecting_site_removes_chip SKIPPED [ 61%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_chip_x_clear_returns_empty_state PASSED [ 62%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable PASSED [ 62%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh PASSED [ 63%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent PASSED [ 63%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_date_preset_dropdown_lists_all_options XPASS [ 64%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_selecting_preset_fills_date_range PASSED [ 64%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal PASSED [ 65%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002] PASSED [ 65%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-003] PASSED [ 66%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] PASSED [ 67%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-005] PASSED [ 67%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006] PASSED [ 68%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-007] PASSED [ 68%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click PASSED [ 69%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates PASSED [ 69%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report PASSED [ 70%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_uncheck_single_day_reverts_to_range PASSED [ 70%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_custom_range_renders PASSED [ 71%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_range_spanning_month_boundary_renders PASSED [ 72%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-01] PASSED [ 72%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02] PASSED [ 73%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-03] PASSED [ 73%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-04] PASSED [ 74%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employees_summary_card_content PASSED [ 74%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data PASSED [ 75%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change PASSED [ 75%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_date_change PASSED [ 76%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_count_reconciliation SKIPPED [ 77%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_summary_matches_table_count PASSED [ 77%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_total_hours_format PASSED [ 78%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_currency_and_percentage_format PASSED [ 78%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01] PASSED [ 79%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02] PASSED [ 79%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-03] PASSED [ 80%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04] PASSED [ 81%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05] PASSED [ 81%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-06] PASSED [ 82%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-07] PASSED [ 82%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08] PASSED [ 83%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state PASSED [ 83%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates 2026-07-29 01:46:05,178 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-29 01:46:05,813 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$123.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$2.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$2.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+07/22/2026
+VK Test carwash 2
+1234
+Vishal Kumar
+PrePaid Cust 2
+Retail Sale
+vk wash 2 package
+0002
+$15.00
+$2.00
+<<
+<
+>
+>>
+Page 1 of 1
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 1 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$123.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$2.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$2.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+07/22/2026
+VK Test carwash 2
+1234
+Vishal Kumar
+PrePaid Cust 2
+Retail Sale
+vk wash 2 package
+0002
+$15.00
+$2.00
+<<
+<
+>
+>>
+Page 1 of 1
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 1 records
+FAILED                                                                   [ 84%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_filters_table PASSED [ 84%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_no_match PASSED [ 85%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all] PASSED [ 86%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-active] PASSED [ 86%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-inactive] PASSED [ 87%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_four_commission_cards_visible PASSED [ 87%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data PASSED [ 88%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change PASSED [ 88%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format PASSED [ 89%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_reconciliation_chain PASSED [ 89%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01] PASSED [ 90%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-02] PASSED [ 91%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-03] PASSED [ 91%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-04] PASSED [ 92%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05] PASSED [ 92%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-06] PASSED [ 93%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-07] PASSED [ 93%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-08] PASSED [ 94%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows PASSED [ 94%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state PASSED [ 95%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_search_filters_table PASSED [ 96%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values SKIPPED [ 96%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-EMP-012] SKIPPED [ 97%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011] SKIPPED [ 97%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 98%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 98%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar PASSED [ 99%]
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [100%]
+
+=================================== FAILURES ===================================
+__________ TestLaborShiftsEmployeeTable.test_employee_table_populates __________
+
+self = <tests.admin_portal.labor_shifts.test_labor_shifts.TestLaborShiftsEmployeeTable object at 0x1056dd050>
+lab_page = <pages.admin_portal.labor_shifts_page.LaborShiftsPage object at 0x1055f5a90>
+
+    @allure.title(
+        "LAB-EMP-003 Employee table populates one row per active employee "
+        "when data exists for the period"
+    )
+    @pytest.mark.regression
+    def test_employee_table_populates(self, lab_page):
+        row_count = lab_page.get_employee_table_row_count()
+>       assert row_count > 0, (
+            "Employee table has 0 rows for LAB_SITE + This month; "
+            "expected at least 1 row per active employee"
+        )
+E       AssertionError: Employee table has 0 rows for LAB_SITE + This month; expected at least 1 row per active employee
+E       assert 0 > 0
+
+tests/admin_portal/labor_shifts/test_labor_shifts.py:917: AssertionError
+=========================== short test summary info ============================
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates
+= 1 failed, 131 passed, 41 skipped, 3 xfailed, 3 xpassed in 6496.21s (1:48:16) =

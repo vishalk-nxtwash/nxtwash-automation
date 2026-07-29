@@ -1,7 +1,0 @@
-[
-  {
-    "name": "Known product defects",
-    "messageRegex": ".*[Kk]nown product defect.*",
-    "matchedStatuses": ["failed", "broken", "skipped", "unknown"]
-  }
-]

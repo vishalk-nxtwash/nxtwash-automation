@@ -15,14 +15,6 @@ pytestmark = [
     allure.story("Toggles"),
 ]
 
-_TOGGLE_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Toggle locators use label-proximity XPath and role='switch' heuristics — "
-        "verify aria-checked attribute and label adjacency in DevTools before removing xfail."
-    ),
-)
-
 _TOGGLES = [
     ("Auto send",                       False, "TUN-TGL-001"),
     ("MOXA auto send",                  False, "TUN-TGL-002"),
@@ -45,7 +37,6 @@ _TOGGLE_DEFAULTS = [(label, default) for label, default, _ in _TOGGLES]
 
 @allure.title("TUN-TGL-009 Toggle defaults on create form")
 @pytest.mark.regression
-@_TOGGLE_XFAIL
 @pytest.mark.parametrize("toggle_label,expected_on", [
     pytest.param(label, default, id=label.replace(" ", "-"))
     for label, default in _TOGGLE_DEFAULTS
@@ -64,10 +55,20 @@ def test_toggle_defaults_on_create_form(browser, toggle_label, expected_on):
 # TUN-TGL-001..008 — each toggle saves and persists both ON and OFF
 # ---------------------------------------------------------------------------
 
+_TGL_008_XFAIL = pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TGL-008: setting Active=False hides the tunnel from the list "
+        "(list filters to active tunnels only); open_edit_tunnel_form cannot "
+        "navigate back to the record to verify the OFF state persisted."
+    ),
+)
+
 @allure.title("TUN-TGL Toggle saves and persists ON and OFF states")
 @pytest.mark.regression
-@_TOGGLE_XFAIL
 @pytest.mark.parametrize("toggle_label", [
+    pytest.param(label, id=tc_id, marks=_TGL_008_XFAIL)
+    if tc_id == "TUN-TGL-008" else
     pytest.param(label, id=tc_id)
     for label, _, tc_id in _TOGGLES
 ])
@@ -96,14 +97,17 @@ def test_toggle_saves_and_persists(browser, managed_tunnel_form, toggle_label):
 
 @allure.title("TUN-TGL-010 All toggle states are reflected on form re-open")
 @pytest.mark.regression
-@_TOGGLE_XFAIL
 def test_toggle_states_reflected_on_reopen(browser, managed_tunnel_form):
     form = managed_tunnel_form
 
-    # Set a known pattern: alternate ON/OFF across the 8 toggles
+    # Set a known pattern: alternate ON/OFF across the 8 toggles.
+    # "Active tunnel configuration" is always kept True so the tunnel remains
+    # visible in the list and open_edit_tunnel_form can navigate back for verification.
     expected_states = {}
     for i, (label, _, _) in enumerate(_TOGGLES):
         desired = (i % 2 == 0)
+        if label == "Active tunnel configuration":
+            desired = True
         form.set_toggle(label, desired)
         expected_states[label] = desired
 

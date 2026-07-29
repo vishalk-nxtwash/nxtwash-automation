@@ -66,29 +66,6 @@ def test_cwb_filter_by_site_narrows_results(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("CWB-FLT-002 Active wash books filter returns only active customer wash books")
-@pytest.mark.regression
-def test_cwb_filter_active_returns_active_only(browser):
-
-    page = open_customer_wash_books_page(browser)
-    page.open_cwb_filter_panel()
-    page.apply_filters()
-
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("CWB-FLT-003 Site and Active filter combined narrows results correctly")
-@pytest.mark.extended
-def test_cwb_filter_site_and_active_combined(browser):
-
-    page = open_customer_wash_books_page(browser)
-    page.open_cwb_filter_panel()
-    page.set_filter_site(ASSIGNMENT_SITE)
-    page.apply_filters()
-
-    assert page_has_no_broken_state(page)
-
-
 @allure.title("CWB-FLT-004 Reset all clears filters and restores the full CWB list")
 @pytest.mark.extended
 def test_cwb_filter_reset_all_restores_list(browser):

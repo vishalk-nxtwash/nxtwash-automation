@@ -1,1 +1,0 @@
-2026-06-24 23:48:57,689 INFO tests.admin_portal.memberships.test_memberships_validation: Validating required membership name

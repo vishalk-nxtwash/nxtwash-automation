@@ -4,15 +4,18 @@ from tests.admin_portal.discounts.conftest import DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import PERCENTAGE_DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import create_discount_if_missing
 from tests.admin_portal.discounts.conftest import create_percentage_discount_if_missing
+from tests.admin_portal._managed import managed_name, managed_resource
+from tests.admin_portal._data import load as _load
 
+_D = _load("coupon_packages")
 
-COUPON_PACKAGE_NAME = "VK ACC2"
-COUPON_PACKAGE_INACTIVE_NAME = "VK ACC2 Inactive"
-GIVEAWAY_SERVICE = "vk detail wash"
-GIVEAWAY_SERVICES = ("vk detail wash", "Detail cleaning")
-MISSING_COUPON_PACKAGE = "coupon-package-does-not-exist-automation"
-EXPIRATION_DAYS = "30"
-SECOND_DISCOUNT_NAME = PERCENTAGE_DISCOUNT_NAME
+COUPON_PACKAGE_NAME          = _D["reference"]["existing_package"]
+COUPON_PACKAGE_INACTIVE_NAME = _D["reference"]["inactive_package"]
+GIVEAWAY_SERVICE             = _D["reference"]["giveaway_service"]
+GIVEAWAY_SERVICES            = tuple(_D["reference"]["giveaway_services"])
+MISSING_COUPON_PACKAGE       = _D["search"]["nonexistent"]
+EXPIRATION_DAYS              = _D["reference"]["expiration_days"]
+SECOND_DISCOUNT_NAME         = PERCENTAGE_DISCOUNT_NAME
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
@@ -87,3 +90,24 @@ def create_inactive_coupon_package_if_missing(browser):
     page.wait_for_coupon_package_row(COUPON_PACKAGE_INACTIVE_NAME)
 
     return page
+
+
+MANAGED_COUPON_PACKAGE = managed_name("Coupon Pkg")
+
+
+def _reset_managed_coupon_package(browser):
+    create_discount_if_missing(browser, DISCOUNT_NAME)
+    page = open_coupon_packages_page(browser)
+    if page.coupon_package_exists(MANAGED_COUPON_PACKAGE):
+        page = open_coupon_packages_page(browser)
+        page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
+        page.clear_assign_discount()
+        page.select_assign_discount(DISCOUNT_NAME)
+        page.ensure_active_switch_on()
+        page.click_save_coupon_package()
+        return open_coupon_packages_page(browser)
+    page.create_coupon_package(MANAGED_COUPON_PACKAGE, DISCOUNT_NAME, GIVEAWAY_SERVICE)
+    return open_coupon_packages_page(browser)
+
+
+managed_coupon_package = managed_resource(_reset_managed_coupon_package)

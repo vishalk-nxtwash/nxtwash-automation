@@ -1,0 +1,19 @@
+{
+  "template": {
+    "base_name":             "VK AL",
+    "base_code":             "AL",
+    "base_number":           3,
+    "email_template":        "vkal%02d@yopmail.com",
+    "contact_email_template":"vkal%dsite@yopmail.com",
+    "state":                 "California",
+    "city":                  "Los Angeles",
+    "zip_code":              "90001",
+    "time_zone":             "(UTC-05:00) Eastern Time (US & Canada)",
+    "pay_week_start_day":    "Monday",
+    "state_sales_tax":       "5",
+    "city_sales_tax":        "3"
+  },
+  "search": {
+    "nonexistent": "VK SITE DOES NOT EXIST"
+  }
+}

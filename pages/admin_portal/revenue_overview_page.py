@@ -164,7 +164,7 @@ class RevenueOverviewPage(BasePage):
         time.sleep(0.5)
         for pattern in self._FRAME_SRC_PATTERNS:
             try:
-                WebDriverWait(self.driver, 2).until(
+                WebDriverWait(self.driver, 15).until(
                     EC.frame_to_be_available_and_switch_to_it(
                         (By.XPATH, "//iframe[contains(@src,'%s')]" % pattern)
                     )
@@ -571,7 +571,7 @@ class RevenueOverviewPage(BasePage):
     # ── Tab helpers ───────────────────────────────────────────────────────────
 
     def _click_tab(self, locator):
-        btn = self.wait.until(EC.element_to_be_clickable(locator))
+        btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
         self.driver.execute_script("arguments[0].click();", btn)
         time.sleep(0.5)
 
@@ -583,8 +583,8 @@ class RevenueOverviewPage(BasePage):
 
     def click_sub_tab(self, name):
         locator = (By.XPATH,
-            "//button[normalize-space()='%s'] | "
-            "//*[@role='tab'][normalize-space()='%s']" % (name, name))
+            "//button[contains(normalize-space(),'%s')] | "
+            "//*[@role='tab'][contains(normalize-space(),'%s')]" % (name, name))
         self._click_tab(locator)
 
     def get_tab_count(self, tab_label):

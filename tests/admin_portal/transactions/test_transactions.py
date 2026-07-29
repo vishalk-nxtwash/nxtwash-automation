@@ -752,7 +752,7 @@ class TestTransactionsDetailPage:
             f"Expected customer '{TRN_DETAIL_CUSTOMER}' not found on detail page"
         )
 
-    @allure.title("TRN-DTL-006 Invoice number on detail page matches 10276")
+    @allure.title("TRN-DTL-006 Invoice number on detail page matches TRN_DETAIL_INVOICE")
     @pytest.mark.regression
     def test_invoice_number_matches(self, trn_detail_page):
         body = trn_detail_page.get_body_text()

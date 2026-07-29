@@ -1,0 +1,21 @@
+2026-07-27 21:28:47,917 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/.venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 68 items / 55 deselected / 13 selected
+
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_on_saves PASSED [  7%]
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_off_saves XFAIL [ 15%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_add_pos_button_opens_form PASSED [ 23%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_active_pos_saves SKIPPED [ 30%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_name_required PASSED [ 38%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_site_required PASSED [ 46%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_lane_required PASSED [ 53%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_form_opens_prepopulated 

@@ -1,0 +1,12 @@
+[shard4] Started: Mon Jul 27 03:54:21 IST 2026
+[shard4] START customers — 03:54:21
+[shard4] DONE  customers — = 24 failed, 28 passed, 34 skipped, 4 xfailed, 4 errors in 4321.01s (1:12:01) ==
+[shard4] START memberships — 05:06:23
+[shard4] DONE  memberships — = 21 failed, 39 passed, 1 skipped, 4 xfailed, 5 errors in 10185.65s (2:49:45) ==
+[shard4] START general_sales_report — 07:56:10
+[shard4] DONE  general_sales_report — ================= 71 passed, 12 xfailed in 1587.05s (0:26:27) ==================
+[shard4] START wash_books — 08:22:38
+[shard4] DONE  wash_books — ====== 21 failed, 44 passed, 12 skipped, 5 xfailed in 3062.36s (0:51:02) =======
+[shard4] START wash_packages — 09:13:42
+[shard4] DONE  wash_packages — = 14 failed, 24 passed, 5 skipped, 15 xfailed, 20 errors in 2817.92s (0:46:57) =
+[shard4] Finished: Mon Jul 27 10:00:40 IST 2026

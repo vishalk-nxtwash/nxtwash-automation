@@ -4,29 +4,28 @@ from pages.admin_portal.users_page import AdminUserFormPage, AdminUsersPage
 from tests.admin_portal.admin_session import open_admin_path
 
 
-# ── Test data constants ───────────────────────────────────────────────────────
+# ── Test data constants  (values managed in test_data/users.json) ─────────────
 
-# Core managed user used by fixtures. All values must exist / be creatable in staging.
-USER_EMAIL = "vkuser02@yopmail.com"
-USER_PHONE = "1234567890"
-USER_PASSWORD = "test"
-# EMPLOYEE_NAME must match an active employee in the staging Employees module.
-EMPLOYEE_NAME = "test user 2"
-# USER_ROLE must be an active role visible in the User Role dropdown.
-USER_ROLE = "VK UR01"
+from tests.admin_portal._data import load as _load
 
-# First / last name come from the linked employee record (used in filter tests).
-USER_FIRST_NAME = "test"
-USER_LAST_NAME = "user 2"
-EMPLOYEE_CODE = "1234"
+_D = _load("users")
 
-UPDATED_EMAIL = "vkuser02.edited@yopmail.com"
-UPDATED_PHONE = "1234567891"
-UPDATED_ROLE = "VK UR01"
+USER_EMAIL      = _D["template"]["email"]
+USER_PHONE      = _D["template"]["phone"]
+USER_PASSWORD   = _D["template"]["password"]
+EMPLOYEE_NAME   = _D["template"]["employee_name"]
+USER_ROLE       = _D["template"]["role"]
+USER_FIRST_NAME = _D["template"]["first_name"]
+USER_LAST_NAME  = _D["template"]["last_name"]
+EMPLOYEE_CODE   = _D["template"]["employee_code"]
 
-ASSIGNMENT_SITE = "VK AL11"
-NONEXISTENT_PHONE = "0000000000"
-INVALID_EMAIL = "not-an-email"
+UPDATED_EMAIL   = _D["updated"]["email"]
+UPDATED_PHONE   = _D["updated"]["phone"]
+UPDATED_ROLE    = _D["updated"]["role"]
+
+ASSIGNMENT_SITE   = _D["template"]["assignment_site"]
+NONEXISTENT_PHONE = _D["invalid"]["phone"]
+INVALID_EMAIL     = _D["invalid"]["email"]
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",

@@ -1,0 +1,472 @@
+2026-07-29 10:45:13,799 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 663 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_accessible_on_existing_customer PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_shows_add_car_button PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls PASSED [  0%]
+tests/admin_portal/customers/test_customers_cars.py::test_license_plate_field_is_present_and_required XPASSsses.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_rfid_field_is_present_and_required XPASSsses.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_assign_membership_button SKIPPEDip module state.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_list_shows_membership_details SKIPPED [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_blacklist_a_car SKIPPEDck after confirming DOM locators from a live run.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_deactivate_a_car SKIPPEDck after confirming DOM locators from a live run.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_update_vehicle_token SKIPPED [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_license_plate_documents_behaviour SKIPPEDck after confirming DOM locators
+from a live run.)                                                        [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_rfid_documents_behaviour SKIPPED [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_then_refresh_car_persists SKIPPEDck after confirming DOM locators from a
+live run.)                                                               [  2%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_appears_in_gift_cards_dropdown SKIPPED) [  2%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_membership_status_reflects_memberships_module SKIPPED) [  2%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [  2%]
+tests/admin_portal/customers/test_customers_dependency.py::test_car_rfid_links_to_pos_tunnel_entry SKIPPED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists PASSED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists 2026-07-29 11:05:58,100 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists (url: https://staging.nxtwash.com/customers/51599)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists (url: https://staging.nxtwash.com/customers/51599)
+2026-07-29 11:05:58,854 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values PASSED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer PASSED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer PASSED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_allow_invoicing_persists PASSED [  3%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_send_text_and_email_persists SKIPPEDt.) [  4%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes PASSED [  4%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist PASSED [  4%]
+tests/admin_portal/customers/test_customers_export.py::test_export_button_triggers_customer_list_download SKIPPEDe-system check which
+is not yet set up in the test harness.)                                  [  4%]
+tests/admin_portal/customers/test_customers_payment.py::test_payment_settings_tab_accessible_on_existing_customer PASSED [  4%]
+tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible PASSED [  4%]
+tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present PASSED [  4%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present PASSED [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present PASSED [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_loads_all_time SKIPPEDustomer.) [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_today_filter SKIPPEDustomer.) [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_select_range_filter SKIPPEDustomer.) [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_export SKIPPED [  5%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_details_link_navigates_to_invoice SKIPPEDon.) [  6%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_pagination_defaults_to_ten SKIPPEDustomer.) [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only PASSED [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields PASSED [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date PASSED [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites PASSED [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection PASSED [  6%]
+tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state PASSED [  7%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer PASSED [  7%]
+tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer PASSED [  7%]
+tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list PASSED [  7%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [  7%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate PASSED [  7%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate PASSED [  7%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default PASSED [  8%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying SKIPPED.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name SKIPPEDtaging.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name SKIPPEDaging.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email SKIPPEDg.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid SKIPPED.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_site XFAILutomation.) [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_membership SKIPPED [  9%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_signup_date_range PASSED [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_next_payment_date_range SKIPPED [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_number SKIPPEDods.) [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_type SKIPPEDs.) [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_number_of_cars_range SKIPPEDnt.) [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_allow_invoicing_yes PASSED [ 10%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_card_on_file PASSED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_recurring_yes SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_prepaid_yes SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_canceled_yes SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_declined_yes PASSED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all PASSED [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_multiple_filters_combined_narrow_results XFAILtrigger-click automation.) [ 11%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_signup_date_from_after_to_documents_behaviour PASSED [ 12%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields PASSED [ 12%]
+tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls PASSED [ 12%]
+tests/admin_portal/customers/test_customers_ui.py::test_grid_membership_status_column_visible SKIPPED [ 12%]
+tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible PASSED [ 12%]
+tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls PASSED [ 12%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save PASSED [ 12%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save PASSED [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save PASSED [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour PASSED [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour PASSED [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour PASSED [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_negative_loyalty_points_documents_behaviour SKIPPEDform.) [ 13%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_page_loads_at_expected_url PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_page_title_visible PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_export_icon_visible PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_filter_by_button_visible PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Invoice number] PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-License plate] PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-RFID] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Site name] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction date/time] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Customer name] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Service] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Discount] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Tax] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-PIF] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Surcharge] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Total amount] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Payment mode] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-CC type] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction source0] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction source1] PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Sale Type] PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Payment status] PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_table_has_rows PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_table_has_horizontal_scroll PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_pagination_present PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_record_count_displayed PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_invoice_number_is_link PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_full_info_link_present PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_default_date_preset_is_this_month PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_row_highlights_on_click SKIPPED detail is via
+the invoice number (opens new tab).)                                     [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_navigation_to_detail_page[TRN-SEL-002] PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_navigation_to_detail_page[TRN-TBL-008] PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_modal_opens PASSED [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_format_selector PASSED [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Invoice number] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-License plate] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-RFID] SKIPPED [].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Site name0] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Lane name] SKIPPEDVerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction date/time] SKIPPEDerify manually: open Export modal → confirm each column
+toggle is present.)                                                      [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Customer name] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Service] SKIPPED.
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Discount] SKIPPED
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Tax] SKIPPEDs [].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-PIF] SKIPPEDs [].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Surcharge] SKIPPEDVerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Total amount] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Payment mode] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-CC type] SKIPPED.
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction source0] SKIPPEDerify manually: open Export modal → confirm each column
+toggle is present.)                                                      [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction source1] SKIPPEDerify manually: open Export modal → confirm each column
+toggle is present.)                                                      [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Sale Type] SKIPPEDVerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Payment status] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Image URL] SKIPPEDVerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Make] SKIPPED [].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Model] SKIPPED[].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Color] SKIPPED[].
+Verify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Site name1] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Total records] SKIPPEDerify manually: open Export modal → confirm each column toggle is
+present.)                                                                [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_site_name_duplicate SKIPPED03). Verify manually: open
+Export modal → confirm 'Site name' appears twice.)                       [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_default_states SKIPPED03). Verify manually:
+open Export modal → confirm Lane name, Image URL, Make, Model, Color,
+Total records are toggled OFF by default.)                               [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_button_present PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_opens PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_structure PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Date & Location] PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Transaction] PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Payment] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Customer] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Membership] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Promotions] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Gift cards] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Washbook] PASSED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Invoice] PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Staff] PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_apply_filters_button_visible PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_live_results_count_updates PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_apply_filters_closes_panel_and_updates PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_reset_filters_clears_selections PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_x_button_closes_panel_without_applying PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_can_be_reopened PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-001] PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-002] PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-003] PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_location_tab_opens PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Today] PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Yesterday] XFAIL [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This week] PASSED [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Last week] XFAIL [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This month] PASSED [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Last month] XFAIL [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This year] XFAIL [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_site_multiselect_present PASSED [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_custom_date_range_input_present PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_selecting_site_scopes_data PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_this_week_starts_on_monday PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_multi_site_shows_overflow_chip PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_lane_filter_state[TRN-DLC-008] PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_lane_filter_state[TRN-DLC-009] PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_transaction_tab_opens PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_category_dropdown_present PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_services_dropdown_present PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_dropdown_present PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Gift Card Sale] PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Washbook Sale] PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Membership Sale] PASSED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Retail / Single Wash] PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_transaction_source_dropdown_present PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_tab_opens PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_method_dropdown_present PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_cc_type_dropdown_present PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_status_multiselect_present PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_detail_page_loads PASSED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_transaction_details_panel_visible PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_car_details_panel_visible PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_customer_panel_visible PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_customer_name_matches PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_invoice_number_matches PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_service_table_visible PASSED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_payment_type_not_null XFAILad of the actual card
+details.  Passes once defect is fixed in backend.)                       [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_action_buttons_present PASSED [ 32%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_back_navigation_from_detail PASSED [ 32%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_active_wash_extra_visible_at_pos SKIPPEDred.) [ 32%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_wash_extra_removed_from_pos SKIPPEDred.) [ 32%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_discount_not_applied_on_wash_extra SKIPPEDbehaviour. Deferred.) [ 32%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_open_price_toggle_enabled_saves SKIPPEDequires POS integration. Deferred.) [ 32%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_description_shows_on_ecommerce_site SKIPPED display. Deferred.) [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_controller_code_saves SKIPPEDur. Deferred.) [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_duplicate_controller_code_rejected SKIPPEDde rejection. Deferred.) [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_single_discount_persists SKIPPED [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_multiple_discounts_persist SKIPPED [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_remove_assigned_discount_persists PASSED [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_save_wash_extra_without_discount PASSED [ 33%]
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_only_active_discounts_appear_in_dropdown PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_create_is_idempotent PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_long_name_does_not_break_form PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_zero_loyalty_points_accepted PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_awarded PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_to_redeem PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_updates_name_prices_and_discount PASSED [ 34%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_values_persist XFAILtiming.) [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_global_commission_persists PASSED [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_loyalty_points_persist SKIPPEDrded requires Loyalty module
+integration. Deferred.)                                                  [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_assigned_sites_persist PASSED [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_discount_configuration_persists SKIPPED [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_activate_wash_extra PASSED [ 35%]
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_deactivate_wash_extra PASSED [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_awarded_saves SKIPPEDmed. Deferred.) [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_to_redeem_saves SKIPPEDmed. Deferred.) [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_zero_points_awarded_accepted PASSED [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_negative_loyalty_points_rejected PASSED [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_save_without_loyalty_points PASSED [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_awarded PASSED [ 36%]
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_to_redeem PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_wash_extras_search_payloads_do_not_break_grid PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_wash_extra_name_is_blocked PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_whitespace_only_service_name_is_rejected PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_price_is_rejected PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_commission_is_rejected PASSED [ 37%]
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_barcode_is_rejected SKIPPEDextra. Deferred until barcode fixtures
+are established.)                                                        [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_wash_extra PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_settings_persist PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_inactive_wash_extra PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_decimal_price_accepted PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_valid_commission_saves PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_commission_succeeds PASSED [ 38%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_barcode_succeeds PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_description_succeeds PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_open_price_toggle_is_off_by_default PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_existing_search PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_partial_search_returns_matches PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_missing_search PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_clear_search_restores_list PASSED [ 39%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_by_site_narrows_results PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_returns_active_only PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_toggle_off_shows_all PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_site_and_active_combined PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_reset_all_restores_list PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_single_site_persists PASSED [ 40%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_multiple_sites_persists SKIPPED [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_all_sites_via_header_checkbox PASSED [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_save_wash_extra_with_no_site_assigned PASSED [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_deselect_previously_assigned_site SKIPPEDuires per-row unchecking
+support. Deferred.)                                                      [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_global_price_reflected_at_site_level PASSED [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_price_override_persists SKIPPEDate not updated.) [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_price_is_rejected PASSED [ 41%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_enable_tax_exemption_for_site_persists SKIPPEDr verification against
+the actual DOM. Deferred.)                                               [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_disable_tax_exemption_for_site_persists SKIPPEDr verification against
+the actual DOM. Deferred.)                                               [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_state_city_tax_fields_are_read_only PASSED [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_commission_override_persists SKIPPED-component state not
+updated.)                                                                [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_commission_is_rejected PASSED [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_page_loads_with_primary_controls PASSED [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_grid_columns_are_visible PASSED [ 42%]
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_filter_panel_shows_controls PASSED [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_add_wash_extra_form_loads PASSED [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_export_file_validation XFAILy configuration and CSV/XLS parser
+utilities. Deferred.)                                                    [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_required_service_name_validation PASSED [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_blank_global_price_is_blocked PASSED [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_zero_price_boundary_behaviour PASSED [ 43%]
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_max_length_name_handled PASSED [ 44%]
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_invalid_numeric_values_do_not_break_form PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gsr_page_loads PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_default_filter_state PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_report_sections_present PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_site_dropdown_lists_sites PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_single_site_filter PASSED [ 44%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multiple_sites_filter PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_sites_filter PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_clearing_site_reverts_to_all PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_dropdown_shows_options PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-007] PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-008] PASSED [ 45%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-009] PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-010] PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-011] PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-012] PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_picker_opens PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_applies PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_range_clears_preset PASSED [ 46%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_apply_filters_refreshes_data PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_reapply_same_filter_identical PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_four_revenue_cards_displayed PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-002] PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-003] PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-004] PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-005] PASSED [ 47%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_data_revenue_cards PASSED [ 48%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_cards_update_on_filter_change PASSED [ 48%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_overview_displayed PASSED [ 48%]
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_full_report_link 

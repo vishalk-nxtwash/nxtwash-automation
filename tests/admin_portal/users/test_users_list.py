@@ -50,13 +50,6 @@ def test_users_list_pagination_count(browser):
 
 @allure.title("USR-LST-004 Results-per-page dropdown changes the number of rows displayed")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-LST-004: Rows-per-page control locator not confirmed against actual DOM. "
-        "Verify control label and element type in DevTools before removing xfail."
-    ),
-)
 def test_users_list_rows_per_page(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

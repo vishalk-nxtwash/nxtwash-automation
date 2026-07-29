@@ -1,0 +1,1 @@
+2026-07-28 19:10:43,926 INFO tests.admin_portal.memberships.test_memberships_validation: Validating duplicate barcode 'AUTO-DUP-BAR-001' is rejected

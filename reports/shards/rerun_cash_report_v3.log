@@ -1,0 +1,72 @@
+2026-07-29 03:41:26,652 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 56 items
+
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_filter_modal_auto_opens PASSED [  3%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_modal_contains_all_controls PASSED [  5%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_title_visible_after_apply PASSED [  7%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_sidebar_highlights_active_item PASSED [  8%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites PASSED [ 10%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_date_preset_dropdown_options PASSED [ 12%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_modal_opens_with_no_default_site PASSED [ 14%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_selecting_preset_fills_date_range PASSED [ 16%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 17%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_filter_values_reflected_in_page_bar PASSED [ 19%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_page_bar_changes_do_not_reopen_modal PASSED [ 21%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option PASSED [ 23%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_selecting_site_creates_chip PASSED [ 25%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown SKIPPED [ 26%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_clearing_chip_removes_site_filter PASSED [ 28%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-002] PASSED [ 32%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-003] PASSED [ 33%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-004] PASSED [ 35%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-005] PASSED [ 37%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-006] PASSED [ 39%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-007] PASSED [ 41%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 42%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 44%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_sdm_syncs_to_page_bar SKIPPEDed via DevTools) [ 46%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_page_bar_sdm_uncheck_syncs_to_modal SKIPPEDed via DevTools) [ 48%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_three_tabs_visible PASSED [ 50%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_active_by_default PASSED [ 51%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_kiosk_tab_click PASSED [ 53%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_pos_tab_click PASSED [ 55%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_restores PASSED [ 57%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_button_visible PASSED [ 58%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_triggers_download PASSED [ 60%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_tab_shows_metrics PASSED [ 62%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_metrics_not_all_zero PASSED [ 64%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_zero_data_message PASSED [ 66%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_visible SKIPPEDed via DevTools) [ 67%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_headers SKIPPED [ 69%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_data SKIPPED [ 71%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_pagination SKIPPED [ 73%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_visible PASSED [ 75%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_has_headers SKIPPEDTML table; widget type
+unconfirmed via DevTools)                                                [ 76%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_pagination SKIPPED [ 78%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_visible SKIPPEDvia DevTools) [ 80%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_has_headers SKIPPED [ 82%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_pagination SKIPPED [ 83%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_zero_data_state PASSED [ 85%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_visible SKIPPED via DevTools) [ 87%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_has_headers SKIPPED [ 89%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_pagination SKIPPED [ 91%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_visible SKIPPEDevTools) [ 92%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_pagination SKIPPED [ 94%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_visible SKIPPEDa DevTools) [ 96%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_pagination SKIPPED [ 98%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_zero_data_state PASSED [100%]
+
+================= 37 passed, 19 skipped in 1261.97s (0:21:01) ==================

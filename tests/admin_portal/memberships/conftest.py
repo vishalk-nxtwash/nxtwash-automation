@@ -2,25 +2,25 @@ from pages.admin_portal.memberships_page import MembershipsPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
+_D = _load("memberships")
 
-EXISTING_MEMBERSHIP = "VK MA2"
-MISSING_MEMBERSHIP = "membership-does-not-exist-automation"
-MEMBERSHIP_NAME = "VK MA2"
-RECURRING_MEMBERSHIP_NAME = "VK MR1"
-UPDATED_MEMBERSHIP_NAME = "VK MA2 updated"
-GLOBAL_PRICE = "15"
-GLOBAL_COMMISSION = "2"
-FIRST_LOCATION_PRICE = "20"
-FIRST_LOCATION_COMMISSION = "3"
-PREPAID_MONTHS = "1"
-REDEEM_AS_SERVICE = "VK detail wash"
-VISIBLE_PRICE = "$15.00"
-
-# Known filter data (a membership assigned to a specific site on staging).
-FILTER_SITE_QUERY = "carwash"
-FILTER_SITE_LABEL = "VK Test carwash 2"
-SITE_MEMBERSHIP = "VK MA1"
+EXISTING_MEMBERSHIP        = _D["reference"]["existing_membership"]
+MISSING_MEMBERSHIP         = _D["search"]["nonexistent"]
+MEMBERSHIP_NAME            = _D["reference"]["existing_membership"]
+RECURRING_MEMBERSHIP_NAME  = _D["reference"]["recurring_membership"]
+UPDATED_MEMBERSHIP_NAME    = _D["updated"]["membership_name"]
+GLOBAL_PRICE               = _D["template"]["global_price"]
+GLOBAL_COMMISSION          = _D["template"]["global_commission"]
+FIRST_LOCATION_PRICE       = _D["template"]["first_location_price"]
+FIRST_LOCATION_COMMISSION  = _D["template"]["first_location_commission"]
+PREPAID_MONTHS             = _D["template"]["prepaid_months"]
+REDEEM_AS_SERVICE          = _D["reference"]["redeem_as_service"]
+VISIBLE_PRICE              = _D["template"]["visible_price"]
+FILTER_SITE_QUERY          = _D["reference"]["filter_site_query"]
+FILTER_SITE_LABEL          = _D["reference"]["filter_site_label"]
+SITE_MEMBERSHIP            = _D["reference"]["site_membership"]
 
 
 BROKEN_STATE_TEXTS = [
@@ -49,6 +49,7 @@ def open_memberships_page(browser):
 
 
 def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
+    from selenium.common.exceptions import TimeoutException
 
     memberships_page = open_memberships_page(browser)
 
@@ -63,6 +64,37 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
             FIRST_LOCATION_COMMISSION
         )
         memberships_page.save_and_return_to_list()
+        memberships_page.clear_active_filters()
+        return memberships_page
+
+    # Not in active list — check inactive before trying to create (staging may
+    # have deactivated it; creating a duplicate name would fail silently).
+    # Use a short 10s wait so we don't burn 60s when the record simply doesn't exist.
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    memberships_page._show_inactive_memberships()
+    memberships_page.search_membership(membership_name)
+    locator = memberships_page.get_membership_row_locator(membership_name)
+    try:
+        WebDriverWait(memberships_page.driver, 10).until(
+            EC.visibility_of_element_located(locator)
+        )
+        inactive_found = True
+    except TimeoutException:
+        inactive_found = False
+
+    if inactive_found:
+        memberships_page.open_edit_membership(membership_name)
+        memberships_page.fill_membership_form(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+        memberships_page.save_and_return_to_list()
+        memberships_page.clear_active_filters()
         return memberships_page
 
     memberships_page.create_membership(
@@ -82,6 +114,7 @@ def create_recurring_membership_if_missing(
     browser,
     membership_name=RECURRING_MEMBERSHIP_NAME
 ):
+    from selenium.common.exceptions import TimeoutException
 
     memberships_page = open_memberships_page(browser)
 
@@ -96,6 +129,35 @@ def create_recurring_membership_if_missing(
             FIRST_LOCATION_COMMISSION
         )
         memberships_page.save_and_return_to_list()
+        memberships_page.clear_active_filters()
+        return memberships_page
+
+    # Not in active list — check inactive before trying to create.
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    memberships_page._show_inactive_memberships()
+    memberships_page.search_membership(membership_name)
+    locator = memberships_page.get_membership_row_locator(membership_name)
+    try:
+        WebDriverWait(memberships_page.driver, 10).until(
+            EC.visibility_of_element_located(locator)
+        )
+        inactive_found = True
+    except TimeoutException:
+        inactive_found = False
+
+    if inactive_found:
+        memberships_page.open_edit_membership(membership_name)
+        memberships_page.fill_recurring_membership_form(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+        memberships_page.save_and_return_to_list()
+        memberships_page.clear_active_filters()
         return memberships_page
 
     memberships_page.create_recurring_membership(
@@ -125,23 +187,52 @@ BASELINE_POINTS = "5"
 
 def reset_managed_membership(browser):
     """Ensure the managed membership exists and reset its mutable fields."""
+    from selenium.common.exceptions import TimeoutException
+
     memberships_page = open_memberships_page(browser)
 
-    if not memberships_page.membership_exists(MANAGED_MEMBERSHIP):
+    # Check existence without calling membership_exists() (which re-triggers
+    # wait_for_list_loaded, costing ~100 s on slow staging).  We are already
+    # inside the list frame after open_memberships_page().
+    memberships_page.search_membership(MANAGED_MEMBERSHIP)
+    try:
+        memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+        membership_found = True
+    except TimeoutException:
+        membership_found = False
+
+    if not membership_found:
+        # Not in active view — check inactive filter before creating.
+        memberships_page._show_inactive_memberships()
+        memberships_page.search_membership(MANAGED_MEMBERSHIP)
+        try:
+            memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+            membership_found = True
+        except TimeoutException:
+            membership_found = False
+
+    if not membership_found:
         memberships_page.create_membership(
             MANAGED_MEMBERSHIP,
             GLOBAL_PRICE,
             GLOBAL_COMMISSION,
             FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
+            FIRST_LOCATION_COMMISSION,
         )
+        # create_membership() saves and returns to list — membership is at
+        # baseline from fill_membership_form(), so reset is complete.
+        return memberships_page
+
+    # Open edit directly from the current list state, skipping the extra
+    # wait_for_list_loaded() call that open_edit_membership() would trigger.
+    # This saves ~100 s per reset on slow staging.
+    memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
 
     # Reset all mutable fields touched by tests back to a known baseline.
     # clear_applicable_discounts() navigates to the Discount tab, so do all
     # Discount tab work before navigating to Settings — that way the Settings
     # tab is the LAST active tab when save is called, keeping any field edits
     # made there in React Hook Form's live state.
-    memberships_page.open_edit_membership(MANAGED_MEMBERSHIP)
     memberships_page.fill_membership_form(
         MANAGED_MEMBERSHIP,
         GLOBAL_PRICE,

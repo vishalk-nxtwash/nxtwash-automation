@@ -1,1 +1,0 @@
-2026-06-24 23:31:42,586 INFO tests.admin_portal.memberships.test_memberships_positive: Creating/verifying prepaid membership: VK MA2

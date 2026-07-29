@@ -2,12 +2,14 @@ from pages.admin_portal.service_categories_page import ServiceCategoriesPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
+_D = _load("service_categories")
 
-CATEGORY_NAME = "VK ASC1"
-INACTIVE_CATEGORY_NAME = "VK ASC2"
-MISSING_CATEGORY = "category-does-not-exist-automation"
-UPDATED_CATEGORY_NAME = "VK ASC1 edited"
+CATEGORY_NAME          = _D["reference"]["active_category"]
+INACTIVE_CATEGORY_NAME = _D["reference"]["inactive_category"]
+MISSING_CATEGORY       = _D["search"]["nonexistent"]
+UPDATED_CATEGORY_NAME  = _D["updated"]["category_name"]
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",

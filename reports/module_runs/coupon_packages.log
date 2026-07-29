@@ -1,0 +1,125 @@
+2026-07-23 06:08:40,825 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 45 items
+
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_packages_tab_loads PASSED [  2%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_packages_grid_columns_visible PASSED [  4%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_exact_search SKIPPED [  6%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_partial_search SKIPPED [  8%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_missing_search SKIPPED [ 11%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_used SKIPPED [ 13%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_not_used SKIPPED [ 15%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_all SKIPPED [ 17%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_filter_active SKIPPED [ 20%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_combined_filter SKIPPED [ 22%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_reset_filters SKIPPED [ 24%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_customer_coupon_code_is_unique SKIPPED [ 26%]
+tests/admin_portal/coupon_packages/test_coupon_packages_customer_tab.py::test_expired_coupon_code_is_inactive SKIPPED [ 28%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_long_name_does_not_break_form PASSED [ 31%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_valid_expiration_days PASSED [ 33%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_zero_expiration_days PASSED [ 35%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_negative_expiration_days_rejected SKIPPED [ 37%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_save_without_giveaway PASSED [ 40%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edge_cases.py::test_coupon_package_remove_giveaway_service PASSED [ 42%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_name PASSED [ 44%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_discount 2026-07-23 06:15:19,997 ERROR nxtwash: Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_discount (url: https://staging.nxtwash.com/services/couponPackages/edit/10083)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_discount (url: https://staging.nxtwash.com/services/couponPackages/edit/10083)
+2026-07-23 06:15:20,608 ERROR nxtwash: Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK PD02
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK PD02
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
+FAILED                                                                   [ 46%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_expiration_days PASSED [ 48%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_giveaway_services PASSED [ 51%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_activate_inactive_coupon_package SKIPPED [ 53%]
+tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_deactivate_active_coupon_package PASSED [ 55%]
+tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_package_duplicate_name_is_blocked PASSED [ 57%]
+tests/admin_portal/coupon_packages/test_coupon_packages_negative.py::test_coupon_packages_special_character_search_stays_usable PASSED [ 60%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_coupon_package PASSED [ 62%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_coupon_package_settings_persist 2026-07-23 06:20:35,831 ERROR nxtwash: Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_coupon_package_settings_persist (url: https://staging.nxtwash.com/services/couponPackages/edit/10083)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_coupon_package_settings_persist (url: https://staging.nxtwash.com/services/couponPackages/edit/10083)
+2026-07-23 06:20:36,413 ERROR nxtwash: Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK PD02
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
++ 1
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Coupon packages
+Edit coupon package
+Cancel
+Save coupon package
+Coupon package name
+Assign discount
+VK PD02
+Expiration days
+Active coupon package
+Coupon giveaway on receipt
+Vk detail wash
++ 1
+FAILED                                                                   [ 64%]
+tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_create_inactive_coupon_package PASSED [ 66%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_exact_search PASSED [ 68%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_partial_search PASSED [ 71%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_missing_search PASSED [ 73%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_clear_search_restores_list PASSED [ 75%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_active_coupon_package_filter_shows_active_only PASSED [ 77%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_active_toggle_off_shows_all_packages PASSED [ 80%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_reset_all_restores_unfiltered_list PASSED [ 82%]
+tests/admin_portal/coupon_packages/test_coupon_packages_search_filter.py::test_coupon_packages_search_payloads_do_not_break_grid PASSED [ 84%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_coupon_packages_page_loads_with_primary_controls PASSED [ 86%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_coupon_packages_grid_columns_are_visible PASSED [ 88%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_customer_coupon_packages_tab_is_accessible PASSED [ 91%]
+tests/admin_portal/coupon_packages/test_coupon_packages_ui.py::test_add_coupon_package_form_loads PASSED [ 93%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_blank_name_is_blocked PASSED [ 95%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_whitespace_name_is_rejected PASSED [ 97%]
+tests/admin_portal/coupon_packages/test_coupon_packages_validation.py::test_coupon_package_blank_discount_is_blocked PASSED [100%]
+
+=================================== FAILURES ===================================
+E   AssertionError: assert 'vk pd02' in 'coupon packages\nedit coupon package\ncancel\nsave coupon package\ncoupon package name\nassign discount\nselect discount\nexpiration days\nactive coupon package\ncoupon giveaway on receipt'
+     +  where 'vk pd02' = <built-in method lower of str object at 0x104fcaf70>()
+     +    where <built-in method lower of str object at 0x104fcaf70> = 'VK PD02'.lower
+     +  and   'coupon packages\nedit coupon package\ncancel\nsave coupon package\ncoupon package name\nassign discount\nselect discount\nexpiration days\nactive coupon package\ncoupon giveaway on receipt' = <built-in method lower of str object at 0x1071f8300>()
+     +    where <built-in method lower of str object at 0x1071f8300> = 'Coupon packages\nEdit coupon package\nCancel\nSave coupon package\nCoupon package name\nAssign discount\nSelect discount\nExpiration days\nActive coupon package\nCoupon giveaway on receipt'.lower
+     +      where 'Coupon packages\nEdit coupon package\nCancel\nSave coupon package\nCoupon package name\nAssign discount\nSelect discount\nExpiration days\nActive coupon package\nCoupon giveaway on receipt' = get_body_text()
+     +        where get_body_text = <pages.admin_portal.coupon_packages_page.CouponPackagesPage object at 0x1071ea7d0>.get_body_text
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/coupon_packages/test_coupon_packages_edit.py:54: AssertionError: assert 'vk pd02' in 'coupon packages\nedit coupon package\ncancel\nsave coupon package\ncoupon package name\nassign discount\nselect discount\nexpiration days\nactive coupon package\ncoupon giveaway on receipt'
+E   AssertionError: assert 'vk ad02' in 'coupon packages\nedit coupon package\ncancel\nsave coupon package\ncoupon package name\nassign discount\nvk pd02\nexpiration days\nactive coupon package\ncoupon giveaway on receipt\nvk detail wash\n+ 1'
+     +  where 'vk ad02' = <built-in method lower of str object at 0x104fcad70>()
+     +    where <built-in method lower of str object at 0x104fcad70> = 'VK AD02'.lower
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/coupon_packages/test_coupon_packages_positive.py:39: AssertionError: assert 'vk ad02' in 'coupon packages\nedit coupon package\ncancel\nsave coupon package\ncoupon package name\nassign discount\nvk pd02\nexpiration days\nactive coupon package\ncoupon giveaway on receipt\nvk detail wash\n+ 1'
+=========================== short test summary info ============================
+FAILED tests/admin_portal/coupon_packages/test_coupon_packages_edit.py::test_edit_coupon_package_discount
+FAILED tests/admin_portal/coupon_packages/test_coupon_packages_positive.py::test_coupon_package_settings_persist
+============ 2 failed, 30 passed, 13 skipped in 1195.88s (0:19:55) =============

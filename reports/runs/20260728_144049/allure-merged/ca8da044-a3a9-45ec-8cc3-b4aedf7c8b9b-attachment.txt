@@ -1,0 +1,1 @@
+INFO     tests.admin_portal.service_categories.test_service_categories_ui:test_service_categories_ui.py:23 Verifying Service Categories list shell and controls

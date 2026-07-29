@@ -1,0 +1,97 @@
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$123.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$2.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$2.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+07/22/2026
+VK Test carwash 2
+1234
+Vishal Kumar
+PrePaid Cust 2
+Retail Sale
+vk wash 2 package
+0002
+$15.00
+$2.00
+<<
+<
+>
+>>
+Page 1 of 1
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 1 records

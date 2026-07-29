@@ -1,0 +1,61 @@
+2026-07-28 18:02:58,747 WARNING nxtwash: Role save did not navigate away. Page message: user roles
+add new user role
+cancel
+save
+user role name
+priority order
+active user role
+assign to locations
+i
+vk al35
+vk zt 9344b0
+vk al34
+vk al92
+vk al33
+vk al32
+vk al31
+vk zt c6d556
+vk al30
+vk al29
+vk zt 9e7bdf
+vk al28
+vk al27
+vk zt 4e248f
+vk al26
+vk zt 8f811b
+vk al25
+vk al24
+vk zt 46d34b
+vk al23
+vk zt c4a124
+vk zt d4ccd8
+vk zt 71c6f6
+vk zt 9eaa54
+vk zt ae9b9c
+test 12
+vk al22
+vk al21
+vk al20
+vk zt c26508
+vk al19
+vk al18
+vk zt c54675
+vk al17
+vk al16
+vk zt 2b4279
+vk al15
+vk al14
+vk zt 146465
+vk al13
+vk al12
+vk al11
+vk al10
+vk al09
+vk al08
+vk al01
+vkauto1
+vk al07
+vk al06
+vk al05
+vk al04
+vk al03

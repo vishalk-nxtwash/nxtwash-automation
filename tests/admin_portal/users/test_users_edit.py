@@ -67,13 +67,6 @@ def test_edit_user_phone_persists(browser, managed_user):
 
 @allure.title("USR-EDT-004 Changing the User Role saves and is visible on the list")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-EDT-004: Role combobox locator uses label heuristics. "
-        "Verify in DevTools and confirm UPDATED_ROLE exists in staging before removing xfail."
-    ),
-)
 def test_edit_user_role_persists(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.select_role(UPDATED_ROLE)

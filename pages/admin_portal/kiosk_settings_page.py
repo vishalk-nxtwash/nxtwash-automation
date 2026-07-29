@@ -32,8 +32,9 @@ class AdminKioskSettingsPage(BasePage):
         "@placeholder='Kiosk name' or @placeholder='Search by kiosk name']")
 
     FILTER_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Filter by'] | "
-        "//button[contains(normalize-space(),'Filter')]")
+        "//button[contains(normalize-space(),'Filter by')] | "
+        "//span[contains(normalize-space(),'Filter by') and not(ancestor::*[@role='dialog'])] | "
+        "//*[@role='button' and contains(normalize-space(),'Filter by')]")
     FILTER_STATUS_COMBOBOX = (By.XPATH,
         "//*[normalize-space()='Status' or normalize-space()='Active']"
         "/following::*[@role='combobox'][1]")
@@ -44,10 +45,16 @@ class AdminKioskSettingsPage(BasePage):
         "//div[contains(@class,'form-select__control')][1]")
     APPLY_FILTERS_BUTTON = (By.XPATH,
         "//button[normalize-space()='Apply filters'] | "
-        "//button[normalize-space()='Apply']")
+        "//button[normalize-space()='Apply'] | "
+        "//span[normalize-space()='Apply filters'] | "
+        "//span[normalize-space()='Apply'] | "
+        "//*[@role='button' and (normalize-space()='Apply filters' or normalize-space()='Apply')]")
     RESET_ALL_BUTTON = (By.XPATH,
         "//button[contains(normalize-space(),'Reset all')] | "
-        "//button[contains(normalize-space(),'Reset All')]")
+        "//button[contains(normalize-space(),'Reset All')] | "
+        "//span[contains(normalize-space(),'Reset all')] | "
+        "//span[contains(normalize-space(),'Reset All')] | "
+        "//*[@role='button' and contains(normalize-space(),'Reset')]")
 
     GRID_ROWS = (By.XPATH,
         "//*[contains(@class,'InovuaReactDataGrid__row')] | "
@@ -61,9 +68,31 @@ class AdminKioskSettingsPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))
+        # The filter badge count is fetched asynchronously after the page renders.
+        # Wait for the button text to stabilize so reset_filters_if_active() sees the final state.
+        self._wait_for_filter_stable()
+
+    def _wait_for_filter_stable(self, stable_for=1.0, timeout=15):
+        """Poll the filter button until its text hasn't changed for stable_for seconds."""
+        FILTER_BTN = (By.XPATH, "//button[contains(@class,'filterButton')]")
+        prev_text = None
+        last_change = time.monotonic()
+        end_time = time.monotonic() + timeout
+        while time.monotonic() < end_time:
+            try:
+                els = self.driver.find_elements(*FILTER_BTN)
+                text = els[0].text.strip() if els else ""
+            except Exception:
+                text = ""
+            if text != prev_text:
+                last_change = time.monotonic()
+                prev_text = text
+            elif text and (time.monotonic() - last_change) >= stable_for:
+                return
+            time.sleep(0.2)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -93,9 +122,12 @@ class AdminKioskSettingsPage(BasePage):
 
     def _row_locator(self, name):
         return (By.XPATH,
-            "//span[contains(@class,'table-cell-ellipsis') and @title='%s'] | "
-            "//span[contains(@class,'table-cell-ellipsis') and normalize-space()='%s']"
-            % (name, name))
+            "//span[contains(@class,'table-cell-ellipsis') and @title='{n}'] | "
+            "//span[contains(@class,'table-cell-ellipsis') and normalize-space()='{n}'] | "
+            "//*[contains(@class,'InovuaReactDataGrid__row')]//*[normalize-space()='{n}' or @title='{n}'] | "
+            "//*[@role='row']//*[normalize-space()='{n}' or @title='{n}'] | "
+            "//*[@role='gridcell' and (normalize-space()='{n}' or @title='{n}')]"
+            .format(n=name))
 
     def wait_for_kiosk_row(self, name, timeout=None):
         locator = self._row_locator(name)
@@ -144,14 +176,36 @@ class AdminKioskSettingsPage(BasePage):
     def open_filter_panel(self):
         if self.filter_panel_is_open():
             return
-        self.click(self.FILTER_BUTTON)
+        # Use native Selenium click — Radix Dialog triggers need browser event dispatch.
+        btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        btn.click()
+        # Dialog renders in the iframe's DOM via Radix portal.  Short outer-doc fallback.
+        try:
+            WebDriverWait(self.driver, 8).until(
+                EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+            return
+        except TimeoutException:
+            pass
+        # Panel not visible in iframe — check outer document.
+        self.driver.switch_to.default_content()
         self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def close_filter_panel(self):
         if not self.filter_panel_is_open():
             return
+        # Press ESC — closes most drawer components regardless of context.
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body")
+            body.send_keys(Keys.ESCAPE)
+            WebDriverWait(self.driver, 5).until(lambda d: not self.filter_panel_is_open())
+            return
+        except Exception:
+            pass
+        # Fallback: toggle via the filter button (which is inside the iframe).
         btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
+        WebDriverWait(self.driver, 10).until(lambda d: not self.filter_panel_is_open())
 
     def filter_by_status(self, status):
         self.open_filter_panel()
@@ -169,8 +223,74 @@ class AdminKioskSettingsPage(BasePage):
     def reset_filters(self):
         self.open_filter_panel()
         btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        btn.click()
+        # Clicking Apply filters commits the cleared state (Reset all alone only clears the UI).
+        try:
+            apply = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+            apply.click()
+        except Exception:
+            pass
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+
+    def reset_filters_if_active(self):
+        """Reset the active kiosk list filter.
+
+        Called after wait_for_loaded() which ensures the filter badge text is stable.
+        The filter button is a Radix UI Dialog trigger — clicking it opens a dialog
+        inside the iframe.  Reset all clears the UI; Apply filters commits to server.
+        Both clicks are required.
+        """
+        if "Filter by (" not in self.get_body_text():
+            return
+
+        # Native click required for Radix Dialog trigger.
+        btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        btn.click()
+
+        # Dialog renders in the iframe's DOM.  Try current context first.
+        reset_btn = None
+        try:
+            reset_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.RESET_ALL_BUTTON)
+            )
+        except TimeoutException:
+            pass
+
+        if reset_btn is None:
+            # Fall back to outer document (React portal pattern).
+            self.driver.switch_to.default_content()
+            try:
+                reset_btn = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(self.RESET_ALL_BUTTON)
+                )
+            except TimeoutException:
+                self.wait.until(
+                    EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME)
+                )
+                return
+
+        # Click Reset all, then Apply filters to commit the cleared state.
+        reset_btn.click()
+        try:
+            apply_btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+            )
+            apply_btn.click()
+        except Exception:
+            pass
+
+        # Return to the list iframe and wait for grid to settle.
+        try:
+            self.driver.switch_to.default_content()
+        except Exception:
+            pass
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.invisibility_of_element_located(self.LOAD_MASK)
+            )
+        except Exception:
+            pass
 
     def filter_panel_has_expected_controls(self):
         self.open_filter_panel()
@@ -188,6 +308,17 @@ class AdminKioskSettingsPage(BasePage):
         ))
         return [o.text.strip() for o in options if o.text.strip()]
 
+    def wait_for_create_frame(self, timeout=60):
+        """Switch to default content and wait for the create-form iframe to appear."""
+        self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.frame_to_be_available_and_switch_to_it(self.KSK_CREATE_FRAME)
+            )
+            return True
+        except Exception:
+            return False
+
 
 class AdminKioskFormPage(BasePage):
     """Kiosk create/edit form — /kiosk/new or /kiosk?kioskId=..."""
@@ -203,8 +334,11 @@ class AdminKioskFormPage(BasePage):
         "/following::div[contains(@class,'form-select__control')][1]")
 
     LANE_COMBOBOX = (By.XPATH,
+        "//div[contains(@class,'form-select__control') and "
+        ".//div[contains(@class,'form-select__placeholder') and "
+        "contains(translate(normalize-space(),'LANE','lane'),'lane')]] | "
         "//input[@name='kioskName' or @placeholder='Kiosk name']"
-        "/following::div[contains(@class,'form-select__control')][2]")
+        "/following::div[contains(@class,'form-select__control')][3]")
 
     ACTIVE_KIOSK_TOGGLE = (By.XPATH,
         "//*[contains(normalize-space(),'Active kiosk') or "
@@ -213,14 +347,14 @@ class AdminKioskFormPage(BasePage):
         "//form//button[@role='switch'][1]")
 
     SAVE_BUTTON = (By.XPATH,
+        "//span[@data-type='primary' and normalize-space()='Save kiosk'] | "
+        "//span[@data-type='primary' and contains(normalize-space(),'Save kiosk')] | "
         "//button[contains(normalize-space(),'Save kiosk')] | "
-        "//button[normalize-space()='Save'] | "
-        "//*[@data-type='primary' and contains(normalize-space(),'Save')] | "
-        "//span[@data-type='primary' and contains(normalize-space(),'Save')]")
+        "//*[@data-type='primary' and normalize-space()='Save kiosk']")
 
     CANCEL_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Cancel'] | "
-        "//*[@data-type and normalize-space()='Cancel']")
+        "//span[normalize-space()='Cancel'] | "
+        "//button[normalize-space()='Cancel']")
 
     # ── Service Settings ─────────────────────────────────────────────────────
 
@@ -275,9 +409,16 @@ class AdminKioskFormPage(BasePage):
 
     # ── Middleware Settings ──────────────────────────────────────────────────
 
+    # Section header is a cursor:pointer <div>, not a <button>.
+    MIDDLEWARE_SECTION_HEADER = (By.XPATH,
+        "//div[contains(@class,'color-dark') and normalize-space()='Middleware settings']"
+        "/ancestor::div[contains(@style,'cursor')][1] | "
+        "//div[normalize-space()='Middleware settings' and "
+        "contains(@style,'cursor')]")
+
     MIDDLEWARE_IP_INPUT = (By.XPATH,
-        "//input[@name='middlewareIp' or @name='middleware_ip' or "
-        "@name='middlewareUrl' or @name='middleware_url' or "
+        "//input[@name='middlewareIp' or "
+        "@placeholder='Add middleware IP' or "
         "contains(@placeholder,'middleware') or contains(@placeholder,'Middleware')]")
 
     # ── Device Settings ──────────────────────────────────────────────────────
@@ -405,23 +546,41 @@ class AdminKioskFormPage(BasePage):
         "contains(normalize-space(),'regenerate') or "
         "contains(normalize-space(),'Generate code')]")
 
+    # ── Connection Code Modal ────────────────────────────────────────────────
+
+    GENERATE_CONNECTION_CODE_BTN = (By.XPATH,
+        "//span[@data-type='primary' and "
+        "contains(normalize-space(),'Generate connection code')] | "
+        "//div[contains(@class,'d-flex')]"
+        "//span[contains(normalize-space(),'Generate connection code')] | "
+        "//button[contains(normalize-space(),'Generate connection code')]")
+
+    CODE_MODAL_CONTAINER = (By.XPATH,
+        "//*[contains(@class,'generate-code-modal')]")
+
+    CODE_MODAL_MANUAL_VALUE = (By.XPATH,
+        "//*[contains(@class,'generate-code-modal__code_qr-descr__value')]")
+
+    CODE_MODAL_CLOSE_BTN = (By.XPATH,
+        "//span[@data-type='cancelModal' and normalize-space()='Close'] | "
+        "//button[normalize-space()='Close']")
+
     # ── Load / frame ─────────────────────────────────────────────────────────
 
     def wait_for_create_loaded(self):
+        # Save/Cancel buttons live in the outer shell, not the iframe — don't look for them here.
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.wait.until(
             lambda d: d.find_element(*self.KIOSK_NAME_INPUT).get_attribute("value") != ""
         )
@@ -487,18 +646,35 @@ class AdminKioskFormPage(BasePage):
             pass
 
     def click_save(self):
+        # Save button is inside KSK_CREATE_FRAME / KSK_EDIT_FRAME alongside the form fields.
         url_before = self.driver.current_url
         el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+        # Switch to default_content so current_url reflects the outer-page navigation.
+        self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
-            self.driver.switch_to.default_content()
+            WebDriverWait(self.driver, 10).until(lambda d: d.current_url != url_before)
+            # URL changed — save succeeded, caller handles next navigation.
         except Exception:
-            pass
+            # URL unchanged — validation blocked the save.
+            # Re-enter the form iframe so post-save checks (e.g. aria-invalid) still work.
+            for frame_loc in (
+                AdminKioskSettingsPage.KSK_CREATE_FRAME,
+                AdminKioskSettingsPage.KSK_EDIT_FRAME,
+            ):
+                try:
+                    WebDriverWait(self.driver, 5).until(
+                        EC.frame_to_be_available_and_switch_to_it(frame_loc)
+                    )
+                    break
+                except Exception:
+                    continue
 
     def click_cancel(self):
+        # Cancel button is inside the form iframe — stay in current context, then exit.
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+        self.driver.switch_to.default_content()
 
     def kiosk_name_input_is_valid(self):
         el = self.wait.until(EC.presence_of_element_located(self.KIOSK_NAME_INPUT))
@@ -646,7 +822,21 @@ class AdminKioskFormPage(BasePage):
     # ── Middleware Settings ───────────────────────────────────────────────────
 
     def enter_middleware_ip(self, ip):
-        self.enter_text(self.MIDDLEWARE_IP_INPUT, ip)
+        # Expand the Middleware settings section if the input is not yet visible.
+        inputs = self.driver.find_elements(*self.MIDDLEWARE_IP_INPUT)
+        if not inputs or not any(e.is_displayed() for e in inputs):
+            try:
+                header = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(self.MIDDLEWARE_SECTION_HEADER)
+                )
+                self.driver.execute_script("arguments[0].click();", header)
+            except Exception:
+                pass
+        element = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(self.MIDDLEWARE_IP_INPUT)
+        )
+        element.clear()
+        element.send_keys(ip)
 
     def get_middleware_ip(self):
         el = self.wait.until(EC.presence_of_element_located(self.MIDDLEWARE_IP_INPUT))
@@ -845,3 +1035,34 @@ class AdminKioskFormPage(BasePage):
     def check_regen_code_button_visible(self):
         els = self.driver.find_elements(*self.CHECK_REGEN_CODE_BUTTON)
         return any(e.is_displayed() for e in els)
+
+    # ── Connection Code Modal ─────────────────────────────────────────────────
+
+    def click_generate_connection_code(self):
+        # Button is inside KSK_CREATE_FRAME alongside the form fields (same as Save/Cancel).
+        el = self.wait.until(EC.element_to_be_clickable(self.GENERATE_CONNECTION_CODE_BTN))
+        self.driver.execute_script("arguments[0].click();", el)
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.CODE_MODAL_CONTAINER))
+        except TimeoutException:
+            pass
+
+    def click_close_code_modal(self):
+        try:
+            el = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.CODE_MODAL_CLOSE_BTN)
+            )
+            self.driver.execute_script("arguments[0].click();", el)
+            WebDriverWait(self.driver, 10).until(
+                EC.invisibility_of_element_located(self.CODE_MODAL_CLOSE_BTN)
+            )
+        except Exception:
+            pass
+
+    def get_connection_code(self):
+        el = self.wait.until(EC.visibility_of_element_located(self.CODE_MODAL_MANUAL_VALUE))
+        return el.text.strip()
+
+    def click_connection_code_value(self):
+        el = self.wait.until(EC.element_to_be_clickable(self.CODE_MODAL_MANUAL_VALUE))
+        self.driver.execute_script("arguments[0].click();", el)

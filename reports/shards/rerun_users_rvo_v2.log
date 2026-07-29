@@ -1,0 +1,2826 @@
+2026-07-29 01:42:14,720 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 300.0s
+timeout method: signal
+timeout func_only: False
+collected 166 items
+
+tests/admin_portal/users/test_users_create.py::test_users_add_form_opens PASSED [  0%]
+tests/admin_portal/users/test_users_create.py::test_create_active_user SKIPPED [  1%]
+tests/admin_portal/users/test_users_create.py::test_create_inactive_user SKIPPED [  1%]
+tests/admin_portal/users/test_users_create.py::test_create_user_employee_required PASSED [  2%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_required SKIPPED [  3%]
+tests/admin_portal/users/test_users_create.py::test_create_user_confirm_password_required SKIPPED [  3%]
+tests/admin_portal/users/test_users_create.py::test_create_user_email_required SKIPPED [  4%]
+tests/admin_portal/users/test_users_create.py::test_create_user_phone_required SKIPPED [  4%]
+tests/admin_portal/users/test_users_create.py::test_create_user_role_required SKIPPED [  5%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_mismatch SKIPPED [  6%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_visibility_toggle XFAIL [  6%]
+tests/admin_portal/users/test_users_create.py::test_create_user_confirm_password_visibility_toggle XFAIL [  7%]
+tests/admin_portal/users/test_users_create.py::test_create_user_employee_dropdown_lists_employees XFAIL [  7%]
+tests/admin_portal/users/test_users_create.py::test_create_user_role_dropdown_lists_roles XFAIL [  8%]
+tests/admin_portal/users/test_users_create.py::test_create_user_invalid_email_rejected PASSED [  9%]
+tests/admin_portal/users/test_users_create.py::test_create_user_duplicate_email_rejected SKIPPED [  9%]
+tests/admin_portal/users/test_users_create.py::test_create_user_cancel_discards_form PASSED [ 10%]
+tests/admin_portal/users/test_users_create.py::test_new_user_appears_immediately SKIPPED [ 10%]
+tests/admin_portal/users/test_users_dependency.py::test_new_role_appears_in_users_dropdown XFAIL [ 11%]
+tests/admin_portal/users/test_users_dependency.py::test_employee_dropdown_reflects_employees_module XFAIL [ 12%]
+tests/admin_portal/users/test_users_dependency.py::test_filter_sites_match_sites_and_locations_module XFAIL [ 12%]
+tests/admin_portal/users/test_users_edge_cases.py::test_only_active_roles_in_dropdown XFAIL [ 13%]
+tests/admin_portal/users/test_users_edge_cases.py::test_only_active_employees_in_dropdown XFAIL [ 13%]
+tests/admin_portal/users/test_users_edge_cases.py::test_email_whitespace_trimmed_or_rejected PASSED [ 14%]
+tests/admin_portal/users/test_users_edge_cases.py::test_long_email_at_boundary PASSED [ 15%]
+tests/admin_portal/users/test_users_edge_cases.py::test_user_data_persists_after_relogin SKIPPED [ 15%]
+tests/admin_portal/users/test_users_edge_cases.py::test_filter_panel_accessible_for_name_email_lookup PASSED [ 16%]
+tests/admin_portal/users/test_users_edit.py::test_users_edit_form_opens SKIPPED [ 16%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_email_persists SKIPPED [ 17%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_persists SKIPPED [ 18%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_role_persists SKIPPED [ 18%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_employee_persists SKIPPED [ 19%]
+tests/admin_portal/users/test_users_edit.py::test_activate_inactive_user SKIPPED [ 19%]
+tests/admin_portal/users/test_users_edit.py::test_deactivate_active_user SKIPPED [ 20%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_email_required SKIPPED [ 21%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_required SKIPPED [ 21%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_invalid_email_blocked SKIPPED [ 22%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_cancel_discards_changes SKIPPED [ 22%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_no_password_fields SKIPPED [ 23%]
+tests/admin_portal/users/test_users_export.py::test_users_export_button_clickable PASSED [ 24%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_panel_opens PASSED [ 24%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_first_name SKIPPED [ 25%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_last_name SKIPPED [ 25%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_email SKIPPED [ 26%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_employee_code SKIPPED [ 27%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_site SKIPPED [ 27%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_active_only SKIPPED [ 28%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_active_off_shows_all SKIPPED [ 28%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_combined_name_and_site SKIPPED [ 29%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_result_count_matches_rows SKIPPED [ 30%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_reset_all SKIPPED [ 30%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_site_dropdown_lists_sites XFAIL [ 31%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_partial_name_matches SKIPPED [ 31%]
+tests/admin_portal/users/test_users_list.py::test_users_list_page_loads PASSED [ 32%]
+tests/admin_portal/users/test_users_list.py::test_users_list_required_columns PASSED [ 33%]
+tests/admin_portal/users/test_users_list.py::test_users_list_pagination_count SKIPPED [ 33%]
+tests/admin_portal/users/test_users_list.py::test_users_list_rows_per_page SKIPPED [ 34%]
+tests/admin_portal/users/test_users_password.py::test_change_password_button_opens_flow SKIPPED [ 34%]
+tests/admin_portal/users/test_users_password.py::test_change_password_matching_passwords_save SKIPPED [ 35%]
+tests/admin_portal/users/test_users_password.py::test_change_password_mismatch_rejected SKIPPED [ 36%]
+tests/admin_portal/users/test_users_password.py::test_change_password_blank_blocked SKIPPED [ 36%]
+tests/admin_portal/users/test_users_password.py::test_change_password_visibility_toggles SKIPPED [ 37%]
+tests/admin_portal/users/test_users_search.py::test_users_search_exact_phone SKIPPED [ 37%]
+tests/admin_portal/users/test_users_search.py::test_users_search_partial_phone SKIPPED [ 38%]
+tests/admin_portal/users/test_users_search.py::test_users_search_nonexistent_phone_shows_empty PASSED [ 39%]
+tests/admin_portal/users/test_users_search.py::test_users_search_clear_restores_list SKIPPED [ 39%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls PASSED [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal PASSED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render PASSED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options PASSED [ 44%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar PASSED [ 47%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar PASSED [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites PASSED [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections PASSED [ 49%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown XFAIL [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it PASSED [ 52%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips XFAIL [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state PASSED [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites ERROR [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button PASSED [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown PASSED [ 55%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options PASSED [ 56%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] PASSED [ 56%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] PASSED [ 57%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] PASSED [ 57%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] PASSED [ 58%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] PASSED [ 59%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] PASSED [ 59%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] PASSED [ 60%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom PASSED [ 60%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_range_field_opens_calendar_picker PASSED [ 61%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_future_dates_disabled_in_calendar XFAIL [ 62%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_year_selector_visible_in_calendar XFAIL [ 62%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_auto_applies_on_metrics_screen PASSED [ 63%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_same_start_end PASSED [ 63%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_month_boundary_date_range PASSED [ 64%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_five_kpi_cards_render PASSED [ 65%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_cards_show_zero_when_no_data PASSED [ 65%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_site_change PASSED [ 66%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_date_change PASSED [ 66%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_currency_format PASSED [ 67%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists PASSED [ 68%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_shows_no_info_when_no_data PASSED [ 68%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_lists_all_series PASSED [ 69%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_segment_shows_tooltip PASSED [ 69%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_updates_centre_label PASSED [ 70%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_resets_on_pointer_leave XPASS [ 71%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_toggle_hides_segment SKIPPED [ 71%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_not_recalculated_after_legend_toggle SKIPPED [ 72%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hiding_all_legend_series_no_error SKIPPED [ 72%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_segment_colours_are_stable PASSED [ 73%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_revenue_series_in_legend_no_arc PASSED [ 74%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_rerenders_on_filter_change PASSED [ 74%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_displayed_with_count PASSED [ 75%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_selected_by_default PASSED [ 75%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_shows_three_subtabs PASSED [ 76%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable 2026-07-29 02:44:22,606 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:44:23,254 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 77%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant PASSED [ 77%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans 2026-07-29 02:45:53,263 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:45:53,902 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 78%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly 2026-07-29 02:47:09,693 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:47:10,393 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 78%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows PASSED [ 79%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_subtab_row_count_equals_badge XFAIL [ 80%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart 2026-07-29 02:50:00,740 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:50:01,381 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 80%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module 2026-07-29 02:51:15,770 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:51:16,438 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 81%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_displayed_with_count PASSED [ 81%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_shows_two_subtabs XFAIL [ 82%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant ERROR [ 83%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages ERROR [ 83%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras 2026-07-29 02:53:29,584 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:53:30,224 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 84%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module 2026-07-29 02:54:45,490 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:54:46,124 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 84%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module 2026-07-29 02:56:02,295 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:56:02,932 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 85%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_tabs_preserves_kpi_and_chart PASSED [ 86%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_empty_list_when_count_zero PASSED [ 86%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points 2026-07-29 02:58:02,005 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 02:58:02,729 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 87%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar PASSED [ 87%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_amount_shows_zero_percent PASSED [ 88%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking 2026-07-29 03:00:05,769 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 03:00:06,417 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 89%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_list_refreshes_on_filter_change PASSED [ 89%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_button_present PASSED [ 90%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_triggers_download PASSED [ 90%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_info_icon_tooltip_text PASSED [ 91%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_dismisses_on_click_away PASSED [ 92%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_content_is_static PASSED [ 92%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_transaction_site_renders_cleanly PASSED [ 93%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_today_with_no_transactions_renders_cleanly PASSED [ 93%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_preset_switching_no_stale_data PASSED [ 94%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data ERROR [ 95%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_only_site_renders_cleanly PASSED [ 95%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_direct_url_opens_filter_modal PASSED [ 96%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overview_full_report_link_navigates_here XFAIL [ 96%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module 2026-07-29 03:04:31,378 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 03:04:32,137 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK AL04
+VK AL05
+VK AL06
+VK AL07
+vkauto1
+VK AL01
+VK AL08
+VK AL09
+VK AL10
+VK AL11
+VK AL12
+VK AL13
+VK ZT 146465
+VK AL14
+VK AL15
+VK ZT 2b4279
+VK AL16
+VK AL17
+VK ZT c54675
+VK AL18
+VK AL19
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+VK ZT ae9b9c
+VK ZT 9eaa54
+VK ZT 71c6f6
+VK ZT d4ccd8
+VK ZT c4a124
+VK AL23
+VK ZT 46d34b
+VK AL24
+VK AL25
+VK ZT 8f811b
+VK AL26
+VK ZT 4e248f
+VK AL27
+VK AL28
+VK ZT 9e7bdf
+VK AL29
+VK AL30
+VK ZT c6d556
+VK AL31
+VK AL32
+VK AL33
+VK AL92
+VK AL34
+VK ZT 9344b0
+VK AL35
+VK AL36
+VK ZT ab24bb
+VK AL37
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK AL04
+VK AL05
+VK AL06
+VK AL07
+vkauto1
+VK AL01
+VK AL08
+VK AL09
+VK AL10
+VK AL11
+VK AL12
+VK AL13
+VK ZT 146465
+VK AL14
+VK AL15
+VK ZT 2b4279
+VK AL16
+VK AL17
+VK ZT c54675
+VK AL18
+VK AL19
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+VK ZT ae9b9c
+VK ZT 9eaa54
+VK ZT 71c6f6
+VK ZT d4ccd8
+VK ZT c4a124
+VK AL23
+VK ZT 46d34b
+VK AL24
+VK AL25
+VK ZT 8f811b
+VK AL26
+VK ZT 4e248f
+VK AL27
+VK AL28
+VK ZT 9e7bdf
+VK AL29
+VK AL30
+VK ZT c6d556
+VK AL31
+VK AL32
+VK AL33
+VK AL92
+VK AL34
+VK ZT 9344b0
+VK AL35
+VK AL36
+VK ZT ab24bb
+VK AL37
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 97%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_changes_label_and_field PASSED [ 98%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_forces_preset_to_custom XFAIL [ 98%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_select_date_in_single_day_mode PASSED [ 99%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range ERROR [100%]
+
+==================================== ERRORS ====================================
+_________ ERROR at setup of test_site_dropdown_scrolls_for_many_sites __________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="cb09604feae26483564bd820dd72d8ab")>
+
+    @pytest.fixture
+    def rvo_page(browser):
+        """Revenue Overview metrics screen with VK Test carwash 2 + VK AL02 + This month applied."""
+        page = open_rvo_page(browser)
+>       page.select_site(RVO_SITE)
+
+tests/admin_portal/revenue_overview/conftest.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:219: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:108: in select_react_dropdown_option
+    option = WebDriverWait(self.driver, 20).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="cb09604feae26483564bd820dd72d8ab")>
+method = <function BasePage.select_react_dropdown_option.<locals>.<lambda> at 0x111e2d8a0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+________________ ERROR at setup of test_retail_count_invariant _________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="3c749f2425a45f8991ab02d8e5827683")>
+
+    @pytest.fixture
+    def rvo_page(browser):
+        """Revenue Overview metrics screen with VK Test carwash 2 + VK AL02 + This month applied."""
+        page = open_rvo_page(browser)
+>       page.select_site(RVO_SITE)
+
+tests/admin_portal/revenue_overview/conftest.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:219: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:99: in select_react_dropdown_option
+    inner_input.send_keys(Keys.CONTROL, "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1121272d0>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100fd9a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100fd1b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100a7b0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+E       3   chromedriver                        0x0000000100abfd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+E       4   chromedriver                        0x0000000100abe354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+E       5   chromedriver                        0x0000000100aba934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       6   chromedriver                        0x0000000100b03030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x0000000100ab9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x0000000100f96c40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x0000000100f9a3b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x0000000100f7d0f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x0000000100f9ac4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x0000000100f6e3b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x0000000100fc01f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x0000000100fc0354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x0000000100fd17a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: ElementNotInteractableException
+__________ ERROR at setup of test_wash_package_subtab_lists_packages ___________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="efc87ef8fcdaeaeaac67ee9e58b339b4")>
+
+    @pytest.fixture
+    def rvo_page(browser):
+        """Revenue Overview metrics screen with VK Test carwash 2 + VK AL02 + This month applied."""
+        page = open_rvo_page(browser)
+>       page.select_site(RVO_SITE)
+
+tests/admin_portal/revenue_overview/conftest.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:219: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:99: in select_react_dropdown_option
+    inner_input.send_keys(Keys.CONTROL, "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1123f5950>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100c69a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100c61b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010070b0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+E       3   chromedriver                        0x000000010074fd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+E       4   chromedriver                        0x000000010074e354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+E       5   chromedriver                        0x000000010074a934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       6   chromedriver                        0x0000000100793030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x0000000100749434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x0000000100c26c40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x0000000100c2a3b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x0000000100c0d0f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x0000000100c2ac4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x0000000100bfe3b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x0000000100c501f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x0000000100c50354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x0000000100c617a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: ElementNotInteractableException
+____________ ERROR at setup of test_rapid_site_toggle_no_stale_data ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="11650d4eba97613853316d7eb1da2d59")>
+
+    @pytest.fixture
+    def rvo_page(browser):
+        """Revenue Overview metrics screen with VK Test carwash 2 + VK AL02 + This month applied."""
+>       page = open_rvo_page(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/revenue_overview/conftest.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/revenue_overview/conftest.py:51: in open_rvo_page
+    page.wait_for_modal()
+pages/admin_portal/revenue_overview_page.py:180: in wait_for_modal
+    self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:112: in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:515: in _predicate
+    element = visibility_of(target)(driver)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:208: in _predicate
+    return _element_if_visible(element)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:223: in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+                      ^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:308: in is_displayed
+    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:578: in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x111ed0b10>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x000000010533da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105335b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104ddf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104de5464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x0000000104de792c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 108276
+E       5   chromedriver                        0x0000000104e67d54 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 633628
+E       6   chromedriver                        0x0000000104e67030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x0000000104e1d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x00000001052fac40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x00000001052fe3b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x00000001052e10f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x00000001052fec4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x00000001052d23b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x00000001053241f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x0000000105324354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x00000001053357a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+_ ERROR at setup of TestSingleDayMode.test_uncheck_single_day_reverts_to_range _
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="aab27ad5377b12ab2309101d5b95d853")>
+
+    @pytest.fixture
+    def rvo_single_day(browser):
+        """Modal open, both sites selected, Single day checkbox checked."""
+        page = open_rvo_page(browser)
+>       page.select_site(RVO_SITE)
+
+tests/admin_portal/revenue_overview/conftest.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:219: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:99: in select_react_dropdown_option
+    inner_input.send_keys(Keys.CONTROL, "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x111f4add0>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+E       Stacktrace:
+E       0   chromedriver                        0x000000010282da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000102825b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001022cf0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+E       3   chromedriver                        0x0000000102313d3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+E       4   chromedriver                        0x0000000102312354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+E       5   chromedriver                        0x000000010230e934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       6   chromedriver                        0x0000000102357030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x000000010230d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x00000001027eac40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x00000001027ee3b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x00000001027d10f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x00000001027eec4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x00000001027c23b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x00000001028141f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x0000000102814354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x00000001028257a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: ElementNotInteractableException
+=================================== FAILURES ===================================
+____________________ test_all_membership_subtabs_clickable _____________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111e020d0>
+
+    @allure.story("Membership Revenue")
+    @allure.title("RVO-MEM-004 All three membership sub-tabs are clickable")
+    @pytest.mark.regression
+    def test_all_membership_subtabs_clickable(rvo_page):
+        rvo_page.click_membership_tab()
+>       rvo_page.click_sub_tab("New Sales")
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:980: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="054997b8da3bb301cfa7fedf5117be17")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x112098360>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000101499a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000101491b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100f3b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100f83a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100fc3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100f79434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000101456c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010145a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010143d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010145ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010142e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001014801f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000101480354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001014917a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+______________________ test_new_sales_subtab_lists_plans _______________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111f7df50>
+
+    @allure.story("Membership Revenue")
+    @allure.title("RVO-MEM-006 New Sales sub-tab lists membership plan rows")
+    @pytest.mark.regression
+    def test_new_sales_subtab_lists_plans(rvo_page):
+        # Dependency: Membership module
+        rvo_page.click_membership_tab()
+>       rvo_page.click_sub_tab("New Sales")
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1009: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="92055b8de0877e12ef785c07846dbadc")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x111f35760>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001009f5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001009edb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001004972a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001004dfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010051f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001004d5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001009b2c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001009b63b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001009990f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001009b6c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010098a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001009dc1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001009dc354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001009ed7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______________ test_recharges_subtab_zero_count_renders_cleanly _______________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x112147c10>
+
+    @allure.story("Membership Revenue")
+    @allure.title("RVO-MEM-007 Recharges sub-tab renders cleanly with zero count")
+    @pytest.mark.regression
+    def test_recharges_subtab_zero_count_renders_cleanly(rvo_page):
+        rvo_page.click_membership_tab()
+>       rvo_page.click_sub_tab("Recharges")
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1023: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="5289d4a49a4bf3f8e0b9f8acc658c2e4")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x1120993a0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001009f1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001009e9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001004932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001004dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010051b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001004d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001009aec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001009b23b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001009950f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001009b2c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001009863b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001009d81f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001009d8354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001009e97a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____________ test_switching_subtabs_does_not_change_kpi_or_chart ______________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x112045790>
+
+    
+    
+    @allure.story("Membership Revenue")
+    @allure.title("RVO-MEM-010 Sub-tab row count in the list equals the badge count")
+    @pytest.mark.regression
+    @pytest.mark.xfail(
+>       strict=False,
+        reason=(
+            "RVO-MEM-010: Row count depends on breakdown list DOM structure — "
+            "verify list-item locator in DevTools before removing xfail."
+        ),
+    )
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1073: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="c66632598e28e292175c3fc5185680ac")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x111f5bd80>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001053a1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105399b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104e432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104e8ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104ecb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104e81434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010535ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001053623b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001053450f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000105362c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001053363b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001053881f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000105388354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001053997a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+___________________ test_membership_plan_names_match_module ____________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111f77010>
+
+    
+    
+    @allure.story("Membership Revenue")
+    @allure.title("RVO-MEM-011 Switching sub-tabs does not change KPI cards or chart")
+    @pytest.mark.regression
+    def test_switching_subtabs_does_not_change_kpi_or_chart(rvo_page):
+>       kpi_before = rvo_page.get_body_text()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1094: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="b8bf39936f81f45f528292c008b3a076")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x112098a40>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100af1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100ae9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001005932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001005dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010061b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001005d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100aaec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000100ab23b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000100a950f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000100ab2c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000100a863b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000100ad81f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100ad8354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000100ae97a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____________________ test_wash_extra_subtab_lists_extras ______________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x112483a10>
+
+    we = rvo_page.get_tab_count("Wash Extra")
+    ret = rvo_page.retail_tab_count()
+    assert wp + we == ret, (
+        "Retail count invariant: Wash Package(%d) + Wash Extra(%d) = %d ≠ Retail(%d)"
+        % (wp, we, wp + we, ret)
+    )
+>   assert page_has_no_broken_state(rvo_page)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="de2ee83c73dd0775570114d488077d0f")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x11209bb00>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001026b5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001026adb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001021572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010219fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001021df030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102195434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102672c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001026763b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001026590f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102676c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010264a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010269c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010269c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001026ad7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____________________ test_wash_package_names_match_module _____________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111e16310>
+
+    rvo_page.click_retail_tab()
+    rvo_page.click_sub_tab("Wash Package")
+    body = rvo_page.get_body_text()
+    assert WASH_PACKAGE_AMOUNT in body or "$" in body, (
+        "Wash Package sub-tab shows no rows. Expected amount: %s" % WASH_PACKAGE_AMOUNT
+    )
+>   assert page_has_no_broken_state(rvo_page)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1185: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="ea5a1a8793c6aeed4e6e8e0a6eb0fea1")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x111f35080>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104c75a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104c6db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001047172a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010475fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010479f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104755434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104c32c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000104c363b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000104c190f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104c36c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000104c0a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000104c5c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104c5c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000104c6d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+______________________ test_wash_extra_names_match_module ______________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111b365d0>
+
+    
+    @allure.story("Retail Revenue")
+    @allure.title("RVO-RET-009 Wash Extra names match the Wash Extras module")
+    @pytest.mark.regression
+    def test_wash_extra_names_match_module(rvo_page):
+        # Dependency: Wash Extras module
+>       rvo_page.click_retail_tab()
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="8b6f5c97edd5c8e2ce06316baf94a3c9")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x1120ff920>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001008e9a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001008e1b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010038b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001003d3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100413030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001003c9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001008a6c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001008aa3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010088d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001008aac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010087e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001008d01f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001008d0354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001008e17a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____________________ test_each_row_shows_four_data_points _____________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x107bf2110>
+
+    
+    @allure.story("Breakdown List")
+    @allure.title("RVO-LST-001 Each breakdown list row shows name, count, amount, and percentage")
+    @pytest.mark.regression
+    def test_each_row_shows_four_data_points(rvo_page):
+>       rvo_page.click_membership_tab()
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1254: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="251d32fd226dac97f5d7a38317977846")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x112098400>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104ca1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104c99b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001047432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010478ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001047cb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104781434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104c5ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000104c623b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000104c450f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104c62c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000104c363b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000104c881f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104c88354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000104c997a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__________________ test_long_names_truncate_without_breaking ___________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111e16fd0>
+
+    
+    @allure.story("Breakdown List")
+    @allure.title("RVO-LST-004 Long plan/package names are truncated without breaking layout")
+    @pytest.mark.extended
+    def test_long_names_truncate_without_breaking(rvo_page):
+>       rvo_page.click_membership_tab()
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1302: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:588: in click_sub_tab
+    self._click_tab(locator)
+pages/admin_portal/revenue_overview_page.py:574: in _click_tab
+    btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(locator))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="34cb6c179a86206b9a9f8c399963c178")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x1120ffe20>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000103491a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000103489b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000102f332a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000102f7ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000102fbb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102f71434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010344ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001034523b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001034350f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000103452c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001034263b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001034781f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000103478354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001034897a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__________________ test_sites_dropdown_reflects_sites_module ___________________
+
+rvo_modal = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x111eb0d10>
+
+    
+    @allure.story("Dependencies")
+    @allure.title("RVO-DEP-002 Site dropdown reflects active sites from Sites & Locations module")
+    @pytest.mark.regression
+    def test_sites_dropdown_reflects_sites_module(rvo_modal):
+        # Dependency: Sites & Locations module
+>       options = rvo_modal.get_site_options()
+E       AssertionError: Site dropdown returned no options
+E       assert 0 > 0
+E        +  where 0 = len([])
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py:1532: AssertionError
+=========================== short test summary info ============================
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range
+= 11 failed, 84 passed, 47 skipped, 18 xfailed, 1 xpassed, 5 errors in 5020.40s (1:23:40) =

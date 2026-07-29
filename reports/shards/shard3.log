@@ -1,0 +1,10 @@
+[shard3] Started: Mon Jul 27 03:54:21 IST 2026
+[shard3] START overview — 03:54:21
+[shard3] DONE  overview — ============ 7 passed, 50 xfailed, 19 xpassed in 1383.52s (0:23:03) ============
+[shard3] START discounts — 04:17:26
+[shard3] DONE  discounts — ======= 1 failed, 48 passed, 18 skipped, 6 xfailed in 2958.44s (0:49:18) =======
+[shard3] START redemptions — 05:06:45
+[shard3] DONE  redemptions — == 1 failed, 61 passed, 5 skipped, 28 xfailed, 6 errors in 2176.17s (0:36:16) ==
+[shard3] START revenue_overview — 05:43:03
+[shard3] DONE  revenue_overview — = 17 failed, 67 passed, 3 skipped, 8 xfailed, 1 xpassed, 4 errors in 2259.10s (0:37:39) =
+[shard3] Finished: Mon Jul 27 06:20:44 IST 2026

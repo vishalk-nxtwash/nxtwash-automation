@@ -1,0 +1,24 @@
+{
+  "reference": {
+    "gift_card_name":       "VK AGC003",
+    "assignment_locations": ["VK AL11", "VK Test Wash 01", "VK AL08", "VK AL01"]
+  },
+  "template": {
+    "amount":               "15",
+    "visible_amount":       "$15.00",
+    "landing_page_code":    "VKAGC003"
+  },
+  "updated": {
+    "landing_page_code":    "VKAGC003-EDIT"
+  },
+  "customer_gift_card": {
+    "site":           "VK AL11",
+    "number":         "VKAGC1011",
+    "amount":         "11",
+    "visible_amount": "$11.00"
+  },
+  "search": {
+    "nonexistent":          "gift-card-does-not-exist-automation",
+    "nonexistent_customer": "customer-gift-card-does-not-exist-automation"
+  }
+}

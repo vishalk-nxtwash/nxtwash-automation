@@ -1,0 +1,9 @@
+Custom services
+Add new custom service
+Cancel
+Save custom service
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Select discounts

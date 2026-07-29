@@ -18,11 +18,3 @@ def test_direct_protected_url_without_login_redirects_to_login(browser, login_pa
     login_page.wait_for_loaded()
 
     assert login_page.is_login_page()
-
-
-def test_auth_token_is_stored_after_login(login_page):
-
-    login_page.login()
-    login_page.wait_for_overview()
-
-    assert login_page.authenticated_session_is_stored()

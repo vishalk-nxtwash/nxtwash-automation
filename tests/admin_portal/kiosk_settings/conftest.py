@@ -7,16 +7,20 @@ from tests.admin_portal.admin_session import open_admin_path
 # Constants
 # ---------------------------------------------------------------------------
 
-KSK_NAME = "VK kiosk1"
-KSK_SITE = "VK Test carwash2"
-KSK_LANE = "Wash lane 2"
-KSK_MIDDLEWARE_IP = "https://middleware-zeus.nxtwash.info"
-KSK_PAYMENT_SERIAL = "1640146298"
-KSK_CAR_RECOGNITION_TYPE = "By License Plate"
-KSK_CAR_RECOGNITION_ALT = "By RFID tag"
-KSK_UPDATED_NAME = "VK kiosk1 edited"
-KSK_NEW_NAME = "VK kiosk auto 1"
-NONEXISTENT_KSK_NAME = "kiosk-does-not-exist-automation"
+from tests.admin_portal._data import load as _load
+
+_D = _load("kiosk_settings")
+
+KSK_NAME                 = _D["reference"]["existing_kiosk"]
+KSK_SITE                 = _D["reference"]["site"]
+KSK_LANE                 = _D["reference"]["lane"]
+KSK_MIDDLEWARE_IP        = _D["template"]["middleware_ip"]
+KSK_PAYMENT_SERIAL       = _D["template"]["payment_serial"]
+KSK_CAR_RECOGNITION_TYPE = _D["reference"]["car_recognition_type"]
+KSK_CAR_RECOGNITION_ALT  = _D["reference"]["car_recognition_alt"]
+KSK_UPDATED_NAME         = _D["updated"]["kiosk_name"]
+KSK_NEW_NAME             = _D["create"]["kiosk_name"]
+NONEXISTENT_KSK_NAME     = _D["search"]["nonexistent"]
 
 # ---------------------------------------------------------------------------
 # Navigation helpers
@@ -27,6 +31,7 @@ def open_kiosk_page(browser):
     open_admin_path(browser, "/kiosk_settings/kiosks")
     page = AdminKioskSettingsPage(browser)
     page.wait_for_loaded()
+    page.reset_filters_if_active()
     return page
 
 
@@ -45,20 +50,22 @@ def open_edit_kiosk_form(browser, name=KSK_NAME):
     return form
 
 
+BROKEN_STATE_TEXTS = [
+    "something went wrong",
+    "internal server error",
+    "application error",
+    "cannot read",
+    "typeerror",
+    "uncaught error",
+]
+
+
 def page_has_no_broken_state(page):
     try:
         body = page.get_body_text().lower()
     except Exception:
         return True
-    broken_signals = [
-        "something went wrong",
-        "internal server error",
-        "application error",
-        "cannot read",
-        "typeerror",
-        "uncaught error",
-    ]
-    return not any(s in body for s in broken_signals)
+    return not any(s in body for s in BROKEN_STATE_TEXTS)
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +87,9 @@ def create_kiosk_if_missing(browser, name=KSK_NAME, site=KSK_SITE, lane=KSK_LANE
     form.enter_kiosk_name(name)
     form.select_site(site)
     form.select_lane(lane)
+    form.enter_middleware_ip(KSK_MIDDLEWARE_IP)
+    form.click_generate_connection_code()
+    form.click_close_code_modal()
     form.click_save()
     page = open_kiosk_page(browser)
     page.search_kiosk(name)

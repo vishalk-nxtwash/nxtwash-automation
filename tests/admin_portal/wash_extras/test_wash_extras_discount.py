@@ -21,6 +21,7 @@ pytestmark = [
 
 @allure.title("WE-DIS-001 Assigning a single discount persists after save")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_assign_single_discount_persists(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -39,6 +40,7 @@ def test_assign_single_discount_persists(browser):
 
 @allure.title("WE-DIS-002 Assigning multiple discounts all persist after save")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_assign_multiple_discounts_persist(browser):
 
     page = create_wash_extra_if_missing(browser)

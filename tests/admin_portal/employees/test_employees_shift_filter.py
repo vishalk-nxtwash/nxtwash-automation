@@ -27,7 +27,6 @@ _FILTER_XFAIL = pytest.mark.xfail(
 
 @allure.title("EMP-SH-FLT-001 Shift filter panel opens with the expected controls")
 @pytest.mark.smoke
-@_FILTER_XFAIL
 def test_shift_filter_panel_opens_with_controls(browser):
     page = open_shift_page(browser)
     page.open_filter_panel()
@@ -61,7 +60,6 @@ def test_shift_filter_by_first_name(browser, managed_employee):
 
 @allure.title("EMP-SH-FLT-003 Filtering by Site shows only shifts at that site")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_shift_filter_by_site(browser):
     page = open_shift_page(browser)
     page.filter_by_site(ASSIGNMENT_SITE)
@@ -110,7 +108,6 @@ def test_shift_filter_by_date_range(browser):
 
 @allure.title("EMP-SH-FLT-005 Active shift filter ON shows only open/active shifts")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_shift_filter_active_on(browser):
     page = open_shift_page(browser)
     page.open_filter_panel()
@@ -126,7 +123,6 @@ def test_shift_filter_active_on(browser):
 
 @allure.title("EMP-SH-FLT-006 Active shift filter OFF shows all shifts including completed ones")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_shift_filter_active_off(browser):
     page = open_shift_page(browser)
     page.open_filter_panel()

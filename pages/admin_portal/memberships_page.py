@@ -15,7 +15,8 @@ class MembershipsPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/memberships?')]"
+        "//iframe[contains(@src,'/services/memberships') "
+        "and not(contains(@src,'/services/memberships/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -194,7 +195,7 @@ class MembershipsPage(BasePage):
     def wait_for_list_loaded(self):
         """Wait until the Memberships list is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -232,7 +233,7 @@ class MembershipsPage(BasePage):
     def wait_for_create_loaded(self):
         """Wait until the create membership form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(
@@ -243,7 +244,9 @@ class MembershipsPage(BasePage):
     def wait_for_edit_loaded(self):
         """Wait until the edit membership form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        WebDriverWait(self.driver, 60).until(
+            EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
+        )
         self.wait.until(
             EC.visibility_of_element_located(self.MEMBERSHIP_NAME_INPUT)
         )
@@ -273,7 +276,7 @@ class MembershipsPage(BasePage):
 
     def wait_for_membership_row(self, membership_name):
         """Wait until a membership row is visible."""
-        return self.wait.until(
+        return WebDriverWait(self.driver, 60).until(
             EC.visibility_of_element_located(
                 self.get_membership_row_locator(membership_name)
             )
@@ -552,10 +555,12 @@ class MembershipsPage(BasePage):
             return False
 
     def clear_active_filters(self):
-        """Reset and apply filters if any are currently active."""
-        if self.has_active_filters():
+        """Reset all filters unconditionally to guarantee clean state."""
+        try:
             self.reset_filters()
             self.apply_filters()
+        except Exception:
+            pass
 
     def apply_filters(self):
         """Apply the configured filters and wait for the grid to refresh."""
@@ -601,6 +606,31 @@ class MembershipsPage(BasePage):
         """Click cancel on create/edit form."""
         self.click(self.CANCEL_BUTTON)
         self.wait_for_list_loaded()
+
+    def open_edit_membership_if_visible(self, membership_name):
+        """Open edit for a membership that is already visible in the current list.
+
+        Skips the wait_for_list_loaded() call that open_edit_membership() does.
+        Use this when you are already in the list frame (e.g. after
+        open_memberships_page()) to avoid an extra ~100 s reload on slow staging.
+        Falls back to showing inactive rows if the membership is not found active.
+        """
+        self.search_membership(membership_name)
+        self.wait_for_grid_idle()
+        try:
+            row = self.wait_for_membership_row(membership_name)
+        except TimeoutException:
+            self._show_inactive_memberships()
+            self.search_membership(membership_name)
+            self.wait_for_grid_idle()
+            row = self.wait_for_membership_row(membership_name)
+        edit_button = row.find_element(
+            By.XPATH,
+            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        self.wait_for_grid_idle()
+        self.driver.execute_script("arguments[0].click();", edit_button)
+        self.wait_for_edit_loaded()
 
     def open_edit_membership(self, membership_name):
         """Open edit membership form, falling back to inactive filter if needed."""
@@ -879,20 +909,22 @@ class MembershipsPage(BasePage):
 
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
-        switch = self.wait.until(EC.presence_of_element_located(locator))
+        switch = self.wait.until(EC.visibility_of_element_located(locator))
         if switch.get_attribute("aria-checked") != "true":
-            self.driver.execute_script("arguments[0].click();", switch)
+            ActionChains(self.driver).move_to_element(switch).click().perform()
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                lambda driver: driver.find_element(*locator)
+                               .get_attribute("aria-checked") == "true"
             )
 
     def ensure_switch_off(self, locator):
         """Turn a switch off if needed."""
-        switch = self.wait.until(EC.presence_of_element_located(locator))
+        switch = self.wait.until(EC.visibility_of_element_located(locator))
         if switch.get_attribute("aria-checked") != "false":
-            self.driver.execute_script("arguments[0].click();", switch)
+            ActionChains(self.driver).move_to_element(switch).click().perform()
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "false"
+                lambda driver: driver.find_element(*locator)
+                               .get_attribute("aria-checked") == "false"
             )
 
     def active_switch_is_on(self):
@@ -974,7 +1006,7 @@ class MembershipsPage(BasePage):
 
     def get_location_rows(self):
         """Return unique visible location assignment rows."""
-        rows = self.wait.until(
+        rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.LOCATION_ROWS)
         )
         unique_rows = []
@@ -1029,23 +1061,19 @@ class MembershipsPage(BasePage):
             return False
 
     def _click_location_checkbox(self, checkbox):
-        """Toggle a location assignment checkbox via its Inovua grid cell.
+        """Toggle a location assignment checkbox via ActionChains on the checkbox element.
 
-        Inovua React Data Grid processes cell clicks through its own event
-        delegation at the InovuaReactDataGrid__cell level.  Clicking the
-        checkbox wrapper directly never reaches that handler; clicking the
-        cell does.  We scroll to centre first so the sticky header cannot
-        obscure the target before elementFromPoint resolves it.
+        Clicking the InovuaReactDataGrid__cell center misses the checkbox on
+        expanded (already-assigned) rows because the cell is taller than the
+        checkbox widget.  Targeting the checkbox element directly with a real
+        (trusted) mouse event is reliable for both checked and unchecked rows
+        and correctly propagates through Inovua → React Hook Form onChange.
         """
         self.driver.execute_script(
-            """
-            const el = arguments[0];
-            const cell = el.closest('.InovuaReactDataGrid__cell') || el;
-            cell.scrollIntoView({block: 'center', inline: 'center'});
-            cell.click();
-            """,
+            "arguments[0].scrollIntoView({block: 'nearest'});",
             checkbox,
         )
+        ActionChains(self.driver).move_to_element(checkbox).click().perform()
 
     def assign_location_by_index_with_price_and_commission(
         self,
@@ -1078,6 +1106,9 @@ class MembershipsPage(BasePage):
                 )
             )
 
+        # Set price/commission after assigning — the checkbox reveal may clear fields.
+        self.set_location_price_and_commission_by_index(row_index, price, commission)
+
     def unassign_location_by_index(self, row_index):
         """Unassign one visible location row if it is checked."""
         rows = self.get_location_rows()
@@ -1095,7 +1126,14 @@ class MembershipsPage(BasePage):
 
         if self.row_checkbox_is_checked(checkbox):
             self._click_location_checkbox(checkbox)
-            self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))
+            self.wait.until(
+                lambda driver: not self.row_checkbox_is_checked(
+                    self.get_location_rows()[row_index].find_element(
+                        By.XPATH,
+                        ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+                    )
+                )
+            )
 
     def unassign_locations_after_first(self):
         """Keep only the first visible location assigned."""
@@ -1190,7 +1228,7 @@ class MembershipsPage(BasePage):
 
     def get_redemption_rows(self):
         """Return unique visible redemption location rows."""
-        rows = self.wait.until(
+        rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
         )
         unique_rows = []
@@ -1216,7 +1254,7 @@ class MembershipsPage(BasePage):
         """Assign one redemption location row by zero-based row index."""
         checkboxes = [
             checkbox
-            for checkbox in self.wait.until(
+            for checkbox in WebDriverWait(self.driver, 60).until(
                 EC.presence_of_all_elements_located(self.REDEMPTION_CHECKBOXES)
             )
             if checkbox.rect["width"] > 0 and checkbox.rect["height"] > 0
@@ -1232,27 +1270,16 @@ class MembershipsPage(BasePage):
         checkbox = checkboxes[checkbox_index]
 
         if not self.row_checkbox_is_checked(checkbox):
-            rect = checkbox.rect
             self.driver.execute_script(
-                """
-                const target = document.elementFromPoint(arguments[0], arguments[1]);
-                const checkbox = target.closest('.inovua-react-toolkit-checkbox');
-                checkbox.click();
-                """,
-                rect["x"] + rect["width"] / 2,
-                rect["y"] + rect["height"] / 2
+                "arguments[0].scrollIntoView({block: 'nearest'});", checkbox
             )
+            ActionChains(self.driver).move_to_element(checkbox).click().perform()
             self.wait.until(
                 lambda driver: self.row_checkbox_is_checked(
                     [
-                        checkbox
-                        for checkbox in driver.find_elements(
-                            *self.REDEMPTION_CHECKBOXES
-                        )
-                        if (
-                            checkbox.rect["width"] > 0
-                            and checkbox.rect["height"] > 0
-                        )
+                        cb
+                        for cb in driver.find_elements(*self.REDEMPTION_CHECKBOXES)
+                        if cb.rect["width"] > 0 and cb.rect["height"] > 0
                     ][checkbox_index]
                 )
             )
@@ -1430,6 +1457,9 @@ class MembershipsPage(BasePage):
             )
         except Exception:
             time.sleep(8)
+        # Capture any visible error before navigating away — if save was rejected
+        # (duplicate name, validation) the error shows in the iframe body here.
+        save_error = self.get_visible_error()
         # Switch to the top-level document first so current_url is the main
         # page URL (the iframe URL can be null after a form submission).
         self.driver.switch_to.default_content()
@@ -1438,8 +1468,16 @@ class MembershipsPage(BasePage):
             base_url = current.split("/services/")[0]
         else:
             base_url = current.rstrip("/")
-        self.driver.get(base_url + "/services/memberships")
+        try:
+            self.driver.get(base_url + "/services/memberships")
+        except TimeoutException:
+            pass  # page load timeout on slow staging; iframe content may still render
         self.wait_for_list_loaded()
+        if save_error:
+            import logging
+            logging.getLogger("nxtwash").warning(
+                "Membership save completed with page error: %s", save_error
+            )
 
     def duplicate_membership_error_is_visible(self):
         """Return whether a duplicate membership error is visible."""
@@ -1480,7 +1518,6 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
-        self.configure_redemption_settings(0, "VK detail wash")
 
     def fill_recurring_membership_form(
         self,
@@ -1510,7 +1547,6 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
-        self.configure_redemption_settings(0, "VK detail wash")
 
     def create_membership(
         self,

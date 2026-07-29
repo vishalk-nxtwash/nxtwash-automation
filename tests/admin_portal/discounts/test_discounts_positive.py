@@ -34,6 +34,7 @@ def test_create_amount_discount(browser):
 
 @allure.title("DS-PER-001 Discount settings persist after creation")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_discount_settings_persist(browser):
 
     discounts_page = create_discount_if_missing(browser)

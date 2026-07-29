@@ -16,18 +16,17 @@ pytestmark = [
     allure.story("Tunnel Settings Section"),
 ]
 
-_SECTION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Tunnel settings section locators use aria-expanded heuristics — "
-        "verify section header classes in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("TUN-TSN-001 Tunnel settings section expands and collapses")
 @pytest.mark.regression
-@_SECTION_XFAIL
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TSN-001: section_is_expanded('Tunnel settings') proxy uses "
+        "CONTROLLER_ID_COMBOBOX which does not exist in the form. The actual form "
+        "body reveals the section contains only the 8 toggle switches — no Controller "
+        "ID dropdown. Proxy always returns False. Pending DevTools verification."
+    ),
+)
 def test_tunnel_settings_section_expand_collapse(browser, managed_tunnel_form):
     form = managed_tunnel_form
     form.expand_section("Tunnel settings")
@@ -43,7 +42,16 @@ def test_tunnel_settings_section_expand_collapse(browser, managed_tunnel_form):
 
 @allure.title("TUN-TSN-002/003 Tunnel operational toggle persists ON and OFF states")
 @pytest.mark.regression
-@_SECTION_XFAIL
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TSN-002/003: 'Tunnel operational' toggle is absent from the form. "
+        "Actual form structure (confirmed from body text) shows the 'Tunnel settings' "
+        "accordion contains only the 8 named toggle switches — no Tunnel operational "
+        "element. TUNNEL_OPERATIONAL_TOGGLE locator always times out. Pending DevTools "
+        "verification to find the actual location of this control."
+    ),
+)
 @pytest.mark.parametrize("operational_on", [
     pytest.param(True, id="TUN-TSN-002"),
     pytest.param(False, id="TUN-TSN-003"),
@@ -64,7 +72,15 @@ def test_tunnel_operational_toggle_persists(browser, managed_tunnel_form, operat
 
 @allure.title("TUN-TSN-004 Controller ID dropdown lists expected options")
 @pytest.mark.regression
-@_SECTION_XFAIL
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TSN-004: Controller ID dropdown is absent from the form. Actual form "
+        "body text shows no Controller ID field in any section. CONTROLLER_ID_COMBOBOX "
+        "locator (placeholder-based) matches nothing. Pending DevTools verification "
+        "to locate the actual dropdown or confirm it is not present in this staging version."
+    ),
+)
 def test_controller_id_dropdown_lists_options(browser, managed_tunnel_form):
     form = managed_tunnel_form
     form.expand_section("Tunnel settings")
@@ -79,7 +95,14 @@ def test_controller_id_dropdown_lists_options(browser, managed_tunnel_form):
 
 @allure.title("TUN-TSN-005 Controller ID selection (RTC) persists after save")
 @pytest.mark.regression
-@_SECTION_XFAIL
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TSN-005: Controller ID dropdown is absent from the form — same root cause "
+        "as TUN-TSN-004. select_controller_id() will time out. Pending DevTools "
+        "verification."
+    ),
+)
 def test_controller_id_selection_persists(browser, managed_tunnel_form):
     form = managed_tunnel_form
     form.expand_section("Tunnel settings")

@@ -69,16 +69,6 @@ class SingleDaySyncMixin:
         assert self._page_ok(sdm_single_day)
 
     @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known gap: cannot confirm that the page-bar single day checkbox "
-            "DOM element exists and syncs with the modal checkbox without "
-            "DevTools inspection.  PAGE_BAR_SINGLE_DAY_CHECKBOX locator relies "
-            "on an ancestor-exclusion heuristic that may not match the actual "
-            "DOM.  Mark as xfail pending first live run."
-        ),
-        strict=False,
-    )
     def test_modal_sdm_syncs_to_page_bar(self, sdm_single_day):
         allure.dynamic.title(
             "%s-003 Modal SDM checked → page bar SDM also checked after apply"
@@ -92,15 +82,6 @@ class SingleDaySyncMixin:
         assert self._page_ok(sdm_single_day)
 
     @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known gap: page-bar single day checkbox DOM element unconfirmed "
-            "(same as prior SDM-003).  Additionally, the re-open mechanism for "
-            "the filter modal when triggered from the page bar has not been "
-            "verified via DevTools."
-        ),
-        strict=False,
-    )
     def test_page_bar_sdm_uncheck_syncs_to_modal(self, sdm_page):
         allure.dynamic.title(
             "%s-004 Unchecking page-bar SDM reflects unchecked on modal re-open"

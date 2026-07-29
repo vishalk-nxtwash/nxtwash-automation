@@ -1,0 +1,1784 @@
+2026-07-28 02:27:14,091 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:27:19,241 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:27:21,822 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+created: 2/2 workers
+2 workers [157 items]
+
+scheduling tests via LoadScheduling
+
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists 
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists 
+[gw1] [  0%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists 
+[gw0] [  1%] ERROR tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists 
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour 2026-07-28 02:30:33,148 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 02:30:52,852 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [  1%] FAILED tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour 
+[gw1] [  2%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_list_shell_controls_and_grid 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist 
+[gw0] [  3%] PASSED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_list_shell_controls_and_grid 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear 
+[gw1] [  3%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites 2026-07-28 02:34:34,663 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 02:34:52,394 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [  4%] FAILED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_filter_panel_site_option_and_reset 
+[gw1] [  5%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites 
+[gw0] [  5%] PASSED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_filter_panel_site_option_and_reset 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_add_wash_package_form_service_discount_save_cancel_controls 
+[gw0] [  6%] PASSED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_add_wash_package_form_service_discount_save_cancel_controls 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_package_global_price_is_required 
+[gw0] [  7%] PASSED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_package_global_price_is_required 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_download_file_validation_blocker 
+[gw1] [  7%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_deactivate_wash_package 
+[gw0] [  8%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_download_file_validation_blocker 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_permission_matrix_blocker 
+[gw0] [  8%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_permission_matrix_blocker 
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_advanced_edge_case_harness_blocker 
+[gw1] [  9%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_deactivate_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists 
+[gw0] [ 10%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_advanced_edge_case_harness_blocker 
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_wash_package_available_for_membership_redemption 
+[gw0] [ 10%] SKIPPED tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_wash_package_available_for_membership_redemption 
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivate_wash_package_mapped_to_membership 
+[gw0] [ 11%] SKIPPED tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivate_wash_package_mapped_to_membership 
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_rename_wash_package_mapped_to_membership 
+[gw0] [ 12%] SKIPPED tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_rename_wash_package_mapped_to_membership 
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivated_discount_removed_from_wash_package 
+[gw0] [ 12%] SKIPPED tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivated_discount_removed_from_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_site_unassignment_does_not_affect_other_redemption_sites 
+[gw0] [ 13%] SKIPPED tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_site_unassignment_does_not_affect_other_redemption_sites 
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_long_name_does_not_break_form 
+[gw1] [ 14%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_multiple_discounts_persist 
+[gw0] [ 14%] PASSED tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_long_name_does_not_break_form 
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_whitespace_name_is_rejected 
+[gw1] [ 15%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_multiple_discounts_persist 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_remove_applicable_discount_persists 
+[gw0] [ 15%] PASSED tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_whitespace_name_is_rejected 
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable 
+[gw1] [ 16%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_remove_applicable_discount_persists 2026-07-28 02:51:39,107 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-28 02:51:44,870 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+
+[gw0] [ 17%] FAILED tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_service_description_persists 
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists 
+[gw1] [ 17%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_service_description_persists 
+[gw0] [ 18%] ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists 
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_button_clickable 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked 2026-07-28 02:58:19,181 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked (url: about:blank)
+2026-07-28 02:58:19,437 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_button_clickable (url: about:blank)
+2026-07-28 02:59:22,923 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_packages_test_wash_packages_negative.py_test_create_duplicate_wash_package_is_blocked': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000104625a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x000000010461db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001040c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x00000001040b1d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x00000001040b1a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x00000001040af818 chromedriver + 227352
+6   chromedriver                        0x00000001040b040c chromedriver + 230412
+7   chromedriver                        0x00000001040d47bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x000000010415a268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x000000010414f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000104105434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x00000001045e2c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001045e63b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x00000001045c90f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x00000001045e6c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x00000001045ba3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x000000010460c1f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x000000010460c354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x000000010461d7a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 02:59:23,028 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_packages_test_wash_packages_export.py_test_wash_packages_export_button_clickable': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x00000001014e9a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001014e1b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000100f8b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000100f75d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000100f75a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000100f73818 chromedriver + 227352
+6   chromedriver                        0x0000000100f7440c chromedriver + 230412
+7   chromedriver                        0x0000000100f987bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x000000010101e268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000101013030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000100fc9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x00000001014a6c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001014aa3b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x000000010148d0f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x00000001014aac4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x000000010147e3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x00000001014d01f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x00000001014d0354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x00000001014e17a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 02:59:26,577 ERROR nxtwash: Visible page text at failure:
+
+2026-07-28 02:59:26,561 ERROR nxtwash: Visible page text at failure:
+
+
+[gw1] [ 19%] FAILED tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_button_clickable 
+[gw0] [ 19%] FAILED tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked 
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_after_filter 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_price_validation 2026-07-28 03:01:15,888 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_price_validation (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:01:30,892 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [ 20%] FAILED tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_price_validation 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_price_is_rejected 
+[gw1] [ 21%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_after_filter 
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_awarded_persists 
+[gw0] [ 21%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_price_is_rejected 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_commission_is_rejected 
+[gw0] [ 22%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_commission_is_rejected 
+[gw1] [ 22%] ERROR tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_awarded_persists 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_packages_special_character_search_stays_usable 
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_redeemed_persists 
+[gw0] [ 23%] PASSED tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_packages_special_character_search_stays_usable 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package 
+[gw1] [ 24%] ERROR tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_redeemed_persists 
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_awarded_info_tooltip_is_visible 
+[gw1] [ 24%] PASSED tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_awarded_info_tooltip_is_visible 2026-07-28 03:09:42,552 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:09:53,749 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_redeemed_info_tooltip_is_visible 
+[gw0] [ 25%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package 
+[gw1] [ 26%] PASSED tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_redeemed_info_tooltip_is_visible 
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_provided_at_baseline 2026-07-28 03:13:02,235 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:13:14,582 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [ 26%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode 
+[gw1] [ 27%] ERROR tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_provided_at_baseline 
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_mutation_is_reset_on_teardown 2026-07-28 03:15:35,461 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode (url: about:blank)
+2026-07-28 03:16:39,807 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_packages_test_wash_packages_positive.py_test_create_wash_package_without_barcode': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000104b91a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104b89b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001046332a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010461dd20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x000000010461da80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x000000010461b818 chromedriver + 227352
+6   chromedriver                        0x000000010461c40c chromedriver + 230412
+7   chromedriver                        0x00000001046407bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x00000001046c6268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x00000001046bb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000104671434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000104b4ec40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x0000000104b523b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x0000000104b350f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000104b52c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x0000000104b263b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000104b781f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000104b78354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000104b897a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 03:16:40,963 ERROR nxtwash: Visible page text at failure:
+
+
+[gw0] [ 28%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points 
+[gw1] [ 28%] ERROR tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_mutation_is_reset_on_teardown 
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_name_validation 2026-07-28 03:18:59,607 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:19:18,733 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [ 29%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount 
+[gw1] [ 29%] PASSED tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_name_validation 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_override_persists 2026-07-28 03:21:55,064 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:22:22,326 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [ 30%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount 
+[gw1] [ 31%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_override_persists 
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_higher_than_global_persists 2026-07-28 03:24:57,737 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:25:02,915 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+VK AL23
+Columbia
+5%
+3%
+
+[gw0] [ 31%] FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search 
+[gw1] [ 32%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_higher_than_global_persists 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_page_loads_with_primary_controls 2026-07-28 03:27:32,815 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_page_loads_with_primary_controls (url: about:blank)
+2026-07-28 03:27:54,747 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:28:01,834 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+VK ZT 46d34b
+Columbia
+0%
+0%
+
+[gw0] [ 33%] FAILED tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_partial_search 2026-07-28 03:28:38,851 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_packages_test_wash_packages_ui.py_test_wash_packages_page_loads_with_primary_controls': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000102fb5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000102fadb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000102a572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000102a41d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000102a41a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000102a3f818 chromedriver + 227352
+6   chromedriver                        0x0000000102a4040c chromedriver + 230412
+7   chromedriver                        0x0000000102a647bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x0000000102aea268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000102adf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000102a95434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000102f72c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x0000000102f763b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x0000000102f590f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000102f76c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x0000000102f4a3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000102f9c1f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000102f9c354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000102fad7a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 03:28:46,156 ERROR nxtwash: Visible page text at failure:
+
+
+[gw1] [ 33%] FAILED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_page_loads_with_primary_controls 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_grid_columns_are_visible 
+[gw0] [ 34%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_partial_search 
+[gw1] [ 35%] PASSED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_grid_columns_are_visible 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_missing_search 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_pagination_controls_are_visible 
+[gw1] [ 35%] PASSED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_pagination_controls_are_visible 
+[gw0] [ 36%] PASSED tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_missing_search 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_add_wash_package_form_loads 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list 
+[gw1] [ 36%] PASSED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_add_wash_package_form_loads 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads 2026-07-28 03:34:49,956 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:34:58,103 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+
+[gw0] [ 37%] FAILED tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_search_payloads_do_not_break_grid 2026-07-28 03:35:28,173 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-28 03:35:39,741 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+
+[gw1] [ 38%] FAILED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads 
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_filter_panel_shows_controls 
+[gw0] [ 38%] PASSED tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_search_payloads_do_not_break_grid 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_search_inactive_wash_package_returns_it 
+[gw1] [ 39%] PASSED tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_filter_panel_shows_controls 
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_blank_required_form_stays_on_form 
+[gw1] [ 40%] PASSED tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_blank_required_form_stays_on_form 
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_price_is_accepted 
+[gw0] [ 40%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_search_inactive_wash_package_returns_it 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results 
+[gw1] [ 41%] PASSED tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_price_is_accepted 
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_commission_is_accepted 2026-07-28 03:42:39,389 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-28 03:42:55,581 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%
+VK AL25
+Columbia
+5%
+3%
+VK AL24
+Columbia
+5%
+3%
+
+[gw0] [ 42%] FAILED tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_active_shows_active_packages 
+[gw1] [ 42%] PASSED tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_commission_is_accepted 
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_invalid_numeric_values_do_not_break_form 
+[gw1] [ 43%] PASSED tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_invalid_numeric_values_do_not_break_form 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_active_wash_extra_visible_at_pos 
+[gw1] [ 43%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_active_wash_extra_visible_at_pos 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_wash_extra_removed_from_pos 
+[gw1] [ 44%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_wash_extra_removed_from_pos 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_discount_not_applied_on_wash_extra 
+[gw1] [ 45%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_deactivated_discount_not_applied_on_wash_extra 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_open_price_toggle_enabled_saves 
+[gw1] [ 45%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_open_price_toggle_enabled_saves 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_description_shows_on_ecommerce_site 
+[gw1] [ 46%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_description_shows_on_ecommerce_site 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_controller_code_saves 
+[gw1] [ 47%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_controller_code_saves 
+tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_duplicate_controller_code_rejected 
+[gw1] [ 47%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_dependency.py::test_duplicate_controller_code_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_single_discount_persists 
+[gw0] [ 48%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_active_shows_active_packages 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_site_and_active_combined 
+[gw1] [ 49%] PASSED tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_single_discount_persists 
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_multiple_discounts_persist 
+[gw0] [ 49%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_site_and_active_combined 
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_reset_filters_restores_grid 
+[gw0] [ 50%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_reset_filters_restores_grid 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_assign_multiple_sites_persists 
+[gw1] [ 50%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_assign_multiple_discounts_persist 
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_remove_assigned_discount_persists 
+[gw0] [ 51%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_assign_multiple_sites_persists 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_select_all_sites_via_header_checkbox 
+[gw0] [ 52%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_select_all_sites_via_header_checkbox 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_save_wash_package_without_site_selection 
+[gw1] [ 52%] PASSED tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_remove_assigned_discount_persists 
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_save_wash_extra_without_discount 
+[gw0] [ 53%] PASSED tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_save_wash_package_without_site_selection 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_global_price_reflected_at_site 
+[gw0] [ 54%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_global_price_reflected_at_site 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_persists 
+[gw1] [ 54%] PASSED tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_save_wash_extra_without_discount 
+tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_only_active_discounts_appear_in_dropdown 
+[gw1] [ 55%] PASSED tests/admin_portal/wash_extras/test_wash_extras_discount.py::test_only_active_discounts_appear_in_dropdown 
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_create_is_idempotent 
+[gw0] [ 56%] XFAIL tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_persists 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_higher_than_global_persists 2026-07-28 04:06:50,595 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_create_is_idempotent (url: about:blank)
+2026-07-28 04:08:00,791 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_extras_test_wash_extras_edge_cases.py_test_wash_extra_create_is_idempotent': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000105321a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000105319b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104dc32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104dadd20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000104dada80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000104dab818 chromedriver + 227352
+6   chromedriver                        0x0000000104dac40c chromedriver + 230412
+7   chromedriver                        0x0000000104dd07bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x0000000104e56268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000104e4b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000104e01434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x00000001052dec40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001052e23b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x00000001052c50f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x00000001052e2c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x00000001052b63b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x00000001053081f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000105308354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x00000001053197a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 04:08:04,318 ERROR nxtwash: Visible page text at failure:
+
+
+[gw1] [ 56%] FAILED tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_create_is_idempotent 
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_long_name_does_not_break_form 
+[gw0] [ 57%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_higher_than_global_persists 
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_lower_than_global_persists 
+[gw0] [ 57%] ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_lower_than_global_persists 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_global_commission_persists 
+[gw1] [ 58%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_wash_extra_long_name_does_not_break_form 
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_zero_loyalty_points_accepted 
+[gw1] [ 59%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_zero_loyalty_points_accepted 
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_awarded 
+[gw1] [ 59%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_awarded 
+tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_to_redeem 
+[gw0] [ 60%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_global_commission_persists 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_loyalty_points_persist 
+[gw0] [ 61%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_loyalty_points_persist 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_assigned_sites_persist 
+[gw1] [ 61%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edge_cases.py::test_info_tooltip_visible_for_points_to_redeem 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_updates_name_prices_and_discount 
+[gw1] [ 62%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_updates_name_prices_and_discount 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_values_persist 
+[gw0] [ 63%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_assigned_sites_persist 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_discount_configuration_persists 
+[gw1] [ 63%] XFAIL tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_values_persist 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_wash_extra_name_is_blocked 
+[gw0] [ 64%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_edit_wash_extra_discount_configuration_persists 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_activate_wash_extra 
+[gw1] [ 64%] PASSED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_wash_extra_name_is_blocked 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_whitespace_only_service_name_is_rejected 2026-07-28 04:25:59,460 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_whitespace_only_service_name_is_rejected (url: about:blank)
+
+[gw0] [ 65%] PASSED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_activate_wash_extra 2026-07-28 04:27:05,600 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_extras_test_wash_extras_negative.py_test_whitespace_only_service_name_is_rejected': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x00000001012c9a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001012c1b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000100d6b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000100d55d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000100d55a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000100d53818 chromedriver + 227352
+6   chromedriver                        0x0000000100d5440c chromedriver + 230412
+7   chromedriver                        0x0000000100d787bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x0000000100dfe268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x0000000100df3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000100da9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000101286c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x000000010128a3b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x000000010126d0f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x000000010128ac4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x000000010125e3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x00000001012b01f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x00000001012b0354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x00000001012c17a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 04:27:06,551 ERROR nxtwash: Visible page text at failure:
+
+
+[gw1] [ 66%] FAILED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_whitespace_only_service_name_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_deactivate_wash_extra 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_price_is_rejected 2026-07-28 04:28:53,945 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_deactivate_wash_extra (url: about:blank)
+2026-07-28 04:29:30,167 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_price_is_rejected (url: about:blank)
+2026-07-28 04:29:57,714 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_extras_test_wash_extras_edit.py_test_deactivate_wash_extra': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000104a25a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a1db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x00000001044b1d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x00000001044b1a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x00000001044af818 chromedriver + 227352
+6   chromedriver                        0x00000001044b040c chromedriver + 230412
+7   chromedriver                        0x00000001044d47bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x000000010455a268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x000000010454f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000104505434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x00000001049e2c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001049e63b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x00000001049c90f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x00000001049e6c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x00000001049ba3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000104a0c1f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000104a0c354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000104a1d7a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 04:29:59,237 ERROR nxtwash: Visible page text at failure:
+
+
+[gw0] [ 66%] FAILED tests/admin_portal/wash_extras/test_wash_extras_edit.py::test_deactivate_wash_extra 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_awarded_saves 
+[gw0] [ 67%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_awarded_saves 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_to_redeem_saves 
+[gw0] [ 68%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_valid_points_to_redeem_saves 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_zero_points_awarded_accepted 2026-07-28 04:30:33,502 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_extras_test_wash_extras_negative.py_test_negative_global_price_is_rejected': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x00000001027a5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x000000010279db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001022472a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000102231d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000102231a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x000000010222f818 chromedriver + 227352
+6   chromedriver                        0x000000010223040c chromedriver + 230412
+7   chromedriver                        0x00000001022547bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x00000001022da268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x00000001022cf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000102285434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000102762c40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x00000001027663b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x00000001027490f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000102766c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x000000010273a3b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x000000010278c1f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x000000010278c354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x000000010279d7a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 04:30:39,932 ERROR nxtwash: Visible page text at failure:
+
+
+[gw1] [ 68%] FAILED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_price_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_commission_is_rejected 
+[gw0] [ 69%] PASSED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_zero_points_awarded_accepted 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_negative_loyalty_points_rejected 
+[gw1] [ 70%] PASSED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_negative_global_commission_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_barcode_is_rejected 
+[gw1] [ 70%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_duplicate_barcode_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_wash_extra 2026-07-28 04:33:21,534 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_negative_loyalty_points_rejected (url: about:blank)
+2026-07-28 04:34:26,028 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_wash_extras_test_wash_extras_loyalty.py_test_negative_loyalty_points_rejected': Message: timeout: Timed out receiving message from renderer: 10.000
+  (Session info: chrome=150.0.7871.182)
+Stacktrace:
+0   chromedriver                        0x0000000104d8da84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104d85b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x000000010482f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104819d20 cxxbridge1$string$len + 3628
+4   chromedriver                        0x0000000104819a80 cxxbridge1$string$len + 2956
+5   chromedriver                        0x0000000104817818 chromedriver + 227352
+6   chromedriver                        0x000000010481840c chromedriver + 230412
+7   chromedriver                        0x000000010483c7bc _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 128388
+8   chromedriver                        0x00000001048c2268 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 675888
+9   chromedriver                        0x00000001048b7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x000000010486d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000104d4ac40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x0000000104d4e3b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x0000000104d310f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000104d4ec4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x0000000104d223b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000104d741f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000104d74354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000104d857a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-28 04:34:28,533 ERROR nxtwash: Visible page text at failure:
+
+
+[gw0] [ 71%] FAILED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_negative_loyalty_points_rejected 
+[gw1] [ 71%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_wash_extra 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_save_without_loyalty_points 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_settings_persist 
+[gw0] [ 72%] PASSED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_save_without_loyalty_points 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_awarded 
+[gw0] [ 73%] PASSED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_awarded 
+tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_to_redeem 
+[gw0] [ 73%] PASSED tests/admin_portal/wash_extras/test_wash_extras_loyalty.py::test_info_tooltip_visible_for_points_to_redeem 
+tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_wash_extras_search_payloads_do_not_break_grid 
+[gw1] [ 74%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_settings_persist 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_inactive_wash_extra 
+[gw0] [ 75%] PASSED tests/admin_portal/wash_extras/test_wash_extras_negative.py::test_wash_extras_search_payloads_do_not_break_grid 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_commission_succeeds 
+[gw1] [ 75%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_create_inactive_wash_extra 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_decimal_price_accepted 
+[gw0] [ 76%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_commission_succeeds 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_barcode_succeeds 
+[gw1] [ 77%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_decimal_price_accepted 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_valid_commission_saves 
+[gw1] [ 77%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_valid_commission_saves 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_by_site_narrows_results 
+[gw1] [ 78%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_by_site_narrows_results 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_returns_active_only 
+[gw1] [ 78%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_returns_active_only 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_toggle_off_shows_all 
+[gw1] [ 79%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_active_toggle_off_shows_all 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_site_and_active_combined 
+[gw1] [ 80%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_site_and_active_combined 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_reset_all_restores_list 
+[gw1] [ 80%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_filter_reset_all_restores_list 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_single_site_persists 
+[gw1] [ 81%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_single_site_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_multiple_sites_persists 
+[gw1] [ 82%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_multiple_sites_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_assign_all_sites_via_header_checkbox 2026-07-28 04:48:20,400 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62606): Read timed out. (read timeout=120)")': /session/35f85e1e4c5151d74f4650b8c55071d5/url
+2026-07-28 04:49:02,615 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_barcode_succeeds (url: https://staging.nxtwash.com/services/washExtras)
+2026-07-28 04:49:03,907 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+
+[gw0] [ 82%] FAILED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_barcode_succeeds 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_description_succeeds 2026-07-28 04:49:28,924 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=51726): Read timed out. (read timeout=120)")': /session/173676f260f2353172133961264de296/url
+
+[gw0] [ 83%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_wash_extra_save_without_description_succeeds 
+tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_open_price_toggle_is_off_by_default 
+[gw0] [ 84%] PASSED tests/admin_portal/wash_extras/test_wash_extras_positive.py::test_open_price_toggle_is_off_by_default 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_existing_search 
+[gw0] [ 84%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_existing_search 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_partial_search_returns_matches 
+[gw0] [ 85%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_partial_search_returns_matches 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_missing_search 
+INTERNALERROR> def worker_internal_error(
+INTERNALERROR>         self, node: WorkerController, formatted_error: str
+INTERNALERROR>     ) -> None:
+INTERNALERROR>         """
+INTERNALERROR>         pytest_internalerror() was called on the worker.
+INTERNALERROR>     
+INTERNALERROR>         pytest_internalerror() arguments are an excinfo and an excrepr, which can't
+INTERNALERROR>         be serialized, so we go with a poor man's solution of raising an exception
+INTERNALERROR>         here ourselves using the formatted message.
+INTERNALERROR>         """
+INTERNALERROR>         self._active_nodes.remove(node)
+INTERNALERROR>         try:
+INTERNALERROR> >           assert False, formatted_error
+INTERNALERROR> E           AssertionError: Traceback (most recent call last):
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR> E                 session.exitstatus = doit(config, session) or 0
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR> E                 config.hook.pytest_runtestloop(session=session)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR> E                 return (yield)  # Run all the tests.
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR> E                 result = yield
+INTERNALERROR> E                          ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 206, in pytest_runtestloop
+INTERNALERROR> E                 self.run_one_test()
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 227, in run_one_test
+INTERNALERROR> E                 self.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/warnings.py", line 89, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/assertion/__init__.py", line 192, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/unittest.py", line 591, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/faulthandler.py", line 102, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+INTERNALERROR> E                 runtestprotocol(item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 137, in runtestprotocol
+INTERNALERROR> E                 reports.append(call_and_report(item, "call", log))
+INTERNALERROR> E                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 249, in call_and_report
+INTERNALERROR> E                 report: TestReport = ihook.pytest_runtest_makereport(item=item, call=call)
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_html/plugin.py", line 129, in pytest_runtest_makereport
+INTERNALERROR> E                 report = outcome.get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/tmpdir.py", line 333, in pytest_runtest_makereport
+INTERNALERROR> E                 rep = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/allure_pytest/listener.py", line 198, in pytest_runtest_makereport
+INTERNALERROR> E                 report = (yield).get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 152, in _multicall
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 303, in pytest_runtest_makereport
+INTERNALERROR> E                 _capture_failure(item, driver)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 238, in _capture_failure
+INTERNALERROR> E                 url = driver.current_url
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 602, in current_url
+INTERNALERROR> E                 return self.execute(Command.GET_CURRENT_URL)["value"]
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 465, in execute
+INTERNALERROR> E                 response = cast(RemoteConnection, self.command_executor).execute(driver_command, params)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 407, in execute
+INTERNALERROR> E                 return self._request(command_info[0], url, body=data)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 431, in _request
+INTERNALERROR> E                 response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 135, in request
+INTERNALERROR> E                 return self.request_encode_url(
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 182, in request_encode_url
+INTERNALERROR> E                 return self.urlopen(method, url, **extra_kw)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/poolmanager.py", line 457, in urlopen
+INTERNALERROR> E                 response = conn.urlopen(method, u.request_uri, **kw)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+INTERNALERROR> E                 return self.urlopen(
+INTERNALERROR> E                        ^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+INTERNALERROR> E                 response = self._make_request(
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+INTERNALERROR> E                 response = conn.getresponse()
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connection.py", line 571, in getresponse
+INTERNALERROR> E                 httplib_response = super().getresponse()
+INTERNALERROR> E                                    ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
+INTERNALERROR> E                 response.begin()
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
+INTERNALERROR> E                 version, status, reason = self._read_status()
+INTERNALERROR> E                                           ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 279, in _read_status
+INTERNALERROR> E                 line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 706, in readinto
+INTERNALERROR> E                 return self._sock.recv_into(b)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 317, in handler
+INTERNALERROR> E                 timeout_sigalrm(item, settings)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 502, in timeout_sigalrm
+INTERNALERROR> E                 pytest.fail(PYTEST_FAILURE_MESSAGE % settings.timeout)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/outcomes.py", line 163, in __call__
+INTERNALERROR> E                 raise Failed(msg=reason, pytrace=pytrace)
+INTERNALERROR> E             Failed: Timeout (>420.0s) from pytest-timeout.
+INTERNALERROR> E           assert False
+INTERNALERROR> 
+INTERNALERROR> venv/lib/python3.11/site-packages/xdist/dsession.py:232: AssertionError
+[gw0] [ 85%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_missing_search 
+tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_clear_search_restores_list 
+[gw0] [ 86%] PASSED tests/admin_portal/wash_extras/test_wash_extras_search_filter.py::test_wash_extras_clear_search_restores_list 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_global_price_reflected_at_site_level 
+[gw0] [ 87%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_global_price_reflected_at_site_level 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_price_override_persists 
+[gw0] [ 87%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_price_override_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_price_is_rejected 
+[gw0] [ 88%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_price_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_enable_tax_exemption_for_site_persists 
+[gw0] [ 89%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_enable_tax_exemption_for_site_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_disable_tax_exemption_for_site_persists 
+[gw0] [ 89%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_disable_tax_exemption_for_site_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_state_city_tax_fields_are_read_only 
+[gw0] [ 90%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_state_city_tax_fields_are_read_only 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_commission_override_persists 
+[gw0] [ 91%] SKIPPED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_location_commission_override_persists 
+tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_commission_is_rejected 2026-07-28 04:55:31,171 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=51726): Read timed out. (read timeout=120)")': /session/173676f260f2353172133961264de296
+
+[gw0] [ 91%] PASSED tests/admin_portal/wash_extras/test_wash_extras_site_assignment.py::test_negative_location_commission_is_rejected 
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_page_loads_with_primary_controls 
+[gw0] [ 92%] PASSED tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_page_loads_with_primary_controls 
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_grid_columns_are_visible 
+[gw0] [ 92%] PASSED tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_grid_columns_are_visible 
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_filter_panel_shows_controls 
+[gw0] [ 93%] PASSED tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_filter_panel_shows_controls 
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_add_wash_extra_form_loads 
+[gw0] [ 94%] PASSED tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_add_wash_extra_form_loads 
+tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_export_file_validation 
+[gw0] [ 94%] XFAIL tests/admin_portal/wash_extras/test_wash_extras_ui.py::test_wash_extras_export_file_validation 
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_required_service_name_validation 
+[gw0] [ 95%] PASSED tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_required_service_name_validation 
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_blank_global_price_is_blocked 
+[gw0] [ 96%] PASSED tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_blank_global_price_is_blocked 
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_zero_price_boundary_behaviour 
+[gw0] [ 96%] PASSED tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_zero_price_boundary_behaviour 
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_max_length_name_handled 2026-07-28 04:57:31,474 WARNING urllib3.connectionpool: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=51726): Read timed out. (read timeout=120)")': /session/173676f260f2353172133961264de296
+
+[gw0] [ 97%] PASSED tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_max_length_name_handled 
+tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_invalid_numeric_values_do_not_break_form 
+[gw0] [ 98%] PASSED tests/admin_portal/wash_extras/test_wash_extras_validation.py::test_wash_extra_invalid_numeric_values_do_not_break_form /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>                          ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR>     config.hook.pytest_runtestloop(session=session)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR>     raise exception
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR>     return (yield)  # Run all the tests.
+INTERNALERROR>             ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR>     result = yield
+INTERNALERROR>              ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 138, in pytest_runtestloop
+INTERNALERROR>     self.loop_once()
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 152, in loop_once
+INTERNALERROR>     raise RuntimeError("Unexpectedly no active workers available")
+INTERNALERROR> RuntimeError: Unexpectedly no active workers available
+
+= 23 failed, 73 passed, 21 skipped, 17 xfailed, 3 warnings, 20 errors in 9051.36s (2:30:51) =
+EXIT:0

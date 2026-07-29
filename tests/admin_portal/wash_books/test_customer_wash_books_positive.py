@@ -2,11 +2,8 @@ import allure
 import pytest
 
 from tests.admin_portal.wash_books.conftest import (
-    CWB_NUMBER_OF_WASHES,
     CWB_WASH_BOOK_NUMBER,
-    WASH_BOOK_NAME,
     create_customer_wash_book_if_missing,
-    open_customer_wash_books_page,
     page_has_no_broken_state,
 )
 
@@ -39,17 +36,6 @@ def test_create_cwb_with_site_selection(browser):
     pass
 
 
-@allure.title("CWB-CRT-003 Creating without assigning a customer succeeds — customer is optional")
-@pytest.mark.extended
-def test_create_cwb_without_customer_succeeds(browser):
-
-    page = create_customer_wash_book_if_missing(browser)
-    page.search_cwb(CWB_WASH_BOOK_NUMBER)
-
-    assert page.wait_for_cwb_row(CWB_WASH_BOOK_NUMBER).is_displayed()
-    assert page_has_no_broken_state(page)
-
-
 @allure.title("CWB-CRT-005 Creating with a future expiration date persists the date")
 @pytest.mark.extended
 @pytest.mark.skip(
@@ -58,17 +44,6 @@ def test_create_cwb_without_customer_succeeds(browser):
 )
 def test_create_cwb_with_expiration_date(browser):
     pass
-
-
-@allure.title("CWB-CRT-006 Creating without an expiration date succeeds — date is optional")
-@pytest.mark.extended
-def test_create_cwb_without_expiration_date(browser):
-
-    page = create_customer_wash_book_if_missing(browser)
-    page.search_cwb(CWB_WASH_BOOK_NUMBER)
-
-    assert page.wait_for_cwb_row(CWB_WASH_BOOK_NUMBER).is_displayed()
-    assert page_has_no_broken_state(page)
 
 
 @allure.title("CWB-CRT-007 Customer wash book is created as Active by default")

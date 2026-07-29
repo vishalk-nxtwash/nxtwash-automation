@@ -1,0 +1,2049 @@
+2026-07-29 10:43:51,090 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 290 items
+
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists ERROR [  0%]
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour XFAILe (product defect).) [  0%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_list_shell_controls_and_grid 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:23 Verifying Wash Packages list shell and primary controls
+PASSED                                                                   [  1%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear SKIPPEDage_if_missing on
+staging.)                                                                [  1%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_filter_panel_site_option_and_reset 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:80 Verifying Wash Packages filter panel controls and reset
+PASSED                                                                   [  1%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_add_wash_package_form_service_discount_save_cancel_controls 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:96 Verifying Add Wash Package form controls
+PASSED                                                                   [  2%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_package_global_price_is_required 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:119 Verifying global price mandatory validation
+PASSED                                                                   [  2%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_download_file_validation_blocker XFAILiguration
+and CSV/XLS parser utilities.)                                           [  2%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_permission_matrix_blocker XFAIL [  3%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_advanced_edge_case_harness_blocker XFAIL multi-session,
+network interception, audit API, and environment restart harnesses.)     [  3%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_wash_package_available_for_membership_redemption SKIPPED) [  3%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivate_wash_package_mapped_to_membership SKIPPED) [  4%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_rename_wash_package_mapped_to_membership SKIPPED) [  4%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivated_discount_removed_from_wash_package SKIPPED [  4%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_site_unassignment_does_not_affect_other_redemption_sites SKIPPED [  5%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_long_name_does_not_break_form PASSED [  5%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_whitespace_name_is_rejected PASSED [  5%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable 2026-07-29 10:51:28,604 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable (url: https://staging.nxtwash.com/services/washPackages)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-29 10:51:29,268 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+FAILED                                                                   [  6%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists ERROR [  6%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists ERROR [  6%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists ERROR [  7%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist ERROR [  7%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites ERROR [  7%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package ERROR [  8%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_deactivate_wash_package XFAILproduces locally. Pending individual fix
+— see docs/admin_test_burndown.md)                                       [  8%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists ERROR [  8%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_multiple_discounts_persist ERROR [  9%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_remove_applicable_discount_persists XFAILproduces locally. Pending
+individual fix — see docs/admin_test_burndown.md)                        [  9%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_service_description_persists XFAIL verification against the actual form DOM.) [ 10%]
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_button_clickable PASSED [ 10%]
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_after_filter XFAILproduces locally. Pending
+individual fix — see docs/admin_test_burndown.md)                        [ 10%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_awarded_persists ERROR [ 11%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_redeemed_persists ERROR [ 11%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_awarded_info_tooltip_is_visible PASSED [ 11%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_redeemed_info_tooltip_is_visible PASSED [ 12%]
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_provided_at_baseline ERROR [ 12%]
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_mutation_is_reset_on_teardown ERROR [ 12%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_name_validation PASSED [ 13%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked XFAILe name; same product defect
+as duplicate barcode.)                                                   [ 13%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_price_validation PASSED [ 13%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_price_is_rejected XFAILs pass checkValidity(). Product
+should enforce min=0. Remove xfail once fixed.)                          [ 14%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_commission_is_rejected XFAILvalues pass checkValidity().
+Product should enforce min=0. Remove xfail once fixed.)                  [ 14%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_packages_special_character_search_stays_usable PASSED [ 14%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package 2026-07-29 11:30:51,647 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:30:52,548 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 15%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package 2026-07-29 11:32:27,799 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:32:28,692 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 15%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode 2026-07-29 11:33:51,691 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:33:52,425 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 15%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points 2026-07-29 11:35:37,681 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:35:38,501 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 16%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount 2026-07-29 11:37:15,268 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:37:16,274 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 16%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist 2026-07-29 11:39:05,318 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:39:06,175 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 16%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search 2026-07-29 11:40:59,454 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:41:00,313 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 17%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_partial_search XFAILproduces locally. Pending
+individual fix — see docs/admin_test_burndown.md)                        [ 17%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_missing_search PASSED [ 17%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list 2026-07-29 11:43:27,595 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:43:28,403 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 18%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_search_payloads_do_not_break_grid PASSED [ 18%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_search_inactive_wash_package_returns_it XFAILrender race). Verify
+inactive-package search behaviour manually.)                             [ 18%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results 2026-07-29 11:47:49,406 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 11:47:50,200 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 19%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_active_shows_active_packages XFAILeproduces
+locally. Pending individual fix — see docs/admin_test_burndown.md)       [ 19%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_site_and_active_combined XFAILproduces locally. Pending
+individual fix — see docs/admin_test_burndown.md)                        [ 20%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_reset_filters_restores_grid XFAILproduces locally. Pending
+individual fix — see docs/admin_test_burndown.md)                        [ 20%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_assign_multiple_sites_persists ERROR [ 20%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_select_all_sites_via_header_checkbox ERROR [ 21%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_save_wash_package_without_site_selection PASSED [ 21%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_global_price_reflected_at_site ERROR [ 21%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_persists XFAILeproduces
+locally. Pending individual fix — see docs/admin_test_burndown.md)       [ 22%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_higher_than_global_persists ERROR [ 22%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_lower_than_global_persists ERROR [ 22%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_override_persists ERROR [ 23%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_higher_than_global_persists ERROR [ 23%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_page_loads_with_primary_controls PASSED [ 23%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_grid_columns_are_visible PASSED [ 24%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_pagination_controls_are_visible PASSED [ 24%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_add_wash_package_form_loads PASSED [ 24%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads 2026-07-29 12:11:04,617 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads (url: https://staging.nxtwash.com/services/washPackages)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-29 12:11:05,248 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+FAILED                                                                   [ 25%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_filter_panel_shows_controls PASSED [ 25%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_blank_required_form_stays_on_form PASSED [ 25%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_price_is_accepted PASSED [ 26%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_commission_is_accepted PASSED [ 26%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_invalid_numeric_values_do_not_break_form PASSED [ 26%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-32/test_download_memberships_star0
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [ 27%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_file_format 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [ 27%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_filtered_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:91 Verifying filtered membership export downloads a file
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [ 27%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent 2026-07-29 12:20:12,121 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 12:20:12,783 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 28%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned 2026-07-29 12:24:40,376 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 12:24:41,028 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 28%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form 2026-07-29 12:29:09,222 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 12:29:10,118 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 28%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA5
+2026-07-29 12:33:41,037 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 12:33:41,714 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 29%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA5 and restoring it
+2026-07-29 12:38:05,106 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 12:38:05,855 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 29%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type ERROR [ 30%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission PASSED [ 30%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists PASSED [ 30%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_off PASSED [ 31%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_on PASSED [ 31%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations 2026-07-29 13:04:25,121 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_assigns_multiple_locations (url: https://staging.nxtwash.com/services/memberships/edit/30362)
+2026-07-29 13:04:26,180 ERROR nxtwash: Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Membership duration months
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Membership duration months
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+FAILED                                                                   [ 31%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_applicable_discount_persists 

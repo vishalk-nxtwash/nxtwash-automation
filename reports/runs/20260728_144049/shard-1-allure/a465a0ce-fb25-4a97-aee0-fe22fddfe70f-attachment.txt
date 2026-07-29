@@ -1,0 +1,56 @@
+Transaction details
+90288
+Refund invoice
+Send receipt to the customer
+Get receipt
+Transaction details
+Invoice number
+10276
+Status
+Paid
+Transaction total ($)
+$0.00
+Tax
+$0.00
+Payment type
+CreditCard **** null
+Payment UID
+None
+Wash date | time
+07/09/2026 | 7:10AM
+Location
+DO NOT TOUCH
+Lane
+Kiosk Lane1
+Transaction source
+Pos
+Employee
+Vishal Kumar
+Gate number
+No information
+Car details
+License plate
+MANIE124
+RFID
+None
+Car year
+2024
+Car make
+Audi
+Car model
+None
+Car color
+white
+Customer
+Name
+Test Customer 01
+Email
+testcustomer01@yopmail.com
+Phone number
+1234567890
+Service used
+Transaction type
+Service amount ($)
+Service balance
+Loyalty points / code / number
+No items

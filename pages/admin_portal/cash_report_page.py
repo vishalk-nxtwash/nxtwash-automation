@@ -1,6 +1,6 @@
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -23,39 +23,40 @@ class CashReportPage(BasePage):
         "//button[normalize-space()='Apply filters'] | "
         "//button[contains(normalize-space(),'Apply filters')]")
 
-    # nxt-multi-select prefix confirmed on GSR / PFM (July 2026)
+    # Confirmed from DevTools (Jul 2026): Cash Report site picker uses
+    # overview__site-select__ prefix (NOT nxt-multi-select__).
     SITE_MULTISELECT = (By.XPATH,
-        "//div[contains(@class,'nxt-multi-select__control')]")
+        "//div[contains(@class,'overview__site-select__control')]")
 
+    # Date preset: find the NEAREST ancestor div of the readonly combobox input
+    # that has "-control" in its class (the React Select control div).
+    # Using ancestor::[1] prevents accidentally matching a broad wrapper div.
     DATE_PRESET_COMBOBOX = (By.XPATH,
-        "//div[contains(@class,'nxt-select__control')]"
-        "[not(contains(@class,'nxt-multi-select__control'))]")
+        "//input[@role='combobox' and @aria-readonly='true']"
+        "/ancestor::div[contains(@class,'-control')][1]")
 
-    DATE_RANGE_INPUT = (By.XPATH, "//input[@placeholder='Select date range']")
+    # Confirmed from DevTools: placeholder is 'Select range of dates'.
+    DATE_RANGE_INPUT = (By.XPATH,
+        "//input[@placeholder='Select range of dates']")
 
-    # Single day checkbox inside the filter modal (modal dialog scope).
-    # TODO: Tighten ancestor selector to modal after DevTools inspection.
+    # Confirmed from DevTools: class header-widget__title__descr_checkbox.
     MODAL_SINGLE_DAY_CHECKBOX = (By.XPATH,
-        "//input[@type='checkbox']"
-        "[ancestor::*[contains(normalize-space(),'Single') or "
-        "contains(normalize-space(),'single')]]")
+        "//input[contains(@class,'header-widget__title__descr_checkbox')]")
 
-    # ── Site chips (compact filter bar, shown after apply) ────────────────────
+    # ── Site chips (shown in modal and page bar after selection) ──────────────
 
+    # Confirmed from DevTools: overview__site-select__multi-value__label
     SITE_CHIPS = (By.XPATH,
-        "//div[contains(@class,'nxt-multi-select__multi-value__label')]")
+        "//div[contains(@class,'overview__site-select__multi-value__label')]")
 
     SITE_CLEAR_BTN = (By.XPATH,
-        "//div[contains(@class,'nxt-multi-select__clear-indicator')]")
+        "//div[contains(@class,'overview__site-select__clear-indicator')] | "
+        "//div[contains(@class,'overview__site-select__multi-value__remove')]")
 
     # ── Page-bar single day checkbox (persistent filter bar, outside modal) ───
-    # TODO: Confirm exact locator via DevTools — the page bar checkbox is
-    # a separate DOM element from the modal checkbox.  Currently disambiguated
-    # by excluding @role='dialog' ancestors; verify after first live run.
+    # Same class as modal checkbox; distinguised by not being inside a dialog.
     PAGE_BAR_SINGLE_DAY_CHECKBOX = (By.XPATH,
-        "//input[@type='checkbox']"
-        "[ancestor::*[contains(normalize-space(),'Single') or "
-        "contains(normalize-space(),'single')]]"
+        "//input[contains(@class,'header-widget__title__descr_checkbox')]"
         "[not(ancestor::*[@role='dialog'])]")
 
     # ── Export ────────────────────────────────────────────────────────────────
@@ -65,11 +66,11 @@ class CashReportPage(BasePage):
         "//button[normalize-space()='Export XLSX']")
 
     # ── Tabs ──────────────────────────────────────────────────────────────────
-    # TODO: Confirm element type (button / a / div) via DevTools
+    # Confirmed DevTools (Jul 2026): Radix UI tabs with role="tab".
+    # Exclude tabs nested inside role="tabpanel" to avoid matching sub-tabs
+    # (e.g. "Cash Box" inside the Kiosk panel content area).
     TABS = (By.XPATH,
-        "//*[@role='tab'] | "
-        "//button[contains(@class,'tab')] | "
-        "//a[contains(@class,'tab')]")
+        "//*[@role='tab' and not(ancestor::*[@role='tabpanel'])]")
 
     # ── Load mask ─────────────────────────────────────────────────────────────
     LOAD_MASK = (By.XPATH,
@@ -133,7 +134,14 @@ class CashReportPage(BasePage):
 
     def get_body_text(self):
         try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            # Include the browser tab title so page-title assertions can match
+            # "Cash Report" even if it only appears in the outer page shell.
+            try:
+                title = self.driver.title
+                return ("%s\n%s" % (title, body)) if title else body
+            except Exception:
+                return body
         except Exception:
             self.driver.switch_to.default_content()
             return self.driver.find_element(By.TAG_NAME, "body").text
@@ -144,30 +152,46 @@ class CashReportPage(BasePage):
     # ── Site filter ───────────────────────────────────────────────────────────
 
     def get_site_options(self):
-        """Open the site dropdown and return visible option texts."""
+        """Open the site dropdown and return visible option texts.
+
+        The site select is an async React Select — options only appear after
+        typing a search term (placeholder: 'Select site to filter…').  We type
+        a single space to trigger an initial load; most backends return all or
+        most sites for a whitespace query.
+        """
         combo = self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+        self.driver.execute_script("arguments[0].click();", combo)
         try:
-            inner = combo.find_element(By.XPATH, ".//input")
-            self.driver.execute_script("arguments[0].click();", inner)
-            inner.send_keys(" ")
-            inner.send_keys(Keys.BACKSPACE)
+            # The searchable input has role=combobox and aria-readonly=None
+            inputs = combo.find_elements(By.XPATH, ".//input[@role='combobox']")
+            if not inputs:
+                inputs = combo.find_elements(By.XPATH, ".//input")
+            if inputs:
+                inner = inputs[0]
+                inner.send_keys(Keys.CONTROL, "a")
+                inner.send_keys(Keys.BACKSPACE)
+                inner.send_keys("VK")  # trigger async option load; all sites in this env start with VK
+                time.sleep(1.5)
         except Exception:
-            self.driver.execute_script("arguments[0].click();", combo)
+            pass
         try:
             WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//*[contains(@class,'nxt-multi-select__menu')]")
-                )
+                EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
             )
         except TimeoutException:
             pass
         option_els = self.driver.find_elements(
-            By.XPATH, "//*[contains(@class,'nxt-multi-select__option')]"
+            By.XPATH,
+            "//*[contains(@class,'overview__site-select__option')] | "
+            "//*[@role='option']"
         )
-        options = [
-            el.text.strip() for el in option_els
-            if el.is_displayed() and el.text.strip()
-        ]
+        options = []
+        for el in option_els:
+            try:
+                if el.is_displayed() and el.text.strip():
+                    options.append(el.text.strip())
+            except StaleElementReferenceException:
+                pass
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
         except Exception:
@@ -179,6 +203,16 @@ class CashReportPage(BasePage):
             self.SITE_MULTISELECT, site_name, clear_first=clear_first
         )
         time.sleep(0.3)
+        # React multi-select keeps the menu open after selection; blur the inner
+        # input to trigger React Select's onBlur handler and close the menu.
+        try:
+            combo = self.driver.find_element(*self.SITE_MULTISELECT)
+            inner = combo.find_elements(By.XPATH, ".//input[@role='combobox']")
+            target = inner[0] if inner else combo
+            self.driver.execute_script("arguments[0].blur();", target)
+            time.sleep(0.2)
+        except Exception:
+            pass
 
     def get_site_chips(self):
         chips = self.driver.find_elements(*self.SITE_CHIPS)
@@ -186,6 +220,17 @@ class CashReportPage(BasePage):
 
     def clear_sites(self):
         try:
+            # Multi-value remove button is always visible per chip — try JS click first
+            # (CSS hover required for the clear-indicator, but not the per-chip remove)
+            remove_btns = self.driver.find_elements(
+                By.XPATH,
+                "//div[contains(@class,'overview__site-select__multi-value__remove')]"
+            )
+            if remove_btns:
+                self.driver.execute_script("arguments[0].click();", remove_btns[0])
+                time.sleep(0.5)
+                return
+            # Fallback: hover to reveal the clear-indicator then click it
             controls = self.driver.find_elements(*self.SITE_MULTISELECT)
             if controls:
                 ActionChains(self.driver).move_to_element(controls[0]).perform()
@@ -198,34 +243,48 @@ class CashReportPage(BasePage):
 
     # ── Date filter ───────────────────────────────────────────────────────────
 
+    def _open_date_preset_menu(self):
+        """Open the date preset dropdown menu.
+
+        The date preset input has aria-readonly=true and raises
+        ElementNotInteractableException on send_keys.  We dispatch a native
+        'mousedown' event on the control div — React Select opens its menu on
+        onMouseDown, not onClick.  Falls back to ActionChains.click().
+        """
+        combo = self.wait.until(EC.element_to_be_clickable(self.DATE_PRESET_COMBOBOX))
+        # Dispatch mousedown — this is what React Select listens for to open
+        self.driver.execute_script("""
+            arguments[0].dispatchEvent(
+                new MouseEvent('mousedown', {bubbles: true, cancelable: true})
+            );
+        """, combo)
+        time.sleep(0.3)
+
     def select_date_preset(self, preset):
-        self.select_react_dropdown_option(self.DATE_PRESET_COMBOBOX, preset)
+        """Select a date preset from the dropdown.
+
+        The inner input has aria-readonly=true and is not interactable for
+        send_keys.  We open the menu by dispatching mousedown on the control
+        div (what React Select uses to toggle the menu), then click the option.
+        """
+        self._open_date_preset_menu()
+        option = WebDriverWait(self.driver, 10).until(
+            lambda d: self._find_react_option(preset)
+        )
+        self.driver.execute_script("arguments[0].click();", option)
+        time.sleep(0.3)
 
     def get_date_preset_options(self):
         """Open the date preset dropdown and return visible option texts."""
-        combo = self.wait.until(EC.element_to_be_clickable(self.DATE_PRESET_COMBOBOX))
+        self._open_date_preset_menu()
         try:
-            inner = combo.find_element(By.XPATH, ".//input")
-            self.driver.execute_script("arguments[0].click();", inner)
-            inner.send_keys(" ")
-            inner.send_keys(Keys.BACKSPACE)
-        except Exception:
-            self.driver.execute_script("arguments[0].click();", combo)
-        try:
-            WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(
-                    (By.XPATH,
-                     "//*[contains(@class,'nxt-select__menu') and "
-                     "not(contains(@class,'nxt-multi-select__menu'))]")
-                )
+            WebDriverWait(self.driver, 8).until(
+                EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
             )
+            time.sleep(0.3)
         except TimeoutException:
             pass
-        option_els = self.driver.find_elements(
-            By.XPATH,
-            "//*[contains(@class,'nxt-select__option') and "
-            "not(contains(@class,'nxt-multi-select__option'))]"
-        )
+        option_els = self.driver.find_elements(By.XPATH, "//*[@role='option']")
         options = [
             el.text.strip() for el in option_els
             if el.is_displayed() and el.text.strip()
@@ -251,12 +310,23 @@ class CashReportPage(BasePage):
             return ""
 
     def enter_date_range(self, start, end):
+        """Set the date range input.
+
+        The field is readonly — React controls the value.  We fire a native
+        input event via the nativeInputValueSetter trick so React picks up the
+        change.  Tested format: 'MM/DD/YYYY - MM/DD/YYYY'.
+        """
         combined = "%s - %s" % (start, end)
         el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-        el.send_keys(Keys.COMMAND + "a")
-        el.send_keys(Keys.BACKSPACE)
-        el.send_keys(combined)
-        el.send_keys(Keys.TAB)
+        self.driver.execute_script("""
+            var nativeInputValueSetter =
+                Object.getOwnPropertyDescriptor(
+                    window.HTMLInputElement.prototype, 'value').set;
+            nativeInputValueSetter.call(arguments[0], arguments[1]);
+            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """, el, combined)
+        time.sleep(0.3)
 
     # ── Single day mode ───────────────────────────────────────────────────────
 
@@ -316,7 +386,9 @@ class CashReportPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         time.sleep(1.5)
         try:
-            self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+            WebDriverWait(self.driver, 60).until(
+                EC.invisibility_of_element_located(self.LOAD_MASK)
+            )
         except TimeoutException:
             pass
 
@@ -338,7 +410,7 @@ class CashReportPage(BasePage):
         )
         if tab_el:
             self.driver.execute_script("arguments[0].click();", tab_el)
-            time.sleep(0.6)
+            time.sleep(1.5)
 
     def get_active_tab(self):
         """Return the name of the currently active tab, or empty string."""
@@ -445,43 +517,23 @@ class CashReportPage(BasePage):
     # ── Sidebar active state ──────────────────────────────────────────────────
 
     def sidebar_cash_report_active(self):
-        """Return True if the FINANCIAL / Cash Report sidebar link appears active.
+        """Return True if the Cash Report sidebar link is active.
 
-        Uses the same JS DOM-walk fallback pattern as PFM.  Known limitation:
-        the sidebar uses Tailwind visual styling with no detectable aria-current
-        or active-class attribute (see PFM-NAV-007 for precedent).
+        Confirmed DevTools (Jul 2026): active link gets Tailwind class bg-blue-500
+        (with ! modifier).  No aria-current or semantic attribute is set.
+        Sidebar lives in the outer shell — switch out of iframe before searching.
+        Uses JS querySelector to avoid is_displayed() returning False in headless
+        for off-screen sidebar elements.
         """
-        els = self.driver.find_elements(By.XPATH,
-            "//*[contains(@class,'active') or @aria-current='page' or "
-            "@aria-current='true' or @aria-selected='true']"
-            "[contains(normalize-space(),'Cash') or "
-            "contains(normalize-space(),'cash') or "
-            "contains(normalize-space(),'Financial')]"
-        )
-        if any(el.is_displayed() for el in els):
-            return True
+        self.driver.switch_to.default_content()
         try:
             return bool(self.driver.execute_script("""
-                function isActive(el, depth) {
-                    if (!el || depth > 6) return false;
-                    var cls = (el.className || '').toString().toLowerCase();
-                    var attrs = [].slice.call(el.attributes || [])
-                        .map(function(a) { return a.name + '=' + a.value; })
-                        .join(' ').toLowerCase();
-                    if (cls.match(/activ|select|current/) ||
-                        attrs.match(/aria-current|aria-selected|data-active/)) {
-                        return true;
-                    }
-                    return isActive(el.parentElement, depth + 1);
-                }
-                var links = document.querySelectorAll('a, [role="link"], [role="menuitem"]');
-                for (var i = 0; i < links.length; i++) {
-                    var t = links[i].textContent.trim().toLowerCase();
-                    if (t.includes('cash') || t.includes('financial')) {
-                        if (isActive(links[i], 0)) return true;
-                    }
-                }
-                return false;
+                var el = document.querySelector('a[href*="cash_report"]');
+                if (!el) return false;
+                var cls = el.className || '';
+                return cls.includes('bg-blue-500');
             """))
         except Exception:
             return False
+        finally:
+            self._switch_to_frame()

@@ -9,10 +9,10 @@ from tests.admin_portal.admin_session import open_admin_path
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
-CDL_SITE = "VK Test carwash 2"
+CDL_SITE = "VK Test Wash 01"
 
 # Multi-site pair used in CDL-SIT-004.
-CDL_MULTI_SITES = ["VK Test Wash 01", "VK Test carwash 2"]
+CDL_MULTI_SITES = ["VK Test Wash 01", "VK AL02"]
 
 # Known defect site — appears in Best & Worst Sites outside any active site
 # filter (see CDL-BWS-004 xfail).

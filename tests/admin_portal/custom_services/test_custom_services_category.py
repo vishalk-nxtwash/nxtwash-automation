@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 from tests.admin_portal.custom_services.conftest import (
+    ASSIGNMENT_SITE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     INACTIVE_CATEGORY,
@@ -60,7 +61,7 @@ def test_service_category_can_be_changed(browser):
 
     name = "VK cat-%s" % uuid.uuid4().hex[:6]
     page = open_custom_services_page(browser)
-    page.create_service(name, SERVICE_CATEGORY, GLOBAL_PRICE, GLOBAL_COMMISSION, "VK AL11")
+    page.create_service(name, SERVICE_CATEGORY, GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE)
 
     page.open_edit_service(name)
     page.select_service_category(SERVICE_CATEGORY)

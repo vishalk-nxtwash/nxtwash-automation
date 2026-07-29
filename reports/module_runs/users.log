@@ -1,0 +1,651 @@
+2026-07-23 23:08:10,731 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 66 items
+
+tests/admin_portal/users/test_users_create.py::test_users_add_form_opens PASSED [  1%]
+tests/admin_portal/users/test_users_create.py::test_create_active_user SKIPPED [  3%]
+tests/admin_portal/users/test_users_create.py::test_create_inactive_user PASSED [  4%]
+tests/admin_portal/users/test_users_create.py::test_create_user_employee_required PASSED [  6%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_required PASSED [  7%]
+tests/admin_portal/users/test_users_create.py::test_create_user_confirm_password_required PASSED [  9%]
+tests/admin_portal/users/test_users_create.py::test_create_user_email_required PASSED [ 10%]
+tests/admin_portal/users/test_users_create.py::test_create_user_phone_required PASSED [ 12%]
+tests/admin_portal/users/test_users_create.py::test_create_user_role_required PASSED [ 13%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_mismatch PASSED [ 15%]
+tests/admin_portal/users/test_users_create.py::test_create_user_password_visibility_toggle XFAIL [ 16%]
+tests/admin_portal/users/test_users_create.py::test_create_user_confirm_password_visibility_toggle XFAIL [ 18%]
+tests/admin_portal/users/test_users_create.py::test_create_user_employee_dropdown_lists_employees XFAIL [ 19%]
+tests/admin_portal/users/test_users_create.py::test_create_user_role_dropdown_lists_roles XFAIL [ 21%]
+tests/admin_portal/users/test_users_create.py::test_create_user_invalid_email_rejected PASSED [ 22%]
+tests/admin_portal/users/test_users_create.py::test_create_user_duplicate_email_rejected 2026-07-23 23:13:34,807 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_create.py::test_create_user_duplicate_email_rejected (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_create.py::test_create_user_duplicate_email_rejected (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:13:35,467 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 24%]
+tests/admin_portal/users/test_users_create.py::test_create_user_cancel_discards_form PASSED [ 25%]
+tests/admin_portal/users/test_users_create.py::test_new_user_appears_immediately SKIPPED [ 27%]
+tests/admin_portal/users/test_users_dependency.py::test_new_role_appears_in_users_dropdown XFAIL [ 28%]
+tests/admin_portal/users/test_users_dependency.py::test_employee_dropdown_reflects_employees_module XFAIL [ 30%]
+tests/admin_portal/users/test_users_dependency.py::test_filter_sites_match_sites_and_locations_module XFAIL [ 31%]
+tests/admin_portal/users/test_users_edge_cases.py::test_only_active_roles_in_dropdown XFAIL [ 33%]
+tests/admin_portal/users/test_users_edge_cases.py::test_only_active_employees_in_dropdown XFAIL [ 34%]
+tests/admin_portal/users/test_users_edge_cases.py::test_email_whitespace_trimmed_or_rejected PASSED [ 36%]
+tests/admin_portal/users/test_users_edge_cases.py::test_long_email_at_boundary PASSED [ 37%]
+tests/admin_portal/users/test_users_edge_cases.py::test_user_data_persists_after_relogin XFAIL [ 39%]
+tests/admin_portal/users/test_users_edge_cases.py::test_filter_panel_accessible_for_name_email_lookup PASSED [ 40%]
+tests/admin_portal/users/test_users_edit.py::test_users_edit_form_opens ERROR [ 42%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_email_persists ERROR [ 43%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_persists ERROR [ 45%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_role_persists XFAIL [ 46%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_employee_persists XFAIL [ 48%]
+tests/admin_portal/users/test_users_edit.py::test_activate_inactive_user SKIPPED [ 50%]
+tests/admin_portal/users/test_users_edit.py::test_deactivate_active_user ERROR [ 51%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_email_required ERROR [ 53%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_required ERROR [ 54%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_invalid_email_blocked ERROR [ 56%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_cancel_discards_changes ERROR [ 57%]
+tests/admin_portal/users/test_users_edit.py::test_edit_user_no_password_fields XFAIL [ 59%]
+tests/admin_portal/users/test_users_export.py::test_users_export_button_clickable XPASS [ 60%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_panel_opens PASSED [ 62%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_first_name XFAIL [ 63%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_last_name XFAIL [ 65%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_email XFAIL [ 66%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_employee_code XFAIL [ 68%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_by_site XFAIL [ 69%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_active_only 2026-07-23 23:28:16,977 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_active_only (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_active_only (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:28:17,628 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 71%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_active_off_shows_all 2026-07-23 23:28:52,374 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_active_off_shows_all (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_active_off_shows_all (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:28:53,048 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 72%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_combined_name_and_site XFAIL [ 74%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_result_count_matches_rows XFAIL [ 75%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_reset_all 2026-07-23 23:30:43,454 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_reset_all (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_filter.py::test_users_filter_reset_all (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:30:44,083 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 77%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_site_dropdown_lists_sites XFAIL [ 78%]
+tests/admin_portal/users/test_users_filter.py::test_users_filter_partial_name_matches XFAIL [ 80%]
+tests/admin_portal/users/test_users_list.py::test_users_list_page_loads PASSED [ 81%]
+tests/admin_portal/users/test_users_list.py::test_users_list_required_columns PASSED [ 83%]
+tests/admin_portal/users/test_users_list.py::test_users_list_pagination_count 2026-07-23 23:32:45,675 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_list.py::test_users_list_pagination_count (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_list.py::test_users_list_pagination_count (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:32:46,297 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 84%]
+tests/admin_portal/users/test_users_list.py::test_users_list_rows_per_page XFAIL [ 86%]
+tests/admin_portal/users/test_users_password.py::test_change_password_button_opens_flow XFAIL [ 87%]
+tests/admin_portal/users/test_users_password.py::test_change_password_matching_passwords_save XFAIL [ 89%]
+tests/admin_portal/users/test_users_password.py::test_change_password_mismatch_rejected XFAIL [ 90%]
+tests/admin_portal/users/test_users_password.py::test_change_password_blank_blocked XFAIL [ 92%]
+tests/admin_portal/users/test_users_password.py::test_change_password_visibility_toggles XFAIL [ 93%]
+tests/admin_portal/users/test_users_search.py::test_users_search_exact_phone 2026-07-23 23:36:51,580 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_exact_phone (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_exact_phone (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:36:52,210 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 95%]
+tests/admin_portal/users/test_users_search.py::test_users_search_partial_phone 2026-07-23 23:37:27,910 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_partial_phone (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_partial_phone (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:37:28,571 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [ 96%]
+tests/admin_portal/users/test_users_search.py::test_users_search_nonexistent_phone_shows_empty PASSED [ 98%]
+tests/admin_portal/users/test_users_search.py::test_users_search_clear_restores_list 2026-07-23 23:38:13,365 ERROR nxtwash: Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_clear_restores_list (url: https://staging.nxtwash.com/users/users/edit/60188)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/users/test_users_search.py::test_users_search_clear_restores_list (url: https://staging.nxtwash.com/users/users/edit/60188)
+2026-07-23 23:38:14,004 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [100%]
+
+==================================== ERRORS ====================================
+_________________ ERROR at setup of test_users_edit_form_opens _________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000101039a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101031b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100adb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100b23a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100b63030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100b19434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100ff6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100ffa3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100fdd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100ffac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100fce3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001010201f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000101020354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001010317a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_______________ ERROR at setup of test_edit_user_email_persists ________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102c3da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102c35b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001026df2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102727a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102767030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010271d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102bfac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102bfe3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102be10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102bfec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102bd23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102c241f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102c24354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102c357a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_______________ ERROR at setup of test_edit_user_phone_persists ________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104d95a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104d8db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048372a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010487fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001048bf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104875434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104d52c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104d563b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104d390f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104d56c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104d2a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104d7c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104d7c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104d8d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+________________ ERROR at setup of test_deactivate_active_user _________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100e51a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100e49b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001008f32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010093ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010097b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100931434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100e0ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100e123b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100df50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100e12c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100de63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100e381f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100e38354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100e497a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_______________ ERROR at setup of test_edit_user_email_required ________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100e9da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100e95b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010093f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100987a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001009c7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010097d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100e5ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100e5e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100e410f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100e5ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100e323b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100e841f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100e84354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100e957a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_______________ ERROR at setup of test_edit_user_phone_required ________________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100949a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100941b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001003eb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100433a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100473030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100429434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100906c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010090a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001008ed0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010090ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001008de3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001009301f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100930354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001009417a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+____________ ERROR at setup of test_edit_user_invalid_email_blocked ____________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102961a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102959b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001024032a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010244ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010248b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102441434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010291ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001029223b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001029050f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102922c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001028f63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001029481f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102948354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001029597a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___________ ERROR at setup of test_edit_user_cancel_discards_changes ___________
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100a35a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100a2db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001004d72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010051fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010055f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100515434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001009f2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001009f63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001009d90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001009f6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001009ca3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100a1c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100a1c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100a2d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000105255a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010524db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104cf72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104d3fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104d7f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104d35434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000105212c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001052163b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001051f90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000105216c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001051ea3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010523c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010523c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010524d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103321a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103319b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102dc32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102e0ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102e4b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102e01434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001032dec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001032e23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001032c50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001032e2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001032b63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001033081f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103308354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001033197a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001048d5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001048cdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001043772a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001043bfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001043ff030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001043b5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104892c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001048963b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001048790f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104896c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010486a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001048bc1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001048bc354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001048cd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001049b9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001049b1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010445b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001044a3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001044e3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104499434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104976c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010497a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010495d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010497ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010494e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001049a01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001049a0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001049b17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102b4da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102b45b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001025ef2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102637a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102677030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010262d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102b0ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102b0e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102af10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102b0ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102ae23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102b341f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102b34354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102b457a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103041a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103039b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102ae32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102b2ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102b6b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102b21434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102ffec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001030023b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102fe50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000103002c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102fd63b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001030281f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103028354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001030397a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104dd9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104dd1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010487b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001048c3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104903030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001048b9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104d96c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104d9a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104d7d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104d9ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104d6e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104dc01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104dc0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104dd17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000101249a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000101241b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100ceb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100d33a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100d73030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100d29434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000101206c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010120a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001011ed0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010120ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001011de3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001012301f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000101230354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001012417a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/users/test_users_create.py::test_create_user_duplicate_email_rejected
+FAILED tests/admin_portal/users/test_users_filter.py::test_users_filter_active_only
+FAILED tests/admin_portal/users/test_users_filter.py::test_users_filter_active_off_shows_all
+FAILED tests/admin_portal/users/test_users_filter.py::test_users_filter_reset_all
+FAILED tests/admin_portal/users/test_users_list.py::test_users_list_pagination_count
+FAILED tests/admin_portal/users/test_users_search.py::test_users_search_exact_phone
+FAILED tests/admin_portal/users/test_users_search.py::test_users_search_partial_phone
+FAILED tests/admin_portal/users/test_users_search.py::test_users_search_clear_restores_list
+ERROR tests/admin_portal/users/test_users_edit.py::test_users_edit_form_opens
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_email_persists
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_persists
+ERROR tests/admin_portal/users/test_users_edit.py::test_deactivate_active_user
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_email_required
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_phone_required
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_invalid_email_blocked
+ERROR tests/admin_portal/users/test_users_edit.py::test_edit_user_cancel_discards_changes
+= 8 failed, 18 passed, 3 skipped, 28 xfailed, 1 xpassed, 8 errors in 1803.42s (0:30:03) =

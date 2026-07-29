@@ -1,2 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","9054","CWB-DEP-001 Only active wash books appear in the Select wash book dropdown","tests.admin_portal.wash_books","2026-06-25","passed","2026-06-25","","test_customer_wash_books_dependency","",""

@@ -1,0 +1,135 @@
+2026-07-23 19:22:23,516 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 101 items
+
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_loads_at_correct_url PASSED [  0%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_modal_auto_opens PASSED [  1%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_contains_all_controls PASSED [  2%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_opens_with_no_default_site PASSED [  3%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_apply_filters_closes_modal PASSED [  4%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_values_reflected_in_page_bar PASSED [  5%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_bar_changes_do_not_navigate_away PASSED [  6%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_content_visible_after_apply PASSED [  7%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites PASSED [  8%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_no_default_site_selected PASSED [  9%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip PASSED [ 10%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_multi_site_selection_accepted PASSED [ 11%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_single_site_scopes_data PASSED [ 12%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_removing_chip_reduces_site_filter PASSED [ 13%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_clear_all_sites PASSED [ 14%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_uses_multiselect PASSED [ 15%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_lists_multiple_sites PASSED [ 16%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_no_modal PASSED [ 17%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_rdm_site_present_in_dropdown PASSED [ 18%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_does_not_reopen_modal PASSED [ 19%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_count PASSED [ 20%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_dropdown_options PASSED [ 21%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_selecting_preset_fills_date_range PASSED [ 22%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-002] PASSED [ 23%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-003] PASSED [ 24%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-004] PASSED [ 25%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-005] PASSED [ 26%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-006] PASSED [ 27%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-007] PASSED [ 28%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_range_field_shows_dates PASSED [ 29%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_future_dates_disabled_in_calendar SKIPPED [ 30%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_mode_changes_date_field ERROR [ 31%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_calendar_date_range_sets_field PASSED [ 32%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_checkbox_visible PASSED [ 33%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_zero_data_date_range_state PASSED [ 34%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_clears_custom_date_range PASSED [ 35%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_total_redemptions_card_visible PASSED [ 36%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_all_summary_cards_visible PASSED [ 37%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-01] PASSED [ 38%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-02] PASSED [ 39%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_expand_all_opens_all_sections XFAIL [ 40%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_collapse_all_hides_all_sections PASSED [ 41%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-loyalty-points] XFAIL [ 42%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-comp-washes] XFAIL [ 43%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-memberships] XFAIL [ 44%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-gift-cards] XFAIL [ 45%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-wash-books] XFAIL [ 46%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-discounts] XFAIL [ 47%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-coupon-codes] XFAIL [ 48%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_summary_cards_visible_without_expanding PASSED [ 49%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-loyalty-points] PASSED [ 50%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-comp-washes] PASSED [ 51%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-memberships] PASSED [ 52%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-gift-cards] PASSED [ 53%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-wash-books] PASSED [ 54%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-loyalty-points] PASSED [ 55%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-comp-washes] PASSED [ 56%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-memberships] PASSED [ 57%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-gift-cards] PASSED [ 58%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-wash-books] PASSED [ 59%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-loyalty-points] XFAIL [ 60%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-comp-washes] XFAIL [ 61%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-memberships] XFAIL [ 62%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-gift-cards] XFAIL [ 63%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-wash-books] XFAIL [ 64%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-loyalty-points] SKIPPED [ 65%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-comp-washes] SKIPPED [ 66%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-memberships] SKIPPED [ 67%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-gift-cards] SKIPPED [ 68%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-wash-books] SKIPPED [ 69%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-loyalty-points] PASSED [ 70%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-comp-washes] PASSED [ 71%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-memberships] PASSED [ 72%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-gift-cards] PASSED [ 73%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-wash-books] PASSED [ 74%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-loyalty-points] XFAIL [ 75%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-comp-washes] XFAIL [ 76%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-memberships] XFAIL [ 77%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-gift-cards] XFAIL [ 78%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-wash-books] XFAIL [ 79%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-site] PASSED [ 80%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-date] PASSED [ 81%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_summary_cards PASSED [ 82%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_breakdown_columns XFAIL [ 83%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_detail_columns XFAIL [ 84%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_summary_cards PASSED [ 85%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_breakdown_columns XFAIL [ 86%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_detail_has_data XFAIL [ 87%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_summary_cards PASSED [ 88%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_breakdown_columns XFAIL [ 89%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_detail_has_data XFAIL [ 90%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_summary_cards PASSED [ 91%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_breakdown_columns XFAIL [ 92%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_detail_has_data XFAIL [ 93%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_summary_cards PASSED [ 94%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_breakdown_columns XFAIL [ 95%]
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_detail_has_data XFAIL [ 96%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 97%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 98%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar XPASS [ 99%]
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal XPASS [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestRedemptionsDateFilter.test_single_day_mode_changes_date_field _
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.129); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104dc9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104dc1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010486b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104871464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x0000000104873678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x0000000104873730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001048afe2c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355316
+    7   chromedriver                        0x00000001048ae354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    8   chromedriver                        0x00000001048aa934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    9   chromedriver                        0x00000001048f3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    10  chromedriver                        0x00000001048a9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    11  chromedriver                        0x0000000104d86c40 cxxbridge1$str$ptr + 2921304
+    12  chromedriver                        0x0000000104d8a3b8 cxxbridge1$str$ptr + 2935504
+    13  chromedriver                        0x0000000104d6d0f8 cxxbridge1$str$ptr + 2816016
+    14  chromedriver                        0x0000000104d8ac4c cxxbridge1$str$ptr + 2937700
+    15  chromedriver                        0x0000000104d5e3b0 cxxbridge1$str$ptr + 2755272
+    16  chromedriver                        0x0000000104db01f4 cxxbridge1$str$ptr + 3090700
+    17  chromedriver                        0x0000000104db0354 cxxbridge1$str$ptr + 3091052
+    18  chromedriver                        0x0000000104dc17a4 cxxbridge1$str$ptr + 3161788
+    19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=========================== short test summary info ============================
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_mode_changes_date_field
+== 64 passed, 6 skipped, 28 xfailed, 2 xpassed, 1 error in 1786.18s (0:29:46) ==

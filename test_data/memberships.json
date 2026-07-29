@@ -1,0 +1,26 @@
+{
+  "reference": {
+    "existing_membership":   "VK MA5",
+    "recurring_membership":  "VK MR4",
+    "site_membership":       "VK MA3",
+    "redeem_as_service":     "VK detail wash",
+    "filter_site_query":     "carwash",
+    "filter_site_label":     "VK Test carwash 2"
+  },
+  "template": {
+    "membership_name":          "VK MA5",
+    "global_price":             "15",
+    "global_commission":        "2",
+    "first_location_price":     "8",
+    "first_location_commission":"4",
+    "prepaid_months":           "1",
+    "visible_price":            "$15.00",
+    "baseline_points":          "5"
+  },
+  "updated": {
+    "membership_name": "VK MA5 updated"
+  },
+  "search": {
+    "nonexistent": "membership-does-not-exist-automation"
+  }
+}

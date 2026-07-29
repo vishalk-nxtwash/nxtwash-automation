@@ -1,0 +1,1166 @@
+2026-07-27 08:22:39,472 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 82 items
+
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_only_active_wash_books_in_cwb_dropdown PASSED [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book 2026-07-27 08:23:39,834 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:23:40,432 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  2%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_customer_search_requires_two_characters PASSED [  3%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_past_expiration_date_behaviour SKIPPED [  4%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists 2026-07-27 08:24:44,044 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:24:44,653 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  6%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_expiration_date_persists SKIPPED [  7%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book 2026-07-27 08:25:37,360 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:25:37,967 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  8%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book 2026-07-27 08:26:29,024 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:26:29,637 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  9%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_selection_blocked PASSED [ 10%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_number_blocked PASSED [ 12%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_number_of_washes_blocked PASSED [ 13%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected 2026-07-27 08:27:54,302 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:27:54,907 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 14%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book 2026-07-27 08:28:46,133 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:28:46,756 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 15%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_site_selection SKIPPED [ 17%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_expiration_date SKIPPED [ 18%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_is_active_by_default SKIPPED [ 19%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number 2026-07-27 08:29:39,597 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:29:40,213 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 20%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number 2026-07-27 08:30:40,715 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-27 08:30:41,283 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 21%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_non_existing_number_shows_empty_state PASSED [ 23%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_by_site_narrows_results PASSED [ 24%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_reset_all_restores_list PASSED [ 25%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_tab_loads_with_controls PASSED [ 26%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_grid_columns_are_visible PASSED [ 28%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_export_file_validation XFAIL [ 29%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_active_wash_book_available_for_cwb_creation SKIPPED [ 30%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_deactivated_wash_book_not_available_for_cwb_creation SKIPPED [ 31%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_valid_points_awarded_saves SKIPPED [ 32%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_duplicate_barcode_rejected SKIPPED [ 34%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_description_shows_on_customer_portal SKIPPED [ 35%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_customer_portal_enabled_wash_book_visible SKIPPED [ 36%]
+tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form 2026-07-27 08:33:54,603 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:33:55,192 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 37%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_description 2026-07-27 08:36:04,599 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_description (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_description (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:36:05,184 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 39%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_name_persists 2026-07-27 08:38:18,244 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_name_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_name_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:38:18,847 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 40%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_price_persists 2026-07-27 08:40:29,317 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_price_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_price_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:40:29,909 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 41%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_number_of_washes_persists 2026-07-27 08:42:40,966 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_number_of_washes_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_number_of_washes_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:42:41,546 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 42%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_site_assignment_persists XFAIL [ 43%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_commission_persists 2026-07-27 08:47:04,273 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_commission_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_commission_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:47:04,870 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 45%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_activate_wash_book 2026-07-27 08:49:16,993 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_activate_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_activate_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:49:17,579 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 46%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_deactivate_wash_book 2026-07-27 08:51:28,954 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_deactivate_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_edit.py::test_deactivate_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:51:29,567 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 47%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_wash_books_special_character_search_stays_usable PASSED [ 48%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_duplicate_wash_book_name_is_blocked PASSED [ 50%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_whitespace_only_wash_book_name_is_rejected PASSED [ 51%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_number_of_washes_is_rejected PASSED [ 52%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_global_price_is_rejected PASSED [ 53%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_global_commission_is_rejected PASSED [ 54%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_wash_book 2026-07-27 08:54:56,953 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_wash_book (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:54:57,595 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 56%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_settings_persist 2026-07-27 08:57:05,847 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_settings_persist (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_settings_persist (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 08:57:06,470 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 57%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_inactive_wash_book PASSED [ 58%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_decimal_price_accepted PASSED [ 59%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_customer_portal_switch_is_off_by_default PASSED [ 60%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_zero_loyalty_points_accepted PASSED [ 62%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_save_without_loyalty_points_succeeds PASSED [ 63%]
+tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_at_site_with_wash_package_persists 2026-07-27 09:00:16,938 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_at_site_with_wash_package_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_at_site_with_wash_package_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 09:00:17,549 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 64%]
+tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_site_without_wash_package_behaviour 2026-07-27 09:02:36,081 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_site_without_wash_package_behaviour (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_site_without_wash_package_behaviour (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 09:02:36,756 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 65%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_existing_search PASSED [ 67%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_partial_search_returns_matches PASSED [ 68%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_missing_search PASSED [ 69%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_clear_search_restores_list PASSED [ 70%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_panel_shows_controls PASSED [ 71%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_by_site_narrows_results PASSED [ 73%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_reset_all_restores_list PASSED [ 74%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_search_payloads_do_not_break_grid PASSED [ 75%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_assign_single_site_persists XFAIL [ 76%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_assign_multiple_sites_persists XFAIL [ 78%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_location_price_override_persists 2026-07-27 09:10:26,427 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_location_price_override_persists (url: https://staging.nxtwash.com/services/washBooks)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_location_price_override_persists (url: https://staging.nxtwash.com/services/washBooks)
+2026-07-27 09:10:27,038 ERROR nxtwash: Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash books
+Filter by (1)
++ Add new wash book
+Wash books
+Customer wash books
+ID
+Wash book name
+Washes number
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 79%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_save_wash_book_with_no_site_assigned PASSED [ 80%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_per_site_customer_portal_toggle_persists SKIPPED [ 81%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_page_loads_with_primary_controls PASSED [ 82%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_grid_columns_are_visible PASSED [ 84%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_customer_wash_books_tab_is_accessible PASSED [ 85%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_add_wash_book_form_loads PASSED [ 86%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_export_file_validation XFAIL [ 87%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_required_name_validation PASSED [ 89%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_blank_required_form_stays_on_form PASSED [ 90%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_blank_global_price_is_blocked PASSED [ 91%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_valid_number_of_washes_saves PASSED [ 92%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_zero_washes_boundary_behaviour PASSED [ 93%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_zero_price_boundary_behaviour PASSED [ 95%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_valid_commission_saves PASSED [ 96%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_save_without_commission_succeeds PASSED [ 97%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_max_length_name_handled PASSED [ 98%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_invalid_numeric_values_do_not_break_form PASSED [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103189a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103181b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102c2b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102c73a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102cb3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102c69434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000103146c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010314a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010312d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010314ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010311e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001031701f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000103170354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001031817a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102da5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102d9db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001028472a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010288fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001028cf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102885434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102d62c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102d663b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102d490f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102d66c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102d3a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102d8c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102d8c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102d9d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104f05a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104efdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049a72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001049efa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104a2f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001049e5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104ec2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104ec63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104ea90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104ec6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104e9a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104eec1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104eec354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104efd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102ba9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102ba1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010264b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102693a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001026d3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102689434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102b66c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102b6a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102b4d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102b6ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102b3e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102b901f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102b90354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102ba17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102889a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102881b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010232b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102373a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001023b3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102369434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102846c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010284a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010282d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010284ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010281e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001028701f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102870354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001028817a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104e0da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104e05b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048af2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001048f7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104937030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001048ed434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104dcac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104dce3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104db10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104dcec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104da23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104df41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104df4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104e057a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104f39a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104f31b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001049db2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104a23a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104a63030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104a19434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104ef6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104efa3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104edd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104efac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104ece3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104f201f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104f20354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104f317a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102db9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102db1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010285b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001028a3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001028e3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102899434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000102d76c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000102d7a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000102d5d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000102d7ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000102d4e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000102da01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102da0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000102db17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100b59a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100b51b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001005fb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100643a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100683030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100639434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100b16c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100b1a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100afd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100b1ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100aee3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100b401f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100b40354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100b517a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001008f1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001008e9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001003932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001003dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010041b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001003d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001008aec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001008b23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001008950f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001008b2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001008863b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001008d81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001008d8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001008e97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001030c5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001030bdb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102b672a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102bafa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102bef030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102ba5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000103082c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001030863b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001030690f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000103086c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010305a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001030ac1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001030ac354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001030bd7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104cfda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104cf5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010479f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001047e7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104827030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001047dd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104cbac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104cbe3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104ca10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104cbec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104c923b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104ce41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104ce4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104cf57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001051b5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001051adb4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104c572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104c9fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104cdf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104c95434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000105172c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001051763b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001051590f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000105176c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010514a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010519c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010519c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001051ad7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number
+FAILED tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number
+FAILED tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_description
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_name_persists
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_price_persists
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_number_of_washes_persists
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_commission_persists
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_activate_wash_book
+FAILED tests/admin_portal/wash_books/test_wash_books_edit.py::test_deactivate_wash_book
+FAILED tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_wash_book
+FAILED tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_settings_persist
+FAILED tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_at_site_with_wash_package_persists
+FAILED tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_site_without_wash_package_behaviour
+FAILED tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_location_price_override_persists
+====== 21 failed, 44 passed, 12 skipped, 5 xfailed in 3062.36s (0:51:02) =======

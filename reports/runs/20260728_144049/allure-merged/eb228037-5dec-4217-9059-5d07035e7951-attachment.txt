@@ -1,0 +1,1 @@
+INFO     tests.admin_portal.service_categories.test_service_categories_search_filter:test_service_categories_search_filter.py:28 Verifying Service Categories search variants

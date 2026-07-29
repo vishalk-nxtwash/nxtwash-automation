@@ -1,0 +1,17 @@
+{
+  "reference": {
+    "default_role":    "Admin Portal User",
+    "assignment_site": "VK AL11"
+  },
+  "template": {
+    "role_name": "VK UR03",
+    "priority":  "5"
+  },
+  "updated": {
+    "role_name": "VK UR03 edited",
+    "priority":  "8"
+  },
+  "search": {
+    "nonexistent": "role-does-not-exist-automation"
+  }
+}

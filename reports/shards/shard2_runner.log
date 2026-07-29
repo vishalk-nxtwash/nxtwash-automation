@@ -1,0 +1,634 @@
+[shard2] Started: Mon Jul 27 03:54:21 IST 2026
+[shard2] START transactions — 03:54:21
+2026-07-27 03:54:21,912 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 121 items
+
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_page_loads_at_expected_url PASSED [  0%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_page_title_visible PASSED [  1%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_export_icon_visible PASSED [  2%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsNav::test_filter_by_button_visible PASSED [  3%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Invoice number] PASSED [  4%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-License plate] PASSED [  4%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-RFID] PASSED [  5%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Site name] PASSED [  6%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction date/time] PASSED [  7%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Customer name] PASSED [  8%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Service] PASSED [  9%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Discount] PASSED [  9%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Tax] PASSED [ 10%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-PIF] PASSED [ 11%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Surcharge] PASSED [ 12%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Total amount] PASSED [ 13%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Payment mode] PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-CC type] PASSED [ 14%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction source0] PASSED [ 15%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Transaction source1] PASSED [ 16%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Sale Type] PASSED [ 17%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_column_header_present[TRN-TBL-001-Payment status] PASSED [ 18%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_table_has_rows PASSED [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_table_has_horizontal_scroll PASSED [ 19%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_pagination_present PASSED [ 20%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_record_count_displayed PASSED [ 21%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_invoice_number_is_link PASSED [ 22%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_full_info_link_present PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTable::test_default_date_preset_is_this_month PASSED [ 23%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_row_highlights_on_click SKIPPED [ 24%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_navigation_to_detail_page[TRN-SEL-002] PASSED [ 25%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsRowInteraction::test_navigation_to_detail_page[TRN-TBL-008] PASSED [ 26%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_modal_opens PASSED [ 27%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_format_selector PASSED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Invoice number] SKIPPED [ 28%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-License plate] SKIPPED [ 29%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-RFID] SKIPPED [ 30%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Site name0] SKIPPED [ 31%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Lane name] SKIPPED [ 32%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction date/time] SKIPPED [ 33%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Customer name] SKIPPED [ 33%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Service] SKIPPED [ 34%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Discount] SKIPPED [ 35%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Tax] SKIPPED [ 36%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-PIF] SKIPPED [ 37%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Surcharge] SKIPPED [ 38%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Total amount] SKIPPED [ 38%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Payment mode] SKIPPED [ 39%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-CC type] SKIPPED [ 40%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction source0] SKIPPED [ 41%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Transaction source1] SKIPPED [ 42%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Sale Type] SKIPPED [ 42%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Payment status] SKIPPED [ 43%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Image URL] SKIPPED [ 44%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Make] SKIPPED [ 45%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Model] SKIPPED [ 46%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Color] SKIPPED [ 47%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Site name1] SKIPPED [ 47%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_toggle_present[TRN-EXP-003-Total records] SKIPPED [ 48%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_site_name_duplicate SKIPPED [ 49%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_column_default_states SKIPPED [ 50%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsExport::test_export_button_present PASSED [ 51%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_opens PASSED [ 52%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_structure PASSED [ 52%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Date & Location] PASSED [ 53%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Transaction] PASSED [ 54%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Payment] PASSED [ 55%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Customer] PASSED [ 56%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Membership] PASSED [ 57%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Promotions] PASSED [ 57%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Gift cards] PASSED [ 58%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Washbook] PASSED [ 59%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Invoice] PASSED [ 60%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_tab_present[TRN-FLT-003-Staff] PASSED [ 61%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_apply_filters_button_visible PASSED [ 61%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_live_results_count_updates PASSED [ 62%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_apply_filters_closes_panel_and_updates PASSED [ 63%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_reset_filters_clears_selections PASSED [ 64%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_x_button_closes_panel_without_applying PASSED [ 65%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsFilterPanel::test_filter_panel_can_be_reopened PASSED [ 66%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-001] PASSED [ 66%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-002] PASSED [ 67%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsQuickFilters::test_quick_filter_updates_state[TRN-QCK-003] PASSED [ 68%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_location_tab_opens PASSED [ 69%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Today] PASSED [ 70%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Yesterday] XFAIL [ 71%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This week] PASSED [ 71%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Last week] XFAIL [ 72%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This month] PASSED [ 73%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-Last month] XFAIL [ 74%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_date_preset_option_present[TRN-DLC-002-This year] XFAIL [ 75%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_site_multiselect_present PASSED [ 76%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_custom_date_range_input_present PASSED [ 76%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_selecting_site_scopes_data PASSED [ 77%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_this_week_starts_on_monday PASSED [ 78%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_multi_site_shows_overflow_chip PASSED [ 79%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_lane_filter_state[TRN-DLC-008] PASSED [ 80%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDateLocation::test_lane_filter_state[TRN-DLC-009] PASSED [ 80%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_transaction_tab_opens PASSED [ 81%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_category_dropdown_present PASSED [ 82%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_services_dropdown_present PASSED [ 83%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_dropdown_present PASSED [ 84%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Gift Card Sale] PASSED [ 85%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Washbook Sale] PASSED [ 85%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Membership Sale] PASSED [ 86%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_sale_type_option_present[TRN-TXN-006-Retail / Single Wash] PASSED [ 87%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsTransactionFilter::test_transaction_source_dropdown_present PASSED [ 88%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_tab_opens PASSED [ 89%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_method_dropdown_present PASSED [ 90%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_cc_type_dropdown_present PASSED [ 90%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsPaymentFilter::test_payment_status_multiselect_present PASSED [ 91%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_detail_page_loads PASSED [ 92%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_transaction_details_panel_visible PASSED [ 93%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_car_details_panel_visible PASSED [ 94%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_customer_panel_visible PASSED [ 95%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_customer_name_matches PASSED [ 95%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_invoice_number_matches PASSED [ 96%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_service_table_visible PASSED [ 97%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_payment_type_not_null XFAIL [ 98%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_action_buttons_present PASSED [ 99%]
+tests/admin_portal/transactions/test_transactions.py::TestTransactionsDetailPage::test_back_navigation_from_detail PASSED [100%]
+
+============ 88 passed, 28 skipped, 5 xfailed in 2318.02s (0:38:38) ============
+[shard2] DONE  transactions — ============ 88 passed, 28 skipped, 5 xfailed in 2318.02s (0:38:38) ============
+[shard2] START tunnel_settings — 04:33:00
+2026-07-27 04:33:01,527 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 44 items
+
+tests/admin_portal/tunnel_settings/test_tunnel_active.py::test_active_configuration_toggle_saves[TUN-ACT-001] XFAIL [  2%]
+tests/admin_portal/tunnel_settings/test_tunnel_active.py::test_active_configuration_toggle_saves[TUN-ACT-002] XFAIL [  4%]
+tests/admin_portal/tunnel_settings/test_tunnel_active.py::test_status_badge_color_reflects_state XFAIL [  6%]
+tests/admin_portal/tunnel_settings/test_tunnel_behavior.py::test_behavior_radio_mutual_exclusivity XPASS [  9%]
+tests/admin_portal/tunnel_settings/test_tunnel_behavior.py::test_behavior_default_sequence_stacking XPASS [ 11%]
+tests/admin_portal/tunnel_settings/test_tunnel_behavior.py::test_behavior_radio_persists XFAIL [ 13%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_add_tunnel_button_opens_form PASSED [ 15%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_required_fields_marked_with_asterisk XFAIL [ 18%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_create_tunnel_full_save XPASS [ 20%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_new_tunnel_appears_immediately XPASS [ 22%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_site_dropdown_lists_active_sites XFAIL [ 25%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_behavior_defaults_to_sequence_stacking XPASS [ 27%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_three_sections_present_on_create_form XPASS [ 29%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_cancel_discards_form_returns_to_list XPASS [ 31%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_create_tunnel_required_fields_only XPASS [ 34%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_required_field_validation[TUN-VAL-001] PASSED [ 36%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_required_field_validation[TUN-VAL-002] PASSED [ 38%]
+tests/admin_portal/tunnel_settings/test_tunnel_create.py::test_required_field_validation[TUN-VAL-003] PASSED [ 40%]
+tests/admin_portal/tunnel_settings/test_tunnel_retract_settings.py::test_retract_row_lifecycle XFAIL [ 43%]
+tests/admin_portal/tunnel_settings/test_tunnel_retract_settings.py::test_multiple_retract_rows_added XFAIL [ 45%]
+tests/admin_portal/tunnel_settings/test_tunnel_retract_settings.py::test_retract_row_numbering_reflects_order XFAIL [ 47%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_tunnel_settings_section_expand_collapse XFAIL [ 50%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_tunnel_operational_toggle_persists[TUN-TSN-002] XFAIL [ 52%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_tunnel_operational_toggle_persists[TUN-TSN-003] XFAIL [ 54%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_controller_id_dropdown_lists_options XFAIL [ 56%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_controller_id_selection_persists XFAIL [ 59%]
+tests/admin_portal/tunnel_settings/test_tunnel_settings_section.py::test_controller_id_label_spelled_correctly XFAIL [ 61%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Auto-send] XPASS [ 63%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[MOXA-auto-send] XPASS [ 65%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Skip-prompt-on-send-car] XPASS [ 68%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Show-car-count] XPASS [ 70%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Prompt-RFID-entry] XPASS [ 72%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Automatic-Car-Selection] XPASS [ 75%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Skip-retract-confirmation-dialog] XPASS [ 77%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_defaults_on_create_form[Active-tunnel-configuration] XPASS [ 79%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-001] XFAIL [ 81%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-002] XFAIL [ 84%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-003] XFAIL [ 86%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-004] XFAIL [ 88%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-005] XFAIL [ 90%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-006] XFAIL [ 93%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-007] XFAIL [ 95%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_saves_and_persists[TUN-TGL-008] XFAIL [ 97%]
+tests/admin_portal/tunnel_settings/test_tunnel_toggles.py::test_toggle_states_reflected_on_reopen XFAIL [100%]
+
+============ 4 passed, 24 xfailed, 16 xpassed in 2990.20s (0:49:50) ============
+[shard2] DONE  tunnel_settings — ============ 4 passed, 24 xfailed, 16 xpassed in 2990.20s (0:49:50) ============
+[shard2] START sites — 05:22:52
+2026-07-27 05:22:53,650 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 66 items
+
+tests/admin_portal/sites/test_sites_dependency.py::test_active_site_in_services_dropdowns SKIPPED [  1%]
+tests/admin_portal/sites/test_sites_dependency.py::test_active_site_in_customers_assign_dropdown SKIPPED [  3%]
+tests/admin_portal/sites/test_sites_dependency.py::test_site_tax_rates_visible_in_service_assignment SKIPPED [  4%]
+tests/admin_portal/sites/test_sites_dependency.py::test_deactivated_site_removed_from_dropdowns SKIPPED [  6%]
+tests/admin_portal/sites/test_sites_dependency.py::test_pay_api_token_gates_card_saving SKIPPED [  7%]
+tests/admin_portal/sites/test_sites_dependency.py::test_lane_count_in_list_matches_saved_lanes SKIPPED [  9%]
+tests/admin_portal/sites/test_sites_dependency.py::test_customer_portal_toggle_controls_ecommerce_listing SKIPPED [ 10%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_create_site_long_site_name_does_not_break_ui PASSED [ 12%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_sites_list_handles_refresh PASSED [ 13%]
+tests/admin_portal/sites/test_sites_edge_cases.py::test_create_site_form_handles_random_address_value PASSED [ 15%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_form_prepopulates PASSED [ 16%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_name_persists SKIPPED [ 18%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_tax_settings_persist PASSED [ 19%]
+tests/admin_portal/sites/test_sites_edit.py::test_activate_site_shows_in_list XFAIL [ 21%]
+tests/admin_portal/sites/test_sites_edit.py::test_deactivate_site_hides_from_list XFAIL [ 22%]
+tests/admin_portal/sites/test_sites_edit.py::test_cancel_edit_does_not_save PASSED [ 24%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_lanes_settings_tab_accessible PASSED [ 25%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_credit_card_tab_accessible PASSED [ 27%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_tab_accessible PASSED [ 28%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_lane_persists XFAIL [ 30%]
+tests/admin_portal/sites/test_sites_edit.py::test_remove_lane_persists SKIPPED [ 31%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_contact_email_persists_after_refresh PASSED [ 33%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_lane_creates_visible_row XPASS [ 34%]
+tests/admin_portal/sites/test_sites_edit.py::test_add_multiple_lanes_succeeds XFAIL [ 36%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_input_fields_are_displayed PASSED [ 37%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_cc_processor_labels_visible PASSED [ 39%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_memberships_toggle XPASS [ 40%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_washbooks_toggle XPASS [ 42%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_gift_cards_toggle XPASS [ 43%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_show_toggle XPASS [ 45%]
+tests/admin_portal/sites/test_sites_edit.py::test_edit_site_customer_portal_settings_persist XPASS [ 46%]
+tests/admin_portal/sites/test_sites_export.py::test_sites_export_button_clickable PASSED [ 48%]
+tests/admin_portal/sites/test_sites_export.py::test_sites_export_file_content XFAIL [ 50%]
+tests/admin_portal/sites/test_sites_negative.py::test_create_site_duplicate_site_name_or_code_is_rejected PASSED [ 51%]
+tests/admin_portal/sites/test_sites_negative.py::test_create_site_cancel_does_not_save_record PASSED [ 53%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_new_site_with_required_general_settings PASSED [ 54%]
+tests/admin_portal/sites/test_sites_positive.py::test_created_site_persists_after_refresh PASSED [ 56%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_inactive_site_hidden_from_list PASSED [ 57%]
+tests/admin_portal/sites/test_sites_positive.py::test_created_site_shows_state_and_city_in_list XFAIL [ 59%]
+tests/admin_portal/sites/test_sites_positive.py::test_create_site_with_zero_tax_rates PASSED [ 60%]
+tests/admin_portal/sites/test_sites_positive.py::test_site_count_increments_after_create XPASS [ 62%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_existing_site_name PASSED [ 63%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_partial_site_name XPASS [ 65%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_missing_site_name_shows_no_match PASSED [ 66%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_reset_filter_restores_list PASSED [ 68%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_on_shows_active_only PASSED [ 69%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_active_toggle_off_shows_all PASSED [ 71%]
+tests/admin_portal/sites/test_sites_search_filter.py::test_sites_filter_by_name_and_active_combined PASSED [ 72%]
+tests/admin_portal/sites/test_sites_ui.py::test_sites_locations_page_ui_elements PASSED [ 74%]
+tests/admin_portal/sites/test_sites_ui.py::test_sites_filter_panel_ui_elements PASSED [ 75%]
+tests/admin_portal/sites/test_sites_ui.py::test_create_site_general_settings_ui_elements PASSED [ 77%]
+tests/admin_portal/sites/test_sites_ui.py::test_create_site_cancel_returns_to_list PASSED [ 78%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_blocks_empty_required_fields PASSED [ 80%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc] XPASS [ 81%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc@] XPASS [ 83%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_email_formats[abc@yopmail] XPASS [ 84%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax--1] PASSED [ 86%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax--1] PASSED [ 87%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax-abc] PASSED [ 89%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax-abc] PASSED [ 90%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[state_sales_tax-101] PASSED [ 92%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_validation_invalid_tax_values[city_sales_tax-101] PASSED [ 93%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_missing_address_blocks_save PASSED [ 95%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_blank_name_with_complete_form_blocks_save PASSED [ 96%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_special_chars_in_name_do_not_break_form PASSED [ 98%]
+tests/admin_portal/sites/test_sites_validation.py::test_create_site_very_long_name_does_not_crash_form PASSED [100%]
+
+====== 40 passed, 9 skipped, 6 xfailed, 11 xpassed in 1894.06s (0:31:34) =======
+[shard2] DONE  sites — ====== 40 passed, 9 skipped, 6 xfailed, 11 xpassed in 1894.06s (0:31:34) =======
+[shard2] START custom_services — 05:54:28
+2026-07-27 05:54:29,550 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 58 items
+
+tests/admin_portal/custom_services/test_custom_services_category.py::test_service_category_dropdown_lists_active_categories_only PASSED [  1%]
+tests/admin_portal/custom_services/test_custom_services_category.py::test_selected_category_persists_after_save PASSED [  3%]
+tests/admin_portal/custom_services/test_custom_services_category.py::test_service_category_can_be_changed PASSED [  5%]
+tests/admin_portal/custom_services/test_custom_services_dependency.py::test_assigned_site_appears_in_site_grid_after_save PASSED [  6%]
+tests/admin_portal/custom_services/test_custom_services_dependency.py::test_service_appears_in_pos_after_assignment SKIPPED [  8%]
+tests/admin_portal/custom_services/test_custom_services_dependency.py::test_inactive_service_hidden_from_pos SKIPPED [ 10%]
+tests/admin_portal/custom_services/test_custom_services_dependency.py::test_delete_service_removes_from_pos SKIPPED [ 12%]
+tests/admin_portal/custom_services/test_custom_services_dependency.py::test_export_download_button_triggers_download SKIPPED [ 13%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_settings_tab_is_visible_on_create PASSED [ 15%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_applicable_discount_persists_after_save PASSED [ 17%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected 2026-07-27 06:00:27,208 ERROR nxtwash: Test FAILED: tests/admin_portal/custom_services/test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected (url: https://staging.nxtwash.com/services/customServices/edit/30764)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/custom_services/test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected (url: https://staging.nxtwash.com/services/customServices/edit/30764)
+2026-07-27 06:00:27,826 ERROR nxtwash: Visible page text at failure:
+Custom services
+Edit custom service
+Cancel
+Save custom service
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Basic Discount
++ 1
+VK PD03
+VK AD03
+AUTOTEST Discount
+AUTOTEST Discount RENAMED
+VK EC 100 Pct
+VK EC Exp Today
+VK EC Future Start
+VK EC Zero Pct
+VK PD02
+AUTOTEST Pct Discount
+VK CMB004
+VK CMB002
+VK AD02
+VK AD01
+Basic Discount
+Plus discount
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Custom services
+Edit custom service
+Cancel
+Save custom service
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Basic Discount
++ 1
+VK PD03
+VK AD03
+AUTOTEST Discount
+AUTOTEST Discount RENAMED
+VK EC 100 Pct
+VK EC Exp Today
+VK EC Future Start
+VK EC Zero Pct
+VK PD02
+AUTOTEST Pct Discount
+VK CMB004
+VK CMB002
+VK AD02
+VK AD01
+Basic Discount
+Plus discount
+FAILED                                                                   [ 18%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_remove_applicable_discount_persists PASSED [ 20%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_tab_accessible_on_edit_form PASSED [ 22%]
+tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_combobox_filters_by_typing 2026-07-27 06:04:05,138 ERROR nxtwash: Test FAILED: tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_combobox_filters_by_typing (url: https://staging.nxtwash.com/services/customServices/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_combobox_filters_by_typing (url: https://staging.nxtwash.com/services/customServices/new)
+2026-07-27 06:04:05,807 ERROR nxtwash: Visible page text at failure:
+Custom services
+Add new custom service
+Cancel
+Save custom service
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+No options
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Custom services
+Add new custom service
+Cancel
+Save custom service
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+No options
+FAILED                                                                   [ 24%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_service_name_persists 2026-07-27 06:05:13,316 ERROR nxtwash: Test FAILED: tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_service_name_persists (url: https://staging.nxtwash.com/services/customServices)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_service_name_persists (url: https://staging.nxtwash.com/services/customServices)
+2026-07-27 06:05:13,931 ERROR nxtwash: Visible page text at failure:
+Custom services
+Filter by (1)
++ Add new custom service
+Service name
+Category
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Custom services
+Filter by (1)
++ Add new custom service
+Service name
+Category
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 25%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_global_price_persists PASSED [ 27%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_site_price_override_persists PASSED [ 29%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_activate_inactive_service SKIPPED [ 31%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_deactivate_active_service PASSED [ 32%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_form_prepopulates_existing_values PASSED [ 34%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_cancel_out_of_edit_form PASSED [ 36%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_barcode_and_description_persist SKIPPED [ 37%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_created_service_persists_after_reload PASSED [ 39%]
+tests/admin_portal/custom_services/test_custom_services_edit.py::test_edited_service_persists_after_reload PASSED [ 41%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_active_custom_service PASSED [ 43%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_inactive_custom_service_hidden PASSED [ 44%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_cancel_out_of_create_form PASSED [ 46%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_form_has_save_and_cancel_buttons PASSED [ 48%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_new_service_global_price_visible_in_list PASSED [ 50%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_service_with_barcode PASSED [ 51%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_service_with_description PASSED [ 53%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_service_with_force_receipt_enabled PASSED [ 55%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_service_with_open_price_enabled PASSED [ 56%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_site_level_price_override_saved PASSED [ 58%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_enable_tax_exemption_per_site PASSED [ 60%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_create_service_with_applicable_discount PASSED [ 62%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_state_city_sales_tax_columns_are_read_only PASSED [ 63%]
+tests/admin_portal/custom_services/test_custom_services_positive.py::test_created_service_persists_after_reload PASSED [ 65%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_search_exact_service_name PASSED [ 67%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_search_partial_service_name PASSED [ 68%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_search_non_existing_service_returns_empty PASSED [ 70%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_clear_search_restores_full_list PASSED [ 72%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_filter_by_site_narrows_results PASSED [ 74%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_active_service_filter_shows_active_only PASSED [ 75%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_active_service_filter_off_shows_all SKIPPED [ 77%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_site_and_active_filter_combined PASSED [ 79%]
+tests/admin_portal/custom_services/test_custom_services_search_filter.py::test_reset_filters_clears_filters PASSED [ 81%]
+tests/admin_portal/custom_services/test_custom_services_ui.py::test_custom_services_page_loads_with_primary_controls PASSED [ 82%]
+tests/admin_portal/custom_services/test_custom_services_ui.py::test_grid_displays_expected_columns PASSED [ 84%]
+tests/admin_portal/custom_services/test_custom_services_ui.py::test_pagination_controls_are_visible PASSED [ 86%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_submit_without_service_name_shows_error PASSED [ 87%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_submit_without_category_shows_error PASSED [ 89%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_submit_without_global_price_shows_error PASSED [ 91%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_negative_global_price_documents_behaviour PASSED [ 93%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_zero_global_price_documents_behaviour PASSED [ 94%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_duplicate_service_name_documents_behaviour PASSED [ 96%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_non_numeric_price_rejected PASSED [ 98%]
+tests/admin_portal/custom_services/test_custom_services_validation.py::test_long_service_name_documents_behaviour PASSED [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100cb9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100cb1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010075b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001007a3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001007e3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100799434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100c76c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100c7a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100c5d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100c7ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100c4e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100ca01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100ca0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100cb17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   assert False
+     +  where False = any(<generator object test_discount_combobox_filters_by_typing.<locals>.<genexpr> at 0x105d6b440>)
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/custom_services/test_custom_services_discount.py:126: assert False
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001009a1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100999b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001004432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010048ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001004cb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100481434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010095ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001009623b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001009450f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100962c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001009363b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001009881f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100988354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001009997a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/custom_services/test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected
+FAILED tests/admin_portal/custom_services/test_custom_services_discount.py::test_discount_combobox_filters_by_typing
+FAILED tests/admin_portal/custom_services/test_custom_services_edit.py::test_edit_service_name_persists
+============= 3 failed, 48 passed, 7 skipped in 2101.20s (0:35:01) =============
+[shard2] DONE  custom_services — ============= 3 failed, 48 passed, 7 skipped in 2101.20s (0:35:01) =============
+[shard2] START cash_report — 06:29:31
+2026-07-27 06:29:32,033 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 56 items
+
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_filter_modal_auto_opens PASSED [  3%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_modal_contains_all_controls PASSED [  5%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_title_visible_after_apply XFAIL [  7%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_sidebar_highlights_active_item XFAIL [  8%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites PASSED [ 10%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_date_preset_dropdown_options PASSED [ 12%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_modal_opens_with_no_default_site PASSED [ 14%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_selecting_preset_fills_date_range PASSED [ 16%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 17%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_filter_values_reflected_in_page_bar PASSED [ 19%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_page_bar_changes_do_not_reopen_modal PASSED [ 21%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option PASSED [ 23%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_selecting_site_creates_chip PASSED [ 25%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown 2026-07-27 06:33:56,407 ERROR nxtwash: Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+2026-07-27 06:33:57,021 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 26%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_clearing_chip_removes_site_filter PASSED [ 28%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-002] PASSED [ 32%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-003] PASSED [ 33%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-004] PASSED [ 35%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-005] PASSED [ 37%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-006] PASSED [ 39%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-007] PASSED [ 41%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_checkbox_visible PASSED [ 42%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_changes_date_field PASSED [ 44%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_sdm_syncs_to_page_bar PASSED [ 46%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [ 48%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_three_tabs_visible PASSED [ 50%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_active_by_default PASSED [ 51%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_kiosk_tab_click PASSED [ 53%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_pos_tab_click PASSED [ 55%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_restores PASSED [ 57%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_button_visible PASSED [ 58%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_triggers_download PASSED [ 60%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_tab_shows_metrics PASSED [ 62%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_metrics_not_all_zero PASSED [ 64%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_zero_data_message PASSED [ 66%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_visible XFAIL [ 67%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_headers XFAIL [ 69%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_data XFAIL [ 71%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_pagination SKIPPED [ 73%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_visible PASSED [ 75%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_has_headers XFAIL [ 76%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_pagination SKIPPED [ 78%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_visible XFAIL [ 80%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_has_headers XFAIL [ 82%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_pagination SKIPPED [ 83%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_zero_data_state PASSED [ 85%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_visible XFAIL [ 87%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_has_headers XFAIL [ 89%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_pagination SKIPPED [ 91%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_visible XFAIL [ 92%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_pagination SKIPPED [ 94%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_visible XFAIL [ 96%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_pagination SKIPPED [ 98%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_zero_data_state PASSED [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104e15a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104e0db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048b72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001048bd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001048bf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001048bf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001048fc0a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355948
+    7   chromedriver                        0x00000001048f6934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    8   chromedriver                        0x000000010493f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    9   chromedriver                        0x00000001048f5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    10  chromedriver                        0x0000000104dd2c40 cxxbridge1$str$ptr + 2921304
+    11  chromedriver                        0x0000000104dd63b8 cxxbridge1$str$ptr + 2935504
+    12  chromedriver                        0x0000000104db90f8 cxxbridge1$str$ptr + 2816016
+    13  chromedriver                        0x0000000104dd6c4c cxxbridge1$str$ptr + 2937700
+    14  chromedriver                        0x0000000104daa3b0 cxxbridge1$str$ptr + 2755272
+    15  chromedriver                        0x0000000104dfc1f4 cxxbridge1$str$ptr + 3090700
+    16  chromedriver                        0x0000000104dfc354 cxxbridge1$str$ptr + 3091052
+    17  chromedriver                        0x0000000104e0d7a4 cxxbridge1$str$ptr + 3161788
+    18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+=========================== short test summary info ============================
+FAILED tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown
+======= 1 failed, 37 passed, 6 skipped, 12 xfailed in 1084.53s (0:18:04) =======
+[shard2] DONE  cash_report — ======= 1 failed, 37 passed, 6 skipped, 12 xfailed in 1084.53s (0:18:04) =======
+[shard2] Finished: Mon Jul 27 06:47:36 IST 2026

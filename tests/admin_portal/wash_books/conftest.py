@@ -1,24 +1,27 @@
 from pages.admin_portal.wash_books_page import WashBooksPage
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._managed import managed_name, managed_resource
+from tests.admin_portal._data import load as _load
 
+_D = _load("wash_books")
 
-EXISTING_WASH_BOOK = "Basic washbook"
-MISSING_WASH_BOOK = "wash-book-does-not-exist-automation"
-WASH_BOOK_NAME = "VK AWB2"
-INACTIVE_WASH_BOOK_NAME = "VK AWB2-I"
-NUMBER_OF_WASHES = "15"
-POINTS_AWARDED = "5"
-GLOBAL_PRICE = "55"
-GLOBAL_COMMISSION = "5"
-VISIBLE_PRICE = "$55.00"
-WASH_BOOK_DESCRIPTION = "Test washbook created using automation"
-ASSIGNMENT_SITE = "VK AL11"
-BARCODE_VALUE = "VK-WB-BAR-001"
+EXISTING_WASH_BOOK           = _D["reference"]["existing_wash_book"]
+MISSING_WASH_BOOK            = _D["search"]["nonexistent"]
+WASH_BOOK_NAME               = _D["template"]["wash_book_name"]
+INACTIVE_WASH_BOOK_NAME      = _D["reference"]["inactive_wash_book"]
+NUMBER_OF_WASHES             = _D["template"]["number_of_washes"]
+POINTS_AWARDED               = _D["template"]["points_awarded"]
+GLOBAL_PRICE                 = _D["template"]["global_price"]
+GLOBAL_COMMISSION            = _D["template"]["global_commission"]
+VISIBLE_PRICE                = _D["template"]["visible_price"]
+WASH_BOOK_DESCRIPTION        = _D["template"]["description"]
+ASSIGNMENT_SITE              = _D["reference"]["assignment_site"]
+BARCODE_VALUE                = _D["template"]["barcode"]
 
-CWB_WASH_BOOK_NUMBER = "AWB-AUTO-001"
-CWB_UPDATED_WASH_BOOK_NUMBER = "AWB-AUTO-001-U"
-CWB_NUMBER_OF_WASHES = "15"
-CWB_UPDATED_NUMBER_OF_WASHES = "8"
+CWB_WASH_BOOK_NUMBER         = _D["customer_wash_book"]["number"]
+CWB_UPDATED_WASH_BOOK_NUMBER = _D["customer_wash_book"]["updated_number"]
+CWB_NUMBER_OF_WASHES         = _D["customer_wash_book"]["number_of_washes"]
+CWB_UPDATED_NUMBER_OF_WASHES = _D["customer_wash_book"]["updated_washes"]
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
@@ -118,3 +121,33 @@ def create_customer_wash_book_if_missing(
     page.wait_for_cwb_row(wash_book_number)
 
     return page
+
+
+MANAGED_WASH_BOOK = managed_name("Wash Book")
+
+
+def _reset_managed_wash_book(browser):
+    page = open_wash_books_page(browser)
+    if page.wash_book_exists(MANAGED_WASH_BOOK):
+        page = open_wash_books_page(browser)
+        page.open_edit_wash_book(MANAGED_WASH_BOOK)
+        page.fill_wash_book_form(
+            MANAGED_WASH_BOOK,
+            NUMBER_OF_WASHES,
+            POINTS_AWARDED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+        )
+        page.click_save_wash_book()
+        return open_wash_books_page(browser)
+    page.create_wash_book(
+        MANAGED_WASH_BOOK,
+        NUMBER_OF_WASHES,
+        POINTS_AWARDED,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+    )
+    return open_wash_books_page(browser)
+
+
+managed_wash_book = managed_resource(_reset_managed_wash_book)

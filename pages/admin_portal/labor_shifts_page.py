@@ -188,7 +188,7 @@ class LaborShiftsPage(BasePage):
             return
         for pattern in self._FRAME_SRC_PATTERNS:
             try:
-                WebDriverWait(self.driver, 2).until(
+                WebDriverWait(self.driver, 15).until(
                     EC.frame_to_be_available_and_switch_to_it(
                         (By.XPATH, "//iframe[contains(@src,'%s')]" % pattern)
                     )
@@ -204,15 +204,26 @@ class LaborShiftsPage(BasePage):
     # ── Page lifecycle ────────────────────────────────────────────────────────
 
     def wait_for_modal(self):
-        """Wait for the blocking filter modal (Apply button) to be clickable."""
-        self._switch_to_frame()
+        """Wait for the blocking filter modal (Apply button) to be clickable.
+
+        _switch_to_frame() does a 0.3s pre-check then spends up to 8s probing
+        iframes — during which the modal is appearing.  Call it AFTER waiting for
+        the Apply button so we don't burn that time on iframe probing when the modal
+        is already present in the main frame.
+        """
+        # Primary: Apply button in the main (React) frame.
         try:
             self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
         except TimeoutException:
+            # Fallback: frame detection then retry.
+            self._switch_to_frame()
             try:
-                self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+                self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
             except TimeoutException:
-                pass
+                try:
+                    self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+                except TimeoutException:
+                    pass
         try:
             self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         except TimeoutException:
@@ -291,47 +302,42 @@ class LaborShiftsPage(BasePage):
         return options or []
 
     def _open_site_multiselect(self):
-        """Open the site multiselect dropdown via JS (avoids holding stale element refs)."""
-        try:
-            self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
-        except TimeoutException:
-            pass  # element may still be in DOM; proceed with JS approach
+        """Open the site multiselect by clicking the value-container (confirmed class)
+        and focusing the search input.  React Select on LAB responds to click+focus,
+        not bare mousedown on the outer control div."""
         self.driver.execute_script("""
-            var ctrl = document.querySelector('.overview__site-select__control')
-                    || document.querySelector('.nxt-multi-select__control')
-                    || (function() {
-                           var ctrls = document.querySelectorAll('div[class*="__control"]');
-                           for (var i = 0; i < ctrls.length; i++) {
-                               var inp = ctrls[i].querySelector('input');
-                               if (inp && inp.getAttribute('aria-readonly') !== 'true'
-                                       && inp.getAttribute('inputmode') !== 'none'
-                                       && ctrls[i].offsetParent !== null) return ctrls[i];
-                           }
-                           return null;
-                       })();
-            if (ctrl) {
-                ctrl.dispatchEvent(new MouseEvent('mousedown', {
+            // value-container confirmed from DevTools HTML
+            var container = document.querySelector('.overview__site-select__value-container')
+                         || document.querySelector('.overview__site-select__control')
+                         || document.querySelector('.nxt-multi-select__value-container')
+                         || document.querySelector('.nxt-multi-select__control');
+            if (container) {
+                container.click();
+                container.dispatchEvent(new MouseEvent('mousedown', {
                     bubbles: true, cancelable: true, view: window
                 }));
             }
+            // Also focus the input directly so the dropdown opens
+            var inp = document.querySelector('.overview__site-select__input')
+                   || document.querySelector('.nxt-multi-select__input');
+            if (inp) { inp.focus(); }
         """)
-        time.sleep(0.4)
+        time.sleep(0.5)
 
     def _get_site_input(self):
-        """Wait up to 5s for the visible site multiselect search input to appear."""
+        """Return the site multiselect search input.
+
+        Drops the offsetParent visibility check — the input is always in the DOM
+        regardless of whether the dropdown is open; checking offsetParent caused
+        false-None returns when React hadn't finished re-rendering the open state.
+        """
         js = """
             var selectors = ['.overview__site-select__input', '.nxt-multi-select__input'];
             for (var i = 0; i < selectors.length; i++) {
                 var el = document.querySelector(selectors[i]);
-                if (el && el.type !== 'hidden' && el.offsetParent !== null) return el;
-            }
-            // Generic fallback: writable input inside any React Select control div
-            var ctrls = document.querySelectorAll('div[class*="__control"]');
-            for (var j = 0; j < ctrls.length; j++) {
-                var inp = ctrls[j].querySelector('input');
-                if (inp && inp.type !== 'hidden' && inp.offsetParent !== null
-                        && inp.getAttribute('aria-readonly') !== 'true'
-                        && inp.getAttribute('inputmode') !== 'none') return inp;
+                if (el && el.type !== 'hidden'
+                        && el.getAttribute('aria-readonly') !== 'true'
+                        && el.getAttribute('inputmode') !== 'none') return el;
             }
             return null;
         """
@@ -520,7 +526,7 @@ class LaborShiftsPage(BasePage):
             )
         except TimeoutException:
             pass
-        options = self.driver.execute_script("""
+        options = self.driver.execute_script(r"""
             return Array.from(document.querySelectorAll(
                 '[role="option"], [class*="-option"], [class*="__option"]'
             )).filter(function(el) {
@@ -529,7 +535,7 @@ class LaborShiftsPage(BasePage):
                 // Strip trailing date hints (e.g. "Today 07/14/2026" → "Today")
                 var raw = el.textContent.trim();
                 // Take text up to the first date-like pattern or newline
-                var cleaned = raw.split('\\n')[0].trim();
+                var cleaned = raw.split('\n')[0].trim();
                 var m = cleaned.match(/^([A-Za-z][A-Za-z ]*?)\s+\d{2}\/\d{2}\/\d{4}/);
                 if (m) cleaned = m[1].trim();
                 return cleaned;

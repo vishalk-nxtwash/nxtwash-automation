@@ -1,0 +1,12 @@
+[shard6] Started: Mon Jul 27 03:54:21 IST 2026
+[shard6] START performance_metrics — 03:54:21
+[shard6] DONE  performance_metrics — ============= 1 failed, 79 passed, 6 xfailed in 2687.30s (0:44:47) =============
+[shard6] START kiosk_settings — 04:39:10
+[shard6] DONE  kiosk_settings — == 21 passed, 1 skipped, 65 xfailed, 4 xpassed, 1 error in 8844.14s (2:27:24) ==
+[shard6] START pos_settings — 07:06:35
+[shard6] DONE  pos_settings — ====== 22 passed, 1 skipped, 14 xfailed, 31 xpassed in 4724.24s (1:18:44) ======
+[shard6] START card_declines — 08:25:21
+[shard6] DONE  card_declines — == 74 passed, 1 skipped, 5 xfailed, 3 xpassed, 1 error in 1422.85s (0:23:42) ===
+[shard6] START user_roles — 08:49:04
+[shard6] DONE  user_roles — = 1 failed, 35 passed, 2 skipped, 23 xfailed, 9 xpassed in 2496.91s (0:41:36) ==
+[shard6] Finished: Mon Jul 27 09:30:42 IST 2026

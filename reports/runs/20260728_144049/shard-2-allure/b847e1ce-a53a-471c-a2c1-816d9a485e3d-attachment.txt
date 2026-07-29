@@ -1,0 +1,1 @@
+INFO     nxtwash:test_wash_packages_coverage_gap.py:47 Verifying Wash Packages search variants
