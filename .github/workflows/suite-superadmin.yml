@@ -22,6 +22,7 @@ concurrency:
 
 jobs:
   superadmin:
+    if: github.ref == 'refs/heads/staging'
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.STAGING }}

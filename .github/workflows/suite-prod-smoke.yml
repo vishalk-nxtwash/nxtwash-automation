@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   prod-smoke:
+    if: github.ref == 'refs/heads/staging'
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.PRODUCTION }}
