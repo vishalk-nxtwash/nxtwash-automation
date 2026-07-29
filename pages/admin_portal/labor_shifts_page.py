@@ -362,8 +362,7 @@ class LaborShiftsPage(BasePage):
             except Exception:
                 inner = self.driver.find_element(*self.SITE_MULTISELECT)
         if clear_first:
-            inner.send_keys(Keys.CONTROL + "a")
-            inner.send_keys(Keys.BACKSPACE)
+            inner.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
             time.sleep(0.1)
         inner.send_keys(site_name)
         time.sleep(0.3)
@@ -587,8 +586,7 @@ class LaborShiftsPage(BasePage):
         """
         try:
             el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-            el.send_keys(Keys.CONTROL + "a")
-            el.send_keys(Keys.BACKSPACE)
+            el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
             el.send_keys(start)
             time.sleep(0.3)
             el.send_keys(Keys.TAB)
@@ -808,8 +806,7 @@ class LaborShiftsPage(BasePage):
             el = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(self.EMPLOYEE_SEARCH)
             )
-            el.send_keys(Keys.CONTROL + "a")
-            el.send_keys(Keys.BACKSPACE)
+            el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
             el.send_keys(term)
             time.sleep(1.0)
         except TimeoutException:
@@ -820,8 +817,7 @@ class LaborShiftsPage(BasePage):
         try:
             el = self.driver.find_element(*self.EMPLOYEE_SEARCH)
             if el.is_displayed():
-                el.send_keys(Keys.CONTROL + "a")
-                el.send_keys(Keys.BACKSPACE)
+                el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
                 time.sleep(0.5)
         except Exception:
             pass
@@ -963,8 +959,7 @@ class LaborShiftsPage(BasePage):
             el = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(self.CTX_SEARCH)
             )
-            el.send_keys(Keys.CONTROL + "a")
-            el.send_keys(Keys.BACKSPACE)
+            el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
             el.send_keys(term)
             time.sleep(1.0)
         except TimeoutException:
@@ -975,8 +970,7 @@ class LaborShiftsPage(BasePage):
         try:
             el = self.driver.find_element(*self.CTX_SEARCH)
             if el.is_displayed():
-                el.send_keys(Keys.CONTROL + "a")
-                el.send_keys(Keys.BACKSPACE)
+                el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
                 time.sleep(0.5)
         except Exception:
             pass
