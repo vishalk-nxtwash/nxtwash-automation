@@ -42,7 +42,6 @@ def test_device_section_expand_collapse(browser, managed_pos_form):
 
 @allure.title("POS-DEV-002 Payment device serial number required — blocked without entry")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_device_serial_required(browser, managed_pos_form):
     # Dependency: Physical POS device required
     form = managed_pos_form
@@ -66,7 +65,6 @@ def test_device_serial_required(browser, managed_pos_form):
 
 @allure.title("POS-DEV-003 Device serial number accepts valid input and saves")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_device_serial_accepts_valid_input(browser, managed_pos_form):
     # Dependency: Physical POS device required
     form = managed_pos_form
@@ -79,7 +77,6 @@ def test_device_serial_accepts_valid_input(browser, managed_pos_form):
 
 @allure.title("POS-DEV-004 Device serial number persists on re-open")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_device_serial_persists(browser, managed_pos_form):
     # Dependency: Physical POS device required
     form = managed_pos_form

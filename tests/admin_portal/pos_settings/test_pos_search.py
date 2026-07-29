@@ -60,13 +60,6 @@ def test_search_nonmatching_shows_empty(browser):
 
 @allure.title("POS-SRH-004 Clearing search field restores full POS list")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-SRH-004: clear_search uses Cmd+A/Backspace — "
-        "verify React input responds correctly in DevTools before removing xfail."
-    ),
-)
 def test_search_clear_restores_list(browser, managed_pos):
     page = open_pos_page(browser)
     page.search_pos(NONEXISTENT_POS_NAME)

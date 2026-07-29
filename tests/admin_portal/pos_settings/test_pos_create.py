@@ -34,23 +34,6 @@ _SITE_LANE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-_PAYMENT_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Payment method checkbox locators use label heuristics — "
-        "verify exact DOM element in DevTools before removing xfail."
-    ),
-)
-
-_ACCORDION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Section accordion locators use aria-expanded heuristics — "
-        "verify in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("POS-CRT-001 Add new POS button opens form on Main settings tab")
 @pytest.mark.smoke
 def test_add_pos_button_opens_form(browser):
@@ -146,7 +129,6 @@ def test_create_pos_lane_required(browser):
 
 @allure.title("POS-CRT-006 Lane dropdown populated based on selected site")
 @pytest.mark.regression
-@_SITE_LANE_XFAIL
 def test_lane_dropdown_populates_on_site_selection(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)
@@ -161,7 +143,6 @@ def test_lane_dropdown_populates_on_site_selection(browser):
 
 @allure.title("POS-CRT-007 Create inactive POS saves and appears inactive")
 @pytest.mark.regression
-@_SITE_LANE_XFAIL
 def test_create_inactive_pos(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)
@@ -212,7 +193,6 @@ def test_allow_checkout_no_customer(browser):
 
 @allure.title("POS-CRT-010 Card payments checkbox checked by default")
 @pytest.mark.regression
-@_PAYMENT_XFAIL
 def test_card_checked_by_default(browser):
     form = open_create_pos_form(browser)
 
@@ -222,7 +202,6 @@ def test_card_checked_by_default(browser):
 
 @allure.title("POS-CRT-011 Cash payments checkbox checked by default")
 @pytest.mark.regression
-@_PAYMENT_XFAIL
 def test_cash_checked_by_default(browser):
     form = open_create_pos_form(browser)
 
@@ -232,8 +211,6 @@ def test_cash_checked_by_default(browser):
 
 @allure.title("POS-CRT-012 Unchecking Card payments saves and persists")
 @pytest.mark.regression
-@_PAYMENT_XFAIL
-@_SITE_LANE_XFAIL
 def test_uncheck_card_persists(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)
@@ -250,8 +227,6 @@ def test_uncheck_card_persists(browser):
 
 @allure.title("POS-CRT-013 Unchecking Cash payments saves and persists")
 @pytest.mark.regression
-@_PAYMENT_XFAIL
-@_SITE_LANE_XFAIL
 def test_uncheck_cash_persists(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)
@@ -267,7 +242,6 @@ def test_uncheck_cash_persists(browser):
 
 @allure.title("POS-CRT-014 All settings accordions collapsed by default on create form")
 @pytest.mark.regression
-@_ACCORDION_XFAIL
 def test_settings_accordions_collapsed(browser):
     section_names = ["Tunnel", "Middleware", "Device"]
     form = open_create_pos_form(browser)
@@ -295,15 +269,21 @@ def test_cancel_discards_form(browser):
 
 @allure.title("POS-CRT-016 Newly created POS appears in list immediately after save")
 @pytest.mark.regression
-@_SITE_LANE_XFAIL
 def test_new_pos_appears_immediately(browser):
     # Dependency: Sites & Locations module
+    page = open_pos_page(browser)
+    pos_name = get_next_available_pos_name(page, POS_NEW_NAME)
+
+    lane = get_free_lane(browser, POS_SITE)
+    if lane is None:
+        pytest.skip("No free lanes available for site '%s' — all lanes in use." % POS_SITE)
+
     form = open_create_pos_form(browser)
-    form.fill_create_form(POS_NEW_NAME, POS_SITE, POS_LANE)
+    form.fill_create_form(pos_name, POS_SITE, lane)
     form.click_save()
 
     page = open_pos_page(browser)
-    assert page.pos_exists(POS_NEW_NAME), (
-        "POS '%s' did not appear in list immediately after save" % POS_NEW_NAME
+    assert page.pos_exists(pos_name), (
+        "POS '%s' did not appear in list immediately after save" % pos_name
     )
     assert page_has_no_broken_state(page)

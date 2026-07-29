@@ -18,18 +18,8 @@ pytestmark = [
 # The single scripted verification is POS-SVC-001 (tab switch) and
 # POS-SVC-012 (restore default settings).
 
-_SVC_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Service Settings tab and restore-default locators use heuristics — "
-        "verify in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("POS-SVC-001 Service settings tab switches view")
 @pytest.mark.smoke
-@_SVC_XFAIL
 def test_service_tab_switches_view(browser, managed_pos):
     # Dependency: Services module
     form = open_edit_pos_form(browser)
@@ -44,7 +34,6 @@ def test_service_tab_switches_view(browser, managed_pos):
 
 @allure.title("POS-SVC-012 Restore default settings resets order and colors")
 @pytest.mark.regression
-@_SVC_XFAIL
 def test_restore_default_settings(browser, managed_pos):
     # Dependency: Services module
     form = open_edit_pos_form(browser)
