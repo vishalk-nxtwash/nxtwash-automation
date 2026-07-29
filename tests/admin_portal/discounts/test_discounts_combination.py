@@ -31,6 +31,7 @@ def _fill_and_save_amount_all_locations(page, name):
     page.set_discount_start(START_DAY, START_TIME)
     page.ensure_active_switch_on()
     page.ensure_all_locations_switch_on()
+    page._wait_for_location_rows_hidden()
     page.click_save_discount()
     page.wait_for_list_loaded()
 
@@ -64,6 +65,7 @@ def _fill_and_save_percentage_all_locations(page, name):
     page.set_discount_start(START_DAY, START_TIME)
     page.ensure_active_switch_on()
     page.ensure_all_locations_switch_on()
+    page._wait_for_location_rows_hidden()
     page.click_save_discount()
     page.wait_for_list_loaded()
 
@@ -169,6 +171,7 @@ def test_cmb_percentage_future_start_date(browser):
         page.set_discount_start(future_day, START_TIME)
         page.ensure_active_switch_on()
         page.ensure_all_locations_switch_on()
+        page._wait_for_location_rows_hidden()
         page.click_save_discount()
         page.wait_for_list_loaded()
 
@@ -196,6 +199,7 @@ def test_cmb_amount_with_end_date(browser):
         page.set_discount_end(END_DAY, END_TIME)
         page.ensure_active_switch_on()
         page.ensure_all_locations_switch_on()
+        page._wait_for_location_rows_hidden()
         page.click_save_discount()
         page.wait_for_list_loaded()
 

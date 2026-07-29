@@ -92,6 +92,15 @@ def test_site_filter_works(rdt_page):
 
 
 @allure.title("GSR-RDT-004 Date range presets dropdown shows all options")
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "GSR-RDT-004: DATE_PRESET_COMBOBOX locator (div[contains(@class,'__control')]) "
+        "does not match the RDT page's date preset control — the component type differs "
+        "from the GSR page. Inspect 'Date range presets' section in DevTools to find "
+        "the correct element class/tag before removing xfail."
+    ),
+)
 def test_date_presets_dropdown(rdt_page):
     options = rdt_page.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -103,6 +112,13 @@ def test_date_presets_dropdown(rdt_page):
 
 
 @allure.title("GSR-RDT-005 Each date preset updates date range field correctly")
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "GSR-RDT-005: DATE_PRESET_COMBOBOX locator does not match RDT page's date "
+        "preset control — same root cause as RDT-004. Needs DevTools inspection."
+    ),
+)
 @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
 def test_each_date_preset_applies(rdt_page, preset):
     start_date, _ = _date_range_for_preset(preset)
@@ -139,13 +155,6 @@ def test_custom_option_enables_manual_entry(rdt_page):
 
 
 @allure.title("GSR-RDT-007 Single day checkbox constrains date range to one day")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-007: Single day checkbox locator uses name/id heuristics — "
-        "verify checkbox DOM attributes in DevTools before removing xfail."
-    ),
-)
 def test_single_day_checkbox_constrains_range(rdt_page):
     rdt_page.toggle_single_day()
     start_val, end_val = rdt_page.get_date_range_values()
@@ -157,6 +166,13 @@ def test_single_day_checkbox_constrains_range(rdt_page):
 
 
 @allure.title("GSR-RDT-008 Apply filters updates header metrics")
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "GSR-RDT-008: select_date_preset relies on DATE_PRESET_COMBOBOX which does "
+        "not match the RDT page — same root cause as RDT-004/005. Fix after DevTools."
+    ),
+)
 def test_apply_filters_updates_metrics(rdt_page):
     # Dependency: Sites & Locations module
     rdt_page.select_site(GSR_SITE)
@@ -179,13 +195,6 @@ def test_five_sections_visible(rdt_page):
 
 
 @allure.title("GSR-RDT-010 Expand All button expands all five sections")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-010: Section count after expand relies on aria-expanded heuristic — "
-        "verify expand-all DOM trigger and section structure in DevTools before removing xfail."
-    ),
-)
 def test_expand_all_button(rdt_page):
     count_before = rdt_page.get_visible_section_count()
     rdt_page.click_expand_all()

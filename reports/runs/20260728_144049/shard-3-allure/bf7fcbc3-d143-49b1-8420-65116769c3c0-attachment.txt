@@ -1,0 +1,29 @@
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+No records available

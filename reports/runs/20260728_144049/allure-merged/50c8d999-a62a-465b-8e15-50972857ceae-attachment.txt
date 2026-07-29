@@ -1,0 +1,79 @@
+Wash extras
+Edit wash extra
+Cancel
+Save wash extra
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Open price
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%

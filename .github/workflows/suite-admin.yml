@@ -8,11 +8,6 @@ name: Admin Suite (staging)
 
 on:
   workflow_dispatch:
-    inputs:
-      reruns:
-        description: "Flaky-test reruns per test"
-        required: false
-        default: "2"
 
 # One admin staging run at a time (its shards run in parallel within the run);
 # a second run queues rather than racing on shared staging data.
@@ -26,49 +21,82 @@ jobs:
       fail-fast: false
       matrix:
         shard:
-          # ── Original modules ──────────────────────────────────────────────
-          - name: wash-packages
-            path: tests/admin_portal/wash_packages
-          - name: discounts
-            path: tests/admin_portal/discounts tests/admin_portal/gift_cards
-          - name: memberships
-            path: tests/admin_portal/memberships tests/admin_portal/wash_extras
-          - name: services-login
-            path: tests/admin_portal/login tests/admin_portal/service_categories
-          - name: rest
+          # ── Reports (read-only, fully parallel-safe) ──────────────────────
+          # 139 tests — overview + performance_metrics
+          - name: reports-overview
             path: >-
-              tests/admin_portal/sites
-              tests/admin_portal/coupon_packages
               tests/admin_portal/overview
-              tests/admin_portal/wash_books
-          # ── Reports ───────────────────────────────────────────────────────
+              tests/admin_portal/performance_metrics
+          # 164 tests — revenue_overview + general_sales_report
           - name: reports-revenue
-            path: tests/admin_portal/revenue_overview tests/admin_portal/performance_metrics
-          - name: reports-sales
-            path: tests/admin_portal/general_sales_report tests/admin_portal/card_declines
+            path: >-
+              tests/admin_portal/revenue_overview
+              tests/admin_portal/general_sales_report
+          # 151 tests — cash_report + card_declines + transactions
           - name: reports-financial
-            path: tests/admin_portal/cash_report tests/admin_portal/transactions
-          # ── People & HR ───────────────────────────────────────────────────
-          - name: people
+            path: >-
+              tests/admin_portal/cash_report
+              tests/admin_portal/card_declines
+              tests/admin_portal/transactions
+          # 177 tests — labor_shifts + redemptions + wash_activity
+          - name: reports-ops
             path: >-
               tests/admin_portal/labor_shifts
-              tests/admin_portal/employees
-              tests/admin_portal/users
-              tests/admin_portal/user_roles
-          # ── Settings (new modules) ────────────────────────────────────────
-          - name: settings-new
-            path: >-
-              tests/admin_portal/tunnel_settings
-              tests/admin_portal/pos_settings
-              tests/admin_portal/kiosk_settings
-          # ── Customers & misc ──────────────────────────────────────────────
-          - name: customers-misc
-            path: >-
-              tests/admin_portal/customers
-              tests/admin_portal/bank_drop
-              tests/admin_portal/custom_services
               tests/admin_portal/redemptions
               tests/admin_portal/wash_activity
+          # ── Auth & Core (run early; downstream modules depend on this data) ─
+          # 131 tests — login + sites + service_categories
+          - name: auth-core
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/sites
+              tests/admin_portal/service_categories
+          # ── Wash Catalog ──────────────────────────────────────────────────
+          # 157 tests — wash_packages + wash_extras
+          - name: wash-packages
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_extras
+          # 127 tests — wash_books + coupon_packages
+          - name: wash-catalog
+            path: >-
+              tests/admin_portal/wash_books
+              tests/admin_portal/coupon_packages
+          # ── Services & Finance ────────────────────────────────────────────
+          # 122 tests — custom_services + gift_cards + bank_drop
+          - name: services
+            path: >-
+              tests/admin_portal/custom_services
+              tests/admin_portal/gift_cards
+              tests/admin_portal/bank_drop
+          # ── Promotions & Loyalty ──────────────────────────────────────────
+          # 139 tests — discounts + memberships
+          - name: promotions
+            path: >-
+              tests/admin_portal/discounts
+              tests/admin_portal/memberships
+          # ── Customers ─────────────────────────────────────────────────────
+          # 97 tests — isolated; complex customer-facing flows
+          - name: customers
+            path: tests/admin_portal/customers
+          # ── Hardware Settings ─────────────────────────────────────────────
+          # 117 tests — kiosk_settings + tunnel_settings
+          - name: settings-hw
+            path: >-
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+          # ── POS & Access Control ──────────────────────────────────────────
+          # 126 tests — pos_settings + user_roles
+          - name: settings-pos
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/user_roles
+          # ── People & HR ───────────────────────────────────────────────────
+          # 164 tests — users + employees
+          - name: people
+            path: >-
+              tests/admin_portal/users
+              tests/admin_portal/employees
     uses: ./.github/workflows/run-suite.yml
     secrets:
       dotenv: ${{ secrets.STAGING }}
@@ -77,5 +105,4 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
-      reruns: ${{ github.event.inputs.reruns || '2' }}
       timeout_minutes: 90

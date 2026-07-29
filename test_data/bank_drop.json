@@ -1,13 +1,13 @@
 {
   "reference": {
-    "first":        "VK ABD01",
+    "first":        "VK ABD04",
     "first_order":  "2",
-    "second":       "VK ABD02",
+    "second":       "VK ABD05",
     "second_order": "3"
   },
   "edit_target": {
-    "name":         "VK EDT002",
-    "updated_name": "VK EDT002-upd",
+    "name":         "VK EDT004",
+    "updated_name": "VK EDT004-upd",
     "order":        "1"
   },
   "edge_cases": {

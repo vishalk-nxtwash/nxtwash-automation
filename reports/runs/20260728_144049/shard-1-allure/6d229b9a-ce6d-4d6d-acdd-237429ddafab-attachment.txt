@@ -1,0 +1,41 @@
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado

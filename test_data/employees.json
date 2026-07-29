@@ -1,10 +1,10 @@
 {
   "template": {
     "first_name":    "Test A",
-    "last_name":     "user 2",
-    "email":         "tau2@yopmail.com",
-    "phone":         "2321334454",
-    "employee_code": "0033",
+    "last_name":     "user 4",
+    "email":         "tau4@yopmail.com",
+    "phone":         "2321333559",
+    "employee_code": "0035",
     "wage":          "15.50",
     "hire_date":     "2025-05-01",
     "address":       "Test user 4 address",
@@ -16,8 +16,8 @@
   "updated": {
     "first_name": "TestEdited a",
     "last_name":  "user02Edited",
-    "email":      "tau4.edited@yopmail.com",
-    "phone":      "1234567790",
+    "email":      "tau6.edited@yopmail.com",
+    "phone":      "1234567791",
     "wage":       "20.00"
   },
   "invalid": {

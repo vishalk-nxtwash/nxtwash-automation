@@ -1,0 +1,1 @@
+2026-07-28 19:45:13,788 INFO tests.admin_portal.service_categories.test_service_categories_ui: Verifying Add Service Category form controls

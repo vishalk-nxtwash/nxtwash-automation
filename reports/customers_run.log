@@ -1,0 +1,3673 @@
+2026-07-26 00:31:56,851 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/.venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 93 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_accessible_on_existing_customer XPASShe edit form.) [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_shows_add_car_button XPASSs.) [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field 2026-07-26 00:33:17,404 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+2026-07-26 00:33:18,029 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  3%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field 2026-07-26 00:33:56,318 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+2026-07-26 00:33:57,042 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  4%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields 2026-07-26 00:34:42,299 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+2026-07-26 00:34:42,914 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  5%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls 2026-07-26 00:35:24,544 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls (url: https://staging.nxtwash.com/customers/edit/51537/cars/new/30195)
+2026-07-26 00:35:25,163 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+FAILED                                                                   [  6%]
+tests/admin_portal/customers/test_customers_cars.py::test_license_plate_field_is_present_and_required XFAILsses.) [  7%]
+tests/admin_portal/customers/test_customers_cars.py::test_rfid_field_is_present_and_required XFAILsses.) [  8%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_assign_membership_button SKIPPEDip module state.) [  9%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_list_shows_membership_details SKIPPED [ 10%]
+tests/admin_portal/customers/test_customers_cars.py::test_blacklist_a_car SKIPPEDck after confirming DOM locators from a live run.) [ 11%]
+tests/admin_portal/customers/test_customers_cars.py::test_deactivate_a_car SKIPPEDck after confirming DOM locators from a live run.) [ 12%]
+tests/admin_portal/customers/test_customers_cars.py::test_update_vehicle_token SKIPPED [ 13%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_license_plate_documents_behaviour SKIPPEDck after confirming DOM locators
+from a live run.)                                                        [ 15%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_rfid_documents_behaviour SKIPPED [ 16%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_then_refresh_car_persists SKIPPEDck after confirming DOM locators from a
+live run.)                                                               [ 17%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_appears_in_gift_cards_dropdown SKIPPED) [ 18%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_membership_status_reflects_memberships_module SKIPPED) [ 19%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [ 20%]
+tests/admin_portal/customers/test_customers_dependency.py::test_car_rfid_links_to_pos_tunnel_entry SKIPPED [ 21%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists 2026-07-26 00:37:42,781 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:37:43,467 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+FAILED                                                                   [ 22%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists ERROR [ 22%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists 2026-07-26 00:38:48,775 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists (url: https://staging.nxtwash.com/customers/51537)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists (url: https://staging.nxtwash.com/customers/51537)
+2026-07-26 00:38:49,439 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 23%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists ERROR [ 23%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values 2026-07-26 00:39:46,995 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values (url: https://staging.nxtwash.com/customers/51537)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values (url: https://staging.nxtwash.com/customers/51537)
+2026-07-26 00:39:47,629 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Select city
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Select city
+FAILED                                                                   [ 24%]
+tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer 2026-07-26 00:40:38,410 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:40:39,087 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+FAILED                                                                   [ 25%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer PASSED [ 26%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_allow_invoicing_persists PASSED [ 27%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_send_text_and_email_persists SKIPPEDt.) [ 29%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes PASSED [ 30%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes ERROR [ 30%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist 2026-07-26 00:43:54,910 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:43:55,674 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edit
+vk test TInact-a4f1a8 0 $0
+Not a member
+Edit
+vk test TCrt2-c5620a 0 $0
+Not a member
+Edit
+vk test TCrt1-96428f 0 $0
+Not a member
+Edit
+vk test TPer1-a09b0b 0 $0
+Not a member
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edit
+vk test TInact-a4f1a8 0 $0
+Not a member
+Edit
+vk test TCrt2-c5620a 0 $0
+Not a member
+Edit
+vk test TCrt1-96428f 0 $0
+Not a member
+Edit
+vk test TPer1-a09b0b 0 $0
+Not a member
+Edi
+FAILED                                                                   [ 31%]
+tests/admin_portal/customers/test_customers_export.py::test_export_button_triggers_customer_list_download SKIPPEDe-system check which
+is not yet set up in the test harness.)                                  [ 32%]
+tests/admin_portal/customers/test_customers_payment.py::test_payment_settings_tab_accessible_on_existing_customer XPASSdit form.) [ 33%]
+tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible PASSED [ 34%]
+tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present PASSED [ 35%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present 2026-07-26 00:45:59,106 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/customers/51543)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/customers/51543)
+2026-07-26 00:45:59,721 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+Credit card info
+Cardholder name
+Card number
+Expiration
+CVV
+ZIP code
+Save card
+Payment history
+Filter by
+Invoice number
+License plate
+RFID
+Total amount
+Wash date
+Wash time
+Site name
+Status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+Credit card info
+Cardholder name
+Card number
+Expiration
+CVV
+ZIP code
+Save card
+Payment history
+Filter by
+Invoice number
+License plate
+RFID
+Total amount
+Wash date
+Wash time
+Site name
+Status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+FAILED                                                                   [ 36%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present 2026-07-26 00:46:25,401 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/customers/51543)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/customers/51543)
+2026-07-26 00:46:26,061 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+Credit card info
+Cardholder name
+Card number
+Expiration
+CVV
+ZIP code
+Save card
+Payment history
+Filter by
+Invoice number
+License plate
+RFID
+Total amount
+Wash date
+Wash time
+Site name
+Status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+Credit card info
+Cardholder name
+Card number
+Expiration
+CVV
+ZIP code
+Save card
+Payment history
+Filter by
+Invoice number
+License plate
+RFID
+Total amount
+Wash date
+Wash time
+Site name
+Status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+FAILED                                                                   [ 37%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_loads_all_time SKIPPEDustomer.) [ 38%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_today_filter SKIPPEDustomer.) [ 39%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_select_range_filter SKIPPEDustomer.) [ 40%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_export SKIPPED [ 41%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_details_link_navigates_to_invoice SKIPPEDon.) [ 43%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_pagination_defaults_to_ten SKIPPEDustomer.) [ 44%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only 2026-07-26 00:46:44,664 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:46:45,323 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Success
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+FAILED                                                                   [ 45%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields PASSED [ 46%]
+tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date PASSED [ 47%]
+tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites PASSED [ 48%]
+tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection PASSED [ 49%]
+tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state PASSED [ 50%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer PASSED [ 51%]
+tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer PASSED [ 52%]
+tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list PASSED [ 53%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [ 54%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate PASSED [ 55%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate 2026-07-26 00:49:25,291 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 00:49:25,953 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 56%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number 2026-07-26 00:49:48,320 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:49:49,014 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+FAILED                                                                   [ 58%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number PASSED [ 59%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent PASSED [ 60%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state PASSED [ 61%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible PASSED [ 62%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default PASSED [ 63%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying PASSED [ 64%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name PASSED [ 65%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name 2026-07-26 00:51:54,231 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:51:54,933 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+FAILED                                                                   [ 66%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email PASSED [ 67%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid 2026-07-26 00:52:54,613 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:52:55,440 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test TPer1-157834 0 $0
+Not a member
+Edit
+vk test TInact-fc7fdd 0 $0
+Not a member
+Edit
+vk test TCrt2-b8f75b 0 $0
+Not a member
+Edit
+vk test TCrt1-01fd31 0 $0
+Not a member
+Edit
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test TPer1-157834 0 $0
+Not a member
+Edit
+vk test TInact-fc7fdd 0 $0
+Not a member
+Edit
+vk test TCrt2-b8f75b 0 $0
+Not a member
+Edit
+vk test TCrt1-01fd31 0 $0
+Not a member
+Edit
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edi
+FAILED                                                                   [ 68%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_site XFAILutomation.) [ 69%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_membership SKIPPED [ 70%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_signup_date_range XPASSot supported.) [ 72%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_next_payment_date_range SKIPPED [ 73%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_number SKIPPEDods.) [ 74%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_type SKIPPEDs.) [ 75%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_number_of_cars_range SKIPPEDnt.) [ 76%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_allow_invoicing_yes XPASS-click automation.) [ 77%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_card_on_file XPASSr-click automation.) [ 78%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_recurring_yes SKIPPED [ 79%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_prepaid_yes SKIPPED [ 80%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_canceled_yes SKIPPED [ 81%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_declined_yes XPASSr-click automation.) [ 82%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all PASSED [ 83%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_multiple_filters_combined_narrow_results XFAILtrigger-click automation.) [ 84%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_signup_date_from_after_to_documents_behaviour XPASSot supported.) [ 86%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields PASSED [ 87%]
+tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls 2026-07-26 00:56:17,323 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls (url: https://staging.nxtwash.com/customers)
+2026-07-26 00:56:18,123 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test TPer1-157834 0 $0
+Not a member
+Edit
+vk test TInact-fc7fdd 0 $0
+Not a member
+Edit
+vk test TCrt2-b8f75b 0 $0
+Not a member
+Edit
+vk test TCrt1-01fd31 0 $0
+Not a member
+Edit
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edi
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+vk test TPer1-157834 0 $0
+Not a member
+Edit
+vk test TInact-fc7fdd 0 $0
+Not a member
+Edit
+vk test TCrt2-b8f75b 0 $0
+Not a member
+Edit
+vk test TCrt1-01fd31 0 $0
+Not a member
+Edit
+vk test auto customer1 edited (100) 100-1 0 $0
+Not a member
+Edit
+vk test TPer1-99471c 0 $0
+Not a member
+Edit
+vk test TInact-89c54a 0 $0
+Not a member
+Edit
+vk test TCrt2-d8cc3b 0 $0
+Not a member
+Edit
+vk test TCrt1-5a35e0 0 $0
+Not a member
+Edit
+vk test auto customer1 0 $0
+Not a member
+Edit
+vk test TInact-695972 0 $0
+Not a member
+Edit
+vk test TCrt2-9ff7bf 0 $0
+Not a member
+Edit
+vk test TCrt2-4abadb 0 $0
+Not a member
+Edit
+vk test TCrt1-bff54d 0 $0
+Not a member
+Edit
+vk test TCrt1-65cb92 0 $0
+Not a member
+Edit
+vk test TPer1-760dff 0 $0
+Not a member
+Edit
+vk test TInact-e5e306 0 $0
+Not a member
+Edit
+vk test TCrt2-46dc31 0 $0
+Not a member
+Edit
+vk test TCrt1-1d820d 0 $0
+Not a member
+Edit
+vk test TPer1-5c520a 0 $0
+Not a member
+Edit
+vk test TInact-c489af 0 $0
+Not a member
+Edit
+vk test TCrt2-fd6040 0 $0
+Not a member
+Edit
+vk test TCrt1-ab10bb 0 $0
+Not a member
+Edit
+vk test TPer1-4fe757 0 $0
+Not a member
+Edit
+vk test TCrt2-4a36af 0 $0
+Not a member
+Edit
+vk test TCrt1-286df8 0 $0
+Not a member
+Edit
+vk test TCrt1-2fbc6f 0 $0
+Not a member
+Edit
+3273245660 (327) 324-5660 0 $0
+Not a member
+Edit
+8013178670 (801) 317-8670 0 $0
+Not a member
+Edit
+vk test TPer1-381712 0 $0
+Not a member
+Edit
+vk test TInact-b6f48e 0 $0
+Not a member
+Edit
+vk test TCrt2-4e8860 0 $0
+Not a member
+Edit
+vk test TCrt1-1dce17 0 $0
+Not a member
+Edit
+vk test TPer1-db4dcd 0 $0
+Not a member
+Edit
+vk test TInact-84d9ba 0 $0
+Not a member
+Edit
+vk test TCrt2-353e48 0 $0
+Not a member
+Edit
+vk test TCrt1-551bba 0 $0
+Not a member
+Edit
+vk test TPer1-a08d8f 0 $0
+Not a member
+Edi
+FAILED                                                                   [ 88%]
+tests/admin_portal/customers/test_customers_ui.py::test_grid_membership_status_column_visible SKIPPED [ 89%]
+tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible PASSED [ 90%]
+tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls PASSED [ 91%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save 2026-07-26 00:56:56,598 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 00:56:57,274 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+First name is required
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+First Name: First name is required
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+First name is required
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+First Name: First name is required
+FAILED                                                                   [ 92%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save 2026-07-26 00:57:07,799 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 00:57:08,465 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Last name is required
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+Last Name: Last name is required
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Last name is required
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+Last Name: Last name is required
+FAILED                                                                   [ 93%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save PASSED [ 94%]
+tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour PASSED [ 95%]
+tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour PASSED [ 96%]
+tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour 2026-07-26 00:58:43,765 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 00:58:44,401 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 97%]
+tests/admin_portal/customers/test_customers_validation.py::test_negative_loyalty_points_documents_behaviour SKIPPEDform.) [ 98%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page PASSED [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at teardown of test_edit_customer_name_persists _____________
+
+self = <allure_commons._allure.fixture object at 0x118b92f50>, args = ()
+kwargs = {}
+
+    def __call__(self, *args, **kwargs):
+        self.parameters = func_parameters(self._fixture_function, *args, **kwargs)
+    
+        with self:
+>           return self._fixture_function(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../.venv/lib/python3.11/site-packages/allure_commons/_allure.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:162: in managed_customer
+    create_customer_if_missing(browser)
+tests/admin_portal/customers/conftest.py:128: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x118b94590>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+    def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+        """Open the create form and fill every provided field before saving."""
+        self.open_create_customer()
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        if phone:
+            self.enter_phone(phone)
+        if dob:
+            self.enter_dob(dob)
+        if address:
+            self.enter_address(address)
+        if zip_code:
+            self.enter_zip(zip_code)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+        if state:
+            try:
+                self.select_state(state)
+                if city:
+                    self.select_react_dropdown_option(self.CITY_COMBOBOX, city)
+            except Exception:  # noqa: BLE001
+                pass  # state/city cascade may vary by environment
+        self.click_save_customer()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+>           raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+E           RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:896: RuntimeError
+--------------------------- Captured stdout teardown ---------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+____________ ERROR at teardown of test_edit_assigned_site_persists _____________
+
+self = <allure_commons._allure.fixture object at 0x118c047d0>, args = ()
+kwargs = {}
+
+    def __call__(self, *args, **kwargs):
+        self.parameters = func_parameters(self._fixture_function, *args, **kwargs)
+    
+        with self:
+>           return self._fixture_function(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../.venv/lib/python3.11/site-packages/allure_commons/_allure.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:162: in managed_customer
+    create_customer_if_missing(browser)
+tests/admin_portal/customers/conftest.py:128: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x118bedd10>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+    def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+        """Open the create form and fill every provided field before saving."""
+        self.open_create_customer()
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        if phone:
+            self.enter_phone(phone)
+        if dob:
+            self.enter_dob(dob)
+        if address:
+            self.enter_address(address)
+        if zip_code:
+            self.enter_zip(zip_code)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+        if state:
+            try:
+                self.select_state(state)
+                if city:
+                    self.select_react_dropdown_option(self.CITY_COMBOBOX, city)
+            except Exception:  # noqa: BLE001
+                pass  # state/city cascade may vary by environment
+        self.click_save_customer()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+>           raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+E           RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:896: RuntimeError
+--------------------------- Captured stdout teardown ---------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+_______ ERROR at teardown of test_cancel_edit_customer_discards_changes ________
+
+self = <allure_commons._allure.fixture object at 0x118c0c6d0>, args = ()
+kwargs = {}
+
+    def __call__(self, *args, **kwargs):
+        self.parameters = func_parameters(self._fixture_function, *args, **kwargs)
+    
+        with self:
+>           return self._fixture_function(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../.venv/lib/python3.11/site-packages/allure_commons/_allure.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:162: in managed_customer
+    create_customer_if_missing(browser)
+tests/admin_portal/customers/conftest.py:128: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x118bec450>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+    def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+        """Open the create form and fill every provided field before saving."""
+        self.open_create_customer()
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        if phone:
+            self.enter_phone(phone)
+        if dob:
+            self.enter_dob(dob)
+        if address:
+            self.enter_address(address)
+        if zip_code:
+            self.enter_zip(zip_code)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+        if state:
+            try:
+                self.select_state(state)
+                if city:
+                    self.select_react_dropdown_option(self.CITY_COMBOBOX, city)
+            except Exception:  # noqa: BLE001
+                pass  # state/city cascade may vary by environment
+        self.click_save_customer()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+>           raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+E           RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:896: RuntimeError
+--------------------------- Captured stdout teardown ---------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+=================================== FAILURES ===================================
+_________________ test_add_car_form_shows_license_plate_field __________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="e1e5260630eb22beeb110bed5a815c8a")>
+
+    @allure.title("CUST-CAR-003 Add car form contains a License Plate field")
+    @pytest.mark.regression
+    def test_add_car_form_shows_license_plate_field(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_cars_settings_tab()
+>       page.open_add_car_form()
+
+tests/admin_portal/customers/test_customers_cars.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:745: in open_add_car_form
+    self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="e1e5260630eb22beeb110bed5a815c8a")>
+method = <function visibility_of_element_located.<locals>._predicate at 0x118be18a0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000102ae9a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000102ae1b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010258b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001025d3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000102613030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001025c9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102aa6c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000102aaa3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000102a8d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102aaac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000102a7e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000102ad01f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000102ad0354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000102ae17a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+______________________ test_add_car_form_shows_rfid_field ______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="e859ff577112f22d5778a542bf7c774f")>
+
+    @allure.title("CUST-CAR-003b Add car form contains an RFID field")
+    @pytest.mark.regression
+    def test_add_car_form_shows_rfid_field(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_cars_settings_tab()
+>       page.open_add_car_form()
+
+tests/admin_portal/customers/test_customers_cars.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:745: in open_add_car_form
+    self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="e859ff577112f22d5778a542bf7c774f")>
+method = <function visibility_of_element_located.<locals>._predicate at 0x118be0680>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000101455a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x000000010144db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100ef72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100f3fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100f7f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100f35434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000101412c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001014163b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001013f90f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000101416c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001013ea3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010143c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010143c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x000000010144d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+________________ test_add_car_form_shows_vehicle_detail_fields _________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="fc9e10affa682bf4abb6d843a74abce7")>
+
+    @allure.title("CUST-CAR-004 Add car form contains vehicle detail fields (Year/Make/Model/Color)")
+    @pytest.mark.regression
+    def test_add_car_form_shows_vehicle_detail_fields(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_cars_settings_tab()
+>       page.open_add_car_form()
+
+tests/admin_portal/customers/test_customers_cars.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:745: in open_add_car_form
+    self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="fc9e10affa682bf4abb6d843a74abce7")>
+method = <function visibility_of_element_located.<locals>._predicate at 0x118be0f40>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x000000010516da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105165b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104c0f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104c57a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104c97030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104c4d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010512ac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010512e3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001051110f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010512ec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001051023b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001051541f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000105154354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001051657a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______________ test_add_car_form_shows_save_and_cancel_controls _______________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="1373e7987d508738eb52ddb8a1642834")>
+
+    @allure.title("CUST-CAR-008 Add car form contains Save and Cancel controls")
+    @pytest.mark.regression
+    def test_add_car_form_shows_save_and_cancel_controls(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_cars_settings_tab()
+>       page.open_add_car_form()
+
+tests/admin_portal/customers/test_customers_cars.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:745: in open_add_car_form
+    self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="1373e7987d508738eb52ddb8a1642834")>
+method = <function visibility_of_element_located.<locals>._predicate at 0x118be0540>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001008f9a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001008f1b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010039b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001003e3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100423030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001003d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001008b6c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001008ba3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010089d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001008bac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010088e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001008e01f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001008e0354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001008f17a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______________________ test_edit_customer_name_persists _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="1d532859a5646053c543798427252197")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x118b92410>
+
+    @allure.title("CUST-EDT-001 Edit customer last name persists after save")
+    @pytest.mark.regression
+    def test_edit_customer_name_persists(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+        page.enter_last_name(UPDATED_LAST)
+        page.click_save_customer()
+        page.wait_for_list_loaded()
+    
+        # Verify new name appears, then restore.
+        page.open_filter_panel()
+        page.filter_by_last_name(UPDATED_LAST)
+        page.apply_filters()
+>       assert UPDATED_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1 edited' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b92410>.get_body_text
+
+tests/admin_portal/customers/test_customers_edit.py:45: AssertionError
+_______________________ test_edit_assigned_site_persists _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="0e1d717e31ef4563bb9699d71a47e9eb")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x118c06910>
+
+    @allure.title("CUST-EDT-002 Edit assigned site persists after save")
+    @pytest.mark.regression
+    def test_edit_assigned_site_persists(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+        # Re-select the same site to confirm edit flow works without breaking.
+        page.select_site(CUSTOMER_SITE)
+        page.click_save_customer()
+        page.wait_for_list_loaded()
+    
+        page.open_filter_panel()
+        page.filter_by_last_name(CUSTOMER_LAST)
+        page.apply_filters()
+        page.open_edit_customer_from_row(CUSTOMER_LAST)
+    
+>       assert page.get_last_name_value() == CUSTOMER_LAST
+E       AssertionError: assert 'auto customer1 edited' == 'auto customer1'
+E         
+E         - auto customer1
+E         + auto customer1 edited
+E         ?               +++++++
+
+tests/admin_portal/customers/test_customers_edit.py:69: AssertionError
+_________________ test_edit_form_prepopulates_existing_values __________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="39ffdda4cb3077966df9d5c9c26c2c26")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x118ba8c50>
+
+    @allure.title("CUST-EDT-003 Edit form pre-populates all existing customer values")
+    @pytest.mark.regression
+    def test_edit_form_prepopulates_existing_values(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+    
+        assert page.get_first_name_value() == CUSTOMER_FIRST
+>       assert page.get_last_name_value() == CUSTOMER_LAST
+E       AssertionError: assert 'auto customer1 edited' == 'auto customer1'
+E         
+E         - auto customer1
+E         + auto customer1 edited
+E         ?               +++++++
+
+tests/admin_portal/customers/test_customers_edit.py:80: AssertionError
+_______________________ test_activate_inactive_customer ________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="f45c56b4233d280ed2123068ba5c66ed")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x118b78610>
+
+    @allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
+    @pytest.mark.smoke
+    def test_activate_inactive_customer(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+        # Deactivate first, then reactivate within the same session to avoid
+        # the inactive-not-searchable race condition (mirrors the WP pattern).
+        page.ensure_active_switch_off()
+        page.ensure_active_switch_on()
+        page.click_save_customer()
+        page.wait_for_list_loaded()
+    
+        page.open_filter_panel()
+        page.filter_by_last_name(CUSTOMER_LAST)
+        page.apply_filters()
+    
+>       assert CUSTOMER_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b78610>.get_body_text
+
+tests/admin_portal/customers/test_customers_edit.py:100: AssertionError
+____________________ test_edit_then_refresh_changes_persist ____________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="c0953c5feb36199115d1410ed5ee8b8e")>
+managed_customer = <pages.admin_portal.customers_page.CustomersPage object at 0x118b0db10>
+
+    @allure.title("CUST-PER-002 Edit customer then refresh — changes persist")
+    @pytest.mark.regression
+    def test_edit_then_refresh_changes_persist(browser, managed_customer):
+        page = managed_customer
+        _open_edit_for_managed_customer(page)
+        page.enter_last_name(UPDATED_LAST)
+        page.click_save_customer()
+        page.wait_for_list_loaded()
+    
+        # Full reload to verify server-side persistence.
+        page = open_customers_page(browser)
+        page.open_filter_panel()
+        page.filter_by_last_name(UPDATED_LAST)
+        page.apply_filters()
+    
+>       assert UPDATED_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1 edited' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118c76350>.get_body_text
+
+tests/admin_portal/customers/test_customers_edit.py:179: AssertionError
+_________________ test_transaction_history_section_is_present __________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="89458b24b906ccb085a84bc947d22d55")>
+
+    @allure.title("CUST-PAY-004b Transaction history section is present in Payment settings")
+    @pytest.mark.regression
+    def test_transaction_history_section_is_present(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_payment_settings_tab()
+    
+>       assert page.transaction_history_is_visible()
+E       assert False
+E        +  where False = transaction_history_is_visible()
+E        +    where transaction_history_is_visible = <pages.admin_portal.customers_page.CustomersPage object at 0x118183490>.transaction_history_is_visible
+
+tests/admin_portal/customers/test_customers_payment.py:81: AssertionError
+_____________ test_transaction_history_filter_controls_are_present _____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="b411151b171f43e5cd2a5cc9a643c9e9")>
+
+    @allure.title("CUST-PAY-005b Transaction history filter controls are present")
+    @pytest.mark.regression
+    def test_transaction_history_filter_controls_are_present(browser):
+        page = _open_managed_customer_edit(browser)
+        page.open_payment_settings_tab()
+        body = page.get_body_text()
+    
+        # All three filter options must be present in the UI.
+>       assert "All time" in body or "Today" in body or "Select range" in body
+E       AssertionError: assert ('All time' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records' or 'Today' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records' or 'Select range' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records')
+
+tests/admin_portal/customers/test_customers_payment.py:93: AssertionError
+________________ test_create_customer_with_required_fields_only ________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="b99634b00e2f29c1a49700bb53977cb2")>
+
+    @allure.title("CUST-CRT-001 Create customer with required fields only appears in the list")
+    @pytest.mark.smoke
+    def test_create_customer_with_required_fields_only(browser):
+        last = "TCrt1-%s" % uuid.uuid4().hex[:6]
+        page = open_customers_page(browser)
+        page.create_customer(CUSTOMER_FIRST, last, CUSTOMER_SITE)
+        page.open_filter_panel()
+        page.filter_by_last_name(last)
+        page.apply_filters()
+    
+>       assert last in page.get_body_text()
+E       AssertionError: assert 'TCrt1-01fd31' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118dd1150>.get_body_text
+
+tests/admin_portal/customers/test_customers_positive.py:34: AssertionError
+_____________________ test_search_by_partial_license_plate _____________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="5b8889db007f574f04e5f79dfd4499e0")>
+
+    @allure.title("CUST-SRH-002 Search by partial license plate returns matching records")
+    @pytest.mark.edge
+    def test_search_by_partial_license_plate(browser):
+>       create_customer_if_missing(browser)
+
+tests/admin_portal/customers/test_customers_search_filter.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:128: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x118b6fa90>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+            return False
+    
+    # ─────────────────────────────────────────────────────────────────────────
+    # React input helper (shared with WashPackagesPage pattern)
+    # ─────────────────────────────────────────────────────────────────────────
+    
+    def _set_input_value(self, element, value):
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value'
+            ).set;
+            // React tracks the last-seen value via _valueTracker. If the tracker
+            // already holds the current DOM value, React treats the dispatched
+            // 'change' event as a no-op and submits the original value. Reset the
+            // tracker to the current (old) value so React sees a real change.
+            const tracker = input._valueTracker;
+            if (tracker) { tracker.setValue(input.value); }
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            value,
+        )
+    
+    # ─────────────────────────────────────────────────────────────────────────
+    # High-level helpers
+    # ─────────────────────────────────────────────────────────────────────────
+    
+    def fill_customer_form(self, first_name, last_name, site, email=""):
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+    
+>   def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+E   RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:896: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+______________________ test_search_by_exact_phone_number _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="682222d4d418568f53356722d77fad90")>
+
+    @allure.title("CUST-SRH-003 Search by exact phone number returns the correct customer")
+    @pytest.mark.regression
+    def test_search_by_exact_phone_number(browser):
+        create_customer_if_missing(browser)
+        page = open_customers_page(browser)
+        page.search_by_phone(CUSTOMER_PHONE)
+    
+>       assert CUSTOMER_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b0f690>.get_body_text
+
+tests/admin_portal/customers/test_customers_search_filter.py:55: AssertionError
+___________________________ test_filter_by_last_name ___________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="6d77acdd0bdb802396d4907eac6b984e")>
+
+    @allure.title("CUST-FLT-005 Filter by last name narrows results to matching customers")
+    @pytest.mark.regression
+    def test_filter_by_last_name(browser):
+        create_customer_if_missing(browser)
+        page = open_customers_page(browser)
+        page.filter_by_last_name(CUSTOMER_LAST)
+        page.apply_filters()
+    
+>       assert CUSTOMER_LAST in page.get_body_text()
+E       AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+E        +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+E        +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x1070186d0>.get_body_text
+
+tests/admin_portal/customers/test_customers_search_filter.py:146: AssertionError
+_____________________________ test_filter_by_rfid ______________________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="d27c7ab0727708466ffbf11b7711d046")>
+
+    @allure.title("CUST-FLT-007 Filter by RFID narrows results")
+    @pytest.mark.regression
+    def test_filter_by_rfid(browser):
+        create_customer_if_missing(browser)
+        page = open_customers_page(browser)
+>       page.filter_by_rfid(CUSTOMER_CAR_RFID)
+
+tests/admin_portal/customers/test_customers_search_filter.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:411: in filter_by_rfid
+    def filter_panel_controls_are_visible(self):
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/customers_page.py:395: in _filter_type_in
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="d27c7ab0727708466ffbf11b7711d046")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x118c8b740>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000105295a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x000000010528db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104d372a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104d7fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104dbf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104d75434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000105252c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001052563b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001052390f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000105256c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010522a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010527c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010527c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x000000010528d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______________ test_customers_page_loads_with_primary_controls ________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="fd5a48b79001d20aed6c8771b376ebe8")>
+
+    @allure.title("CUST-LST-001 Customers page loads with all primary controls")
+    @pytest.mark.smoke
+    def test_customers_page_loads_with_primary_controls(browser):
+        page = open_customers_page(browser)
+        body = page.get_body_text()
+    
+        assert "Customers" in body
+        assert page.search_input_is_visible()
+        assert page.filter_button_is_clickable()
+>       assert page.download_button_is_clickable()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/customers/test_customers_ui.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/customers_page.py:267: in download_button_is_clickable
+    def wait_for_edit_loaded(self):
+              ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="fd5a48b79001d20aed6c8771b376ebe8")>
+method = <function presence_of_element_located.<locals>._predicate at 0x118a77420>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104b2da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104b25b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001045cf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104617a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104657030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x000000010460d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104aeac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000104aee3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000104ad10f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104aeec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000104ac23b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000104b141f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104b14354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000104b257a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+../.venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____________________ test_blank_first_name_blocked_on_save _____________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="0b13746ca255a44dcfd71c918fa1a8db")>
+
+    @allure.title("CUST-VAL-001 Blank first name is blocked on save")
+    @pytest.mark.smoke
+    def test_blank_first_name_blocked_on_save(browser):
+        page = open_customers_page(browser)
+        page.open_create_customer()
+        page.enter_last_name(CUSTOMER_LAST)
+        page.select_site(CUSTOMER_SITE)
+        page.click_save_customer()
+    
+>       assert not page.first_name_input_is_valid()
+E       assert not True
+E        +  where True = first_name_input_is_valid()
+E        +    where first_name_input_is_valid = <pages.admin_portal.customers_page.CustomersPage object at 0x118b78610>.first_name_input_is_valid
+
+tests/admin_portal/customers/test_customers_validation.py:31: AssertionError
+_____________________ test_blank_last_name_blocked_on_save _____________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="298bd6d8cca36163dd3e352e9fec803e")>
+
+    @allure.title("CUST-VAL-002 Blank last name is blocked on save")
+    @pytest.mark.smoke
+    def test_blank_last_name_blocked_on_save(browser):
+        page = open_customers_page(browser)
+        page.open_create_customer()
+        page.enter_first_name(CUSTOMER_FIRST)
+        page.select_site(CUSTOMER_SITE)
+        page.click_save_customer()
+    
+>       assert not page.last_name_input_is_valid()
+E       assert not True
+E        +  where True = last_name_input_is_valid()
+E        +    where last_name_input_is_valid = <pages.admin_portal.customers_page.CustomersPage object at 0x118a7d450>.last_name_input_is_valid
+
+tests/admin_portal/customers/test_customers_validation.py:45: AssertionError
+___________________ test_duplicate_email_documents_behaviour ___________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="7b2b981e62f5c3e54ee5ebc4b8b66c01")>
+
+    @allure.title("CUST-VAL-006 Duplicate email — document behaviour")
+    @pytest.mark.edge
+    def test_duplicate_email_documents_behaviour(browser):
+>       create_customer_if_missing(browser)
+
+tests/admin_portal/customers/test_customers_validation.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/customers/conftest.py:128: in create_customer_if_missing
+    page.create_full_customer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.admin_portal.customers_page.CustomersPage object at 0x118ed9610>
+first_name = 'vk test', last_name = 'auto customer1', site = 'Vk AL01'
+email = 'vktestcust1@yopmail.com', phone = '1001001', dob = '2026-07-01'
+address = 'Vk test cust 1 test address', zip_code = '10001', state = 'Arizona'
+city = 'Amado'
+
+            return False
+    
+    # ─────────────────────────────────────────────────────────────────────────
+    # React input helper (shared with WashPackagesPage pattern)
+    # ─────────────────────────────────────────────────────────────────────────
+    
+    def _set_input_value(self, element, value):
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value'
+            ).set;
+            // React tracks the last-seen value via _valueTracker. If the tracker
+            // already holds the current DOM value, React treats the dispatched
+            // 'change' event as a no-op and submits the original value. Reset the
+            // tracker to the current (old) value so React sees a real change.
+            const tracker = input._valueTracker;
+            if (tracker) { tracker.setValue(input.value); }
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            value,
+        )
+    
+    # ─────────────────────────────────────────────────────────────────────────
+    # High-level helpers
+    # ─────────────────────────────────────────────────────────────────────────
+    
+    def fill_customer_form(self, first_name, last_name, site, email=""):
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        if email:
+            self.enter_email(email)
+        self.ensure_active_switch_on()
+        self.select_site(site)
+    
+>   def create_full_customer(
+        self,
+        first_name,
+        last_name,
+        site,
+        email="",
+        phone="",
+        dob="",
+        address="",
+        zip_code="",
+        state="",
+        city="",
+    ):
+E   RuntimeError: Customer save did not return to list. Page message: none visible
+
+pages/admin_portal/customers_page.py:896: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.
+=========================== short test summary info ============================
+FAILED tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x0000000102ae9a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000102ae1b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x000000010258b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x00000001025d3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000102613030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x00000001025c9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x0000000102aa6c40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x0000000102aaa3b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x0000000102a8d0f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x0000000102aaac4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x0000000102a7e3b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x0000000102ad01f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x0000000102ad0354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x0000000102ae17a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x0000000101455a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x000000010144db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000100ef72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000100f3fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000100f7f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x0000000100f35434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x0000000101412c40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x00000001014163b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x00000001013f90f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x0000000101416c4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x00000001013ea3b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x000000010143c1f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x000000010143c354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x000000010144d7a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x000000010516da84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000105165b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c0f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c57a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000104c97030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x0000000104c4d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x000000010512ac40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x000000010512e3b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x00000001051110f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x000000010512ec4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x00000001051023b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x00000001051541f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x0000000105154354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x00000001051657a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x00000001008f9a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001008f1b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x000000010039b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x00000001003e3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000100423030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x00000001003d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x00000001008b6c40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x00000001008ba3b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x000000010089d0f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x00000001008bac4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x000000010088e3b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x00000001008e01f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x00000001008e0354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x00000001008f17a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists - AssertionError: assert 'auto customer1 edited' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b92410>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists - AssertionError: assert 'auto customer1 edited' == 'auto customer1'
+  
+  - auto customer1
+  + auto customer1 edited
+  ?               +++++++
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values - AssertionError: assert 'auto customer1 edited' == 'auto customer1'
+  
+  - auto customer1
+  + auto customer1 edited
+  ?               +++++++
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer - AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b78610>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist - AssertionError: assert 'auto customer1 edited' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118c76350>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present - assert False
+ +  where False = transaction_history_is_visible()
+ +    where transaction_history_is_visible = <pages.admin_portal.customers_page.CustomersPage object at 0x118183490>.transaction_history_is_visible
+FAILED tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present - AssertionError: assert ('All time' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records' or 'Today' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records' or 'Select range' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nEdit\nCancel\nSave changes\nCustomer info\nCars settings\nPayment settings\nStatistics\nCredit card info\nCardholder name\nCard number\nExpiration\nCVV\nZIP code\nSave card\nPayment history\nFilter by\nInvoice number\nLicense plate\nRFID\nTotal amount\nWash date\nWash time\nSite name\nStatus\nPage 1 of 0\n|\nShow 100\nout of 0 records')
+FAILED tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only - AssertionError: assert 'TCrt1-01fd31' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nSuccess\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118dd1150>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate - RuntimeError: Customer save did not return to list. Page message: none visible
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number - AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x118b0f690>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name - AssertionError: assert 'auto customer1' in 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters'
+ +  where 'Overview\nSites / Locations\nServices\nCustomers\nUsers / Employees\nKiosk Settings\nGas Pump Settings\nPOS Settings\nTunnel Settings\nSelf Serve\nReports\nVishal Kumar\nOwner\nCustomers\nFilter by\n+ Add customer\nFirst Name\nLast Name\nPhone number\nCars (#)\nLast visit\nTotal amount spent\nMembership status\nPage 1 of 0\n|\nShow 100\nout of 0 records\nFilter by\nFirst Name\nLast Name\nEmail\nRFID\nSite/Location\nSelect site/location\nActive customers only\nMembership\nSelect membership\nSign up date from\nSign up date to\nNext payment date from\nNext payment date to\nRecurring\nAll\nPrepaid\nAll\nAllow invoicing\nAll\nCard on file\nAll\nCC number\nCC type\nCC type\nCanceled\nAll\nDeclined\nAll\nNumber of cars min\nNumber of cars max\nNumber of recurring min\nNumber of recurring max\nNumber of prepaid min\nNumber of prepaid max\nReset filters\nApply filters' = get_body_text()
+ +    where get_body_text = <pages.admin_portal.customers_page.CustomersPage object at 0x1070186d0>.get_body_text
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x0000000105295a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x000000010528db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104d372a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104d7fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000104dbf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x0000000104d75434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x0000000105252c40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x00000001052563b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x00000001052390f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x0000000105256c4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x000000010522a3b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x000000010527c1f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x000000010527c354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x000000010528d7a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls - selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+0   chromedriver                        0x0000000104b2da84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104b25b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001045cf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104617a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+4   chromedriver                        0x0000000104657030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+5   chromedriver                        0x000000010460d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+6   chromedriver                        0x0000000104aeac40 cxxbridge1$str$ptr + 2921304
+7   chromedriver                        0x0000000104aee3b8 cxxbridge1$str$ptr + 2935504
+8   chromedriver                        0x0000000104ad10f8 cxxbridge1$str$ptr + 2816016
+9   chromedriver                        0x0000000104aeec4c cxxbridge1$str$ptr + 2937700
+10  chromedriver                        0x0000000104ac23b0 cxxbridge1$str$ptr + 2755272
+11  chromedriver                        0x0000000104b141f4 cxxbridge1$str$ptr + 3090700
+12  chromedriver                        0x0000000104b14354 cxxbridge1$str$ptr + 3091052
+13  chromedriver                        0x0000000104b257a4 cxxbridge1$str$ptr + 3161788
+14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+FAILED tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save - assert not True
+ +  where True = first_name_input_is_valid()
+ +    where first_name_input_is_valid = <pages.admin_portal.customers_page.CustomersPage object at 0x118b78610>.first_name_input_is_valid
+FAILED tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save - assert not True
+ +  where True = last_name_input_is_valid()
+ +    where last_name_input_is_valid = <pages.admin_portal.customers_page.CustomersPage object at 0x118a7d450>.last_name_input_is_valid
+FAILED tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour - RuntimeError: Customer save did not return to list. Page message: none visible
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists - RuntimeError: Customer save did not return to list. Page message: none visible
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists - RuntimeError: Customer save did not return to list. Page message: none visible
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes - RuntimeError: Customer save did not return to list. Page message: none visible
+= 20 failed, 32 passed, 29 skipped, 4 xfailed, 8 xpassed, 3 errors in 1622.83s (0:27:02) =

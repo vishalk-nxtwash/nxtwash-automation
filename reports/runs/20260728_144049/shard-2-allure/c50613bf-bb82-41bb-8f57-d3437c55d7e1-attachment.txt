@@ -1,0 +1,1 @@
+2026-07-29 00:48:27,460 INFO nxtwash: Verifying Wash Packages list shell and primary controls

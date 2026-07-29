@@ -66,10 +66,6 @@ def test_kiosk_list_pagination_shows_count(browser):
 
 @allure.title("KSK-LST-005 Results-per-page control is present on the list page")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-LST-005: Results-per-page control locator not confirmed in DevTools — verify exact element before removing xfail.",
-)
 def test_kiosk_list_results_per_page(browser):
     page = open_kiosk_page(browser)
     body = page.get_body_text()

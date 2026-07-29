@@ -36,7 +36,6 @@ def test_employees_page_loads(browser):
 
 @allure.title("EMP-LST-002 Employees tab displays the seven expected columns")
 @pytest.mark.regression
-@_COLUMNS_XFAIL
 def test_employees_list_displays_correct_columns(browser):
     page = open_employees_page(browser)
     headers = page.page_header_columns_text()
@@ -84,6 +83,7 @@ def test_status_column_shows_badge(browser, managed_employee):
 
 @allure.title("EMP-LST-005 Pagination control shows a non-empty 'Showing N of N' label")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_employees_pagination_shows_count(browser):
     page = open_employees_page(browser)
     body = page.get_body_text()

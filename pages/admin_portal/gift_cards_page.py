@@ -660,11 +660,17 @@ class GiftCardsPage(BasePage):
         """Fill gift card form with requested settings."""
         self.enter_gift_card_name(gift_card_name)
         self.enter_landing_page_code(landing_page_code)
-        # Assign locations BEFORE enabling toggles: toggle clicks cause a form
-        # reflow that shifts the assignment grid's rows into an area covered by
-        # settings-page__form-column, making checkbox clicks unclickable.
-        self.assign_all_locations_and_show_on_cp(location_names)
+        # Assign location checkboxes BEFORE enabling main toggles: toggling the
+        # main switches causes a form reflow that pushes grid rows behind the
+        # settings-page__form-column overlay, making checkbox clicks unclickable.
+        for location_name in location_names:
+            self.assign_location(location_name)
         self.enable_all_main_toggles()
+        # Enable per-location Show on CP AFTER main toggles: the "Show on customer
+        # portal" main switch triggers a grid re-render that resets per-location
+        # CP switches to OFF, so they must be set last.
+        for location_name in location_names:
+            self.enable_location_show_on_cp(location_name)
         # Enter amount last — toggle/checkbox interactions trigger React
         # re-renders that reset the amount field to its server value if set earlier.
         self.enter_gift_card_amount(amount)

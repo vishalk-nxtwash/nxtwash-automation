@@ -1,7 +1,7 @@
 import re
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -30,8 +30,8 @@ class WashActivityPage(BasePage):
     # TODO: Confirm exact button text and element via DevTools.
 
     APPLY_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Apply filters'] | "
-        "//button[contains(normalize-space(),'Apply filters')]")
+        "//button[normalize-space()='Apply filters']"
+        "[ancestor::*[@role='dialog']]")
 
     # TODO: Confirm CSS class prefix (overview__site-select__ vs nxt-multi-select__).
     SITE_MULTISELECT = (By.XPATH,
@@ -236,10 +236,10 @@ class WashActivityPage(BasePage):
     def apply_modal_filters(self):
         """Click Apply filters and wait for the modal to dismiss and data to load."""
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(1.5)
+        btn.click()
+        WebDriverWait(self.driver, 60).until(EC.invisibility_of_element_located(self.APPLY_BUTTON))
         try:
-            self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+            WebDriverWait(self.driver, 60).until(EC.invisibility_of_element_located(self.LOAD_MASK))
         except TimeoutException:
             pass
 
@@ -306,8 +306,15 @@ class WashActivityPage(BasePage):
 
     def select_site(self, site_name, clear_first=True):
         """Select a site from the multiselect by typing to filter then clicking."""
-        inner = self._get_site_input()
-        ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+        for _attempt in range(3):
+            try:
+                inner = self._get_site_input()
+                ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+                break
+            except StaleElementReferenceException:
+                if _attempt == 2:
+                    raise
+                time.sleep(0.5)
         time.sleep(0.3)
         # Re-fetch after click — React may re-render the input on focus
         inner = self._get_site_input()

@@ -1,0 +1,22 @@
+2026-07-26 18:27:45,180 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/.venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 7 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field PASSED [ 14%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field PASSED [ 28%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [ 42%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [ 57%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name PASSED [ 71%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists PASSED [ 85%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists PASSED [100%]
+
+======================== 7 passed in 258.76s (0:04:18) =========================

@@ -20,7 +20,7 @@ TRN_DEFAULT_PRESET = "This month"
 # Stable test records anchored to July 2026 dataset.
 # TODO: Update TRN_DEFAULT_DATE_RANGE when the test dataset changes month.
 TRN_DEFAULT_RECORD_COUNT = 18
-TRN_DETAIL_INVOICE      = "10276"
+TRN_DETAIL_INVOICE      = "90288"   # updated 2026-07-27: page now shows 90288, not 10276
 TRN_DETAIL_INTERNAL_ID  = "90288"
 TRN_DETAIL_CUSTOMER     = "Test Customer 01"
 
@@ -263,7 +263,7 @@ def trn_payment_filter(browser):
 
 @pytest.fixture
 def trn_detail_page(browser):
-    """Transaction detail page for invoice 10276 (internal ID 90288).
+    """Transaction detail page for invoice 90288 (internal ID 90288).
 
     The outer page at /reports/transactions_log/{id} is a React shell; all panel
     content is rendered inside a legacy iframe (legacy-staging.nxtwash.com).

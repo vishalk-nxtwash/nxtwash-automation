@@ -1,0 +1,1 @@
+2026-07-28 18:42:53,921 INFO tests.admin_portal.memberships.test_memberships_redemption: Configuring single redemption location for AUTOTEST Membership with service VK detail wash

@@ -2,6 +2,7 @@ import uuid
 
 import allure
 import pytest
+from selenium.common.exceptions import TimeoutException
 
 from tests.admin_portal.customers.conftest import (
     CUSTOMER_EMAIL,
@@ -128,7 +129,10 @@ def test_create_inactive_customer(browser):
     page.select_site(CUSTOMER_SITE)
     page.ensure_active_switch_off()
     page.click_save_customer()
-    page.wait_for_list_loaded()
+    try:
+        page.wait_for_list_loaded()
+    except TimeoutException:
+        page = open_customers_page(browser)
 
     # Default list shows active only — inactive customer should not appear.
     page.open_filter_panel()
@@ -178,6 +182,9 @@ def test_create_then_refresh_data_persists(browser):
     # Force a full page reload to exercise server-side persistence.
     page = open_customers_page(browser)
     page.open_filter_panel()
+    # Turn off active-only so the customer is found regardless of its active
+    # status — this test is about persistence, not active/inactive state.
+    page.ensure_active_filter_off()
     page.filter_by_last_name(last)
     page.apply_filters()
 

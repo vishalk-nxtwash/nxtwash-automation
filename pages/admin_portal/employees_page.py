@@ -18,8 +18,11 @@ class AdminEmployeesPage(BasePage):
     EMP_CREATE_FRAME = (By.XPATH,
         "//iframe[contains(@src,'/users/employees/new')]")
     EMP_EDIT_FRAME = (By.XPATH,
-        "//iframe[contains(@src,'/users/employees/') "
-        "and not(contains(@src,'/users/employees/new'))]")
+        "//iframe["
+        "contains(@src,'/users/employees') and ("
+        "contains(@src,'employeeId=') or "
+        "(contains(@src,'/users/employees/') and not(contains(@src,'/users/employees/new')))"
+        ")]")
 
     PAGE_TITLE = (By.XPATH,
         "//*[normalize-space()='Employees' and (self::h1 or self::h2 or "
@@ -63,7 +66,7 @@ class AdminEmployeesPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(EC.frame_to_be_available_and_switch_to_it(self.EMP_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
@@ -105,10 +108,14 @@ class AdminEmployeesPage(BasePage):
         return "concat(%s)" % ", \"'\", ".join("'%s'" % p for p in parts)
 
     def _row_locator(self, last_name):
-        safe = self._xpath_string(last_name)
+        # Use translate() for case-insensitive match — staging may title-case
+        # the name (e.g. "User 2") even when stored as "user 2".
+        safe = self._xpath_string(last_name.lower())
+        _U = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        _L = 'abcdefghijklmnopqrstuvwxyz'
         return (By.XPATH,
             "//*[contains(@class,'InovuaReactDataGrid__row') and "
-            ".//*[contains(normalize-space(),%s)]]" % safe)
+            ".//*[contains(translate(normalize-space(),'%s','%s'),%s)]]" % (_U, _L, safe))
 
     def wait_for_employee_row(self, last_name, timeout=None):
         # InovuaReactDataGrid rows are present in the DOM but Selenium's
@@ -131,7 +138,7 @@ class AdminEmployeesPage(BasePage):
             pass
         self.search_employee(last_name)
         try:
-            self.wait_for_employee_row(last_name, timeout=60)
+            self.wait_for_employee_row(last_name, timeout=120)
             return True
         except TimeoutException:
             return False
@@ -300,14 +307,14 @@ class AdminEmployeeFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_EDIT_FRAME)
@@ -548,8 +555,11 @@ class AdminEmployeeShiftPage(BasePage):
     SHIFT_CREATE_FRAME = (By.XPATH,
         "//iframe[contains(@src,'/users/employeeShift/new')]")
     SHIFT_EDIT_FRAME = (By.XPATH,
-        "//iframe[contains(@src,'/users/employeeShift/') "
-        "and not(contains(@src,'/users/employeeShift/new'))]")
+        "//iframe["
+        "contains(@src,'/users/employeeShift') and ("
+        "contains(@src,'shiftId=') or "
+        "(contains(@src,'/users/employeeShift/') and not(contains(@src,'/users/employeeShift/new')))"
+        ")]")
 
     SHIFT_PAGE_TITLE = (By.XPATH,
         "//*[contains(normalize-space(),'Employee shift') and "
@@ -600,7 +610,7 @@ class AdminEmployeeShiftPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.SHIFT_LIST_FRAME)
         )
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
@@ -758,7 +768,7 @@ class AdminEmployeeShiftFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_COMBOBOX))
@@ -766,7 +776,7 @@ class AdminEmployeeShiftFormPage(BasePage):
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))

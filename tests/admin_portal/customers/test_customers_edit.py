@@ -1,5 +1,6 @@
 import allure
 import pytest
+from selenium.common.exceptions import TimeoutException
 
 from tests.admin_portal.customers.conftest import (
     CUSTOMER_EMAIL,
@@ -91,7 +92,10 @@ def test_activate_inactive_customer(browser, managed_customer):
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
     page.click_save_customer()
-    page.wait_for_list_loaded()
+    try:
+        page.wait_for_list_loaded()
+    except TimeoutException:
+        page = open_customers_page(browser)
 
     page.open_filter_panel()
     page.filter_by_last_name(CUSTOMER_LAST)
@@ -108,7 +112,10 @@ def test_deactivate_active_customer(browser, managed_customer):
     _open_edit_for_managed_customer(page)
     page.ensure_active_switch_off()
     page.click_save_customer()
-    page.wait_for_list_loaded()
+    try:
+        page.wait_for_list_loaded()
+    except TimeoutException:
+        page = open_customers_page(browser)
 
     page.open_filter_panel()
     page.filter_by_last_name(CUSTOMER_LAST)

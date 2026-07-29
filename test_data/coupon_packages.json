@@ -1,7 +1,7 @@
 {
   "reference": {
-    "existing_package":          "VK ACC2",
-    "inactive_package":          "VK ACC2 Inactive",
+    "existing_package":          "VK ACC4",
+    "inactive_package":          "VK ACC4 Inactive",
     "giveaway_service":          "vk detail wash",
     "giveaway_services":         ["vk detail wash", "Detail cleaning"],
     "expiration_days":           "30"

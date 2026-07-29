@@ -89,8 +89,16 @@ class TunnelSettingsListPage(BasePage):
 
     def open_edit_tunnel(self, name):
         self.wait_for_tunnel_row(name)
-        edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
-        self.driver.execute_script("arguments[0].click();", edit_link)
+        try:
+            row_el = self.driver.find_element(*self._row_locator(name))
+            row_container = row_el.find_element(By.XPATH,
+                "./ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]")
+            edit_link = row_container.find_element(By.XPATH,
+                ".//a[@role='button' and contains(@class,'table__edit')]")
+            self.driver.execute_script("arguments[0].click();", edit_link)
+        except Exception:
+            edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
+            self.driver.execute_script("arguments[0].click();", edit_link)
 
     def get_visible_row_count(self):
         rows = self.driver.find_elements(*self.GRID_ROWS)
@@ -151,11 +159,14 @@ class TunnelSettingsFormPage(BasePage):
         "//*[contains(normalize-space(),'Tunnel operational')]"
         "/ancestor::*[.//button[@role='switch']][1]//button[@role='switch']")
 
+    # Placeholder contains "controler" (confirmed typo in staging UI — TSN-006 copy defect).
+    # Using placeholder is more reliable than label text because the label spelling varies.
     CONTROLLER_ID_COMBOBOX = (By.XPATH,
-        "//*[contains(normalize-space(),'Controller') and "
-        "(contains(normalize-space(),'ID') or contains(normalize-space(),'Id') or "
-        "contains(normalize-space(),'id'))]"
-        "/following::div[contains(@class,'form-select__control')][1]")
+        "//div[contains(@class,'form-select__control') and ("
+        ".//input[contains(@placeholder,'controler')] or "
+        ".//input[contains(@placeholder,'controller')] or "
+        ".//input[contains(@placeholder,'Controller')]"
+        ")]")
 
     # ── Retract settings section internals ────────────────────────────────────
 
@@ -215,11 +226,17 @@ class TunnelSettingsFormPage(BasePage):
         # Same pattern: full navigation to /tunnels/{id}, form inside TUNNEL_EDIT_FRAME.
         self._switch_to_form_frame(TunnelSettingsListPage.TUNNEL_EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
-        # Confirm form data has loaded: at least one visible text input has a value.
+        # Confirm React has hydrated the form — any visible non-control input must
+        # carry a value.  Use XPath negation rather than @type='text' because inputs
+        # without an explicit type attribute are not matched by @type='text' in XPath
+        # even though they behave as text inputs in the browser.
         self.wait.until(
             lambda d: any(
                 inp.get_attribute("value")
-                for inp in d.find_elements(By.XPATH, "//input[@type='text']")
+                for inp in d.find_elements(By.XPATH,
+                    "//input[not(@type='hidden') and not(@type='checkbox') "
+                    "and not(@type='radio') and not(@type='submit') "
+                    "and not(@type='button') and not(@type='file')]")
                 if inp.is_displayed()
             )
         )
@@ -326,9 +343,13 @@ class TunnelSettingsFormPage(BasePage):
         )
         if current != on:
             self.driver.execute_script("arguments[0].click();", toggle)
-            expected = "true" if on else "false"
+            aria_expected  = "true" if on else "false"
+            state_expected = "checked" if on else "unchecked"
             self.wait.until(
-                lambda d: d.find_element(*locator).get_attribute("aria-checked") == expected
+                lambda d: (
+                    d.find_element(*locator).get_attribute("aria-checked") == aria_expected
+                    or d.find_element(*locator).get_attribute("data-state") == state_expected
+                )
             )
 
     def toggle_is_present(self, label):
@@ -345,17 +366,30 @@ class TunnelSettingsFormPage(BasePage):
         )
 
     def set_tunnel_operational(self, on):
-        toggle = self.wait.until(EC.element_to_be_clickable(self.TUNNEL_OPERATIONAL_TOGGLE))
+        # EC.element_to_be_clickable with a compound XPath (|) returns the first
+        # element in document order, which may be hidden.  Use find_elements and
+        # filter for the first visible + enabled button to avoid the wrong pick.
+        def _get_toggle(d):
+            for e in d.find_elements(*self.TUNNEL_OPERATIONAL_TOGGLE):
+                if e.is_displayed() and e.is_enabled():
+                    return e
+            return None
+
+        toggle = self.wait.until(_get_toggle)
         current = (
             toggle.get_attribute("aria-checked") == "true"
             or toggle.get_attribute("data-state") == "checked"
         )
         if current != on:
             self.driver.execute_script("arguments[0].click();", toggle)
-            expected = "true" if on else "false"
+            aria_expected  = "true" if on else "false"
+            state_expected = "checked" if on else "unchecked"
             self.wait.until(
-                lambda d: d.find_element(*self.TUNNEL_OPERATIONAL_TOGGLE)
-                .get_attribute("aria-checked") == expected
+                lambda d: (
+                    (t := _get_toggle(d)) is not None
+                    and (t.get_attribute("aria-checked") == aria_expected
+                         or t.get_attribute("data-state") == state_expected)
+                )
             )
 
     # ── Controller ID (inside Tunnel settings section) ────────────────────────
@@ -364,13 +398,28 @@ class TunnelSettingsFormPage(BasePage):
         self.select_react_dropdown_option(self.CONTROLLER_ID_COMBOBOX, controller_id)
 
     def get_controller_id_options(self):
+        from selenium.webdriver.common.action_chains import ActionChains
         el = self.wait.until(EC.element_to_be_clickable(self.CONTROLLER_ID_COMBOBOX))
         self.driver.execute_script("arguments[0].click();", el)
-        opts = self.wait.until(EC.presence_of_all_elements_located(
-            (By.XPATH,
-             "//*[contains(@class,'form-select__option')] | //*[@role='option']")
-        ))
-        return [o.text.strip() for o in opts if o.text.strip()]
+        inner_inputs = el.find_elements(By.XPATH, ".//input")
+        if inner_inputs:
+            try:
+                ActionChains(self.driver).click(inner_inputs[0]).perform()
+            except Exception:
+                self.driver.execute_script("arguments[0].click();", inner_inputs[0])
+        return self.wait.until(
+            lambda d: d.execute_script("""
+                var opts = Array.from(document.querySelectorAll(
+                    '[role="option"], [class*="__option"], [class*="select__option"]'
+                )).filter(function(el) {
+                    var r = el.getBoundingClientRect();
+                    return r.height > 0 && el.textContent.trim();
+                });
+                return opts.length > 0
+                    ? opts.map(function(el) { return el.textContent.trim(); })
+                    : null;
+            """)
+        ) or []
 
     # ── Retract settings ──────────────────────────────────────────────────────
 
@@ -383,6 +432,7 @@ class TunnelSettingsFormPage(BasePage):
         return len([e for e in els if e.is_displayed()])
 
     def select_retract_service(self, row_index, service):
+        from selenium.webdriver.common.action_chains import ActionChains
         dropdowns = [
             e for e in self.driver.find_elements(*self.RETRACT_SERVICE_DROPDOWNS)
             if e.is_displayed()
@@ -391,7 +441,15 @@ class TunnelSettingsFormPage(BasePage):
             raise IndexError(
                 "Retract row %d not found (%d visible)" % (row_index, len(dropdowns))
             )
-        self.driver.execute_script("arguments[0].click();", dropdowns[row_index])
+        combobox = dropdowns[row_index]
+        self.driver.execute_script("arguments[0].click();", combobox)
+        # JS click alone doesn't open React Select in headless; focus the inner input.
+        inner = combobox.find_elements(By.XPATH, ".//input")
+        if inner:
+            try:
+                ActionChains(self.driver).click(inner[0]).perform()
+            except Exception:
+                self.driver.execute_script("arguments[0].click();", inner[0])
         opt = self.wait.until(lambda d: self._find_react_option(service))
         self.driver.execute_script("arguments[0].click();", opt)
 
@@ -437,8 +495,6 @@ class TunnelSettingsFormPage(BasePage):
         self.driver.execute_script("arguments[0].click();", remove_btns[row_index])
 
     # ── Section accordion helpers ─────────────────────────────────────────────
-
-    # ── Section accordion helpers ─────────────────────────────────────────────
     # DevTools confirmed: heading text lives in *-heading__header-title div.
     # The parent div is the clickable toggle; no aria-expanded is set.
 
@@ -460,6 +516,62 @@ class TunnelSettingsFormPage(BasePage):
         raise TimeoutException("Section header not found: %s" % section_name)
 
     def section_is_expanded(self, section_name):
+        # "Tunnel settings" special-case: the operational toggle XPath can match
+        # elements outside the accordion (visible regardless of section state), so
+        # it cannot reliably proxy for section expansion.  Use the Controller ID
+        # combobox instead — it is inside the accordion and only visible when open.
+        if section_name == "Tunnel settings":
+            els = self.driver.find_elements(*self.CONTROLLER_ID_COMBOBOX)
+            return any(e.is_displayed() for e in els)
+
+        # Primary: JS walk from the confirmed heading__header-title element.
+        # Finds the first ancestor that has multiple children (the section container),
+        # then checks whether the NON-heading child branch has any visible form
+        # controls (input / role=switch / form-select / Add-new button).
+        # This works regardless of aria-expanded or class naming conventions.
+        heading_xpath = (
+            "//*[contains(@class,'heading__header-title') "
+            "and normalize-space()='%s']" % section_name
+        )
+        headings = [e for e in self.driver.find_elements(By.XPATH, heading_xpath)
+                    if e.is_displayed()]
+        if headings:
+            try:
+                result = self.driver.execute_script("""
+                    var heading = arguments[0];
+                    var el = heading;
+                    for (var i = 0; i < 5; i++) {
+                        el = el.parentElement;
+                        if (!el) break;
+                        var children = el.children;
+                        if (children.length < 2) continue;
+                        // This ancestor has multiple children — treat as section container.
+                        // Inspect the branch that does NOT contain the heading.
+                        for (var j = 0; j < children.length; j++) {
+                            if (children[j].contains(heading)) continue;
+                            var controls = children[j].querySelectorAll(
+                                'input, button[role="switch"], ' +
+                                'div[class*="form-select__control"], ' +
+                                'span[data-type="primary"]'
+                            );
+                            if (controls.length === 0) continue;
+                            for (var k = 0; k < controls.length; k++) {
+                                var s = window.getComputedStyle(controls[k]);
+                                if (s.display !== 'none' && s.visibility !== 'hidden'
+                                        && parseFloat(s.opacity) > 0) {
+                                    return true;   // content visible → expanded
+                                }
+                            }
+                            return false;  // content present but hidden → collapsed
+                        }
+                    }
+                    return false;
+                """, headings[0])
+                if result is not None:
+                    return bool(result)
+            except Exception:
+                pass
+        # Fallback: aria-expanded or class keywords (original heuristics)
         for xpath in self._SECTION_XPATHS:
             els = [e for e in self.driver.find_elements(By.XPATH, xpath % section_name)
                    if e.is_displayed()]
@@ -469,7 +581,6 @@ class TunnelSettingsFormPage(BasePage):
             expanded = el.get_attribute("aria-expanded")
             if expanded is not None:
                 return expanded == "true"
-            # Class-based fallback (some frameworks toggle open/expanded/active)
             cls = (el.get_attribute("class") or "").lower()
             if any(k in cls for k in ("open", "expanded", "active")):
                 return True

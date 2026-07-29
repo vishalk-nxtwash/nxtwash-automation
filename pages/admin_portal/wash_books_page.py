@@ -171,7 +171,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
@@ -192,7 +192,7 @@ class WashBooksPage(BasePage):
     def wait_for_create_loaded(self):
         """Wait until the create wash book form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(
@@ -579,7 +579,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_service_location_rows(self):
         """Wait until service-setting location rows are hydrated."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(
             lambda driver: len(self.visible_location_price_inputs()) >= 1
         )
@@ -1023,10 +1023,10 @@ class WashBooksPage(BasePage):
         The form may be rendered inside an iframe (same pattern as WB/WE forms)
         or directly on the page. Try the iframe first; fall back to default content.
         """
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.frame_to_be_available_and_switch_to_it(self.CWB_CREATE_FRAME)
             )
         except TimeoutException:
@@ -1035,10 +1035,10 @@ class WashBooksPage(BasePage):
 
     def wait_for_cwb_edit_loaded(self):
         """Wait until the CWB edit form is ready."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.frame_to_be_available_and_switch_to_it(self.CWB_EDIT_FRAME)
             )
         except TimeoutException:
