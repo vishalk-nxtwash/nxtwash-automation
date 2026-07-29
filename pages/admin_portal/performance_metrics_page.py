@@ -272,7 +272,7 @@ class PerformanceMetricsPage(BasePage):
             ActionChains(self.driver).move_to_element(inner).click(inner).perform()
             time.sleep(0.4)
             if clear_first:
-                inner.send_keys(Keys.COMMAND, "a")
+                inner.send_keys(Keys.CONTROL, "a")
                 inner.send_keys(Keys.BACKSPACE)
             inner.send_keys(site_name)
         else:

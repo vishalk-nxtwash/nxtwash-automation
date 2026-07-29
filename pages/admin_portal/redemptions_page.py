@@ -215,7 +215,7 @@ class RedemptionsPage(BasePage):
         time.sleep(0.3)
         inner = self._get_site_inner_input()
         if clear_first:
-            inner.send_keys(Keys.COMMAND + "a")
+            inner.send_keys(Keys.CONTROL + "a")
             inner.send_keys(Keys.BACKSPACE)
         inner.send_keys(site_name)
         time.sleep(0.3)
@@ -355,7 +355,7 @@ class RedemptionsPage(BasePage):
         """
         combined = "%s - %s" % (start, end)
         el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.CONTROL + "a")
         el.send_keys(Keys.BACKSPACE)
         el.send_keys(combined)
         el.send_keys(Keys.TAB)

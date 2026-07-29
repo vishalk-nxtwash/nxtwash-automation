@@ -58,7 +58,7 @@ class EditCompanyPage(BasePage):
                 self.TERMS_CONDITION_TEXTAREA
             )
         )
-        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.CONTROL, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(terms_condition)
 
