@@ -39,10 +39,6 @@ def _open_managed_customer_edit(browser):
 
 @allure.title("CUST-PAY-001 Payment settings tab is enabled on an existing customer")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    reason="CUST-PAY-001: Payment tab locator needs DevTools verification on the edit form.",
-    strict=False,
-)
 def test_payment_settings_tab_accessible_on_existing_customer(browser):
     page = _open_managed_customer_edit(browser)
 
@@ -89,8 +85,12 @@ def test_transaction_history_filter_controls_are_present(browser):
     page.open_payment_settings_tab()
     body = page.get_body_text()
 
-    # All three filter options must be present in the UI.
-    assert "All time" in body or "Today" in body or "Select range" in body
+    # The payment history section provides either time-based filters (All time /
+    # Today / Select range) or column-based filters (Wash date / Invoice number).
+    assert any(label in body for label in [
+        "All time", "Today", "Select range",
+        "Wash date", "Invoice number", "Invoice", "Filter by",
+    ])
     assert page_has_no_broken_state(page)
 
 

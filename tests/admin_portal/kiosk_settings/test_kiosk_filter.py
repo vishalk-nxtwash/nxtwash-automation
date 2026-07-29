@@ -68,7 +68,6 @@ def test_filter_by_site(browser):
 
 @allure.title("KSK-FLT-004 Filter-by-site result count matches visible rows")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_by_site_count_matches_rows(browser):
     # Dependency: Sites & Locations module
     import re

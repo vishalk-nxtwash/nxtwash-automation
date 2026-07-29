@@ -1,3 +1,5 @@
+from datetime import date as _date
+
 from pages.admin_portal.discounts_page import DiscountsPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
@@ -14,7 +16,13 @@ SERVICE_CATEGORY           = _D["reference"]["service_category"]
 DISCOUNT_AMOUNT            = _D["template"]["amount"]
 START_DAY                  = _D["template"]["start_day"]
 START_TIME                 = _D["template"]["start_time"]
-START_VALUE                = _D["template"]["start_value"]
+
+_today = _date.today()
+START_VALUE = (
+    _date(_today.year, _today.month, int(START_DAY)).strftime("%B")
+    + f" {int(START_DAY)}, {_today.year} "
+    + START_TIME
+)
 PERCENTAGE_DISCOUNT_NAME   = _D["percentage"]["discount_name"]
 PERCENTAGE_AMOUNT          = _D["percentage"]["amount"]
 ALL_LOC_DISCOUNT_NAME      = _D["reference"]["all_locations_discount"]
@@ -52,7 +60,6 @@ def create_discount_if_missing(browser, discount_name=DISCOUNT_NAME):
     discounts_page = open_discounts_page(browser)
 
     if discounts_page.discount_exists(discount_name):
-        discounts_page = open_discounts_page(browser)
         discounts_page.open_edit_discount(discount_name)
         discounts_page.fill_discount_form(
             discount_name,

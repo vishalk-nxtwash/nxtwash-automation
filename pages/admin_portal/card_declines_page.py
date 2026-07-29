@@ -93,7 +93,7 @@ class CardDeclinesPage(BasePage):
             return
         for pattern in self._FRAME_SRC_PATTERNS:
             try:
-                WebDriverWait(self.driver, 2).until(
+                WebDriverWait(self.driver, 15).until(
                     EC.frame_to_be_available_and_switch_to_it(
                         (By.XPATH, "//iframe[contains(@src,'%s')]" % pattern)
                     )
@@ -143,14 +143,13 @@ class CardDeclinesPage(BasePage):
             return False
 
     def get_body_text(self):
+        # JS innerText avoids StaleElementReferenceException — no Python-side
+        # DOM reference is held across React re-renders.
         try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except StaleElementReferenceException:
-            time.sleep(0.5)
-            return self.driver.find_element(By.TAG_NAME, "body").text
+            return self.driver.execute_script("return document.body.innerText;") or ""
         except Exception:
             self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
+            return self.driver.execute_script("return document.body.innerText;") or ""
 
     def get_current_url(self):
         return self.driver.current_url

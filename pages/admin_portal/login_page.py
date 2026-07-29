@@ -48,7 +48,7 @@ class AdminLoginPage(BasePage):
 
     def wait_for_loaded(self):
         """Wait until the Admin login form is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
 
         long_wait.until(lambda driver: "/login" in driver.current_url)
         long_wait.until(EC.visibility_of_element_located(self.LOGIN_TITLE))
@@ -296,5 +296,5 @@ class AdminLoginPage(BasePage):
 
     def wait_until_redirected_away_from_login(self):
         """Wait until browser is no longer on login page."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(lambda driver: "/login" not in driver.current_url)

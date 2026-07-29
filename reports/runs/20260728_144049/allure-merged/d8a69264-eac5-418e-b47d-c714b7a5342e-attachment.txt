@@ -1,0 +1,9 @@
+Wash extras
+Edit wash extra
+Cancel
+Save wash extra
+Service settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount

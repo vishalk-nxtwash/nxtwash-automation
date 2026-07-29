@@ -1,0 +1,22 @@
+WARNING  nxtwash:employees_page.py:521 Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city

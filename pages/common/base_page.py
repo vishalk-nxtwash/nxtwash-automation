@@ -1,4 +1,6 @@
-from selenium.common.exceptions import StaleElementReferenceException
+import time
+
+from selenium.common.exceptions import ElementNotInteractableException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -100,9 +102,10 @@ class BasePage:
                     inner_input.send_keys(Keys.BACKSPACE)
                 inner_input.send_keys(option_text)
                 break
-            except StaleElementReferenceException:
+            except (StaleElementReferenceException, ElementNotInteractableException):
                 if _attempt == 2:
                     raise
+                time.sleep(0.5)
                 inner_input = _get_inner_input()
 
         option = WebDriverWait(self.driver, 20).until(

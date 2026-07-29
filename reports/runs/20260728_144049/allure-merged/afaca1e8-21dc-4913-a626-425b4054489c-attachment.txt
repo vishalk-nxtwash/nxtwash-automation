@@ -1,0 +1,2 @@
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download

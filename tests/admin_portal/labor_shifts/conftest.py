@@ -192,6 +192,10 @@ def lab_page(browser):
     Primary dataset (07/01/2026 – current date):
     Cost Per Car = $27.27, Commission Total = $24.00 (all Retail),
     7 Commission Transactions rows.
+
+    Phase 2 has no Apply button and no page title — the inline filter bar
+    auto-applies after a dropdown selection.  Wait for KPI content to confirm
+    the metrics screen has loaded rather than checking for a modal.
     """
     page = open_lab_page(browser)
     page.select_site(LAB_SITE)
@@ -203,6 +207,14 @@ def lab_page(browser):
     except Exception:
         time.sleep(2.0)
     page.apply_modal_filters()
+    # Phase 2: wait for metrics content — no Apply button exists after modal closes.
+    _PHASE2_KEYWORDS = ("Labor", "Cost Per Car", "Productivity", "Commission")
+    try:
+        WebDriverWait(page.driver, 15).until(
+            lambda d: any(kw in page.get_body_text() for kw in _PHASE2_KEYWORDS)
+        )
+    except Exception:
+        time.sleep(3.0)
     return page
 
 
@@ -223,6 +235,13 @@ def lab_zero_data(browser):
     except Exception:
         time.sleep(1.0)
     page.apply_modal_filters()
+    _PHASE2_KEYWORDS = ("Labor", "Cost Per Car", "Productivity", "Commission", "No data")
+    try:
+        WebDriverWait(page.driver, 15).until(
+            lambda d: any(kw in page.get_body_text() for kw in _PHASE2_KEYWORDS)
+        )
+    except Exception:
+        time.sleep(3.0)
     return page
 
 
@@ -266,4 +285,11 @@ def sdm_page(browser):
     except Exception:
         time.sleep(2.0)
     page.apply_modal_filters()
+    _PHASE2_KEYWORDS = ("Labor", "Cost Per Car", "Productivity", "Commission")
+    try:
+        WebDriverWait(page.driver, 15).until(
+            lambda d: any(kw in page.get_body_text() for kw in _PHASE2_KEYWORDS)
+        )
+    except Exception:
+        time.sleep(3.0)
     return page

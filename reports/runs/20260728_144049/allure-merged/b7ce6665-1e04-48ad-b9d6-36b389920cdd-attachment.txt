@@ -1,0 +1,1 @@
+INFO     tests.admin_portal.memberships.test_memberships_validation:test_memberships_validation.py:45 Validating blank required membership form stays on create page

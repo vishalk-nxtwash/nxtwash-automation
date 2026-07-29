@@ -285,7 +285,7 @@ def test_limit_membership_toggle_persists(managed_membership):
         page.open_edit_membership(MANAGED_MEMBERSHIP)
         assert page.limit_membership_switch_is_on()
     finally:
-        page.open_edit_membership(MANAGED_MEMBERSHIP)
+        # Still on the edit form opened above; no need to re-open.
         page.ensure_switch_off(page.LIMIT_MEMBERSHIP_SWITCH)
         page.save_and_return_to_list()
 

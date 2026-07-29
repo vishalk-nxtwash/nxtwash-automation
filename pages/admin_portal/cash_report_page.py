@@ -1,6 +1,6 @@
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -66,11 +66,11 @@ class CashReportPage(BasePage):
         "//button[normalize-space()='Export XLSX']")
 
     # ── Tabs ──────────────────────────────────────────────────────────────────
-    # TODO: Confirm element type (button / a / div) via DevTools
+    # Confirmed DevTools (Jul 2026): Radix UI tabs with role="tab".
+    # Exclude tabs nested inside role="tabpanel" to avoid matching sub-tabs
+    # (e.g. "Cash Box" inside the Kiosk panel content area).
     TABS = (By.XPATH,
-        "//*[@role='tab'] | "
-        "//button[contains(@class,'tab')] | "
-        "//a[contains(@class,'tab')]")
+        "//*[@role='tab' and not(ancestor::*[@role='tabpanel'])]")
 
     # ── Load mask ─────────────────────────────────────────────────────────────
     LOAD_MASK = (By.XPATH,
@@ -185,10 +185,13 @@ class CashReportPage(BasePage):
             "//*[contains(@class,'overview__site-select__option')] | "
             "//*[@role='option']"
         )
-        options = [
-            el.text.strip() for el in option_els
-            if el.is_displayed() and el.text.strip()
-        ]
+        options = []
+        for el in option_els:
+            try:
+                if el.is_displayed() and el.text.strip():
+                    options.append(el.text.strip())
+            except StaleElementReferenceException:
+                pass
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
         except Exception:
@@ -383,7 +386,9 @@ class CashReportPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         time.sleep(1.5)
         try:
-            self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+            WebDriverWait(self.driver, 60).until(
+                EC.invisibility_of_element_located(self.LOAD_MASK)
+            )
         except TimeoutException:
             pass
 
@@ -512,43 +517,23 @@ class CashReportPage(BasePage):
     # ── Sidebar active state ──────────────────────────────────────────────────
 
     def sidebar_cash_report_active(self):
-        """Return True if the FINANCIAL / Cash Report sidebar link appears active.
+        """Return True if the Cash Report sidebar link is active.
 
-        Uses the same JS DOM-walk fallback pattern as PFM.  Known limitation:
-        the sidebar uses Tailwind visual styling with no detectable aria-current
-        or active-class attribute (see PFM-NAV-007 for precedent).
+        Confirmed DevTools (Jul 2026): active link gets Tailwind class bg-blue-500
+        (with ! modifier).  No aria-current or semantic attribute is set.
+        Sidebar lives in the outer shell — switch out of iframe before searching.
+        Uses JS querySelector to avoid is_displayed() returning False in headless
+        for off-screen sidebar elements.
         """
-        els = self.driver.find_elements(By.XPATH,
-            "//*[contains(@class,'active') or @aria-current='page' or "
-            "@aria-current='true' or @aria-selected='true']"
-            "[contains(normalize-space(),'Cash') or "
-            "contains(normalize-space(),'cash') or "
-            "contains(normalize-space(),'Financial')]"
-        )
-        if any(el.is_displayed() for el in els):
-            return True
+        self.driver.switch_to.default_content()
         try:
             return bool(self.driver.execute_script("""
-                function isActive(el, depth) {
-                    if (!el || depth > 6) return false;
-                    var cls = (el.className || '').toString().toLowerCase();
-                    var attrs = [].slice.call(el.attributes || [])
-                        .map(function(a) { return a.name + '=' + a.value; })
-                        .join(' ').toLowerCase();
-                    if (cls.match(/activ|select|current/) ||
-                        attrs.match(/aria-current|aria-selected|data-active/)) {
-                        return true;
-                    }
-                    return isActive(el.parentElement, depth + 1);
-                }
-                var links = document.querySelectorAll('a, [role="link"], [role="menuitem"]');
-                for (var i = 0; i < links.length; i++) {
-                    var t = links[i].textContent.trim().toLowerCase();
-                    if (t.includes('cash') || t.includes('financial')) {
-                        if (isActive(links[i], 0)) return true;
-                    }
-                }
-                return false;
+                var el = document.querySelector('a[href*="cash_report"]');
+                if (!el) return false;
+                var cls = el.className || '';
+                return cls.includes('bg-blue-500');
             """))
         except Exception:
             return False
+        finally:
+            self._switch_to_frame()

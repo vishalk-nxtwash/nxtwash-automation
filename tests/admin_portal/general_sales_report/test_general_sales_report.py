@@ -191,13 +191,6 @@ def test_all_sites_filter(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-005 Clearing selected site chips reverts to All Sites")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-FLT-005: clear-indicator / multi-value remove locator uses class "
-        "heuristics — verify exact DOM element in DevTools before removing xfail."
-    ),
-)
 def test_clearing_site_reverts_to_all(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -335,13 +328,6 @@ def test_four_revenue_cards_displayed(gsr_page):
 @allure.story("Revenue")
 @allure.title("GSR-REV-002..005 Revenue card shows expected number of line items")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-REV-002..005: Line-item count uses DOM heuristics ($ signs following "
-        "card title) — verify actual card structure in DevTools before removing xfail."
-    ),
-)
 @pytest.mark.parametrize("card_title,min_items", _REVENUE_CARD_PARAMS)
 def test_revenue_card_line_items(gsr_filtered, card_title, min_items):
     body = gsr_filtered.get_body_text()
@@ -458,13 +444,6 @@ def test_multi_site_comparison_visible(gsr_page):
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-002 Table shows one row per site plus Total row")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-MSC-002: 'Total' row presence depends on table DOM structure — "
-        "verify row locator in DevTools before removing xfail."
-    ),
-)
 def test_multi_site_shows_site_rows(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Total" in body, "Total row not visible in Multi-Site Comparison table"
@@ -477,13 +456,6 @@ def test_multi_site_shows_site_rows(gsr_filtered):
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-003 Table shows only selected site row when filtered")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-MSC-003: Single-site row isolation check depends on all other site "
-        "names being known — verify row content in DevTools before removing xfail."
-    ),
-)
 def test_multi_site_filtered_single_site(gsr_filtered):
     # gsr_filtered already has GSR_SITE selected
     body = gsr_filtered.get_body_text()
@@ -526,13 +498,6 @@ def test_column_headers_sort(gsr_filtered):
 @allure.story("Revenue Breakdown")
 @allure.title("GSR-RBR-001 Revenue Net by Payment Method shows eight channels")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RBR-001: Payment channel count (8) verified against body text only — "
-        "confirm exact channel labels in DevTools before removing xfail."
-    ),
-)
 def test_revenue_breakdown_payment_channels(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert (
@@ -582,13 +547,6 @@ def test_revenue_breakdown_updates(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-001 Retail Sales table shows six columns")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-SAC-001: Column count heuristic relies on table DOM structure — "
-        "verify Retail Sales table <th> count in DevTools before removing xfail."
-    ),
-)
 def test_retail_sales_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Retail" in body, "Retail Sales section not visible"
@@ -603,13 +561,6 @@ def test_retail_sales_columns(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-003 Retail Sales category row expands to details")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-SAC-003: Row expand relies on aria-expanded on row toggle — "
-        "verify exact expand control in DevTools before removing xfail."
-    ),
-)
 def test_retail_sales_category_expands(gsr_filtered):
     from selenium.webdriver.common.by import By
     body = gsr_filtered.get_body_text()
@@ -625,13 +576,6 @@ def test_retail_sales_category_expands(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-004 Memberships Breakdown shows eight columns")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-SAC-004: Column count heuristic relies on table DOM structure — "
-        "verify Memberships Breakdown table <th> count in DevTools before removing xfail."
-    ),
-)
 def test_memberships_breakdown_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Membership" in body, "Memberships Breakdown section not visible"
@@ -687,13 +631,6 @@ def test_sales_activity_updates(gsr_filtered):
 @allure.story("Prepaid Liability")
 @allure.title("GSR-PLB-001 Prepaid Liability Overview table shows five columns")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-PLB-001: Column count heuristic relies on table DOM structure — "
-        "verify Prepaid Liability table <th> count in DevTools before removing xfail."
-    ),
-)
 def test_prepaid_liability_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Prepaid" in body, "Prepaid Liability section not visible"
@@ -741,13 +678,6 @@ def test_three_summary_tiles(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-001 Gift Card Activity section is collapsible")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-GCA-001: Collapsible state detection uses aria-expanded heuristic — "
-        "verify toggle element attributes in DevTools before removing xfail."
-    ),
-)
 def test_gift_card_section_collapsible(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Gift Card" in body, "Gift Card Activity section not visible"
@@ -761,13 +691,6 @@ def test_gift_card_section_collapsible(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-002 Expanded Gift Card Activity shows three sub-cards")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-GCA-002: Sub-card count uses class heuristic (card/tile/widget) — "
-        "verify child container class names in DevTools before removing xfail."
-    ),
-)
 def test_gift_card_three_sub_cards(gsr_filtered):
     count = gsr_filtered.sub_card_count_after_expand("Gift Card")
     assert count >= 3, (
@@ -822,13 +745,6 @@ def test_gift_cards_redeemed_table(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-001 Washbook Activity section is collapsible")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-WBA-001: Collapsible state detection uses aria-expanded heuristic — "
-        "verify toggle element attributes in DevTools before removing xfail."
-    ),
-)
 def test_washbook_section_collapsible(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert (
@@ -877,13 +793,6 @@ def test_washbook_net_revenue_formula(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-004 Cash to Accrual Reconciliation accordion expands")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-WBA-004: Reconciliation accordion uses aria-expanded — "
-        "verify exact accordion DOM attributes in DevTools before removing xfail."
-    ),
-)
 def test_washbook_reconciliation_accordion(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Washbook")
     body = gsr_filtered.get_body_text()

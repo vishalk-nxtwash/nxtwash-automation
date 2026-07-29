@@ -1,0 +1,1 @@
+2026-07-28 18:23:26,238 INFO tests.admin_portal.memberships.test_memberships_positive: Creating inactive membership: VK inactive 8991d1

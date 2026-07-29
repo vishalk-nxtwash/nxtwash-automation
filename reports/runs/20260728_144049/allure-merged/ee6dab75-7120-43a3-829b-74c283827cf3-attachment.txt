@@ -1,0 +1,64 @@
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters

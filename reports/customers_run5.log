@@ -1,0 +1,354 @@
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/create)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+Select site/location
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Select state
+City
+Select city
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls (url: https://staging.nxtwash.com/customers/create)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+Customer email already exists
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist (url: https://staging.nxtwash.com/customers)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Your connection was interrupted
+A network change was detected.
+ERR_NETWORK_CHANGED
+Reload
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page (url: https://staging.nxtwash.com/)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Press space to play
+Try:
+Checking the network cables, modem and router
+Reconnecting to Wi-Fi
+ERR_INTERNET_DISCONNECTED

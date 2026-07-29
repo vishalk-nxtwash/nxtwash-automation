@@ -73,6 +73,9 @@ def open_csh_page(browser):
     open_admin_path(browser, "/reports/detailed/cash_report")
     page = CashReportPage(browser)
     page.wait_for_modal()
+    # Brief settle after modal appears — prevents ElementNotInteractableException
+    # when a loading overlay is still fading out before dropdown interactions begin.
+    time.sleep(0.8)
     return page
 
 

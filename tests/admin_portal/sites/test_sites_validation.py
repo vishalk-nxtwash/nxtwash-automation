@@ -29,14 +29,6 @@ def test_create_site_validation_blocks_empty_required_fields(
 
 @allure.title("SL-VAL-011 Invalid email format blocks save")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    reason=(
-        "Framework blocker: the pay-week React-select option is unstable in "
-        "this validation path, so the test does not consistently reach email "
-        "validation."
-    ),
-    strict=False,
-)
 @pytest.mark.parametrize("email", ["abc", "abc@", "abc@yopmail"])
 def test_create_site_validation_invalid_email_formats(
     logged_in_admin_browser,

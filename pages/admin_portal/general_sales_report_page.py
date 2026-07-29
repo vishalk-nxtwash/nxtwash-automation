@@ -417,12 +417,15 @@ class AdminRedemptionDetailsPage(BasePage):
     FRAME = (By.XPATH,
         "//iframe[contains(@src,'redemption') or contains(@src,'Redemption')]")
 
+    # The RDT page may use a different React Select class prefix than 'nxt-'.
+    # Anchor by placeholder text / label so the locator works regardless of prefix.
     SITE_COMBOBOX = (By.XPATH,
-        "//div[contains(@class,'nxt-multi-select__control')]")
+        "//div[contains(@class,'__control') and "
+        ".//div[contains(normalize-space(),'Select site to filter')]]")
 
     DATE_PRESET_COMBOBOX = (By.XPATH,
-        "//div[contains(@class,'nxt-select__control')]"
-        "[not(contains(@class,'nxt-multi-select__control'))]")
+        "//*[normalize-space()='Date range presets']/following::div"
+        "[contains(@class,'__control')][1]")
 
     DATE_RANGE_INPUT = (By.XPATH, "//input[@placeholder='Select date range']")
 

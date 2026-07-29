@@ -3,6 +3,7 @@ import re
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -126,7 +127,8 @@ class DiscountsPage(BasePage):
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""
-        self.wait.until(
+        from selenium.webdriver.support.ui import WebDriverWait
+        WebDriverWait(self.driver, 60).until(
             lambda driver: not any(
                 mask.is_displayed()
                 for mask in driver.find_elements(*self.GRID_LOAD_MASK)
@@ -463,8 +465,7 @@ class DiscountsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.DISCOUNT_AMOUNT_INPUT)
         )
-        element.clear()
-        element.send_keys(str(amount))
+        self._set_input_value(element, str(amount))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.DISCOUNT_AMOUNT_INPUT
@@ -631,7 +632,14 @@ class DiscountsPage(BasePage):
 
     def ensure_all_locations_switch_on(self):
         """Turn Allow discount at all locations on if needed."""
-        self.ensure_switch_on(self.ALL_LOCATIONS_SWITCH)
+        switch = self.wait.until(EC.element_to_be_clickable(self.ALL_LOCATIONS_SWITCH))
+        if switch.get_attribute("aria-checked") != "true":
+            ActionChains(self.driver).move_to_element(switch).click(switch).perform()
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.ALL_LOCATIONS_SWITCH
+                ).get_attribute("aria-checked") == "true"
+            )
 
     def set_discount_start(self, day, time_text):
         """Set discount start date in the visible date picker."""
@@ -771,11 +779,9 @@ class DiscountsPage(BasePage):
 
     def ensure_all_locations_switch_off(self):
         """Turn Allow discount at all locations switch off if needed."""
-        switch = self.wait.until(
-            EC.presence_of_element_located(self.ALL_LOCATIONS_SWITCH)
-        )
+        switch = self.wait.until(EC.element_to_be_clickable(self.ALL_LOCATIONS_SWITCH))
         if switch.get_attribute("aria-checked") == "true":
-            self.driver.execute_script("arguments[0].click();", switch)
+            ActionChains(self.driver).move_to_element(switch).click(switch).perform()
             self.wait.until(
                 lambda driver: driver.find_element(
                     *self.ALL_LOCATIONS_SWITCH
@@ -878,6 +884,17 @@ class DiscountsPage(BasePage):
                 % (error or "none visible")
             ) from None
 
+    def _wait_for_location_rows_hidden(self):
+        """Wait until the per-location grid collapses after all-locations is toggled on.
+
+        When RHF registers the all-locations toggle, the app hides the per-location
+        assignment grid. If rows are still present the toggle did not register with
+        React and saving would silently fail validation.
+        """
+        self.wait.until(
+            lambda driver: len(driver.find_elements(*self.LOCATION_ROWS)) == 0
+        )
+
     def fill_discount_form_all_locations(
         self,
         discount_name,
@@ -895,6 +912,7 @@ class DiscountsPage(BasePage):
         self.set_discount_start(start_day, start_time)
         self.ensure_active_switch_on()
         self.ensure_all_locations_switch_on()
+        self._wait_for_location_rows_hidden()
 
     def create_discount_all_locations(
         self,

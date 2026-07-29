@@ -32,10 +32,6 @@ on:
         description: "xdist workers: a number, auto, or 0 for serial"
         type: string
         default: "2"
-      reruns:
-        description: "Flaky-test reruns per test"
-        type: string
-        default: "2"
       timeout_minutes:
         description: "Job timeout in minutes"
         type: number
@@ -105,7 +101,6 @@ jobs:
           PARALLEL: ${{ inputs.parallel }}
           MARKER: ${{ inputs.marker }}
           TEST_PATH: ${{ inputs.test_path }}
-          RERUNS: ${{ inputs.reruns }}
         run: |
           # Parallelism: number of workers; "0" forces serial.
           xdist="-n ${PARALLEL}"
@@ -118,7 +113,6 @@ jobs:
           mkdir -p reports/allure-results reports/screenshots reports/logs
           pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
-            --reruns "${RERUNS}" --reruns-delay 3 \
             --alluredir=reports/allure-results \
             --html=reports/report.html --self-contained-html \
             --junitxml=reports/results.xml

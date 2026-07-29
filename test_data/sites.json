@@ -2,7 +2,7 @@
   "template": {
     "base_name":             "VK AL",
     "base_code":             "AL",
-    "base_number":           1,
+    "base_number":           3,
     "email_template":        "vkal%02d@yopmail.com",
     "contact_email_template":"vkal%dsite@yopmail.com",
     "state":                 "California",

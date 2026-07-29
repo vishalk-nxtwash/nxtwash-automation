@@ -1,0 +1,22 @@
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Applicable discounts
+Discounts applied to this service
+Plus discount
+Adaptive discounts
+Coming soon...
+Multiple months discount
+Multiple cars discount
+Discount profile
+Create custom discount profiles and apply to your memberships by importing them
++ Add multi-month discount
+Discount
+Months number
+From date
+To date
+No records available

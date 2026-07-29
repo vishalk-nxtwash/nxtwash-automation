@@ -106,10 +106,6 @@ def test_site_selection_populates_lane_dropdown(browser):
 
 @allure.title("KSK-CRT-006 All setting sections are collapsed by default on the create form")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-CRT-006: Section header locators use heuristics — verify aria-expanded attribute in DevTools.",
-)
 def test_create_form_sections_collapsed_by_default(browser):
     section_names = ["Service", "Gate", "Tunnel", "Middleware", "Device", "Timer", "Flow", "Localization", "Fleet"]
     form = open_create_kiosk_form(browser)
@@ -123,10 +119,6 @@ def test_create_form_sections_collapsed_by_default(browser):
 
 @allure.title("KSK-CRT-007 Configure panel is visible on the create form with tabs")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-CRT-007: Configure panel and tab locators use heuristics — verify in DevTools.",
-)
 def test_create_form_configure_panel_visible(browser):
     form = open_create_kiosk_form(browser)
 

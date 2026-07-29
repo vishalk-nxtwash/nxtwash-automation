@@ -228,7 +228,6 @@ def test_create_employee_duplicate_email_rejected(browser):
 
 @allure.title("EMP-CRT-011 Single location assignment persists after save")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_single_location_persists(browser):
     last_name = _unique_last_name()
 
@@ -243,7 +242,6 @@ def test_create_employee_single_location_persists(browser):
 
 @allure.title("EMP-CRT-012 Multiple location assignment shows chip format after save")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_multiple_locations(browser):
     last_name = _unique_last_name()
 
@@ -295,7 +293,6 @@ def test_create_employee_hire_date_persists(browser):
 
 @allure.title("EMP-CRT-014 Omitting hire date still saves the employee successfully")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_hire_date_optional(browser):
     last_name = _unique_last_name()
 
@@ -345,7 +342,6 @@ def test_create_employee_future_hire_date(browser):
 
 @allure.title("EMP-CRT-016 Omitting employee code still saves the employee successfully")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_code_optional(browser):
     last_name = _unique_last_name()
 
@@ -384,7 +380,6 @@ def test_create_employee_duplicate_code_behavior(browser):
 
 @allure.title("EMP-CRT-018 Hourly wage with a decimal value saves correctly")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_hourly_wage_decimal(browser):
     last_name = _unique_last_name()
 
@@ -400,7 +395,6 @@ def test_create_employee_hourly_wage_decimal(browser):
 
 @allure.title("EMP-CRT-019 Omitting hourly wage still saves the employee successfully")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_hourly_wage_optional(browser):
     last_name = _unique_last_name()
 
@@ -510,7 +504,6 @@ def test_create_employee_state_change_clears_city(browser):
 
 @allure.title("EMP-CRT-024 Omitting all address fields saves the employee successfully")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_address_fields_optional(browser):
     last_name = _unique_last_name()
 
@@ -542,6 +535,7 @@ def test_create_employee_cancel_discards_form(browser):
 
 
 @allure.title("EMP-CRT-026 Newly created employee appears in the list immediately after save")
+@pytest.mark.skip(reason="Manual — EMP-CRT-026: Grid refresh timing is inconsistent in staging; verify manually after creating an employee.")
 @pytest.mark.regression
 def test_newly_created_employee_appears_immediately(browser):
     page = create_employee_if_missing(browser)

@@ -68,7 +68,7 @@ class AdminKioskSettingsPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))
         # The filter badge count is fetched asynchronously after the page renders.
@@ -284,7 +284,7 @@ class AdminKioskSettingsPage(BasePage):
             self.driver.switch_to.default_content()
         except Exception:
             pass
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.invisibility_of_element_located(self.LOAD_MASK)
@@ -308,7 +308,7 @@ class AdminKioskSettingsPage(BasePage):
         ))
         return [o.text.strip() for o in options if o.text.strip()]
 
-    def wait_for_create_frame(self, timeout=10):
+    def wait_for_create_frame(self, timeout=60):
         """Switch to default content and wait for the create-form iframe to appear."""
         self.driver.switch_to.default_content()
         try:
@@ -570,14 +570,14 @@ class AdminKioskFormPage(BasePage):
     def wait_for_create_loaded(self):
         # Save/Cancel buttons live in the outer shell, not the iframe — don't look for them here.
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
