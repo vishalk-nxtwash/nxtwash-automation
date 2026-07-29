@@ -372,12 +372,21 @@ class WashPackagesPage(BasePage):
         """Open edit package form."""
         self.wait_for_list_loaded()
         self.search_package(package_name)
-        row = self.wait_for_package_row(package_name)
-        edit_button = row.find_element(
-            By.XPATH,
-            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        self.wait_for_package_row(package_name)
+        # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        _CLICK_EDIT_JS = (
+            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "for(var i=0;i<rows.length;i++){"
+            " if(rows[i].textContent.indexOf(name)!==-1){"
+            "  var a=Array.from(rows[i].querySelectorAll('a'))"
+            "   .find(function(x){return x.textContent.trim()==='Edit';});"
+            "  if(a){a.click();return true;}"
+            " }}"
+            "return false;"
         )
-        edit_button.click()
+        WebDriverWait(self.driver, 20).until(
+            lambda d: d.execute_script(_CLICK_EDIT_JS, package_name)
+        )
         self.wait_for_edit_loaded()
 
     def enter_service_name(self, service_name):
@@ -607,20 +616,30 @@ if (grid) {
             ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
         )
 
-        def checkbox_is_checked():
-            classes = checkbox.get_attribute("class")
-            return (
-                "inovua-react-toolkit-checkbox--checked" in classes
-                and "inovua-react-toolkit-checkbox--unchecked" not in classes
-            )
+        _CB_XPATH = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[contains(@class,'inovua-react-toolkit-checkbox')]" % site_name,
+        )
 
-        if not checkbox_is_checked():
+        def _checkbox_checked(d):
+            try:
+                cls = d.find_element(*_CB_XPATH).get_attribute("class")
+                return (
+                    "inovua-react-toolkit-checkbox--checked" in cls
+                    and "inovua-react-toolkit-checkbox--unchecked" not in cls
+                )
+            except Exception:
+                return False
+
+        if not _checkbox_checked(self.driver):
             self.driver.execute_script(
                 "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
                 checkbox
             )
             self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: checkbox_is_checked())
+            self.wait.until(_checkbox_checked)
 
         price_input = row.find_element(By.NAME, "price")
         commission_input = row.find_element(By.NAME, "commission")
