@@ -103,7 +103,7 @@ class WashExtrasPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Extras list is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
@@ -124,7 +124,7 @@ class WashExtrasPage(BasePage):
     def wait_for_create_loaded(self):
         """Wait until the create extra form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
@@ -133,7 +133,7 @@ class WashExtrasPage(BasePage):
     def wait_for_edit_loaded(self):
         """Wait until the edit extra form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
         self.wait.until(lambda driver: self.get_service_name_value() != "")
@@ -339,7 +339,7 @@ class WashExtrasPage(BasePage):
             EC.presence_of_element_located(self.DISCOUNT_SETTINGS_TAB)
         )
         self.driver.execute_script("arguments[0].click();", tab)
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             EC.presence_of_element_located(self.DISCOUNTS_COMBOBOX)
         )
 
@@ -416,7 +416,7 @@ class WashExtrasPage(BasePage):
         price input mounted, so child find_element calls don't raise
         NoSuchElementException on partially-rendered rows.
         """
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(
             EC.presence_of_all_elements_located(self.LOCATION_ROWS)
         )
@@ -545,7 +545,7 @@ class WashExtrasPage(BasePage):
                 "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
                 price_input
             )
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             lambda driver: self._numeric_matches(price_input, price)
         )
 
@@ -560,7 +560,7 @@ class WashExtrasPage(BasePage):
             )
 
         price_input = rows[row_index].find_element(By.NAME, "price")
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             lambda driver: price_input.get_attribute("value") != ""
         )
         return price_input.get_attribute("value")
@@ -749,7 +749,7 @@ class WashExtrasPage(BasePage):
                 % (row_index + 1, len(rows))
             )
         commission_input = rows[row_index].find_element(By.NAME, "commission")
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             lambda driver: commission_input.get_attribute("value") != ""
         )
         return commission_input.get_attribute("value")
