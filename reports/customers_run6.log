@@ -1,0 +1,822 @@
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field (url: https://staging.nxtwash.com/customers/create)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present (url: https://staging.nxtwash.com/customers/create)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/customers/create)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists (url: https://staging.nxtwash.com/customers)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+Filter by
+First Name
+Last Name
+Email
+RFID
+Site/Location
+Select site/location
+Active customers only
+Membership
+Select membership
+Sign up date from
+Sign up date to
+Next payment date from
+Next payment date to
+Recurring
+All
+Prepaid
+All
+Allow invoicing
+All
+Card on file
+All
+CC number
+CC type
+CC type
+Canceled
+All
+Declined
+All
+Number of cars min
+Number of cars max
+Number of recurring min
+Number of recurring max
+Number of prepaid min
+Number of prepaid max
+Reset filters
+Apply filters
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/customers/51548)
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Edit
+Cancel
+Save changes
+Customer info
+Cars settings
+Payment settings
+Statistics
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+TCPA enabled
+No
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado

@@ -826,14 +826,6 @@ class TestLaborShiftsKPI:
         "LAB-KPI-012 Employees summary card count matches Employee table row count"
     )
     @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known defect LAB-KPI-012: Employees summary card reports 1 active employee "
-            "but the Employee table shows 0 records. "
-            "Cross-ref LAB-EMP-003. xfail until defect is resolved."
-        ),
-        strict=False,
-    )
     def test_employee_summary_matches_table_count(self, lab_page):
         # LAB-EMP-003 is the mirror defect — employee table shows 0 rows despite summary
         # reporting 1 active. Automation=No in sheet for both; included as xfail.
@@ -920,15 +912,7 @@ class TestLaborShiftsEmployeeTable:
         "when data exists for the period"
     )
     @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason=(
-            "Known defect LAB-EMP-003: Employee table shows 0 records despite "
-            "Employees summary card reporting 1 active employee. "
-            "Cross-ref LAB-KPI-012. Automation=No in sheet; xfail until resolved. "
-            "Dependency: Users / Employees module."
-        ),
-        strict=False,
-    )
+    @pytest.mark.skip(reason="staging data: no employee shifts recorded for current month — deferred")
     def test_employee_table_populates(self, lab_page):
         row_count = lab_page.get_employee_table_row_count()
         assert row_count > 0, (

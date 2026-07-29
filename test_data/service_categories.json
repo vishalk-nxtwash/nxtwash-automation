@@ -1,0 +1,15 @@
+{
+  "reference": {
+    "active_category":   "VK ASC4",
+    "inactive_category": "VK ASC2"
+  },
+  "template": {
+    "category_name": "VK ASC4"
+  },
+  "updated": {
+    "category_name": "VK ASC4 edited"
+  },
+  "search": {
+    "nonexistent": "category-does-not-exist-automation"
+  }
+}

@@ -1,0 +1,555 @@
+2026-07-29 05:40:07,683 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 66 items
+
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-31/test_download_memberships_star0
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  1%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_file_format 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  3%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_filtered_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:91 Verifying filtered membership export downloads a file
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  4%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent 2026-07-29 05:50:50,791 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships/new)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6177370112) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships/new)
+2026-07-29 05:50:58,971 ERROR nxtwash: Visible page text at failure:
+Memberships
+Add new membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Membership duration months
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL11
+Columbia
+5%
+3%
+VK AL12
+Columbia
+5%
+3%
+VK AL16
+Columbia
+5%
+3%
+VK ZT 2b4279
+Columbia
+0%
+0%
+VK AL15
+Columbia
+5%
+3%
+VK AL14
+Columbia
+5%
+3%
+VK ZT 146465
+Columbia
+0%
+0%
+VK AL04
+Columbia
+5%
+3%
+VK AL05
+Columbia
+5%
+3%
+VK AL06
+Columbia
+5%
+3%
+VK AL07
+Columbia
+5%
+3%
+vkauto1
+Canyon lake
+5%
+2%
+VK AL01
+Columbia
+5%
+3%
+VK AL08
+Columbia
+5%
+3%
+VK AL09
+Columbia
+5%
+3%
+VK AL10
+Columbia
+5%
+3%
+VK AL13
+Columbia
+5%
+3%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Add new membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Membership duration months
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL11
+Columbia
+5%
+3%
+VK AL12
+Columbia
+5%
+3%
+VK AL16
+Columbia
+5%
+3%
+VK ZT 2b4279
+Columbia
+0%
+0%
+VK AL15
+Columbia
+5%
+3%
+VK AL14
+Columbia
+5%
+3%
+VK ZT 146465
+Columbia
+0%
+0%
+VK AL04
+Columbia
+5%
+3%
+VK AL05
+Columbia
+5%
+3%
+VK AL06
+Columbia
+5%
+3%
+VK AL07
+Columbia
+5%
+3%
+vkauto1
+Canyon lake
+5%
+2%
+VK AL01
+Columbia
+5%
+3%
+VK AL08
+Columbia
+5%
+3%
+VK AL09
+Columbia
+5%
+3%
+VK AL10
+Columbia
+5%
+3%
+VK AL13
+Columbia
+5%
+3%
+FAILED                                                                   [  6%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned 2026-07-29 05:54:08,153 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: unknown)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: unknown)
+2026-07-29 05:54:08,386 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_memberships_test_memberships_edge_cases.py_test_membership_only_first_location_is_assigned': Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:213 Could not capture screenshot 'failure-tests_admin_portal_memberships_test_memberships_edge_cases.py_test_membership_only_first_location_is_assigned': Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-29 05:54:08,393 WARNING nxtwash: Could not capture body text: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:258 Could not capture body text: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-29 05:54:08,418 WARNING nxtwash: Could not capture page source: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:278 Could not capture page source: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x0000000104a11a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000104a09b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001044b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010448c774 chromedriver + 165748
+4   chromedriver                        0x0000000104523b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x000000010453ab4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x00000001044f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001049cec40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001049d23b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001049b50f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001049d2c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x00000001049a63b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001049f81f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001049f8354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x0000000104a097a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+FAILED                                                                   [  7%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form 2026-07-29 05:57:21,430 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: unknown)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: unknown)
+2026-07-29 05:57:21,453 WARNING nxtwash: Could not capture screenshot 'failure-tests_admin_portal_memberships_test_memberships_edge_cases.py_test_membership_long_name_does_not_break_form': Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:213 Could not capture screenshot 'failure-tests_admin_portal_memberships_test_memberships_edge_cases.py_test_membership_long_name_does_not_break_form': Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-29 05:57:21,455 WARNING nxtwash: Could not capture body text: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:258 Could not capture body text: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+2026-07-29 05:57:21,455 WARNING nxtwash: Could not capture page source: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+WARNING  nxtwash:conftest.py:278 Could not capture page source: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=150.0.7871.187)
+Stacktrace:
+0   chromedriver                        0x00000001051e5a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001051ddb4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000104c872a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000104c60774 chromedriver + 165748
+4   chromedriver                        0x0000000104cf7b58 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 534816
+5   chromedriver                        0x0000000104d0eb4c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 629012
+6   chromedriver                        0x0000000104cc5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+7   chromedriver                        0x00000001051a2c40 cxxbridge1$str$ptr + 2921304
+8   chromedriver                        0x00000001051a63b8 cxxbridge1$str$ptr + 2935504
+9   chromedriver                        0x00000001051890f8 cxxbridge1$str$ptr + 2816016
+10  chromedriver                        0x00000001051a6c4c cxxbridge1$str$ptr + 2937700
+11  chromedriver                        0x000000010517a3b0 cxxbridge1$str$ptr + 2755272
+12  chromedriver                        0x00000001051cc1f4 cxxbridge1$str$ptr + 3090700
+13  chromedriver                        0x00000001051cc354 cxxbridge1$str$ptr + 3091052
+14  chromedriver                        0x00000001051dd7a4 cxxbridge1$str$ptr + 3161788
+15  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+FAILED                                                                   [  9%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA5
+2026-07-29 06:04:49,505 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 06:04:55,116 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 10%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA5 and restoring it

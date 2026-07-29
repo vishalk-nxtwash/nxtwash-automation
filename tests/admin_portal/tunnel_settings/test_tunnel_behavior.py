@@ -16,18 +16,8 @@ pytestmark = [
     allure.story("Behavior"),
 ]
 
-_FORM_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Behavior radio locators use label heuristics — "
-        "verify radio input DOM structure in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("TUN-BHV-001/002 Behavior radio buttons are present and mutually exclusive")
 @pytest.mark.regression
-@_FORM_XFAIL
 def test_behavior_radio_mutual_exclusivity(browser):
     form = open_create_tunnel_form(browser)
     radios = form.get_behavior_radio_elements()
@@ -49,7 +39,6 @@ def test_behavior_radio_mutual_exclusivity(browser):
 
 @allure.title("TUN-BHV-003 Sequence stacking is the default behavior on create form")
 @pytest.mark.regression
-@_FORM_XFAIL
 def test_behavior_default_sequence_stacking(browser):
     form = open_create_tunnel_form(browser)
     body = form.get_body_text()
@@ -66,7 +55,6 @@ def test_behavior_default_sequence_stacking(browser):
 
 @allure.title("TUN-BHV-004 Selected behavior persists after save")
 @pytest.mark.regression
-@_FORM_XFAIL
 def test_behavior_radio_persists(browser, managed_tunnel_form):
     form = managed_tunnel_form
     radios = form.get_behavior_radio_elements()

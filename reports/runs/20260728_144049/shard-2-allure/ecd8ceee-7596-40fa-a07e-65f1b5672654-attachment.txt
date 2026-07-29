@@ -1,0 +1,1 @@
+2026-07-29 00:50:26,943 INFO nxtwash: Verifying global price mandatory validation

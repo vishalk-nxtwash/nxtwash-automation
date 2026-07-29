@@ -1,0 +1,115 @@
+2026-07-27 08:25:21,704 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 84 items
+
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_opens_with_all_sites_default PASSED [  4%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_apply_filters_closes_modal PASSED [  5%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_bar_changes_do_not_reopen_modal PASSED [  8%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_content_visible_after_apply PASSED [  9%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites XFAIL [ 10%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_all_sites_is_default PASSED [ 11%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_selecting_site_creates_chip PASSED [ 13%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_multi_site_selection_accepted PASSED [ 14%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_single_site_scopes_data PASSED [ 15%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_removing_chip_reduces_site_filter PASSED [ 16%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_clear_all_sites PASSED [ 17%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes XFAIL [ 19%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites XFAIL [ 20%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_page_bar_site_change_no_modal PASSED [ 21%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_chart_title_updates_on_site_filter XFAIL [ 22%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_cdl_site_present_in_dropdown PASSED [ 23%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-KPI-003] PASSED [ 25%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-MTX-012] PASSED [ 26%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-BWS-007] PASSED [ 27%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-TDS-005] PASSED [ 28%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-HMP-005] PASSED [ 29%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options PASSED [ 32%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range PASSED [ 33%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002] PASSED [ 34%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003] PASSED [ 35%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004] PASSED [ 36%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005] PASSED [ 38%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006] PASSED [ 39%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007] PASSED [ 40%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_section_visible PASSED [ 41%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-01] PASSED [ 42%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-02] PASSED [ 44%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-03] PASSED [ 45%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-04] PASSED [ 46%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-05] PASSED [ 47%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-06] PASSED [ 48%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-07] PASSED [ 50%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-08] PASSED [ 51%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-09] XFAIL [ 52%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_visible_for_zero_data PASSED [ 53%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-01] PASSED [ 54%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02] ERROR [ 55%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-03] PASSED [ 57%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-04] PASSED [ 58%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-05] PASSED [ 59%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-06] PASSED [ 60%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-07] PASSED [ 61%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-08] PASSED [ 63%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_values_non_zero XPASS [ 64%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_zero_data_state PASSED [ 65%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_section_visible PASSED [ 66%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-01] PASSED [ 67%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-02] PASSED [ 69%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-03] PASSED [ 70%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-04] PASSED [ 71%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-05] PASSED [ 72%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-06] PASSED [ 73%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-07] PASSED [ 75%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-08] PASSED [ 76%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-09] PASSED [ 77%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-10] PASSED [ 78%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-11] PASSED [ 79%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-12] PASSED [ 80%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-13] PASSED [ 82%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_has_data_rows XPASS [ 83%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_pagination_present SKIPPED [ 84%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_zero_data_state PASSED [ 85%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_section_visible PASSED [ 86%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_best_sites_visible PASSED [ 88%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_worst_sites_visible PASSED [ 89%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_excludes_defect_site XPASS [ 90%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_section_visible PASSED [ 91%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_has_content PASSED [ 92%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesHeatmap::test_heatmap_section_visible PASSED [ 94%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesReasonDist::test_reason_dist_section_visible PASSED [ 95%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 96%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 97%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar PASSED [ 98%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-02] __
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000103115a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010310db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102bb70a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000102bfbd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x0000000102bfa354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x0000000102bf6934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x0000000102c3f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x0000000102bf5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x00000001030d2c40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x00000001030d63b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x00000001030b90f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x00000001030d6c4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x00000001030aa3b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x00000001030fc1f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x00000001030fc354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x000000010310d7a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=========================== short test summary info ============================
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02]
+== 74 passed, 1 skipped, 5 xfailed, 3 xpassed, 1 error in 1422.85s (0:23:42) ===

@@ -1,0 +1,133 @@
+2026-07-29 05:41:28,458 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 83 items
+
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply PASSED [  4%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal SKIPPED [  6%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal PASSED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites 2026-07-29 05:46:16,587 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-29 05:46:19,746 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [  9%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted SKIPPED [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip XPASSming race when
+iterating all options on staging.)                                       [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data ERROR [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state PASSED [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal PASSED [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites XPASSing race during
+modal open on staging.)                                                  [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown XFAILpen on staging.) [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] XPASS [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] XPASS [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] XPASS [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count XFAILace during modal open.) [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] XPASSw to
+populate on staging.)                                                    [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] XPASSw to
+populate on staging.)                                                    [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] XFAILw to
+populate on staging.)                                                    [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] XFAILw to
+populate on staging.)                                                    [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] XPASSw to
+populate on staging.)                                                    [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] XPASSw to
+populate on staging.)                                                    [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available XFAIL; timing race during modal
+open on staging.)                                                        [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range PASSED [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range XPASSaging
+date preset rendering is intermittently slow.)                           [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal PASSED [ 39%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date PASSED [ 40%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range SKIPPED [ 42%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state PASSED [ 43%]

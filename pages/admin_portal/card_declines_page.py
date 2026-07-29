@@ -1,5 +1,6 @@
 import time
 
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -92,7 +93,7 @@ class CardDeclinesPage(BasePage):
             return
         for pattern in self._FRAME_SRC_PATTERNS:
             try:
-                WebDriverWait(self.driver, 2).until(
+                WebDriverWait(self.driver, 15).until(
                     EC.frame_to_be_available_and_switch_to_it(
                         (By.XPATH, "//iframe[contains(@src,'%s')]" % pattern)
                     )
@@ -142,11 +143,13 @@ class CardDeclinesPage(BasePage):
             return False
 
     def get_body_text(self):
+        # JS innerText avoids StaleElementReferenceException — no Python-side
+        # DOM reference is held across React re-renders.
         try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
+            return self.driver.execute_script("return document.body.innerText;") or ""
         except Exception:
             self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
+            return self.driver.execute_script("return document.body.innerText;") or ""
 
     def get_current_url(self):
         return self.driver.current_url
@@ -156,24 +159,25 @@ class CardDeclinesPage(BasePage):
     def get_site_options(self):
         """Open the site dropdown and return visible option texts via JS.
 
-        React Select may render options in a portal outside the control's
-        subtree, so we query by role='option' rather than by CSS class.
-        JS mousedown dispatch is used (same as date preset) because
-        ActionChains.click() does not reliably fire React's onMouseDown
-        handler in headless Chrome.
+        React Select may render the menu in a portal (position:fixed) so
+        offsetParent is null for portal options.  We use getBoundingClientRect
+        instead to detect visible elements.  Click the dropdown-indicator arrow
+        rather than the inner input for a more reliable React open event.
         """
-        self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
-        self.driver.execute_script("""
-            var ctrl = document.querySelector('.overview__site-select__control');
-            if (ctrl) {
-                ctrl.dispatchEvent(new MouseEvent('mousedown', {
-                    bubbles: true, cancelable: true, view: window
-                }));
-            }
-        """)
-        time.sleep(0.5)
+        ctrl = self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
         try:
-            WebDriverWait(self.driver, 8).until(
+            indicator = ctrl.find_element(
+                By.XPATH,
+                ".//div[contains(@class,'overview__site-select__dropdown-indicator')]"
+            )
+            ActionChains(self.driver).move_to_element(indicator).click(indicator).perform()
+        except Exception:
+            inputs = ctrl.find_elements(By.XPATH, ".//input")
+            target = inputs[0] if inputs else ctrl
+            ActionChains(self.driver).move_to_element(target).click(target).perform()
+        time.sleep(0.8)
+        try:
+            WebDriverWait(self.driver, 10).until(
                 lambda d: d.execute_script(
                     "return document.querySelectorAll('[role=\"option\"]').length > 0;"
                 )
@@ -181,9 +185,14 @@ class CardDeclinesPage(BasePage):
         except TimeoutException:
             pass
         options = self.driver.execute_script("""
-            return Array.from(document.querySelectorAll('[role="option"]'))
-                .filter(function(el) { return el.textContent.trim(); })
-                .map(function(el) { return el.textContent.trim(); });
+            return Array.from(document.querySelectorAll(
+                '[role="option"], [class*="__option"], [class*="-option"]'
+            ))
+            .filter(function(el) {
+                var r = el.getBoundingClientRect();
+                return (r.width > 0 || r.height > 0) && el.textContent.trim();
+            })
+            .map(function(el) { return el.textContent.trim(); });
         """)
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
@@ -191,35 +200,71 @@ class CardDeclinesPage(BasePage):
             pass
         return options or []
 
+    def _get_site_inner_input(self):
+        """Re-find the site multiselect's typeable input (safe after React re-renders)."""
+        ctrl = self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+        try:
+            return ctrl.find_element(
+                By.XPATH, ".//input[contains(@class,'overview__site-select__input')]"
+            )
+        except Exception:
+            return ctrl.find_element(By.XPATH, ".//input")
+
     def select_site(self, site_name, clear_first=True):
         """Select *site_name* from the site/location multiselect.
 
         Clicks the typeable overview__site-select__input, types the site name
-        to filter, then clicks the matching option.
+        to filter, then clicks the matching option.  Re-finds the inner input
+        after click and after clear to survive React re-renders.
         """
-        ctrl = self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
-        try:
-            inner = ctrl.find_element(
-                By.XPATH, ".//input[contains(@class,'overview__site-select__input')]"
-            )
-        except Exception:
-            inner = ctrl.find_element(By.XPATH, ".//input")
+        inner = self._get_site_inner_input()
         ActionChains(self.driver).move_to_element(inner).click(inner).perform()
         time.sleep(0.3)
+        # Re-find after click — React may re-render the input container.
+        inner = self._get_site_inner_input()
         if clear_first:
-            inner.send_keys(Keys.COMMAND + "a")
-            inner.send_keys(Keys.BACKSPACE)
-        inner.send_keys(site_name)
+            try:
+                inner.send_keys(Keys.COMMAND + "a")
+                inner.send_keys(Keys.BACKSPACE)
+            except StaleElementReferenceException:
+                inner = self._get_site_inner_input()
+                inner.send_keys(Keys.COMMAND + "a")
+                inner.send_keys(Keys.BACKSPACE)
+        try:
+            inner.send_keys(site_name)
+        except StaleElementReferenceException:
+            inner = self._get_site_inner_input()
+            inner.send_keys(site_name)
         time.sleep(0.3)
-        option = WebDriverWait(self.driver, 20).until(
-            lambda d: self._find_react_option(site_name)
+        # Atomic JS find-and-click avoids StaleElementReferenceException —
+        # finding the element and clicking it in one script call leaves no gap
+        # for React to re-render and invalidate the reference.
+        WebDriverWait(self.driver, 20).until(
+            lambda d: d.execute_script("""
+                var text = arguments[0].toLowerCase().trim();
+                var candidates = Array.from(document.querySelectorAll(
+                    '[role="option"], [class*="__option"], [class*="-option"], [class*="select__option"]'
+                ));
+                var target = candidates.find(function(el) {
+                    var r = el.getBoundingClientRect();
+                    return r.height > 0 && el.textContent.trim().toLowerCase() === text;
+                });
+                if (target) { target.click(); return true; }
+                return false;
+            """, site_name)
         )
-        self.driver.execute_script("arguments[0].click();", option)
         time.sleep(0.3)
 
     def get_site_chips(self):
         chips = self.driver.find_elements(*self.SITE_CHIPS)
-        return [c.text.strip() for c in chips if c.is_displayed() and c.text.strip()]
+        result = []
+        for c in chips:
+            try:
+                if c.is_displayed() and c.text.strip():
+                    result.append(c.text.strip())
+            except StaleElementReferenceException:
+                pass
+        return result
 
     def clear_sites(self):
         """Remove all selected site chips.
@@ -275,28 +320,22 @@ class CardDeclinesPage(BasePage):
     # ── Date filter ───────────────────────────────────────────────────────────
 
     def _open_date_preset_dropdown(self):
-        """Open the date preset dropdown by dispatching mousedown on the control.
+        """Open the date preset React Select dropdown.
 
-        React Select's onMouseDown handler toggles the menu; a plain click()
-        via ActionChains is not always sufficient because the synthetic React
-        event may not fire in headless Chrome.  JS mousedown dispatch is
-        reliable across browser/driver versions.
+        The DummyInput (inputmode=none) has transform:scale(0) — clicking it
+        or its ancestor div via ActionChains does not trigger React's synthetic
+        open handler.  Instead: focus the DummyInput via JS (it has tabindex=0)
+        then dispatch an ARROW_DOWN key action, which is React Select's standard
+        keyboard shortcut to open a non-searchable select.
         """
-        self.driver.execute_script("""
-            var input = document.querySelector(
-                'input[aria-readonly="true"][role="combobox"]'
-            );
-            if (!input) return;
-            var el = input.parentElement;
-            while (el && !el.className.includes('-control')) {
-                el = el.parentElement;
-            }
-            if (el) {
-                el.dispatchEvent(new MouseEvent('mousedown', {
-                    bubbles: true, cancelable: true, view: window
-                }));
-            }
-        """)
+        date_input = self.wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//input[@inputmode='none' and @role='combobox']")
+            )
+        )
+        self.driver.execute_script("arguments[0].focus();", date_input)
+        time.sleep(0.2)
+        ActionChains(self.driver).send_keys(Keys.ARROW_DOWN).perform()
         time.sleep(0.5)
 
     def select_date_preset(self, preset):
@@ -429,7 +468,13 @@ class CardDeclinesPage(BasePage):
         els = self.driver.find_elements(By.XPATH,
             "//*[contains(normalize-space(),'%s')]" % keyword
         )
-        return any(el.is_displayed() for el in els)
+        for el in els:
+            try:
+                if el.is_displayed():
+                    return True
+            except StaleElementReferenceException:
+                pass
+        return False
 
     def _text_visible(self, keyword):
         return self.widget_section_visible(keyword)

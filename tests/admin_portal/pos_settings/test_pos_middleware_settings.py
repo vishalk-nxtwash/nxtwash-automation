@@ -42,7 +42,6 @@ def test_middleware_section_expand_collapse(browser, managed_pos_form):
 
 @allure.title("POS-MID-002 Middleware IP required field — blocked without entry")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_middleware_ip_required(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Middleware")
@@ -65,7 +64,6 @@ def test_middleware_ip_required(browser, managed_pos_form):
 
 @allure.title("POS-MID-003 Middleware IP accepts valid URL and saves without error")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_middleware_ip_accepts_valid_url(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Middleware")
@@ -77,7 +75,6 @@ def test_middleware_ip_accepts_valid_url(browser, managed_pos_form):
 
 @allure.title("POS-MID-004 Middleware IP persists in form after reopening edit")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_middleware_ip_persists(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Middleware")

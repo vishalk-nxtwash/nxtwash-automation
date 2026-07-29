@@ -1,0 +1,21 @@
+{
+  "reference": {
+    "existing_extra":      "Detailing",
+    "discount_name":       "Plus discount",
+    "updated_discount":    "Basic discount"
+  },
+  "template": {
+    "extra_name":          "VK EWA4",
+    "global_price":        "15",
+    "global_commission":   "2",
+    "visible_price":       "$15.00",
+    "first_location_price":"10",
+    "second_location_price":"20"
+  },
+  "updated": {
+    "extra_name": "VK EWA4 updated"
+  },
+  "search": {
+    "nonexistent": "wash-extra-does-not-exist-automation"
+  }
+}

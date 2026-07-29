@@ -270,10 +270,11 @@ class SitesPage(BasePage):
             self._api_script("""
             const siteName = arguments[0];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
+            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+            const authKey = _la.key ? JSON.parse(_la.key) : "";
             const params = new URLSearchParams({
-                key: auth.key,
+                key: authKey,
                 pageSize: "500",
                 pageNumber: "1"
             });
@@ -281,7 +282,7 @@ class SitesPage(BasePage):
             fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 }
             })
                 .then((response) => response.json())
@@ -313,17 +314,18 @@ class SitesPage(BasePage):
             self._api_script("""
             const siteId = arguments[0];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
+            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+            const authKey = _la.key ? JSON.parse(_la.key) : "";
             const params = new URLSearchParams({
-                key: auth.key,
+                key: authKey,
                 id: siteId
             });
 
             fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 }
             })
                 .then(async (response) => done({
@@ -354,15 +356,16 @@ class SitesPage(BasePage):
                 const siteName = arguments[0];
                 const siteCode = arguments[1];
                 const done = arguments[arguments.length - 1];
-                const root = JSON.parse(localStorage.getItem("persist:root"));
-                const auth = JSON.parse(root.authSessionReducer);
+                const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+                const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+                const authKey = _la.key ? JSON.parse(_la.key) : "";
                 const headers = {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 };
                 const baseUrl = API_BASE + "/api/sites";
                 const listParams = new URLSearchParams({
-                    key: auth.key,
+                    key: authKey,
                     pageSize: "500",
                     pageNumber: "1"
                 });
@@ -378,7 +381,7 @@ class SitesPage(BasePage):
                             const details = await Promise.all(
                                 chunk.map(async (site) => {
                                     const params = new URLSearchParams({
-                                        key: auth.key,
+                                        key: authKey,
                                         id: site.siteId
                                     });
                                     const response = await fetch(
@@ -422,11 +425,12 @@ class SitesPage(BasePage):
             const siteName = arguments[0];
             const referenceSite = arguments[1];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
+            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+            const authKey = _la.key ? JSON.parse(_la.key) : "";
 
             const payload = JSON.parse(JSON.stringify(referenceSite));
-            payload.key = auth.key;
+            payload.key = authKey;
             payload.siteId = 0;
             payload.siteName = siteName;
             payload.siteCode = siteName;
@@ -450,7 +454,7 @@ class SitesPage(BasePage):
                 headers: {
                     accept: "application/json",
                     "content-type": "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 },
                 body: JSON.stringify(payload)
             })

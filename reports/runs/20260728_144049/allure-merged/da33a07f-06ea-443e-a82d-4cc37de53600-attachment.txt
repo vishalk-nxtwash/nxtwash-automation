@@ -1,0 +1,14 @@
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book

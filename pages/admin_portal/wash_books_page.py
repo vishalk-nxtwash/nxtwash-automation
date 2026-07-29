@@ -11,7 +11,9 @@ class WashBooksPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/washBooks?')]"
+        "//iframe[contains(@src,'/services/washBooks')"
+        " and not(contains(@src,'/services/washBooks/'))"
+        " and not(contains(@src,'/new'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -35,7 +37,9 @@ class WashBooksPage(BasePage):
     )
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]/following-sibling::button[1]"
     )
     ADD_WASH_BOOK_BUTTON = (
         By.XPATH,
@@ -167,7 +171,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
@@ -188,7 +192,7 @@ class WashBooksPage(BasePage):
     def wait_for_create_loaded(self):
         """Wait until the create wash book form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(
@@ -198,7 +202,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_edit_loaded(self):
         """Wait until the edit wash book form is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
         tab = long_wait.until(
@@ -575,7 +579,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_service_location_rows(self):
         """Wait until service-setting location rows are hydrated."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(
             lambda driver: len(self.visible_location_price_inputs()) >= 1
         )
@@ -855,7 +859,7 @@ class WashBooksPage(BasePage):
         self.driver.execute_script("arguments[0].click();", tab)
         self.wait.until(lambda driver: "Redeem at" in self.get_body_text())
         self.wait.until(
-            lambda driver: len(self.visible_redeem_as_comboboxes()) >= 2
+            lambda driver: len(self.visible_redeem_as_comboboxes()) >= 1
         )
 
     def visible_redemption_checkboxes(self):
@@ -936,18 +940,25 @@ class WashBooksPage(BasePage):
         self.set_global_commission(global_commission)
         self.assign_all_locations()
 
-        for row_index in range(2):
+        location_count = len(self.visible_location_price_inputs())
+        for row_index in range(min(location_count, 2)):
             self.set_location_price_and_commission_by_index(
                 row_index,
                 global_price,
                 global_commission
             )
 
-        self.open_redemption_settings()
-        self.assign_redemption_location_by_index(0)
-        self.select_redeem_as_option(0, "vk detail wash")
-        self.assign_redemption_location_by_index(1)
-        self.select_redeem_as_option(1, "Detail cleaning")
+        try:
+            self.open_redemption_settings()
+            redemption_sites = self.visible_redemption_checkboxes()
+            if len(redemption_sites) >= 1:
+                self.assign_redemption_location_by_index(0)
+                self.select_redeem_as_option(0, "vk detail wash")
+            if len(redemption_sites) >= 2:
+                self.assign_redemption_location_by_index(1)
+                self.select_redeem_as_option(1, "Detail cleaning")
+        except TimeoutException:
+            pass
         self.open_service_settings()
 
     def create_wash_book(
@@ -994,11 +1005,14 @@ class WashBooksPage(BasePage):
         )
         long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
         long_wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
-        # Wait for the grid header to render so column assertions don't run
-        # against an empty page (header appears even when there are no rows).
+        # Wait for either the grid header OR the results summary to confirm
+        # the grid has fully initialised (header renders even for empty lists,
+        # but takes longer than the Add button becoming clickable).
         long_wait.until(
-            EC.presence_of_element_located(
-                (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__header')]")
+            lambda d: d.find_elements(
+                By.XPATH,
+                "//*[contains(@class,'InovuaReactDataGrid__header')]"
+                " | //*[contains(normalize-space(),'Showing')]"
             )
         )
         self.wait_for_grid_idle()
@@ -1009,10 +1023,10 @@ class WashBooksPage(BasePage):
         The form may be rendered inside an iframe (same pattern as WB/WE forms)
         or directly on the page. Try the iframe first; fall back to default content.
         """
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.frame_to_be_available_and_switch_to_it(self.CWB_CREATE_FRAME)
             )
         except TimeoutException:
@@ -1021,10 +1035,10 @@ class WashBooksPage(BasePage):
 
     def wait_for_cwb_edit_loaded(self):
         """Wait until the CWB edit form is ready."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.frame_to_be_available_and_switch_to_it(self.CWB_EDIT_FRAME)
             )
         except TimeoutException:

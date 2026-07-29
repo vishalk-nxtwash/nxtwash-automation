@@ -1,0 +1,15 @@
+Users
+Add new user
+Cancel
+Save user
+User settings
+Employee
+No options
+Password
+Confirm password
+Active employee
+Contact info
+Email
+Phone number
+User role
+Select user role

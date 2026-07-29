@@ -1,0 +1,1985 @@
+2026-07-28 02:26:28,023 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:26:31,841 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:26:32,029 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+created: 2/2 workers
+2 workers [270 items]
+
+scheduling tests via LoadScheduling
+
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_uncheck_single_day_reverts_to_range 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_loads_at_correct_url 
+[gw0] [  0%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_loads_at_correct_url 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens 
+[gw1] [  0%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_uncheck_single_day_reverts_to_range 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_custom_range_renders 
+[gw0] [  1%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_modal_auto_opens 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_contains_all_controls 
+[gw1] [  1%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_custom_range_renders 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_range_spanning_month_boundary_renders 
+[gw0] [  1%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_contains_all_controls 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_opens_with_no_site_default 
+[gw1] [  2%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_range_spanning_month_boundary_renders 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-01] 
+[gw0] [  2%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_modal_opens_with_no_site_default 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal 
+[gw1] [  2%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-01] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02] 
+[gw0] [  3%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_apply_filters_closes_modal 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack 
+[gw1] [  3%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-02] 
+[gw0] [  4%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_renders_widget_stack 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-03] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible 
+[gw0] [  4%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_employee_summary_and_commission_visible 
+[gw1] [  4%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-03] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-04] 
+[gw0] [  5%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_filter_values_reflected_in_page_bar 
+[gw1] [  5%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_kpi_card_visible[LAB-KPI-001-04] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_level_changes_do_not_reopen_modal 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employees_summary_card_content 
+[gw1] [  5%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employees_summary_card_content 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data 
+[gw0] [  6%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_page_level_changes_do_not_reopen_modal 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state 
+[gw1] [  6%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_all_metrics_zero_with_no_data 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change 
+[gw0] [  7%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_commission_transactions_subtitle_spelling 
+[gw1] [  7%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_site_change 
+[gw0] [  7%] XFAIL tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_commission_transactions_subtitle_spelling 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_date_change 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_sites_dropdown_lists_active_sites 
+[gw0] [  8%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_sites_dropdown_lists_active_sites 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data 
+[gw1] [  8%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_widgets_refresh_on_date_change 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_count_reconciliation 
+[gw0] [  8%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation 
+[gw1] [  9%] SKIPPED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_count_reconciliation 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_summary_matches_table_count 
+[gw0] [  9%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_shows_chips_with_overflow 
+[gw1] [ 10%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_employee_summary_matches_table_count 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_total_hours_format 
+[gw1] [ 10%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_total_hours_format 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_currency_and_percentage_format 
+[gw0] [ 10%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_shows_chips_with_overflow 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown 
+[gw1] [ 11%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsKPI::test_currency_and_percentage_format 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01] 
+[gw0] [ 11%] SKIPPED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_selected_option_highlighted_in_dropdown 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deselecting_site_removes_chip 
+[gw1] [ 11%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02] 
+[gw1] [ 12%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-03] 
+[gw0] [ 12%] SKIPPED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deselecting_site_removes_chip 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_chip_x_clear_returns_empty_state 
+[gw1] [ 12%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-03] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04] 
+[gw0] [ 13%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_chip_x_clear_returns_empty_state 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable 
+[gw1] [ 13%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-04] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05] 
+[gw0] [ 14%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_site_dropdown_scrollable 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh 
+[gw1] [ 14%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-06] 
+[gw0] [ 14%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_page_level_site_refresh 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent 
+[gw1] [ 15%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-06] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-07] 
+[gw0] [ 15%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_date_preset_dropdown_lists_all_options 
+[gw1] [ 15%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-07] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08] 
+[gw0] [ 16%] XPASS tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_date_preset_dropdown_lists_all_options 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_selecting_preset_fills_date_range 
+[gw1] [ 16%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08] 
+[gw0] [ 17%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_selecting_preset_fills_date_range 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal 
+[gw1] [ 17%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_empty_state 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates 
+[gw0] [ 17%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_page_level_preset_matches_modal 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002] 2026-07-28 03:14:35,430 ERROR nxtwash: Test FAILED: tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates (url: https://staging.nxtwash.com/reports/detailed/employee_labor)
+2026-07-28 03:14:39,298 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Labor
+0.00%
+Total labor
+Cost Per Car
+$123.00
+$ per car
+Productivity
+0.00
+Cars per labor hour
+Employees
+Total employees
+0
+Active employees
+0
+Inactive employees
+0
+Total hours
+0h 0m
+Search
+Status
+All
+Employee
+Membership sales
+Resignups
+Commission
+Total shifts
+Hours Worked
+Overtime
+Status
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Commission Details
+Commision Transactions
+Membership Sales Commission
+$0.00
+Retail Sales Commission
+$2.00
+Washbook Sales Commission
+$0.00
+Total Commission
+$2.00
+Search
+Date
+Site name
+Employee code
+Employee
+Customer
+Type
+Service
+License plate
+Service Price
+Commission Amount
+07/22/2026
+VK Test carwash 2
+1234
+Vishal Kumar
+PrePaid Cust 2
+Retail Sale
+vk wash 2 package
+0002
+$15.00
+$2.00
+<<
+<
+>
+>>
+Page 1 of 1
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 1 records
+
+[gw1] [ 18%] FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_filters_table 
+[gw0] [ 18%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-003] 
+[gw1] [ 18%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_filters_table 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_no_match 
+[gw0] [ 19%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-003] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] 
+[gw1] [ 19%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_search_no_match 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all] 
+[gw0] [ 20%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-004] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-005] 
+[gw1] [ 20%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-active] 
+[gw0] [ 20%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-005] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006] 
+[gw1] [ 21%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-active] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-inactive] 
+[gw0] [ 21%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-007] 
+[gw1] [ 21%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-inactive] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_four_commission_cards_visible 
+[gw0] [ 22%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-007] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click 
+[gw1] [ 22%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_four_commission_cards_visible 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data 
+[gw0] [ 22%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates 
+[gw1] [ 23%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_zero_with_no_data 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change 
+[gw0] [ 23%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report 
+[gw1] [ 24%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_cards_update_on_filter_change 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format 
+[gw0] [ 24%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_single_day_mode_renders_report 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_future_dates_disabled_in_calendar 
+[gw1] [ 24%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format 
+[gw0] [ 25%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_future_dates_disabled_in_calendar 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_mode_changes_date_field 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_reconciliation_chain 
+[gw1] [ 25%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_reconciliation_chain 
+[gw0] [ 25%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_mode_changes_date_field 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_calendar_date_range_sets_field 
+[gw0] [ 26%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_calendar_date_range_sets_field 
+[gw1] [ 26%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-01] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_checkbox_visible 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-02] 
+[gw0] [ 27%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_single_day_checkbox_visible 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_zero_data_date_range_state 
+[gw1] [ 27%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-02] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-03] 
+[gw0] [ 27%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_zero_data_date_range_state 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_clears_custom_date_range 
+[gw1] [ 28%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-03] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-04] 
+[gw0] [ 28%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_clears_custom_date_range 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_total_redemptions_card_visible 
+[gw1] [ 28%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-04] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05] 
+[gw0] [ 29%] ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_total_redemptions_card_visible 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_all_summary_cards_visible 
+[gw1] [ 29%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-05] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-06] 
+[gw0] [ 30%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_all_summary_cards_visible 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-01] 
+[gw1] [ 30%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-06] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-07] 
+[gw1] [ 30%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-07] 
+[gw0] [ 31%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-01] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-08] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-02] 
+[gw0] [ 31%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_summary_card_currency_format[RDM-SUM-004-02] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_expand_all_opens_all_sections 
+[gw1] [ 31%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_column_present[LAB-CTX-001-08] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows 
+[gw0] [ 32%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_expand_all_opens_all_sections 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_collapse_all_hides_all_sections 
+[gw1] [ 32%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_has_rows 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state 
+[gw0] [ 32%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_collapse_all_hides_all_sections 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-loyalty-points] 
+[gw1] [ 33%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_search_filters_table 
+[gw0] [ 33%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-comp-washes] 
+[gw1] [ 34%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_search_filters_table 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values 
+[gw0] [ 34%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-memberships] 
+[gw1] [ 34%] SKIPPED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_type_column_has_values 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-EMP-012] 
+[gw0] [ 35%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-gift-cards] 
+[gw1] [ 35%] SKIPPED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-EMP-012] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011] 
+[gw0] [ 35%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-wash-books] 
+[gw1] [ 36%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011] 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+[gw0] [ 36%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-discounts] 
+[gw1] [ 37%] ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+[gw0] [ 37%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-discounts] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-coupon-codes] 
+[gw1] [ 37%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+[gw0] [ 38%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_individual_section_toggle[sec-coupon-codes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_summary_cards_visible_without_expanding 
+[gw1] [ 38%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+[gw0] [ 38%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsExpandCollapse::test_summary_cards_visible_without_expanding 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-loyalty-points] 
+[gw1] [ 39%] PASSED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_loads_at_correct_url 
+[gw0] [ 39%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-comp-washes] 
+[gw1] [ 40%] ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_loads_at_correct_url 
+[gw0] [ 40%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_modal_auto_opens 
+[gw1] [ 40%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_modal_auto_opens 
+[gw0] [ 41%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_contains_all_controls 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-gift-cards] 
+[gw1] [ 41%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_contains_all_controls 
+[gw0] [ 41%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_opens_with_no_default_site 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-wash-books] 
+[gw1] [ 42%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_modal_opens_with_no_default_site 
+[gw0] [ 42%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_header_visible[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_apply_filters_closes_modal 
+[gw0] [ 42%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-loyalty-points] 
+[gw1] [ 43%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_apply_filters_closes_modal 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_values_reflected_in_page_bar 
+[gw1] [ 43%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_filter_values_reflected_in_page_bar 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_bar_changes_do_not_navigate_away 
+[gw0] [ 44%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-memberships] 
+[gw1] [ 44%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_bar_changes_do_not_navigate_away 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_content_visible_after_apply 
+[gw0] [ 44%] ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-gift-cards] 
+[gw1] [ 45%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_content_visible_after_apply 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites 
+[gw1] [ 45%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_sites_dropdown_lists_active_sites 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_no_default_site_selected 
+[gw0] [ 45%] ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-wash-books] 
+[gw1] [ 46%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_no_default_site_selected 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip 
+[gw0] [ 46%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-loyalty-points] 
+[gw1] [ 47%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_selecting_site_creates_chip 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_multi_site_selection_accepted 
+[gw1] [ 47%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_multi_site_selection_accepted 
+[gw0] [ 47%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_single_site_scopes_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-comp-washes] 
+[gw1] [ 48%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_single_site_scopes_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_removing_chip_reduces_site_filter 
+[gw0] [ 48%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-memberships] 
+[gw1] [ 48%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_removing_chip_reduces_site_filter 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_clear_all_sites 
+[gw0] [ 49%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-gift-cards] 
+[gw1] [ 49%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_clear_all_sites 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_uses_multiselect 
+[gw0] [ 50%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-wash-books] 
+[gw1] [ 50%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_uses_multiselect 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_lists_multiple_sites 
+[gw1] [ 50%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_site_dropdown_lists_multiple_sites 
+[gw0] [ 51%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_breakdown_table_present[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_no_modal 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-loyalty-points] 
+[gw0] [ 51%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-comp-washes] 
+[gw1] [ 51%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_no_modal 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_rdm_site_present_in_dropdown 
+[gw0] [ 52%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-memberships] 
+[gw1] [ 52%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_rdm_site_present_in_dropdown 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_does_not_reopen_modal 
+[gw0] [ 52%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-gift-cards] 
+[gw1] [ 53%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSiteFilter::test_page_bar_site_change_does_not_reopen_modal 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_count 
+[gw0] [ 53%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-wash-books] 
+[gw1] [ 54%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_count 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_dropdown_options 
+[gw0] [ 54%] SKIPPED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_pagination_present[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-loyalty-points] 
+[gw1] [ 54%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_preset_dropdown_options 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_selecting_preset_fills_date_range 
+[gw0] [ 55%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-comp-washes] 
+[gw1] [ 55%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_selecting_preset_fills_date_range 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-002] 
+[gw0] [ 55%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-comp-washes] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-memberships] 
+[gw1] [ 56%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-002] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-003] 
+[gw0] [ 56%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-gift-cards] 
+[gw1] [ 57%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-003] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-004] 
+[gw0] [ 57%] ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-gift-cards] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-wash-books] 
+[gw1] [ 57%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-004] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-005] 
+[gw1] [ 58%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-005] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-006] 
+[gw0] [ 58%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-loyalty-points] 
+[gw1] [ 58%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-006] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-007] 
+[gw0] [ 59%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-loyalty-points] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-comp-washes] 
+[gw1] [ 59%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_preset_populates_date_range[RDM-DTE-007] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_range_field_shows_dates 
+[gw0] [ 60%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-comp-washes] 
+[gw1] [ 60%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsDateFilter::test_date_range_field_shows_dates 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_breakdown_columns 
+[gw1] [ 60%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_breakdown_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_detail_has_data 
+[gw0] [ 61%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-memberships] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-gift-cards] 
+[gw0] [ 61%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-gift-cards] 
+[gw1] [ 61%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_detail_has_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+[gw1] [ 62%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+[gw0] [ 62%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_detail_table_horizontal_scroll[sec-wash-books] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-site] 
+[gw1] [ 62%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+[gw0] [ 63%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-site] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-date] 
+[gw1] [ 63%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+[gw0] [ 64%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_all_sections_refresh_on_filter_change[RDM-SUM-003-date] 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_summary_cards 
+[gw1] [ 64%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+[gw0] [ 64%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_summary_cards 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_breakdown_columns 
+[gw1] [ 65%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens 
+[gw0] [ 65%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_breakdown_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_detail_columns 
+[gw1] [ 65%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls 
+[gw0] [ 66%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsLoyalty::test_loyalty_detail_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_summary_cards 
+[gw1] [ 66%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply 
+[gw0] [ 67%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_summary_cards 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_breakdown_columns 
+[gw1] [ 67%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal 
+[gw1] [ 67%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar 
+[gw0] [ 68%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_breakdown_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_detail_has_data 
+[gw1] [ 68%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal 
+[gw0] [ 68%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsCompWashes::test_comp_washes_detail_has_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_summary_cards 
+[gw1] [ 69%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites 
+[gw0] [ 69%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_summary_cards 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_breakdown_columns 
+[gw1] [ 70%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default 
+[gw0] [ 70%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_breakdown_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_detail_has_data 
+[gw1] [ 70%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip 
+[gw0] [ 71%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsMemberships::test_memberships_detail_has_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_summary_cards 2026-07-28 04:49:29,782 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-28 04:49:31,259 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+
+[gw1] [ 71%] FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted 
+[gw0] [ 71%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_summary_cards 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_breakdown_columns 
+[gw1] [ 72%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip 
+[gw0] [ 72%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_breakdown_columns 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_detail_has_data 
+[gw0] [ 72%] XFAIL tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsGiftCards::test_gift_cards_detail_has_data 
+tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_summary_cards 
+[gw1] [ 73%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data 
+[gw0] [ 73%] PASSED tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsWashBooks::test_wash_books_summary_cards 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites 
+[gw1] [ 74%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter 
+[gw0] [ 74%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal 
+[gw1] [ 74%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state 
+[gw0] [ 75%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites 
+[gw1] [ 75%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range 
+[gw0] [ 75%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown 
+[gw1] [ 76%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal 
+[gw0] [ 76%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] 
+[gw1] [ 77%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date 
+[gw1] [ 77%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range 
+[gw0] [ 77%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] 
+[gw1] [ 78%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state 
+[gw0] [ 78%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] 
+[gw1] [ 78%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] 
+[gw1] [ 79%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] 
+[gw0] [ 79%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count 
+[gw0] [ 80%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] 
+[gw1] [ 80%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] 
+[gw0] [ 80%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] 
+[gw1] [ 81%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] 
+[gw0] [ 81%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] 
+[gw1] [ 81%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] 
+[gw0] [ 82%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] 
+[gw1] [ 82%] ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] 
+[gw0] [ 82%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] 
+[gw0] [ 83%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] 
+[gw1] [ 83%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] 
+[gw0] [ 84%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available 
+[gw1] [ 84%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] 
+[gw0] [ 84%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range 
+[gw1] [ 85%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] 
+[gw0] [ 85%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] 
+[gw1] [ 85%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero 
+[gw0] [ 86%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab 
+[gw1] [ 86%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state 
+[gw0] [ 87%] XFAIL tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_section_visible 
+[gw1] [ 87%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum 
+[gw0] [ 87%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_section_visible 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data 
+[gw0] [ 88%] SKIPPED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data 
+[gw1] [ 88%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_daily_average_non_zero 
+[gw0] [ 88%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_renders_for_test_dataset 
+[gw1] [ 89%] XFAIL tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_daily_average_non_zero 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero 
+[gw0] [ 89%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_renders_for_test_dataset 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off 
+[gw1] [ 90%] XFAIL tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero 
+[gw0] [ 90%] ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_on 
+[gw1] [ 90%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] 
+[gw0] [ 91%] SKIPPED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_on 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible 
+[gw0] [ 91%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible 
+[gw1] [ 91%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_all_three_tabs_visible 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships 
+[gw0] [ 92%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_all_three_tabs_visible 
+[gw1] [ 92%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] 
+[gw1] [ 92%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] 
+[gw0] [ 93%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] 
+[gw0] [ 93%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present 
+[gw1] [ 94%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] 
+[gw1] [ 94%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present 
+[gw1] [ 94%] SKIPPED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count 
+[gw0] [ 95%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_empty_state 
+[gw1] [ 95%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count 
+[gw0] [ 95%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_empty_state 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi 
+[gw1] [ 96%] XFAIL tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch 
+[gw0] [ 96%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_empty_state 
+[gw1] [ 97%] ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi 
+[gw0] [ 97%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_empty_state 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible 
+[gw1] [ 97%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_initiates_download 
+[gw0] [ 98%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+[gw0] [ 98%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_checkbox_visible 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+[gw1] [ 98%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_initiates_download 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+[gw0] [ 99%] ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar 
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+[gw1] [ 99%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_changes_date_field 
+[gw0] [100%] PASSED tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal 
+
+==================================== ERRORS ====================================
+________ ERROR at setup of TestLaborShiftsNav.test_sidebar_active_state ________
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000102a21a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000102a19b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001024c32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001024add20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001024ada80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001024ab818 chromedriver + 227352
+E   6   chromedriver                        0x00000001024ac40c chromedriver + 230412
+E   7   chromedriver                        0x00000001024b97a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001024cfe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001024aca78 chromedriver + 232056
+E   10  chromedriver                        0x00000001024cfc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010254af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102501434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001029dec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001029e23b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001029c50f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x00000001029e2c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001029b63b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000102a081f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000102a08354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000102a197a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+___ ERROR at setup of TestLaborShiftsSiteFilter.test_single_site_scopes_data ___
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000101311a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000101309b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000100db32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100d9dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100d9da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100d9b818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100d9c40c chromedriver + 230412
+E   7   chromedriver                        0x0000000100da97a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100dbfe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100d9ca78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100dbfc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100e3af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100df1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001012cec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001012d23b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001012b50f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x00000001012d2c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001012a63b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001012f81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x00000001012f8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001013097a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(99521) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___ ERROR at setup of TestLaborShiftsSiteFilter.test_multi_site_aggregation ____
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104acda84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104ac5b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010456f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000104559d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000104559a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000104557818 chromedriver + 227352
+E   6   chromedriver                        0x000000010455840c chromedriver + 230412
+E   7   chromedriver                        0x00000001045657a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010457be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000104558a78 chromedriver + 232056
+E   10  chromedriver                        0x000000010457bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001045f6f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001045ad434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104a8ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104a8e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000104a710f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104a8ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000104a623b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104ab41f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104ab4354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104ac57a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(260) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-01] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x000000010076da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100765b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010020f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001001f9d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001001f9a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001001f7818 chromedriver + 227352
+E   6   chromedriver                        0x00000001001f840c chromedriver + 230412
+E   7   chromedriver                        0x00000001002057a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010021be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001001f8a78 chromedriver + 232056
+E   10  chromedriver                        0x000000010021bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100296f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x000000010024d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010072ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010072e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001007110f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010072ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001007023b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001007541f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100754354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001007657a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(2190) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-02] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104a41a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104a39b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001044e32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001044cdd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001044cda80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001044cb818 chromedriver + 227352
+E   6   chromedriver                        0x00000001044cc40c chromedriver + 230412
+E   7   chromedriver                        0x00000001044d97a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001044efe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001044cca78 chromedriver + 232056
+E   10  chromedriver                        0x00000001044efc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010456af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104521434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001049fec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104a023b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001049e50f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104a02c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001049d63b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104a281f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104a28354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104a397a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(2719) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-05] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100a65a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100a5db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001005072a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001004f1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001004f1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001004ef818 chromedriver + 227352
+E   6   chromedriver                        0x00000001004f040c chromedriver + 230412
+E   7   chromedriver                        0x00000001004fd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100513e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001004f0a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100513c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010058ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100545434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100a22c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100a263b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100a090f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100a26c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001009fa3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100a4c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100a4c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100a5d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(3850) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+__ ERROR at setup of TestLaborShiftsSiteFilter.test_deactivated_sites_absent ___
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x00000001026dda84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001026d5b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010217f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102169d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102169a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102167818 chromedriver + 227352
+E   6   chromedriver                        0x000000010216840c chromedriver + 230412
+E   7   chromedriver                        0x00000001021757a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010218be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102168a78 chromedriver + 232056
+E   10  chromedriver                        0x000000010218bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000102206f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001021bd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010269ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010269e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001026810f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010269ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001026723b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001026c41f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x00000001026c4354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001026d57a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(4702) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_table_column_present[LAB-EMP-001-08] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x00000001010c1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001010b9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000100b632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100b4dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100b4da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100b4b818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100b4c40c chromedriver + 230412
+E   7   chromedriver                        0x0000000100b597a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100b6fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100b4ca78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100b6fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100beaf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100ba1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010107ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001010823b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001010650f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000101082c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001010563b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001010a81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x00000001010a8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001010b97a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(5416) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsDateFilter.test_preset_populates_date_range[LAB-DTE-002] _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104665a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x000000010465db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001041072a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001040f1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001040f1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001040ef818 chromedriver + 227352
+E   6   chromedriver                        0x00000001040f040c chromedriver + 230412
+E   7   chromedriver                        0x00000001040fd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000104113e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001040f0a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000104113c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010418ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104145434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104622c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001046263b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001046090f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104626c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001045fa3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x000000010464c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x000000010464c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x000000010465d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(6466) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsEmployeeTable.test_employee_status_filter[LAB-EMP-006-all] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x00000001048b1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001048a9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001043532a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010433dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x000000010433da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010433b818 chromedriver + 227352
+E   6   chromedriver                        0x000000010433c40c chromedriver + 230412
+E   7   chromedriver                        0x00000001043497a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010435fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x000000010433ca78 chromedriver + 232056
+E   10  chromedriver                        0x000000010435fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001043daf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104391434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010486ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001048723b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001048550f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104872c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001048463b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001048981f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104898354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001048a97a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(7950) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsDateFilter.test_preset_populates_date_range[LAB-DTE-006] _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100b81a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100b79b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001006232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010060dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x000000010060da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010060b818 chromedriver + 227352
+E   6   chromedriver                        0x000000010060c40c chromedriver + 230412
+E   7   chromedriver                        0x00000001006197a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010062fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x000000010060ca78 chromedriver + 232056
+E   10  chromedriver                        0x000000010062fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001006aaf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100661434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100b3ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100b423b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100b250f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100b42c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000100b163b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100b681f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100b68354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100b797a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(8623) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsDateFilter.test_calendar_opens_on_date_click _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x000000010128da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000101285b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000100d2f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100d19d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100d19a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100d17818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100d1840c chromedriver + 230412
+E   7   chromedriver                        0x0000000100d257a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100d3be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100d18a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100d3bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100db6f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100d6d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010124ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010124e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001012310f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010124ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001012223b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001012741f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000101274354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001012857a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(9576) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+__ ERROR at setup of TestLaborShiftsDateFilter.test_custom_date_range_updates __
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:185: in lab_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000102d79a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000102d71b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010281b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102805d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102805a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102803818 chromedriver + 227352
+E   6   chromedriver                        0x000000010280440c chromedriver + 230412
+E   7   chromedriver                        0x00000001028117a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000102827e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102804a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000102827c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001028a2f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102859434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000102d36c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000102d3a3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000102d1d0f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000102d3ac4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000102d0e3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000102d601f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000102d60354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000102d717a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(10040) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsCommissionCards.test_commission_card_currency_format _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100cf1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100ce9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001007932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010077dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x000000010077da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010077b818 chromedriver + 227352
+E   6   chromedriver                        0x000000010077c40c chromedriver + 230412
+E   7   chromedriver                        0x00000001007897a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010079fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x000000010077ca78 chromedriver + 232056
+E   10  chromedriver                        0x000000010079fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010081af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001007d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100caec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100cb23b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100c950f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100cb2c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000100c863b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100cd81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100cd8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100ce97a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(10968) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestRedemptionsSummaryCards.test_total_redemptions_card_visible _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/redemptions/conftest.py:199: in rdm_page
+    page = open_rdm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/redemptions/conftest.py:129: in open_rdm_page
+    open_admin_path(browser, "/reports/detailed/redemption_details")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000103565a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x000000010355db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001030072a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102ff1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102ff1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102fef818 chromedriver + 227352
+E   6   chromedriver                        0x0000000102ff040c chromedriver + 230412
+E   7   chromedriver                        0x0000000102ffd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000103013e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102ff0a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000103013c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010308ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000103045434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000103522c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001035263b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001035090f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000103526c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001034fa3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x000000010354c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x000000010354c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x000000010355d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(13508) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsCommissionTransactions.test_ctx_table_empty_state _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:228: in lab_zero_data
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104729a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104721b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001041cb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001041b5d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001041b5a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001041b3818 chromedriver + 227352
+E   6   chromedriver                        0x00000001041b440c chromedriver + 230412
+E   7   chromedriver                        0x00000001041c17a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001041d7e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001041b4a78 chromedriver + 232056
+E   10  chromedriver                        0x00000001041d7c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000104252f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104209434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001046e6c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001046ea3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001046cd0f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x00000001046eac4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001046be3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001047101f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104710354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001047217a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(15756) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestLaborShiftsPagination.test_table_pagination_controls_present[LAB-CTX-011] _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:200: in lab_page
+    page = open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104845a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x000000010483db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001042e72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001042d1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001042d1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001042cf818 chromedriver + 227352
+E   6   chromedriver                        0x00000001042d040c chromedriver + 230412
+E   7   chromedriver                        0x00000001042dd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001042f3e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001042d0a78 chromedriver + 232056
+E   10  chromedriver                        0x00000001042f3c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010436ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104325434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104802c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001048063b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001047e90f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104806c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001047da3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x000000010482c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x000000010482c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x000000010483d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(17606) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+__ ERROR at setup of TestSingleDaySync.test_modal_single_day_checkbox_visible __
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/conftest.py:264: in sdm_modal
+    return open_lab_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/labor_shifts/conftest.py:120: in open_lab_page
+    open_admin_path(browser, "/reports/detailed/employee_labor")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x000000010301da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000103015b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000102abf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102aa9d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102aa9a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102aa7818 chromedriver + 227352
+E   6   chromedriver                        0x0000000102aa840c chromedriver + 230412
+E   7   chromedriver                        0x0000000102ab57a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000102acbe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102aa8a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000102acbc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000102b46f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102afd434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000102fdac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000102fde3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000102fc10f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000102fdec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000102fb23b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001030041f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000103004354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001030157a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(18281) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_____ ERROR at setup of TestRedemptionsNav.test_page_loads_at_correct_url ______
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/redemptions/conftest.py:193: in rdm_modal
+    return open_rdm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/redemptions/conftest.py:129: in open_rdm_page
+    open_admin_path(browser, "/reports/detailed/redemption_details")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104a25a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104a1db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001044c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001044b1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001044b1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001044af818 chromedriver + 227352
+E   6   chromedriver                        0x00000001044b040c chromedriver + 230412
+E   7   chromedriver                        0x00000001044bd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001044d3e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001044b0a78 chromedriver + 232056
+E   10  chromedriver                        0x00000001044d3c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010454ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104505434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001049e2c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001049e63b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001049c90f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x00000001049e6c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001049ba3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104a0c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104a0c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104a1d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(19745) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestRedemptionsAccordionShared.test_section_name_in_header[sec-memberships] _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/redemptions/conftest.py:199: in rdm_page
+    page = open_rdm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/redemptions/conftest.py:129: in open_rdm_page
+    open_admin_path(browser, "/reports/detailed/redemption_details")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104c7da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104c75b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010471f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000104709d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000104709a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000104707818 chromedriver + 227352
+E   6   chromedriver                        0x000000010470840c chromedriver + 230412
+E   7   chromedriver                        0x00000001047157a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010472be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000104708a78 chromedriver + 232056
+E   10  chromedriver                        0x000000010472bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001047a6f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x000000010475d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104c3ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104c3e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000104c210f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104c3ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000104c123b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104c641f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104c64354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104c757a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(22136) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestRedemptionsAccordionShared.test_section_name_in_header[sec-gift-cards] _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/redemptions/conftest.py:199: in rdm_page
+    page = open_rdm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/redemptions/conftest.py:129: in open_rdm_page
+    open_admin_path(browser, "/reports/detailed/redemption_details")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000102db5a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000102dadb4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001028572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102841d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102841a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010283f818 chromedriver + 227352
+E   6   chromedriver                        0x000000010284040c chromedriver + 230412
+E   7   chromedriver                        0x000000010284d7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000102863e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102840a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000102863c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001028def70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102895434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000102d72c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000102d763b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000102d590f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000102d76c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000102d4a3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000102d9c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000102d9c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000102dad7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(22514) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestRedemptionsAccordionShared.test_section_zero_data_state[sec-gift-cards] _
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/redemptions/conftest.py:241: in rdm_zero_data
+    page.select_site(RDM_SITE)
+pages/admin_portal/redemptions_page.py:220: in select_site
+    inner.send_keys(site_name)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E   Stacktrace:
+E   0   chromedriver                        0x0000000102cd1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000102cc9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001027732a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102779464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E   4   chromedriver                        0x000000010277b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E   5   chromedriver                        0x000000010277b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E   6   chromedriver                        0x00000001027b6138 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 347904
+E   7   chromedriver                        0x00000001027b2934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E   8   chromedriver                        0x00000001027fb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   9   chromedriver                        0x00000001027b1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   10  chromedriver                        0x0000000102c8ec40 cxxbridge1$str$ptr + 2921304
+E   11  chromedriver                        0x0000000102c923b8 cxxbridge1$str$ptr + 2935504
+E   12  chromedriver                        0x0000000102c750f8 cxxbridge1$str$ptr + 2816016
+E   13  chromedriver                        0x0000000102c92c4c cxxbridge1$str$ptr + 2937700
+E   14  chromedriver                        0x0000000102c663b0 cxxbridge1$str$ptr + 2755272
+E   15  chromedriver                        0x0000000102cb81f4 cxxbridge1$str$ptr + 3090700
+E   16  chromedriver                        0x0000000102cb8354 cxxbridge1$str$ptr + 3091052
+E   17  chromedriver                        0x0000000102cc97a4 cxxbridge1$str$ptr + 3161788
+E   18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(25508) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestWashActivityKPI.test_kpi_card_visible[WAC-KPI-001-02] __
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/wash_activity/conftest.py:170: in wac_page
+    page.select_site(WAC_SITE)
+pages/admin_portal/wash_activity_page.py:310: in select_site
+    ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/action_chains.py:99: in perform
+    self.w3c_actions.perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/actions/action_builder.py:148: in perform
+    self.driver.execute(Command.W3C_ACTIONS, enc)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100a55a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100a4db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001004f72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001004fd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E   4   chromedriver                        0x00000001004ff678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E   5   chromedriver                        0x00000001004ff730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E   6   chromedriver                        0x000000010054487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+E   7   chromedriver                        0x0000000100544294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+E   8   chromedriver                        0x00000001005862e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+E   9   chromedriver                        0x000000010057f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   10  chromedriver                        0x0000000100535434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   11  chromedriver                        0x0000000100a12c40 cxxbridge1$str$ptr + 2921304
+E   12  chromedriver                        0x0000000100a163b8 cxxbridge1$str$ptr + 2935504
+E   13  chromedriver                        0x00000001009f90f8 cxxbridge1$str$ptr + 2816016
+E   14  chromedriver                        0x0000000100a16c4c cxxbridge1$str$ptr + 2937700
+E   15  chromedriver                        0x00000001009ea3b0 cxxbridge1$str$ptr + 2755272
+E   16  chromedriver                        0x0000000100a3c1f4 cxxbridge1$str$ptr + 3090700
+E   17  chromedriver                        0x0000000100a3c354 cxxbridge1$str$ptr + 3091052
+E   18  chromedriver                        0x0000000100a4d7a4 cxxbridge1$str$ptr + 3161788
+E   19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(28439) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_____ ERROR at setup of TestWashActivityChart.test_chart_legend_toggle_off _____
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/wash_activity/conftest.py:170: in wac_page
+    page.select_site(WAC_SITE)
+pages/admin_portal/wash_activity_page.py:310: in select_site
+    ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/action_chains.py:99: in perform
+    self.w3c_actions.perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/actions/action_builder.py:148: in perform
+    self.driver.execute(Command.W3C_ACTIONS, enc)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E   Stacktrace:
+E   0   chromedriver                        0x000000010488da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104885b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010432f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000104335464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E   4   chromedriver                        0x0000000104337678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E   5   chromedriver                        0x0000000104337730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E   6   chromedriver                        0x000000010437c87c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+E   7   chromedriver                        0x000000010437c294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+E   8   chromedriver                        0x00000001043be2e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+E   9   chromedriver                        0x00000001043b7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   10  chromedriver                        0x000000010436d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   11  chromedriver                        0x000000010484ac40 cxxbridge1$str$ptr + 2921304
+E   12  chromedriver                        0x000000010484e3b8 cxxbridge1$str$ptr + 2935504
+E   13  chromedriver                        0x00000001048310f8 cxxbridge1$str$ptr + 2816016
+E   14  chromedriver                        0x000000010484ec4c cxxbridge1$str$ptr + 2937700
+E   15  chromedriver                        0x00000001048223b0 cxxbridge1$str$ptr + 2755272
+E   16  chromedriver                        0x00000001048741f4 cxxbridge1$str$ptr + 3090700
+E   17  chromedriver                        0x0000000104874354 cxxbridge1$str$ptr + 3091052
+E   18  chromedriver                        0x00000001048857a4 cxxbridge1$str$ptr + 3161788
+E   19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(29028) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_ ERROR at setup of TestWashActivityCompWashes.test_comp_washes_breakdown_cards_present _
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/wash_activity/conftest.py:170: in wac_page
+    page.select_site(WAC_SITE)
+pages/admin_portal/wash_activity_page.py:310: in select_site
+    ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/action_chains.py:99: in perform
+    self.w3c_actions.perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/actions/action_builder.py:148: in perform
+    self.driver.execute(Command.W3C_ACTIONS, enc)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100691a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100689b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001001332a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100139464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E   4   chromedriver                        0x000000010013b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E   5   chromedriver                        0x000000010013b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E   6   chromedriver                        0x000000010018087c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+E   7   chromedriver                        0x0000000100180294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+E   8   chromedriver                        0x00000001001c22e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+E   9   chromedriver                        0x00000001001bb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   10  chromedriver                        0x0000000100171434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   11  chromedriver                        0x000000010064ec40 cxxbridge1$str$ptr + 2921304
+E   12  chromedriver                        0x00000001006523b8 cxxbridge1$str$ptr + 2935504
+E   13  chromedriver                        0x00000001006350f8 cxxbridge1$str$ptr + 2816016
+E   14  chromedriver                        0x0000000100652c4c cxxbridge1$str$ptr + 2937700
+E   15  chromedriver                        0x00000001006263b0 cxxbridge1$str$ptr + 2755272
+E   16  chromedriver                        0x00000001006781f4 cxxbridge1$str$ptr + 3090700
+E   17  chromedriver                        0x0000000100678354 cxxbridge1$str$ptr + 3091052
+E   18  chromedriver                        0x00000001006897a4 cxxbridge1$str$ptr + 3161788
+E   19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(29426) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_____ ERROR at setup of TestSingleDaySync.test_modal_sdm_syncs_to_page_bar _____
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/wash_activity/conftest.py:219: in sdm_single_day
+    page.select_site(WAC_SITE)
+pages/admin_portal/wash_activity_page.py:315: in select_site
+    inner.send_keys(Keys.COMMAND + "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+E   Stacktrace:
+E   0   chromedriver                        0x00000001033bda84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001033b5b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000102e5f0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+E   3   chromedriver                        0x0000000102ea3d3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+E   4   chromedriver                        0x0000000102ea2354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+E   5   chromedriver                        0x0000000102e9e934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E   6   chromedriver                        0x0000000102ee7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   7   chromedriver                        0x0000000102e9d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   8   chromedriver                        0x000000010337ac40 cxxbridge1$str$ptr + 2921304
+E   9   chromedriver                        0x000000010337e3b8 cxxbridge1$str$ptr + 2935504
+E   10  chromedriver                        0x00000001033610f8 cxxbridge1$str$ptr + 2816016
+E   11  chromedriver                        0x000000010337ec4c cxxbridge1$str$ptr + 2937700
+E   12  chromedriver                        0x00000001033523b0 cxxbridge1$str$ptr + 2755272
+E   13  chromedriver                        0x00000001033a41f4 cxxbridge1$str$ptr + 3090700
+E   14  chromedriver                        0x00000001033a4354 cxxbridge1$str$ptr + 3091052
+E   15  chromedriver                        0x00000001033b57a4 cxxbridge1$str$ptr + 3161788
+E   16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(29574) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+=================================== FAILURES ===================================
+__________ TestLaborShiftsEmployeeTable.test_employee_table_populates __________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/labor_shifts/test_labor_shifts.py:917: in test_employee_table_populates
+    assert row_count > 0, (
+E   AssertionError: Employee table has 0 rows for LAB_SITE + This month; expected at least 1 row per active employee
+E   assert 0 > 0
+---------------------------- Captured stderr setup -----------------------------
+Python(6270) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_________ TestWashActivitySiteFilter.test_selecting_site_creates_chip __________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/wash_activity/test_wash_activity.py:228: in test_selecting_site_creates_chip
+    wac_modal.select_site(WAC_SITE)
+pages/admin_portal/wash_activity_page.py:310: in select_site
+    ActionChains(self.driver).move_to_element(inner).click(inner).perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/action_chains.py:99: in perform
+    self.w3c_actions.perform()
+venv/lib/python3.11/site-packages/selenium/webdriver/common/actions/action_builder.py:148: in perform
+    self.driver.execute(Command.W3C_ACTIONS, enc)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E     (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104c85a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104c7db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001047272a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010472d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E   4   chromedriver                        0x000000010472f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E   5   chromedriver                        0x000000010472f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E   6   chromedriver                        0x000000010477487c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 390724
+E   7   chromedriver                        0x0000000104774294 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 389212
+E   8   chromedriver                        0x00000001047b62e4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 659628
+E   9   chromedriver                        0x00000001047af030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   10  chromedriver                        0x0000000104765434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   11  chromedriver                        0x0000000104c42c40 cxxbridge1$str$ptr + 2921304
+E   12  chromedriver                        0x0000000104c463b8 cxxbridge1$str$ptr + 2935504
+E   13  chromedriver                        0x0000000104c290f8 cxxbridge1$str$ptr + 2816016
+E   14  chromedriver                        0x0000000104c46c4c cxxbridge1$str$ptr + 2937700
+E   15  chromedriver                        0x0000000104c1a3b0 cxxbridge1$str$ptr + 2755272
+E   16  chromedriver                        0x0000000104c6c1f4 cxxbridge1$str$ptr + 3090700
+E   17  chromedriver                        0x0000000104c6c354 cxxbridge1$str$ptr + 3091052
+E   18  chromedriver                        0x0000000104c7d7a4 cxxbridge1$str$ptr + 3161788
+E   19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(27304) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+=========================== short test summary info ============================
+FAILED tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_populates
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsNav::test_sidebar_active_state
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_single_site_scopes_data
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_multi_site_aggregation
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-01]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-02]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-05]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsSiteFilter::test_deactivated_sites_absent
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_table_column_present[LAB-EMP-001-08]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-002]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsEmployeeTable::test_employee_status_filter[LAB-EMP-006-all]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_preset_populates_date_range[LAB-DTE-006]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_calendar_opens_on_date_click
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsDateFilter::test_custom_date_range_updates
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionCards::test_commission_card_currency_format
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsSummaryCards::test_total_redemptions_card_visible
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsCommissionTransactions::test_ctx_table_empty_state
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestLaborShiftsPagination::test_table_pagination_controls_present[LAB-CTX-011]
+ERROR tests/admin_portal/labor_shifts/test_labor_shifts.py::TestSingleDaySync::test_modal_single_day_checkbox_visible
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsNav::test_page_loads_at_correct_url
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-memberships]
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_name_in_header[sec-gift-cards]
+ERROR tests/admin_portal/redemptions/test_redemptions.py::TestRedemptionsAccordionShared::test_section_zero_data_state[sec-gift-cards]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02]
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar
+= 2 failed, 194 passed, 14 skipped, 33 xfailed, 1 xpassed, 26 errors in 9355.82s (2:35:55) =
+EXIT:0

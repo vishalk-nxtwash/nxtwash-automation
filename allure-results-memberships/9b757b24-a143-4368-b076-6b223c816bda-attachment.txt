@@ -1,1 +1,0 @@
-[32mINFO    [0m tests.admin_portal.memberships.test_memberships_positive:test_memberships_positive.py:92 Verifying membership settings persist: VK MA2

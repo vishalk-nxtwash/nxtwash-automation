@@ -1,0 +1,1 @@
+2026-07-28 18:51:42,512 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership with very long text

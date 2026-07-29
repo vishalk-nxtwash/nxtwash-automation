@@ -1,0 +1,314 @@
+2026-07-29 02:35:24,570 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collected 160 items
+
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_only_active_wash_books_in_cwb_dropdown PASSED [  0%]
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book 2026-07-29 02:36:33,375 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:36:33,994 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_customer_search_requires_two_characters PASSED [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_past_expiration_date_behaviour SKIPPED [  2%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists 2026-07-29 02:37:43,994 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:37:44,613 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  3%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_expiration_date_persists SKIPPED [  3%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book 2026-07-29 02:38:37,593 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:38:38,192 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  4%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book 2026-07-29 02:39:33,209 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:39:33,840 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  5%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_selection_blocked PASSED [  5%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_number_blocked PASSED [  6%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_number_of_washes_blocked PASSED [  6%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected 2026-07-29 02:41:09,271 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:41:09,865 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  7%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book 2026-07-29 02:42:04,285 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:42:04,898 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [  8%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_site_selection SKIPPED [  8%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_expiration_date SKIPPED [  9%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_is_active_by_default SKIPPED [ 10%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number 2026-07-29 02:42:56,639 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:42:57,297 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 10%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number 2026-07-29 02:43:48,352 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number (url: https://staging.nxtwash.com/services/customerWashBooks/new)
+2026-07-29 02:43:48,965 ERROR nxtwash: Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Customer wash books
+Add customer wash book
+Cancel
+Save customer wash book
+Select site
+Select site
+Select wash book
+No options
+Select customer
+Enter at least 2 letters to load customers
+Wash book number
+Number of washes
+Expiration date
+Active customer wash book
+FAILED                                                                   [ 11%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_non_existing_number_shows_empty_state PASSED [ 11%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_by_site_narrows_results PASSED [ 12%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_reset_all_restores_list PASSED [ 13%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_tab_loads_with_controls PASSED [ 13%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_grid_columns_are_visible PASSED [ 14%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_export_file_validation XFAIL [ 15%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_active_wash_book_available_for_cwb_creation SKIPPED [ 15%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_deactivated_wash_book_not_available_for_cwb_creation SKIPPED [ 16%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_valid_points_awarded_saves SKIPPED [ 16%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_duplicate_barcode_rejected SKIPPED [ 17%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_description_shows_on_customer_portal SKIPPED [ 18%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_customer_portal_enabled_wash_book_visible SKIPPED [ 18%]
+tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form 

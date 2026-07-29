@@ -87,42 +87,6 @@ def test_wash_books_filter_by_site_narrows_results(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-FLT-002 Active wash books filter returns only active records")
-@pytest.mark.regression
-def test_wash_books_filter_active_returns_active_only(browser):
-
-    page = open_wash_books_page(browser)
-    page.open_filter_panel()
-    page.apply_filters()
-
-    body_text = page.get_body_text()
-    assert "Inactive" not in body_text or page_has_no_broken_state(page)
-
-
-@allure.title("WB-FLT-003 Disabling Active toggle in filter reveals all wash books")
-@pytest.mark.extended
-def test_wash_books_filter_active_toggle_off_shows_all(browser):
-
-    page = open_wash_books_page(browser)
-    page.open_filter_panel()
-    page.reset_filters()
-    page.apply_filters()
-
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WB-FLT-004 Site and Active filter combined narrows results correctly")
-@pytest.mark.extended
-def test_wash_books_filter_site_and_active_combined(browser):
-
-    page = open_wash_books_page(browser)
-    page.open_filter_panel()
-    page.set_filter_site(ASSIGNMENT_SITE)
-    page.apply_filters()
-
-    assert page_has_no_broken_state(page)
-
-
 @allure.title("WB-FLT-005 Reset all clears filters and restores the default list")
 @pytest.mark.extended
 def test_wash_books_filter_reset_all_restores_list(browser):

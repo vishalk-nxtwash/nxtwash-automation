@@ -1,0 +1,31 @@
+Revenue Metrics
+Sites / Locations
+No options
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters

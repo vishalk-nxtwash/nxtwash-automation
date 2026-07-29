@@ -1,0 +1,34 @@
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters

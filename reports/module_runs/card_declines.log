@@ -1,0 +1,3495 @@
+2026-07-23 05:11:14,604 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 84 items
+
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_opens_with_all_sites_default PASSED [  4%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_apply_filters_closes_modal XFAIL [  5%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_values_reflected_in_page_bar ERROR [  7%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_bar_changes_do_not_reopen_modal ERROR [  8%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_content_visible_after_apply ERROR [  9%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites 2026-07-23 05:14:32,077 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:14:32,722 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 10%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_all_sites_is_default PASSED [ 11%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_selecting_site_creates_chip PASSED [ 13%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_multi_site_selection_accepted PASSED [ 14%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_single_site_scopes_data ERROR [ 15%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_removing_chip_reduces_site_filter ERROR [ 16%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_clear_all_sites ERROR [ 17%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes 2026-07-23 05:17:20,379 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:17:21,016 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 19%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites 2026-07-23 05:17:42,694 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:17:43,358 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 20%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_page_bar_site_change_no_modal ERROR [ 21%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_chart_title_updates_on_site_filter XFAIL [ 22%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_cdl_site_present_in_dropdown PASSED [ 23%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-KPI-003] ERROR [ 25%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-MTX-012] ERROR [ 26%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-BWS-007] ERROR [ 27%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-TDS-005] ERROR [ 28%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-HMP-005] ERROR [ 29%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count 2026-07-23 05:22:20,997 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:22:21,650 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 30%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options 2026-07-23 05:22:53,275 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:22:53,943 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 32%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range 2026-07-23 05:23:25,818 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:23:26,510 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 33%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002] 2026-07-23 05:23:58,285 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:23:58,945 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 34%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003] 2026-07-23 05:24:30,761 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:24:31,431 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 35%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004] 2026-07-23 05:25:03,811 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:25:04,493 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 36%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005] 2026-07-23 05:25:36,331 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:25:37,022 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 38%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006] 2026-07-23 05:26:10,265 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:26:10,945 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 39%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007] 2026-07-23 05:26:46,561 ERROR nxtwash: Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007] (url: https://staging.nxtwash.com/reports/detailed/cc_declines)
+2026-07-23 05:26:47,238 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 40%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_section_visible ERROR [ 41%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-01] ERROR [ 42%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-02] ERROR [ 44%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-03] ERROR [ 45%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-04] ERROR [ 46%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-05] ERROR [ 47%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-06] ERROR [ 48%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-07] ERROR [ 50%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-08] ERROR [ 51%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-09] XFAIL [ 52%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_visible_for_zero_data ERROR [ 53%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-01] ERROR [ 54%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02] ERROR [ 55%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-03] ERROR [ 57%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-04] ERROR [ 58%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-05] ERROR [ 59%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-06] ERROR [ 60%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-07] ERROR [ 61%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-08] ERROR [ 63%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_values_non_zero ERROR [ 64%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_zero_data_state ERROR [ 65%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_section_visible ERROR [ 66%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-01] ERROR [ 67%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-02] ERROR [ 69%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-03] ERROR [ 70%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-04] ERROR [ 71%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-05] ERROR [ 72%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-06] ERROR [ 73%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-07] ERROR [ 75%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-08] ERROR [ 76%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-09] ERROR [ 77%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-10] ERROR [ 78%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-11] ERROR [ 79%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-12] ERROR [ 80%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-13] ERROR [ 82%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_has_data_rows ERROR [ 83%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_pagination_present ERROR [ 84%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_zero_data_state ERROR [ 85%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_section_visible ERROR [ 86%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_best_sites_visible ERROR [ 88%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_worst_sites_visible ERROR [ 89%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_excludes_defect_site XFAIL [ 90%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_section_visible ERROR [ 91%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_has_content ERROR [ 92%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesHeatmap::test_heatmap_section_visible ERROR [ 94%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesReasonDist::test_reason_dist_section_visible ERROR [ 95%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 96%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 97%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar XFAIL [ 98%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal XFAIL [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestCardDeclinesNav.test_filter_values_reflected_in_page_bar _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesNav.test_page_bar_changes_do_not_reopen_modal _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesNav.test_page_content_visible_after_apply __
+E   selenium.common.exceptions.TimeoutException: Message:
+__ ERROR at setup of TestCardDeclinesSiteFilter.test_single_site_scopes_data ___
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_removing_chip_reduces_site_filter _
+E   selenium.common.exceptions.TimeoutException: Message:
+______ ERROR at setup of TestCardDeclinesSiteFilter.test_clear_all_sites _______
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_page_bar_site_change_no_modal _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_widgets_refresh_on_site_change[CDL-KPI-003] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_widgets_refresh_on_site_change[CDL-MTX-012] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_widgets_refresh_on_site_change[CDL-BWS-007] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_widgets_refresh_on_site_change[CDL-TDS-005] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesSiteFilter.test_widgets_refresh_on_site_change[CDL-HMP-005] _
+E   selenium.common.exceptions.TimeoutException: Message:
+___ ERROR at setup of TestCardDeclinesGlossary.test_glossary_section_visible ___
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-01] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-02] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-03] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-04] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-05] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-06] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-07] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_term_visible[CDL-GLS-002-08] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesGlossary.test_glossary_visible_for_zero_data _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-01] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-02] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-03] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-04] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-05] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-06] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-07] __
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-08] __
+E   selenium.common.exceptions.TimeoutException: Message:
+________ ERROR at setup of TestCardDeclinesKPI.test_kpi_values_non_zero ________
+E   selenium.common.exceptions.TimeoutException: Message:
+________ ERROR at setup of TestCardDeclinesKPI.test_kpi_zero_data_state ________
+E   selenium.common.exceptions.TimeoutException: Message:
+_____ ERROR at setup of TestCardDeclinesMatrix.test_matrix_section_visible _____
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-01] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-02] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-03] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-04] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-05] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-06] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-07] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-08] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-09] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-10] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-11] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-12] _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesMatrix.test_matrix_column_present[CDL-MTX-002-13] _
+E   selenium.common.exceptions.TimeoutException: Message:
+______ ERROR at setup of TestCardDeclinesMatrix.test_matrix_has_data_rows ______
+E   selenium.common.exceptions.TimeoutException: Message:
+___ ERROR at setup of TestCardDeclinesMatrix.test_matrix_pagination_present ____
+E   selenium.common.exceptions.TimeoutException: Message:
+_____ ERROR at setup of TestCardDeclinesMatrix.test_matrix_zero_data_state _____
+E   selenium.common.exceptions.TimeoutException: Message:
+_____ ERROR at setup of TestCardDeclinesBestWorst.test_bws_section_visible _____
+E   selenium.common.exceptions.TimeoutException: Message:
+_____ ERROR at setup of TestCardDeclinesBestWorst.test_best_sites_visible ______
+E   selenium.common.exceptions.TimeoutException: Message:
+_____ ERROR at setup of TestCardDeclinesBestWorst.test_worst_sites_visible _____
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesDailySummary.test_daily_summary_section_visible _
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesDailySummary.test_daily_summary_has_content _
+E   selenium.common.exceptions.TimeoutException: Message:
+____ ERROR at setup of TestCardDeclinesHeatmap.test_heatmap_section_visible ____
+E   selenium.common.exceptions.TimeoutException: Message:
+_ ERROR at setup of TestCardDeclinesReasonDist.test_reason_dist_section_visible _
+E   selenium.common.exceptions.TimeoutException: Message:
+=================================== FAILURES ===================================
+E   AssertionError: Site dropdown returned no options
+    assert 0 > 0
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/card_declines/test_card_declines.py:220: AssertionError: Site dropdown returned no options
+E   AssertionError: Site dropdown returned no options
+    assert 0 > 0
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/card_declines/test_card_declines.py:301: AssertionError: Site dropdown returned no options
+E   AssertionError: Expected multiple active sites in dropdown; got: []
+    assert 0 > 1
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/card_declines/test_card_declines.py:315: AssertionError: Expected multiple active sites in dropdown; got: []
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message:
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002]
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003]
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004]
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005]
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006]
+FAILED tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_values_reflected_in_page_bar
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_bar_changes_do_not_reopen_modal
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_content_visible_after_apply
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_single_site_scopes_data
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_removing_chip_reduces_site_filter
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_clear_all_sites
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_page_bar_site_change_no_modal
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-KPI-003]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-MTX-012]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-BWS-007]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-TDS-005]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-HMP-005]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_section_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-01]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-02]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-03]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-04]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-05]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-06]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-07]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-08]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_visible_for_zero_data
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-01]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-03]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-04]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-05]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-06]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-07]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-08]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_values_non_zero
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_zero_data_state
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_section_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-01]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-02]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-03]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-04]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-05]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-06]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-07]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-08]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-09]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-10]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-11]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-12]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-13]
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_has_data_rows
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_pagination_present
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_zero_data_state
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_section_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_best_sites_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_worst_sites_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_section_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_has_content
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesHeatmap::test_heatmap_section_visible
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesReasonDist::test_reason_dist_section_visible
+======= 12 failed, 10 passed, 6 xfailed, 56 errors in 2558.01s (0:42:38) =======

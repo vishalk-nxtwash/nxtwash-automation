@@ -1,0 +1,603 @@
+2026-07-29 05:01:32,464 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 66 items
+
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-30/test_download_memberships_star0
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  1%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_memberships_file_format 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:65 Verifying membership export file format
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  3%]
+tests/admin_portal/memberships/test_memberships_download.py::test_download_filtered_memberships_starts_file_download 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:91 Verifying filtered membership export downloads a file
+INFO     tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download
+PASSED                                                                   [  4%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent 2026-07-29 05:11:22,657 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships/new)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6109376512) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_create_is_idempotent (url: https://staging.nxtwash.com/services/memberships/new)
+2026-07-29 05:11:24,648 ERROR nxtwash: Visible page text at failure:
+Memberships
+Add new membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Redeem at
+Redeem as
+VK AL37
+Los angeles
+Vk detail wash
+VK ZT ab24bb
+Los angeles
+Select...
+VK AL36
+Los angeles
+Select...
+VK AL35
+Los angeles
+Select...
+VK ZT 9344b0
+Los angeles
+Select...
+VK AL34
+Los angeles
+Select...
+VK AL92
+Select...
+VK AL33
+Los angeles
+Select...
+VK AL32
+Los angeles
+Select...
+VK AL31
+Los angeles
+Select...
+VK ZT c6d556
+Los angeles
+Select...
+VK AL30
+Los angeles
+Select...
+VK AL29
+Los angeles
+Select...
+VK ZT 9e7bdf
+Los angeles
+Select...
+VK AL28
+Los angeles
+Select...
+VK AL27
+Los angeles
+Select...
+VK ZT 4e248f
+Los angeles
+Select...
+VK AL26
+Los angeles
+Select...
+VK ZT 8f811b
+Columbia
+Select...
+VK AL25
+Columbia
+Select...
+VK AL24
+Columbia
+Select...
+VK ZT 46d34b
+Columbia
+Select...
+VK AL23
+Columbia
+Select...
+VK ZT c4a124
+Columbia
+Select...
+VK ZT d4ccd8
+Columbia
+Select...
+VK ZT 71c6f6
+Columbia
+Select...
+VK ZT 9eaa54
+Columbia
+Select...
+VK ZT ae9b9c
+Columbia
+Select...
+test 12
+Clifton
+Select...
+VK AL22
+Columbia
+Select...
+VK AL21
+Columbia
+Select...
+VK AL20
+Columbia
+Select...
+VK ZT c26508
+Columbia
+Select...
+VK AL19
+Columbia
+Select...
+VK AL18
+Columbia
+Select...
+VK ZT c54675
+Columbia
+Select...
+VK AL17
+Columbia
+Select...
+VK AL16
+Columbia
+Select...
+VK ZT 2b4279
+Columbia
+Select...
+VK AL15
+Columbia
+Select...
+VK AL14
+Columbia
+Select...
+VK ZT 146465
+Columbia
+Select...
+VK AL13
+Columbia
+Select...
+VK AL12
+Columbia
+Select...
+VK AL11
+Columbia
+Select...
+VK AL10
+Columbia
+Select...
+VK AL09
+Columbia
+Select...
+VK AL08
+Columbia
+Select...
+VK AL01
+Columbia
+Select...
+vkauto1
+Canyon lake
+Select...
+VK AL07
+Columbia
+Select...
+VK AL06
+Columbia
+Select...
+VK AL05
+Columbia
+Select...
+VK AL04
+Columbia
+Select...
+VK AL03
+Columbia
+Select...
+VK AL02
+Columbia
+Select...
+test123 udpated
+Columbia
+Select...
+VK Test carwash 2
+Canyon lake
+Select...
+VK Test Wash 01
+League city
+Select...
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Add new membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Redeem at
+Redeem as
+VK AL37
+Los angeles
+Vk detail wash
+VK ZT ab24bb
+Los angeles
+Select...
+VK AL36
+Los angeles
+Select...
+VK AL35
+Los angeles
+Select...
+VK ZT 9344b0
+Los angeles
+Select...
+VK AL34
+Los angeles
+Select...
+VK AL92
+Select...
+VK AL33
+Los angeles
+Select...
+VK AL32
+Los angeles
+Select...
+VK AL31
+Los angeles
+Select...
+VK ZT c6d556
+Los angeles
+Select...
+VK AL30
+Los angeles
+Select...
+VK AL29
+Los angeles
+Select...
+VK ZT 9e7bdf
+Los angeles
+Select...
+VK AL28
+Los angeles
+Select...
+VK AL27
+Los angeles
+Select...
+VK ZT 4e248f
+Los angeles
+Select...
+VK AL26
+Los angeles
+Select...
+VK ZT 8f811b
+Columbia
+Select...
+VK AL25
+Columbia
+Select...
+VK AL24
+Columbia
+Select...
+VK ZT 46d34b
+Columbia
+Select...
+VK AL23
+Columbia
+Select...
+VK ZT c4a124
+Columbia
+Select...
+VK ZT d4ccd8
+Columbia
+Select...
+VK ZT 71c6f6
+Columbia
+Select...
+VK ZT 9eaa54
+Columbia
+Select...
+VK ZT ae9b9c
+Columbia
+Select...
+test 12
+Clifton
+Select...
+VK AL22
+Columbia
+Select...
+VK AL21
+Columbia
+Select...
+VK AL20
+Columbia
+Select...
+VK ZT c26508
+Columbia
+Select...
+VK AL19
+Columbia
+Select...
+VK AL18
+Columbia
+Select...
+VK ZT c54675
+Columbia
+Select...
+VK AL17
+Columbia
+Select...
+VK AL16
+Columbia
+Select...
+VK ZT 2b4279
+Columbia
+Select...
+VK AL15
+Columbia
+Select...
+VK AL14
+Columbia
+Select...
+VK ZT 146465
+Columbia
+Select...
+VK AL13
+Columbia
+Select...
+VK AL12
+Columbia
+Select...
+VK AL11
+Columbia
+Select...
+VK AL10
+Columbia
+Select...
+VK AL09
+Columbia
+Select...
+VK AL08
+Columbia
+Select...
+VK AL01
+Columbia
+Select...
+vkauto1
+Canyon lake
+Select...
+VK AL07
+Columbia
+Select...
+VK AL06
+Columbia
+Select...
+VK AL05
+Columbia
+Select...
+VK AL04
+Columbia
+Select...
+VK AL03
+Columbia
+Select...
+VK AL02
+Columbia
+Select...
+test123 udpated
+Columbia
+Select...
+VK Test carwash 2
+Canyon lake
+Select...
+VK Test Wash 01
+League city
+Select...
+FAILED                                                                   [  6%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned 2026-07-29 05:18:28,267 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6109376512) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_only_first_location_is_assigned (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:18:31,977 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  7%]
+tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form 2026-07-29 05:25:34,781 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6109376512) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edge_cases.py::test_membership_long_name_does_not_break_form (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:25:36,771 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [  9%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:35 Editing membership loyalty points and discount: VK MA5
+2026-07-29 05:33:16,870 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_loyalty_points_and_discount (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:33:18,600 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 10%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore 
+-------------------------------- live log call ---------------------------------
+INFO     tests.admin_portal.memberships.test_memberships_edit:test_memberships_edit.py:60 Editing membership name from VK MA5 and restoring it
+2026-07-29 05:38:20,786 ERROR nxtwash: Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~ Stack of Thread-1 (run_server) (6109376512) ~~~~~~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 995, in _bootstrap
+    self._bootstrap_inner()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 438, in run_server
+    conn, _ = self.sock.accept()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
++++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/memberships/test_memberships_edit.py::test_edit_membership_name_and_restore (url: https://staging.nxtwash.com/services/memberships)
+2026-07-29 05:38:22,557 ERROR nxtwash: Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Memberships
+Filter by (1)
++ Add new membership
+Membership Name
+Type
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 12%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_type ERROR [ 13%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_global_price_and_commission ERROR [ 15%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_barcode_persists ERROR [ 16%]
+tests/admin_portal/memberships/test_memberships_edit.py::test_edit_managed_membership_customer_portal_toggle_off PASSED [ 18%]

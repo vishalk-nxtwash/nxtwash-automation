@@ -1,4 +1,5 @@
 import re
+import time
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -75,6 +76,12 @@ class CustomServicesPage(BasePage):
     POINTS_AWARDED_INPUT = (By.NAME, "pointsAwarded")
     POINTS_REDEEMED_INPUT = (By.NAME, "pointsRedeemed")
     DESCRIPTION_TEXTAREA = (By.XPATH, "//textarea[@name='description']")
+    DESCRIPTION_SECTION_TOGGLE = (
+        By.XPATH,
+        "//textarea[@name='description']"
+        "/ancestor::div[contains(@class,'collapse')]"
+        "/preceding-sibling::div[contains(@style,'cursor: pointer')]"
+    )
     SERVICE_CATEGORY_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select service category']"
@@ -140,7 +147,8 @@ class CustomServicesPage(BasePage):
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is gone."""
-        self.wait.until(
+        from selenium.webdriver.support.ui import WebDriverWait
+        WebDriverWait(self.driver, 60).until(
             lambda driver: not any(
                 mask.is_displayed()
                 for mask in driver.find_elements(*self.GRID_LOAD_MASK)
@@ -492,6 +500,17 @@ class CustomServicesPage(BasePage):
         return element.get_attribute("value")
 
     def enter_description(self, text):
+        # Expand the collapsible "Service description" section if it's folded
+        collapse_divs = self.driver.find_elements(
+            By.XPATH,
+            "//textarea[@name='description']"
+            "/ancestor::div[contains(@class,'collapse')]"
+        )
+        if collapse_divs and 'show' not in (collapse_divs[0].get_attribute('class') or ''):
+            toggles = self.driver.find_elements(*self.DESCRIPTION_SECTION_TOGGLE)
+            if toggles:
+                self.driver.execute_script("arguments[0].click();", toggles[0])
+                time.sleep(0.4)
         element = self.wait.until(
             EC.presence_of_element_located(self.DESCRIPTION_TEXTAREA)
         )
@@ -549,18 +568,23 @@ class CustomServicesPage(BasePage):
 
     def get_site_row(self, site_name):
         """Return the site assignment grid row for a given site."""
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row ')]")
-        self.wait.until(EC.presence_of_element_located(any_row_locator))
-        return self.wait.until(
-            EC.visibility_of_element_located((
-                By.XPATH,
-                "//*[@data-props-id='assignTo']"
-                "[.//*[normalize-space()='%s']]"
-                "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
-                % site_name
-            ))
+        # InovuaReactDataGrid--native-scroll uses a JS-managed virtual scroll
+        # (inovua-react-scroll-container) that ignores CSS scroll APIs.
+        # ASSIGNMENT_SITE must be in the grid's initially-rendered row batch
+        # (first ~14 rows), otherwise it will never appear without the grid's
+        # own scroll controls. Bring the grid body into view to ensure the
+        # initial batch is rendered, then locate the target row directly.
+        self.driver.execute_script(
+            "var el = document.querySelector('.InovuaReactDataGrid__body');"
+            "if (el) el.scrollIntoView({block: 'start', behavior: 'instant'});"
         )
+        xpath = (
+            "//*[@data-props-id='assignTo']"
+            "[.//*[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
+            % site_name
+        )
+        return self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a site and set site-level price and commission."""

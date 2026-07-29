@@ -19,7 +19,11 @@ class AdminUsersPage(BasePage):
     CREATE_FRAME = (By.XPATH, "//iframe[contains(@src,'/users/users/new')]")
     EDIT_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'users/users') and contains(@src,'userId=')]",
+        "//iframe["
+        "contains(@src,'users/users') and ("
+        "contains(@src,'userId=') or "
+        "(contains(@src,'/users/users/') and not(contains(@src,'/users/users/new')))"
+        ")]",
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Users']")
@@ -70,7 +74,7 @@ class AdminUsersPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
         self._wait_for_grid_idle()
@@ -364,7 +368,7 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
@@ -372,7 +376,7 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.EDIT_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
@@ -468,7 +472,12 @@ class AdminUserFormPage(BasePage):
             WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
             self.driver.switch_to.default_content()
         except Exception:
-            pass
+            error = self.get_visible_error()
+            if error:
+                import logging
+                logging.getLogger("nxtwash").warning(
+                    "User save did not navigate away. Page message: %s", error
+                )
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))

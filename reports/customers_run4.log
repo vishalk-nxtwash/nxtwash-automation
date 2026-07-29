@@ -1,0 +1,480 @@
+2026-07-26 02:17:31,707 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collected 93 items
+
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_accessible_on_existing_customer XPASS [  1%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_settings_tab_shows_add_car_button XPASS [  2%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_license_plate_field PASSED [  3%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_rfid_field PASSED [  4%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields 2026-07-26 02:20:10,658 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 02:20:11,351 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [  5%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_save_and_cancel_controls PASSED [  6%]
+tests/admin_portal/customers/test_customers_cars.py::test_license_plate_field_is_present_and_required XPASS [  7%]
+tests/admin_portal/customers/test_customers_cars.py::test_rfid_field_is_present_and_required XPASS [  8%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_assign_membership_button SKIPPED [  9%]
+tests/admin_portal/customers/test_customers_cars.py::test_cars_list_shows_membership_details SKIPPED [ 10%]
+tests/admin_portal/customers/test_customers_cars.py::test_blacklist_a_car SKIPPED [ 11%]
+tests/admin_portal/customers/test_customers_cars.py::test_deactivate_a_car SKIPPED [ 12%]
+tests/admin_portal/customers/test_customers_cars.py::test_update_vehicle_token SKIPPED [ 13%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_license_plate_documents_behaviour SKIPPED [ 15%]
+tests/admin_portal/customers/test_customers_cars.py::test_duplicate_rfid_documents_behaviour SKIPPED [ 16%]
+tests/admin_portal/customers/test_customers_cars.py::test_add_car_then_refresh_car_persists SKIPPED [ 17%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_appears_in_gift_cards_dropdown SKIPPED [ 18%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_membership_status_reflects_memberships_module SKIPPED [ 19%]
+tests/admin_portal/customers/test_customers_dependency.py::test_customer_site_assignment_matches_sites_module PASSED [ 20%]
+tests/admin_portal/customers/test_customers_dependency.py::test_car_rfid_links_to_pos_tunnel_entry SKIPPED [ 21%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists PASSED [ 22%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists ERROR [ 22%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_assigned_site_persists PASSED [ 23%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values PASSED [ 24%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values ERROR [ 24%]
+tests/admin_portal/customers/test_customers_edit.py::test_activate_inactive_customer PASSED [ 25%]
+tests/admin_portal/customers/test_customers_edit.py::test_deactivate_active_customer PASSED [ 26%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_allow_invoicing_persists PASSED [ 27%]
+tests/admin_portal/customers/test_customers_edit.py::test_toggle_send_text_and_email_persists SKIPPED [ 29%]
+tests/admin_portal/customers/test_customers_edit.py::test_cancel_edit_customer_discards_changes PASSED [ 30%]
+tests/admin_portal/customers/test_customers_edit.py::test_edit_then_refresh_changes_persist PASSED [ 31%]
+tests/admin_portal/customers/test_customers_export.py::test_export_button_triggers_customer_list_download SKIPPED [ 32%]
+tests/admin_portal/customers/test_customers_payment.py::test_payment_settings_tab_accessible_on_existing_customer XPASS [ 33%]
+tests/admin_portal/customers/test_customers_payment.py::test_credit_card_section_is_visible PASSED [ 34%]
+tests/admin_portal/customers/test_customers_payment.py::test_save_card_button_is_present PASSED [ 35%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present 2026-07-26 02:31:26,599 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 02:31:27,317 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 36%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present 2026-07-26 02:32:26,580 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 02:32:27,274 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 37%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_loads_all_time SKIPPED [ 38%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_today_filter SKIPPED [ 39%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_select_range_filter SKIPPED [ 40%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_export SKIPPED [ 41%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_details_link_navigates_to_invoice SKIPPED [ 43%]
+tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_pagination_defaults_to_ten SKIPPED [ 44%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_required_fields_only PASSED [ 45%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_customer_with_all_optional_fields PASSED [ 46%]
+tests/admin_portal/customers/test_customers_positive.py::test_date_of_birth_calendar_picker_selects_past_date PASSED [ 47%]
+tests/admin_portal/customers/test_customers_positive.py::test_assign_to_site_dropdown_lists_available_sites PASSED [ 48%]
+tests/admin_portal/customers/test_customers_positive.py::test_state_dropdown_populates_cities_on_selection PASSED [ 49%]
+tests/admin_portal/customers/test_customers_positive.py::test_city_dropdown_empty_without_state PASSED [ 50%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_inactive_customer PASSED [ 51%]
+tests/admin_portal/customers/test_customers_positive.py::test_cars_and_payment_tabs_disabled_for_new_customer PASSED [ 52%]
+tests/admin_portal/customers/test_customers_positive.py::test_cancel_add_customer_returns_to_list PASSED [ 53%]
+tests/admin_portal/customers/test_customers_positive.py::test_create_then_refresh_data_persists PASSED [ 54%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_license_plate PASSED [ 55%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_license_plate PASSED [ 56%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number 2026-07-26 02:35:17,391 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number (url: https://staging.nxtwash.com/customers)
+2026-07-26 02:35:18,084 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+Filter by (1)
++ Add customer
+First Name
+Last Name
+Phone number
+Cars (#)
+Last visit
+Total amount spent
+Membership status
+Page 1 of 0
+|
+Show 100
+out of 0 records
+FAILED                                                                   [ 58%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_partial_phone_number PASSED [ 59%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_license_plate_and_phone_searches_are_independent PASSED [ 60%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_nonmatching_search_returns_empty_state PASSED [ 61%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_panel_opens_with_all_fields_visible PASSED [ 62%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_active_accounts_toggle_is_on_by_default PASSED [ 63%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_result_count_updates_before_applying PASSED [ 64%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_first_name PASSED [ 65%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_last_name PASSED [ 66%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_email PASSED [ 67%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_rfid PASSED [ 68%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_site XFAIL [ 69%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_membership SKIPPED [ 70%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_signup_date_range XPASS [ 72%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_next_payment_date_range SKIPPED [ 73%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_number SKIPPED [ 74%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_cc_type SKIPPED [ 75%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_number_of_cars_range SKIPPED [ 76%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_allow_invoicing_yes XPASS [ 77%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_card_on_file XPASS [ 78%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_recurring_yes SKIPPED [ 79%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_prepaid_yes SKIPPED [ 80%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_canceled_yes SKIPPED [ 81%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_filter_by_declined_yes XPASS [ 82%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_all_boolean_dropdowns_default_to_all PASSED [ 83%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_multiple_filters_combined_narrow_results XFAIL [ 84%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_signup_date_from_after_to_documents_behaviour XPASS [ 86%]
+tests/admin_portal/customers/test_customers_search_filter.py::test_reset_all_clears_filter_fields PASSED [ 87%]
+tests/admin_portal/customers/test_customers_ui.py::test_customers_page_loads_with_primary_controls PASSED [ 88%]
+tests/admin_portal/customers/test_customers_ui.py::test_grid_membership_status_column_visible SKIPPED [ 89%]
+tests/admin_portal/customers/test_customers_ui.py::test_pagination_and_results_per_page_visible PASSED [ 90%]
+tests/admin_portal/customers/test_customers_ui.py::test_add_customer_form_loads_with_required_controls PASSED [ 91%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_first_name_blocked_on_save PASSED [ 92%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_last_name_blocked_on_save PASSED [ 93%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_site_assignment_blocked_on_save PASSED [ 94%]
+tests/admin_portal/customers/test_customers_validation.py::test_invalid_email_format_documents_behaviour PASSED [ 95%]
+tests/admin_portal/customers/test_customers_validation.py::test_dob_in_future_documents_behaviour PASSED [ 96%]
+tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour 2026-07-26 02:44:26,373 ERROR nxtwash: Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/customers/create)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour (url: https://staging.nxtwash.com/customers/create)
+2026-07-26 02:44:27,048 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Customers
+New
+Cancel
+Save new
+First Name
+Last Name
+Date of birth
+Site/Location
+VK AL01
+Loyalty points amount
+Allow invoicing
+Send text
+Send email
+Active customer
+Phone number
+Email
+Address
+ZIP code
+State
+Arizona
+City
+Amado
+FAILED                                                                   [ 97%]
+tests/admin_portal/customers/test_customers_validation.py::test_negative_loyalty_points_documents_behaviour SKIPPED [ 98%]
+tests/admin_portal/customers/test_customers_validation.py::test_blank_form_stays_on_create_page PASSED [100%]
+
+=========================== short test summary info ============================
+FAILED tests/admin_portal/customers/test_customers_cars.py::test_add_car_form_shows_vehicle_detail_fields
+FAILED tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_section_is_present
+FAILED tests/admin_portal/customers/test_customers_payment.py::test_transaction_history_filter_controls_are_present
+FAILED tests/admin_portal/customers/test_customers_search_filter.py::test_search_by_exact_phone_number
+FAILED tests/admin_portal/customers/test_customers_validation.py::test_duplicate_email_documents_behaviour
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_edit_customer_name_persists
+ERROR tests/admin_portal/customers/test_customers_edit.py::test_edit_form_prepopulates_existing_values
+= 5 failed, 47 passed, 29 skipped, 2 xfailed, 10 xpassed, 2 errors in 1624.60s (0:27:04) =

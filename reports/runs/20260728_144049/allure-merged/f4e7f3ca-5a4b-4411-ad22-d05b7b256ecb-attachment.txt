@@ -1,0 +1,130 @@
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+📚
+Glossary
+0
+Initial Recharge Attempts
+0
+Successful Initial Recharges
+0
+Initial Declines
+0
+Total Recovery Attempts
+0
+Successfully Recovered
+0
+Recover Day 1
+0
+Recover Day 2+
+0
+Unrecovered
+Recovery Attempts
+Successfully Recovered
+Plan Name
+Initial Recharge Attempts
+Total Attempts
+Initial Successful Recharges
+Initial Declines
+Failed First Attempt
+Attempt 1
+Attempt 2
+Attempt 3+
+Total Attempts
+Day 1
+After Decline
+Day 2
+After Decline
+Day 3+
+After Decline
+Total Recovered
+Unrecovered
+Failed All Retries
+Total
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+🏆
+Best & Worst Sites by Declines
+Site Name
+Declines
+Performance
+Total
+0
+Total Daily Declines Summary
+Date
+Site Name
+Initial Declines
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Declines Reason Over Time - Temporal Heatmap
+Date
+Total
+Declines Reason Distribution
+Reason Value Percentage
+Total Daily Declines - All Sites
+Declined Payments
+Recovery Status
+Recovery Status
+Attempt Type
+Attempt Type
+Date/Time
+Customer
+License Plate/RFID
+Membership
+Decline Reason
+Declined Attempts
+Sequential Decline Attempt
+Attempt Type
+Recovery Status
+Actions
+<<
+<
+>
+>>
+Page 1 of 0
+|
+Show 10
+Show 20
+Show 40
+Show 100
+out of 0 records
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters

@@ -1,0 +1,22 @@
+2026-07-28 14:44:31,598 WARNING nxtwash: Employee save did not navigate away. Page text: Employees
+Add new employee
+Cancel
+Save employee
+User settings
+First Name
+Last Name
+Locations
+Select locations
+Hire date
+Employee code
+Hourly wage, $
+Active employee
+Contact info
+Email
+Phone number
+Address
+ZIP code
+State
+Select state
+City
+Select city

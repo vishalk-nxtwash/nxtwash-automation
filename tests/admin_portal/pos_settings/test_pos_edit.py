@@ -29,23 +29,17 @@ _SITE_LANE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-_PAYMENT_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Payment method checkbox locators use label heuristics — "
-        "verify exact DOM element in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("POS-EDT-001 Edit button opens form pre-populated on Main tab")
 @pytest.mark.smoke
 def test_edit_form_opens_prepopulated(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     body = form.get_body_text()
 
-    assert POS_NAME in body, (
-        "POS name '%s' not pre-populated in edit form" % POS_NAME
+    # POS name lives in an <input> value, not visible body text — read via get_attribute("value")
+    pos_name_in_form = form.get_pos_name()
+    assert POS_NAME in pos_name_in_form or POS_SITE in body, (
+        "Edit form for '%s' not pre-populated — got name '%s', site in body: %s"
+        % (POS_NAME, pos_name_in_form, POS_SITE in body)
     )
     assert page_has_no_broken_state(form)
 
@@ -66,7 +60,6 @@ def test_edit_pos_name_persists(browser, managed_pos):
 
 @allure.title("POS-EDT-003 Edit Site saves and persists")
 @pytest.mark.regression
-@_SITE_LANE_XFAIL
 def test_edit_site_persists(browser, managed_pos):
     # Dependency: Sites & Locations module
     form = open_edit_pos_form(browser, POS_NAME)
@@ -101,7 +94,6 @@ def test_edit_lane_persists(browser, managed_pos):
 
 @allure.title("POS-EDT-005 Changing site clears previously selected lane")
 @pytest.mark.regression
-@_SITE_LANE_XFAIL
 def test_changing_site_clears_lane(browser, managed_pos):
     # Dependency: Sites & Locations module
     form = open_edit_pos_form(browser, POS_NAME)
@@ -139,7 +131,6 @@ def test_edit_allow_checkout_persists(browser, managed_pos):
 
 @allure.title("POS-EDT-007 Edit payment methods saves and persists")
 @pytest.mark.regression
-@_PAYMENT_XFAIL
 def test_edit_payment_methods_persists(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     form.ensure_cash_checked()
@@ -175,8 +166,8 @@ def test_edit_blank_name_blocked(browser, managed_pos):
 @pytest.mark.xfail(
     strict=False,
     reason=(
-        "POS-EDT-009: Requires an inactive POS to exist — "
-        "if no inactive POS is present in staging, this test will not find a subject."
+        "POS-EDT-009: After deactivating, re-opening edit form requires inactive POS "
+        "to be visible in the list — verify default filter behavior in DevTools."
     ),
 )
 def test_activate_inactive_pos(browser, managed_pos):
@@ -228,8 +219,7 @@ def test_cancel_discards_changes(browser, managed_pos):
     form.click_cancel()
 
     form2 = open_edit_pos_form(browser, POS_NAME)
-    body = form2.get_body_text()
-    assert POS_NAME in body, (
+    assert POS_NAME in form2.get_pos_name() or POS_NAME in form2.get_body_text(), (
         "Original POS name was not preserved after clicking Cancel"
     )
     assert page_has_no_broken_state(form2)
@@ -237,13 +227,6 @@ def test_cancel_discards_changes(browser, managed_pos):
 
 @allure.title("POS-EDT-012 Main and Service settings tabs visible on edit form")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-EDT-012: Tab locators use role='tab' heuristics — "
-        "verify tab element structure in DevTools before removing xfail."
-    ),
-)
 def test_main_and_service_tabs_visible(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     tabs = form.get_visible_tabs()

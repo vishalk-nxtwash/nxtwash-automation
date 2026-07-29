@@ -1,0 +1,3 @@
+
+[test_data] Customer 'auto customer1' / 'vktestcust1@yopmail.com' could not be created.
+  → Open tests/admin_portal/customers/test_data.py and set SLOT = 2, then re-run.

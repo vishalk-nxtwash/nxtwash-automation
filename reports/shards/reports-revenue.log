@@ -1,0 +1,1124 @@
+2026-07-28 02:25:53,675 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:25:54,611 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:25:54,675 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+created: 2/2 workers
+2 workers [183 items]
+
+scheduling tests via LoadScheduling
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url 
+[gw0] [  0%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens 
+[gw1] [  1%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites 
+[gw0] [  1%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls 
+[gw0] [  2%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal 
+[gw1] [  2%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button 
+[gw0] [  3%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render 
+[gw1] [  3%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown 
+[gw0] [  4%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item 
+[gw0] [  4%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites 
+[gw1] [  5%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options 
+[gw0] [  6%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options 
+[gw1] [  6%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] 
+[gw0] [  7%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state 
+[gw1] [  7%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] 
+[gw0] [  8%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range 
+[gw1] [  8%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] 
+[gw0] [  9%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date 
+[gw0] [  9%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date 
+[gw1] [ 10%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] 
+[gw0] [ 10%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar 
+[gw1] [ 11%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] 
+[gw1] [ 12%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] 
+[gw0] [ 12%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar 
+[gw0] [ 13%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar 
+[gw1] [ 13%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] 
+[gw1] [ 14%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] 
+[gw0] [ 14%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections 
+[gw0] [ 15%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue 
+[gw1] [ 15%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_range_field_opens_calendar_picker 
+[gw1] [ 16%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_range_field_opens_calendar_picker 
+[gw0] [ 16%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_future_dates_disabled_in_calendar 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips 
+[gw1] [ 17%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_future_dates_disabled_in_calendar 
+[gw0] [ 18%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_year_selector_visible_in_calendar 
+[gw1] [ 18%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_year_selector_visible_in_calendar 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_auto_applies_on_metrics_screen 
+[gw0] [ 19%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown 
+[gw1] [ 19%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_auto_applies_on_metrics_screen 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_same_start_end 
+[gw0] [ 20%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it 
+[gw1] [ 20%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_same_start_end 
+[gw0] [ 21%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_month_boundary_date_range 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips 
+[gw1] [ 21%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_month_boundary_date_range 
+[gw0] [ 22%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_five_kpi_cards_render 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_date_change 
+[gw1] [ 22%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_five_kpi_cards_render 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_cards_show_zero_when_no_data 
+[gw0] [ 23%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_date_change 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_currency_format 
+[gw0] [ 24%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_currency_format 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists 
+[gw1] [ 24%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_cards_show_zero_when_no_data 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_site_change 
+[gw0] [ 25%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_shows_no_info_when_no_data 
+[gw1] [ 25%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_site_change 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_empty_list_when_count_zero 
+[gw0] [ 26%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_shows_no_info_when_no_data 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_lists_all_series 
+[gw1] [ 26%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_empty_list_when_count_zero 
+[gw0] [ 27%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_lists_all_series 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_segment_shows_tooltip 
+[gw0] [ 27%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_segment_shows_tooltip 2026-07-28 03:03:44,013 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_updates_centre_label 2026-07-28 03:03:58,076 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw1] [ 28%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar 
+[gw0] [ 28%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_updates_centre_label 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_resets_on_pointer_leave 2026-07-28 03:06:02,365 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:06:05,122 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw1] [ 29%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_amount_shows_zero_percent 
+[gw0] [ 30%] XPASS tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_resets_on_pointer_leave 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_toggle_hides_segment 
+[gw1] [ 30%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_amount_shows_zero_percent 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking 
+[gw0] [ 31%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_toggle_hides_segment 2026-07-28 03:09:26,298 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:09:50,149 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw1] [ 31%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_not_recalculated_after_legend_toggle 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_list_refreshes_on_filter_change 
+[gw0] [ 32%] SKIPPED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_not_recalculated_after_legend_toggle 
+[gw1] [ 32%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_list_refreshes_on_filter_change 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hiding_all_legend_series_no_error 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_button_present 
+[gw1] [ 33%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_button_present 
+[gw0] [ 33%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hiding_all_legend_series_no_error 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_segment_colours_are_stable 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_triggers_download 
+[gw1] [ 34%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_triggers_download 
+[gw0] [ 34%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_segment_colours_are_stable 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_info_icon_tooltip_text 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_revenue_series_in_legend_no_arc 
+[gw1] [ 35%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_info_icon_tooltip_text 
+[gw0] [ 36%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_revenue_series_in_legend_no_arc 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_dismisses_on_click_away 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_rerenders_on_filter_change 
+[gw1] [ 36%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_dismisses_on_click_away 
+[gw0] [ 37%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_rerenders_on_filter_change 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_content_is_static 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_displayed_with_count 
+[gw0] [ 37%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_displayed_with_count 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_selected_by_default 
+[gw1] [ 38%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_content_is_static 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_transaction_site_renders_cleanly 
+[gw0] [ 38%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_selected_by_default 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_shows_three_subtabs 
+[gw1] [ 39%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_transaction_site_renders_cleanly 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_today_with_no_transactions_renders_cleanly 
+[gw0] [ 39%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_shows_three_subtabs 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable 
+[gw1] [ 40%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_today_with_no_transactions_renders_cleanly 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_preset_switching_no_stale_data 
+[gw0] [ 40%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant 
+[gw1] [ 41%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_preset_switching_no_stale_data 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data 
+[gw0] [ 42%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans 
+[gw1] [ 42%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_only_site_renders_cleanly 
+[gw1] [ 43%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_only_site_renders_cleanly 2026-07-28 03:30:11,084 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_direct_url_opens_filter_modal 2026-07-28 03:30:17,397 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 43%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly 
+[gw1] [ 44%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_direct_url_opens_filter_modal 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overview_full_report_link_navigates_here 2026-07-28 03:32:30,333 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+[gw1] [ 44%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overview_full_report_link_navigates_here 2026-07-28 03:32:55,585 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 45%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows 
+[gw1] [ 45%] ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_changes_label_and_field 2026-07-28 03:35:31,576 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:35:42,544 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 46%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_subtab_row_count_equals_badge 
+[gw1] [ 46%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_changes_label_and_field 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_forces_preset_to_custom 
+[gw1] [ 47%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_forces_preset_to_custom 
+[gw0] [ 48%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_subtab_row_count_equals_badge 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_select_date_in_single_day_mode 
+[gw1] [ 48%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_select_date_in_single_day_mode 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range 2026-07-28 03:39:54,897 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:39:57,731 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 49%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module 
+[gw1] [ 49%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gsr_page_loads 2026-07-28 03:41:59,393 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:42:13,940 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 50%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_displayed_with_count 
+[gw1] [ 50%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_gsr_page_loads 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_default_filter_state 
+[gw0] [ 51%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_displayed_with_count 
+[gw1] [ 51%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_default_filter_state 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_shows_two_subtabs 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_report_sections_present 
+[gw1] [ 52%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_report_sections_present 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_site_dropdown_lists_sites 
+[gw0] [ 53%] XFAIL tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_shows_two_subtabs 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant 
+[gw1] [ 53%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_site_dropdown_lists_sites 2026-07-28 03:48:05,331 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:48:09,655 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 54%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_single_site_filter 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages 
+[gw1] [ 54%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_single_site_filter 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multiple_sites_filter 2026-07-28 03:50:31,729 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:50:35,373 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 55%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras 
+[gw1] [ 55%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multiple_sites_filter 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_sites_filter 2026-07-28 03:52:30,391 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:52:36,500 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 56%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module 
+[gw1] [ 56%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_all_sites_filter 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_clearing_site_reverts_to_all 
+[gw1] [ 57%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_clearing_site_reverts_to_all 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_dropdown_shows_options 2026-07-28 03:55:32,833 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:55:46,961 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+[gw0] [ 57%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module 
+[gw1] [ 58%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_dropdown_shows_options 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-007] 
+[gw1] [ 59%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-007] 2026-07-28 03:58:14,551 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-28 03:58:17,942 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-008] 
+[gw0] [ 59%] FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module 
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_tabs_preserves_kpi_and_chart 
+[gw0] [ 60%] PASSED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_tabs_preserves_kpi_and_chart 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-002] 
+[gw1] [ 60%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-008] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-009] 
+[gw0] [ 61%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-002] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-003] 
+[gw1] [ 61%] ERROR tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-009] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-010] 
+[gw0] [ 62%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-003] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-004] 
+[gw1] [ 62%] ERROR tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-010] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-011] 
+[gw0] [ 63%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-004] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-005] 
+[gw1] [ 63%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-011] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-012] 
+[gw1] [ 64%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_date_preset_updates_range[GSR-FLT-012] 
+[gw0] [ 65%] ERROR tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_card_line_items[GSR-REV-005] 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_picker_opens 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_data_revenue_cards 
+[gw1] [ 65%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_picker_opens 
+[gw0] [ 66%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_zero_data_revenue_cards 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_applies 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_cards_update_on_filter_change 
+[gw1] [ 66%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_date_range_applies 
+[gw0] [ 67%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_revenue_cards_update_on_filter_change 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_overview_displayed 
+[gw0] [ 67%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_overview_displayed 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_full_report_link 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_range_clears_preset 
+[gw0] [ 68%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_full_report_link 
+[gw1] [ 68%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_custom_range_clears_preset 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_apply_filters_refreshes_data 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_update_on_filter_change 
+[gw1] [ 69%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_apply_filters_refreshes_data 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_reapply_same_filter_identical 
+[gw0] [ 69%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_redemptions_update_on_filter_change 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_comparison_visible 
+[gw0] [ 70%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_comparison_visible 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_shows_site_rows 
+[gw0] [ 71%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_shows_site_rows 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_filtered_single_site 
+[gw0] [ 71%] PASSED tests/admin_portal/general_sales_report/test_general_sales_report.py::test_multi_site_filtered_single_site 
+tests/admin_portal/general_sales_report/test_general_sales_report.py::test_column_headers_sort 2026-07-28 04:24:45,264 WARNING urllib3.connectionpool: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=65119): Read timed out. (read timeout=120)")': /session/4705f36d090bf8e0e5a23fd4d51442fe/url
+
+INTERNALERROR> def worker_internal_error(
+INTERNALERROR>         self, node: WorkerController, formatted_error: str
+INTERNALERROR>     ) -> None:
+INTERNALERROR>         """
+INTERNALERROR>         pytest_internalerror() was called on the worker.
+INTERNALERROR>     
+INTERNALERROR>         pytest_internalerror() arguments are an excinfo and an excrepr, which can't
+INTERNALERROR>         be serialized, so we go with a poor man's solution of raising an exception
+INTERNALERROR>         here ourselves using the formatted message.
+INTERNALERROR>         """
+INTERNALERROR>         self._active_nodes.remove(node)
+INTERNALERROR>         try:
+INTERNALERROR> >           assert False, formatted_error
+INTERNALERROR> E           AssertionError: Traceback (most recent call last):
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR> E                 session.exitstatus = doit(config, session) or 0
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR> E                 config.hook.pytest_runtestloop(session=session)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR> E                 return (yield)  # Run all the tests.
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR> E                 result = yield
+INTERNALERROR> E                          ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 206, in pytest_runtestloop
+INTERNALERROR> E                 self.run_one_test()
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/remote.py", line 227, in run_one_test
+INTERNALERROR> E                 self.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/warnings.py", line 89, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/assertion/__init__.py", line 192, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 53, in run_old_style_hookwrapper
+INTERNALERROR> E                 return result.get_result()
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/unittest.py", line 591, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/faulthandler.py", line 102, in pytest_runtest_protocol
+INTERNALERROR> E                 return (yield)
+INTERNALERROR> E                         ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR> E                 res = hook_impl.function(*args)
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+INTERNALERROR> E                 runtestprotocol(item, nextitem=nextitem)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 137, in runtestprotocol
+INTERNALERROR> E                 reports.append(call_and_report(item, "call", log))
+INTERNALERROR> E                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/runner.py", line 249, in call_and_report
+INTERNALERROR> E                 report: TestReport = ihook.pytest_runtest_makereport(item=item, call=call)
+INTERNALERROR> E                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR> E                 return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR> E                 return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR> E                 raise exception
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_html/plugin.py", line 129, in pytest_runtest_makereport
+INTERNALERROR> E                 report = outcome.get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/tmpdir.py", line 333, in pytest_runtest_makereport
+INTERNALERROR> E                 rep = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR> E                 teardown.throw(exception)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/allure_pytest/listener.py", line 198, in pytest_runtest_makereport
+INTERNALERROR> E                 report = (yield).get_result()
+INTERNALERROR> E                          ^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_result.py", line 103, in get_result
+INTERNALERROR> E                 raise exc.with_traceback(tb)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+INTERNALERROR> E                 res = yield
+INTERNALERROR> E                       ^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 152, in _multicall
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+INTERNALERROR> E                 teardown.send(result)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 303, in pytest_runtest_makereport
+INTERNALERROR> E                 _capture_failure(item, driver)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/conftest.py", line 238, in _capture_failure
+INTERNALERROR> E                 url = driver.current_url
+INTERNALERROR> E                       ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 602, in current_url
+INTERNALERROR> E                 return self.execute(Command.GET_CURRENT_URL)["value"]
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 465, in execute
+INTERNALERROR> E                 response = cast(RemoteConnection, self.command_executor).execute(driver_command, params)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 407, in execute
+INTERNALERROR> E                 return self._request(command_info[0], url, body=data)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py", line 431, in _request
+INTERNALERROR> E                 response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 135, in request
+INTERNALERROR> E                 return self.request_encode_url(
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/_request_methods.py", line 182, in request_encode_url
+INTERNALERROR> E                 return self.urlopen(method, url, **extra_kw)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/poolmanager.py", line 457, in urlopen
+INTERNALERROR> E                 response = conn.urlopen(method, u.request_uri, **kw)
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 872, in urlopen
+INTERNALERROR> E                 return self.urlopen(
+INTERNALERROR> E                        ^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+INTERNALERROR> E                 response = self._make_request(
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+INTERNALERROR> E                 response = conn.getresponse()
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/urllib3/connection.py", line 571, in getresponse
+INTERNALERROR> E                 httplib_response = super().getresponse()
+INTERNALERROR> E                                    ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
+INTERNALERROR> E                 response.begin()
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
+INTERNALERROR> E                 version, status, reason = self._read_status()
+INTERNALERROR> E                                           ^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 279, in _read_status
+INTERNALERROR> E                 line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+INTERNALERROR> E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py", line 706, in readinto
+INTERNALERROR> E                 return self._sock.recv_into(b)
+INTERNALERROR> E                        ^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 317, in handler
+INTERNALERROR> E                 timeout_sigalrm(item, settings)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_timeout.py", line 502, in timeout_sigalrm
+INTERNALERROR> E                 pytest.fail(PYTEST_FAILURE_MESSAGE % settings.timeout)
+INTERNALERROR> E               File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/outcomes.py", line 163, in __call__
+INTERNALERROR> E                 raise Failed(msg=reason, pytrace=pytrace)
+INTERNALERROR> E             Failed: Timeout (>420.0s) from pytest-timeout.
+INTERNALERROR> E           assert False
+INTERNALERROR> 
+INTERNALERROR> venv/lib/python3.11/site-packages/xdist/dsession.py:232: AssertionError
+[gw0] [ 72%] XFAIL tests/admin_portal/general_sales_report/test_general_sales_report.py::test_column_headers_sort /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 318, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>                          ^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/main.py", line 372, in _main
+INTERNALERROR>     config.hook.pytest_runtestloop(session=session)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+INTERNALERROR>     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+INTERNALERROR>     raise exception
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+INTERNALERROR>     return (yield)  # Run all the tests.
+INTERNALERROR>             ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+INTERNALERROR>     teardown.throw(exception)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+INTERNALERROR>     result = yield
+INTERNALERROR>              ^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>           ^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 138, in pytest_runtestloop
+INTERNALERROR>     self.loop_once()
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 163, in loop_once
+INTERNALERROR>     call(**kwargs)
+INTERNALERROR>   File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/xdist/dsession.py", line 217, in worker_workerfinished
+INTERNALERROR>     assert not crashitem, (crashitem, node)
+INTERNALERROR> AssertionError: ('tests/admin_portal/general_sales_report/test_general_sales_report.py::test_reapply_same_filter_identical', <WorkerController gw1>)
+INTERNALERROR> assert not 'tests/admin_portal/general_sales_report/test_general_sales_report.py::test_reapply_same_filter_identical'
+
+= 13 failed, 91 passed, 1 skipped, 10 xfailed, 1 xpassed, 3 warnings, 16 errors in 7253.96s (2:00:53) =
+EXIT:0

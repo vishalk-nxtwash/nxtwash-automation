@@ -21,8 +21,8 @@ class RedemptionsPage(BasePage):
     # ── Filter modal controls ─────────────────────────────────────────────────
 
     APPLY_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Apply filters'] | "
-        "//button[contains(normalize-space(),'Apply filters')]")
+        "//button[normalize-space()='Apply filters']"
+        "[ancestor::*[@role='dialog']]")
 
     # DevTools confirmed: RDM uses the same overview__site-select__ prefix as CDL.
     SITE_MULTISELECT = (By.XPATH,
@@ -127,8 +127,8 @@ class RedemptionsPage(BasePage):
 
     def apply_modal_filters(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(1.5)
+        btn.click()
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_BUTTON))
         try:
             self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         except TimeoutException:

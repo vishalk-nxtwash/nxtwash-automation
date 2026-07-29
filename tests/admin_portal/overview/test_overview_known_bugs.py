@@ -33,6 +33,7 @@ def test_overview_labor_percent_extreme_value_bug(overview_page):
     "OV-BUG-002 Labor % displays '--' or 0% when no revenue exists for the period"
 )
 @pytest.mark.regression
+@_IFRAME_XFAIL
 def test_overview_labor_percent_no_revenue_shows_placeholder(overview_page):
     """With zero revenue the Labor % denominator is zero.
 

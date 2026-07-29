@@ -26,7 +26,6 @@ _TOGGLE_XFAIL = pytest.mark.xfail(
 
 @allure.title("POS-ACT-001 Active POS toggle ON saves with Active status")
 @pytest.mark.smoke
-@_TOGGLE_XFAIL
 def test_active_pos_toggle_on_saves(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     form.ensure_active_pos_on()

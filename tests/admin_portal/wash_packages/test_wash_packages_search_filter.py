@@ -83,8 +83,7 @@ def test_search_inactive_wash_package_returns_it(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.ensure_active_switch_off()
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.search_package(PACKAGE_NAME)
     names = page.get_visible_package_names()

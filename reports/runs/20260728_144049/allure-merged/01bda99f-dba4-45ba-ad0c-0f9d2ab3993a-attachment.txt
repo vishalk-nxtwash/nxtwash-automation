@@ -1,0 +1,91 @@
+Memberships
+Edit membership
+Cancel
+Save membership
+Membership settings
+Redemption settings
+Discount settings
+Membership name
+Membership type
+Recurring
+Prepaid
+Loyalty points
+Points awarded on recharge/sale
+Limit membership
+Barcode
+Membership terms and conditions
+Membership description
+Active service
+Show on customer portal
+Global price
+Global commission
+Assign to
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+Show on CP
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+VK AL28
+Los angeles
+5%
+3%
+VK AL27
+Los angeles
+5%
+3%
+VK ZT 4e248f
+Los angeles
+0%
+0%
+VK AL26
+Los angeles
+5%
+3%
+VK ZT 8f811b
+Columbia
+0%
+0%

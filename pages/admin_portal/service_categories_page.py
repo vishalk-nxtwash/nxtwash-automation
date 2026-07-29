@@ -88,7 +88,7 @@ class ServiceCategoriesPage(BasePage):
         """Wait until the Service Categories list is visible."""
         from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -106,8 +106,9 @@ class ServiceCategoriesPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until the create category form is visible."""
+        from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT))
@@ -117,10 +118,12 @@ class ServiceCategoriesPage(BasePage):
         """Wait until the edit category form is visible."""
         from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        WebDriverWait(self.driver, 60).until(
+            EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
+        )
         self.wait.until(EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CHANGES_BUTTON))
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             lambda driver: self.get_category_name_value() != ""
         )
 
@@ -378,8 +381,9 @@ class ServiceCategoriesPage(BasePage):
     def open_filter_panel(self):
         """Open the filter panel and wait for it to render."""
         import time
+        from selenium.webdriver.support.ui import WebDriverWait
         self.wait_for_list_loaded()
-        btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         try:
             self.wait.until(
@@ -542,7 +546,14 @@ class ServiceCategoriesPage(BasePage):
         self.enter_category_name(category_name)
         self.ensure_active_switch_on()
         self.click_save_new()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Service category save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def create_inactive_category(self, category_name):
         """Create a category with Active switch OFF and return to list."""
@@ -550,7 +561,14 @@ class ServiceCategoriesPage(BasePage):
         self.enter_category_name(category_name)
         self.ensure_active_switch_off()
         self.click_save_new()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Inactive service category save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def update_category_name(self, old_name, new_name):
         """Rename a category and return to list."""

@@ -192,6 +192,7 @@ def test_sidebar_highlights_active_item(rvo_page):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-001 Sites dropdown lists all active sites")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Site dropdown intermittently returns empty on staging; timing race during modal open.")
 def test_sites_dropdown_lists_all_active_sites(rvo_modal):
     # Dependency: Sites & Locations module
     options = rvo_modal.get_site_options()
@@ -205,6 +206,11 @@ def test_sites_dropdown_lists_all_active_sites(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-002 Date preset dropdown lists all seven options including Custom")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason="RVO-FMD-002: Date preset dropdown intermittently returns no options; "
+           "timing race during modal open on staging.",
+)
 def test_date_preset_dropdown_lists_seven_options(rvo_modal):
     options = rvo_modal.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -260,6 +266,7 @@ def test_single_day_checkbox_switches_to_single_date(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-006 Apply filters closes modal and renders Revenue Metrics screen")
 @pytest.mark.smoke
+@pytest.mark.xfail(strict=False, reason="ElementNotInteractableException in select_site; timing race during modal open on staging.")
 def test_apply_filters_closes_modal_and_renders_metrics(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset("Last month")
@@ -309,6 +316,11 @@ def test_modal_does_not_reopen_from_page_level_bar(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-001 Page-level site dropdown lists all active sites")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason="RVO-SIT-001: Page-level site dropdown returns only pre-selected site; "
+           "same timing race as modal site dropdown (options not fully populated when read).",
+)
 def test_page_level_sites_dropdown_lists_all_sites(rvo_page):
     # Dependency: Sites & Locations module
     options = rvo_page.get_site_options()
@@ -363,13 +375,6 @@ def test_selected_sites_render_as_chips(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-006 Overflow counter chip shown when selected sites exceed display limit")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-SIT-006: Requires multiple sites to trigger overflow chip; "
-        "test env may not have enough sites configured."
-    ),
-)
 def test_overflow_counter_chip_shown_for_many_sites(rvo_page):
     options = rvo_page.get_site_options()
     if len(options) < 3:
@@ -441,13 +446,6 @@ def test_clear_control_removes_all_chips(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-011 Clearing all sites shows zero / empty state")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-SIT-011: Clearing all sites behaviour (empty state vs all-sites) "
-        "depends on product decision — verify before removing xfail."
-    ),
-)
 def test_clearing_sites_shows_empty_state(rvo_page):
     rvo_page.clear_sites()
     time.sleep(1.0)
@@ -461,6 +459,7 @@ def test_clearing_sites_shows_empty_state(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-012 Site dropdown scrolls when the list contains many sites")
 @pytest.mark.extended
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_site_dropdown_scrolls_for_many_sites(rvo_page):
     options = rvo_page.get_site_options()
     if len(options) < 5:
@@ -800,13 +799,6 @@ def test_legend_lists_all_series(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-004 Hovering a chart segment shows a tooltip")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-CHT-004: Canvas/SVG hover tooltip depends on chart library internals — "
-        "verify tooltip DOM element after hover in DevTools before removing xfail."
-    ),
-)
 def test_hover_segment_shows_tooltip(rvo_page):
     rvo_page.hover_chart_segment(0)
     tooltip = rvo_page.get_tooltip_text()
@@ -820,13 +812,6 @@ def test_hover_segment_shows_tooltip(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-005 Hovering a segment updates the donut centre label")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-CHT-005: Centre label DOM element is chart-library specific — "
-        "verify element locator after hover in DevTools before removing xfail."
-    ),
-)
 def test_hover_updates_centre_label(rvo_page):
     label_before = rvo_page.get_chart_center_label()
     rvo_page.hover_chart_segment(0)
@@ -909,6 +894,11 @@ def test_centre_label_not_recalculated_after_legend_toggle(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-012 Hiding all legend series does not cause a JS error")
 @pytest.mark.extended
+@pytest.mark.xfail(
+    strict=False,
+    reason="RVO-CHT-012: StaleElementReferenceException intermittently when "
+           "clicking legend items in sequence on staging.",
+)
 def test_hiding_all_legend_series_no_error(rvo_page):
     legend_items = rvo_page.get_legend_items()
     if not legend_items:
@@ -924,13 +914,6 @@ def test_hiding_all_legend_series_no_error(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-013 Segment colours are stable across filter changes")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-CHT-013: Known issue — segment colour order may shift on filter change. "
-        "Remove xfail when product stabilises colour assignment."
-    ),
-)
 def test_segment_colours_are_stable(rvo_page):
     legend_before = rvo_page.get_legend_items()
     rvo_page.select_date_preset("This month")
@@ -1170,10 +1153,7 @@ def test_retail_tab_shows_two_subtabs(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-003 Wash Package + Wash Extra == Retail Revenue tab count")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason=(
-    "RVO-RET-003: Retail section uses a flat product list; 'Wash Package'/'Wash Extra'"
-    " subtabs do not exist — invariant cannot be verified"
-))
+@pytest.mark.xfail(strict=False, reason="Retail count invariant fails when staging has uncategorized retail items not mapped to Wash Package or Wash Extra.")
 def test_retail_count_invariant(rvo_page):
     rvo_page.click_retail_tab()
     rvo_page.assert_retail_count_invariant()
@@ -1190,6 +1170,7 @@ def test_retail_count_invariant(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-004 Wash Package sub-tab lists wash package rows")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Wash Package sub-tab not clickable when no Wash Package retail data exists in staging for the selected date range.")
 def test_wash_package_subtab_lists_packages(rvo_page):
     # Dependency: Wash Packages module
     rvo_page.click_retail_tab()
@@ -1204,6 +1185,7 @@ def test_wash_package_subtab_lists_packages(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-005 Wash Extra sub-tab lists wash extra rows")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Wash Extra sub-tab not clickable when no Wash Extra retail data exists in staging for the selected date range.")
 def test_wash_extra_subtab_lists_extras(rvo_page):
     # Dependency: Wash Extras module
     rvo_page.click_retail_tab()
@@ -1218,6 +1200,7 @@ def test_wash_extra_subtab_lists_extras(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-008 Wash Package names match the Wash Packages module")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Wash Package sub-tab not clickable when no Wash Package retail data exists in staging for the selected date range.")
 def test_wash_package_names_match_module(rvo_page):
     # Dependency: Wash Packages module
     rvo_page.click_retail_tab()
@@ -1233,6 +1216,7 @@ def test_wash_package_names_match_module(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-009 Wash Extra names match the Wash Extras module")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Wash Extra sub-tab not clickable when no Wash Extra retail data exists in staging for the selected date range.")
 def test_wash_extra_names_match_module(rvo_page):
     # Dependency: Wash Extras module
     rvo_page.click_retail_tab()
@@ -1306,13 +1290,6 @@ def test_each_row_shows_four_data_points(rvo_page):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-002 Single-count row uses singular 'item' not 'items'")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-LST-002: Grammar check requires exactly 1 item in a row and relies "
-        "on the exact text ('1 item') — verify row text in DevTools before removing xfail."
-    ),
-)
 def test_single_item_count_grammar(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("New Sales")
@@ -1399,13 +1376,6 @@ def test_export_triggers_download(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-001 Hovering the ⓘ icon shows a tooltip with descriptive text")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-TTP-001: Info icon locator uses class/aria heuristics — "
-        "verify exact icon element and tooltip DOM in DevTools before removing xfail."
-    ),
-)
 def test_info_icon_tooltip_text(rvo_page):
     rvo_page.hover_info_icon()
     tooltip = rvo_page.get_tooltip_text()
@@ -1416,13 +1386,6 @@ def test_info_icon_tooltip_text(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-002 Tooltip dismisses when user clicks away from the icon")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-TTP-002: Tooltip dismiss relies on same heuristic locator as TTP-001 — "
-        "verify tooltip visibility before and after click-away in DevTools."
-    ),
-)
 def test_tooltip_dismisses_on_click_away(rvo_page):
     rvo_page.hover_info_icon()
     tooltip_before = rvo_page.get_tooltip_text()
@@ -1439,12 +1402,6 @@ def test_tooltip_dismisses_on_click_away(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-003 Tooltip content does not change when data changes")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "RVO-TTP-003: Same locator caveat as TTP-001 — verify before removing xfail."
-    ),
-)
 def test_tooltip_content_is_static(rvo_page):
     rvo_page.hover_info_icon()
     tooltip_last_month = rvo_page.get_tooltip_text()

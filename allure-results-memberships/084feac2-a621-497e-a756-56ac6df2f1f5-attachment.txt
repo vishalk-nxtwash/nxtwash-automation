@@ -1,2 +1,0 @@
-[32mINFO    [0m tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:42 Configuring Chrome download directory: /private/var/folders/18/r8qfvkyn1yng87d4n0nl8lxc0000gn/T/pytest-of-vk/pytest-14/test_download_memberships_star0
-[32mINFO    [0m tests.admin_portal.memberships.test_memberships_download:test_memberships_download.py:27 Waiting for membership export download

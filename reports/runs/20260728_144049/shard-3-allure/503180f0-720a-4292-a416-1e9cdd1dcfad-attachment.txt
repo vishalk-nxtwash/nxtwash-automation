@@ -1,0 +1,1 @@
+2026-07-28 19:06:02,218 INFO tests.admin_portal.memberships.test_memberships_validation: Validating negative global commission

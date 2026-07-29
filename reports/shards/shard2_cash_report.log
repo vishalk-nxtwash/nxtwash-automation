@@ -1,0 +1,147 @@
+2026-07-27 06:29:32,033 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 56 items
+
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_filter_modal_auto_opens PASSED [  3%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_modal_contains_all_controls PASSED [  5%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_title_visible_after_apply XFAIL [  7%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_sidebar_highlights_active_item XFAIL [  8%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites PASSED [ 10%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_date_preset_dropdown_options PASSED [ 12%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_modal_opens_with_no_default_site PASSED [ 14%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_selecting_preset_fills_date_range PASSED [ 16%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 17%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_filter_values_reflected_in_page_bar PASSED [ 19%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_page_bar_changes_do_not_reopen_modal PASSED [ 21%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option PASSED [ 23%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_selecting_site_creates_chip PASSED [ 25%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown 2026-07-27 06:33:56,407 ERROR nxtwash: Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+2026-07-27 06:33:57,021 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 26%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_clearing_chip_removes_site_filter PASSED [ 28%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-002] PASSED [ 32%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-003] PASSED [ 33%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-004] PASSED [ 35%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-005] PASSED [ 37%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-006] PASSED [ 39%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-007] PASSED [ 41%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_checkbox_visible PASSED [ 42%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_changes_date_field PASSED [ 44%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_sdm_syncs_to_page_bar PASSED [ 46%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [ 48%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_three_tabs_visible PASSED [ 50%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_active_by_default PASSED [ 51%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_kiosk_tab_click PASSED [ 53%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_pos_tab_click PASSED [ 55%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_restores PASSED [ 57%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_button_visible PASSED [ 58%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_triggers_download PASSED [ 60%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_tab_shows_metrics PASSED [ 62%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_metrics_not_all_zero PASSED [ 64%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_zero_data_message PASSED [ 66%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_visible XFAIL [ 67%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_headers XFAIL [ 69%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_data XFAIL [ 71%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_pagination SKIPPED [ 73%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_visible PASSED [ 75%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_has_headers XFAIL [ 76%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_pagination SKIPPED [ 78%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_visible XFAIL [ 80%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_has_headers XFAIL [ 82%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_pagination SKIPPED [ 83%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_zero_data_state PASSED [ 85%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_visible XFAIL [ 87%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_has_headers XFAIL [ 89%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_pagination SKIPPED [ 91%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_visible XFAIL [ 92%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_pagination SKIPPED [ 94%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_visible XFAIL [ 96%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_pagination SKIPPED [ 98%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_zero_data_state PASSED [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000104e15a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104e0db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001048b72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001048bd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001048bf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001048bf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x00000001048fc0a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355948
+    7   chromedriver                        0x00000001048f6934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    8   chromedriver                        0x000000010493f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    9   chromedriver                        0x00000001048f5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    10  chromedriver                        0x0000000104dd2c40 cxxbridge1$str$ptr + 2921304
+    11  chromedriver                        0x0000000104dd63b8 cxxbridge1$str$ptr + 2935504
+    12  chromedriver                        0x0000000104db90f8 cxxbridge1$str$ptr + 2816016
+    13  chromedriver                        0x0000000104dd6c4c cxxbridge1$str$ptr + 2937700
+    14  chromedriver                        0x0000000104daa3b0 cxxbridge1$str$ptr + 2755272
+    15  chromedriver                        0x0000000104dfc1f4 cxxbridge1$str$ptr + 3090700
+    16  chromedriver                        0x0000000104dfc354 cxxbridge1$str$ptr + 3091052
+    17  chromedriver                        0x0000000104e0d7a4 cxxbridge1$str$ptr + 3161788
+    18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+=========================== short test summary info ============================
+FAILED tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown
+======= 1 failed, 37 passed, 6 skipped, 12 xfailed in 1084.53s (0:18:04) =======

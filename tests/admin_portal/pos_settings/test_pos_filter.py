@@ -14,15 +14,6 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Filter panel locators (active toggle, reset button) use label heuristics. "
-        "Verify exact DOM structure in DevTools before removing xfail."
-    ),
-)
-
-
 @allure.title("POS-FLT-001 Filter panel opens with site dropdown and active toggle")
 @pytest.mark.smoke
 def test_filter_panel_opens(browser):
@@ -53,7 +44,6 @@ def test_filter_by_site(browser, managed_pos):
 
 @allure.title("POS-FLT-003 Filter Active POS ON shows only active units")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_active_pos_on(browser, managed_pos):
     page = open_pos_page(browser)
     page.filter_active_pos_on()
@@ -68,7 +58,6 @@ def test_filter_active_pos_on(browser, managed_pos):
 
 @allure.title("POS-FLT-004 Filter Active POS OFF shows all units")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_active_pos_off(browser):
     page = open_pos_page(browser)
     page.filter_active_pos_off()
@@ -80,7 +69,6 @@ def test_filter_active_pos_off(browser):
 
 @allure.title("POS-FLT-005 Filter result count matches rendered row count")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_result_count_matches_rows(browser, managed_pos):
     import re
 
@@ -99,7 +87,6 @@ def test_filter_result_count_matches_rows(browser, managed_pos):
 
 @allure.title("POS-FLT-006 Combining site + active filters returns correct subset")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_site_and_active_combined(browser, managed_pos):
     # Dependency: Sites & Locations module
     page = open_pos_page(browser)
@@ -114,13 +101,6 @@ def test_filter_site_and_active_combined(browser, managed_pos):
 
 @allure.title("POS-FLT-007 Reset All clears filters and restores full list")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-FLT-007: Reset All button locator uses label heuristics "
-        "— verify in DevTools before removing xfail."
-    ),
-)
 def test_filter_reset_all(browser, managed_pos):
     page = open_pos_page(browser)
     page.filter_by_site(POS_SITE)

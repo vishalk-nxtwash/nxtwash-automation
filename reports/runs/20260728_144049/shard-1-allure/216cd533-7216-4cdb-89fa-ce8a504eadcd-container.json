@@ -1,0 +1,1 @@
+{"uuid": "dc668f52-b47b-4965-9fbe-857bfa3914fa", "children": ["721124b4-ded2-451a-bf37-c0adf4280b61"], "befores": [{"name": "managed_role", "status": "passed", "start": 1785242580404, "stop": 1785242610281}], "afters": [{"name": "managed_role::0", "status": "passed", "start": 1785242617314, "stop": 1785242638711}], "start": 1785242580404, "stop": 1785242638712}

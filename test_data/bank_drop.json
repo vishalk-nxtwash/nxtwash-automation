@@ -1,0 +1,20 @@
+{
+  "reference": {
+    "first":        "VK ABD04",
+    "first_order":  "2",
+    "second":       "VK ABD05",
+    "second_order": "3"
+  },
+  "edit_target": {
+    "name":         "VK EDT004",
+    "updated_name": "VK EDT004-upd",
+    "order":        "1"
+  },
+  "edge_cases": {
+    "long_name": "VK BANK DROP AUTOMATION LONG NAME 0123456789",
+    "xss_name":  "<script>alert(1)</script>"
+  },
+  "search": {
+    "nonexistent": "bank-drop-does-not-exist-automation"
+  }
+}

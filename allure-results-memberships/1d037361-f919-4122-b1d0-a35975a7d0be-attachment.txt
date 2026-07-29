@@ -1,2 +1,0 @@
-2026-06-25 12:04:29,129 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching for an inactive membership
-2026-06-25 12:04:57,390 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching inactive membership by name: AUTOTEST Membership

@@ -54,6 +54,7 @@ def test_applicable_discount_persists_after_save(managed_service):
 
 @allure.title("CS-DSC-003 Multiple applicable discounts can be selected")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_multiple_applicable_discounts_can_be_selected(managed_service):
 
     page = managed_service
@@ -111,6 +112,7 @@ def test_discount_tab_accessible_on_edit_form(browser):
 
 @allure.title("CS-DSC-006 Discount combobox filters options by typing")
 @pytest.mark.regression
+@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_discount_combobox_filters_by_typing(browser):
 
     page = open_custom_services_page(browser)

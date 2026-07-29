@@ -1,0 +1,1926 @@
+2026-07-27 05:43:04,691 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 100 items
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render PASSED [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item PASSED [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites 2026-07-27 05:44:49,931 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 05:44:50,545 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options PASSED [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range PASSED [ 10%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar PASSED [ 13%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar PASSED [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites PASSED [ 15%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips PASSED [ 18%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites PASSED [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown XFAIL [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it PASSED [ 21%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips XFAIL [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state PASSED [ 23%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites PASSED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button 2026-07-27 05:50:11,323 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 05:50:11,954 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+FAILED                                                                   [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown PASSED [ 26%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options PASSED [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] PASSED [ 28%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] PASSED [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] PASSED [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] PASSED [ 31%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] 2026-07-27 05:52:38,149 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 05:52:38,886 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Last month
+Select date range
+Single day
+Total Revenue
+$300.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$300.00
+Revenue distribution
+Membership Revenue
+1
+Retail Revenue
+11
+New Sales
+1
+Recharges
+0
+Resignups
+0
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Last month
+Select date range
+Single day
+Total Revenue
+$300.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$300.00
+Revenue distribution
+Membership Revenue
+1
+Retail Revenue
+11
+New Sales
+1
+Recharges
+0
+Resignups
+0
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] PASSED [ 34%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom 2026-07-27 05:53:11,364 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 05:53:12,108 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 35%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_range_field_opens_calendar_picker PASSED [ 36%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_future_dates_disabled_in_calendar XFAIL [ 37%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_year_selector_visible_in_calendar XFAIL [ 38%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_auto_applies_on_metrics_screen PASSED [ 39%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_same_start_end PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_month_boundary_date_range PASSED [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_five_kpi_cards_render PASSED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_cards_show_zero_when_no_data PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_site_change PASSED [ 44%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_date_change PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_currency_format PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists ERROR [ 47%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_shows_no_info_when_no_data PASSED [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_lists_all_series PASSED [ 49%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_segment_shows_tooltip PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_updates_centre_label PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_resets_on_pointer_leave XPASS [ 52%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_toggle_hides_segment SKIPPED [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_not_recalculated_after_legend_toggle SKIPPED [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hiding_all_legend_series_no_error SKIPPED [ 55%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_segment_colours_are_stable PASSED [ 56%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_revenue_series_in_legend_no_arc PASSED [ 57%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_rerenders_on_filter_change PASSED [ 58%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_displayed_with_count PASSED [ 59%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_selected_by_default PASSED [ 60%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_shows_three_subtabs PASSED [ 61%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable PASSED [ 62%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant ERROR [ 63%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans 2026-07-27 06:03:52,164 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:03:52,938 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 64%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly 2026-07-27 06:05:35,170 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:05:35,789 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 65%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows 2026-07-27 06:06:21,803 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:06:22,502 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 66%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_subtab_row_count_equals_badge XFAIL [ 67%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart 2026-07-27 06:07:22,256 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:07:22,853 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 68%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module 2026-07-27 06:07:58,960 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:07:59,562 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 69%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_displayed_with_count PASSED [ 70%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_shows_two_subtabs XFAIL [ 71%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant 2026-07-27 06:09:08,649 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:09:09,255 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 72%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages ERROR [ 73%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras 2026-07-27 06:10:04,636 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:10:05,246 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 74%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module 2026-07-27 06:10:42,976 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:10:43,625 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 75%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module 2026-07-27 06:11:26,727 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:11:27,424 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 76%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_tabs_preserves_kpi_and_chart PASSED [ 77%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_empty_list_when_count_zero PASSED [ 78%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points 2026-07-27 06:12:47,265 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:12:47,873 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 79%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar 2026-07-27 06:13:26,228 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:13:26,903 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 80%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_amount_shows_zero_percent PASSED [ 81%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking 2026-07-27 06:14:36,692 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:14:37,331 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+VK Test carwash 2
+VK AL02
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [ 82%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_list_refreshes_on_filter_change PASSED [ 83%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_button_present PASSED [ 84%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_triggers_download PASSED [ 85%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_info_icon_tooltip_text PASSED [ 86%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_dismisses_on_click_away PASSED [ 87%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_content_is_static PASSED [ 88%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_transaction_site_renders_cleanly PASSED [ 89%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_today_with_no_transactions_renders_cleanly PASSED [ 90%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_preset_switching_no_stale_data PASSED [ 91%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data PASSED [ 92%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_only_site_renders_cleanly PASSED [ 93%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_direct_url_opens_filter_modal PASSED [ 94%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overview_full_report_link_navigates_here XFAIL [ 95%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module 2026-07-27 06:19:47,549 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-27 06:19:48,351 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+No options
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+No options
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 96%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_changes_label_and_field PASSED [ 97%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_forces_preset_to_custom XFAIL [ 98%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_select_date_in_single_day_mode PASSED [ 99%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range ERROR [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at setup of test_chart_renders_when_data_exists _____________
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000103421a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000103419b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102ec30a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000102f07d3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x0000000102f06354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x0000000102f02934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x0000000102f4b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x0000000102f01434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x00000001033dec40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x00000001033e23b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x00000001033c50f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x00000001033e2c4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x00000001033b63b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x00000001034081f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x0000000103408354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x00000001034197a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+______________ ERROR at setup of test_membership_count_invariant _______________
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000102f19a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102f11b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001029bb0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x00000001029ffd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x00000001029fe354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x00000001029fa934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x0000000102a43030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x00000001029f9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x0000000102ed6c40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x0000000102eda3b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x0000000102ebd0f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x0000000102edac4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x0000000102eae3b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x0000000102f001f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x0000000102f00354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x0000000102f117a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__________ ERROR at setup of test_wash_package_subtab_lists_packages ___________
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x00000001050b9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001050b1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000104b5b0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000104b9fd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x0000000104b9e354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x0000000104b9a934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x0000000104be3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x0000000104b99434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x0000000105076c40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x000000010507a3b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x000000010505d0f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x000000010507ac4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x000000010504e3b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x00000001050a01f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x00000001050a0354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x00000001050b17a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+_ ERROR at setup of TestSingleDayMode.test_uncheck_single_day_reverts_to_range _
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100ccda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100cc5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010076f0a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x00000001007b3d3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x00000001007b2354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x00000001007ae934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x00000001007f7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x00000001007ad434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x0000000100c8ac40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x0000000100c8e3b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x0000000100c710f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x0000000100c8ec4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x0000000100c623b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x0000000100cb41f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x0000000100cb4354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x0000000100cc57a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=================================== FAILURES ===================================
+E   AssertionError: Site dropdown returned no options
+    assert 0 > 0
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/revenue_overview/test_revenue_overview.py:198: AssertionError: Site dropdown returned no options
+E   selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+    Stacktrace:
+    0   chromedriver                        0x0000000100925a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010091db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001003c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001003cd464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+    4   chromedriver                        0x00000001003cf678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+    5   chromedriver                        0x00000001003cf730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+    6   chromedriver                        0x000000010040c0a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355948
+    7   chromedriver                        0x0000000100406934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    8   chromedriver                        0x000000010044f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    9   chromedriver                        0x0000000100405434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    10  chromedriver                        0x00000001008e2c40 cxxbridge1$str$ptr + 2921304
+    11  chromedriver                        0x00000001008e63b8 cxxbridge1$str$ptr + 2935504
+    12  chromedriver                        0x00000001008c90f8 cxxbridge1$str$ptr + 2816016
+    13  chromedriver                        0x00000001008e6c4c cxxbridge1$str$ptr + 2937700
+    14  chromedriver                        0x00000001008ba3b0 cxxbridge1$str$ptr + 2755272
+    15  chromedriver                        0x000000010090c1f4 cxxbridge1$str$ptr + 3090700
+    16  chromedriver                        0x000000010090c354 cxxbridge1$str$ptr + 3091052
+    17  chromedriver                        0x000000010091d7a4 cxxbridge1$str$ptr + 3161788
+    18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E   AssertionError: Membership count invariant: New Sales(0) + Recharges(0) + Resignups(0) = 0 ≠ Membership Revenue(1)
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/pages/admin_portal/revenue_overview_page.py:620: AssertionError: Membership count invariant: New Sales(0) + Recharges(0) + Resignups(0) = 0 ≠ Membership Revenue(1)
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000103595a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010358db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001030370a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x000000010307bd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x000000010307a354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x0000000103076934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x00000001030bf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x0000000103075434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x0000000103552c40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x00000001035563b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x00000001035390f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x0000000103556c4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x000000010352a3b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x000000010357c1f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x000000010357c354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x000000010358d7a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104939a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104931b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001043db2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104423a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104463030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104419434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001048f6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001048fa3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001048dd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001048fac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001048ce3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001049201f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104920354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001049317a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104c4da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104c45b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001046ef2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000104737a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000104777030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010472d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000104c0ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000104c0e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000104bf10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104c0ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000104be23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000104c341f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104c34354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000104c457a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100879a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100871b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010031b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100363a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001003a3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100359434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100836c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010083a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010081d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010083ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010080e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001008601f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100860354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001008717a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000104935a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010492db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001043d72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010441fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010445f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104415434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001048f2c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001048f63b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001048d90f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001048f6c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001048ca3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010491c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010491c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010492d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000103501a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001034f9b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102fa32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102feba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x000000010302b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102fe1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001034bec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001034c23b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001034a50f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001034c2c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001034963b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001034e81f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001034e8354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001034f97a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   AssertionError: Retail count invariant: Wash Package(0) + Wash Extra(0) = 0 ≠ Retail(7)
+    assert (0 + 0) == 7
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/revenue_overview/test_revenue_overview.py:1144: AssertionError: Retail count invariant: Wash Package(0) + Wash Extra(0) = 0 ≠ Retail(7)
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001030a5a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010309db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102b472a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102b8fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102bcf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000102b85434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000103062c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001030663b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001030490f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000103066c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010303a3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x000000010308c1f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x000000010308c354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x000000010309d7a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001048a1a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000104899b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001043432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x000000010438ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001043cb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000104381434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010485ec40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001048623b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001048450f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000104862c4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001048363b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001048881f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000104888354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001048997a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000102619a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000102611b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001020bb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000102103a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102143030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001020f9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001025d6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001025da3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001025bd0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001025dac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001025ae3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001026001f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000102600354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001026117a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001014bda84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001014b5b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000100f5f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100fa7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100fe7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100f9d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x000000010147ac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x000000010147e3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x00000001014610f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x000000010147ec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x00000001014523b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001014a41f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001014a4354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001014b57a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100a89a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100a81b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010052b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100573a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x00000001005b3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x0000000100569434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100a46c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100a4a3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100a2d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100a4ac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100a1e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100a701f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100a70354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100a817a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x0000000100e2da84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x0000000100e25b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x00000001008cf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x0000000100917a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000100957030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x000000010090d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x0000000100deac40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x0000000100dee3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x0000000100dd10f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x0000000100deec4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x0000000100dc23b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x0000000100e141f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x0000000100e14354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x0000000100e257a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+E   AssertionError: Site dropdown returned no options
+    assert 0 > 0
+     +  where 0 = len([])
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/revenue_overview/test_revenue_overview.py:1532: AssertionError: Site dropdown returned no options
+=========================== short test summary info ============================
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007]
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range
+= 17 failed, 67 passed, 3 skipped, 8 xfailed, 1 xpassed, 4 errors in 2259.10s (0:37:39) =

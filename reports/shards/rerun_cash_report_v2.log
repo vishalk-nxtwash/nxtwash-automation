@@ -1,0 +1,623 @@
+2026-07-29 03:06:22,645 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 300.0s
+timeout method: signal
+timeout func_only: False
+collected 56 items
+
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_filter_modal_auto_opens PASSED [  3%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_modal_contains_all_controls PASSED [  5%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_page_title_visible_after_apply PASSED [  7%]
+tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_sidebar_highlights_active_item ERROR [  8%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites 2026-07-29 03:09:11,763 ERROR nxtwash: Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+2026-07-29 03:09:12,968 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 10%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_date_preset_dropdown_options PASSED [ 12%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_modal_opens_with_no_default_site PASSED [ 14%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_selecting_preset_fills_date_range PASSED [ 16%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_apply_filters_closes_modal_and_renders_metrics PASSED [ 17%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_filter_values_reflected_in_page_bar PASSED [ 19%]
+tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_page_bar_changes_do_not_reopen_modal PASSED [ 21%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option 2026-07-29 03:12:45,000 ERROR nxtwash: Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option (url: https://staging.nxtwash.com/reports/detailed/cash_report)
+2026-07-29 03:12:46,129 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+VK Test Wash 01
+VK Test carwash 2
+VK AL02
+VK AL03
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+Export XLSX
+Today
+Select date range
+Single day
+Analytics
+Kiosk
+POS
+Kiosk Denomination Distribution
+Analysis of bill distribution by denomination with percentage and value breakdown
+No information for this period
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 23%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_selecting_site_creates_chip PASSED [ 25%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_test_site_in_dropdown SKIPPED [ 26%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_clearing_chip_removes_site_filter PASSED [ 28%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-002] PASSED [ 32%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-003] PASSED [ 33%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-004] PASSED [ 35%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-005] PASSED [ 37%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-006] PASSED [ 39%]
+tests/admin_portal/cash_report/test_cash_report.py::TestDateFilter::test_preset_populates_date_range[CSH-DTE-007] PASSED [ 41%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_checkbox_visible PASSED [ 42%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_single_day_changes_date_field PASSED [ 44%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_modal_sdm_syncs_to_page_bar SKIPPED [ 46%]
+tests/admin_portal/cash_report/test_cash_report.py::TestSingleDayMode::test_page_bar_sdm_uncheck_syncs_to_modal SKIPPED [ 48%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_three_tabs_visible PASSED [ 50%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_active_by_default PASSED [ 51%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_kiosk_tab_click PASSED [ 53%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_pos_tab_click PASSED [ 55%]
+tests/admin_portal/cash_report/test_cash_report.py::TestTabNavigation::test_analytics_tab_restores PASSED [ 57%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_button_visible PASSED [ 58%]
+tests/admin_portal/cash_report/test_cash_report.py::TestExport::test_export_xlsx_triggers_download PASSED [ 60%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_tab_shows_metrics PASSED [ 62%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_metrics_not_all_zero PASSED [ 64%]
+tests/admin_portal/cash_report/test_cash_report.py::TestAnalyticsTab::test_analytics_zero_data_message PASSED [ 66%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_visible SKIPPED [ 67%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_headers SKIPPED [ 69%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_has_data SKIPPED [ 71%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_balance_summary_pagination SKIPPED [ 73%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_visible PASSED [ 75%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_has_headers SKIPPED [ 76%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_denomination_pagination SKIPPED [ 78%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_visible SKIPPED [ 80%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_has_headers SKIPPED [ 82%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_transactions_pagination SKIPPED [ 83%]
+tests/admin_portal/cash_report/test_cash_report.py::TestKioskTab::test_kiosk_zero_data_state PASSED [ 85%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_visible SKIPPED [ 87%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_has_headers SKIPPED [ 89%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_balance_summary_pagination SKIPPED [ 91%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_visible SKIPPED [ 92%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_bank_drop_pagination SKIPPED [ 94%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_visible SKIPPED [ 96%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_transactions_pagination SKIPPED [ 98%]
+tests/admin_portal/cash_report/test_cash_report.py::TestPOSTab::test_pos_zero_data_state PASSED [100%]
+
+==================================== ERRORS ====================================
+_____ ERROR at setup of TestNavigation.test_sidebar_highlights_active_item _____
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="729100f76452b8eb2e8e0664005d979c")>
+
+    @pytest.fixture
+    def csh_page(browser):
+        """Phase 2 — CSH_SITE + Last month applied; lands on the metrics screen.
+    
+        Last month (06/01–06/30/2026) gives a stable dataset with transactions
+        across all three tabs.
+        """
+        page = open_csh_page(browser)
+        try:
+>           page.select_site(CSH_SITE)
+
+tests/admin_portal/cash_report/conftest.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/cash_report_page.py:199: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:99: in select_react_dropdown_option
+    inner_input.send_keys(Keys.CONTROL, "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x107808e10>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+E       Stacktrace:
+E       0   chromedriver                        0x00000001028f1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001028e9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001023930a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+E       3   chromedriver                        0x00000001023d7d3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+E       4   chromedriver                        0x00000001023d6354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+E       5   chromedriver                        0x00000001023d2934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       6   chromedriver                        0x000000010241b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x00000001023d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x00000001028aec40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x00000001028b23b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x00000001028950f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x00000001028b2c4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x00000001028863b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x00000001028d81f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x00000001028d8354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x00000001028e97a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: ElementNotInteractableException
+=================================== FAILURES ===================================
+____________ TestFilterModal.test_sites_dropdown_lists_active_sites ____________
+
+self = <tests.admin_portal.cash_report.test_cash_report.TestFilterModal object at 0x1078f1f10>
+csh_modal = <pages.admin_portal.cash_report_page.CashReportPage object at 0x1077e4210>
+
+    @allure.title("CSH-FMD-001 Sites dropdown lists active sites including test site")
+    @pytest.mark.regression
+    def test_sites_dropdown_lists_active_sites(self, csh_modal):
+>       options = csh_modal.get_site_options()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/cash_report/test_cash_report.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/cash_report_page.py:188: in get_site_options
+    options = [
+pages/admin_portal/cash_report_page.py:190: in <listcomp>
+    if el.is_displayed() and el.text.strip()
+                             ^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:105: in text
+    return self._execute(Command.GET_ELEMENT_TEXT)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105e696d0>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000105269a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105261b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104d0b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104d11464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x0000000104d13678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E       5   chromedriver                        0x0000000104d13730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E       6   chromedriver                        0x0000000104d500a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355948
+E       7   chromedriver                        0x0000000104d4a934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       8   chromedriver                        0x0000000104d93030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       9   chromedriver                        0x0000000104d49434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       10  chromedriver                        0x0000000105226c40 cxxbridge1$str$ptr + 2921304
+E       11  chromedriver                        0x000000010522a3b8 cxxbridge1$str$ptr + 2935504
+E       12  chromedriver                        0x000000010520d0f8 cxxbridge1$str$ptr + 2816016
+E       13  chromedriver                        0x000000010522ac4c cxxbridge1$str$ptr + 2937700
+E       14  chromedriver                        0x00000001051fe3b0 cxxbridge1$str$ptr + 2755272
+E       15  chromedriver                        0x00000001052501f4 cxxbridge1$str$ptr + 3090700
+E       16  chromedriver                        0x0000000105250354 cxxbridge1$str$ptr + 3091052
+E       17  chromedriver                        0x00000001052617a4 cxxbridge1$str$ptr + 3161788
+E       18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+___________________ TestSiteFilter.test_no_all_sites_option ____________________
+
+self = <tests.admin_portal.cash_report.test_cash_report.TestSiteFilter object at 0x107904d90>
+csh_modal = <pages.admin_portal.cash_report_page.CashReportPage object at 0x1079122d0>
+
+    @allure.title("CSH-SIT-001 Site dropdown has no 'All Sites' option")
+    @pytest.mark.regression
+    def test_no_all_sites_option(self, csh_modal):
+>       options = csh_modal.get_site_options()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/cash_report/test_cash_report.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/cash_report_page.py:188: in get_site_options
+    options = [
+pages/admin_portal/cash_report_page.py:190: in <listcomp>
+    if el.is_displayed() and el.text.strip()
+                             ^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:105: in text
+    return self._execute(Command.GET_ELEMENT_TEXT)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1077093d0>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000101461a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000101459b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100f032a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100f09464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x0000000100f0b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E       5   chromedriver                        0x0000000100f0b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E       6   chromedriver                        0x0000000100f480a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355948
+E       7   chromedriver                        0x0000000100f42934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       8   chromedriver                        0x0000000100f8b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       9   chromedriver                        0x0000000100f41434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       10  chromedriver                        0x000000010141ec40 cxxbridge1$str$ptr + 2921304
+E       11  chromedriver                        0x00000001014223b8 cxxbridge1$str$ptr + 2935504
+E       12  chromedriver                        0x00000001014050f8 cxxbridge1$str$ptr + 2816016
+E       13  chromedriver                        0x0000000101422c4c cxxbridge1$str$ptr + 2937700
+E       14  chromedriver                        0x00000001013f63b0 cxxbridge1$str$ptr + 2755272
+E       15  chromedriver                        0x00000001014481f4 cxxbridge1$str$ptr + 3090700
+E       16  chromedriver                        0x0000000101448354 cxxbridge1$str$ptr + 3091052
+E       17  chromedriver                        0x00000001014597a4 cxxbridge1$str$ptr + 3161788
+E       18  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       19  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+=========================== short test summary info ============================
+FAILED tests/admin_portal/cash_report/test_cash_report.py::TestFilterModal::test_sites_dropdown_lists_active_sites
+FAILED tests/admin_portal/cash_report/test_cash_report.py::TestSiteFilter::test_no_all_sites_option
+ERROR tests/admin_portal/cash_report/test_cash_report.py::TestNavigation::test_sidebar_highlights_active_item
+======== 2 failed, 34 passed, 19 skipped, 1 error in 1238.01s (0:20:38) ========

@@ -1,0 +1,1 @@
+2026-07-28 18:49:22,454 INFO tests.admin_portal.memberships.test_memberships_search_filter: Searching membership using uppercase value: VK MA5

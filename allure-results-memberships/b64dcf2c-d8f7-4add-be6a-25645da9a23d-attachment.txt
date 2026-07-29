@@ -1,1 +1,0 @@
-2026-06-24 23:50:53,580 INFO tests.admin_portal.memberships.test_memberships_validation: Validating negative global price

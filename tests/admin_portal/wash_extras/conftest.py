@@ -2,19 +2,22 @@ from selenium.common.exceptions import TimeoutException
 
 from pages.admin_portal.wash_extras_page import WashExtrasPage
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._managed import managed_name, managed_resource
+from tests.admin_portal._data import load as _load
 
+_D = _load("wash_extras")
 
-EXISTING_EXTRA = "Detailing"
-MISSING_EXTRA = "wash-extra-does-not-exist-automation"
-WASH_EXTRA_NAME = "VK EWA2"
-UPDATED_WASH_EXTRA_NAME = "VK EWA2 updated"
-GLOBAL_PRICE = "15"
-GLOBAL_COMMISSION = "2"
-DISCOUNT_NAME = "Plus discount"
-UPDATED_DISCOUNT_NAME = "Basic discount"
-VISIBLE_PRICE = "$15.00"
-FIRST_LOCATION_PRICE = "10"
-SECOND_LOCATION_PRICE = "20"
+EXISTING_EXTRA          = _D["reference"]["existing_extra"]
+MISSING_EXTRA           = _D["search"]["nonexistent"]
+WASH_EXTRA_NAME         = _D["template"]["extra_name"]
+UPDATED_WASH_EXTRA_NAME = _D["updated"]["extra_name"]
+GLOBAL_PRICE            = _D["template"]["global_price"]
+GLOBAL_COMMISSION       = _D["template"]["global_commission"]
+DISCOUNT_NAME           = _D["reference"]["discount_name"]
+UPDATED_DISCOUNT_NAME   = _D["reference"]["updated_discount"]
+VISIBLE_PRICE           = _D["template"]["visible_price"]
+FIRST_LOCATION_PRICE    = _D["template"]["first_location_price"]
+SECOND_LOCATION_PRICE   = _D["template"]["second_location_price"]
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
     "Internal Server Error",
@@ -103,3 +106,28 @@ def page_has_no_broken_state(page):
 
     body_text = page.get_body_text()
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
+
+
+MANAGED_WASH_EXTRA = managed_name("Wash Extra")
+
+
+def _reset_managed_wash_extra(browser):
+    page = open_wash_extras_page(browser)
+    if page.extra_exists(MANAGED_WASH_EXTRA):
+        page = open_wash_extras_page(browser)
+        page.open_edit_extra(MANAGED_WASH_EXTRA)
+        page.fill_extra_form(MANAGED_WASH_EXTRA, GLOBAL_PRICE, GLOBAL_COMMISSION)
+        page.open_discount_settings()
+        page.select_applicable_discount(DISCOUNT_NAME)
+        page.click_save_extra()
+        return open_wash_extras_page(browser)
+    page.create_extra(
+        MANAGED_WASH_EXTRA,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        DISCOUNT_NAME,
+    )
+    return open_wash_extras_page(browser)
+
+
+managed_wash_extra = managed_resource(_reset_managed_wash_extra)

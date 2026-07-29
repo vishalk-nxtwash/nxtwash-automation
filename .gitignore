@@ -5,17 +5,33 @@ __pycache__/
 .env.*
 !.env.example
 
-logs/
-reports/
-screenshots/
+# ── Report output (all under reports/) ───────────────────────────────────────
+# Single canonical location for every run artifact.
+reports/allure-results/
+reports/allure-report/
+reports/screenshots/
+reports/logs/
 
-allure-results/
-allure-report/
+# Keep the reports/ directory itself and its placeholder files in git.
+!reports/.gitkeep
 
+# ── Legacy / stray allure folders at project root ─────────────────────────────
+# These were created before the reports/ convention was enforced.
+# Safe to delete locally; they are not committed.
+allure-results*/
+allure-report*/
+
+# ── Root-level report files (also produced by the old CI step) ───────────────
 report.html
 results.xml
-assets/
 
+# ── Old root-level screenshot / log directories ───────────────────────────────
+screenshots/
+logs/
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+assets/
 .DS_Store
 .vscode/
 .idea/
+--headless
