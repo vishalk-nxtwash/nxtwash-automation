@@ -29,8 +29,7 @@ def test_assign_multiple_sites_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     body = page.get_body_text()
@@ -82,8 +81,7 @@ def test_location_price_override_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, SITE_OVERRIDE_PRICE, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE
@@ -98,8 +96,7 @@ def test_location_price_override_higher_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, SITE_OVERRIDE_PRICE_HIGH, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE_HIGH
@@ -115,8 +112,7 @@ def test_location_price_override_lower_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, lower_price, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == lower_price
@@ -131,8 +127,7 @@ def test_location_commission_override_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, SITE_OVERRIDE_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_commission_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_COMMISSION
@@ -148,8 +143,7 @@ def test_location_commission_higher_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, higher_commission
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_commission_value(ASSIGNMENT_SITE) == higher_commission

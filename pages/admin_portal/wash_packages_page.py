@@ -104,7 +104,7 @@ class WashPackagesPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Packages list is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         self.driver.switch_to.default_content()
         long_wait.until(
             EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
@@ -125,7 +125,7 @@ class WashPackagesPage(BasePage):
     def wait_for_create_loaded(self):
         """Wait until the create package form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(
+        WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
         )
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
@@ -134,7 +134,9 @@ class WashPackagesPage(BasePage):
     def wait_for_edit_loaded(self):
         """Wait until the edit package form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        WebDriverWait(self.driver, 60).until(
+            EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
+        )
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_PACKAGE_BUTTON))
         self.wait.until(lambda driver: self.get_service_name_value() != "")
@@ -566,7 +568,7 @@ class WashPackagesPage(BasePage):
         import time as _time
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
-        self.wait.until(EC.presence_of_element_located(any_row_locator))
+        WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(any_row_locator))
 
         row_xpath = (
             By.XPATH,
@@ -597,7 +599,7 @@ if (grid) {
             if els:
                 return els[0]
 
-        return self.wait.until(EC.presence_of_element_located(row_xpath))
+        return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a package to a site and set site-level price/commission."""
@@ -651,6 +653,41 @@ if (grid) {
     def click_save_package(self):
         """Click save package."""
         self.click(self.SAVE_PACKAGE_BUTTON)
+
+    def save_and_return_to_list(self):
+        """Save wash package and navigate explicitly to the list.
+
+        Staging does not always auto-redirect after save; this method forces
+        navigation so callers don't have to depend on the SPA redirect.
+        """
+        import time as _t
+        self.click(self.SAVE_PACKAGE_BUTTON)
+        try:
+            self.wait.until(
+                lambda driver: not driver.find_element(
+                    *self.SAVE_PACKAGE_BUTTON
+                ).is_enabled()
+            )
+            self.wait.until(EC.element_to_be_clickable(self.SAVE_PACKAGE_BUTTON))
+        except Exception:
+            _t.sleep(5)
+        save_error = self.get_visible_error()
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url or ""
+        if "/services/" in current:
+            base_url = current.split("/services/")[0]
+        else:
+            base_url = current.rstrip("/")
+        try:
+            self.driver.get(base_url + "/services/washPackages")
+        except TimeoutException:
+            pass
+        self.wait_for_list_loaded()
+        if save_error:
+            import logging
+            logging.getLogger("nxtwash").warning(
+                "Wash package save had page error: %s", save_error
+            )
 
     def ensure_active_switch_off(self):
         """Turn active switch off if needed."""

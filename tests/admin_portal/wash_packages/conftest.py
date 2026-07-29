@@ -71,30 +71,34 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
 
 def _reset_managed_package(browser):
     """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline."""
-    from selenium.webdriver.support.ui import WebDriverWait
-
     page = open_wash_packages_page(browser)
-    if not page.package_exists(PACKAGE_NAME):
-        page.create_package(
+    if page.package_exists(PACKAGE_NAME):
+        page = open_wash_packages_page(browser)
+        page.open_edit_package(PACKAGE_NAME)
+        page.fill_package_form(
             PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
             GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
         )
-        return open_wash_packages_page(browser)
+        page.save_and_return_to_list()
+        return page
 
+    # PACKAGE_NAME not found — check whether a prior interrupted run left it
+    # renamed to UPDATED_PACKAGE_NAME; rename it back if so.
     page = open_wash_packages_page(browser)
-    page.open_edit_package(PACKAGE_NAME)
-    page.fill_package_form(
+    if page.package_exists(UPDATED_PACKAGE_NAME):
+        page = open_wash_packages_page(browser)
+        page.open_edit_package(UPDATED_PACKAGE_NAME)
+        page.fill_package_form(
+            PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
+            GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
+        )
+        page.save_and_return_to_list()
+        return page
+
+    page.create_package(
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
     )
-    page.click_save_package()
-    # Wait for SPA to finish processing the save before re-navigating.
-    try:
-        WebDriverWait(browser, 15).until(
-            lambda d: "/edit/" not in d.current_url
-        )
-    except Exception:
-        pass
     return open_wash_packages_page(browser)
 
 
