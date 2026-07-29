@@ -42,7 +42,6 @@ def test_tunnel_section_expand_collapse(browser, managed_pos_form):
 
 @allure.title("POS-TUN-002 Send invoice to tunnel toggle saves")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_send_invoice_toggle_saves(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Tunnel")
@@ -54,7 +53,6 @@ def test_send_invoice_toggle_saves(browser, managed_pos_form):
 
 @allure.title("POS-TUN-003 Tunnel operational toggle saves as Active")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_tunnel_operational_toggle_saves(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Tunnel")
@@ -66,7 +64,6 @@ def test_tunnel_operational_toggle_saves(browser, managed_pos_form):
 
 @allure.title("POS-TUN-004 Select controller ID required — blocked without selection")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_controller_id_required(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Tunnel")
@@ -155,7 +152,6 @@ def test_controller_ip_valid_format_saves(browser, managed_pos_form):
 
 @allure.title("POS-TUN-009 Car/roller output behavior required — blocked without selection")
 @pytest.mark.regression
-@_SETTINGS_XFAIL
 def test_car_roller_output_required(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section("Tunnel")

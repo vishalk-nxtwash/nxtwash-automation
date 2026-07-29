@@ -1,6 +1,7 @@
 import time
 
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -595,7 +596,10 @@ class AdminPOSFormPage(BasePage):
                 or toggle.get_attribute("data-state") == "checked"
             )
             if not checked:
-                self.driver.execute_script("arguments[0].click();", toggle)
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", toggle
+                )
+                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
         except Exception:
             pass
 
@@ -607,7 +611,10 @@ class AdminPOSFormPage(BasePage):
                 or toggle.get_attribute("data-state") == "checked"
             )
             if checked:
-                self.driver.execute_script("arguments[0].click();", toggle)
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", toggle
+                )
+                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
         except Exception:
             pass
 

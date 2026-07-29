@@ -24,13 +24,6 @@ pytestmark = [
 
 @allure.title("POS-EC-001 POS name whitespace trimmed or rejected")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-EC-001: Whitespace trimming behavior depends on backend implementation — "
-        "verify whether trailing/leading spaces are stripped or rejected in staging."
-    ),
-)
 def test_pos_name_whitespace_trimmed(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     form.enter_pos_name("  " + POS_NAME + "  ")
