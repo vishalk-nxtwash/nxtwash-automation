@@ -1,0 +1,1033 @@
+2026-07-28 02:25:46,259 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:25:46,683 INFO nxtwash: Test run starting against 'staging' environment
+2026-07-28 02:25:46,721 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+created: 2/2 workers
+2 workers [162 items]
+
+scheduling tests via LoadScheduling
+
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_extreme_value_bug 
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_cars_washed_total_matches_report 
+[gw0] [  0%] XFAIL tests/admin_portal/overview/test_overview_data_validation.py::test_overview_cars_washed_total_matches_report 
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_revenue_daily_matches_report 
+[gw1] [  1%] PASSED tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_extreme_value_bug 
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_no_revenue_shows_placeholder 
+[gw1] [  1%] XFAIL tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_no_revenue_shows_placeholder 
+[gw0] [  2%] XPASS tests/admin_portal/overview/test_overview_data_validation.py::test_overview_revenue_daily_matches_report 
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_usage_breakdown_percentages_sum_to_100 
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_filters_persist_navigating_to_report 
+[gw0] [  3%] XPASS tests/admin_portal/overview/test_overview_data_validation.py::test_overview_filters_persist_navigating_to_report 
+[gw1] [  3%] XFAIL tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_usage_breakdown_percentages_sum_to_100 
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_modal_and_inline_filters_return_matching_totals 
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_browser_back_returns_to_overview 
+[gw0] [  4%] XPASS tests/admin_portal/overview/test_overview_data_validation.py::test_overview_modal_and_inline_filters_return_matching_totals 
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_both_report_pages_accept_same_filter_inputs 
+[gw1] [  4%] PASSED tests/admin_portal/overview/test_overview_navigation.py::test_overview_browser_back_returns_to_overview 
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_opens_in_new_tab 
+[gw0] [  5%] XFAIL tests/admin_portal/overview/test_overview_data_validation.py::test_overview_both_report_pages_accept_same_filter_inputs 
+tests/admin_portal/overview/test_overview_exports.py::test_overview_exports_are_available_and_filter_aware 
+[gw1] [  6%] PASSED tests/admin_portal/overview/test_overview_navigation.py::test_overview_opens_in_new_tab 
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_report_navigation_is_available 
+[gw0] [  6%] XPASS tests/admin_portal/overview/test_overview_exports.py::test_overview_exports_are_available_and_filter_aware 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens 
+[gw1] [  7%] XFAIL tests/admin_portal/overview/test_overview_navigation.py::test_overview_report_navigation_is_available 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_no_data_states_are_handled 
+[gw0] [  8%] XPASS tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_updates_dashboard 
+[gw1] [  8%] XPASS tests/admin_portal/overview/test_overview_negative.py::test_overview_no_data_states_are_handled 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_network_failure_is_handled 
+[gw1] [  9%] XFAIL tests/admin_portal/overview/test_overview_negative.py::test_overview_network_failure_is_handled 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_rapid_filter_switching_does_not_crash 
+[gw1] [  9%] XPASS tests/admin_portal/overview/test_overview_negative.py::test_overview_rapid_filter_switching_does_not_crash 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_empty_state_with_no_shift_data 
+[gw0] [ 10%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_updates_dashboard 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_selected_site_shows_as_chip 
+[gw1] [ 11%] XPASS tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_empty_state_with_no_shift_data 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_future_date_range_shows_empty_state 
+[gw1] [ 11%] XPASS tests/admin_portal/overview/test_overview_negative.py::test_overview_future_date_range_shows_empty_state 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_zero_data_visually_distinct_from_loading 
+[gw0] [ 12%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_selected_site_shows_as_chip 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_clearing_sites_reverts_to_aggregated 
+[gw1] [ 12%] XFAIL tests/admin_portal/overview/test_overview_negative.py::test_overview_zero_data_visually_distinct_from_loading 
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_no_records_label_when_no_assignments 
+[gw1] [ 13%] XPASS tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_no_records_label_when_no_assignments 
+[gw0] [ 14%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_clearing_sites_reverts_to_aggregated 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_loads 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_preset_filters_are_available 
+[gw1] [ 14%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_loads 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_summary_cards_update 
+[gw0] [ 15%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_date_preset_filters_are_available 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_last_month_preset_updates_dashboard 
+[gw1] [ 16%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_summary_cards_update 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_redemption_cards 
+[gw0] [ 16%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_last_month_preset_updates_dashboard 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_range_filters_are_available 
+[gw1] [ 17%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_redemption_cards 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_hourly_chart_legend 
+[gw0] [ 17%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_date_range_filters_are_available 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_custom_date_range_updates_dashboard 
+[gw1] [ 18%] XPASS tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_hourly_chart_legend 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_usage_breakdown_tabs 
+[gw1] [ 19%] XPASS tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_usage_breakdown_tabs 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_percentages_sum_to_100 
+[gw0] [ 19%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_custom_date_range_updates_dashboard 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_checkbox_is_available 
+[gw1] [ 20%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_percentages_sum_to_100 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_rounding_rule 
+[gw0] [ 20%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_checkbox_is_available 
+[gw1] [ 21%] XPASS tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_rounding_rule 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_documents_behaviour 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_loads 
+[gw1] [ 22%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_loads 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_summary_cards_update 
+[gw0] [ 22%] ERROR tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_documents_behaviour 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_uncheck_single_day_reverts_to_range_mode 
+[gw0] [ 23%] XFAIL tests/admin_portal/overview/test_overview_filters.py::test_overview_uncheck_single_day_reverts_to_range_mode 
+[gw1] [ 24%] XPASS tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_summary_cards_update 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_end_date_before_start_documents_behaviour 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_donut_updates_on_click 
+[gw1] [ 24%] XFAIL tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_donut_updates_on_click 
+[gw0] [ 25%] ERROR tests/admin_portal/overview/test_overview_filters.py::test_overview_end_date_before_start_documents_behaviour 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_no_broken_state 
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_membership_tab 
+[gw0] [ 25%] PASSED tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_no_broken_state 
+[gw1] [ 26%] XPASS tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_membership_tab 
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_today_matches_today_preset 
+tests/admin_portal/overview/test_overview_ui.py::test_overview_shell_redirects_and_loads 
+[gw0] [ 27%] XPASS tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_today_matches_today_preset 
+[gw1] [ 27%] PASSED tests/admin_portal/overview/test_overview_ui.py::test_overview_shell_redirects_and_loads 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_shift_status 
+tests/admin_portal/overview/test_overview_ui.py::test_overview_support_button_is_visible 
+[gw1] [ 28%] XPASS tests/admin_portal/overview/test_overview_ui.py::test_overview_support_button_is_visible 
+[gw0] [ 29%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_shift_status 
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_filter_controls_visible 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_full_report_link 
+[gw0] [ 29%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_full_report_link 
+[gw1] [ 30%] XFAIL tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_filter_controls_visible 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_gift_cards_totals 
+tests/admin_portal/overview/test_overview_ui.py::test_overview_export_buttons_visible 
+[gw0] [ 30%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_gift_cards_totals 
+[gw1] [ 31%] XPASS tests/admin_portal/overview/test_overview_ui.py::test_overview_export_buttons_visible 
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_widgets_visible 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_wash_books_totals 
+[gw0] [ 32%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_wash_books_totals 
+[gw1] [ 32%] XFAIL tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_widgets_visible 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_all_dashboard_cards_render 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_percent_calculates 
+[gw0] [ 33%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_percent_calculates 
+[gw1] [ 33%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_all_dashboard_cards_render 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_totals_update_with_filters 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_per_car_and_per_hour 
+[gw0] [ 34%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_per_car_and_per_hour 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_full_report_link 
+[gw1] [ 35%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_totals_update_with_filters 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_breakdown_legend 
+[gw0] [ 35%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_full_report_link 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_loads_at_correct_url 
+[gw1] [ 36%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_breakdown_legend 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders 
+[gw0] [ 37%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_loads_at_correct_url 
+[gw1] [ 37%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_auto_opens 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_full_report_link 
+[gw1] [ 38%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_full_report_link 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters 
+[gw0] [ 38%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_auto_opens 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_contains_four_controls 
+[gw0] [ 39%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_contains_four_controls 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_metrics_shell_renders_behind_modal 
+[gw1] [ 40%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_donut_chart_renders 
+[gw0] [ 40%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_metrics_shell_renders_behind_modal 
+[gw1] [ 41%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_donut_chart_renders 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_renders_two_widgets 
+[gw1] [ 41%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle 
+[gw0] [ 42%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_renders_two_widgets 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_full_report_link 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sidebar_highlights_active_item 
+[gw0] [ 43%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sidebar_highlights_active_item 
+[gw1] [ 43%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_full_report_link 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle_effect_documented 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_lists_all_active_sites 
+[gw1] [ 44%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle_effect_documented 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_tiles_are_clickable 
+[gw0] [ 45%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_lists_all_active_sites 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_opens_with_default_state 
+[gw1] [ 45%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_tiles_are_clickable 
+[gw0] [ 46%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_opens_with_default_state 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_info_tooltip_shows_formula 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_dropdown_lists_six_options 
+[gw1] [ 46%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_info_tooltip_shows_formula 
+[gw0] [ 47%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_dropdown_lists_six_options 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_auto_updates_date_range 
+[gw1] [ 48%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display 
+[gw0] [ 48%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_auto_updates_date_range 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_breakdown_bar_renders 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_apply_closes_modal_and_renders_widgets 
+[gw1] [ 49%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_breakdown_bar_renders 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_active_count 
+[gw0] [ 50%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_apply_closes_modal_and_renders_widgets 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_values_reflected_in_page_bar 
+[gw1] [ 50%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_active_count 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_transaction_counts_update 
+[gw1] [ 51%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_transaction_counts_update 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_recurring_prepaid_breakdown 
+[gw0] [ 51%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_values_reflected_in_page_bar 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_does_not_reopen_from_page_bar 
+[gw1] [ 52%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_recurring_prepaid_breakdown 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_canceled_bars_display 
+[gw0] [ 53%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_does_not_reopen_from_page_bar 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_uses_checkboxes 
+[gw1] [ 53%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_canceled_bars_display 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_info_tooltip_visible 
+[gw1] [ 54%] XPASS tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_info_tooltip_visible 
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_table_columns 
+[gw0] [ 54%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_uses_checkboxes 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_option_present_and_default 
+[gw1] [ 55%] XFAIL tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_table_columns 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_aggregates_data 
+[gw0] [ 56%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_option_present_and_default 
+[gw1] [ 56%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_aggregates_data 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This month] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_site_scopes_both_widgets 
+[gw1] [ 57%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_site_scopes_both_widgets 
+[gw0] [ 58%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This month] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last month] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multiple_sites_aggregate_data 
+[gw0] [ 58%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last month] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_calendar_picker_opens 
+[gw1] [ 59%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multiple_sites_aggregate_data 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_site_name_scoped 
+[gw0] [ 59%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_calendar_picker_opens 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_today_highlighted_in_calendar 
+[gw1] [ 60%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_site_name_scoped 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_selected_sites_render_as_chips 
+[gw0] [ 61%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_today_highlighted_in_calendar 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_future_dates_not_selectable 
+[gw1] [ 61%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_selected_sites_render_as_chips 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_checkbox_state_reflects_selection 
+[gw0] [ 62%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_future_dates_not_selectable 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_updates_and_refreshes 
+[gw1] [ 62%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_checkbox_state_reflects_selection 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_unchecking_removes_site 
+[gw0] [ 63%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_updates_and_refreshes 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_date_range_button 
+[gw1] [ 64%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_unchecking_removes_site 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_all_removes_all_sites 
+[gw0] [ 64%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_date_range_button 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_day_range_shows_cvr_constraint 
+[gw1] [ 65%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_all_removes_all_sites 
+[gw0] [ 66%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_day_range_shows_cvr_constraint 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_dropdown_scrolls_with_many_options 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_month_boundary_spanning_range 
+[gw0] [ 66%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_month_boundary_spanning_range 
+[gw1] [ 67%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_dropdown_scrolls_with_many_options 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_site_change_auto_applies 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multi_year_range_no_error 
+[gw1] [ 67%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_site_change_auto_applies 
+[gw0] [ 68%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multi_year_range_no_error 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_deactivated_sites_excluded 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_change_in_page_bar_auto_applies 
+[gw1] [ 69%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_deactivated_sites_excluded 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_preset_dropdown_has_six_options 
+[gw0] [ 69%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_change_in_page_bar_auto_applies 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_conversion_rate_chart_renders 
+[gw1] [ 70%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_preset_dropdown_has_six_options 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Today] 
+[gw0] [ 70%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_conversion_rate_chart_renders 
+[gw1] [ 71%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Today] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-002-CVR-003-short_range] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Yesterday] 
+[gw1] [ 72%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Yesterday] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This week] 
+[gw0] [ 72%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-002-CVR-003-short_range] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-004-gte_7days] 
+[gw1] [ 73%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This week] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last week] 
+[gw0] [ 74%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-004-gte_7days] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_legend_shows_series_name 
+[gw1] [ 74%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last week] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recurring] 
+[gw0] [ 75%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_legend_shows_series_name 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_y_axis_percentage_range 
+[gw1] [ 75%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recurring] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prepaid] 
+[gw0] [ 76%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_y_axis_percentage_range 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_rerenders_on_filter_change 
+[gw1] [ 77%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prepaid] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New] 
+[gw0] [ 77%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_rerenders_on_filter_change 
+[gw1] [ 78%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Recurring] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_table_renders 
+[gw1] [ 79%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Recurring] 
+[gw0] [ 79%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_table_renders 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Date] 
+[gw0] [ 80%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Date] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Prepaid] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Site Name] 
+[gw0] [ 80%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Site Name] 
+[gw1] [ 81%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Prepaid] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Resignup] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Total] 
+[gw1] [ 82%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Resignup] 
+[gw0] [ 82%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Total] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recharges] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day recharges] 
+[gw1] [ 83%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recharges] 
+[gw0] [ 83%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day recharges] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day declines count] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prev. day recharge] 
+[gw0] [ 84%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prev. day recharge] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Cancelled] 
+[gw1] [ 85%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day declines count] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Previous day declines count] 
+[gw0] [ 85%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Cancelled] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined] 
+[gw1] [ 86%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Previous day declines count] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Net movement] 
+[gw0] [ 87%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined & Canceled] 
+[gw1] [ 87%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Net movement] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_no_data_message_when_empty 
+[gw0] [ 88%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined & Canceled] 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_rows_sorted_descending_by_date 
+[gw1] [ 88%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_no_data_message_when_empty 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_column_headers_have_sort_controls 
+[gw1] [ 89%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_column_headers_have_sort_controls 
+[gw0] [ 90%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_rows_sorted_descending_by_date 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clicking_header_toggles_sort 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows 
+[gw0] [ 90%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows 
+[gw1] [ 91%] XFAIL tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clicking_header_toggles_sort 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_cells_with_weekday_and_color 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_horizontal_scrollbar_visible 
+[gw1] [ 91%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_horizontal_scrollbar_visible 
+[gw0] [ 92%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_cells_with_weekday_and_color 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_zero_values_render_as_zero 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_color_coded_semantics 
+[gw1] [ 93%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_color_coded_semantics 
+[gw0] [ 93%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_zero_values_render_as_zero 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_resignup_label_mismatch 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cancelled_vs_canceled_spelling 
+[gw1] [ 94%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_resignup_label_mismatch 
+[gw0] [ 95%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cancelled_vs_canceled_spelling 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_updates_on_filter_change 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_settings_icon_opens_modal 
+[gw0] [ 95%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_settings_icon_opens_modal 
+[gw1] [ 96%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_updates_on_filter_change 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_toggles_on_by_default 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_lists_17_column_toggles 
+[gw1] [ 96%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_lists_17_column_toggles 
+[gw0] [ 97%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_toggles_on_by_default 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_on_restores_column 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_off_removes_column 
+[gw1] [ 98%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_on_restores_column 
+[gw0] [ 98%] PASSED tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_off_removes_column 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_master_switch_toggles_all_off 
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_date_column_always_visible 
+[gw1] [ 99%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_master_switch_toggles_all_off 
+[gw0] [100%] ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_date_column_always_visible 
+
+==================================== ERRORS ====================================
+____ ERROR at setup of test_overview_single_day_no_date_documents_behaviour ____
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/overview/conftest.py:36: in overview_page
+    open_admin_path(browser, "/")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x00000001031f1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001031e9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000102c932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102c7dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102c7da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102c7b818 chromedriver + 227352
+E   6   chromedriver                        0x0000000102c7c40c chromedriver + 230412
+E   7   chromedriver                        0x0000000102c897a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000102c9fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102c7ca78 chromedriver + 232056
+E   10  chromedriver                        0x0000000102c9fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000102d1af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102cd1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x00000001031aec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001031b23b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001031950f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x00000001031b2c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001031863b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001031d81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x00000001031d8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001031e97a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+__ ERROR at setup of test_overview_end_date_before_start_documents_behaviour ___
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/overview/conftest.py:36: in overview_page
+    open_admin_path(browser, "/")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000103181a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000103179b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000102c232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000102c0dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000102c0da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000102c0b818 chromedriver + 227352
+E   6   chromedriver                        0x0000000102c0c40c chromedriver + 230412
+E   7   chromedriver                        0x0000000102c197a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000102c2fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000102c0ca78 chromedriver + 232056
+E   10  chromedriver                        0x0000000102c2fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000102caaf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000102c61434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010313ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x00000001031423b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001031250f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000103142c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001031163b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001031681f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000103168354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001031797a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(258) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_________ ERROR at setup of test_all_sites_option_present_and_default __________
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:119: in pfm_modal
+    return open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100f81a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100f79b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000100a232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100a0dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100a0da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100a0b818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100a0c40c chromedriver + 230412
+E   7   chromedriver                        0x0000000100a197a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100a2fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100a0ca78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100a2fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100aaaf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100a61434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100f3ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100f423b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100f250f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100f42c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000100f163b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100f681f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100f68354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100f797a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(10925) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+______ ERROR at setup of test_date_preset_sets_correct_range[This month] _______
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:119: in pfm_modal
+    return open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:58: in open_pfm_page
+    page.wait_for_modal()
+pages/admin_portal/performance_metrics_page.py:200: in wait_for_modal
+    self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: in until
+    raise TimeoutException(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: 
+E   Stacktrace:
+E   0   chromedriver                        0x00000001029f1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001029e9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001024932a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001024dba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E   4   chromedriver                        0x000000010251b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E   5   chromedriver                        0x00000001024d1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   6   chromedriver                        0x00000001029aec40 cxxbridge1$str$ptr + 2921304
+E   7   chromedriver                        0x00000001029b23b8 cxxbridge1$str$ptr + 2935504
+E   8   chromedriver                        0x00000001029950f8 cxxbridge1$str$ptr + 2816016
+E   9   chromedriver                        0x00000001029b2c4c cxxbridge1$str$ptr + 2937700
+E   10  chromedriver                        0x00000001029863b0 cxxbridge1$str$ptr + 2755272
+E   11  chromedriver                        0x00000001029d81f4 cxxbridge1$str$ptr + 3090700
+E   12  chromedriver                        0x00000001029d8354 cxxbridge1$str$ptr + 3091052
+E   13  chromedriver                        0x00000001029e97a4 cxxbridge1$str$ptr + 3161788
+E   14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(11454) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+____________ ERROR at setup of test_selected_sites_render_as_chips _____________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x00000001010bda84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x00000001010b5b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000100b5f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100b49d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100b49a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100b47818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100b4840c chromedriver + 230412
+E   7   chromedriver                        0x0000000100b557a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100b6be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100b48a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100b6bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100be6f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000100b9d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010107ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010107e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001010610f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010107ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001010523b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001010a41f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x00000001010a4354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001010b57a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(12914) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___________ ERROR at setup of test_checkbox_state_reflects_selection ___________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:119: in pfm_modal
+    return open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x000000010156da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000101565b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010100f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100ff9d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100ff9a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100ff7818 chromedriver + 227352
+E   6   chromedriver                        0x0000000100ff840c chromedriver + 230412
+E   7   chromedriver                        0x00000001010057a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010101be1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100ff8a78 chromedriver + 232056
+E   10  chromedriver                        0x000000010101bc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000101096f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x000000010104d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010152ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010152e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001015110f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010152ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001015023b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001015541f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000101554354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001015657a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(13317) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+______________ ERROR at setup of test_clear_all_removes_all_sites ______________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x000000010524da84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000105245b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x0000000104cef2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000104cd9d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000104cd9a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000104cd7818 chromedriver + 227352
+E   6   chromedriver                        0x0000000104cd840c chromedriver + 230412
+E   7   chromedriver                        0x0000000104ce57a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000104cfbe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000104cd8a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000104cfbc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000104d76f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104d2d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x000000010520ac40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x000000010520e3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x00000001051f10f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x000000010520ec4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x00000001051e23b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x00000001052341f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000105234354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x00000001052457a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(14362) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_____________ ERROR at setup of test_conversion_rate_chart_renders _____________
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104e55a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104e4db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001048f72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001048e1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001048e1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001048df818 chromedriver + 227352
+E   6   chromedriver                        0x00000001048e040c chromedriver + 230412
+E   7   chromedriver                        0x00000001048ed7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000104903e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001048e0a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000104903c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010497ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104935434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104e12c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104e163b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000104df90f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104e16c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000104dea3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104e3c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104e3c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104e4d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(16401) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_______ ERROR at setup of test_date_preset_sets_correct_range[Last week] _______
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:119: in pfm_modal
+    return open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000102b11a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000102b09b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001025b32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010259dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x000000010259da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010259b818 chromedriver + 227352
+E   6   chromedriver                        0x000000010259c40c chromedriver + 230412
+E   7   chromedriver                        0x00000001025a97a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001025bfe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x000000010259ca78 chromedriver + 232056
+E   10  chromedriver                        0x00000001025bfc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x000000010263af70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001025f1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000102acec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000102ad23b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000102ab50f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000102ad2c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000102aa63b0 cxxbridge1$str$ptr + 2755272
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/_pytest/threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (run_connection)
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 445, in run_connection
+    op, i, k, v = self._sock_recv(conn).split("|")
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/pytest_rerunfailures.py", line 410, in _sock_recv
+    b = conn.recv(1)
+        ^^^^^^^^^^^^
+TimeoutError: timed out
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+E   18  chromedriver                        0x0000000102af81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000102af8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000102b097a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(17594) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___________ ERROR at setup of test_default_column_headers[Recurring] ___________
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104f45a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104f3db4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001049e72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x00000001049d1d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x00000001049d1a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x00000001049cf818 chromedriver + 227352
+E   6   chromedriver                        0x00000001049d040c chromedriver + 230412
+E   7   chromedriver                        0x00000001049dd7a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x00000001049f3e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x00000001049d0a78 chromedriver + 232056
+E   10  chromedriver                        0x00000001049f3c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000104a6ef70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104a25434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104f02c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104f063b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000104ee90f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104f06c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000104eda3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104f2c1f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104f2c354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104f3d7a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(18273) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___________ ERROR at setup of test_default_column_headers[Cancelled] ___________
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100dc1a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100db9b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x00000001008632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x000000010084dd20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x000000010084da80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x000000010084b818 chromedriver + 227352
+E   6   chromedriver                        0x000000010084c40c chromedriver + 230412
+E   7   chromedriver                        0x00000001008597a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x000000010086fe1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x000000010084ca78 chromedriver + 232056
+E   10  chromedriver                        0x000000010086fc18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001008eaf70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001008a1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100d7ec40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100d823b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100d650f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100d82c4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000100d563b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100da81f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100da8354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100db97a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(22169) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___________ ERROR at setup of test_default_column_headers[Declined] ____________
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/conftest.py:129: in pfm_page
+    page = open_pfm_page(browser)
+           ^^^^^^^^^^^^^^^^^^^^^^
+tests/admin_portal/performance_metrics/conftest.py:56: in open_pfm_page
+    open_admin_path(browser, "/performance-metrics")
+tests/admin_portal/admin_session.py:100: in open_admin_path
+    ensure_admin_logged_in(browser)
+tests/admin_portal/admin_session.py:53: in ensure_admin_logged_in
+    if host not in browser.current_url:
+                   ^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:602: in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000100cd9a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000100cd1b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010077b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000100765d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000100765a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000100763818 chromedriver + 227352
+E   6   chromedriver                        0x000000010076440c chromedriver + 230412
+E   7   chromedriver                        0x00000001007717a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000100787e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000100764a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000100787c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x0000000100802f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x00000001007b9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000100c96c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000100c9a3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000100c7d0f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000100c9ac4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000100c6e3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000100cc01f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000100cc0354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000100cd17a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(22504) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+___ ERROR at setup of TestColumnSettings.test_master_switch_toggles_all_off ____
+[gw1] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+tests/admin_portal/performance_metrics/test_performance_metrics.py:1038: in _toggle_all_off
+    pfm_page.cst_toggle_all()   # toggle all OFF — hides every non-pinned column
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/performance_metrics_page.py:849: in cst_toggle_all
+    btns = self.driver.find_elements(*self.CST_MASTER_BTN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:899: in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {"using": by, "value": value})["value"] or []
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: in check_response
+    raise exception_class(message, screen, stacktrace)
+E   selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 60.000
+E     (Session info: chrome=150.0.7871.182)
+E   Stacktrace:
+E   0   chromedriver                        0x0000000104ba9a84 cxxbridge1$str$ptr + 3195292
+E   1   chromedriver                        0x0000000104ba1b4c cxxbridge1$str$ptr + 3162724
+E   2   chromedriver                        0x000000010464b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E   3   chromedriver                        0x0000000104635d20 cxxbridge1$string$len + 3628
+E   4   chromedriver                        0x0000000104635a80 cxxbridge1$string$len + 2956
+E   5   chromedriver                        0x0000000104633818 chromedriver + 227352
+E   6   chromedriver                        0x000000010463440c chromedriver + 230412
+E   7   chromedriver                        0x00000001046417a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 34156
+E   8   chromedriver                        0x0000000104657e1c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125924
+E   9   chromedriver                        0x0000000104634a78 chromedriver + 232056
+E   10  chromedriver                        0x0000000104657c18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 125408
+E   11  chromedriver                        0x00000001046d2f70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630072
+E   12  chromedriver                        0x0000000104689434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E   13  chromedriver                        0x0000000104b66c40 cxxbridge1$str$ptr + 2921304
+E   14  chromedriver                        0x0000000104b6a3b8 cxxbridge1$str$ptr + 2935504
+E   15  chromedriver                        0x0000000104b4d0f8 cxxbridge1$str$ptr + 2816016
+E   16  chromedriver                        0x0000000104b6ac4c cxxbridge1$str$ptr + 2937700
+E   17  chromedriver                        0x0000000104b3e3b0 cxxbridge1$str$ptr + 2755272
+E   18  chromedriver                        0x0000000104b901f4 cxxbridge1$str$ptr + 3090700
+E   19  chromedriver                        0x0000000104b90354 cxxbridge1$str$ptr + 3091052
+E   20  chromedriver                        0x0000000104ba17a4 cxxbridge1$str$ptr + 3161788
+E   21  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E   22  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+---------------------------- Captured stderr setup -----------------------------
+Python(25001) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+_____ ERROR at setup of TestColumnSettings.test_date_column_always_visible _____
+[gw0] darwin -- Python 3.11.2 /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python3.11
+venv/lib/python3.11/site-packages/urllib3/connectionpool.py:534: in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/urllib3/connection.py:571: in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py:1374: in getresponse
+    response.begin()
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py:318: in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py:279: in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py:706: in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+E   TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+tests/admin_portal/performance_metrics/test_performance_metrics.py:1037: in _toggle_all_off
+    pfm_page.cst_open_settings()
+pages/admin_portal/performance_metrics_page.py:812: in cst_open_settings
+    self.driver.execute_script("arguments[0].click();", btn)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:578: in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:465: in execute
+    response = cast(RemoteConnection, self.command_executor).execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py:407: in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/remote_connection.py:431: in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/urllib3/_request_methods.py:143: in request
+    return self.request_encode_body(
+venv/lib/python3.11/site-packages/urllib3/_request_methods.py:278: in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/urllib3/poolmanager.py:457: in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/urllib3/connectionpool.py:842: in urlopen
+    retries = retries.increment(
+venv/lib/python3.11/site-packages/urllib3/util/retry.py:498: in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/urllib3/util/util.py:39: in reraise
+    raise value
+venv/lib/python3.11/site-packages/urllib3/connectionpool.py:788: in urlopen
+    response = self._make_request(
+venv/lib/python3.11/site-packages/urllib3/connectionpool.py:536: in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+venv/lib/python3.11/site-packages/urllib3/connectionpool.py:367: in _raise_timeout
+    raise ReadTimeoutError(
+E   urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=61520): Read timed out. (read timeout=120)
+---------------------------- Captured stderr setup -----------------------------
+Python(25002) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+=========================== short test summary info ============================
+ERROR tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_documents_behaviour
+ERROR tests/admin_portal/overview/test_overview_filters.py::test_overview_end_date_before_start_documents_behaviour
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_option_present_and_default
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This month]
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_selected_sites_render_as_chips
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_checkbox_state_reflects_selection
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_all_removes_all_sites
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_conversion_rate_chart_renders
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last week]
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recurring]
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Cancelled]
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined]
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_master_switch_toggles_all_off
+ERROR tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_date_column_always_visible
+====== 73 passed, 39 xfailed, 36 xpassed, 14 errors in 8351.85s (2:19:11) ======
+EXIT:0

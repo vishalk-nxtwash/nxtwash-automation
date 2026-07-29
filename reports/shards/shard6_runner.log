@@ -1,0 +1,928 @@
+[shard6] Started: Mon Jul 27 03:54:21 IST 2026
+[shard6] START performance_metrics — 03:54:21
+2026-07-27 03:54:21,912 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 86 items
+
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_contains_four_controls PASSED [  3%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_metrics_shell_renders_behind_modal PASSED [  4%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_renders_two_widgets PASSED [  5%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sidebar_highlights_active_item XFAIL [  6%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_lists_all_active_sites PASSED [  8%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_opens_with_default_state PASSED [  9%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_dropdown_lists_six_options PASSED [ 10%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_auto_updates_date_range PASSED [ 11%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_apply_closes_modal_and_renders_widgets PASSED [ 12%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_values_reflected_in_page_bar PASSED [ 13%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_does_not_reopen_from_page_bar PASSED [ 15%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_uses_checkboxes PASSED [ 16%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_option_present_and_default PASSED [ 17%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_aggregates_data PASSED [ 18%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_site_scopes_both_widgets PASSED [ 19%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multiple_sites_aggregate_data XFAIL [ 20%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_site_name_scoped XFAIL [ 22%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_selected_sites_render_as_chips PASSED [ 23%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_checkbox_state_reflects_selection PASSED [ 24%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_unchecking_removes_site PASSED [ 25%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_all_removes_all_sites PASSED [ 26%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_dropdown_scrolls_with_many_options PASSED [ 27%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_site_change_auto_applies PASSED [ 29%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_deactivated_sites_excluded PASSED [ 30%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_preset_dropdown_has_six_options PASSED [ 31%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Today] PASSED [ 32%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Yesterday] PASSED [ 33%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This week] PASSED [ 34%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last week] PASSED [ 36%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This month] PASSED [ 37%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last month] PASSED [ 38%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_calendar_picker_opens PASSED [ 39%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_today_highlighted_in_calendar PASSED [ 40%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_future_dates_not_selectable PASSED [ 41%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_updates_and_refreshes PASSED [ 43%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_date_range_button XFAIL [ 44%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_day_range_shows_cvr_constraint PASSED [ 45%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_month_boundary_spanning_range PASSED [ 46%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multi_year_range_no_error PASSED [ 47%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_change_in_page_bar_auto_applies PASSED [ 48%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_conversion_rate_chart_renders PASSED [ 50%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-002-CVR-003-short_range] PASSED [ 51%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-004-gte_7days] PASSED [ 52%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_legend_shows_series_name PASSED [ 53%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_y_axis_percentage_range PASSED [ 54%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_rerenders_on_filter_change PASSED [ 55%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_table_renders PASSED [ 56%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Date] PASSED [ 58%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Site Name] PASSED [ 59%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Total] PASSED [ 60%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recurring] PASSED [ 61%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prepaid] PASSED [ 62%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New] PASSED [ 63%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Recurring] PASSED [ 65%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Prepaid] PASSED [ 66%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Resignup] PASSED [ 67%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recharges] PASSED [ 68%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day recharges] PASSED [ 69%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prev. day recharge] PASSED [ 70%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Cancelled] PASSED [ 72%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined] PASSED [ 73%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined & Canceled] PASSED [ 74%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day declines count] PASSED [ 75%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Previous day declines count] PASSED [ 76%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Net movement] PASSED [ 77%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_no_data_message_when_empty PASSED [ 79%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_rows_sorted_descending_by_date PASSED [ 80%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows 2026-07-27 04:29:58,049 ERROR nxtwash: Test FAILED: tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows (url: https://staging.nxtwash.com/performance-metrics)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows (url: https://staging.nxtwash.com/performance-metrics)
+2026-07-27 04:29:58,788 ERROR nxtwash: Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Sites/Locations
+VK Test carwash 2
+Predefined date range
+This month
+Pick custom date range
+Export
+Choose option
+Performance Metrics
+Conversion rate
+Retail transactions 100%
+Membership history
+No data for this site/period
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK AL04
+VK AL05
+VK AL06
+VK AL07
+vkauto1
+VK AL01
+VK AL08
+VK AL09
+VK AL10
+VK AL11
+VK AL12
+VK AL13
+VK ZT 146465
+VK AL14
+VK AL15
+VK ZT 2b4279
+VK AL16
+VK AL17
+VK ZT c54675
+VK AL18
+VK AL19
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+test 12
+VK ZT ae9b9c
+VK ZT 9eaa54
+VK ZT 71c6f6
+VK ZT d4ccd8
+VK ZT c4a124
+VK AL23
+VK ZT 46d34b
+VK AL24
+VK AL25
+VK ZT 8f811b
+VK AL26
+VK ZT 4e248f
+VK AL27
+VK AL28
+VK ZT 9e7bdf
+VK AL29
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Overview
+Sites / Locations
+Services
+Customers
+Users / Employees
+Kiosk Settings
+Gas Pump Settings
+POS Settings
+Tunnel Settings
+Self Serve
+Reports
+Vishal Kumar
+Owner
+Sites/Locations
+VK Test carwash 2
+Predefined date range
+This month
+Pick custom date range
+Export
+Choose option
+Performance Metrics
+Conversion rate
+Retail transactions 100%
+Membership history
+No data for this site/period
+VK Test Wash 01
+VK Test carwash 2
+test123 udpated
+VK AL02
+VK AL03
+VK AL04
+VK AL05
+VK AL06
+VK AL07
+vkauto1
+VK AL01
+VK AL08
+VK AL09
+VK AL10
+VK AL11
+VK AL12
+VK AL13
+VK ZT 146465
+VK AL14
+VK AL15
+VK ZT 2b4279
+VK AL16
+VK AL17
+VK ZT c54675
+VK AL18
+VK AL19
+VK ZT c26508
+VK AL20
+VK AL21
+VK AL22
+test 12
+VK ZT ae9b9c
+VK ZT 9eaa54
+VK ZT 71c6f6
+VK ZT d4ccd8
+VK ZT c4a124
+VK AL23
+VK ZT 46d34b
+VK AL24
+VK AL25
+VK ZT 8f811b
+VK AL26
+VK ZT 4e248f
+VK AL27
+VK AL28
+VK ZT 9e7bdf
+VK AL29
+FAILED                                                                   [ 81%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_cells_with_weekday_and_color PASSED [ 82%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_column_headers_have_sort_controls XFAIL [ 83%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clicking_header_toggles_sort XFAIL [ 84%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_horizontal_scrollbar_visible PASSED [ 86%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_color_coded_semantics PASSED [ 87%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_zero_values_render_as_zero PASSED [ 88%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cancelled_vs_canceled_spelling PASSED [ 89%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_resignup_label_mismatch PASSED [ 90%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_updates_on_filter_change PASSED [ 91%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_settings_icon_opens_modal PASSED [ 93%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_lists_17_column_toggles PASSED [ 94%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_toggles_on_by_default PASSED [ 95%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_off_removes_column PASSED [ 96%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_on_restores_column PASSED [ 97%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_master_switch_toggles_all_off PASSED [ 98%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_date_column_always_visible PASSED [100%]
+
+=================================== FAILURES ===================================
+E   AssertionError: Missing recent rows: Jul 9=False, Jul 10=False. Dates found: []
+    assert (False)
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/tests/admin_portal/performance_metrics/test_performance_metrics.py:854: AssertionError: Missing recent rows: Jul 9=False, Jul 10=False. Dates found: []
+=========================== short test summary info ============================
+FAILED tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows
+============= 1 failed, 79 passed, 6 xfailed in 2687.30s (0:44:47) =============
+[shard6] DONE  performance_metrics — ============= 1 failed, 79 passed, 6 xfailed in 2687.30s (0:44:47) =============
+[shard6] START kiosk_settings — 04:39:10
+2026-07-27 04:39:11,175 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 91 items
+
+tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_active_toggle_on_shows_active_in_list PASSED [  1%]
+tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_active_toggle_on_shows_active_in_list ERROR [  1%]
+tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_active_toggle_off_shows_inactive_in_list XFAIL [  2%]
+tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_kiosk_connected_message_displays XFAIL [  3%]
+tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_check_regen_code_button_visible_when_connected XPASS [  4%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_add_kiosk_form_opens PASSED [  5%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_kiosk_name_only XPASS [  6%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_kiosk_name_required PASSED [  7%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_kiosk_with_site_and_lane XPASS [  8%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_site_selection_populates_lane_dropdown XFAIL [  9%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_form_sections_collapsed_by_default PASSED [ 10%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_form_configure_panel_visible PASSED [ 12%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_create_kiosk_cancel_discards_form PASSED [ 13%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_new_kiosk_appears_immediately XFAIL [ 14%]
+tests/admin_portal/kiosk_settings/test_kiosk_create.py::test_generate_connection_code_after_create XFAIL [ 15%]
+tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py::test_site_dropdown_lists_sites XFAIL [ 16%]
+tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py::test_lane_dropdown_lists_lanes_for_site XFAIL [ 17%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_device_section_expand_collapse XFAIL [ 18%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_enter_payment_serial_saves XFAIL [ 19%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_payment_serial_persists XFAIL [ 20%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_car_recognition_by_plate_persists XFAIL [ 21%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_car_recognition_by_rfid_persists XFAIL [ 23%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_car_recognition_last_selected_wins XFAIL [ 24%]
+tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py::test_cc_entry_methods_saves XFAIL [ 25%]
+tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py::test_kiosk_name_whitespace_trimmed PASSED [ 26%]
+tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py::test_kiosk_without_site_lane_appears_in_list XFAIL [ 27%]
+tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py::test_receipt_modal_delay_boundary_values_valid XFAIL [ 28%]
+tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py::test_extras_dismiss_delay_boundary_values_valid XFAIL [ 29%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_form_opens_prepopulated XFAIL [ 30%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_kiosk_name_persists PASSED [ 31%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_kiosk_site_persists XFAIL [ 32%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_kiosk_lane_persists XFAIL [ 34%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_clear_name_blocked PASSED [ 35%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_cancel_discards_changes XFAIL [ 36%]
+tests/admin_portal/kiosk_settings/test_kiosk_edit.py::test_edit_form_configure_panel_visible XPASS [ 37%]
+tests/admin_portal/kiosk_settings/test_kiosk_filter.py::test_filter_panel_opens PASSED [ 38%]
+tests/admin_portal/kiosk_settings/test_kiosk_filter.py::test_filter_by_active_status XFAIL [ 39%]
+tests/admin_portal/kiosk_settings/test_kiosk_filter.py::test_filter_by_site PASSED [ 40%]
+tests/admin_portal/kiosk_settings/test_kiosk_filter.py::test_filter_by_site_count_matches_rows PASSED [ 41%]
+tests/admin_portal/kiosk_settings/test_kiosk_filter.py::test_filter_reset_restores_list XFAIL [ 42%]
+tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py::test_fleet_section_expand_collapse XFAIL [ 43%]
+tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py::test_fleet_toggles_save_on_off XFAIL [ 45%]
+tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py::test_fleet_capabilities_dropdown_saves XFAIL [ 46%]
+tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py::test_fleet_manager_url_saves XFAIL [ 47%]
+tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py::test_fleet_call_attendant_toggle_saves XFAIL [ 48%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_section_expand_collapse XFAIL [ 49%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_toggles_save_on_and_off XFAIL [ 50%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_theme_dropdown_saves XFAIL [ 51%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_optspot_text_fields_save XFAIL [ 52%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_optspot_toggles_save XFAIL [ 53%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_sign_membership_heading_saves XFAIL [ 54%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_remaining_toggles_save XFAIL [ 56%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_wex_wash_cards_toggle_saves XFAIL [ 57%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_remaining_toggles_save_duplicate SKIPPED [ 58%]
+tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py::test_flow_dedup_timer_saves XFAIL [ 59%]
+tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py::test_gate_section_expand_collapse XFAIL [ 60%]
+tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py::test_gate_operational_toggle_on_persists XFAIL [ 61%]
+tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py::test_gate_operational_toggle_off_persists XFAIL [ 62%]
+tests/admin_portal/kiosk_settings/test_kiosk_list.py::test_kiosk_page_loads PASSED [ 63%]
+tests/admin_portal/kiosk_settings/test_kiosk_list.py::test_kiosk_list_displays_columns PASSED [ 64%]
+tests/admin_portal/kiosk_settings/test_kiosk_list.py::test_kiosk_list_status_column PASSED [ 65%]
+tests/admin_portal/kiosk_settings/test_kiosk_list.py::test_kiosk_list_pagination_shows_count PASSED [ 67%]
+tests/admin_portal/kiosk_settings/test_kiosk_list.py::test_kiosk_list_results_per_page PASSED [ 68%]
+tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py::test_localization_section_expand_collapse XFAIL [ 69%]
+tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py::test_localization_external_translations_toggle_saves XFAIL [ 70%]
+tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py::test_localization_translation_url_saves XFAIL [ 71%]
+tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py::test_middleware_section_expand_collapse XFAIL [ 72%]
+tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py::test_enter_middleware_ip_saves XFAIL [ 73%]
+tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py::test_middleware_ip_persists XFAIL [ 74%]
+tests/admin_portal/kiosk_settings/test_kiosk_search.py::test_search_by_exact_name PASSED [ 75%]
+tests/admin_portal/kiosk_settings/test_kiosk_search.py::test_search_by_partial_name PASSED [ 76%]
+tests/admin_portal/kiosk_settings/test_kiosk_search.py::test_search_nonexistent_name PASSED [ 78%]
+tests/admin_portal/kiosk_settings/test_kiosk_search.py::test_clear_search_restores_list PASSED [ 79%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_service_section_expand_collapse XFAIL [ 80%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_service_section_shows_checkboxes XFAIL [ 81%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_uncheck_memberships_persists XFAIL [ 82%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_recheck_memberships_persists XFAIL [ 83%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_enable_all_checkboxes_and_upsale XFAIL [ 84%]
+tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py::test_upsale_toggle_off_persists XFAIL [ 85%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_timer_section_expand_collapse XFAIL [ 86%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_receipt_modal_delay_valid_value XFAIL [ 87%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_receipt_modal_delay_below_min_rejected XFAIL [ 89%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_receipt_modal_delay_above_max_rejected XFAIL [ 90%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_rfid_tag_delay_valid_value XFAIL [ 91%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_rfid_tag_delay_out_of_range_rejected XFAIL [ 92%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_extras_dismiss_delay_valid_value XFAIL [ 93%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_extras_dismiss_delay_below_min_rejected XFAIL [ 94%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_extras_dismiss_delay_above_max_rejected XFAIL [ 95%]
+tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py::test_timer_field_non_numeric_rejected XFAIL [ 96%]
+tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py::test_tunnel_section_expand_collapse XFAIL [ 97%]
+tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py::test_tunnel_operational_toggle_on_persists XFAIL [ 98%]
+tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py::test_tunnel_operational_toggle_off_persists XFAIL [100%]
+
+==================================== ERRORS ====================================
+_______ ERROR at teardown of test_active_toggle_on_shows_active_in_list ________
+E   selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+ERROR tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py::test_active_toggle_on_shows_active_in_list
+== 21 passed, 1 skipped, 65 xfailed, 4 xpassed, 1 error in 8844.14s (2:27:24) ==
+[shard6] DONE  kiosk_settings — == 21 passed, 1 skipped, 65 xfailed, 4 xpassed, 1 error in 8844.14s (2:27:24) ==
+[shard6] START pos_settings — 07:06:35
+2026-07-27 07:06:36,635 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 68 items
+
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_on_saves XPASS [  1%]
+tests/admin_portal/pos_settings/test_pos_active.py::test_active_pos_toggle_off_saves XFAIL [  2%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_add_pos_button_opens_form PASSED [  4%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_active_pos_saves SKIPPED [  5%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_name_required PASSED [  7%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_site_required PASSED [  8%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_pos_lane_required PASSED [ 10%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_lane_dropdown_populates_on_site_selection XPASS [ 11%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_create_inactive_pos XPASS [ 13%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_default PASSED [ 14%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_allow_checkout_no_customer XFAIL [ 16%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_card_checked_by_default XPASS [ 17%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_cash_checked_by_default XPASS [ 19%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_card_persists XPASS [ 20%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_uncheck_cash_persists XPASS [ 22%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_settings_accordions_collapsed XPASS [ 23%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_cancel_discards_form PASSED [ 25%]
+tests/admin_portal/pos_settings/test_pos_create.py::test_new_pos_appears_immediately XFAIL [ 26%]
+tests/admin_portal/pos_settings/test_pos_dependencies.py::test_site_dropdown_from_sites_locations XFAIL [ 27%]
+tests/admin_portal/pos_settings/test_pos_dependencies.py::test_lane_dropdown_from_site_lanes PASSED [ 29%]
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_section_expand_collapse XFAIL [ 30%]
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_required XPASS [ 32%]
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_accepts_valid_input XPASS [ 33%]
+tests/admin_portal/pos_settings/test_pos_device_settings.py::test_device_serial_persists XPASS [ 35%]
+tests/admin_portal/pos_settings/test_pos_edge_cases.py::test_pos_name_whitespace_trimmed XPASS [ 36%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_form_opens_prepopulated PASSED [ 38%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_pos_name_persists PASSED [ 39%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_site_persists XPASS [ 41%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_lane_persists XFAIL [ 42%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_changing_site_clears_lane XPASS [ 44%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_allow_checkout_persists XFAIL [ 45%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_payment_methods_persists XPASS [ 47%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_edit_blank_name_blocked PASSED [ 48%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_activate_inactive_pos XPASS [ 50%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_deactivate_active_pos XFAIL [ 51%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_cancel_discards_changes PASSED [ 52%]
+tests/admin_portal/pos_settings/test_pos_edit.py::test_main_and_service_tabs_visible XPASS [ 54%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_panel_opens PASSED [ 55%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_by_site PASSED [ 57%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_on XPASS [ 58%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_active_pos_off PASSED [ 60%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_result_count_matches_rows XPASS [ 61%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_site_and_active_combined XPASS [ 63%]
+tests/admin_portal/pos_settings/test_pos_filter.py::test_filter_reset_all XPASS [ 64%]
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_page_loads PASSED [ 66%]
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_displays_columns PASSED [ 67%]
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_status_column PASSED [ 69%]
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_pagination_shows_count PASSED [ 70%]
+tests/admin_portal/pos_settings/test_pos_list.py::test_pos_list_results_per_page PASSED [ 72%]
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_section_expand_collapse XFAIL [ 73%]
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_required XPASS [ 75%]
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_accepts_valid_url XPASS [ 76%]
+tests/admin_portal/pos_settings/test_pos_middleware_settings.py::test_middleware_ip_persists XPASS [ 77%]
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_exact_name PASSED [ 79%]
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_by_partial_name PASSED [ 80%]
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_nonmatching_shows_empty PASSED [ 82%]
+tests/admin_portal/pos_settings/test_pos_search.py::test_search_clear_restores_list XPASS [ 83%]
+tests/admin_portal/pos_settings/test_pos_service_settings.py::test_service_tab_switches_view XPASS [ 85%]
+tests/admin_portal/pos_settings/test_pos_service_settings.py::test_restore_default_settings XPASS [ 86%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_section_expand_collapse XFAIL [ 88%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_send_invoice_toggle_saves XPASS [ 89%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_operational_toggle_saves XPASS [ 91%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_required XPASS [ 92%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_id_saves_persists XFAIL [ 94%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_tunnel_controller_ip_required XFAIL [ 95%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_controller_ip_valid_format_saves XFAIL [ 97%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_required XPASS [ 98%]
+tests/admin_portal/pos_settings/test_pos_tunnel_settings.py::test_car_roller_output_persists XFAIL [100%]
+
+====== 22 passed, 1 skipped, 14 xfailed, 31 xpassed in 4724.24s (1:18:44) ======
+[shard6] DONE  pos_settings — ====== 22 passed, 1 skipped, 14 xfailed, 31 xpassed in 4724.24s (1:18:44) ======
+[shard6] START card_declines — 08:25:21
+2026-07-27 08:25:21,704 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 84 items
+
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_modal_opens_with_all_sites_default PASSED [  4%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_apply_filters_closes_modal PASSED [  5%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_bar_changes_do_not_reopen_modal PASSED [  8%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesNav::test_page_content_visible_after_apply PASSED [  9%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_sites_dropdown_lists_active_sites XFAIL [ 10%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_all_sites_is_default PASSED [ 11%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_selecting_site_creates_chip PASSED [ 13%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_multi_site_selection_accepted PASSED [ 14%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_single_site_scopes_data PASSED [ 15%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_removing_chip_reduces_site_filter PASSED [ 16%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_clear_all_sites PASSED [ 17%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_uses_checkboxes XFAIL [ 19%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_site_dropdown_lists_multiple_sites XFAIL [ 20%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_page_bar_site_change_no_modal PASSED [ 21%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_chart_title_updates_on_site_filter XFAIL [ 22%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_cdl_site_present_in_dropdown PASSED [ 23%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-KPI-003] PASSED [ 25%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-MTX-012] PASSED [ 26%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-BWS-007] PASSED [ 27%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-TDS-005] PASSED [ 28%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesSiteFilter::test_widgets_refresh_on_site_change[CDL-HMP-005] PASSED [ 29%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_count PASSED [ 30%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_date_preset_dropdown_options PASSED [ 32%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_selecting_preset_fills_date_range PASSED [ 33%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-002] PASSED [ 34%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-003] PASSED [ 35%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-004] PASSED [ 36%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-005] PASSED [ 38%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-006] PASSED [ 39%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDateFilter::test_preset_populates_date_range[CDL-DTE-007] PASSED [ 40%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_section_visible PASSED [ 41%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-01] PASSED [ 42%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-02] PASSED [ 44%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-03] PASSED [ 45%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-04] PASSED [ 46%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-05] PASSED [ 47%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-06] PASSED [ 48%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-07] PASSED [ 50%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-08] PASSED [ 51%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_term_visible[CDL-GLS-002-09] XFAIL [ 52%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesGlossary::test_glossary_visible_for_zero_data PASSED [ 53%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-01] PASSED [ 54%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02] ERROR [ 55%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-03] PASSED [ 57%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-04] PASSED [ 58%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-05] PASSED [ 59%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-06] PASSED [ 60%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-07] PASSED [ 61%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-08] PASSED [ 63%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_values_non_zero XPASS [ 64%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_zero_data_state PASSED [ 65%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_section_visible PASSED [ 66%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-01] PASSED [ 67%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-02] PASSED [ 69%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-03] PASSED [ 70%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-04] PASSED [ 71%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-05] PASSED [ 72%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-06] PASSED [ 73%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-07] PASSED [ 75%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-08] PASSED [ 76%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-09] PASSED [ 77%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-10] PASSED [ 78%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-11] PASSED [ 79%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-12] PASSED [ 80%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_column_present[CDL-MTX-002-13] PASSED [ 82%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_has_data_rows XPASS [ 83%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_pagination_present SKIPPED [ 84%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesMatrix::test_matrix_zero_data_state PASSED [ 85%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_section_visible PASSED [ 86%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_best_sites_visible PASSED [ 88%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_worst_sites_visible PASSED [ 89%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesBestWorst::test_bws_excludes_defect_site XPASS [ 90%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_section_visible PASSED [ 91%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesDailySummary::test_daily_summary_has_content PASSED [ 92%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesHeatmap::test_heatmap_section_visible PASSED [ 94%]
+tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesReasonDist::test_reason_dist_section_visible PASSED [ 95%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_checkbox_visible PASSED [ 96%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_single_day_changes_date_field PASSED [ 97%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar PASSED [ 98%]
+tests/admin_portal/card_declines/test_card_declines.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal PASSED [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestCardDeclinesKPI.test_kpi_card_visible[CDL-KPI-001-02] __
+E   selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+      (Session info: chrome=150.0.7871.182); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception
+    Stacktrace:
+    0   chromedriver                        0x0000000103115a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x000000010310db4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x0000000102bb70a8 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73328
+    3   chromedriver                        0x0000000102bfbd3c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 355076
+    4   chromedriver                        0x0000000102bfa354 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 348444
+    5   chromedriver                        0x0000000102bf6934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+    6   chromedriver                        0x0000000102c3f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    7   chromedriver                        0x0000000102bf5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    8   chromedriver                        0x00000001030d2c40 cxxbridge1$str$ptr + 2921304
+    9   chromedriver                        0x00000001030d63b8 cxxbridge1$str$ptr + 2935504
+    10  chromedriver                        0x00000001030b90f8 cxxbridge1$str$ptr + 2816016
+    11  chromedriver                        0x00000001030d6c4c cxxbridge1$str$ptr + 2937700
+    12  chromedriver                        0x00000001030aa3b0 cxxbridge1$str$ptr + 2755272
+    13  chromedriver                        0x00000001030fc1f4 cxxbridge1$str$ptr + 3090700
+    14  chromedriver                        0x00000001030fc354 cxxbridge1$str$ptr + 3091052
+    15  chromedriver                        0x000000010310d7a4 cxxbridge1$str$ptr + 3161788
+    16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+=========================== short test summary info ============================
+ERROR tests/admin_portal/card_declines/test_card_declines.py::TestCardDeclinesKPI::test_kpi_card_visible[CDL-KPI-001-02]
+== 74 passed, 1 skipped, 5 xfailed, 3 xpassed, 1 error in 1422.85s (0:23:42) ===
+[shard6] DONE  card_declines — == 74 passed, 1 skipped, 5 xfailed, 3 xpassed, 1 error in 1422.85s (0:23:42) ===
+[shard6] START user_roles — 08:49:04
+2026-07-27 08:49:05,391 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+collected 70 items
+
+tests/admin_portal/user_roles/test_user_roles_create.py::test_user_roles_add_form_opens PASSED [  1%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_active_user_role PASSED [  2%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_inactive_user_role PASSED [  4%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_name_required PASSED [  5%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_priority_required PASSED [  7%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_duplicate_role_rejected 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:user_roles_page.py:404 Role save did not navigate away. Page message: user roles
+add new user role
+cancel
+save
+user role name
+priority order
+active user role
+assign to locations
+i
+vk al31
+vk zt c6d556
+vk al30
+vk al29
+vk zt 9e7bdf
+vk al28
+vk al27
+vk zt 4e248f
+vk al26
+vk zt 8f811b
+vk al25
+vk al24
+vk zt 46d34b
+vk al23
+vk zt c4a124
+vk zt d4ccd8
+vk zt 71c6f6
+vk zt 9eaa54
+vk zt ae9b9c
+test 12
+vk al22
+vk al21
+vk al20
+vk zt c26508
+vk al19
+vk al18
+vk zt c54675
+vk al17
+vk al16
+vk zt 2b4279
+vk al15
+vk al14
+vk zt 146465
+vk al13
+vk al12
+vk al11
+vk al10
+vk al09
+vk al08
+vk al01
+vkauto1
+vk al07
+vk al06
+vk al05
+vk al04
+vk al03
+vk al02
+test123 udpated
+vk test carwash 2
+vk test wa
+PASSED                                                                   [  8%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_cancel_discards PASSED [ 10%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_name_whitespace_trimmed_or_rejected 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:user_roles_page.py:404 Role save did not navigate away. Page message: user roles
+add new user role
+cancel
+save
+user role name
+priority order
+active user role
+assign to locations
+i
+vk al31
+vk zt c6d556
+vk al30
+vk al29
+vk zt 9e7bdf
+vk al28
+vk al27
+vk zt 4e248f
+vk al26
+vk zt 8f811b
+vk al25
+vk al24
+vk zt 46d34b
+vk al23
+vk zt c4a124
+vk zt d4ccd8
+vk zt 71c6f6
+vk zt 9eaa54
+vk zt ae9b9c
+test 12
+vk al22
+vk al21
+vk al20
+vk zt c26508
+vk al19
+vk al18
+vk zt c54675
+vk al17
+vk al16
+vk zt 2b4279
+vk al15
+vk al14
+vk zt 146465
+vk al13
+vk al12
+vk al11
+vk al10
+vk al09
+vk al08
+vk al01
+vkauto1
+vk al07
+vk al06
+vk al05
+vk al04
+vk al03
+vk al02
+test123 udpated
+vk test carwash 2
+vk test wa
+PASSED                                                                   [ 11%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_name_max_length_saves PASSED [ 12%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_newly_created_role_appears_immediately PASSED [ 14%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_role_priority_integers_only PASSED [ 15%]
+tests/admin_portal/user_roles/test_user_roles_create.py::test_create_vk_company_user_role PASSED [ 17%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_duplicate_name_vs_inactive_role PASSED [ 18%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_case_sensitivity_duplicate 
+-------------------------------- live log call ---------------------------------
+WARNING  nxtwash:user_roles_page.py:404 Role save did not navigate away. Page message: user roles
+add new user role
+cancel
+save
+user role name
+priority order
+active user role
+assign to locations
+i
+vk al31
+vk zt c6d556
+vk al30
+vk al29
+vk zt 9e7bdf
+vk al28
+vk al27
+vk zt 4e248f
+vk al26
+vk zt 8f811b
+vk al25
+vk al24
+vk zt 46d34b
+vk al23
+vk zt c4a124
+vk zt d4ccd8
+vk zt 71c6f6
+vk zt 9eaa54
+vk zt ae9b9c
+test 12
+vk al22
+vk al21
+vk al20
+vk zt c26508
+vk al19
+vk al18
+vk zt c54675
+vk al17
+vk al16
+vk zt 2b4279
+vk al15
+vk al14
+vk zt 146465
+vk al13
+vk al12
+vk al11
+vk al10
+vk al09
+vk al08
+vk al01
+vkauto1
+vk al07
+vk al06
+vk al05
+vk al04
+vk al03
+vk al02
+test123 udpated
+vk test carwash 2
+vk test wa
+PASSED                                                                   [ 20%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_predefined_role_fields_editable SKIPPED [ 21%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_deactivate_assigned_role_documents_behavior PASSED [ 22%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_data_persists_after_logout_relogin XPASS [ 24%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_priority_zero_documents_behavior PASSED [ 25%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_duplicate_priority_documents_behavior PASSED [ 27%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_deactivate_label_correct_terminology PASSED [ 28%]
+tests/admin_portal/user_roles/test_user_roles_edge_cases.py::test_predefined_name_edit_guard SKIPPED [ 30%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_user_roles_edit_form_opens PASSED [ 31%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_edit_role_name_persists XPASS [ 32%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_edit_role_priority_persists XPASS [ 34%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_activate_inactive_role 2026-07-27 09:02:07,189 ERROR nxtwash: Test FAILED: tests/admin_portal/user_roles/test_user_roles_edit.py::test_activate_inactive_role (url: https://staging.nxtwash.com/users/userRoles)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/user_roles/test_user_roles_edit.py::test_activate_inactive_role (url: https://staging.nxtwash.com/users/userRoles)
+2026-07-27 09:02:07,796 ERROR nxtwash: Visible page text at failure:
+User roles
+Filter by (1)
++ Add user role
+User role name
+Role Type
+Created date
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+User roles
+Filter by (1)
++ Add user role
+User role name
+Role Type
+Created date
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 35%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_deactivate_active_role PASSED [ 37%]
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_edit_role_cancel_discards PASSED [ 38%]
+------------------------------ live log teardown -------------------------------
+WARNING  nxtwash:user_roles_page.py:404 Role save did not navigate away. Page message: user roles
+add new user role
+cancel
+save
+user role name
+priority order
+active user role
+assign to locations
+i
+vk al31
+vk zt c6d556
+vk al30
+vk al29
+vk zt 9e7bdf
+vk al28
+vk al27
+vk zt 4e248f
+vk al26
+vk zt 8f811b
+vk al25
+vk al24
+vk zt 46d34b
+vk al23
+vk zt c4a124
+vk zt d4ccd8
+vk zt 71c6f6
+vk zt 9eaa54
+vk zt ae9b9c
+test 12
+vk al22
+vk al21
+vk al20
+vk zt c26508
+vk al19
+vk al18
+vk zt c54675
+vk al17
+vk al16
+vk zt 2b4279
+vk al15
+vk al14
+vk zt 146465
+vk al13
+vk al12
+vk al11
+vk al10
+vk al09
+vk al08
+vk al01
+vkauto1
+vk al07
+vk al06
+vk al05
+vk al04
+vk al03
+vk al02
+test123 udpated
+vk test carwash 2
+vk test wa
+
+tests/admin_portal/user_roles/test_user_roles_edit.py::test_edit_role_name_required PASSED [ 40%]
+tests/admin_portal/user_roles/test_user_roles_export.py::test_user_roles_export_button_clickable XFAIL [ 41%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_panel_opens PASSED [ 42%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_active_shows_active_only PASSED [ 44%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_off_shows_all PASSED [ 45%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_by_site PASSED [ 47%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_combined_site_and_active PASSED [ 48%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_filter_count_matches_rows XPASS [ 50%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_site_filter_alphabetical XFAIL [ 51%]
+tests/admin_portal/user_roles/test_user_roles_filter.py::test_user_roles_reset_all_clears_filters PASSED [ 52%]
+tests/admin_portal/user_roles/test_user_roles_list.py::test_user_roles_list_page_loads PASSED [ 54%]
+tests/admin_portal/user_roles/test_user_roles_list.py::test_user_roles_list_required_columns PASSED [ 55%]
+tests/admin_portal/user_roles/test_user_roles_list.py::test_user_roles_default_roles_present PASSED [ 57%]
+tests/admin_portal/user_roles/test_user_roles_list.py::test_user_roles_pagination_count PASSED [ 58%]
+tests/admin_portal/user_roles/test_user_roles_list.py::test_user_roles_rows_per_page_changes_display XFAIL [ 60%]
+tests/admin_portal/user_roles/test_user_roles_locations.py::test_assign_single_location_persists XPASS [ 61%]
+tests/admin_portal/user_roles/test_user_roles_locations.py::test_assign_multiple_locations_persist XPASS [ 62%]
+tests/admin_portal/user_roles/test_user_roles_locations.py::test_location_list_includes_configured_sites XFAIL [ 64%]
+tests/admin_portal/user_roles/test_user_roles_locations.py::test_remove_location_persists XPASS [ 65%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_permission_sections_collapsed_by_default XFAIL [ 67%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_expand_permission_section_reveals_toggles XFAIL [ 68%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_parent_toggle_on_enables_all_children XFAIL [ 70%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_parent_toggle_off_disables_all_children XFAIL [ 71%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_child_toggle_independent XFAIL [ 72%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_permissions_persist_after_save XFAIL [ 74%]
+tests/admin_portal/user_roles/test_user_roles_permissions.py::test_all_permissions_off_saves_ok XPASS [ 75%]
+tests/admin_portal/user_roles/test_user_roles_search.py::test_user_roles_search_exact_name PASSED [ 77%]
+tests/admin_portal/user_roles/test_user_roles_search.py::test_user_roles_search_partial_name XPASS [ 78%]
+tests/admin_portal/user_roles/test_user_roles_search.py::test_user_roles_search_nonexistent_shows_empty PASSED [ 80%]
+tests/admin_portal/user_roles/test_user_roles_search.py::test_user_roles_clear_search_restores_list PASSED [ 81%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Sites] XFAIL [ 82%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Services] XFAIL [ 84%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Customers] XFAIL [ 85%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Users] XFAIL [ 87%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Employees] XFAIL [ 88%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[User_Roles] XFAIL [ 90%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Kiosk_Settings] XFAIL [ 91%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Kiosk_App] XFAIL [ 92%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[POS_Settings] XFAIL [ 94%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[POS_App] XFAIL [ 95%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Tunnel_Settings] XFAIL [ 97%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Gas_Pump_Settings] XFAIL [ 98%]
+tests/admin_portal/user_roles/test_user_roles_section_permissions.py::test_section_permissions_persist_after_save[Reports] XFAIL [100%]
+
+=================================== FAILURES ===================================
+E   selenium.common.exceptions.TimeoutException: Message: 
+    Stacktrace:
+    0   chromedriver                        0x00000001029f9a84 cxxbridge1$str$ptr + 3195292
+    1   chromedriver                        0x00000001029f1b4c cxxbridge1$str$ptr + 3162724
+    2   chromedriver                        0x000000010249b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+    3   chromedriver                        0x00000001024e3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+    4   chromedriver                        0x0000000102523030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+    5   chromedriver                        0x00000001024d9434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+    6   chromedriver                        0x00000001029b6c40 cxxbridge1$str$ptr + 2921304
+    7   chromedriver                        0x00000001029ba3b8 cxxbridge1$str$ptr + 2935504
+    8   chromedriver                        0x000000010299d0f8 cxxbridge1$str$ptr + 2816016
+    9   chromedriver                        0x00000001029bac4c cxxbridge1$str$ptr + 2937700
+    10  chromedriver                        0x000000010298e3b0 cxxbridge1$str$ptr + 2755272
+    11  chromedriver                        0x00000001029e01f4 cxxbridge1$str$ptr + 3090700
+    12  chromedriver                        0x00000001029e0354 cxxbridge1$str$ptr + 3091052
+    13  chromedriver                        0x00000001029f17a4 cxxbridge1$str$ptr + 3161788
+    14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+    15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+/Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: selenium.common.exceptions.TimeoutException: Message:
+=========================== short test summary info ============================
+FAILED tests/admin_portal/user_roles/test_user_roles_edit.py::test_activate_inactive_role
+= 1 failed, 35 passed, 2 skipped, 23 xfailed, 9 xpassed in 2496.91s (0:41:36) ==
+[shard6] DONE  user_roles — = 1 failed, 35 passed, 2 skipped, 23 xfailed, 9 xpassed in 2496.91s (0:41:36) ==
+[shard6] Finished: Mon Jul 27 09:30:42 IST 2026

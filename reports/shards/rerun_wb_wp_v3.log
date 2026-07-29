@@ -1,0 +1,3685 @@
+2026-07-29 02:46:21,660 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collected 160 items
+
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_only_active_wash_books_in_cwb_dropdown PASSED [  0%]
+tests/admin_portal/wash_books/test_customer_wash_books_dependency.py::test_cwb_washes_reflect_template_wash_book PASSED [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_customer_search_requires_two_characters PASSED [  1%]
+tests/admin_portal/wash_books/test_customer_wash_books_edge_cases.py::test_cwb_past_expiration_date_behaviour SKIPPED [  2%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_number_of_washes_persists PASSED [  3%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_edit_cwb_expiration_date_persists SKIPPED [  3%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_activate_customer_wash_book PASSED [  4%]
+tests/admin_portal/wash_books/test_customer_wash_books_edit.py::test_deactivate_customer_wash_book PASSED [  5%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_selection_blocked PASSED [  5%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_wash_book_number_blocked PASSED [  6%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_blank_number_of_washes_blocked PASSED [  6%]
+tests/admin_portal/wash_books/test_customer_wash_books_negative.py::test_create_cwb_duplicate_number_rejected PASSED [  7%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_customer_wash_book PASSED [  8%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_site_selection SKIPPED [  8%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_with_expiration_date SKIPPED [  9%]
+tests/admin_portal/wash_books/test_customer_wash_books_positive.py::test_create_cwb_is_active_by_default SKIPPED [ 10%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_exact_number PASSED [ 10%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_by_partial_number PASSED [ 11%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_search_non_existing_number_shows_empty_state PASSED [ 11%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_by_site_narrows_results PASSED [ 12%]
+tests/admin_portal/wash_books/test_customer_wash_books_search_filter.py::test_cwb_filter_reset_all_restores_list PASSED [ 13%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_tab_loads_with_controls PASSED [ 13%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_grid_columns_are_visible PASSED [ 14%]
+tests/admin_portal/wash_books/test_customer_wash_books_ui.py::test_customer_wash_books_export_file_validation XFAIL [ 15%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_active_wash_book_available_for_cwb_creation SKIPPED [ 15%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_deactivated_wash_book_not_available_for_cwb_creation SKIPPED [ 16%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_valid_points_awarded_saves SKIPPED [ 16%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_duplicate_barcode_rejected SKIPPED [ 17%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_description_shows_on_customer_portal SKIPPED [ 18%]
+tests/admin_portal/wash_books/test_wash_books_dependency.py::test_customer_portal_enabled_wash_book_visible SKIPPED [ 18%]
+tests/admin_portal/wash_books/test_wash_books_edge_cases.py::test_wash_book_long_description_does_not_break_form PASSED [ 19%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_description PASSED [ 20%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_name_persists PASSED [ 20%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_price_persists PASSED [ 21%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_number_of_washes_persists PASSED [ 21%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_site_assignment_persists XFAIL [ 22%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_edit_wash_book_global_commission_persists PASSED [ 23%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_activate_wash_book PASSED [ 23%]
+tests/admin_portal/wash_books/test_wash_books_edit.py::test_deactivate_wash_book PASSED [ 24%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_wash_books_special_character_search_stays_usable PASSED [ 25%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_duplicate_wash_book_name_is_blocked PASSED [ 25%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_whitespace_only_wash_book_name_is_rejected PASSED [ 26%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_number_of_washes_is_rejected PASSED [ 26%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_global_price_is_rejected PASSED [ 27%]
+tests/admin_portal/wash_books/test_wash_books_negative.py::test_negative_global_commission_is_rejected PASSED [ 28%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_wash_book PASSED [ 28%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_settings_persist PASSED [ 29%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_create_inactive_wash_book PASSED [ 30%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_decimal_price_accepted PASSED [ 30%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_customer_portal_switch_is_off_by_default PASSED [ 31%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_zero_loyalty_points_accepted PASSED [ 31%]
+tests/admin_portal/wash_books/test_wash_books_positive.py::test_wash_book_save_without_loyalty_points_succeeds PASSED [ 32%]
+tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_at_site_with_wash_package_persists PASSED [ 33%]
+tests/admin_portal/wash_books/test_wash_books_redemption.py::test_redemption_site_without_wash_package_behaviour PASSED [ 33%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_existing_search PASSED [ 34%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_partial_search_returns_matches PASSED [ 35%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_missing_search PASSED [ 35%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_clear_search_restores_list PASSED [ 36%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_panel_shows_controls PASSED [ 36%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_by_site_narrows_results PASSED [ 37%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_filter_reset_all_restores_list PASSED [ 38%]
+tests/admin_portal/wash_books/test_wash_books_search_filter.py::test_wash_books_search_payloads_do_not_break_grid PASSED [ 38%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_assign_single_site_persists XFAIL [ 39%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_assign_multiple_sites_persists XFAIL [ 40%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_location_price_override_persists PASSED [ 40%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_save_wash_book_with_no_site_assigned PASSED [ 41%]
+tests/admin_portal/wash_books/test_wash_books_site_assignment.py::test_per_site_customer_portal_toggle_persists SKIPPED [ 41%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_page_loads_with_primary_controls PASSED [ 42%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_grid_columns_are_visible PASSED [ 43%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_customer_wash_books_tab_is_accessible PASSED [ 43%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_add_wash_book_form_loads PASSED [ 44%]
+tests/admin_portal/wash_books/test_wash_books_ui.py::test_wash_books_export_file_validation XFAIL [ 45%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_required_name_validation PASSED [ 45%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_blank_required_form_stays_on_form PASSED [ 46%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_blank_global_price_is_blocked PASSED [ 46%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_valid_number_of_washes_saves PASSED [ 47%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_zero_washes_boundary_behaviour PASSED [ 48%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_zero_price_boundary_behaviour PASSED [ 48%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_valid_commission_saves PASSED [ 49%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_save_without_commission_succeeds PASSED [ 50%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_max_length_name_handled PASSED [ 50%]
+tests/admin_portal/wash_books/test_wash_books_validation.py::test_wash_book_invalid_numeric_values_do_not_break_form PASSED [ 51%]
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists ERROR [ 51%]
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour 2026-07-29 03:49:38,525 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 03:49:40,038 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 52%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_list_shell_controls_and_grid 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:23 Verifying Wash Packages list shell and primary controls
+PASSED                                                                   [ 53%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:47 Verifying Wash Packages search variants
+2026-07-29 03:50:56,550 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear (url: https://staging.nxtwash.com/services/washPackages)
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-29 03:50:57,581 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+No records available
+Page
+of
+0
+Results per page
+100
+Showing 0 - 0 of 0
+FAILED                                                                   [ 53%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_filter_panel_site_option_and_reset 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:79 Verifying Wash Packages filter panel controls and reset
+PASSED                                                                   [ 54%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_add_wash_package_form_service_discount_save_cancel_controls 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:95 Verifying Add Wash Package form controls
+PASSED                                                                   [ 55%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_package_global_price_is_required 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:118 Verifying global price mandatory validation
+PASSED                                                                   [ 55%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_download_file_validation_blocker XFAIL [ 56%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_permission_matrix_blocker XFAIL [ 56%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_advanced_edge_case_harness_blocker XFAIL [ 57%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_wash_package_available_for_membership_redemption SKIPPED [ 58%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivate_wash_package_mapped_to_membership SKIPPED [ 58%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_rename_wash_package_mapped_to_membership SKIPPED [ 59%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivated_discount_removed_from_wash_package SKIPPED [ 60%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_site_unassignment_does_not_affect_other_redemption_sites SKIPPED [ 60%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_long_name_does_not_break_form PASSED [ 61%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_whitespace_name_is_rejected PASSED [ 61%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable PASSED [ 62%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists ERROR [ 63%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists ERROR [ 63%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists ERROR [ 64%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist ERROR [ 65%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites ERROR [ 65%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package ERROR [ 66%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_deactivate_wash_package XFAIL [ 66%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists ERROR [ 67%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_multiple_discounts_persist ERROR [ 68%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_remove_applicable_discount_persists XFAIL [ 68%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_service_description_persists XFAIL [ 69%]
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_button_clickable PASSED [ 70%]
+tests/admin_portal/wash_packages/test_wash_packages_export.py::test_wash_packages_export_after_filter XFAIL [ 70%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_awarded_persists ERROR [ 71%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_redeemed_persists ERROR [ 71%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_awarded_info_tooltip_is_visible PASSED [ 72%]
+tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_points_redeemed_info_tooltip_is_visible PASSED [ 73%]
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_provided_at_baseline ERROR [ 73%]
+tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_mutation_is_reset_on_teardown ERROR [ 74%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_name_validation PASSED [ 75%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked 2026-07-29 04:24:47,482 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 04:24:48,546 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 75%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_package_required_price_validation PASSED [ 76%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_price_is_rejected XFAIL [ 76%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_negative_global_commission_is_rejected XFAIL [ 77%]
+tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_wash_packages_special_character_search_stays_usable PASSED [ 78%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_active_wash_package PASSED [ 78%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package 2026-07-29 04:27:17,729 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 04:27:18,545 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 79%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode 2026-07-29 04:28:43,340 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 04:28:44,212 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 80%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points 2026-07-29 04:30:14,447 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 04:30:15,354 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 80%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount 2026-07-29 04:31:40,685 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount (url: https://staging.nxtwash.com/services/washPackages/new)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount (url: https://staging.nxtwash.com/services/washPackages/new)
+2026-07-29 04:31:41,592 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Add new wash package
+Cancel
+Save wash package
+Service settings
+Discount settings
+Service name
+Barcode
+Loyalty points
+Points awarded
+Points to redeem
+Service description
+Force receipt printing
+Active service
+Global price
+Global commission
+Assign to
+Controller code
+Location price
+Exempt tax
+State sales tax rate
+City sales tax rate
+Commission
+VK AL37
+Los angeles
+5%
+3%
+VK ZT ab24bb
+Los angeles
+0%
+0%
+VK AL36
+Los angeles
+5%
+3%
+VK AL35
+Los angeles
+5%
+3%
+VK ZT 9344b0
+Los angeles
+0%
+0%
+VK AL34
+Los angeles
+5%
+3%
+VK AL92
+5%
+3%
+VK AL33
+Los angeles
+5%
+3%
+VK AL32
+Los angeles
+5%
+3%
+VK AL31
+Los angeles
+5%
+3%
+VK ZT c6d556
+Los angeles
+0%
+0%
+VK AL30
+Los angeles
+5%
+3%
+VK AL29
+Los angeles
+5%
+3%
+VK ZT 9e7bdf
+Los angeles
+0%
+0%
+FAILED                                                                   [ 81%]
+tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_wash_package_settings_persist PASSED [ 81%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_existing_search PASSED [ 82%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_partial_search XPASS [ 83%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_missing_search PASSED [ 83%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_clear_search_restores_list PASSED [ 84%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_wash_packages_search_payloads_do_not_break_grid PASSED [ 85%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_search_inactive_wash_package_returns_it XFAIL [ 85%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_by_site_narrows_results PASSED [ 86%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_active_shows_active_packages XFAIL [ 86%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_filter_site_and_active_combined XFAIL [ 87%]
+tests/admin_portal/wash_packages/test_wash_packages_search_filter.py::test_reset_filters_restores_grid XFAIL [ 88%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_assign_multiple_sites_persists ERROR [ 88%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_select_all_sites_via_header_checkbox ERROR [ 89%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_save_wash_package_without_site_selection PASSED [ 90%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_global_price_reflected_at_site ERROR [ 90%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_persists XFAIL [ 91%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_higher_than_global_persists ERROR [ 91%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_lower_than_global_persists ERROR [ 92%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_override_persists ERROR [ 93%]
+tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_higher_than_global_persists ERROR [ 93%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_page_loads_with_primary_controls PASSED [ 94%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_grid_columns_are_visible PASSED [ 95%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_pagination_controls_are_visible PASSED [ 95%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_add_wash_package_form_loads PASSED [ 96%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_discount_settings_tab_loads PASSED [ 96%]
+tests/admin_portal/wash_packages/test_wash_packages_ui.py::test_wash_packages_filter_panel_shows_controls PASSED [ 97%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_blank_required_form_stays_on_form PASSED [ 98%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_price_is_accepted PASSED [ 98%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_decimal_commission_is_accepted PASSED [ 99%]
+tests/admin_portal/wash_packages/test_wash_packages_validation.py::test_wash_package_invalid_numeric_values_do_not_break_form PASSED [100%]
+
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_wash_package_barcode_persists _____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="7d695f4af320aa53c82d11a35c1fdc52")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="7d695f4af320aa53c82d11a35c1fdc52")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1077a1b20>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104d01a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104cf9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001047a32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001047eba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010482b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001047e1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104cbec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000104cc23b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000104ca50f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104cc2c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000104c963b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000104ce81f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104ce8354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000104cf97a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____________ ERROR at setup of test_edit_wash_package_name_persists ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="b30e9fc3dd90f0aa4350a4f89a97bf7e")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:85: in _reset_managed_package
+    page.open_edit_package(PACKAGE_NAME)
+pages/admin_portal/wash_packages_page.py:383: in open_edit_package
+    self.wait_for_edit_loaded()
+pages/admin_portal/wash_packages_page.py:137: in wait_for_edit_loaded
+    WebDriverWait(self.driver, 60).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="b30e9fc3dd90f0aa4350a4f89a97bf7e")>
+method = <function frame_to_be_available_and_switch_to_it.<locals>._predicate at 0x107904a40>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100c49a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100c41b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001006eb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100733a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100773030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100729434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100c06c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000100c0a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000100bed0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000100c0ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000100bde3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000100c301f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100c30354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000100c417a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+________ ERROR at setup of test_edit_wash_package_global_price_persists ________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="97589aaaaf93380a34c99d5cadec2755")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="97589aaaaf93380a34c99d5cadec2755")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1075a2fc0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001051a1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105199b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104c432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104c8ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104ccb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104c81434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010515ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001051623b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001051450f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000105162c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001051363b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001051881f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000105188354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001051997a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____ ERROR at setup of test_edit_wash_package_global_commission_persists ______
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="e876eac0fdf55b39b61168d01b43247c")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="e876eac0fdf55b39b61168d01b43247c")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107823060>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001053a1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105399b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104e432a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104e8ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104ecb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104e81434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010535ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001053623b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001053450f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000105362c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001053363b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001053881f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000105388354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001053997a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______ ERROR at setup of test_edit_wash_package_loyalty_points_persist ________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="bee1d297dd456e7b0723370744dab72a")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="bee1d297dd456e7b0723370744dab72a")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1079053a0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100849a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100841b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001002eb2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100333a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100373030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100329434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100806c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010080a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001007ed0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010080ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001007de3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001008301f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100830354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001008417a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+___________ ERROR at setup of test_edit_wash_package_assigned_sites ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="9299e37dc81514c43ab4a83cdab92f9c")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="9299e37dc81514c43ab4a83cdab92f9c")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107905760>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000102665a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x000000010265db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001021072a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010214fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010218f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102145434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102622c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001026263b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001026090f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102626c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001025fa3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010264c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010264c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x000000010265d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_________________ ERROR at setup of test_activate_wash_package _________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="0f3303449136f990541fa1d169db37b5")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="0f3303449136f990541fa1d169db37b5")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1079059e0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000102e8da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000102e85b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010292f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000102977a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001029b7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x000000010296d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102e4ac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000102e4e3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000102e310f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102e4ec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000102e223b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000102e741f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000102e74354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000102e857a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__________ ERROR at setup of test_assign_applicable_discount_persists __________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="2bad269a68a2eacd1d92bd52fe09750d")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="2bad269a68a2eacd1d92bd52fe09750d")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107906340>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001026f5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001026edb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001021972a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001021dfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010221f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001021d5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001026b2c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001026b63b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001026990f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001026b6c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010268a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001026dc1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001026dc354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001026ed7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+___________ ERROR at setup of test_assign_multiple_discounts_persist ___________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="f5fb215458c6b4ab02839d56e8049e91")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="f5fb215458c6b4ab02839d56e8049e91")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107822200>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x000000010093da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100935b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001003df2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100427a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100467030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x000000010041d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001008fac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001008fe3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001008e10f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001008fec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001008d23b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001009241f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100924354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001009357a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____________ ERROR at setup of test_loyalty_points_awarded_persists ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="7c0d3fd387d58d76f361ad3cf568b6e8")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="7c0d3fd387d58d76f361ad3cf568b6e8")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1075a2fc0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100f2da84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100f25b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001009cf2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100a17a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100a57030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100a0d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100eeac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000100eee3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000100ed10f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000100eeec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000100ec23b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000100f141f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100f14354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000100f257a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+___________ ERROR at setup of test_loyalty_points_redeemed_persists ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="5b075944060ef85f17a42d697bf5f5a4")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="5b075944060ef85f17a42d697bf5f5a4")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107904fe0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104645a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x000000010463db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001040e72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010412fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010416f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104125434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104602c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001046063b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001045e90f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104606c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001045da3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010462c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010462c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x000000010463d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_________ ERROR at setup of test_managed_package_provided_at_baseline __________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="a15bba7ee2e378be26ec30aaa5b81279")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="a15bba7ee2e378be26ec30aaa5b81279")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107905620>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001032bda84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001032b5b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000102d5f2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000102da7a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000102de7030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102d9d434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010327ac40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010327e3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001032610f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010327ec4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001032523b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001032a41f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001032a4354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001032b57a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_____ ERROR at setup of test_managed_package_mutation_is_reset_on_teardown _____
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="46905b7fa78f36e8ac5a516b05fa4262")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="46905b7fa78f36e8ac5a516b05fa4262")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107942660>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001005f5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001005edb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001000972a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001000dfa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010011f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001000d5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001005b2c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001005b63b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001005990f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001005b6c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010058a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001005dc1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001005dc354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001005ed7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____________ ERROR at setup of test_assign_multiple_sites_persists _____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="829c1cd0a48e70cb4ed20c1ec6c04ac2")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="829c1cd0a48e70cb4ed20c1ec6c04ac2")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107942660>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001008b9a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001008b1b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010035b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001003a3a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001003e3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100399434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100876c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010087a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010085d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010087ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010084e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001008a01f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001008a0354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001008b17a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_________ ERROR at setup of test_select_all_sites_via_header_checkbox __________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="9b3bb0342587ac71ca1e72fa32a42a01")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="9b3bb0342587ac71ca1e72fa32a42a01")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107943ce0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100779a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100771b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x000000010021b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100263a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001002a3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100259434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000100736c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010073a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010071d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010073ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010070e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001007601f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100760354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001007717a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____________ ERROR at setup of test_global_price_reflected_at_site _____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="91719e3cabcfb8c0234875a61eae5154")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="91719e3cabcfb8c0234875a61eae5154")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1074756c0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001032b1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001032a9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000102d532a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000102d9ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000102ddb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102d91434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010326ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001032723b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001032550f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000103272c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001032463b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001032981f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000103298354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001032a97a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__ ERROR at setup of test_location_price_override_higher_than_global_persists __
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="bd3539202afcc40e2b43cd004a747055")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="bd3539202afcc40e2b43cd004a747055")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107998720>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000103045a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x000000010303db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000102ae72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000102b2fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000102b6f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102b25434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000103002c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001030063b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000102fe90f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000103006c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000102fda3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010302c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010302c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x000000010303d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__ ERROR at setup of test_location_price_override_lower_than_global_persists ___
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="21900150e23417a87268b0a9a578f2c6")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="21900150e23417a87268b0a9a578f2c6")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107943c40>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100621a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100619b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001000c32a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010010ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010014b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100101434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x00000001005dec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001005e23b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001005c50f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x00000001005e2c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001005b63b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001006081f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000100608354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001006197a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_________ ERROR at setup of test_location_commission_override_persists _________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="c26dfa821cd65d6455fd65e41e371af4")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="c26dfa821cd65d6455fd65e41e371af4")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107999080>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000102e25a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000102e1db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001028c72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010290fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010294f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102905434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102de2c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000102de63b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000102dc90f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102de6c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000102dba3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000102e0c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000102e0c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000102e1d7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+____ ERROR at setup of test_location_commission_higher_than_global_persists ____
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="ab978db278a811c58ac87b414fe6fedc")>
+
+    @pytest.fixture
+    def managed_package(browser):
+        """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+>       page = _reset_managed_package(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/wash_packages/conftest.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/wash_packages/conftest.py:86: in _reset_managed_package
+    page.fill_package_form(
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="ab978db278a811c58ac87b414fe6fedc")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1079994e0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001010b5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001010adb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100b572a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100b9fa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000100bdf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000100b95434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000101072c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001010763b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001010590f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000101076c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010104a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x000000010109c1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x000000010109c354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001010ad7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+=================================== FAILURES ===================================
+_______________________ test_duplicate_barcode_behaviour _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="cf2eb73c6cc13477dac3dd3763caf9f2")>
+
+    @allure.title("WP-BAR-003 Creating a second package with a duplicate barcode is blocked or accepted")
+    @pytest.mark.regression
+    def test_duplicate_barcode_behaviour(browser):
+        package_a = "VK bar-a %s" % uuid.uuid4().hex[:6]
+        package_b = "VK bar-b %s" % uuid.uuid4().hex[:6]
+    
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+>       page.fill_package_form(
+            package_a,
+            POINTS_AWARDED,
+            POINTS_REDEEMED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            ASSIGNMENT_SITE,
+        )
+
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="cf2eb73c6cc13477dac3dd3763caf9f2")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107822340>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001046b1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001046a9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001041532a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010419ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001041db030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104191434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010466ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001046723b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001046550f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104672c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001046463b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001046981f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104698354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001046a97a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_________________ test_wash_packages_search_variants_and_clear _________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="f7bd481306b7768e294b1f6079364691")>
+
+    @allure.epic("Admin Portal")
+    @allure.feature("Wash Packages")
+    @allure.story("Search")
+    @allure.title("WP-SRCH exact, partial, case-insensitive, trim, long, missing, and clear")
+    @pytest.mark.regression
+    def test_wash_packages_search_variants_and_clear(browser):
+        LOG.info("Verifying Wash Packages search variants")
+        page = create_wash_package_if_missing(browser)
+        original_count = len(page.get_visible_package_names())
+    
+        page.search_package(EXISTING_PACKAGE)
+        assert page.wait_for_package_row(EXISTING_PACKAGE).is_displayed()
+    
+        page.search_package(EXISTING_PACKAGE[:4])
+        assert EXISTING_PACKAGE in page.get_body_text()
+    
+        page.search_package(EXISTING_PACKAGE.upper())
+        assert EXISTING_PACKAGE.lower() in page.get_body_text().lower()
+    
+        page.search_package("  %s  " % EXISTING_PACKAGE)
+>       assert EXISTING_PACKAGE.lower() in page.get_body_text().lower()
+E       AssertionError: assert 'vk awp1' in 'wash packages\nfilter by (1)\n+ add new wash package\nwash package name\nprice\nstatus\nno records available\npage\nof\n0\nresults per page\n100\nshowing 0 - 0 of 0'
+E        +  where 'vk awp1' = <built-in method lower of str object at 0x107653eb0>()
+E        +    where <built-in method lower of str object at 0x107653eb0> = 'VK AWP1'.lower
+E        +  and   'wash packages\nfilter by (1)\n+ add new wash package\nwash package name\nprice\nstatus\nno records available\npage\nof\n0\nresults per page\n100\nshowing 0 - 0 of 0' = <built-in method lower of str object at 0x1075b2950>()
+E        +    where <built-in method lower of str object at 0x1075b2950> = 'Wash packages\nFilter by (1)\n+ Add new wash package\nWash package name\nPrice\nStatus\nNo records available\nPage\nof\n0\nResults per page\n100\nShowing 0 - 0 of 0'.lower
+E        +      where 'Wash packages\nFilter by (1)\n+ Add new wash package\nWash package name\nPrice\nStatus\nNo records available\nPage\nof\n0\nResults per page\n100\nShowing 0 - 0 of 0' = get_body_text()
+E        +        where get_body_text = <pages.admin_portal.wash_packages_page.WashPackagesPage object at 0x1077b84d0>.get_body_text
+
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py:61: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-07-29 03:50:17,406 INFO nxtwash: Verifying Wash Packages search variants
+------------------------------ Captured log call -------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:47 Verifying Wash Packages search variants
+________________ test_create_duplicate_wash_package_is_blocked _________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="428f648af5197a43f40f7e26bc2746a2")>
+
+    @allure.title("WP-NAM-003 Duplicate wash package name is blocked")
+    @pytest.mark.regression
+    def test_create_duplicate_wash_package_is_blocked(browser):
+        create_wash_package_if_missing(browser)
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+>       page.fill_package_form(
+            PACKAGE_NAME,
+            POINTS_AWARDED,
+            POINTS_REDEEMED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            ASSIGNMENT_SITE,
+        )
+
+tests/admin_portal/wash_packages/test_wash_packages_negative.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="428f648af5197a43f40f7e26bc2746a2")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107905e40>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104991a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104989b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001044332a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010447ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001044bb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104471434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x000000010494ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001049523b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001049350f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104952c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x00000001049263b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001049781f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104978354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001049897a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+______________________ test_create_inactive_wash_package _______________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="0ef989049e4dc307bee7e203dd8c072f")>
+
+    @allure.title("WP-TGL-002 Create inactive wash package is hidden from the default list")
+    @pytest.mark.regression
+    def test_create_inactive_wash_package(browser):
+        package_name = "VK inactive %s" % uuid.uuid4().hex[:6]
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+>       page.fill_package_form(
+            package_name,
+            POINTS_AWARDED,
+            POINTS_REDEEMED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            ASSIGNMENT_SITE,
+        )
+
+tests/admin_portal/wash_packages/test_wash_packages_positive.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="0ef989049e4dc307bee7e203dd8c072f")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107942a20>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000105279a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000105271b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000104d1b2a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000104d63a44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x0000000104da3030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000104d59434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000105236c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x000000010523a3b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x000000010521d0f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x000000010523ac4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010520e3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001052601f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000105260354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001052717a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+___________________ test_create_wash_package_without_barcode ___________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="f151d00cf4e66f8a4d3b71d5c5e9cd86")>
+
+    @allure.title("WP-BAR-002 Saving a wash package without a barcode succeeds")
+    @pytest.mark.regression
+    def test_create_wash_package_without_barcode(browser):
+        package_name = "VK no-bar %s" % uuid.uuid4().hex[:6]
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+>       page.fill_package_form(
+            package_name,
+            POINTS_AWARDED,
+            POINTS_REDEEMED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            ASSIGNMENT_SITE,
+        )
+
+tests/admin_portal/wash_packages/test_wash_packages_positive.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="f151d00cf4e66f8a4d3b71d5c5e9cd86")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107941ee0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000104e05a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000104dfdb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001048a72a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001048efa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x000000010492f030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001048e5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104dc2c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000104dc63b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000104da90f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104dc6c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000104d9a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000104dec1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000104dec354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000104dfd7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+_______________ test_create_wash_package_without_loyalty_points ________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="4c4ef0dec7760e85fc6425bf46bd6419")>
+
+    @allure.title("WP-LTY-006 Saving a wash package without loyalty points succeeds")
+    @pytest.mark.regression
+    def test_create_wash_package_without_loyalty_points(browser):
+        package_name = "VK no-lty %s" % uuid.uuid4().hex[:6]
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+        page.enter_service_name(package_name)
+        page.ensure_active_switch_on()
+        page.set_global_price(GLOBAL_PRICE)
+        page.set_global_commission(GLOBAL_COMMISSION)
+>       page.assign_site_with_price_and_commission(ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION)
+
+tests/admin_portal/wash_packages/test_wash_packages_positive.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="4c4ef0dec7760e85fc6425bf46bd6419")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107943740>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x0000000102c81a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000102c79b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001027232a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010276ba44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001027ab030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x0000000102761434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000102c3ec40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x0000000102c423b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x0000000102c250f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000102c42c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x0000000102c163b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x0000000102c681f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x0000000102c68354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x0000000102c797a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+__________________ test_create_wash_package_without_discount ___________________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="8c167ed36420c635afaa1fa3c8bce7fa")>
+
+    @allure.title("WP-DIS-004 Saving a wash package without assigning a discount succeeds")
+    @pytest.mark.regression
+    def test_create_wash_package_without_discount(browser):
+        package_name = "VK no-dis %s" % uuid.uuid4().hex[:6]
+        page = open_wash_packages_page(browser)
+        page.open_create_package()
+>       page.fill_package_form(
+            package_name,
+            POINTS_AWARDED,
+            POINTS_REDEEMED,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            ASSIGNMENT_SITE,
+        )
+
+tests/admin_portal/wash_packages/test_wash_packages_positive.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_packages_page.py:647: in fill_package_form
+    self.assign_site_with_price_and_commission(
+pages/admin_portal/wash_packages_page.py:606: in assign_site_with_price_and_commission
+    row = self.get_site_row(site_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pages/admin_portal/wash_packages_page.py:602: in get_site_row
+    return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="8c167ed36420c635afaa1fa3c8bce7fa")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1079059e0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   chromedriver                        0x00000001048c5a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001048bdb4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001043672a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x00000001043afa44 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 370700
+E       4   chromedriver                        0x00000001043ef030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       5   chromedriver                        0x00000001043a5434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       6   chromedriver                        0x0000000104882c40 cxxbridge1$str$ptr + 2921304
+E       7   chromedriver                        0x00000001048863b8 cxxbridge1$str$ptr + 2935504
+E       8   chromedriver                        0x00000001048690f8 cxxbridge1$str$ptr + 2816016
+E       9   chromedriver                        0x0000000104886c4c cxxbridge1$str$ptr + 2937700
+E       10  chromedriver                        0x000000010485a3b0 cxxbridge1$str$ptr + 2755272
+E       11  chromedriver                        0x00000001048ac1f4 cxxbridge1$str$ptr + 3090700
+E       12  chromedriver                        0x00000001048ac354 cxxbridge1$str$ptr + 3091052
+E       13  chromedriver                        0x00000001048bd7a4 cxxbridge1$str$ptr + 3161788
+E       14  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       15  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+=========================== short test summary info ============================
+FAILED tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour
+FAILED tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear
+FAILED tests/admin_portal/wash_packages/test_wash_packages_negative.py::test_create_duplicate_wash_package_is_blocked
+FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_inactive_wash_package
+FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_barcode
+FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_loyalty_points
+FAILED tests/admin_portal/wash_packages/test_wash_packages_positive.py::test_create_wash_package_without_discount
+ERROR tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_multiple_discounts_persist
+ERROR tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_awarded_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_loyalty.py::test_loyalty_points_redeemed_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_provided_at_baseline
+ERROR tests/admin_portal/wash_packages/test_wash_packages_managed.py::test_managed_package_mutation_is_reset_on_teardown
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_assign_multiple_sites_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_select_all_sites_via_header_checkbox
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_global_price_reflected_at_site
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_higher_than_global_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_price_override_lower_than_global_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_override_persists
+ERROR tests/admin_portal/wash_packages/test_wash_packages_site_assignment.py::test_location_commission_higher_than_global_persists
+= 7 failed, 96 passed, 17 skipped, 19 xfailed, 1 xpassed, 20 errors in 7552.06s (2:05:52) =

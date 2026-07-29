@@ -1,0 +1,829 @@
+2026-07-29 10:44:10,151 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 362 items
+
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_page_loads_at_correct_url PASSED [  0%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_filter_modal_auto_opens PASSED [  0%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_modal_contains_all_controls PASSED [  0%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_metrics_shell_renders_behind_modal PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_page_title_and_info_icon_render PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_sidebar_highlights_active_item PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_sites_dropdown_lists_all_active_sites XFAILing modal open.) [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_preset_dropdown_lists_seven_options 2026-07-29 10:46:28,109 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_preset_dropdown_lists_seven_options (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_preset_dropdown_lists_seven_options (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 10:46:28,821 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Revenue
+$0.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$0.00
+Revenue distribution
+No information for this period
+Membership Revenue
+Retail Revenue
+New Sales
+Recharges
+Resignups
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_modal_opens_with_default_state PASSED [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_changing_preset_auto_updates_date_range PASSED [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_single_day_checkbox_switches_to_single_date PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_apply_filters_closes_modal_and_renders_metrics XPASS [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_filter_values_reflected_in_page_level_bar PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_modal_does_not_reopen_from_page_level_bar PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_page_level_sites_dropdown_lists_all_sites XPASSsame timing race as modal
+site dropdown (options not fully populated when read).)                  [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_selecting_single_site_scopes_all_sections PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_selecting_multiple_sites_aggregates_revenue PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_selected_sites_render_as_chips PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_overflow_counter_chip_shown_for_many_sites PASSED [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_selected_options_highlighted_in_dropdown XFAIL_site-select__option--is-
+selected) — verify in DevTools before removing xfail.)                   [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_deselecting_option_removes_it PASSED [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_clear_control_removes_all_chips XFAIL_site-select__clear-indicator) —
+verify in DevTools before removing xfail.)                               [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_clearing_sites_shows_empty_state PASSED [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_site_dropdown_scrolls_for_many_sites SKIPPED [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_site_change_auto_applies_no_apply_button 2026-07-29 10:52:12,353 ERROR nxtwash: Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_site_change_auto_applies_no_apply_button (url: https://staging.nxtwash.com/reports/detailed/revenue)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_site_change_auto_applies_no_apply_button (url: https://staging.nxtwash.com/reports/detailed/revenue)
+2026-07-29 10:52:13,056 ERROR nxtwash: Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+No options
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Revenue Metrics
+Sites / Locations
+No options
+Export XLSX
+This month
+Select date range
+Single day
+Total Revenue
+$190.00
+New Members
+$0.00
+Recharges
+$0.00
+Resignups
+$0.00
+Retail Sales
+$190.00
+Revenue distribution
+Membership Revenue
+3
+Retail Revenue
+7
+New Sales
+1
+Recharges
+0
+Resignups
+2
+Wash Prepaid
+$0.00
+1 items
+0.0% of total net revenue
+FAILED                                                                   [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_deactivated_sites_not_in_dropdown PASSED [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_page_level_preset_lists_seven_options PASSED [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-002] PASSED [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-003] PASSED [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-004] PASSED [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-005] PASSED [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-006] PASSED [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-007] PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_preset_updates_range_and_data[RVO-DTE-008] PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_custom_range_switches_preset_to_custom PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_range_field_opens_calendar_picker PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_future_dates_disabled_in_calendar XFAILass heuristics — verify calendar day
+button DOM in DevTools before removing xfail.)                           [ 10%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_year_selector_visible_in_calendar XFAILfy calendar year control DOM
+in DevTools before removing xfail.)                                      [ 10%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_preset_auto_applies_on_metrics_screen PASSED [ 10%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_custom_range_same_start_end PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_month_boundary_date_range PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_five_kpi_cards_render PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_kpi_cards_show_zero_when_no_data PASSED [ 11%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_kpi_values_update_on_site_change PASSED [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_kpi_values_update_on_date_change PASSED [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_kpi_values_currency_format PASSED [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_chart_renders_when_data_exists PASSED [ 12%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_chart_shows_no_info_when_no_data PASSED [ 13%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_legend_lists_all_series PASSED [ 13%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_hover_segment_shows_tooltip PASSED [ 13%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_hover_updates_centre_label PASSED [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_centre_label_resets_on_pointer_leave XPASSart-library specific — verify in
+DevTools before removing xfail.)                                         [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_legend_toggle_hides_segment SKIPPED [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_centre_label_not_recalculated_after_legend_toggle SKIPPED [ 14%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_hiding_all_legend_series_no_error SKIPPED [ 15%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_segment_colours_are_stable PASSED [ 15%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_zero_revenue_series_in_legend_no_arc PASSED [ 15%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_chart_rerenders_on_filter_change PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_membership_tab_displayed_with_count PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_membership_tab_selected_by_default PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_membership_tab_shows_three_subtabs PASSED [ 16%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_all_membership_subtabs_clickable PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_membership_count_invariant PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_new_sales_subtab_lists_plans PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_recharges_subtab_zero_count_renders_cleanly PASSED [ 17%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_resignups_subtab_lists_rows PASSED [ 18%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_subtab_row_count_equals_badge XFAILy list-item locator in DevTools
+before removing xfail.)                                                  [ 18%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_switching_subtabs_does_not_change_kpi_or_chart PASSED [ 18%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_membership_plan_names_match_module PASSED [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_retail_tab_displayed_with_count PASSED [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_retail_tab_shows_two_subtabs XFAIL 'Wash Package'/'Wash Extra' subtabs not
+present on current page)                                                 [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_retail_count_invariant XFAILms not mapped to Wash Package or Wash Extra.) [ 19%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_wash_package_subtab_lists_packages XFAILists in staging for the
+selected date range.)                                                    [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_wash_extra_subtab_lists_extras XFAIL in staging for the selected date
+range.)                                                                  [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_wash_package_names_match_module XFAILists in staging for the selected date
+range.)                                                                  [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_wash_extra_names_match_module XFAIL in staging for the selected date
+range.)                                                                  [ 20%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_switching_tabs_preserves_kpi_and_chart PASSED [ 21%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_retail_tab_empty_list_when_count_zero PASSED [ 21%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_each_row_shows_four_data_points PASSED [ 21%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_single_item_count_grammar PASSED [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_zero_amount_shows_zero_percent PASSED [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_long_names_truncate_without_breaking PASSED [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_list_refreshes_on_filter_change ERROR [ 22%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_export_button_present PASSED [ 23%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_export_triggers_download PASSED [ 23%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_info_icon_tooltip_text PASSED [ 23%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_tooltip_dismisses_on_click_away PASSED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_tooltip_content_is_static PASSED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_zero_transaction_site_renders_cleanly PASSED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_today_with_no_transactions_renders_cleanly PASSED [ 24%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_rapid_preset_switching_no_stale_data PASSED [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_rapid_site_toggle_no_stale_data PASSED [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_retail_only_site_renders_cleanly PASSED [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_direct_url_opens_filter_modal PASSED [ 25%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_overview_full_report_link_navigates_here XFAILlink not findable from outer
+frame context)                                                           [ 26%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_sites_dropdown_reflects_sites_module PASSED [ 26%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::TestSingleDayMode::test_single_day_changes_label_and_field PASSED [ 26%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::TestSingleDayMode::test_single_day_forces_preset_to_custom XFAILday is checked;
+preset retains its previous value (e.g. 'Today'))                        [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::TestSingleDayMode::test_select_date_in_single_day_mode PASSED [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range PASSED [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url PASSED [ 27%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens PASSED [ 28%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls PASSED [ 28%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal PASSED [ 28%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render PASSED [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item PASSED [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites XFAILing modal open.) [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options XPASSiming race during modal
+open on staging.)                                                        [ 29%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state PASSED [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range PASSED [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_day_checkbox_switches_to_single_date PASSED [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_apply_filters_closes_modal_and_renders_metrics XPASS [ 30%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_values_reflected_in_page_level_bar PASSED [ 31%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_does_not_reopen_from_page_level_bar PASSED [ 31%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_sites_dropdown_lists_all_sites XPASSsame timing race as modal site
+dropdown (options not fully populated when read).)                       [ 31%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_single_site_scopes_all_sections PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selecting_multiple_sites_aggregates_revenue PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_sites_render_as_chips PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overflow_counter_chip_shown_for_many_sites PASSED [ 32%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_selected_options_highlighted_in_dropdown XFAIL_site-select__option--is-
+selected) — verify in DevTools before removing xfail.)                   [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deselecting_option_removes_it PASSED [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clear_control_removes_all_chips XFAIL_site-select__clear-indicator) — verify
+in DevTools before removing xfail.)                                      [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_clearing_sites_shows_empty_state PASSED [ 33%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_dropdown_scrolls_for_many_sites SKIPPED [ 34%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_site_change_auto_applies_no_apply_button PASSED [ 34%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_deactivated_sites_not_in_dropdown PASSED [ 34%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_level_preset_lists_seven_options PASSED [ 35%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-002] PASSED [ 35%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-003] PASSED [ 35%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-004] PASSED [ 35%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-005] PASSED [ 36%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-006] PASSED [ 36%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-007] PASSED [ 36%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_preset_updates_range_and_data[RVO-DTE-008] PASSED [ 37%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_switches_preset_to_custom PASSED [ 37%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_range_field_opens_calendar_picker PASSED [ 37%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_future_dates_disabled_in_calendar XFAILass heuristics — verify calendar day
+button DOM in DevTools before removing xfail.)                           [ 37%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_year_selector_visible_in_calendar XFAILfy calendar year control DOM in
+DevTools before removing xfail.)                                         [ 38%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_auto_applies_on_metrics_screen PASSED [ 38%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_custom_range_same_start_end PASSED [ 38%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_month_boundary_date_range PASSED [ 38%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_five_kpi_cards_render PASSED [ 39%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_cards_show_zero_when_no_data PASSED [ 39%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_site_change PASSED [ 39%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_update_on_date_change PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_kpi_values_currency_format PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_renders_when_data_exists PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_shows_no_info_when_no_data PASSED [ 40%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_lists_all_series PASSED [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_segment_shows_tooltip PASSED [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hover_updates_centre_label PASSED [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_resets_on_pointer_leave XPASSart-library specific — verify in
+DevTools before removing xfail.)                                         [ 41%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_legend_toggle_hides_segment SKIPPED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_centre_label_not_recalculated_after_legend_toggle SKIPPED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_hiding_all_legend_series_no_error SKIPPED [ 42%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_segment_colours_are_stable PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_revenue_series_in_legend_no_arc PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_chart_rerenders_on_filter_change PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_displayed_with_count PASSED [ 43%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_selected_by_default PASSED [ 44%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_tab_shows_three_subtabs PASSED [ 44%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_all_membership_subtabs_clickable PASSED [ 44%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_count_invariant PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_new_sales_subtab_lists_plans PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_recharges_subtab_zero_count_renders_cleanly PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_resignups_subtab_lists_rows PASSED [ 45%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_subtab_row_count_equals_badge XFAILy list-item locator in DevTools
+before removing xfail.)                                                  [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_subtabs_does_not_change_kpi_or_chart PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_membership_plan_names_match_module PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_displayed_with_count PASSED [ 46%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_shows_two_subtabs XFAIL 'Wash Package'/'Wash Extra' subtabs not
+present on current page)                                                 [ 47%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_count_invariant XFAILms not mapped to Wash Package or Wash Extra.) [ 47%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_subtab_lists_packages XFAILists in staging for the selected date
+range.)                                                                  [ 47%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_subtab_lists_extras XFAIL in staging for the selected date
+range.)                                                                  [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_package_names_match_module XFAILists in staging for the selected date
+range.)                                                                  [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_wash_extra_names_match_module XFAIL in staging for the selected date range.) [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_switching_tabs_preserves_kpi_and_chart PASSED [ 48%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_tab_empty_list_when_count_zero PASSED [ 49%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_each_row_shows_four_data_points PASSED [ 49%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_single_item_count_grammar PASSED [ 49%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_amount_shows_zero_percent PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_long_names_truncate_without_breaking PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_list_refreshes_on_filter_change PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_button_present PASSED [ 50%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_export_triggers_download PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_info_icon_tooltip_text PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_dismisses_on_click_away PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_tooltip_content_is_static PASSED [ 51%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_zero_transaction_site_renders_cleanly PASSED [ 52%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_today_with_no_transactions_renders_cleanly PASSED [ 52%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_preset_switching_no_stale_data PASSED [ 52%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_rapid_site_toggle_no_stale_data PASSED [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_retail_only_site_renders_cleanly PASSED [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_direct_url_opens_filter_modal PASSED [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_overview_full_report_link_navigates_here XFAILlink not findable from outer
+frame context)                                                           [ 53%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_reflects_sites_module PASSED [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_changes_label_and_field PASSED [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_single_day_forces_preset_to_custom XFAILday is checked;
+preset retains its previous value (e.g. 'Today'))                        [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_select_date_in_single_day_mode PASSED [ 54%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::TestSingleDayMode::test_uncheck_single_day_reverts_to_range PASSED [ 55%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_loads_at_correct_url PASSED [ 55%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_auto_opens PASSED [ 55%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_modal_contains_four_controls PASSED [ 56%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_metrics_shell_renders_behind_modal PASSED [ 56%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_renders_two_widgets PASSED [ 56%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sidebar_highlights_active_item XFAILm (likely Tailwind
+color/background class) with no detectable aria-current, data-active, or
+'active'/'selected'/'current' class on any ancestor element. Needs
+DevTools inspection to identify the exact class name.)                   [ 56%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_lists_all_active_sites PASSED [ 57%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_opens_with_default_state PASSED [ 57%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_dropdown_lists_six_options PASSED [ 57%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_auto_updates_date_range PASSED [ 58%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_apply_closes_modal_and_renders_widgets PASSED [ 58%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_filter_values_reflected_in_page_bar PASSED [ 58%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_does_not_reopen_from_page_bar PASSED [ 58%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_sites_dropdown_uses_checkboxes PASSED [ 59%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_option_present_and_default PASSED [ 59%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_sites_aggregates_data PASSED [ 59%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_site_scopes_both_widgets PASSED [ 59%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multiple_sites_aggregate_data XFAIL after selection — was masked by a
+SITE_CHIPS locator bug that double-counted each chip. Needs DevTools
+inspection to determine if VK AL02 is available in the PM site dropdown
+and why the second select_site call produces no chip.)                   [ 60%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_site_name_scoped XFAILs' even when a subset of
+sites is selected)                                                       [ 60%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_selected_sites_render_as_chips PASSED [ 60%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_checkbox_state_reflects_selection PASSED [ 61%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_unchecking_removes_site PASSED [ 61%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_all_removes_all_sites PASSED [ 61%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_dropdown_scrolls_with_many_options PASSED [ 61%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_site_change_auto_applies PASSED [ 62%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_deactivated_sites_excluded PASSED [ 62%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_page_level_preset_dropdown_has_six_options PASSED [ 62%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Today] PASSED [ 62%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Yesterday] PASSED [ 63%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This week] PASSED [ 63%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last week] PASSED [ 63%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[This month] PASSED [ 64%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_preset_sets_correct_range[Last month] PASSED [ 64%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_calendar_picker_opens PASSED [ 64%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_today_highlighted_in_calendar PASSED [ 64%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_future_dates_not_selectable PASSED [ 65%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_custom_range_updates_and_refreshes PASSED [ 65%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clear_date_range_button XFAILd in the current build — direct JS click on
+all buttons in the input's ancestor tree does not change the field
+value. Either the clear button is absent or requires a React internal
+state event that Selenium cannot dispatch. Needs DevTools inspection to
+identify the clear mechanism.)                                           [ 65%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_single_day_range_shows_cvr_constraint PASSED [ 66%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_month_boundary_spanning_range PASSED [ 66%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_multi_year_range_no_error PASSED [ 66%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_preset_change_in_page_bar_auto_applies PASSED [ 66%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_conversion_rate_chart_renders PASSED [ 67%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-002-CVR-003-short_range] PASSED [ 67%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_week_range_boundary[CVR-004-gte_7days] PASSED [ 67%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_legend_shows_series_name PASSED [ 67%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_y_axis_percentage_range PASSED [ 68%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cvr_rerenders_on_filter_change PASSED [ 68%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_membership_history_table_renders PASSED [ 68%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Date] PASSED [ 69%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Site Name] PASSED [ 69%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Total] PASSED [ 69%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recurring] PASSED [ 69%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prepaid] PASSED [ 70%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New] PASSED [ 70%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Recurring] PASSED [ 70%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[New Prepaid] PASSED [ 70%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Resignup] PASSED [ 71%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Recharges] PASSED [ 71%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day recharges] PASSED [ 71%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Prev. day recharge] PASSED [ 72%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Cancelled] PASSED [ 72%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined] PASSED [ 72%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Declined & Canceled] PASSED [ 72%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Current day declines count] PASSED [ 73%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Previous day declines count] PASSED [ 73%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_default_column_headers[Net movement] PASSED [ 73%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_no_data_message_when_empty PASSED [ 74%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_rows_sorted_descending_by_date PASSED [ 74%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_includes_most_recent_rows SKIPPED [ 74%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_date_cells_with_weekday_and_color PASSED [ 74%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_column_headers_have_sort_controls XFAILort-class icons in the
+current build — sort UI is not yet implemented)                          [ 75%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_clicking_header_toggles_sort XPASSrt interaction is not yet
+implemented in the current build)                                        [ 75%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_horizontal_scrollbar_visible PASSED [ 75%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_color_coded_semantics PASSED [ 75%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_zero_values_render_as_zero PASSED [ 76%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_cancelled_vs_canceled_spelling PASSED [ 76%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_resignup_label_mismatch PASSED [ 76%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_mht_updates_on_filter_change PASSED [ 77%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_settings_icon_opens_modal PASSED [ 77%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_modal_lists_17_column_toggles PASSED [ 77%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::test_all_toggles_on_by_default PASSED [ 77%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_off_removes_column PASSED [ 78%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_toggle_on_restores_column PASSED [ 78%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_master_switch_toggles_all_off PASSED [ 78%]
+tests/admin_portal/performance_metrics/test_performance_metrics.py::TestColumnSettings::test_date_column_always_visible PASSED [ 79%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_cars_washed_total_matches_report XFAILe live data.) [ 79%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_revenue_daily_matches_report XPASSe live data.) [ 79%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_filters_persist_navigating_to_report XPASSe live data.) [ 79%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_modal_and_inline_filters_return_matching_totals XPASSe live
+data.)                                                                   [ 80%]
+tests/admin_portal/overview/test_overview_data_validation.py::test_overview_both_report_pages_accept_same_filter_inputs XFAILe live data.) [ 80%]
+tests/admin_portal/overview/test_overview_exports.py::test_overview_exports_are_available_and_filter_aware XPASS [ 80%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_dropdown_opens XPASS [ 80%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_site_filter_updates_dashboard XFAIL [ 81%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_selected_site_shows_as_chip XFAIL [ 81%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_clearing_sites_reverts_to_aggregated XFAIL [ 81%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_preset_filters_are_available XFAIL [ 82%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_last_month_preset_updates_dashboard XFAIL [ 82%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_date_range_filters_are_available XFAIL [ 82%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_custom_date_range_updates_dashboard XFAIL [ 82%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_checkbox_is_available XFAIL [ 83%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_documents_behaviour PASSED [ 83%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_uncheck_single_day_reverts_to_range_mode XFAIL [ 83%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_end_date_before_start_documents_behaviour PASSED [ 83%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_no_date_no_broken_state PASSED [ 84%]
+tests/admin_portal/overview/test_overview_filters.py::test_overview_single_day_today_matches_today_preset XPASS [ 84%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_extreme_value_bug PASSED [ 84%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_labor_percent_no_revenue_shows_placeholder XPASS [ 85%]
+tests/admin_portal/overview/test_overview_known_bugs.py::test_overview_usage_breakdown_percentages_sum_to_100 XFAIL [ 85%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_browser_back_returns_to_overview PASSED [ 85%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_opens_in_new_tab PASSED [ 85%]
+tests/admin_portal/overview/test_overview_navigation.py::test_overview_report_navigation_is_available XFAIL links are unavailable.) [ 86%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_no_data_states_are_handled XPASS [ 86%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_network_failure_is_handled XFAILquests.) [ 86%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_rapid_filter_switching_does_not_crash XPASS [ 87%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_empty_state_with_no_shift_data XPASS [ 87%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_future_date_range_shows_empty_state XPASS [ 87%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_zero_data_visually_distinct_from_loading XPASS [ 87%]
+tests/admin_portal/overview/test_overview_negative.py::test_overview_employees_no_records_label_when_no_assignments XPASS [ 88%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_loads XFAILs unavailable.) [ 88%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_summary_cards_update XFAILs unavailable.) [ 88%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_redemption_cards XPASSs unavailable.) [ 88%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_hourly_chart_legend XPASSs unavailable.) [ 89%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_usage_breakdown_tabs XPASSs unavailable.) [ 89%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_percentages_sum_to_100 XFAILs unavailable.) [ 89%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_cars_washed_report_rounding_rule XFAILs unavailable.) [ 90%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_loads XPASSs unavailable.) [ 90%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_summary_cards_update XPASSs unavailable.) [ 90%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_donut_updates_on_click XPASSs unavailable.) [ 90%]
+tests/admin_portal/overview/test_overview_reports.py::test_overview_revenue_report_membership_tab XPASSs unavailable.) [ 91%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_shell_redirects_and_loads PASSED [ 91%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_support_button_is_visible XPASSg.) [ 91%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_filter_controls_visible XFAIL [ 91%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_export_buttons_visible XPASS [ 92%]
+tests/admin_portal/overview/test_overview_ui.py::test_overview_dashboard_widgets_visible XFAIL [ 92%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_all_dashboard_cards_render XFAILs unavailable.) [ 92%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_totals_update_with_filters XFAILs unavailable.) [ 93%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_breakdown_legend XPASSs unavailable.) [ 93%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_hourly_chart_renders XPASSs unavailable.) [ 93%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_cars_washed_full_report_link XPASSs unavailable.) [ 93%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_totals_update_with_filters XPASSs unavailable.) [ 94%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_donut_chart_renders XFAILs unavailable.) [ 94%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle XPASSs unavailable.) [ 94%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_full_report_link XPASSs unavailable.) [ 95%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_revenue_memberships_toggle_effect_documented XPASSs
+unavailable.)                                                            [ 95%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_tiles_are_clickable XPASSs unavailable.) [ 95%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_info_tooltip_shows_formula XFAILs unavailable.) [ 95%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_formula_values_match_display XPASSs unavailable.) [ 96%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_awt_breakdown_bar_renders XFAILs unavailable.) [ 96%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_active_count XPASSs unavailable.) [ 96%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_transaction_counts_update XPASSs unavailable.) [ 96%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_recurring_prepaid_breakdown XPASSs unavailable.) [ 97%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_canceled_bars_display XFAILs unavailable.) [ 97%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_memberships_info_tooltip_visible XPASSs unavailable.) [ 97%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_table_columns XFAILs unavailable.) [ 98%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_shift_status XPASSs unavailable.) [ 98%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_employees_full_report_link XPASSs unavailable.) [ 98%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_gift_cards_totals XPASSs unavailable.) [ 98%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_wash_books_totals XPASSs unavailable.) [ 99%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_percent_calculates XPASSs unavailable.) [ 99%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_per_car_and_per_hour XPASSs unavailable.) [ 99%]
+tests/admin_portal/overview/test_overview_widgets.py::test_overview_labor_full_report_link XPASSs unavailable.) [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at setup of test_list_refreshes_on_filter_change ____________
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="3ca02d3d6ca3360220cce34e6f7824b8")>
+
+    @pytest.fixture
+    def rvo_page(browser):
+        """Revenue Overview metrics screen with VK Test carwash 2 + VK AL02 + This month applied."""
+>       page = open_rvo_page(browser)
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/admin_portal/revenue_overview/conftest.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/admin_portal/revenue_overview/conftest.py:51: in open_rvo_page
+    page.wait_for_modal()
+pages/admin_portal/revenue_overview_page.py:180: in wait_for_modal
+    self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:112: in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:515: in _predicate
+    element = visibility_of(target)(driver)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:208: in _predicate
+    return _element_if_visible(element)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/support/expected_conditions.py:223: in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+                      ^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:308: in is_displayed
+    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:578: in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1060922d0>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x00000001013c1a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x00000001013b9b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x0000000100e632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100e69464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x0000000100e6b92c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 108276
+E       5   chromedriver                        0x0000000100eebd54 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 633628
+E       6   chromedriver                        0x0000000100eeb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       7   chromedriver                        0x0000000100ea1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       8   chromedriver                        0x000000010137ec40 cxxbridge1$str$ptr + 2921304
+E       9   chromedriver                        0x00000001013823b8 cxxbridge1$str$ptr + 2935504
+E       10  chromedriver                        0x00000001013650f8 cxxbridge1$str$ptr + 2816016
+E       11  chromedriver                        0x0000000101382c4c cxxbridge1$str$ptr + 2937700
+E       12  chromedriver                        0x00000001013563b0 cxxbridge1$str$ptr + 2755272
+E       13  chromedriver                        0x00000001013a81f4 cxxbridge1$str$ptr + 3090700
+E       14  chromedriver                        0x00000001013a8354 cxxbridge1$str$ptr + 3091052
+E       15  chromedriver                        0x00000001013b97a4 cxxbridge1$str$ptr + 3161788
+E       16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+=================================== FAILURES ===================================
+________________ test_date_preset_dropdown_lists_seven_options _________________
+
+rvo_modal = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x105cad2d0>
+
+    @allure.story("Filter Modal")
+    @allure.title("RVO-FMD-002 Date preset dropdown lists all seven options including Custom")
+    @pytest.mark.regression
+    def test_date_preset_dropdown_lists_seven_options(rvo_modal):
+        options = rvo_modal.get_date_preset_options()
+        options_lower = [o.lower() for o in options]
+        missing = [p for p in DATE_PRESETS if p.lower() not in options_lower]
+>       assert not missing, (
+            "Date preset options missing: %s. Actual: %s" % (missing, options)
+        )
+E       AssertionError: Date preset options missing: ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'Custom']. Actual: []
+E       assert not ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'Custom']
+
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py:213: AssertionError
+________________ test_site_change_auto_applies_no_apply_button _________________
+
+rvo_page = <pages.admin_portal.revenue_overview_page.RevenueOverviewPage object at 0x10474fd10>
+
+    @allure.story("Site Filter")
+    @allure.title("RVO-SIT-013 Changing site on metrics screen auto-applies without Apply button")
+    @pytest.mark.regression
+    def test_site_change_auto_applies_no_apply_button(rvo_page):
+        options = rvo_page.get_site_options()
+        body_before = rvo_page.get_body_text()
+        # Change to a different site (second option, or use same if only one)
+        other = next((o for o in options if o != RVO_SITE), None)
+        if other:
+>           rvo_page.select_site(other, clear_first=True)
+
+tests/admin_portal/revenue_overview/test_revenue_overview 2.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/revenue_overview_page.py:219: in select_site
+    self.select_react_dropdown_option(
+pages/common/base_page.py:111: in select_react_dropdown_option
+    option = WebDriverWait(self.driver, 20).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="b4eabd2c289b61d2d98e0a85bca6b6bb")>
+method = <function BasePage.select_react_dropdown_option.<locals>.<lambda> at 0x105c78ea0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+=========================== short test summary info ============================
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_date_preset_dropdown_lists_seven_options - AssertionError: Date preset options missing: ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'Custom']. Actual: []
+assert not ['Today', 'Yesterday', 'This week', 'Last week', 'This month', 'Last month', 'Custom']
+FAILED tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_site_change_auto_applies_no_apply_button - selenium.common.exceptions.TimeoutException: Message:
+ERROR tests/admin_portal/revenue_overview/test_revenue_overview 2.py::test_list_refreshes_on_filter_change - selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+0   chromedriver                        0x00000001013c1a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x00000001013b9b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x0000000100e632a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000100e69464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+4   chromedriver                        0x0000000100e6b92c _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 108276
+5   chromedriver                        0x0000000100eebd54 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 633628
+6   chromedriver                        0x0000000100eeb030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+7   chromedriver                        0x0000000100ea1434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+8   chromedriver                        0x000000010137ec40 cxxbridge1$str$ptr + 2921304
+9   chromedriver                        0x00000001013823b8 cxxbridge1$str$ptr + 2935504
+10  chromedriver                        0x00000001013650f8 cxxbridge1$str$ptr + 2816016
+11  chromedriver                        0x0000000101382c4c cxxbridge1$str$ptr + 2937700
+12  chromedriver                        0x00000001013563b0 cxxbridge1$str$ptr + 2755272
+13  chromedriver                        0x00000001013a81f4 cxxbridge1$str$ptr + 3090700
+14  chromedriver                        0x00000001013a8354 cxxbridge1$str$ptr + 3091052
+15  chromedriver                        0x00000001013b97a4 cxxbridge1$str$ptr + 3161788
+16  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+17  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+= 2 failed, 240 passed, 9 skipped, 60 xfailed, 50 xpassed, 1 error in 8369.45s (2:19:29) =

@@ -1,0 +1,93 @@
+2026-07-29 05:39:51,953 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 78 items
+
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_wash_package_barcode_persists ERROR [  1%]
+tests/admin_portal/wash_packages/test_wash_packages_barcode.py::test_duplicate_barcode_behaviour XPASSe (product defect).) [  2%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_list_shell_controls_and_grid 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:23 Verifying Wash Packages list shell and primary controls
+PASSED                                                                   [  3%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_search_variants_and_clear SKIPPEDage_if_missing on
+staging.)                                                                [  5%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_filter_panel_site_option_and_reset 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:80 Verifying Wash Packages filter panel controls and reset
+PASSED                                                                   [  6%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_add_wash_package_form_service_discount_save_cancel_controls 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:96 Verifying Add Wash Package form controls
+PASSED                                                                   [  7%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_package_global_price_is_required 
+-------------------------------- live log call ---------------------------------
+INFO     nxtwash:test_wash_packages_coverage_gap.py:119 Verifying global price mandatory validation
+PASSED                                                                   [  8%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_download_file_validation_blocker XFAILiguration
+and CSV/XLS parser utilities.)                                           [ 10%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_permission_matrix_blocker XFAIL [ 11%]
+tests/admin_portal/wash_packages/test_wash_packages_coverage_gap.py::test_wash_packages_advanced_edge_case_harness_blocker XFAIL multi-session,
+network interception, audit API, and environment restart harnesses.)     [ 12%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_wash_package_available_for_membership_redemption SKIPPED) [ 14%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivate_wash_package_mapped_to_membership SKIPPED) [ 15%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_rename_wash_package_mapped_to_membership SKIPPED) [ 16%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_deactivated_discount_removed_from_wash_package SKIPPED [ 17%]
+tests/admin_portal/wash_packages/test_wash_packages_dependency.py::test_site_unassignment_does_not_affect_other_redemption_sites SKIPPED [ 19%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_long_name_does_not_break_form PASSED [ 20%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_whitespace_name_is_rejected PASSED [ 21%]
+tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable 2026-07-29 05:50:05,504 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable (url: https://staging.nxtwash.com/services/washPackages)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_packages/test_wash_packages_edge_cases.py::test_wash_package_existing_search_is_repeatable (url: https://staging.nxtwash.com/services/washPackages)
+2026-07-29 05:50:10,422 ERROR nxtwash: Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Wash packages
+Filter by (1)
++ Add new wash package
+Wash package name
+Price
+Status
+VK AWP1 edited
+$30.00
+Active
+Edit
+Page
+of
+1
+Results per page
+100
+Showing 1 - 1 of 1
+FAILED                                                                   [ 23%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_name_persists ERROR [ 24%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_price_persists ERROR [ 25%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists ERROR [ 26%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_loyalty_points_persist ERROR [ 28%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_edit_wash_package_assigned_sites ERROR [ 29%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_activate_wash_package ERROR [ 30%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_deactivate_wash_package XFAILproduces locally. Pending individual fix
+— see docs/admin_test_burndown.md)                                       [ 32%]
+tests/admin_portal/wash_packages/test_wash_packages_edit.py::test_assign_applicable_discount_persists 

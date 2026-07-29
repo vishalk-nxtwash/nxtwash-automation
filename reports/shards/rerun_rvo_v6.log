@@ -1,0 +1,24 @@
+2026-07-29 05:59:01,904 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 100 items
+
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_metrics_shell_renders_behind_modal PASSED [  4%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_title_and_info_icon_render PASSED [  5%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sidebar_highlights_active_item PASSED [  6%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_sites_dropdown_lists_all_active_sites XPASSing modal open.) [  7%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_date_preset_dropdown_lists_seven_options XPASSiming race during modal
+open on staging.)                                                        [  8%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_modal_opens_with_default_state PASSED [  9%]
+tests/admin_portal/revenue_overview/test_revenue_overview.py::test_changing_preset_auto_updates_date_range 

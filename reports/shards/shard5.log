@@ -1,0 +1,8 @@
+[shard5] Started: Mon Jul 27 03:54:21 IST 2026
+[shard5] START employees — 03:54:21
+[shard5] DONE  employees — = 2 failed, 46 passed, 10 skipped, 31 xfailed, 8 xpassed, 1 error in 6002.79s (1:40:02) =
+[shard5] START labor_shifts — 05:34:25
+[shard5] DONE  labor_shifts — = 13 failed, 38 passed, 6 skipped, 3 xfailed, 1 xpassed, 25 errors in 3886.04s (1:04:46) =
+[shard5] START users — 06:39:12
+[shard5] DONE  users — ====== 7 failed, 12 passed, 37 skipped, 10 xfailed in 2711.53s (0:45:11) =======
+[shard5] Finished: Mon Jul 27 07:24:25 IST 2026

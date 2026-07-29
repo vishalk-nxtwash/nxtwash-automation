@@ -1,0 +1,880 @@
+2026-07-29 05:02:01,648 INFO nxtwash: Test run starting against 'staging' environment
+============================= test session starts ==============================
+platform darwin -- Python 3.11.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/vk/Documents/NxtWash Automation/nxtwash-automation/venv/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.11.2', 'Platform': 'macOS-26.2-arm64-arm-64bit', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'html': '4.1.1', 'allure-pytest': '2.16.0', 'xdist': '3.8.0', 'Faker': '40.19.1', 'timeout': '2.4.0', 'metadata': '3.1.1', 'rerunfailures': '15.1'}}
+rootdir: /Users/vk/Documents/NxtWash Automation/nxtwash-automation
+configfile: pytest.ini
+plugins: html-4.1.1, allure-pytest-2.16.0, xdist-3.8.0, Faker-40.19.1, timeout-2.4.0, metadata-3.1.1, rerunfailures-15.1
+timeout: 420.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 83 items
+
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_loads_at_correct_url PASSED [  1%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_modal_auto_opens PASSED [  2%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_modal_contains_all_controls PASSED [  3%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply ERROR [  4%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_apply_filters_closes_modal SKIPPED [  6%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_filter_values_reflected_in_page_bar PASSED [  7%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_bar_changes_do_not_reopen_modal PASSED [  8%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_sites_dropdown_lists_active_sites PASSED [  9%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_filter_empty_by_default PASSED [ 10%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_selecting_site_creates_chip PASSED [ 12%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_multi_site_selection_accepted SKIPPED [ 13%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip 2026-07-29 05:06:05,773 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-29 05:06:06,830 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 14%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_single_site_scopes_data PASSED [ 15%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_removing_chip_reduces_site_filter PASSED [ 16%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_chip_x_and_clear_returns_empty_state PASSED [ 18%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_clear_all_sites PASSED [ 19%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal ERROR [ 20%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites 2026-07-29 05:09:11,242 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-29 05:09:12,567 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 21%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_wac_site_present_in_dropdown XPASSpen on staging.) [ 22%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-KPI-003-kpi] XPASS [ 24%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-CHT-010-chart] XPASS [ 25%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_widgets_refresh_on_site_change[WAC-TAB-005-tab] XPASS [ 26%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_preset_count XFAILace during modal open.) [ 27%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-002] XPASSw to
+populate on staging.)                                                    [ 28%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-003] XPASSw to
+populate on staging.)                                                    [ 30%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-004] XPASSw to
+populate on staging.)                                                    [ 31%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-005] XPASSw to
+populate on staging.)                                                    [ 32%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-006] XPASSw to
+populate on staging.)                                                    [ 33%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_preset_populates_date_range[WAC-DTE-007] XPASSw to
+populate on staging.)                                                    [ 34%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available 2026-07-29 05:13:35,134 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-29 05:13:35,801 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 36%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_selecting_preset_fills_date_range PASSED [ 37%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range 2026-07-29 05:14:23,853 ERROR nxtwash: Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+
+-------------------------------- live log call ---------------------------------
+ERROR    nxtwash:conftest.py:241 Test FAILED: tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range (url: https://staging.nxtwash.com/reports/detailed/cars_washed)
+2026-07-29 05:14:27,165 ERROR nxtwash: Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Today
+Yesterday
+This week
+Last week
+This month
+Last month
+Custom
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+ERROR    nxtwash:conftest.py:256 Visible page text at failure:
+Sites / Locations
+Select site to filter...
+Export XLSX
+Today
+Today
+Yesterday
+This week
+Last week
+This month
+Last month
+Custom
+Select date range
+Single day
+Total Cars
+0
+Daily Average
+0
+Hourly Average
+0
+Total Redemptions
+0
+Membership
+Total Paid
+0
+Single Washes
+Total Comp Washes
+0
+Comp Washes
+Hourly Distribution
+No information for this period
+Usage Breakdown
+Memberships (0)
+Paid Washes (0)
+Comp Washes (0)
+Sites / Locations
+Select site to filter...
+Date range presets
+Today
+Select date range
+Single day
+Apply filters
+FAILED                                                                   [ 38%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_checkbox_in_modal PASSED [ 39%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_single_day_field_narrows_to_one_date PASSED [ 40%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_last_month_date_range SKIPPED [ 42%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_zero_data_state PASSED [ 43%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-KPI-003-kpi] XPASS [ 44%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-CHT-010-chart] XPASS [ 45%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_widgets_refresh_on_date_change[WAC-TAB-005-tab] XPASS [ 46%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-01] PASSED [ 48%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-02] PASSED [ 49%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-03] PASSED [ 50%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-04] PASSED [ 51%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-05] PASSED [ 53%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_visible[WAC-KPI-001-06] PASSED [ 54%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_values_non_zero PASSED [ 55%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_zero_data_state PASSED [ 56%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_cars_equals_sum PASSED [ 57%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_daily_average_non_zero XFAILoduct defect) [ 59%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_hourly_average_non_zero XFAILormula not computing. See
+also WAC-KPI-005, WAC-KPI-011.)                                          [ 60%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-008] PASSED [ 61%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-009] PASSED [ 62%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_card_sublabels[WAC-KPI-010] PASSED [ 63%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityKPI::test_kpi_total_paid_matches_tab XFAILmatch. Same root cause as
+WAC-KPI-005, WAC-PWS-006.)                                               [ 65%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_section_visible PASSED [ 66%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_has_bars_for_non_zero_data SKIPPEDinst live DOM) [ 67%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_empty_state_for_zero_data PASSED [ 68%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_renders_for_test_dataset XPASS [ 69%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_off SKIPPEDe removing skip.) [ 71%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityChart::test_chart_legend_toggle_on SKIPPED [ 72%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_usage_breakdown_section_visible XPASS [ 73%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_all_three_tabs_visible PASSED [ 74%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_default_active_tab_is_memberships PASSED [ 75%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-mem] PASSED [ 77%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-pws] PASSED [ 78%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_tab_switching[WAC-TAB-004-cmp] PASSED [ 79%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-mem] PASSED [ 80%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityTabs::test_empty_tab_clean_state[WAC-TAB-007-cmp] PASSED [ 81%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_breakdown_cards_present PASSED [ 83%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_empty_state PASSED [ 84%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityMemberships::test_memberships_tab_matches_total_redemptions_kpi PASSED [ 85%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_breakdown_cards_present SKIPPEDools
+verification)                                                            [ 86%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_sum_matches_tab_count XFAIL [ 87%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityPaidWashes::test_paid_washes_tab_vs_total_paid_kpi_mismatch XFAIL [ 89%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_breakdown_cards_present PASSED [ 90%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_empty_state PASSED [ 91%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityCompWashes::test_comp_washes_tab_matches_kpi PASSED [ 92%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_button_visible XPASS) [ 93%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityExport::test_export_xlsx_initiates_download XPASS [ 95%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_checkbox_visible <- tests/admin_portal/mixins.py PASSED [ 96%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_single_day_changes_date_field <- tests/admin_portal/mixins.py PASSED [ 97%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_modal_sdm_syncs_to_page_bar <- tests/admin_portal/mixins.py PASSED [ 98%]
+tests/admin_portal/wash_activity/test_wash_activity.py::TestSingleDaySync::test_page_bar_sdm_uncheck_syncs_to_modal <- tests/admin_portal/mixins.py PASSED [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestWashActivityNav.test_page_content_visible_after_apply __
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="3cd38dd4a67927ec83ffbe0c2f9d9e7f")>
+
+    @pytest.fixture
+    def wac_page(browser):
+        """Phase 2 — WAC_SITE + Last month applied; metrics screen visible."""
+        page = open_wac_page(browser)
+>       page.select_site(WAC_SITE)
+
+tests/admin_portal/wash_activity/conftest.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_activity_page.py:323: in select_site
+    inner.send_keys(Keys.BACKSPACE)
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105e0af90>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100a95a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100a8db4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001005372a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x000000010053d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x000000010053f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E       5   chromedriver                        0x000000010053f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E       6   chromedriver                        0x0000000100580724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+E       7   chromedriver                        0x00000001005807b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+E       8   chromedriver                        0x0000000100579b18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+E       9   chromedriver                        0x0000000100576934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       10  chromedriver                        0x00000001005bf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       11  chromedriver                        0x0000000100575434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       12  chromedriver                        0x0000000100a52c40 cxxbridge1$str$ptr + 2921304
+E       13  chromedriver                        0x0000000100a563b8 cxxbridge1$str$ptr + 2935504
+E       14  chromedriver                        0x0000000100a390f8 cxxbridge1$str$ptr + 2816016
+E       15  chromedriver                        0x0000000100a56c4c cxxbridge1$str$ptr + 2937700
+E       16  chromedriver                        0x0000000100a2a3b0 cxxbridge1$str$ptr + 2755272
+E       17  chromedriver                        0x0000000100a7c1f4 cxxbridge1$str$ptr + 3090700
+E       18  chromedriver                        0x0000000100a7c354 cxxbridge1$str$ptr + 3091052
+E       19  chromedriver                        0x0000000100a8d7a4 cxxbridge1$str$ptr + 3161788
+E       20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+_ ERROR at setup of TestWashActivitySiteFilter.test_page_bar_site_change_no_modal _
+
+browser = <selenium.webdriver.chrome.webdriver.WebDriver (session="9d3967f8f72f1421a0461bc02393636f")>
+
+    @pytest.fixture
+    def wac_page(browser):
+        """Phase 2 — WAC_SITE + Last month applied; metrics screen visible."""
+        page = open_wac_page(browser)
+>       page.select_site(WAC_SITE)
+
+tests/admin_portal/wash_activity/conftest.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_activity_page.py:322: in select_site
+    inner.send_keys(Keys.COMMAND + "a")
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:276: in send_keys
+    self._execute(
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105d7d210>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...000199325c08 _pthread_start + 136\\n20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100c71a84 cxxbridge1$str$ptr + 3195292
+E       1   chromedriver                        0x0000000100c69b4c cxxbridge1$str$ptr + 3162724
+E       2   chromedriver                        0x00000001007132a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+E       3   chromedriver                        0x0000000100719464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+E       4   chromedriver                        0x000000010071b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+E       5   chromedriver                        0x000000010071b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+E       6   chromedriver                        0x000000010075c724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+E       7   chromedriver                        0x0000000100755c70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346680
+E       8   chromedriver                        0x0000000100752934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+E       9   chromedriver                        0x000000010079b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+E       10  chromedriver                        0x0000000100751434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+E       11  chromedriver                        0x0000000100c2ec40 cxxbridge1$str$ptr + 2921304
+E       12  chromedriver                        0x0000000100c323b8 cxxbridge1$str$ptr + 2935504
+E       13  chromedriver                        0x0000000100c150f8 cxxbridge1$str$ptr + 2816016
+E       14  chromedriver                        0x0000000100c32c4c cxxbridge1$str$ptr + 2937700
+E       15  chromedriver                        0x0000000100c063b0 cxxbridge1$str$ptr + 2755272
+E       16  chromedriver                        0x0000000100c581f4 cxxbridge1$str$ptr + 3090700
+E       17  chromedriver                        0x0000000100c58354 cxxbridge1$str$ptr + 3091052
+E       18  chromedriver                        0x0000000100c697a4 cxxbridge1$str$ptr + 3161788
+E       19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+E       20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+
+venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py:232: StaleElementReferenceException
+=================================== FAILURES ===================================
+________ TestWashActivitySiteFilter.test_all_sites_shows_overflow_chip _________
+
+self = <tests.admin_portal.wash_activity.test_wash_activity.TestWashActivitySiteFilter object at 0x105fe6b90>
+wac_modal = <pages.admin_portal.wash_activity_page.WashActivityPage object at 0x105d90bd0>
+
+    @allure.title(
+        "WAC-SIT-004b Selecting all 7 sites shows 2 chips + '+5' overflow indicator"
+    )
+    @pytest.mark.regression
+    def test_all_sites_shows_overflow_chip(self, wac_modal):
+        options = wac_modal.get_site_options()
+>       assert len(options) >= WAC_ALL_SITE_COUNT, (
+            "Expected at least %d sites; got %d" % (WAC_ALL_SITE_COUNT, len(options))
+        )
+E       AssertionError: Expected at least 7 sites; got 0
+E       assert 0 >= 7
+E        +  where 0 = len([])
+
+tests/admin_portal/wash_activity/test_wash_activity.py:260: AssertionError
+______ TestWashActivitySiteFilter.test_site_dropdown_lists_multiple_sites ______
+
+self = <tests.admin_portal.wash_activity.test_wash_activity.TestWashActivitySiteFilter object at 0x105fe4910>
+wac_modal = <pages.admin_portal.wash_activity_page.WashActivityPage object at 0x105bc2b10>
+
+    @allure.title("WAC-SIT-012 Site dropdown lists more than one active site")
+    @pytest.mark.regression
+    def test_site_dropdown_lists_multiple_sites(self, wac_modal):
+        options = wac_modal.get_site_options()
+>       assert len(options) > 1, (
+            "Expected multiple active sites in dropdown; got: %s" % options
+        )
+E       AssertionError: Expected multiple active sites in dropdown; got: []
+E       assert 0 > 1
+E        +  where 0 = len([])
+
+tests/admin_portal/wash_activity/test_wash_activity.py:340: AssertionError
+___________ TestWashActivityDateFilter.test_custom_preset_available ____________
+
+self = <tests.admin_portal.wash_activity.test_wash_activity.TestWashActivityDateFilter object at 0x105fc51d0>
+wac_modal = <pages.admin_portal.wash_activity_page.WashActivityPage object at 0x105ff2410>
+
+    @allure.title("WAC-DTE-008 'Custom' preset option is available in the date dropdown")
+    @pytest.mark.regression
+    def test_custom_preset_available(self, wac_modal):
+        options = wac_modal.get_date_preset_options()
+>       assert any("custom" in o.lower() for o in options), (
+            "Custom preset not found in date dropdown options: %s" % options
+        )
+E       AssertionError: Custom preset not found in date dropdown options: []
+E       assert False
+E        +  where False = any(<generator object TestWashActivityDateFilter.test_custom_preset_available.<locals>.<genexpr> at 0x105bb17e0>)
+
+tests/admin_portal/wash_activity/test_wash_activity.py:423: AssertionError
+____ TestWashActivityDateFilter.test_date_range_input_shows_selected_range _____
+
+self = <tests.admin_portal.wash_activity.test_wash_activity.TestWashActivityDateFilter object at 0x105fc7450>
+wac_modal = <pages.admin_portal.wash_activity_page.WashActivityPage object at 0x105fc7cd0>
+
+    @allure.title("WAC-DTE-012 Date range input reflects the selected range value")
+    @pytest.mark.regression
+    def test_date_range_input_shows_selected_range(self, wac_modal):
+>       wac_modal.select_date_preset("Last month")
+
+tests/admin_portal/wash_activity/test_wash_activity.py:448: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages/admin_portal/wash_activity_page.py:392: in select_date_preset
+    option = WebDriverWait(self.driver, 10).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="302c1d6750c9cfe747ce7c0be4dcf70b")>
+method = <function WashActivityPage.select_date_preset.<locals>.<lambda> at 0x105ba7ba0>
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+venv/lib/python3.11/site-packages/selenium/webdriver/support/wait.py:121: TimeoutException
+=========================== short test summary info ============================
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_all_sites_shows_overflow_chip - AssertionError: Expected at least 7 sites; got 0
+assert 0 >= 7
+ +  where 0 = len([])
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_site_dropdown_lists_multiple_sites - AssertionError: Expected multiple active sites in dropdown; got: []
+assert 0 > 1
+ +  where 0 = len([])
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_custom_preset_available - AssertionError: Custom preset not found in date dropdown options: []
+assert False
+ +  where False = any(<generator object TestWashActivityDateFilter.test_custom_preset_available.<locals>.<genexpr> at 0x105bb17e0>)
+FAILED tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityDateFilter::test_date_range_input_shows_selected_range - selenium.common.exceptions.TimeoutException: Message:
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivityNav::test_page_content_visible_after_apply - selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+0   chromedriver                        0x0000000100a95a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000100a8db4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001005372a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x000000010053d464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+4   chromedriver                        0x000000010053f678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+5   chromedriver                        0x000000010053f730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+6   chromedriver                        0x0000000100580724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+7   chromedriver                        0x00000001005807b0 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 374136
+8   chromedriver                        0x0000000100579b18 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346336
+9   chromedriver                        0x0000000100576934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+10  chromedriver                        0x00000001005bf030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+11  chromedriver                        0x0000000100575434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+12  chromedriver                        0x0000000100a52c40 cxxbridge1$str$ptr + 2921304
+13  chromedriver                        0x0000000100a563b8 cxxbridge1$str$ptr + 2935504
+14  chromedriver                        0x0000000100a390f8 cxxbridge1$str$ptr + 2816016
+15  chromedriver                        0x0000000100a56c4c cxxbridge1$str$ptr + 2937700
+16  chromedriver                        0x0000000100a2a3b0 cxxbridge1$str$ptr + 2755272
+17  chromedriver                        0x0000000100a7c1f4 cxxbridge1$str$ptr + 3090700
+18  chromedriver                        0x0000000100a7c354 cxxbridge1$str$ptr + 3091052
+19  chromedriver                        0x0000000100a8d7a4 cxxbridge1$str$ptr + 3161788
+20  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+21  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+ERROR tests/admin_portal/wash_activity/test_wash_activity.py::TestWashActivitySiteFilter::test_page_bar_site_change_no_modal - selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=150.0.7871.187); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+0   chromedriver                        0x0000000100c71a84 cxxbridge1$str$ptr + 3195292
+1   chromedriver                        0x0000000100c69b4c cxxbridge1$str$ptr + 3162724
+2   chromedriver                        0x00000001007132a4 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 73836
+3   chromedriver                        0x0000000100719464 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 98860
+4   chromedriver                        0x000000010071b678 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107584
+5   chromedriver                        0x000000010071b730 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 107768
+6   chromedriver                        0x000000010075c724 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 373996
+7   chromedriver                        0x0000000100755c70 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 346680
+8   chromedriver                        0x0000000100752934 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 333564
+9   chromedriver                        0x000000010079b030 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 630264
+10  chromedriver                        0x0000000100751434 _RNvCs9NA52FrZ4pF_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 328188
+11  chromedriver                        0x0000000100c2ec40 cxxbridge1$str$ptr + 2921304
+12  chromedriver                        0x0000000100c323b8 cxxbridge1$str$ptr + 2935504
+13  chromedriver                        0x0000000100c150f8 cxxbridge1$str$ptr + 2816016
+14  chromedriver                        0x0000000100c32c4c cxxbridge1$str$ptr + 2937700
+15  chromedriver                        0x0000000100c063b0 cxxbridge1$str$ptr + 2755272
+16  chromedriver                        0x0000000100c581f4 cxxbridge1$str$ptr + 3090700
+17  chromedriver                        0x0000000100c58354 cxxbridge1$str$ptr + 3091052
+18  chromedriver                        0x0000000100c697a4 cxxbridge1$str$ptr + 3161788
+19  libsystem_pthread.dylib             0x0000000199325c08 _pthread_start + 136
+20  libsystem_pthread.dylib             0x0000000199320ba8 thread_start + 8
+= 4 failed, 47 passed, 7 skipped, 6 xfailed, 17 xpassed, 2 errors in 1977.47s (0:32:57) =
