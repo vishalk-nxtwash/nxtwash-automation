@@ -16,16 +16,6 @@ pytestmark = [
     allure.story("Retract Settings"),
 ]
 
-_RETRACT_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Retract settings row locators use section-proximity heuristics — "
-        "verify exact row container classes and button aria-labels in DevTools "
-        "before removing xfail."
-    ),
-)
-
-
 @pytest.fixture
 def retract_form(browser, managed_tunnel):
     """Open Retract settings section for VK Tunnel 1; clean up any rows on teardown."""
@@ -51,7 +41,15 @@ def retract_form(browser, managed_tunnel):
     "TUN-RTR-001..007 Retract row full lifecycle: add, configure, toggle, remove"
 )
 @pytest.mark.regression
-@_RETRACT_XFAIL
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-RTR-004: select_retract_service JS-clicks the React Select option which "
+        "does not fire onChange — service value is not registered in form state and is "
+        "not persisted after save. Needs DevTools verification to confirm whether "
+        "ActionChains or a native click strategy is required for form-select__ options."
+    ),
+)
 def test_retract_row_lifecycle(browser, retract_form):
     form = retract_form
 
@@ -69,24 +67,34 @@ def test_retract_row_lifecycle(browser, retract_form):
     except Exception as exc:
         raise AssertionError("Retract row service dropdown not present: %s" % exc) from exc
 
-    # TUN-RTR-003: Service dropdown lists Detailing and Tire Wash
+    # TUN-RTR-003: Service dropdown lists expected services
     # Dependency: Services / Custom Services module
-    form.driver.execute_script(
-        "arguments[0].click();",
-        form.wait.until(lambda d: [
-            e for e in d.find_elements(*form.RETRACT_SERVICE_DROPDOWNS) if e.is_displayed()
-        ][-1])
-    )
+    from selenium.webdriver.common.action_chains import ActionChains as _AC
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
+    dropdown = form.wait.until(lambda d: [
+        e for e in d.find_elements(*form.RETRACT_SERVICE_DROPDOWNS) if e.is_displayed()
+    ][-1])
+    form.driver.execute_script("arguments[0].click();", dropdown)
+    inner = dropdown.find_elements(By.XPATH, ".//input")
+    if inner:
+        try:
+            _AC(form.driver).click(inner[0]).perform()
+        except Exception:
+            form.driver.execute_script("arguments[0].click();", inner[0])
     opts = WebDriverWait(form.driver, 10).until(
-        lambda d: [
-            o.text.strip()
-            for o in d.find_elements(By.XPATH,
-                "//*[contains(@class,'form-select__option')] | //*[@role='option']")
-            if o.text.strip()
-        ]
-    )
+        lambda d: d.execute_script("""
+            var opts = Array.from(document.querySelectorAll(
+                '[role="option"], [class*="__option"], [class*="select__option"]'
+            )).filter(function(el) {
+                var r = el.getBoundingClientRect();
+                return r.height > 0 && el.textContent.trim();
+            });
+            return opts.length > 0
+                ? opts.map(function(el) { return el.textContent.trim(); })
+                : null;
+        """)
+    ) or []
     assert len(opts) > 0, "Retract service dropdown has no options"
     assert TUNNEL_RETRACT_SERVICE in opts, (
         "Expected service '%s' not in retract options: %s" % (TUNNEL_RETRACT_SERVICE, opts)
@@ -145,7 +153,6 @@ def test_retract_row_lifecycle(browser, retract_form):
 
 @allure.title("TUN-RTR-009 Multiple retract rows can be added")
 @pytest.mark.regression
-@_RETRACT_XFAIL
 def test_multiple_retract_rows_added(browser, retract_form):
     form = retract_form
 
@@ -165,7 +172,6 @@ def test_multiple_retract_rows_added(browser, retract_form):
 
 @allure.title("TUN-RTR-012 Retract row numbering reflects insertion order")
 @pytest.mark.regression
-@_RETRACT_XFAIL
 def test_retract_row_numbering_reflects_order(browser, retract_form):
     form = retract_form
 
