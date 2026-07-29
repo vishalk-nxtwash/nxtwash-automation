@@ -3,6 +3,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
@@ -215,14 +216,20 @@ class SitesPage(BasePage):
         else:
             self.filter_by_site_name(site_name)
         self.wait_for_site_row(site_name)
-        locator = (
-            By.XPATH,
-            "//*[normalize-space()='%s']/ancestor::tr[1]"
-            "//*[@id='table-edit-button']//button"
-            % site_name
+        # Atomic JS click: finds and clicks in a single JS call so grid re-renders
+        # between EC.element_to_be_clickable and execute_script cannot stale the ref.
+        _CLICK_EDIT_JS = (
+            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "for(var i=0;i<rows.length;i++){"
+            " if(rows[i].textContent.indexOf(name)!==-1){"
+            "  var btn=rows[i].querySelector('#table-edit-button button');"
+            "  if(btn){btn.click();return true;}"
+            " }}"
+            "return false;"
         )
-        button = self.wait.until(EC.element_to_be_clickable(locator))
-        self.driver.execute_script("arguments[0].click();", button)
+        WebDriverWait(self.driver, 20).until(
+            lambda d: d.execute_script(_CLICK_EDIT_JS, site_name)
+        )
 
     def filter_by_name_and_active(self, site_name, should_be_active=True):
         """Enter site-name filter and set the active toggle, then apply once."""

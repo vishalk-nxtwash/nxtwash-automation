@@ -221,6 +221,7 @@ def reset_managed_membership(browser):
         )
         # create_membership() saves and returns to list — membership is at
         # baseline from fill_membership_form(), so reset is complete.
+        memberships_page.clear_active_filters()
         return memberships_page
 
     # Open edit directly from the current list state, skipping the extra
@@ -245,6 +246,9 @@ def reset_managed_membership(browser):
     memberships_page.open_membership_settings()
     memberships_page.set_barcode("")
     memberships_page.save_and_return_to_list()
+    # Clear any residual filters (e.g. inactive-only from _show_inactive_memberships)
+    # so the next test sees a clean default list view.
+    memberships_page.clear_active_filters()
 
     return memberships_page
 

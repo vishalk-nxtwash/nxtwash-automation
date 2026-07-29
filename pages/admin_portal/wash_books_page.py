@@ -382,13 +382,21 @@ class WashBooksPage(BasePage):
         """Open edit wash book form."""
         self.wait_for_list_loaded()
         self.search_wash_book(wash_book_name)
-        row = self.wait_for_wash_book_row(wash_book_name)
-        edit_button = row.find_element(
-            By.XPATH,
-            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        self.wait_for_wash_book_row(wash_book_name)
+        # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        _CLICK_EDIT_JS = (
+            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "for(var i=0;i<rows.length;i++){"
+            " if(rows[i].textContent.indexOf(name)!==-1){"
+            "  var a=Array.from(rows[i].querySelectorAll('a'))"
+            "   .find(function(x){return x.textContent.trim()==='Edit';});"
+            "  if(a){a.click();return true;}"
+            " }}"
+            "return false;"
         )
-        # Use JS click to bypass any overlay/interceptor covering the button.
-        self.driver.execute_script("arguments[0].click();", edit_button)
+        WebDriverWait(self.driver, 20).until(
+            lambda d: d.execute_script(_CLICK_EDIT_JS, wash_book_name)
+        )
         self.wait_for_edit_loaded()
 
     def enter_wash_book_name(self, wash_book_name):

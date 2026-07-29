@@ -372,14 +372,18 @@ class AdminUserRoleFormPage(BasePage):
     def ensure_active_switch_on(self):
         switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
-            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "true")
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda d: d.find_element(*self.ACTIVE_SWITCH).get_attribute("aria-checked") == "true"
+            )
 
     def ensure_active_switch_off(self):
         switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
         if switch.get_attribute("aria-checked") != "false":
-            switch.click()
-            self.wait.until(lambda d: switch.get_attribute("aria-checked") == "false")
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda d: d.find_element(*self.ACTIVE_SWITCH).get_attribute("aria-checked") == "false"
+            )
 
     def click_save(self):
         url_before = self.driver.current_url
@@ -389,8 +393,8 @@ class AdminUserRoleFormPage(BasePage):
         # If validation fails the URL won't change — silently timeout so tests can
         # inspect the form state themselves.
         try:
-            # Short timeout — fast for successful saves; fails quickly when validation blocks.
-            WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
+            # 15 s gives CI enough headroom; fails fast locally when validation blocks.
+            WebDriverWait(self.driver, 15).until(lambda d: d.current_url != url_before)
             # URL changed: SPA navigated away from the form. Release the stale iframe so
             # subsequent find_element calls don't search inside a detached frame.
             self.driver.switch_to.default_content()

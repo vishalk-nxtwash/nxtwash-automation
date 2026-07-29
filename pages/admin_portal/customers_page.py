@@ -530,13 +530,19 @@ class CustomersPage(BasePage):
 
     def ensure_active_filter_off(self):
         """Turn off the 'Active accounts only' filter toggle if it is on."""
+        # Open the panel first — switch is not in the DOM while the panel is closed.
+        self.open_filter_panel()
         try:
-            switch = WebDriverWait(self.driver, 3).until(
-                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
+            # aria-checked lives on the wrapper ancestor, not the <input> itself.
+            wrapper = WebDriverWait(self.driver, 5).until(
+                lambda d: d.find_element(
+                    By.XPATH,
+                    "//input[@name='isActive']/ancestor::*[@aria-checked][1]"
+                )
             )
-            if not switch.is_selected():
+            if wrapper.get_attribute("aria-checked") == "false":
                 return
-            self._click_react_switch(switch, False)
+            self._click_react_switch(wrapper, False)
         except TimeoutException:
             pass
 
