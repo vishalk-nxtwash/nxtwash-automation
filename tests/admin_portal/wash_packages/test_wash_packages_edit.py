@@ -32,17 +32,14 @@ def test_edit_wash_package_name_persists(browser, managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.enter_service_name(UPDATED_PACKAGE_NAME)
-    page.click_save_package()
-    # Name-change saves can redirect at different speeds; re-navigate to be safe
-    page = open_wash_packages_page(browser)
+    page.save_and_return_to_list()
     page.search_package(UPDATED_PACKAGE_NAME)
 
     assert page.wait_for_package_row(UPDATED_PACKAGE_NAME).is_displayed()
 
     page.open_edit_package(UPDATED_PACKAGE_NAME)
     page.enter_service_name(PACKAGE_NAME)
-    page.click_save_package()
-    open_wash_packages_page(browser)
+    page.save_and_return_to_list()
 
 
 @allure.title("WP-EDT-002 Edit global price persists after save")
@@ -52,8 +49,7 @@ def test_edit_wash_package_global_price_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.set_global_price(new_price)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_global_price_value() == new_price
@@ -67,8 +63,7 @@ def test_edit_wash_package_global_commission_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.set_global_commission(new_commission)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_global_commission_value() == new_commission
@@ -81,8 +76,7 @@ def test_edit_wash_package_loyalty_points_persist(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.set_loyalty_points(UPDATED_POINTS_AWARDED, UPDATED_POINTS_REDEEMED)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_points_awarded_value() == UPDATED_POINTS_AWARDED
@@ -98,8 +92,7 @@ def test_edit_wash_package_assigned_sites(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     body = page.get_body_text()
@@ -119,8 +112,7 @@ def test_activate_wash_package(managed_package):
     # re-search → open-edit flow is not reliable in this environment.
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(PACKAGE_NAME)
 
     assert page.wait_for_package_row(PACKAGE_NAME).is_displayed()
@@ -135,8 +127,7 @@ def test_deactivate_wash_package(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.ensure_active_switch_off()
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(PACKAGE_NAME)
 
     assert PACKAGE_NAME not in page.get_body_text()
@@ -150,8 +141,7 @@ def test_assign_applicable_discount_persists(managed_package):
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
@@ -175,8 +165,7 @@ def test_assign_multiple_discounts_persist(managed_package):
             "in conftest.py" % SECOND_APPLICABLE_DISCOUNT
         )
 
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
@@ -193,14 +182,12 @@ def test_remove_applicable_discount_persists(managed_package):
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
     page.remove_applicable_discount(APPLICABLE_DISCOUNT)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
@@ -220,8 +207,7 @@ def test_service_description_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.enter_description(DESCRIPTION_TEXT)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_description_value() == DESCRIPTION_TEXT

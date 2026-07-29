@@ -34,8 +34,7 @@ def test_managed_package_mutation_is_reset_on_teardown(browser, managed_package)
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.enter_service_name(UPDATED_PACKAGE_NAME)
-    page.click_save_package()
-    page = open_wash_packages_page(browser)
+    page.save_and_return_to_list()
     page.search_package(UPDATED_PACKAGE_NAME)
 
     assert page.wait_for_package_row(UPDATED_PACKAGE_NAME).is_displayed()
