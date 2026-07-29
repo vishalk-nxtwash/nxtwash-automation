@@ -239,7 +239,7 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(gift_card_name)
         self.wait.until(
@@ -254,7 +254,7 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -268,7 +268,7 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.CUSTOMER_SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(gift_card_number)
         self.wait.until(
@@ -424,7 +424,7 @@ class GiftCardsPage(BasePage):
             EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(amount))
 

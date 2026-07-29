@@ -267,7 +267,7 @@ class WashPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(package_name)
         self.wait.until(
@@ -283,7 +283,7 @@ class WashPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(

@@ -112,7 +112,7 @@ class AdminPOSSettingsPage(BasePage):
     def search_pos(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.CONTROL + "a")
         el.send_keys(Keys.BACKSPACE)
         el.send_keys(name)
         self.wait.until(
@@ -124,7 +124,7 @@ class AdminPOSSettingsPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.COMMAND + "a")
+        el.send_keys(Keys.CONTROL + "a")
         el.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
@@ -487,7 +487,7 @@ class AdminPOSFormPage(BasePage):
         el = self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
         el.click()
         from selenium.webdriver.common.keys import Keys as _Keys
-        el.send_keys(_Keys.COMMAND + "a")
+        el.send_keys(_Keys.CONTROL + "a")
         el.send_keys(_Keys.BACKSPACE)
         el.send_keys(name)
         # Fire React synthetic events so React state sees the new value

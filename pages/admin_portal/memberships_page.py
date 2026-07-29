@@ -394,7 +394,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.CONTROL + "a")
         search_input.send_keys(Keys.BACKSPACE)
         search_input.send_keys(membership_name)
         self.wait.until(
@@ -423,7 +423,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.CONTROL + "a")
         search_input.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(
@@ -752,7 +752,7 @@ class MembershipsPage(BasePage):
             "arguments[0].scrollIntoView({ block: 'center' }); arguments[0].focus();",
             element
         )
-        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.CONTROL, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(barcode))
         self.driver.execute_script(
@@ -1183,7 +1183,7 @@ class MembershipsPage(BasePage):
             "arguments[0].focus();",
             element
         )
-        element.send_keys(Keys.COMMAND, "a")
+        element.send_keys(Keys.CONTROL, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(value))
         self.driver.execute_script(

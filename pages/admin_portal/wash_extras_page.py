@@ -177,7 +177,7 @@ class WashExtrasPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.CONTROL + "a")
         search_input.send_keys(Keys.BACKSPACE)
         search_input.send_keys(extra_name)
         self.wait.until(
@@ -523,7 +523,7 @@ class WashExtrasPage(BasePage):
             "arguments[0].focus();",
             price_input
         )
-        price_input.send_keys(Keys.COMMAND, "a")
+        price_input.send_keys(Keys.CONTROL, "a")
         price_input.send_keys(Keys.BACKSPACE)
         price_input.send_keys(str(price))
         self.driver.execute_script(
@@ -637,7 +637,7 @@ class WashExtrasPage(BasePage):
         """Clear the wash extra search field."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         search_input.click()
-        search_input.send_keys(Keys.COMMAND + "a")
+        search_input.send_keys(Keys.CONTROL + "a")
         search_input.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(

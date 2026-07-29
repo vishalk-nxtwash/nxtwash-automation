@@ -26,7 +26,7 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        element.send_keys(Keys.COMMAND + "a")
+        element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(text)
 
