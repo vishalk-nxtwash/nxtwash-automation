@@ -106,11 +106,17 @@ def ensure_gas_pump_created(browser, name=GPS_PUMP_NAME, site=GPS_SITE):
             GPS_FETCH_INTERVAL, GPS_CODE_LENGTH,
         )
         form.ensure_active_pump_on()
-        # WBC row: VKAWB1 wash book, ID code 02 — Dependency: Wash Books module
+        # WBC row: VK AWB1 wash book, ID code 02 — Dependency: Wash Books module
         try:
             form.click_add_wbc_row()
-            form.select_wbc_wash_book(0, GPS_WASH_BOOK)
-            form.enter_wbc_id_code(0, GPS_WBC_ID_CODE)
+            try:
+                form.select_wbc_wash_book(0, GPS_WASH_BOOK)
+                form.enter_wbc_id_code(0, GPS_WBC_ID_CODE)
+            except Exception:
+                try:
+                    form.click_remove_wbc_row(0)
+                except Exception:
+                    pass
         except Exception:
             pass
     except Exception as exc:
@@ -120,6 +126,7 @@ def ensure_gas_pump_created(browser, name=GPS_PUMP_NAME, site=GPS_SITE):
         ) from exc
 
     form.click_save()
+    post_save_error = form.get_visible_error() or "none visible"
 
     page = open_gas_pump_list(browser)
     try:
@@ -127,7 +134,7 @@ def ensure_gas_pump_created(browser, name=GPS_PUMP_NAME, site=GPS_SITE):
     except Exception:
         pytest.skip(
             "Gas pump '%s' not found after create — save likely failed "
-            "(staging data issue for site '%s')." % (name, site)
+            "(site '%s'). Form error after save: %s" % (name, site, post_save_error)
         )
 
     # GPS-CRT-017: header count must increment after a successful create

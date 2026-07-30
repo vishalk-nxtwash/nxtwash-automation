@@ -224,10 +224,10 @@ class CardDeclinesPage(BasePage):
         inner = self._get_site_inner_input()
         if clear_first:
             try:
-                inner.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+                inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
             except StaleElementReferenceException:
                 inner = self._get_site_inner_input()
-                inner.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+                inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         try:
             inner.send_keys(site_name)
         except StaleElementReferenceException:

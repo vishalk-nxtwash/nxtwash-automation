@@ -287,7 +287,7 @@ class AdminGeneralSalesReportPage(BasePage):
         self.open_filter_popup()
         combined = "%s - %s" % (start, end)
         el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(combined)
         el.send_keys(Keys.TAB)
 

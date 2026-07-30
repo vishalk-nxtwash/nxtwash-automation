@@ -78,7 +78,7 @@ class AdminEmployeesPage(BasePage):
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
@@ -90,7 +90,7 @@ class AdminEmployeesPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -345,11 +345,11 @@ class AdminEmployeeFormPage(BasePage):
 
     def clear_first_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def clear_last_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_first_name_value(self):
         return self.wait.until(
@@ -366,7 +366,7 @@ class AdminEmployeeFormPage(BasePage):
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_email_value(self):
         return self.wait.until(
@@ -378,7 +378,7 @@ class AdminEmployeeFormPage(BasePage):
 
     def clear_phone(self):
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_phone_value(self):
         return self.wait.until(
@@ -620,7 +620,7 @@ class AdminEmployeeShiftPage(BasePage):
     def search_shift(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
         el.send_keys(Keys.RETURN)
         self.wait.until(
@@ -632,7 +632,7 @@ class AdminEmployeeShiftPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -661,7 +661,7 @@ class AdminEmployeeShiftPage(BasePage):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(self.FILTER_FIRST_NAME))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(first_name)
 
     def filter_by_site(self, site_name):

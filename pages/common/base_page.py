@@ -26,7 +26,7 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(text)
 
     def get_text(self, locator):

@@ -319,7 +319,7 @@ class WashActivityPage(BasePage):
         # Re-fetch after click — React may re-render the input on focus
         inner = self._get_site_input()
         if clear_first:
-            inner.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+            inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         inner.send_keys(site_name)
         time.sleep(0.4)
         option = WebDriverWait(self.driver, 20).until(
