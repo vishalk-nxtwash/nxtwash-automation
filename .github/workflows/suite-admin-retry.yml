@@ -1,0 +1,72 @@
+name: Admin Suite — Retry Failed Shards (staging)
+
+# Targeted re-run of only the shards that failed in the last full suite.
+# Use this after pushing a fix to verify the broken modules without re-running
+# the shards that were already green (reports, auth-core, customers).
+#
+# Failing shards as of 2026-07-29 run:
+#   wash-packages  — stale element on edit / checkbox closure
+#   wash-catalog   — stale element on open_edit_wash_book
+#   services       — custom_services iframe timeout + gift_cards field doubling
+#   settings-pos   — user_roles toggle stale closure
+#   settings-hw    — kiosk pagination timeout
+#   promotions     — memberships filter contamination (CANCELLED)
+#   people         — employees/users fixture cascade timeout (CANCELLED)
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: admin-retry-staging
+  cancel-in-progress: false
+
+jobs:
+  admin:
+    if: github.ref == 'refs/heads/staging'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          # ── Wash Catalog ──────────────────────────────────────────────────
+          - name: wash-packages
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_extras
+          - name: wash-catalog
+            path: >-
+              tests/admin_portal/wash_books
+              tests/admin_portal/coupon_packages
+          # ── Services ─────────────────────────────────────────────────────
+          - name: services
+            path: >-
+              tests/admin_portal/custom_services
+              tests/admin_portal/gift_cards
+              tests/admin_portal/bank_drop
+          # ── Settings ─────────────────────────────────────────────────────
+          - name: settings-pos
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/user_roles
+          - name: settings-hw
+            path: >-
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+          # ── Promotions ────────────────────────────────────────────────────
+          - name: promotions
+            path: >-
+              tests/admin_portal/discounts
+              tests/admin_portal/memberships
+          # ── People ────────────────────────────────────────────────────────
+          - name: people
+            path: >-
+              tests/admin_portal/users
+              tests/admin_portal/employees
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-retry-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: "2"
+      timeout_minutes: 90
