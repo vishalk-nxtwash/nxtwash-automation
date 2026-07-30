@@ -205,7 +205,7 @@ class DiscountsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(discount_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -220,7 +220,7 @@ class DiscountsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -491,7 +491,7 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        discount_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        discount_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         discount_input.send_keys(str(value))
         self.wait.until(
             lambda driver: rows[row_index].find_element(

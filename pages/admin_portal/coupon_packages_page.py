@@ -178,7 +178,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(coupon_package_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -308,7 +308,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -449,7 +449,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.EXPIRATION_DAYS_INPUT)
         )
         expiry.click()
-        expiry.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        expiry.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         expiry.send_keys("30")
         self.ensure_active_switch_on()
         self.click_save_coupon_package()

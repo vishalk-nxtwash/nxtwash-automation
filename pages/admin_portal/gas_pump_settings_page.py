@@ -201,22 +201,32 @@ class GasPumpSettingsFormPage(BasePage):
         "//*[@data-type='primary' and contains(normalize-space(),'Add wash book code')] | "
         "//span[@data-type='primary' and contains(normalize-space(),'Add wash book code')]")
 
+    # Identified from DevTools: placeholder text "Select wash book" is unique to WBC rows.
     WBC_WASH_BOOK_DROPDOWNS = (By.XPATH,
-        "//*[contains(normalize-space(),'Wash Book Code List')]"
-        "/following::div[contains(@class,'select__control')]")
+        "//div[contains(@class,'rhf-select__control') and ("
+        ".//div[contains(normalize-space(),'Select wash book')] or "
+        ".//div[contains(normalize-space(),'wash book')])]")
 
     WBC_ID_CODE_INPUTS = (By.XPATH,
-        "//*[contains(normalize-space(),'Wash Book Code List')]"
-        "/following::input[not(@name='gasPumpName') "
-        "and not(contains(@placeholder,'gas pump')) "
-        "and not(contains(@placeholder,'Gas pump'))]")
+        "//input[@placeholder='Gas pump ID code' or "
+        "contains(@name,'gasPumpIdCode') or "
+        "contains(@name,'gasPumpCodeList')]")
 
+    # Anchor to "Add wash book code" button (confirmed clickable) — remove buttons
+    # for WBC rows appear after it in DOM order.
     WBC_REMOVE_BUTTONS = (By.XPATH,
-        "//*[contains(normalize-space(),'Wash Book Code List')]"
+        "//button[contains(normalize-space(),'Add wash book code')]"
         "/following::button[.//svg or "
+        "normalize-space()='×' or normalize-space()='✕' or "
         "contains(@class,'remove') or contains(@class,'delete') or "
         "contains(@aria-label,'remove') or contains(@aria-label,'delete') or "
-        "normalize-space()='×' or normalize-space()='✕']")
+        "contains(@aria-label,'Remove') or contains(@aria-label,'Delete')] | "
+        "//*[@data-type='primary' and contains(normalize-space(),'Add wash book code')]"
+        "/following::button[.//svg or "
+        "normalize-space()='×' or normalize-space()='✕' or "
+        "contains(@class,'remove') or contains(@class,'delete') or "
+        "contains(@aria-label,'remove') or contains(@aria-label,'delete') or "
+        "contains(@aria-label,'Remove') or contains(@aria-label,'Delete')]")
 
     # ── Connection status indicator ───────────────────────────────────────────
 
@@ -327,7 +337,7 @@ class GasPumpSettingsFormPage(BasePage):
         """Enter value into a text/numeric input with React-safe event dispatch."""
         el = self.wait.until(EC.visibility_of_element_located(locator))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(value))
         self.driver.execute_script("""
             var el = arguments[0];
@@ -515,31 +525,57 @@ class GasPumpSettingsFormPage(BasePage):
         time.sleep(0.5)
 
     def get_wbc_row_count(self):
-        """Count visible WBC rows by number of visible wash book dropdowns."""
-        dropdowns = [
-            e for e in self.driver.find_elements(*self.WBC_WASH_BOOK_DROPDOWNS)
+        """Count visible WBC rows by number of visible ID code inputs."""
+        inputs = [
+            e for e in self.driver.find_elements(*self.WBC_ID_CODE_INPUTS)
             if e.is_displayed()
         ]
-        return len(dropdowns)
+        return len(inputs)
 
     def select_wbc_wash_book(self, row_index, wash_book):
         """Select wash book from the nth WBC row dropdown (0-indexed)."""
-        dropdowns = [
-            e for e in self.driver.find_elements(*self.WBC_WASH_BOOK_DROPDOWNS)
-            if e.is_displayed()
-        ]
+        # Find unselected WBC dropdowns by their placeholder text (DevTools-confirmed).
+        # After selection the placeholder disappears, so this locates rows still needing selection.
+        placeholder_locator = (By.XPATH,
+            "//div[contains(@class,'rhf-select__control') and "
+            ".//div[contains(normalize-space(),'Select wash book') or "
+            "contains(normalize-space(),'wash book')]]")
+        dropdowns = [e for e in self.driver.find_elements(*placeholder_locator) if e.is_displayed()]
+
+        if row_index >= len(dropdowns):
+            # Fallback: any rhf-select__control following the Add WBC button
+            fallback_locator = (By.XPATH,
+                "//button[contains(normalize-space(),'Add wash book code')]"
+                "/following::div[contains(@class,'rhf-select__control')] | "
+                "//*[@data-type='primary' and "
+                "contains(normalize-space(),'Add wash book code')]"
+                "/following::div[contains(@class,'rhf-select__control')]")
+            dropdowns = [e for e in self.driver.find_elements(*fallback_locator) if e.is_displayed()]
+
         if row_index >= len(dropdowns):
             raise IndexError(
                 "WBC row %d not found (only %d rows visible)" % (row_index, len(dropdowns))
             )
+
         dropdown = dropdowns[row_index]
         self.driver.execute_script("arguments[0].click();", dropdown)
-        inner_inputs = dropdown.find_elements(By.XPATH, ".//input")
+        inner_inputs = dropdown.find_elements(By.XPATH, ".//input[@role='combobox'] | .//input")
         if inner_inputs:
-            try:
-                ActionChains(self.driver).click(inner_inputs[0]).perform()
-            except Exception:
-                self.driver.execute_script("arguments[0].click();", inner_inputs[0])
+            inner = inner_inputs[0]
+            for attempt in range(3):
+                try:
+                    ActionChains(self.driver).click(inner).perform()
+                    inner.send_keys(Keys.CONTROL, "a")
+                    inner.send_keys(Keys.BACKSPACE)
+                    inner.send_keys(wash_book)
+                    break
+                except Exception:
+                    if attempt == 2:
+                        raise
+                    time.sleep(0.5)
+                    fresh = dropdown.find_elements(By.XPATH, ".//input")
+                    if fresh:
+                        inner = fresh[0]
         option = WebDriverWait(self.driver, 10).until(
             lambda d: self._find_react_option(wash_book)
         )
@@ -594,7 +630,7 @@ class GasPumpSettingsFormPage(BasePage):
             )
         el = inputs[row_index]
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];
@@ -617,15 +653,20 @@ class GasPumpSettingsFormPage(BasePage):
     def get_wbc_selected_wash_book(self, row_index):
         """Return the selected wash book label text for the nth WBC row."""
         try:
-            dropdowns = [
-                e for e in self.driver.find_elements(*self.WBC_WASH_BOOK_DROPDOWNS)
-                if e.is_displayed()
-            ]
-            if row_index >= len(dropdowns):
+            # After selection the placeholder "Select wash book" is replaced by a
+            # single-value div. Anchor to the Add button so we skip the site dropdown.
+            single_val_locator = (By.XPATH,
+                "//button[contains(normalize-space(),'Add wash book code')]"
+                "/following::div[contains(@class,'rhf-select__single-value') or "
+                "contains(@class,'singleValue')] | "
+                "//*[@data-type='primary' and "
+                "contains(normalize-space(),'Add wash book code')]"
+                "/following::div[contains(@class,'rhf-select__single-value') or "
+                "contains(@class,'singleValue')]")
+            vals = [e for e in self.driver.find_elements(*single_val_locator) if e.is_displayed()]
+            if row_index >= len(vals):
                 return ""
-            single_val = dropdowns[row_index].find_elements(By.XPATH,
-                ".//div[contains(@class,'single-value') or contains(@class,'singleValue')]")
-            return single_val[0].text.strip() if single_val else ""
+            return vals[row_index].text.strip()
         except Exception:
             return ""
 

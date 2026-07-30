@@ -2,7 +2,7 @@
   "reference": {
     "existing_pump": "VK AGP02",
     "site":          "VK AL02",
-    "wash_book":     "VKAWB1"
+    "wash_book":     "VK AWB1"
   },
   "template": {
     "pump_name":      "VK AGP02",

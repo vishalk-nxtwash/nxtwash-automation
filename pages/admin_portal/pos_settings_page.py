@@ -112,7 +112,7 @@ class AdminPOSSettingsPage(BasePage):
     def search_pos(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == name
@@ -123,7 +123,7 @@ class AdminPOSSettingsPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )

@@ -130,7 +130,7 @@ class CustomServicesPage(BasePage):
         """Wait until the Custom Services list is visible."""
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 8).until(
+            WebDriverWait(self.driver, 30).until(
                 EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
             )
         except TimeoutException:
@@ -138,7 +138,7 @@ class CustomServicesPage(BasePage):
             current_url = self.driver.current_url
             list_url = re.sub(r'(/services/customServices)/[^?#]*', r'\1', current_url)
             self.driver.get(list_url)
-            self.wait.until(
+            WebDriverWait(self.driver, 45).until(
                 EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
             )
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
@@ -206,7 +206,7 @@ class CustomServicesPage(BasePage):
         """Search for a custom service by name."""
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(service_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -219,7 +219,7 @@ class CustomServicesPage(BasePage):
         """Clear the search input and wait for the grid to refresh."""
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -514,7 +514,7 @@ class CustomServicesPage(BasePage):
         )
         self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", element)
         self.driver.execute_script("arguments[0].click();", element)
-        element.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(text)
 
     def get_description_value(self):
@@ -617,7 +617,7 @@ class CustomServicesPage(BasePage):
             )
         )
         price_input.click()
-        price_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        price_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         price_input.send_keys(str(price))
         price_input.send_keys(Keys.TAB)
 
@@ -630,7 +630,7 @@ class CustomServicesPage(BasePage):
                  "//input[@name='commission']" % site_name)
             )
         )
-        commission_input.send_keys(Keys.CONTROL + "a" + Keys.BACKSPACE)
+        commission_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         commission_input.send_keys(str(commission))
         commission_input.send_keys(Keys.TAB)
 
