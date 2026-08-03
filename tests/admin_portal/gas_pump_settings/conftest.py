@@ -1,4 +1,7 @@
+import logging
 import pytest
+
+_log = logging.getLogger("nxtwash")
 
 from pages.admin_portal.gas_pump_settings_page import GasPumpSettingsFormPage, GasPumpSettingsListPage
 from tests.admin_portal._data import load as _load
@@ -106,36 +109,72 @@ def ensure_gas_pump_created(browser, name=GPS_PUMP_NAME, site=GPS_SITE):
             GPS_FETCH_INTERVAL, GPS_CODE_LENGTH,
         )
         form.ensure_active_pump_on()
-        # WBC row: VK AWB1 wash book, ID code 02 — Dependency: Wash Books module
+        # The create form starts with one pre-existing empty WBC row.
+        # Fill it — the form requires at least one complete WBC entry to save.
+        # (Removing the row leaves 0 WBC rows and save is silently blocked.)
         try:
-            form.click_add_wbc_row()
-            try:
-                form.select_wbc_wash_book(0, GPS_WASH_BOOK)
-                form.enter_wbc_id_code(0, GPS_WBC_ID_CODE)
-            except Exception:
-                try:
-                    form.click_remove_wbc_row(0)
-                except Exception:
-                    pass
-        except Exception:
-            pass
+            form.select_wbc_wash_book(0, GPS_WASH_BOOK)
+            form.enter_wbc_id_code(0, GPS_WBC_ID_CODE)
+            _log.info("GPS WBC row 0 filled: wash_book=%r id_code=%r", GPS_WASH_BOOK, GPS_WBC_ID_CODE)
+        except Exception as _wbc_exc:
+            _log.warning("GPS WBC fill failed (%s) — removing row as fallback", _wbc_exc)
+            form.remove_all_incomplete_wbc_rows()
+        # Required before save: open the connection-code modal and close it.
+        try:
+            form.click_check_regen_code()
+            form.click_modal_close()
+            _log.info("GPS connection code modal opened and closed")
+        except Exception as _modal_exc:
+            _log.warning("GPS connection code modal step failed: %s", _modal_exc)
     except Exception as exc:
         raise pytest.skip(
             "Could not fill create form for gas pump '%s' — "
             "site '%s' may not exist in staging. Error: %s" % (name, site, exc)
         ) from exc
 
+    # Log all named inputs (including hidden) so we can verify the site
+    # hidden-input value is set before save is attempted.
+    try:
+        field_vals = form.driver.execute_script("""
+            var inputs = document.querySelectorAll('input');
+            var result = [];
+            inputs.forEach(function(el) {
+                if (el.name) result.push(el.name + '=' + el.value);
+            });
+            return result.join(' | ');
+        """)
+        _log.info("GPS named inputs before save: %s", field_vals)
+    except Exception as _e:
+        _log.info("GPS could not read fields before save: %s", _e)
+
+    # click_save() logs form body text from within the frame if URL does not change.
     form.click_save()
     post_save_error = form.get_visible_error() or "none visible"
 
     page = open_gas_pump_list(browser)
+    found_by_xpath = False
     try:
         page.wait_for_pump_row(name)
+        found_by_xpath = True
     except Exception:
-        pytest.skip(
-            "Gas pump '%s' not found after create — save likely failed "
-            "(site '%s'). Form error after save: %s" % (name, site, post_save_error)
+        pass
+
+    if not found_by_xpath:
+        # Fallback: check whether the pump name appears anywhere in the list body.
+        try:
+            body = page.get_body_text()
+        except Exception:
+            body = ""
+        _log.info(
+            "GPS wait_for_pump_row missed '%s'. Body snippet (500 chars): %s",
+            name, body[:500],
         )
+        if name not in body:
+            pytest.skip(
+                "Gas pump '%s' not found after create — save likely failed "
+                "(site '%s'). Form error after save: %s" % (name, site, post_save_error)
+            )
+        _log.info("GPS pump '%s' found via body text — XPath locator needs DevTools fix.", name)
 
     # GPS-CRT-017: header count must increment after a successful create
     count_after = page.get_header_pump_count()
