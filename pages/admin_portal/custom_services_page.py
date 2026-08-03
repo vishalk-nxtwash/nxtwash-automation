@@ -739,9 +739,17 @@ class CustomServicesPage(BasePage):
     # ---------------------------------------------------------------------- save / cancel
 
     def click_save_service(self):
-        """Click the Save custom service button."""
+        """Click the Save custom service button and wait for the save to settle."""
         self.driver.execute_script("window.scrollTo(0, 0);")
-        self.click(self.SAVE_SERVICE_BUTTON)
+        btn = self.wait.until(EC.element_to_be_clickable(self.SAVE_SERVICE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+        # Wait for the button to go stale or the iframe to unload before the
+        # caller navigates away — prevents races with in-flight POST requests.
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(btn))
+        except Exception:
+            pass
+        self.driver.switch_to.default_content()
 
     def click_cancel(self):
         """Click Cancel to discard the form."""

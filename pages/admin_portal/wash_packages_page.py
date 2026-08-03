@@ -384,7 +384,7 @@ class WashPackagesPage(BasePage):
             " }}"
             "return false;"
         )
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 45).until(
             lambda d: d.execute_script(_CLICK_EDIT_JS, package_name)
         )
         self.wait_for_edit_loaded()

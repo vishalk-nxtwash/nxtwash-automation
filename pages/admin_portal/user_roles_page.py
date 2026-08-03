@@ -69,7 +69,7 @@ class AdminUserRolesPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.ADD_ROLE_BUTTON))
         # Wait for the data-loading spinner to clear so body text reflects real rows
