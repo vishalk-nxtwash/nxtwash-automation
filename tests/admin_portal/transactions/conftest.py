@@ -15,7 +15,8 @@ TRN_SITE = "VK Test carwash 2"
 TRN_MULTI_SITES = ["VK Test Wash 01", "VK Test carwash 2"]
 
 # Default display after navigating with no filters applied.
-TRN_DEFAULT_PRESET = "This month"
+# The app natively shows "Today" until a quick filter is applied.
+TRN_DEFAULT_PRESET = "Today"
 
 # Stable test records anchored to July 2026 dataset.
 # TODO: Update TRN_DEFAULT_DATE_RANGE when the test dataset changes month.

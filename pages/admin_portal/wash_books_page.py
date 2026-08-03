@@ -265,9 +265,9 @@ class WashBooksPage(BasePage):
         )
 
     def wait_for_wash_book_row(self, wash_book_name):
-        """Wait until a wash book row is visible."""
+        """Wait until a wash book row is present (InovuaReactDataGrid uses CSS transforms; visibility check is unreliable)."""
         return self.wait.until(
-            EC.visibility_of_element_located(
+            EC.presence_of_element_located(
                 self.get_wash_book_row_locator(wash_book_name)
             )
         )
