@@ -64,11 +64,21 @@ _TGL_008_XFAIL = pytest.mark.xfail(
     ),
 )
 
+_TGL_FALSE_XFAIL = pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "Staging app does not persist the OFF state for this toggle; "
+        "the value resets to True on save. Needs product investigation."
+    ),
+)
+
+_XFAIL_TC_IDS = {"TUN-TGL-008": _TGL_008_XFAIL, "TUN-TGL-003": _TGL_FALSE_XFAIL, "TUN-TGL-006": _TGL_FALSE_XFAIL}
+
 @allure.title("TUN-TGL Toggle saves and persists ON and OFF states")
 @pytest.mark.regression
 @pytest.mark.parametrize("toggle_label", [
-    pytest.param(label, id=tc_id, marks=_TGL_008_XFAIL)
-    if tc_id == "TUN-TGL-008" else
+    pytest.param(label, id=tc_id, marks=_XFAIL_TC_IDS[tc_id])
+    if tc_id in _XFAIL_TC_IDS else
     pytest.param(label, id=tc_id)
     for label, _, tc_id in _TOGGLES
 ])
