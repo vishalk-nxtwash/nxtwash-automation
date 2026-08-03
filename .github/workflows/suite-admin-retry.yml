@@ -1,0 +1,49 @@
+name: Admin Suite — Retry Failed Shards (staging)
+
+# Targeted re-run of only the shards that failed in the last full suite.
+# Use this after pushing a fix to verify the broken modules without re-running
+# the shards that were already green (reports, auth-core, customers).
+#
+# Shards targeted as of 2026-08-04 fixes:
+#   reports-financial — TRN_DEFAULT_PRESET "Today" + trn_page uses Last month
+#   wash-packages     — assignment_site VK AL11 + presence_of_element_located
+#   wash-catalog      — wait_for_wash_book_row presence fix + base_page 45s timeout
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: admin-retry-staging
+  cancel-in-progress: false
+
+jobs:
+  admin:
+    if: github.ref == 'refs/heads/staging'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          # ── Reports ───────────────────────────────────────────────────────
+          - name: reports-financial
+            path: >-
+              tests/admin_portal/cash_report
+              tests/admin_portal/card_declines
+              tests/admin_portal/transactions
+          # ── Wash Catalog ──────────────────────────────────────────────────
+          - name: wash-packages
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_extras
+          - name: wash-catalog
+            path: >-
+              tests/admin_portal/wash_books
+              tests/admin_portal/coupon_packages
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-retry-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: "2"
+      timeout_minutes: 90
