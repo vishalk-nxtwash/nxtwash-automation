@@ -31,6 +31,8 @@
 import pytest
 import allure
 
+from pages.admin_portal.transactions_page import TransactionsPage
+from tests.admin_portal.admin_session import open_admin_path
 from tests.admin_portal.transactions.conftest import (
     TRN_SITE,
     TRN_MULTI_SITES,
@@ -180,14 +182,18 @@ class TestTransactionsTable:
         assert trn_page.first_row_has_full_info_link()
         assert page_has_no_broken_state(trn_page)
 
-    @allure.title("TRN-TBL-010 Default date preset label is 'This month'")
+    @allure.title("TRN-TBL-010 Default date preset is 'Today' on fresh page load")
     @pytest.mark.smoke
-    def test_default_date_preset_is_this_month(self, trn_page):
-        label = trn_page.get_active_quick_filter_label()
+    def test_default_date_preset_is_today(self, browser):
+        # Must use fresh navigation — trn_page applies a filter before the test runs.
+        open_admin_path(browser, "/transactions/report")
+        page = TransactionsPage(browser)
+        page.wait_for_table()
+        label = page.get_active_quick_filter_label()
         assert label == TRN_DEFAULT_PRESET, (
             f"Expected default preset '{TRN_DEFAULT_PRESET}', got '{label}'"
         )
-        assert page_has_no_broken_state(trn_page)
+        assert page_has_no_broken_state(page)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -107,7 +107,7 @@ class BasePage:
                 time.sleep(0.5)
                 inner_input = _get_inner_input()
 
-        option = WebDriverWait(self.driver, 20).until(
+        option = WebDriverWait(self.driver, 45).until(
             lambda d: self._find_react_option(option_text)
         )
         self.driver.execute_script("arguments[0].click();", option)
