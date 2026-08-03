@@ -237,9 +237,9 @@ class WashPackagesPage(BasePage):
         )
 
     def wait_for_package_row(self, package_name):
-        """Wait until a package row is visible."""
+        """Wait until a package row is present (InovuaReactDataGrid uses CSS transforms; visibility check is unreliable)."""
         return self.wait.until(
-            EC.visibility_of_element_located(
+            EC.presence_of_element_located(
                 self.get_package_row_locator(package_name)
             )
         )

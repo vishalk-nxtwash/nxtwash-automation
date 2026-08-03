@@ -133,11 +133,12 @@ SALE_TYPES = ["Gift Card Sale", "Washbook Sale", "Membership Sale", "Retail / Si
 
 
 def open_transactions_page(browser):
-    """Navigate to /transactions/report and apply 'This month' to ensure a non-empty table.
+    """Navigate to /transactions/report and apply 'Last month' to ensure a non-empty table.
 
     The app's factory default is 'Today' which produces 0 rows in the test dataset.
-    Applying 'This month' via the Quick Filter gives the 18-record dataset all table
-    tests depend on.  Tests that need the bare default state should navigate directly.
+    'This month' also produces 0 rows early in the month before data accrues.
+    'Last month' gives a stable closed dataset that always has rows.
+    Tests that need the bare default state should navigate directly.
     """
     from selenium.common.exceptions import TimeoutException
     from selenium.webdriver.support import expected_conditions as EC
@@ -147,9 +148,9 @@ def open_transactions_page(browser):
     page = TransactionsPage(browser)
     # Wait for the table shell — rows may be 0 until filter is applied.
     page.wait_for_table()
-    # Apply 'This month' so all dependent tests have real data.
+    # Apply 'Last month' so all dependent tests have real data.
     page.open_filter_panel()
-    page.click_quick_filter("This month")
+    page.click_quick_filter("Last month")
     time.sleep(0.3)
     page.apply_panel_filters()
     # Wait for rows to appear after apply (up to 15 s).
@@ -222,7 +223,7 @@ def compute_preset_date_range(preset):
 
 @pytest.fixture
 def trn_page(browser):
-    """Transactions Report page — default state (This month, All Sites, table loaded)."""
+    """Transactions Report page — default state (Last month, All Sites, table loaded)."""
     return open_transactions_page(browser)
 
 
