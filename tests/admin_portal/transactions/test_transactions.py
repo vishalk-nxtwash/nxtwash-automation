@@ -388,16 +388,16 @@ class TestTransactionsFilterPanel:
     @allure.title("TRN-FLT-007 Reset filters clears all filter selections")
     @pytest.mark.regression
     def test_reset_filters_clears_selections(self, trn_filter_panel):
-        # Select a quick filter to create a non-default state.
-        trn_filter_panel.click_quick_filter("Today")
+        # Use "This week" — it is never the native factory default ("Today"),
+        # so after reset we can unambiguously assert it was cleared regardless
+        # of what the app restores as its default.
+        trn_filter_panel.click_quick_filter("This week")
         import time
         time.sleep(0.3)
         trn_filter_panel.reset_panel_filters()
-        # After reset the app reverts to its factory default ("Today") — just
-        # assert that "This month" (our fixture-applied preset) was cleared.
         active = trn_filter_panel.get_active_quick_filter_label()
-        assert active != TRN_DEFAULT_PRESET, (
-            f"After reset, '{TRN_DEFAULT_PRESET}' should have been cleared, got '{active}'"
+        assert active != "This week", (
+            f"After reset, 'This week' filter should have been cleared, got '{active}'"
         )
         assert page_has_no_broken_state(trn_filter_panel)
 

@@ -621,6 +621,25 @@ class TransactionsPage(BasePage):
             return result;
         """, presets) or []
 
+    def click_date_preset(self, label):
+        """Click a named date preset button in the Date & Location filter tab.
+
+        Date presets (Today, Yesterday, Last month, etc.) live inside the
+        Date & Location tab of the filter panel — they are NOT quick-filter chips.
+        The filter panel must already be open when this is called.
+        """
+        self.driver.execute_script("""
+            var label = arguments[0];
+            var form = document.querySelector('#transactions-report-filter-form');
+            if (!form) return;
+            var buttons = Array.from(form.querySelectorAll('button'));
+            var btn = buttons.find(function(b) {
+                return b.textContent.trim() === label;
+            });
+            if (btn) btn.click();
+        """, label)
+        time.sleep(0.3)
+
     def get_date_range_value(self):
         """Return the current date range string displayed in the filter."""
         els = self.driver.find_elements(By.XPATH,

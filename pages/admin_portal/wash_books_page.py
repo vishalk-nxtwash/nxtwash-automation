@@ -258,9 +258,8 @@ class WashBooksPage(BasePage):
         """Build a locator for a wash book row by name."""
         return (
             By.XPATH,
-            "//*[@data-props-id='washbookName']"
-            "[.//span[normalize-space()='%s']]"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[@data-props-id='washbookName' and normalize-space()='%s']]"
             % wash_book_name
         )
 
@@ -384,11 +383,13 @@ class WashBooksPage(BasePage):
         self.search_wash_book(wash_book_name)
         self.wait_for_wash_book_row(wash_book_name)
         # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        # InovuaReactDataGrid renders <div> rows — querySelectorAll('tr') always returns 0.
         _CLICK_EDIT_JS = (
-            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "var name=arguments[0];"
+            "var rows=Array.from(document.querySelectorAll('[class*=\"InovuaReactDataGrid__row\"]'));"
             "for(var i=0;i<rows.length;i++){"
             " if(rows[i].textContent.indexOf(name)!==-1){"
-            "  var a=Array.from(rows[i].querySelectorAll('a'))"
+            "  var a=Array.from(rows[i].querySelectorAll('a,button'))"
             "   .find(function(x){return x.textContent.trim()==='Edit';});"
             "  if(a){a.click();return true;}"
             " }}"
@@ -1071,9 +1072,8 @@ class WashBooksPage(BasePage):
         """Build a locator for a CWB row by wash book number."""
         return (
             By.XPATH,
-            "//*[@data-props-id='washbookNumber']"
-            "[.//span[normalize-space()='%s']]"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[@data-props-id='washbookNumber' and normalize-space()='%s']]"
             % wash_book_number
         )
 

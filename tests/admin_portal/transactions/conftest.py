@@ -150,9 +150,11 @@ def open_transactions_page(browser):
     # Wait for the table shell — rows may be 0 until filter is applied.
     page.wait_for_table()
     # Apply 'Last month' so all dependent tests have real data.
+    # NOTE: 'Last month' is a date preset in the Date & Location tab, NOT a
+    # quick-filter chip — click_quick_filter("Last month") silently no-ops.
     page.open_filter_panel()
-    page.click_quick_filter("Last month")
-    time.sleep(0.3)
+    page.click_filter_tab("Date & Location")
+    page.click_date_preset("Last month")
     page.apply_panel_filters()
     # Wait for rows to appear after apply (up to 15 s).
     try:

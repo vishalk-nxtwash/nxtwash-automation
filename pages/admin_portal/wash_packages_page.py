@@ -230,9 +230,8 @@ class WashPackagesPage(BasePage):
         """Build a locator for a package row by package name."""
         return (
             By.XPATH,
-            "//*[@data-props-id='serviceName']"
-            "[.//span[normalize-space()='%s']]"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[@data-props-id='serviceName' and normalize-space()='%s']]"
             % package_name
         )
 
@@ -373,12 +372,13 @@ class WashPackagesPage(BasePage):
         self.wait_for_list_loaded()
         self.search_package(package_name)
         self.wait_for_package_row(package_name)
-        # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        # Atomic JS click — InovuaReactDataGrid uses <div> rows, not <tr>.
         _CLICK_EDIT_JS = (
-            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "var name=arguments[0];"
+            "var rows=Array.from(document.querySelectorAll('[class*=\"InovuaReactDataGrid__row\"]'));"
             "for(var i=0;i<rows.length;i++){"
             " if(rows[i].textContent.indexOf(name)!==-1){"
-            "  var a=Array.from(rows[i].querySelectorAll('a'))"
+            "  var a=Array.from(rows[i].querySelectorAll('a,button'))"
             "   .find(function(x){return x.textContent.trim()==='Edit';});"
             "  if(a){a.click();return true;}"
             " }}"
