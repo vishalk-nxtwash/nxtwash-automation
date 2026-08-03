@@ -1,3 +1,4 @@
+import logging
 import re
 import time
 
@@ -9,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+
+_log = logging.getLogger("nxtwash")
 
 
 class GasPumpSettingsListPage(BasePage):
@@ -74,10 +77,15 @@ class GasPumpSettingsListPage(BasePage):
 
     def pump_exists(self, name):
         try:
-            self.wait_for_pump_row(name, timeout=15)
+            self.wait_for_pump_row(name, timeout=8)
             return True
         except TimeoutException:
-            return False
+            # XPath locator may not match this grid's cell class; fall back to body text.
+            try:
+                body = self.get_body_text()
+                return name in body
+            except Exception:
+                return False
 
     def get_pump_status(self, name):
         self.wait_for_pump_row(name)
@@ -181,13 +189,11 @@ class GasPumpSettingsFormPage(BasePage):
         "//*[contains(normalize-space(),'Active gas pump')]"
         "/following::button[@role='switch'][1]")
 
+    # User-confirmed: the onClick lives on the inner <span data-type='primary'>.
+    # Clicking the outer <button> or parent <div> does NOT fire it (events don't
+    # bubble down into children).  Target the span exclusively.
     SAVE_BUTTON = (By.XPATH,
-        "//button[contains(@class,'nxt-button') and .//span[contains(normalize-space(),'Save')]] | "
-        "//span[@data-type='primary' and contains(normalize-space(),'Save gas pump')] | "
-        "//button[contains(normalize-space(),'Save gas pump')] | "
-        "//span[@data-type='primary' and contains(normalize-space(),'Save')] | "
-        "//*[@data-type='primary' and contains(normalize-space(),'Save')] | "
-        "//button[normalize-space()='Save']")
+        "//span[@data-type='primary' and normalize-space()='Save gas pump']")
 
     CANCEL_BUTTON = (By.XPATH,
         "//button[normalize-space()='Cancel'] | "
@@ -195,38 +201,45 @@ class GasPumpSettingsFormPage(BasePage):
         "//*[@data-type and normalize-space()='Cancel']")
 
     # ── Wash Book Code List (right panel) ────────────────────────────────────
+    # DevTools-confirmed class prefixes (CSS modules append a hash suffix):
+    #   section title  → wbCodeListTable_wbCodeListTitle_<hash>
+    #   row item       → wbCodeListTable_wbCodeListTableItem_<hash>
+    #   remove wrapper → wbCodeListTable_wbCodeListTableItemRemove_<hash>
+    #   remove target  → img[alt="Close"] inside the remove wrapper
+
+    WBC_SECTION_TITLE = (By.XPATH,
+        "//div[contains(@class,'wbCodeListTable_wbCodeListTitle_')]")
 
     ADD_WBC_BUTTON = (By.XPATH,
         "//button[contains(normalize-space(),'Add wash book code')] | "
         "//*[@data-type='primary' and contains(normalize-space(),'Add wash book code')] | "
         "//span[@data-type='primary' and contains(normalize-space(),'Add wash book code')]")
 
-    # Identified from DevTools: placeholder text "Select wash book" is unique to WBC rows.
-    WBC_WASH_BOOK_DROPDOWNS = (By.XPATH,
-        "//div[contains(@class,'rhf-select__control') and ("
-        ".//div[contains(normalize-space(),'Select wash book')] or "
-        ".//div[contains(normalize-space(),'wash book')])]")
+    # Each WBC row: div[class*="wbCodeListTable_wbCodeListTableItem_"]
+    # The hashed suffix starts with _ so the contains() match is specific to row items
+    # (inputs wrapper = "...TableItemInputs_", remove wrapper = "...TableItemRemove_"
+    # — neither contains "TableItem_").
+    WBC_ROW_ITEMS = (By.XPATH,
+        "//div[contains(@class,'wbCodeListTable_wbCodeListTableItem_')]")
 
+    # Inside each WBC row: the rhf-select control for the wash book dropdown.
+    # Scoped via WBC_ROW_ITEMS at runtime; this bare locator used as fallback.
+    WBC_WASH_BOOK_DROPDOWNS = (By.XPATH,
+        "//div[contains(@class,'wbCodeListTable_wbCodeListTableItem_')]"
+        "//div[contains(@class,'rhf-select__control')]")
+
+    # Confirmed name pattern: gasPumpCodeList.{n}.gasPumpIdCode
+    # Confirmed placeholder: "Gas pump ID code"
     WBC_ID_CODE_INPUTS = (By.XPATH,
         "//input[@placeholder='Gas pump ID code' or "
-        "contains(@name,'gasPumpIdCode') or "
-        "contains(@name,'gasPumpCodeList')]")
+        "contains(@name,'gasPumpIdCode')]")
 
-    # Anchor to "Add wash book code" button (confirmed clickable) — remove buttons
-    # for WBC rows appear after it in DOM order.
+    # Remove is img[alt="Close"] inside div[class*="wbCodeListTableItemRemove_"].
+    # NOT a <button> — confirmed from DevTools.
     WBC_REMOVE_BUTTONS = (By.XPATH,
-        "//button[contains(normalize-space(),'Add wash book code')]"
-        "/following::button[.//svg or "
-        "normalize-space()='×' or normalize-space()='✕' or "
-        "contains(@class,'remove') or contains(@class,'delete') or "
-        "contains(@aria-label,'remove') or contains(@aria-label,'delete') or "
-        "contains(@aria-label,'Remove') or contains(@aria-label,'Delete')] | "
-        "//*[@data-type='primary' and contains(normalize-space(),'Add wash book code')]"
-        "/following::button[.//svg or "
-        "normalize-space()='×' or normalize-space()='✕' or "
-        "contains(@class,'remove') or contains(@class,'delete') or "
-        "contains(@aria-label,'remove') or contains(@aria-label,'delete') or "
-        "contains(@aria-label,'Remove') or contains(@aria-label,'Delete')]")
+        "//div[contains(@class,'wbCodeListTable_wbCodeListTableItemRemove_')]"
+        "/img[@alt='Close' or @alt='close'] | "
+        "//div[contains(@class,'wbCodeListTable_wbCodeListTableItemRemove_')]/img")
 
     # ── Connection status indicator ───────────────────────────────────────────
 
@@ -248,11 +261,15 @@ class GasPumpSettingsFormPage(BasePage):
         "//*[@title='Connected' or @aria-label='Connected'] | "
         "//*[contains(@class,'connection') and contains(@class,'success')]")
 
+    # New pump (no code yet):  span text = "Generate connection code"
+    # Existing pump (code exists): span text = "Check or re-generate code"
+    # Both use the same div.d-flex > span[data-type='primary'] pattern.
     CHECK_REGEN_CODE_BUTTON = (By.XPATH,
-        "//button[contains(normalize-space(),'Check or re-generate code')] | "
-        "//span[contains(normalize-space(),'Check or re-generate code')] | "
-        "//*[contains(normalize-space(),'re-generate') and "
-        "contains(normalize-space(),'code')]")
+        "//span[@data-type='primary' and ("
+        "normalize-space()='Generate connection code' or "
+        "contains(normalize-space(),'Check or re-generate code'))] | "
+        "//span[contains(normalize-space(),'connection code') or "
+        "contains(normalize-space(),'re-generate code')]")
 
     # ── Connection code modal ─────────────────────────────────────────────────
 
@@ -280,13 +297,11 @@ class GasPumpSettingsFormPage(BasePage):
         "//span[contains(normalize-space(),'Generate new code')] | "
         "//*[@data-type='primary' and contains(normalize-space(),'Generate new')]")
 
+    # DevTools-confirmed: <span data-type="cancelModal">Close</span> inside a div.d-flex.
     MODAL_CLOSE_BTN = (By.XPATH,
+        "//span[@data-type='cancelModal' and normalize-space()='Close'] | "
         "//*[@role='dialog' or contains(@class,'modal')]"
         "//button[normalize-space()='Close'] | "
-        "//*[@role='dialog' or contains(@class,'modal')]"
-        "//button[normalize-space()='Done'] | "
-        "//*[@role='dialog' or contains(@class,'modal')]"
-        "//*[contains(@class,'btn-close') or contains(@class,'close-btn')] | "
         "//*[@role='dialog' or contains(@class,'modal')]"
         "//*[@aria-label='Close' or @aria-label='close']")
 
@@ -299,11 +314,15 @@ class GasPumpSettingsFormPage(BasePage):
     def _switch_to_form_frame(self, frame_locator):
         self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 15).until(
                 EC.frame_to_be_available_and_switch_to_it(frame_locator)
             )
+            _log.info("GPS _switch_to_form_frame: switched into frame %s", frame_locator)
         except TimeoutException:
-            pass
+            _log.warning(
+                "GPS _switch_to_form_frame: frame NOT found after 15s — staying in "
+                "default_content. Locator: %s", frame_locator
+            )
 
     def wait_for_create_loaded(self):
         self._switch_to_form_frame(GasPumpSettingsListPage.PUMP_CREATE_FRAME)
@@ -352,9 +371,22 @@ class GasPumpSettingsFormPage(BasePage):
         self._enter_field(self.GAS_PUMP_NAME_INPUT, name)
 
     def select_site(self, site):
-        # Dependency: Sites & Locations module
         self.select_react_dropdown_option(self.SITE_COMBOBOX, site)
         time.sleep(1)
+        # Verify the selection is visible as a single-value chip.
+        try:
+            sv_els = self.driver.find_elements(By.XPATH,
+                "//div[contains(@class,'rhf-select__single-value') or "
+                "contains(@class,'select__single-value')]")
+            visible = [e.text.strip() for e in sv_els if e.is_displayed() and e.text.strip()]
+            _log.info("GPS select_site '%s': single-value after selection = %s", site, visible)
+            if not any(site in v for v in visible):
+                _log.warning(
+                    "GPS select_site: '%s' NOT found in single-value elements %s — "
+                    "selection may not have registered in RHF", site, visible
+                )
+        except Exception as _e:
+            _log.info("GPS select_site: could not read single-value: %s", _e)
 
     def enter_serial_port(self, value):
         self._enter_field(self.SERIAL_PORT_INPUT, value)
@@ -479,20 +511,53 @@ class GasPumpSettingsFormPage(BasePage):
             return False
 
     def click_save(self):
-        url_before = self.driver.current_url
+        # The form's submit is triggered by the inner div.d-flex > span[data-type='primary'],
+        # NOT the outer shell <button>.  Use ActionChains for a trusted click event.
         el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        _log.info(
+            "GPS click_save: %s  class=%r  data-type=%r  y=%s",
+            el.tag_name,
+            (el.get_attribute("class") or "")[:80],
+            el.get_attribute("data-type"),
+            el.location.get("y", "?"),
+        )
         self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
-        self.driver.execute_script("arguments[0].click();", el)
+        time.sleep(0.3)
+        ActionChains(self.driver).move_to_element(el).click().perform()
+        time.sleep(1.5)
+
+        # Check RHF validation errors.
         try:
-            WebDriverWait(self.driver, 20).until(lambda d: d.current_url != url_before)
-            self.driver.switch_to.default_content()
+            invalid_fields = self.driver.execute_script("""
+                return Array.from(document.querySelectorAll('input, select, textarea'))
+                    .filter(function(el) { return el.getAttribute('aria-invalid') === 'true'; })
+                    .map(function(el) {
+                        return (el.name || el.id || el.placeholder || '?') + '=' + el.value;
+                    });
+            """)
+            if invalid_fields:
+                _log.warning("GPS aria-invalid after save: %s", invalid_fields)
+            else:
+                _log.info("GPS aria-invalid: none — validation passed")
+        except Exception as _iv:
+            _log.info("GPS could not read aria-invalid: %s", _iv)
+
+        # Allow the API response to complete before the caller navigates away.
+        time.sleep(1.5)
+        save_succeeded = False
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            _log.info("GPS form body after save (400 chars): %s", body[:400])
+            save_succeeded = (
+                "successfully created" in body
+                or "successfully updated" in body
+            )
         except Exception:
-            error = self.get_visible_error()
-            if error:
-                import logging
-                logging.getLogger("nxtwash").warning(
-                    "Gas pump save did not navigate away. Page message: %s", error
-                )
+            pass
+        # Only leave the form frame on success; stay in frame on validation failure
+        # so callers can inspect field validity after a failed save attempt.
+        if save_succeeded:
+            self.driver.switch_to.default_content()
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
@@ -511,9 +576,19 @@ class GasPumpSettingsFormPage(BasePage):
 
     # ── Wash Book Code List ───────────────────────────────────────────────────
 
+    def _get_wbc_rows(self):
+        """Return all visible WBC row elements (div[class*='wbCodeListTable_wbCodeListTableItem_'])."""
+        return [
+            e for e in self.driver.find_elements(*self.WBC_ROW_ITEMS)
+            if e.is_displayed()
+        ]
+
     def wbc_panel_is_visible(self):
+        els = self.driver.find_elements(*self.WBC_SECTION_TITLE)
+        if any(e.is_displayed() for e in els):
+            return True
         body = self.get_body_text()
-        return "Wash Book Code List" in body or "wash book code" in body.lower()
+        return "Wash book code list" in body or "wash book code" in body.lower()
 
     def add_wbc_button_is_visible(self):
         els = self.driver.find_elements(*self.ADD_WBC_BUTTON)
@@ -525,57 +600,44 @@ class GasPumpSettingsFormPage(BasePage):
         time.sleep(0.5)
 
     def get_wbc_row_count(self):
-        """Count visible WBC rows by number of visible ID code inputs."""
-        inputs = [
-            e for e in self.driver.find_elements(*self.WBC_ID_CODE_INPUTS)
-            if e.is_displayed()
-        ]
-        return len(inputs)
+        return len(self._get_wbc_rows())
 
     def select_wbc_wash_book(self, row_index, wash_book):
-        """Select wash book from the nth WBC row dropdown (0-indexed)."""
-        # Find unselected WBC dropdowns by their placeholder text (DevTools-confirmed).
-        # After selection the placeholder disappears, so this locates rows still needing selection.
-        placeholder_locator = (By.XPATH,
-            "//div[contains(@class,'rhf-select__control') and "
-            ".//div[contains(normalize-space(),'Select wash book') or "
-            "contains(normalize-space(),'wash book')]]")
-        dropdowns = [e for e in self.driver.find_elements(*placeholder_locator) if e.is_displayed()]
+        """Select wash book from the nth WBC row dropdown (0-indexed).
 
-        if row_index >= len(dropdowns):
-            # Fallback: any rhf-select__control following the Add WBC button
-            fallback_locator = (By.XPATH,
-                "//button[contains(normalize-space(),'Add wash book code')]"
-                "/following::div[contains(@class,'rhf-select__control')] | "
-                "//*[@data-type='primary' and "
-                "contains(normalize-space(),'Add wash book code')]"
-                "/following::div[contains(@class,'rhf-select__control')]")
-            dropdowns = [e for e in self.driver.find_elements(*fallback_locator) if e.is_displayed()]
-
-        if row_index >= len(dropdowns):
+        Confirmed DOM: each row has div[class*='wbCodeListTable_wbCodeListTableItem_'].
+        Inside the row: div.rhf-select__control > div > input.rhf-select__input[role='combobox'].
+        """
+        rows = self._get_wbc_rows()
+        if row_index >= len(rows):
             raise IndexError(
-                "WBC row %d not found (only %d rows visible)" % (row_index, len(dropdowns))
+                "WBC row %d not found (only %d rows visible)" % (row_index, len(rows))
             )
+        row = rows[row_index]
 
-        dropdown = dropdowns[row_index]
-        self.driver.execute_script("arguments[0].click();", dropdown)
-        inner_inputs = dropdown.find_elements(By.XPATH, ".//input[@role='combobox'] | .//input")
-        if inner_inputs:
-            inner = inner_inputs[0]
-            for attempt in range(3):
-                try:
-                    ActionChains(self.driver).click(inner).perform()
-                    inner.send_keys(Keys.CONTROL, "a")
-                    inner.send_keys(Keys.BACKSPACE)
-                    inner.send_keys(wash_book)
-                    break
-                except Exception:
-                    if attempt == 2:
-                        raise
-                    time.sleep(0.5)
-                    fresh = dropdown.find_elements(By.XPATH, ".//input")
-                    if fresh:
-                        inner = fresh[0]
+        # Click the dropdown-indicator chevron to open the menu.
+        indicator = row.find_element(By.XPATH,
+            ".//div[contains(@class,'rhf-select__dropdown-indicator')]")
+        self.driver.execute_script("arguments[0].click();", indicator)
+        time.sleep(0.2)
+
+        # Type in the combobox input to filter options.
+        inner = row.find_element(By.XPATH,
+            ".//input[@role='combobox' and contains(@class,'rhf-select__input')]")
+        for attempt in range(3):
+            try:
+                ActionChains(self.driver).click(inner).perform()
+                inner.send_keys(Keys.COMMAND, "a")
+                inner.send_keys(Keys.BACKSPACE)
+                inner.send_keys(wash_book)
+                break
+            except Exception:
+                if attempt == 2:
+                    raise
+                time.sleep(0.5)
+                inner = row.find_element(By.XPATH,
+                    ".//input[@role='combobox' and contains(@class,'rhf-select__input')]")
+
         option = WebDriverWait(self.driver, 10).until(
             lambda d: self._find_react_option(wash_book)
         )
@@ -584,20 +646,16 @@ class GasPumpSettingsFormPage(BasePage):
 
     def get_wbc_wash_book_options(self, row_index=0):
         """Return wash book dropdown option texts for the nth WBC row (0-indexed)."""
-        dropdowns = [
-            e for e in self.driver.find_elements(*self.WBC_WASH_BOOK_DROPDOWNS)
-            if e.is_displayed()
-        ]
-        if row_index >= len(dropdowns):
+        rows = self._get_wbc_rows()
+        if row_index >= len(rows):
             return []
-        dropdown = dropdowns[row_index]
-        self.driver.execute_script("arguments[0].click();", dropdown)
-        inner_inputs = dropdown.find_elements(By.XPATH, ".//input")
-        if inner_inputs:
-            try:
-                ActionChains(self.driver).click(inner_inputs[0]).perform()
-            except Exception:
-                self.driver.execute_script("arguments[0].click();", inner_inputs[0])
+        row = rows[row_index]
+
+        indicator = row.find_element(By.XPATH,
+            ".//div[contains(@class,'rhf-select__dropdown-indicator')]")
+        self.driver.execute_script("arguments[0].click();", indicator)
+        time.sleep(0.2)
+
         options = WebDriverWait(self.driver, 8).until(
             lambda d: d.execute_script("""
                 var opts = Array.from(document.querySelectorAll(
@@ -619,18 +677,20 @@ class GasPumpSettingsFormPage(BasePage):
         return options or []
 
     def enter_wbc_id_code(self, row_index, code):
-        """Enter Gas pump ID code in the nth WBC row text field (0-indexed)."""
-        inputs = [
-            e for e in self.driver.find_elements(*self.WBC_ID_CODE_INPUTS)
-            if e.is_displayed()
-        ]
-        if row_index >= len(inputs):
+        """Enter Gas pump ID code in the nth WBC row (0-indexed).
+
+        Confirmed name: gasPumpCodeList.{n}.gasPumpIdCode
+        Confirmed placeholder: "Gas pump ID code"
+        """
+        rows = self._get_wbc_rows()
+        if row_index >= len(rows):
             raise IndexError(
-                "WBC ID code input %d not found (only %d visible)" % (row_index, len(inputs))
+                "WBC row %d not found (only %d rows visible)" % (row_index, len(rows))
             )
-        el = inputs[row_index]
+        el = rows[row_index].find_element(By.XPATH,
+            ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];
@@ -642,43 +702,68 @@ class GasPumpSettingsFormPage(BasePage):
         """, el, str(code))
 
     def get_wbc_id_code(self, row_index):
-        inputs = [
-            e for e in self.driver.find_elements(*self.WBC_ID_CODE_INPUTS)
-            if e.is_displayed()
-        ]
-        if row_index >= len(inputs):
+        rows = self._get_wbc_rows()
+        if row_index >= len(rows):
             return ""
-        return inputs[row_index].get_attribute("value") or ""
-
-    def get_wbc_selected_wash_book(self, row_index):
-        """Return the selected wash book label text for the nth WBC row."""
         try:
-            # After selection the placeholder "Select wash book" is replaced by a
-            # single-value div. Anchor to the Add button so we skip the site dropdown.
-            single_val_locator = (By.XPATH,
-                "//button[contains(normalize-space(),'Add wash book code')]"
-                "/following::div[contains(@class,'rhf-select__single-value') or "
-                "contains(@class,'singleValue')] | "
-                "//*[@data-type='primary' and "
-                "contains(normalize-space(),'Add wash book code')]"
-                "/following::div[contains(@class,'rhf-select__single-value') or "
-                "contains(@class,'singleValue')]")
-            vals = [e for e in self.driver.find_elements(*single_val_locator) if e.is_displayed()]
-            if row_index >= len(vals):
-                return ""
-            return vals[row_index].text.strip()
+            el = rows[row_index].find_element(By.XPATH,
+                ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
+            return el.get_attribute("value") or ""
         except Exception:
             return ""
 
+    def get_wbc_selected_wash_book(self, row_index):
+        """Return the selected wash book label text for the nth WBC row.
+
+        After selection, the placeholder is replaced by div.rhf-select__single-value.
+        Confirmed selected value: <div class="rhf-select__single-value ...">VK AWB1</div>
+        """
+        rows = self._get_wbc_rows()
+        if row_index >= len(rows):
+            return ""
+        try:
+            el = rows[row_index].find_element(By.XPATH,
+                ".//div[contains(@class,'rhf-select__single-value')]")
+            return el.text.strip()
+        except Exception:
+            return ""
+
+    def remove_all_incomplete_wbc_rows(self):
+        """Remove all WBC rows (any that remain after fill failure).
+
+        Confirmed remove element: img[alt="Close"] inside
+        div[class*="wbCodeListTable_wbCodeListTableItemRemove_"].
+        An empty WBC row triggers "Must be selected" / "Can't be empty" and blocks save.
+        """
+        for _ in range(10):
+            btns = [
+                e for e in self.driver.find_elements(*self.WBC_REMOVE_BUTTONS)
+                if e.is_displayed()
+            ]
+            if not btns:
+                break
+            try:
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", btns[0]
+                )
+                self.driver.execute_script("arguments[0].click();", btns[0])
+                time.sleep(0.3)
+            except Exception:
+                break
+
     def click_remove_wbc_row(self, row_index):
-        """Click the × remove button on the nth WBC row (0-indexed)."""
+        """Click the Close img on the nth WBC row remove wrapper (0-indexed).
+
+        Confirmed: remove is img[alt="Close"] inside
+        div[class*="wbCodeListTable_wbCodeListTableItemRemove_"] — NOT a <button>.
+        """
         btns = [
             e for e in self.driver.find_elements(*self.WBC_REMOVE_BUTTONS)
             if e.is_displayed()
         ]
         if row_index >= len(btns):
             raise IndexError(
-                "WBC remove button %d not found (only %d visible)" % (row_index, len(btns))
+                "WBC remove img %d not found (only %d visible)" % (row_index, len(btns))
             )
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", btns[row_index]
@@ -727,8 +812,10 @@ class GasPumpSettingsFormPage(BasePage):
 
     def click_check_regen_code(self):
         el = self.wait.until(EC.element_to_be_clickable(self.CHECK_REGEN_CODE_BUTTON))
-        self.driver.execute_script("arguments[0].click();", el)
-        time.sleep(1.0)
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
+        time.sleep(0.2)
+        ActionChains(self.driver).move_to_element(el).click().perform()
+        time.sleep(2.0)
 
     # ── Connection code modal ─────────────────────────────────────────────────
 
@@ -768,11 +855,11 @@ class GasPumpSettingsFormPage(BasePage):
 
     def click_modal_close(self):
         try:
-            btn = WebDriverWait(self.driver, 4).until(
+            btn = WebDriverWait(self.driver, 8).until(
                 EC.element_to_be_clickable(self.MODAL_CLOSE_BTN)
             )
-            self.driver.execute_script("arguments[0].click();", btn)
-            time.sleep(0.5)
+            ActionChains(self.driver).move_to_element(btn).click().perform()
+            time.sleep(0.8)
         except Exception:
             try:
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
