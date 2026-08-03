@@ -12,13 +12,25 @@ from tests.admin_portal.admin_session import open_admin_path
 PFM_SITE  = "VK Test carwash 2"
 PFM_SITE_2 = "VK AL02"
 
-# Absolute date strings anchored to test dataset (today = 07/10/2026).
-LAST_MONTH_START = "06/01/2026"
-LAST_MONTH_END   = "06/30/2026"
-THIS_MONTH_START = "07/01/2026"
-THIS_MONTH_END   = "07/10/2026"
-TODAY_DATE       = "07/10/2026"
-YESTERDAY_DATE   = "07/09/2026"
+# Date strings computed at runtime so they never drift as calendar months roll over.
+def _last_month_start():
+    today = datetime.date.today()
+    first_this_month = today.replace(day=1)
+    last_month_last = first_this_month - datetime.timedelta(days=1)
+    return last_month_last.replace(day=1).strftime("%m/%d/%Y")
+
+def _last_month_end():
+    today = datetime.date.today()
+    first_this_month = today.replace(day=1)
+    last_month_last = first_this_month - datetime.timedelta(days=1)
+    return last_month_last.strftime("%m/%d/%Y")
+
+LAST_MONTH_START = _last_month_start()
+LAST_MONTH_END   = _last_month_end()
+THIS_MONTH_START = datetime.date.today().replace(day=1).strftime("%m/%d/%Y")
+THIS_MONTH_END   = datetime.date.today().strftime("%m/%d/%Y")
+TODAY_DATE       = datetime.date.today().strftime("%m/%d/%Y")
+YESTERDAY_DATE   = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%m/%d/%Y")
 
 # 6 date presets (no Custom — PFM differs from Revenue Overview)
 DATE_PRESETS = ["Today", "Yesterday", "This week", "Last week", "This month", "Last month"]
@@ -123,8 +135,8 @@ def pfm_modal(browser):
 def pfm_page(browser):
     """Phase 2 — VK Test carwash 2 + Last month applied.
 
-    Last month (06/01–06/30/2026, 30 days) gives a stable dataset:
-    CVR renders the chart (≥ 7 days) and MHT has Jun 30→Jun 1 rows.
+    Last month gives a stable closed dataset: CVR renders the chart
+    (≥ 7 days) and MHT has rows from the last day to first of the month.
     """
     page = open_pfm_page(browser)
     page.select_site(PFM_SITE)
