@@ -99,8 +99,7 @@ jobs:
               tests/admin_portal/users
               tests/admin_portal/employees
     uses: ./.github/workflows/run-suite.yml
-    secrets:
-      dotenv: ${{ secrets.STAGING }}
+    secrets: inherit
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
