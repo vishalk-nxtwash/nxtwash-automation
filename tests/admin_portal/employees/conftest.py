@@ -177,6 +177,12 @@ def create_employee_if_missing(
             "searching list with extended timeout"
         )
     page = open_employees_page(browser)
+    # Reset filters so inactive employees are visible (active-only filter
+    # would hide a previously deactivated record, causing a false miss).
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     page.search_employee(last_name)
     page.wait_for_employee_row(last_name, timeout=180)
     return page

@@ -38,7 +38,10 @@ class AdminUserRolesPage(BasePage):
         "//*[normalize-space()='+ Add user role']"
     )
     SEARCH_INPUT = (By.NAME, "roleName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH,
+        "//button[contains(normalize-space(),'Filter by')] | "
+        "//*[@role='button' and contains(normalize-space(),'Filter by')]"
+    )
     SITE_FILTER_INPUT = (
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"

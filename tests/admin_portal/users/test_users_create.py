@@ -2,6 +2,7 @@ import uuid
 
 import allure
 import pytest
+from selenium.webdriver.support.ui import WebDriverWait
 
 from tests.admin_portal.users.conftest import (
     EMPLOYEE_NAME,
@@ -37,6 +38,8 @@ def _unique_phone():
 def test_users_add_form_opens(browser):
     page = open_users_page(browser)
     page.click_add_user()
+    # Wait for the SPA to navigate (URL change happens asynchronously on CI).
+    WebDriverWait(browser, 30).until(lambda d: "users" in d.current_url)
 
     assert "users/new" in browser.current_url or "users" in browser.current_url
     assert page_has_no_broken_state(page)

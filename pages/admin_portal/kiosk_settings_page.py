@@ -136,6 +136,8 @@ class AdminKioskSettingsPage(BasePage):
         return self.wait.until(EC.presence_of_element_located(locator))
 
     def kiosk_exists(self, name):
+        # Reset filters so inactive kiosks are visible before searching.
+        self.reset_filters_if_active()
         self.search_kiosk(name)
         try:
             self.wait_for_kiosk_row(name, timeout=15)
