@@ -98,6 +98,7 @@ def _reset_managed_package(browser):
     page.create_package(
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
+        barcode=BARCODE_VALUE,
     )
     return open_wash_packages_page(browser)
 

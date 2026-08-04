@@ -1,27 +1,28 @@
 {
   "reference": {
-    "existing_package":           "VK AWP1",
-    "assignment_site":            "VK AL11",
+    "existing_package":           "VK AWP005",
+    "assignment_site":            "VK Test Wash 01",
     "applicable_discount":        "Basic Discount",
     "second_applicable_discount": "VK AD01"
   },
   "template": {
-    "package_name":       "VK AWP1",
+    "package_name":       "VK AWP005",
     "points_awarded":     "3",
     "points_redeemed":    "1",
-    "global_price":       "30",
-    "global_commission":  "5",
-    "visible_price":      "$30.00",
-    "barcode":            "VK-BAR-001",
+    "global_price":       "14",
+    "global_commission":  "4",
+    "visible_price":      "$14.00",
+    "barcode":            "AWP004",
+    "controller_code":    "004",
     "description":        "VK automation test description"
   },
   "updated": {
-    "package_name":             "VK AWP1 edited",
+    "package_name":             "VK AWP004 edited",
     "points_awarded":           "10",
     "points_redeemed":          "5",
-    "site_override_price":      "25",
-    "site_override_price_high": "40",
-    "site_override_commission": "8"
+    "site_override_price":      "10",
+    "site_override_price_high": "20",
+    "site_override_commission": "6"
   },
   "search": {
     "nonexistent": "wash-package-does-not-exist-automation"

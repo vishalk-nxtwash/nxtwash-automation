@@ -48,8 +48,8 @@ SHARD_2_MODULES=(
     tests/admin_portal/general_sales_report  #  83
     tests/admin_portal/wash_packages       #  78
     tests/admin_portal/pos_settings        #  68
-    tests/admin_portal/custom_services     #  58
-    tests/admin_portal/tunnel_settings     #  44
+    tests/admin_portal/custom_services  #  58
+    tests/admin_portal/tunnel_settings  #  44
 )   # total ≈ 523
 
 SHARD_3_MODULES=(

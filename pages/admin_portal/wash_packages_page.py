@@ -1,4 +1,5 @@
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -228,10 +229,14 @@ class WashPackagesPage(BasePage):
 
     def get_package_row_locator(self, package_name):
         """Build a locator for a package row by package name."""
+        # Inovua renders the name cell with both a visible truncated text node
+        # and a full-text node (div, not span, in recent grid versions).
+        # normalize-space() on the cell concatenates both, so exact equality
+        # fails. contains() is safe because package names are unique.
         return (
             By.XPATH,
             "//*[contains(@class,'InovuaReactDataGrid__row')]"
-            "[.//*[@data-props-id='serviceName' and normalize-space()='%s']]"
+            "[.//*[@data-props-id='serviceName' and contains(normalize-space(),'%s')]]"
             % package_name
         )
 
@@ -257,16 +262,15 @@ class WashPackagesPage(BasePage):
     def search_package(self, package_name):
         """Search package by service name.
 
-        Uses Cmd+A → Backspace to clear (fires keyboard events React handles),
-        then send_keys to type the new value.  element.clear() does not fire
-        React's synthetic onChange on macOS Chrome, causing the next send_keys
-        to append to the old React-state value instead of replacing it.
+        JS input.select() selects all text cross-platform (Ctrl+A only selects
+        on Linux; on macOS it moves the cursor).  send_keys then replaces the
+        selection so React's onChange fires cleanly on all platforms.
         """
         element = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self.driver.execute_script("arguments[0].select();", element)
         element.send_keys(package_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -281,7 +285,8 @@ class WashPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -569,13 +574,17 @@ class WashPackagesPage(BasePage):
         InovuaReactDataGrid rows have is_displayed()=False even when rendered
         (the grid uses CSS transforms/clipping for its virtual scroller).
         Uses EC.presence_of_element_located (DOM presence) instead of visibility.
-        Scrolls the page to ensure the grid is in the browser viewport before
-        querying, then dispatches WheelEvents if the row is not immediately found.
+
+        Scroll strategy: direct scrollTop on the inner scrollable container
+        (the unnamed div with scrollH > clientH inside the virtual-list wrapper).
+        This bypasses the WheelEvent→Inovua→React-state→re-render→scroll-reset
+        cycle that caused the previous approach to fail after form field changes.
         """
         import time as _time
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         any_row_locator = (By.XPATH, "//*[contains(@class,'InovuaReactDataGrid__row')]")
         WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(any_row_locator))
+        _time.sleep(0.5)
 
         row_xpath = (
             By.XPATH,
@@ -584,63 +593,95 @@ class WashPackagesPage(BasePage):
             % site_name,
         )
 
-        # InovuaReactDataGrid: is_displayed() is unreliable. Check DOM presence.
         els = self.driver.find_elements(*row_xpath)
         if els:
             return els[0]
 
-        # Row not in DOM yet — try scrolling to load deferred rows.
-        # Uses WheelEvent (300ms gap so React processes each event before next).
-        _scroll_js = """
-var grid = document.querySelector('[class*="InovuaReactDataGrid__virtual-list"]');
-if (grid) {
-    grid.dispatchEvent(
-        new WheelEvent('wheel', {deltaY: 2000, bubbles: true, cancelable: true})
-    );
+        # Find the real scroller and get its max scrollTop.
+        _find_scroller_js = """
+var vl = document.querySelector('[class*="InovuaReactDataGrid__virtual-list"]');
+if (!vl) return null;
+var kids = Array.from(vl.querySelectorAll('div'));
+for (var i = 0; i < kids.length; i++) {
+    if (kids[i].scrollHeight > kids[i].clientHeight + 50) return kids[i].scrollHeight - kids[i].clientHeight;
+}
+return null;
+"""
+        max_scroll = self.driver.execute_script(_find_scroller_js)
+        if max_scroll is None:
+            max_scroll = 4000  # fallback
+
+        _set_scroll_js = """
+var vl = document.querySelector('[class*="InovuaReactDataGrid__virtual-list"]');
+if (!vl) return;
+var kids = Array.from(vl.querySelectorAll('div'));
+for (var i = 0; i < kids.length; i++) {
+    if (kids[i].scrollHeight > kids[i].clientHeight + 50) {
+        kids[i].scrollTop = arguments[0];
+        return;
+    }
 }
 """
-        for _i in range(30):
-            self.driver.execute_script(_scroll_js)
-            _time.sleep(0.3)
+        # Scan in ~350 px steps (slightly less than viewport height so rows
+        # near viewport edges are always included in at least one window).
+        step = 350
+        for pos in range(0, int(max_scroll) + step, step):
+            self.driver.execute_script(_set_scroll_js, min(pos, int(max_scroll)))
+            _time.sleep(0.12)
             els = self.driver.find_elements(*row_xpath)
             if els:
                 return els[0]
 
-        return WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(row_xpath))
+        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(row_xpath))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a package to a site and set site-level price/commission."""
+        import time as _t
+        # React re-renders triggered by the preceding form-field changes can
+        # reset the virtual grid's scroll position mid-loop.  A short wait lets
+        # the form settle so the grid stays stable during the scroll search.
+        _t.sleep(2)
         row = self.get_site_row(site_name)
         checkbox = row.find_element(
             By.XPATH,
-            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox')"
+            " and not(contains(@class,'__icon'))]"
         )
 
         _CB_XPATH = (
             By.XPATH,
-            "//*[normalize-space()='%s']"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
-            "//*[contains(@class,'inovua-react-toolkit-checkbox')]" % site_name,
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[normalize-space()='%s']]"
+            "//*[contains(@class,'inovua-react-toolkit-checkbox')"
+            " and not(contains(@class,'__icon'))]" % site_name,
         )
 
         def _checkbox_checked(d):
+            # Inovua renders duplicate DOM rows; check ALL matching checkboxes.
             try:
-                cls = d.find_element(*_CB_XPATH).get_attribute("class")
-                return (
-                    "inovua-react-toolkit-checkbox--checked" in cls
-                    and "inovua-react-toolkit-checkbox--unchecked" not in cls
+                return any(
+                    "inovua-react-toolkit-checkbox--checked" in el.get_attribute("class")
+                    and "inovua-react-toolkit-checkbox--unchecked"
+                        not in el.get_attribute("class")
+                    for el in d.find_elements(*_CB_XPATH)
                 )
             except Exception:
                 return False
 
         if not _checkbox_checked(self.driver):
+            import time as _tc
+            # scrollIntoView centers the row in the inner iframe viewport so
+            # ActionChains.move_to_element() lands on the checkbox correctly.
             self.driver.execute_script(
                 "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
                 checkbox
             )
-            self.driver.execute_script("arguments[0].click();", checkbox)
+            _tc.sleep(0.3)
+            ActionChains(self.driver).move_to_element(checkbox).click().perform()
             self.wait.until(_checkbox_checked)
 
+        # Re-find row after React re-render triggered by checkbox state change.
+        row = self.get_site_row(site_name)
         price_input = row.find_element(By.NAME, "price")
         commission_input = row.find_element(By.NAME, "commission")
         self._set_input_value(price_input, str(price))
@@ -653,10 +694,13 @@ if (grid) {
         points_redeemed,
         global_price,
         global_commission,
-        site_name
+        site_name,
+        barcode=None,
     ):
         """Fill package form with package and site assignment details."""
         self.enter_service_name(service_name)
+        if barcode is not None:
+            self.enter_barcode(barcode)
         self.set_loyalty_points(points_awarded, points_redeemed)
         self.ensure_active_switch_on()
         self.set_global_price(global_price)
@@ -874,9 +918,14 @@ if (grid) {
         points_redeemed,
         global_price,
         global_commission,
-        site_name
+        site_name,
+        barcode=None,
     ):
-        """Create an active wash package and return to the list."""
+        """Create an active wash package and force navigation back to the list.
+
+        Staging does not auto-redirect after create; we force navigation so
+        callers don't depend on the SPA redirect behavior.
+        """
         self.open_create_package()
         self.fill_package_form(
             service_name,
@@ -884,14 +933,7 @@ if (grid) {
             points_redeemed,
             global_price,
             global_commission,
-            site_name
+            site_name,
+            barcode=barcode,
         )
-        self.click_save_package()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            error = self.get_visible_error()
-            raise RuntimeError(
-                "Wash package save did not return to list. Page message: %s"
-                % (error or "none visible")
-            ) from None
+        self.save_and_return_to_list()

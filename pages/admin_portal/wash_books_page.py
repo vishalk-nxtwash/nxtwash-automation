@@ -258,8 +258,9 @@ class WashBooksPage(BasePage):
         """Build a locator for a wash book row by name."""
         return (
             By.XPATH,
-            "//*[contains(@class,'InovuaReactDataGrid__row')]"
-            "[.//*[@data-props-id='washbookName' and normalize-space()='%s']]"
+            "//*[@data-props-id='washbookName']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
             % wash_book_name
         )
 
@@ -1072,8 +1073,9 @@ class WashBooksPage(BasePage):
         """Build a locator for a CWB row by wash book number."""
         return (
             By.XPATH,
-            "//*[contains(@class,'InovuaReactDataGrid__row')]"
-            "[.//*[@data-props-id='washbookNumber' and normalize-space()='%s']]"
+            "//*[@data-props-id='washbookNumber']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
             % wash_book_number
         )
 
