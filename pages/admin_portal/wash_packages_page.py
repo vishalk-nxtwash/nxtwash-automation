@@ -642,9 +642,32 @@ if (grid) {
             self.wait.until(_checkbox_checked)
 
         price_input = row.find_element(By.NAME, "price")
-        commission_input = row.find_element(By.NAME, "commission")
-        self._set_input_value(price_input, str(price))
-        self._set_input_value(commission_input, str(commission))
+        # input.select() + send_keys is more reliable than the native-setter +
+        # dispatchEvent approach for Inovua row inputs. JS select() highlights
+        # all existing text without emitting key events (no Inovua grid shortcut
+        # intercept), and send_keys fires per-character keydown/input events that
+        # React's controlled-input onChange processes correctly.
+        # scrollIntoView first: the price row may be below the visible Chrome
+        # window even after get_site_row positions Inovua's internal scroll; we
+        # must bring it on-screen before send_keys (same pattern as checkbox).
+        import time as _ti
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center',inline:'center'});",
+            price_input
+        )
+        _ti.sleep(0.3)
+        self.driver.execute_script("arguments[0].select();", price_input)
+        price_input.send_keys(str(price))
+        # Re-find after potential React re-render triggered by price change.
+        row = self.get_site_row(site_name)
+        commission_input = row.find_elements(By.NAME, "commission")[0]
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center',inline:'center'});",
+            commission_input
+        )
+        _ti.sleep(0.3)
+        self.driver.execute_script("arguments[0].select();", commission_input)
+        commission_input.send_keys(str(commission))
 
     def fill_package_form(
         self,
@@ -839,6 +862,29 @@ if (grid) {
         row = self.get_site_row(site_name)
         elements = row.find_elements(By.NAME, "commission")
         return elements[0].get_attribute("value") if elements else ""
+
+    def site_is_assigned(self, site_name):
+        """Return True if the site's checkbox is checked in the assignment grid.
+
+        Uses get_site_row to scroll the Inovua virtual grid to the correct row
+        before inspecting the checkbox class, so the row need not be in the
+        currently visible viewport.
+        """
+        try:
+            row = self.get_site_row(site_name)
+            checkboxes = row.find_elements(
+                By.XPATH,
+                ".//*[contains(@class,'inovua-react-toolkit-checkbox')"
+                " and not(contains(@class,'__icon'))]"
+            )
+            return any(
+                "inovua-react-toolkit-checkbox--checked" in (el.get_attribute("class") or "")
+                and "inovua-react-toolkit-checkbox--unchecked"
+                    not in (el.get_attribute("class") or "")
+                for el in checkboxes
+            )
+        except Exception:
+            return False
 
     def select_all_sites(self):
         """Click the Select All header checkbox in the site assignment grid."""
