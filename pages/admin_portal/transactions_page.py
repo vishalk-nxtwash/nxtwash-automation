@@ -622,21 +622,27 @@ class TransactionsPage(BasePage):
         """, presets) or []
 
     def click_date_preset(self, label):
-        """Click a named date preset button in the Date & Location filter tab.
+        """Click a named date preset in the Date & Location filter tab.
 
-        Date presets (Today, Yesterday, Last month, etc.) live inside the
-        Date & Location tab of the filter panel — they are NOT quick-filter chips.
-        The filter panel must already be open when this is called.
+        Date presets live inside the Date & Location tab — NOT quick-filter chips.
+        Uses the same leaf-node visible scan as get_date_preset_labels because the
+        preset elements are not necessarily <button> tags.
         """
         self.driver.execute_script("""
             var label = arguments[0];
             var form = document.querySelector('#transactions-report-filter-form');
             if (!form) return;
-            var buttons = Array.from(form.querySelectorAll('button'));
-            var btn = buttons.find(function(b) {
-                return b.textContent.trim() === label;
-            });
-            if (btn) btn.click();
+            var els = Array.from(form.querySelectorAll('*'));
+            for (var i = 0; i < els.length; i++) {
+                var el = els[i];
+                if (el.offsetParent === null) continue;
+                if (el.children.length > 0) continue;
+                if (el.textContent.trim() === label) {
+                    el.click();
+                    return true;
+                }
+            }
+            return false;
         """, label)
         time.sleep(0.3)
 
