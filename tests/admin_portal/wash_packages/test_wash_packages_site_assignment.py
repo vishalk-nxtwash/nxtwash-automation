@@ -32,9 +32,9 @@ def test_assign_multiple_sites_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    body = page.get_body_text()
-
-    assert ASSIGNMENT_SITE in body
+    # site_is_assigned scrolls the Inovua virtual grid to find the row;
+    # get_body_text() only captures the currently rendered virtual viewport.
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 
@@ -44,9 +44,7 @@ def test_select_all_sites_via_header_checkbox(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.select_all_sites()
-    body = page.get_body_text()
-
-    assert ASSIGNMENT_SITE in body
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 

@@ -95,8 +95,9 @@ def test_edit_wash_package_assigned_sites(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    body = page.get_body_text()
-    assert ASSIGNMENT_SITE in body
+    # site_is_assigned scrolls the Inovua virtual grid to find the row rather
+    # than relying on get_body_text(), which only captures currently rendered rows.
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 
