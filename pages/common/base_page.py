@@ -150,6 +150,34 @@ class BasePage:
         body = (self.get_visible_error() or "")
         return any(kw in body for kw in self._DUPLICATE_KEYWORDS)
 
+    def switch_to_frame_with_retry(self, locator, timeout=90):
+        """Switch to an iframe, retrying on StaleElementReferenceException.
+
+        EC.frame_to_be_available_and_switch_to_it only catches NoSuchFrameException.
+        React re-mounts iframes during client-side navigation, causing stale element
+        errors between find_element and switch_to.frame. This loop handles that race.
+        """
+        from selenium.common.exceptions import NoSuchFrameException, TimeoutException
+        self.driver.switch_to.default_content()
+        deadline = time.time() + timeout
+        last_exc = None
+        while time.time() < deadline:
+            try:
+                frame = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(locator)
+                )
+                self.driver.switch_to.frame(frame)
+                return
+            except StaleElementReferenceException:
+                self.driver.switch_to.default_content()
+                time.sleep(0.5)
+            except (TimeoutException, NoSuchFrameException) as exc:
+                last_exc = exc
+                self.driver.switch_to.default_content()
+                time.sleep(1)
+        from selenium.common.exceptions import TimeoutException as TE
+        raise TE("Frame %s not stable after %ss" % (locator, timeout)) from last_exc
+
     def pagination_controls_present(self, context_el=None):
         """Return True if any pagination controls are visible.
 

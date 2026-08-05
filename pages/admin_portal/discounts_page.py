@@ -116,11 +116,7 @@ class DiscountsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Discounts list is visible."""
-        from selenium.webdriver.support.ui import WebDriverWait
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 30).until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
         self.wait_for_grid_idle()
@@ -137,20 +133,13 @@ class DiscountsPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until the create discount form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
 
     def wait_for_edit_loaded(self):
         """Wait until the edit discount form is visible."""
-        from selenium.webdriver.support.ui import WebDriverWait
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
         WebDriverWait(self.driver, 30).until(
