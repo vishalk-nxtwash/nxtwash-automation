@@ -32,10 +32,10 @@ class WashPackagesPage(BasePage):
     PAGE_TITLE = (By.XPATH,
         "//*[normalize-space()='Wash packages' or normalize-space()='Wash Packages']")
     SEARCH_INPUT = (By.NAME, "serviceName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH, "//button[contains(normalize-space(),'Filter by')]")
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[contains(normalize-space(),'Filter by')]/following-sibling::button[1]"
     )
     ADD_PACKAGE_BUTTON = (
         By.XPATH,
@@ -351,6 +351,20 @@ class WashPackagesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
 
+    def reset_filters_if_active(self):
+        """Reset filter panel state if any filter is currently active.
+
+        The app persists site filter state after edit-form site assignment,
+        causing 'Filter by (1)' on the next list load. Call this before any
+        operation that needs to find a specific row in an unfiltered grid.
+        """
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            if "Filter by (" in body:
+                self.reset_filters()
+        except Exception:  # noqa: BLE001
+            pass
+
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""
         button = self.wait.until(EC.presence_of_element_located(self.DOWNLOAD_BUTTON))
@@ -365,6 +379,7 @@ class WashPackagesPage(BasePage):
     def open_edit_package(self, package_name):
         """Open edit package form."""
         self.wait_for_list_loaded()
+        self.reset_filters_if_active()
         self.search_package(package_name)
         self.wait_for_package_row(package_name)
         # Atomic JS click — InovuaReactDataGrid uses <div> rows, not <tr>.
