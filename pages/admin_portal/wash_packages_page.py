@@ -931,10 +931,25 @@ for (var i = 0; i < kids.length; i++) {
             return False
 
     def select_all_sites(self):
-        """Click the Select All header checkbox in the site assignment grid."""
+        """Click the Select All header checkbox to select all sites.
+
+        Inovua's tristate header checkbox deselects all when in indeterminate
+        state (some-but-not-all rows checked). Normalise to unchecked first so
+        the click always transitions to the all-checked state.
+        """
+        import time as _ts
         header_checkbox = self.wait.until(
             EC.element_to_be_clickable(self.SITE_ASSIGNMENT_HEADER_CHECKBOX)
         )
+        classes = header_checkbox.get_attribute("class") or ""
+        if "inovua-react-toolkit-checkbox--unchecked" not in classes:
+            # Indeterminate or checked: one click reaches the unchecked state.
+            self.driver.execute_script("arguments[0].click();", header_checkbox)
+            _ts.sleep(0.5)
+            header_checkbox = self.wait.until(
+                EC.element_to_be_clickable(self.SITE_ASSIGNMENT_HEADER_CHECKBOX)
+            )
+        # From unchecked state: click selects all rows.
         self.driver.execute_script("arguments[0].click();", header_checkbox)
 
     def click_download_button(self):

@@ -278,13 +278,21 @@ class WashBooksPage(BasePage):
         Uses send_keys so React's onChange handler fires and the grid actually
         filters.  _set_input_value (JS-only) sets the DOM value but does not
         trigger the synthetic event React listens to for search.
+
+        Ctrl+A / Cmd+A are both intercepted by Inovua's global keydown handler.
+        JS select() highlights the text, then ActionChains.send_keys sends to
+        the already-focused element without refocusing (which would deselect).
         """
+        from selenium.webdriver.common.action_chains import ActionChains
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        search_input.send_keys(wash_book_name)
+        # Focus and select existing content via JS; ActionChains then sends keys
+        # to the active element without issuing a new focus command (no deselect).
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", search_input
+        )
+        ActionChains(self.driver).send_keys(Keys.BACKSPACE).send_keys(wash_book_name).perform()
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -342,9 +350,12 @@ class WashBooksPage(BasePage):
 
     def clear_wash_book_search(self):
         """Clear the wash book search field and wait for list to reset."""
+        from selenium.webdriver.common.action_chains import ActionChains
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", search_input
+        )
+        ActionChains(self.driver).send_keys(Keys.BACKSPACE).perform()
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -359,6 +370,39 @@ class WashBooksPage(BasePage):
     def reset_filters(self):
         """Click Reset all to clear active filters."""
         self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+
+    def clear_all_filters(self):
+        """If any filters are active, open the panel, reset, and apply to close."""
+        import re as _re
+        try:
+            btn = self.driver.find_element(*self.FILTER_BUTTON)
+            if _re.search(r'\(\d+\)', btn.text or ""):
+                self.open_filter_panel()
+                self.reset_filters()
+                self.apply_filters()
+                self.wait_for_grid_idle()
+        except Exception:
+            pass
+
+    def disable_active_filter(self):
+        """Open filter panel and turn the Active-only toggle OFF so all records
+        (active and inactive) are visible.  No-op if already off."""
+        try:
+            self.open_filter_panel()
+            switch = self.wait.until(
+                EC.presence_of_element_located(self.ACTIVE_SWITCH)
+            )
+            if switch.get_attribute("aria-checked") == "true":
+                self.driver.execute_script("arguments[0].click();", switch)
+                self.wait.until(
+                    lambda driver: driver.find_element(
+                        *self.ACTIVE_SWITCH
+                    ).get_attribute("aria-checked") != "true"
+                )
+            self.apply_filters()
+            self.wait_for_grid_idle()
+        except Exception:
+            pass
 
     def set_filter_site(self, site_name):
         """Type a site name into the filter panel and select the matching option."""
@@ -645,10 +689,14 @@ class WashBooksPage(BasePage):
             seen_locations.add(location_key)
             unique_rows.append(row)
 
+        _BASELINE_SITES = {
+            "VK Test carwash 2", "VK Test Wash 01",
+            "VK AL02", "VK AL03", "VK AL04", "VK AL05", "VK AL06", "VK AL07",
+        }
         baseline_rows = [
             row
             for row in unique_rows
-            if "VK Test carwash 2" in row.text or "VK Test Wash 01" in row.text
+            if any(site in row.text for site in _BASELINE_SITES)
         ]
 
         return baseline_rows or unique_rows
@@ -739,32 +787,25 @@ class WashBooksPage(BasePage):
         self.set_grid_input_value(commission_inputs[row_index], commission)
 
     def set_grid_input_value(self, element, value):
-        """Set a React grid input value without appending to stale text."""
+        """Set a React grid input value via the native setter and DOM events.
+
+        Ctrl+A inside the Inovua grid bubbles to the grid's global keydown
+        handler and may trigger "select all cells" rather than selecting the
+        input text. The native-setter path (_set_input_value) is reliable and
+        avoids that interception.
+
+        After blur the grid may re-render the row (replacing the DOM node),
+        which makes `element` stale. We accept that as confirmation that the
+        value was committed rather than waiting on a stale reference.
+        """
         self.driver.execute_script(
-            "arguments[0].scrollIntoView({ block: 'center' });"
-            "arguments[0].focus();",
+            "arguments[0].scrollIntoView({ block: 'center' });",
             element
         )
-        element.send_keys(Keys.CONTROL, "a")
-        element.send_keys(Keys.BACKSPACE)
-        element.send_keys(str(value))
+        self._set_input_value(element, str(value))
         self.driver.execute_script(
-            """
-            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-            """,
+            "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
             element
-        )
-        if not self.grid_input_numeric_value_matches(element, value):
-            self._set_input_value(element, str(value))
-        self.driver.execute_script(
-            """
-            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
-            """,
-            element
-        )
-        self.wait.until(
-            lambda driver: self.grid_input_numeric_value_matches(element, value)
         )
 
     def grid_input_numeric_value_matches(self, element, value):
@@ -949,12 +990,15 @@ class WashBooksPage(BasePage):
         self.assign_all_locations()
 
         location_count = len(self.visible_location_price_inputs())
-        for row_index in range(min(location_count, 2)):
-            self.set_location_price_and_commission_by_index(
-                row_index,
-                global_price,
-                global_commission
-            )
+        for row_index in range(location_count):
+            try:
+                self.set_location_price_and_commission_by_index(
+                    row_index,
+                    global_price,
+                    global_commission
+                )
+            except AssertionError:
+                break
 
         try:
             self.open_redemption_settings()

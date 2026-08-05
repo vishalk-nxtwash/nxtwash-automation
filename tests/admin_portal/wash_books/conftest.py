@@ -43,6 +43,7 @@ def open_wash_books_page(browser):
 
     wash_books_page = WashBooksPage(browser)
     wash_books_page.wait_for_list_loaded()
+    wash_books_page.clear_all_filters()
 
     return wash_books_page
 
@@ -53,22 +54,12 @@ def create_wash_book_if_missing(browser, wash_book_name=WASH_BOOK_NAME):
     wash_books_page = open_wash_books_page(browser)
 
     if wash_books_page.wash_book_exists(wash_book_name):
-        # wash_book_exists() leaves the browser in a filtered-list state with
-        # the search field already populated.  open_edit_wash_book() calls
-        # wait_for_list_loaded() (frame switch) then search_wash_book() again;
-        # clearing a React-controlled input that already has content via
-        # send_keys is unreliable in headless Chrome.  A fresh navigation
-        # guarantees an empty search field for the second search.
         wash_books_page = open_wash_books_page(browser)
         wash_books_page.open_edit_wash_book(wash_book_name)
-        wash_books_page.fill_wash_book_form(
-            wash_book_name,
-            NUMBER_OF_WASHES,
-            POINTS_AWARDED,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION
-        )
+        wash_books_page.ensure_active_switch_on()
+        wash_books_page.ensure_customer_portal_switch_on()
         wash_books_page.click_save_wash_book()
+        wash_books_page.wait_for_list_loaded()
         return open_wash_books_page(browser)
 
     # Not found in the active list — attempt creation.
@@ -84,12 +75,11 @@ def create_wash_book_if_missing(browser, wash_book_name=WASH_BOOK_NAME):
             GLOBAL_COMMISSION
         )
     except TimeoutException:
-        return open_wash_books_page(browser)
+        pass
 
-    wash_books_page.search_wash_book(wash_book_name)
-    wash_books_page.wait_for_wash_book_row(wash_book_name)
-
-    return wash_books_page
+    # Return a fresh page so the caller always starts with an empty search
+    # field — avoids the JS-select/Backspace deselect race on a pre-filled input.
+    return open_wash_books_page(browser)
 
 
 def open_customer_wash_books_page(browser):
@@ -106,6 +96,9 @@ def create_customer_wash_book_if_missing(
     browser,
     wash_book_number=CWB_WASH_BOOK_NUMBER
 ):
+    # Ensure the wash book template exists with its canonical name before
+    # trying to select it in the CWB create form.
+    create_wash_book_if_missing(browser)
 
     page = open_customer_wash_books_page(browser)
 

@@ -1,23 +1,33 @@
 {
   "reference": {
-    "existing_wash_book":          "Basic washbook",
-    "inactive_wash_book":          "VK AWB2-I",
-    "assignment_site":             "VK AL11"
+    "existing_wash_book":  "Basic washbook",
+    "inactive_wash_book":  "VK AWB2-I",
+    "assignment_site":     "VK Test Wash 01",
+    "assignment_sites":    [
+      "VK Test carwash 2",
+      "VK Test Wash 01",
+      "VK AL02",
+      "VK AL03",
+      "VK AL04",
+      "VK AL05",
+      "VK AL06",
+      "VK AL07"
+    ]
   },
   "template": {
-    "wash_book_name":     "VK AWB2",
-    "number_of_washes":   "15",
+    "wash_book_name":     "AWB004",
+    "number_of_washes":   "11",
     "points_awarded":     "5",
-    "global_price":       "55",
-    "global_commission":  "5",
-    "visible_price":      "$55.00",
+    "global_price":       "15",
+    "global_commission":  "3",
+    "visible_price":      "$15.00",
     "description":        "Test washbook created using automation",
     "barcode":            "VK-WB-BAR-001"
   },
   "customer_wash_book": {
     "number":           "AWB-AUTO-001",
     "updated_number":   "AWB-AUTO-001-U",
-    "number_of_washes": "15",
+    "number_of_washes": "11",
     "updated_washes":   "8"
   },
   "search": {
