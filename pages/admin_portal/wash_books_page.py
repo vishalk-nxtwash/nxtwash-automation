@@ -171,11 +171,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
-        long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
         self.wait_for_grid_idle()
@@ -191,10 +187,7 @@ class WashBooksPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until the create wash book form is visible."""
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.WASH_BOOK_NAME_INPUT)
         )
@@ -203,8 +196,7 @@ class WashBooksPage(BasePage):
     def wait_for_edit_loaded(self):
         """Wait until the edit wash book form is visible."""
         long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         tab = long_wait.until(
             EC.presence_of_element_located(self.SERVICE_SETTINGS_TAB)
         )
@@ -1051,10 +1043,7 @@ class WashBooksPage(BasePage):
     def wait_for_cwb_list_loaded(self):
         """Wait until the Customer Wash Books listing is ready."""
         long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CWB_LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CWB_LIST_FRAME)
         long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
         long_wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
         # Wait for either the grid header OR the results summary to confirm
@@ -1076,25 +1065,19 @@ class WashBooksPage(BasePage):
         or directly on the page. Try the iframe first; fall back to default content.
         """
         long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 30).until(
-                EC.frame_to_be_available_and_switch_to_it(self.CWB_CREATE_FRAME)
-            )
+            self.switch_to_frame_with_retry(self.CWB_CREATE_FRAME, timeout=30)
         except TimeoutException:
-            pass  # No iframe — form rendered directly on the page
+            self.driver.switch_to.default_content()
         long_wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
 
     def wait_for_cwb_edit_loaded(self):
         """Wait until the CWB edit form is ready."""
         long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
         try:
-            WebDriverWait(self.driver, 30).until(
-                EC.frame_to_be_available_and_switch_to_it(self.CWB_EDIT_FRAME)
-            )
+            self.switch_to_frame_with_retry(self.CWB_EDIT_FRAME, timeout=30)
         except TimeoutException:
-            pass  # No iframe — form rendered directly on the page
+            self.driver.switch_to.default_content()
         long_wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
         long_wait.until(lambda driver: self.get_cwb_wash_book_number_value() != "")
 

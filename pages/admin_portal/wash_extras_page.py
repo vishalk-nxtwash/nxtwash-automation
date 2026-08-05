@@ -103,11 +103,7 @@ class WashExtrasPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Extras list is visible."""
-        long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON))
         self.wait_for_grid_idle()
@@ -123,17 +119,13 @@ class WashExtrasPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until the create extra form is visible."""
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
 
     def wait_for_edit_loaded(self):
         """Wait until the edit extra form is visible."""
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
         self.wait.until(lambda driver: self.get_service_name_value() != "")

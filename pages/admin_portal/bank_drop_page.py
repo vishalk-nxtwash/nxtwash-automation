@@ -61,8 +61,7 @@ class BankDropPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Bank Drop list is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
         self.wait_for_grid_idle()
@@ -78,15 +77,13 @@ class BankDropPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until create Bank Drop form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME))
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
         """Wait until edit Bank Drop form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.wait.until(lambda driver: self.get_name_value() != "")
