@@ -68,8 +68,7 @@ class AdminUserRolesPage(BasePage):
     )
 
     def wait_for_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.ADD_ROLE_BUTTON))
         # Wait for the data-loading spinner to clear so body text reflects real rows
@@ -297,18 +296,12 @@ class AdminUserRoleFormPage(BasePage):
     ]
 
     def wait_for_create_loaded(self):
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(AdminUserRolesPage.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminUserRolesPage.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(AdminUserRolesPage.EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminUserRolesPage.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         # Best-effort: wait up to 5s for React to populate the name field.

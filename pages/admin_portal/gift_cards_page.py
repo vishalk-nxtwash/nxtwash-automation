@@ -130,10 +130,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Gift Cards list is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
         # Wait for the grid column headers — the inovua grid initialises
@@ -147,10 +144,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
         )
@@ -158,8 +152,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_edit_loaded(self):
         """Wait until the edit gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
         )
@@ -183,10 +176,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_customer_list_loaded(self):
         """Wait until the Customer Gift Cards list is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CUSTOMER_LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CUSTOMER_LIST_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.CUSTOMER_PAGE_TITLE)
         )
@@ -196,12 +186,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_customer_create_loaded(self):
         """Wait until the create customer gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(
-                self.CUSTOMER_CREATE_FRAME
-            )
-        )
+        self.switch_to_frame_with_retry(self.CUSTOMER_CREATE_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(
                 self.CUSTOMER_GIFT_CARD_NUMBER_INPUT
@@ -995,10 +980,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_customer_edit_loaded(self):
         """Wait until the customer gift card edit form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CUSTOMER_EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CUSTOMER_EDIT_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_NUMBER_INPUT)
         )

@@ -66,9 +66,7 @@ class AdminEmployeesPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
-        long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(EC.frame_to_be_available_and_switch_to_it(self.EMP_LIST_FRAME))
+        self.switch_to_frame_with_retry(self.EMP_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
 
@@ -304,19 +302,12 @@ class AdminEmployeeFormPage(BasePage):
         "//*[@data-type and normalize-space()='Cancel']")
 
     def wait_for_create_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminEmployeesPage.EMP_CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
-        long_wait = WebDriverWait(self.driver, 60)
-        self.driver.switch_to.default_content()
-        long_wait.until(
-            EC.frame_to_be_available_and_switch_to_it(AdminEmployeesPage.EMP_EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminEmployeesPage.EMP_EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.wait.until(
@@ -603,10 +594,7 @@ class AdminEmployeeShiftPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(self.SHIFT_LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.SHIFT_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
 
@@ -758,18 +746,12 @@ class AdminEmployeeShiftFormPage(BasePage):
         "//*[@data-type and normalize-space()='Cancel']")
 
     def wait_for_create_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminEmployeeShiftPage.SHIFT_CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_COMBOBOX))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def get_body_text(self):
