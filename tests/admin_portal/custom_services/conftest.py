@@ -47,13 +47,30 @@ def create_service_if_missing(browser, service_name=SERVICE_NAME):
 
     if page.service_exists(service_name):
         page.open_edit_service(service_name)
-        page.fill_service_form(
-            service_name,
-            SERVICE_CATEGORY,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            ASSIGNMENT_SITE,
-        )
+        page.ensure_active_switch_on()
+        page.click_save_service()
+        return open_custom_services_page(browser)
+
+    # service_exists() only scans the active-filter view.  A deactivate test may
+    # have left the service inactive; a create attempt on a duplicate name fails
+    # silently, then wait_for_service_row() burns the full timeout.  Reset filters
+    # and re-check with a short timeout before falling through to create.
+    from selenium.common.exceptions import TimeoutException as _TE
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    page.reset_filters()
+    page.search_service(service_name)
+    locator = page.get_service_row_locator(service_name)
+    try:
+        WebDriverWait(page.driver, 10).until(EC.visibility_of_element_located(locator))
+        inactive_found = True
+    except _TE:
+        inactive_found = False
+
+    if inactive_found:
+        page.open_edit_service(service_name)
+        page.ensure_active_switch_on()
         page.click_save_service()
         return open_custom_services_page(browser)
 

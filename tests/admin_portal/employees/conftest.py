@@ -133,6 +133,29 @@ def create_employee_if_missing(
         form.click_save()
         return open_employees_page(browser)
 
+    # Not found under canonical name.  An edit-last-name test may have renamed
+    # it to UPDATED_LAST_NAME and failed to restore.  Check the known-updated
+    # name with a short timeout before falling through to create — a create
+    # attempt would hit a duplicate-email error and then hang for 180 s waiting
+    # for a row that never appears under the old name.
+    from selenium.common.exceptions import TimeoutException as _TE
+    page.search_employee(UPDATED_LAST_NAME)
+    try:
+        page.wait_for_employee_row(UPDATED_LAST_NAME, timeout=10)
+        renamed_found = True
+    except _TE:
+        renamed_found = False
+
+    if renamed_found:
+        form = open_edit_employee_form(browser, UPDATED_LAST_NAME)
+        form.enter_first_name(first_name)
+        form.enter_last_name(last_name)
+        form.enter_email(email)
+        form.enter_phone(phone)
+        form.ensure_active_switch_on()
+        form.click_save()
+        return open_employees_page(browser)
+
     form = open_create_employee_form(browser)
     form.enter_first_name(first_name)
     form.enter_last_name(last_name)

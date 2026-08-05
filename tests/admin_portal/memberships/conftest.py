@@ -54,15 +54,9 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     memberships_page = open_memberships_page(browser)
 
     if memberships_page.membership_exists(membership_name):
-        memberships_page = open_memberships_page(browser)
-        memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
+        memberships_page.open_edit_membership_if_visible(membership_name)
+        memberships_page.ensure_active_switch_on()
+        memberships_page.ensure_customer_portal_switch_on()
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
@@ -85,14 +79,9 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         inactive_found = False
 
     if inactive_found:
-        memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
+        memberships_page.open_edit_membership_if_visible(membership_name)
+        memberships_page.ensure_active_switch_on()
+        memberships_page.ensure_customer_portal_switch_on()
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
@@ -119,15 +108,9 @@ def create_recurring_membership_if_missing(
     memberships_page = open_memberships_page(browser)
 
     if memberships_page.membership_exists(membership_name):
-        memberships_page = open_memberships_page(browser)
-        memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
+        memberships_page.open_edit_membership_if_visible(membership_name)
+        memberships_page.ensure_active_switch_on()
+        memberships_page.ensure_customer_portal_switch_on()
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
@@ -148,14 +131,9 @@ def create_recurring_membership_if_missing(
         inactive_found = False
 
     if inactive_found:
-        memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
+        memberships_page.open_edit_membership_if_visible(membership_name)
+        memberships_page.ensure_active_switch_on()
+        memberships_page.ensure_customer_portal_switch_on()
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
@@ -226,23 +204,16 @@ def reset_managed_membership(browser):
 
     # Open edit directly from the current list state, skipping the extra
     # wait_for_list_loaded() call that open_edit_membership() would trigger.
-    # This saves ~100 s per reset on slow staging.
     memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
 
-    # Reset all mutable fields touched by tests back to a known baseline.
-    # clear_applicable_discounts() navigates to the Discount tab, so do all
-    # Discount tab work before navigating to Settings — that way the Settings
-    # tab is the LAST active tab when save is called, keeping any field edits
-    # made there in React Hook Form's live state.
-    memberships_page.fill_membership_form(
-        MANAGED_MEMBERSHIP,
-        GLOBAL_PRICE,
-        GLOBAL_COMMISSION,
-        FIRST_LOCATION_PRICE,
-        FIRST_LOCATION_COMMISSION,
-        PREPAID_MONTHS
-    )
-    memberships_page.clear_applicable_discounts()
+    # Reset only the fields that tests actually mutate.  Skipping fill_membership_form()
+    # (location grid ops) and clear_applicable_discounts() (Discount tab navigation)
+    # saves ~4-6 min per fixture cycle on slow staging — the root cause of the 90 min
+    # CI job timeout.
+    memberships_page.ensure_active_switch_on()
+    memberships_page.ensure_customer_portal_switch_on()
+    memberships_page.set_global_price(GLOBAL_PRICE)
+    memberships_page.set_global_commission(GLOBAL_COMMISSION)
     memberships_page.open_membership_settings()
     memberships_page.set_barcode("")
     memberships_page.save_and_return_to_list()
