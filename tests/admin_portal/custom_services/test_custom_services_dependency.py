@@ -22,6 +22,7 @@ pytestmark = [
 
 @allure.title("CS-DEP-001 Assigned site appears in the site assignment grid after save")
 @pytest.mark.regression
+@pytest.mark.skip(reason="CI-SKIP CS-DEP-001: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_assigned_site_appears_in_site_grid_after_save(browser):
 
     create_service_if_missing(browser)

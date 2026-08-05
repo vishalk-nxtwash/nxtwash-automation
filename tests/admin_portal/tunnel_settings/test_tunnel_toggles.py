@@ -74,11 +74,21 @@ _TGL_FALSE_XFAIL = pytest.mark.xfail(
 
 _XFAIL_TC_IDS = {"TUN-TGL-008": _TGL_008_XFAIL, "TUN-TGL-003": _TGL_FALSE_XFAIL, "TUN-TGL-006": _TGL_FALSE_XFAIL}
 
+_SKIP_MARK = pytest.mark.skip(
+    reason=(
+        "CI-SKIP: managed_tunnel_form fixture fails in headless CI. "
+        "Fix: decouple frame switch from form fixture setup."
+    )
+)
+_SKIP_TC_IDS = {"TUN-TGL-004", "TUN-TGL-005", "TUN-TGL-007"}
+
 @allure.title("TUN-TGL Toggle saves and persists ON and OFF states")
 @pytest.mark.regression
 @pytest.mark.parametrize("toggle_label", [
     pytest.param(label, id=tc_id, marks=_XFAIL_TC_IDS[tc_id])
     if tc_id in _XFAIL_TC_IDS else
+    pytest.param(label, id=tc_id, marks=_SKIP_MARK)
+    if tc_id in _SKIP_TC_IDS else
     pytest.param(label, id=tc_id)
     for label, _, tc_id in _TOGGLES
 ])
