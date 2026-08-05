@@ -39,6 +39,7 @@ def open_wash_packages_page(browser):
 
     page = WashPackagesPage(browser)
     page.wait_for_list_loaded()
+    page.reset_filters_if_active()
 
     return page
 
