@@ -43,6 +43,7 @@ def open_wash_books_page(browser):
 
     wash_books_page = WashBooksPage(browser)
     wash_books_page.wait_for_list_loaded()
+    wash_books_page.reset_filters_if_active()
 
     return wash_books_page
 
