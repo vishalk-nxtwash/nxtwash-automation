@@ -51,6 +51,7 @@ def open_discounts_page(browser):
 
     discounts_page = DiscountsPage(browser)
     discounts_page.wait_for_list_loaded()
+    discounts_page.reset_filters_if_active()
 
     return discounts_page
 

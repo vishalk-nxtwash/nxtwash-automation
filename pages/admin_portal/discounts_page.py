@@ -30,10 +30,17 @@ class DiscountsPage(BasePage):
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Discounts']")
     SEARCH_INPUT = (By.NAME, "discountName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (
+        By.XPATH,
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]"
+    )
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]/following-sibling::button[1]"
     )
     ADD_DISCOUNT_BUTTON = (
         By.XPATH,
@@ -237,8 +244,10 @@ class DiscountsPage(BasePage):
         ).text.strip()
 
     def open_filter_panel(self):
-        """Open the Discounts filter panel."""
+        """Open the Discounts filter panel (idempotent — no-op if already open)."""
         self.wait_for_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
@@ -330,6 +339,14 @@ class DiscountsPage(BasePage):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
         self.click(self.RESET_ALL_BUTTON)
+
+    def reset_filters_if_active(self):
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            if "Filter by (" in body:
+                self.reset_filters()
+        except Exception:
+            pass
 
     def open_create_discount(self):
         """Open create discount form."""
