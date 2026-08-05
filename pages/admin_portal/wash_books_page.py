@@ -328,8 +328,10 @@ class WashBooksPage(BasePage):
         ).text.strip()
 
     def open_filter_panel(self):
-        """Open the Wash Books filter panel."""
+        """Open the Wash Books filter panel (idempotent — no-op if already open)."""
         self.wait_for_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
@@ -360,7 +362,8 @@ class WashBooksPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)).click()
 
     def reset_filters(self):
-        """Click Reset all to clear active filters."""
+        """Open the filter panel (if closed) and click Reset all."""
+        self.open_filter_panel()
         self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
 
     def clear_all_filters(self):

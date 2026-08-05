@@ -35,6 +35,7 @@ def open_user_roles_page(browser):
     open_admin_path(browser, "/users/userRoles")
     page = AdminUserRolesPage(browser)
     page.wait_for_loaded()
+    page.reset_filters_if_active()
     return page
 
 

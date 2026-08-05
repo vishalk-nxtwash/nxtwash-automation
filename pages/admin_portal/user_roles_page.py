@@ -216,6 +216,14 @@ class AdminUserRolesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
 
+    def reset_filters_if_active(self):
+        try:
+            body = self.get_body_text()
+            if "Filter by (" in body:
+                self.reset_filters()
+        except Exception:
+            pass
+
     def click_export_button(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EXPORT_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)

@@ -40,6 +40,12 @@ def create_bank_drop_if_missing(browser, name=BANK_DROP_NAME, order=BANK_DROP_OR
     page = open_bank_drop_page(browser)
 
     if page.bank_drop_exists(name):
+        # Reset mutable fields so tests always start from the expected baseline.
+        page.open_edit(name)
+        page.enter_order(order)
+        page.ensure_active_on()
+        page.click_save()
+        page.wait_for_list_loaded()
         return page
 
     saved = page.create_bank_drop(name, order)
