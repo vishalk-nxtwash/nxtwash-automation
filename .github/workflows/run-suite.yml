@@ -39,7 +39,7 @@ on:
     secrets:
       dotenv:
         description: "Full .env contents (KEY=value lines) for the target environment"
-        required: true
+        required: false
 
 jobs:
   run:
