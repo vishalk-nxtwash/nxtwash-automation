@@ -1,14 +1,14 @@
 {
   "reference": {
-    "existing_membership":   "AM003",
-    "recurring_membership":  "AM003R",
-    "site_membership":       "VK MA3",
+    "existing_membership":   "AM004",
+    "recurring_membership":  "AM004R",
+    "site_membership":       "VK MA4",
     "redeem_as_service":     "VK detail wash",
     "filter_site_query":     "carwash",
     "filter_site_label":     "VK Test carwash 2"
   },
   "template": {
-    "membership_name":          "AM003",
+    "membership_name":          "AM004",
     "global_price":             "15",
     "global_commission":        "2",
     "first_location_price":     "8",
@@ -18,7 +18,7 @@
     "baseline_points":          "5"
   },
   "updated": {
-    "membership_name": "AM003 updated"
+    "membership_name": "AM004 updated"
   },
   "search": {
     "nonexistent": "membership-does-not-exist-automation"
