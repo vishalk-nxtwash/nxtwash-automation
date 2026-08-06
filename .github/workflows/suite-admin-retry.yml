@@ -28,7 +28,8 @@ jobs:
               tests/admin_portal/discounts
               tests/admin_portal/memberships
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: admin-retry-${{ matrix.shard.name }}
       environment: staging
