@@ -29,7 +29,7 @@ class DiscountsPage(BasePage):
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Discounts']")
-    SEARCH_INPUT = (By.NAME, "discountName")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input[placeholder='Discount name']")
     FILTER_BUTTON = (
         By.XPATH,
         "//button[contains("
@@ -200,12 +200,7 @@ class DiscountsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        # JS click avoids ElementClickInterceptedException caused by the outer
-        # page <html> intercepting clicks when the iframe coordinate origin
-        # differs from the outer viewport origin.
-        self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        search_input.send_keys(discount_name)
+        self._set_input_value(search_input, discount_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -218,8 +213,7 @@ class DiscountsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self._set_input_value(search_input, "")
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -385,7 +379,10 @@ class DiscountsPage(BasePage):
 
     def enter_discount_name(self, discount_name):
         """Enter discount name."""
-        self.enter_text(self.DISCOUNT_NAME_INPUT, discount_name)
+        element = self.wait.until(
+            EC.element_to_be_clickable(self.DISCOUNT_NAME_INPUT)
+        )
+        self._set_input_value(element, discount_name)
 
     def get_discount_name_value(self):
         """Return the current discount name input value."""
@@ -505,8 +502,7 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        discount_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        discount_input.send_keys(str(value))
+        self._set_input_value(discount_input, str(value))
         self.wait.until(
             lambda driver: rows[row_index].find_element(
                 By.NAME,
@@ -829,7 +825,9 @@ class DiscountsPage(BasePage):
         )
         self.wait.until(EC.element_to_be_clickable(time_locator)).click()
         end_date.send_keys(Keys.ESCAPE)
-        self.wait.until(lambda driver: time_text in end_date.get_attribute("value"))
+        self.wait.until(
+            lambda driver: time_text in self._get_date_input_by_index(1).get_attribute("value")
+        )
 
     def get_discount_end_value(self):
         """Return discount end date input value."""

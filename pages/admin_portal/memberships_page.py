@@ -29,7 +29,7 @@ class MembershipsPage(BasePage):
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Memberships']")
-    SEARCH_INPUT = (By.NAME, "membershipName")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input[placeholder='Membership name']")
     FILTER_BUTTON = (
         By.XPATH,
         "//button[contains(normalize-space(.), 'Filter by') "
@@ -375,45 +375,24 @@ class MembershipsPage(BasePage):
             return False
 
     def search_membership(self, membership_name):
-        """Search membership by name.
-
-        Uses Cmd+A → Backspace to clear so React's onChange fires correctly.
-        Ctrl+A on macOS Chrome moves the cursor to start of line rather than
-        selecting all text, causing repeated searches to append instead of replace.
-        """
+        """Search membership by name."""
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        search_input.send_keys(membership_name)
+        self._set_input_value(search_input, membership_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
             ).get_attribute("value") == membership_name
         )
         self.wait_for_grid_idle()
-        # React may update the controlled input asynchronously after the grid
-        # renders a zero-results state (deferred setState clears the value).
-        # Poll until two consecutive reads agree so the caller sees the final
-        # stable value rather than a transient intermediate state.
-        prev = object()
-        for _ in range(8):
-            curr = self.driver.find_element(
-                *self.SEARCH_INPUT
-            ).get_attribute("value")
-            if curr == prev:
-                break
-            prev = curr
-            time.sleep(0.1)
 
     def clear_membership_search(self):
         """Clear membership search and wait for the grid to refresh."""
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self._set_input_value(search_input, "")
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
@@ -643,7 +622,10 @@ class MembershipsPage(BasePage):
 
     def enter_membership_name(self, membership_name):
         """Enter membership name."""
-        self.enter_text(self.MEMBERSHIP_NAME_INPUT, membership_name)
+        element = self.wait.until(
+            EC.element_to_be_clickable(self.MEMBERSHIP_NAME_INPUT)
+        )
+        self._set_input_value(element, membership_name)
 
     def get_membership_name_value(self):
         """Return the current membership name input value."""

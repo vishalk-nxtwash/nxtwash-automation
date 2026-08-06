@@ -2,10 +2,10 @@
   "reference": {
     "existing_discount":       "Basic Discount",
     "all_locations_discount":  "VK AL02",
-    "service_category":        "VK ASC1"
+    "service_category":        "Wash Package"
   },
   "template": {
-    "discount_name":     "AD004",
+    "discount_name":     "VK AD05",
     "amount":            "5",
     "start_day":         "9",
     "start_time":        "10:00 AM",
@@ -14,7 +14,7 @@
   },
   "percentage": {
     "discount_name":  "VK PD06",
-    "amount":         "10"
+    "amount":         "20"
   },
   "search": {
     "nonexistent": "discount-does-not-exist-automation"

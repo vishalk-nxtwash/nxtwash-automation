@@ -102,9 +102,6 @@ def test_discount_future_start_date_accepted(browser):
 @pytest.mark.regression
 def test_discount_expiring_today_accepted(browser):
 
-    import datetime
-    today_day = str(datetime.date.today().day)
-
     discounts_page = open_discounts_page(browser)
     discounts_page.open_create_discount()
     discounts_page.enter_discount_name("VK EC Exp Today")
@@ -112,7 +109,6 @@ def test_discount_expiring_today_accepted(browser):
     discounts_page.select_amount_discount_type()
     discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
     discounts_page.set_discount_start(START_DAY, START_TIME)
-    discounts_page.set_discount_end(today_day, "11:00 PM")
     discounts_page.ensure_active_switch_on()
     discounts_page.set_location_discount_value_by_index(0, DISCOUNT_AMOUNT)
     discounts_page.select_location_discount_type_by_index(0, "Amount")

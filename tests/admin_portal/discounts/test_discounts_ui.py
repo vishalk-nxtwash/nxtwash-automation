@@ -38,12 +38,21 @@ def test_discounts_page_loads_with_primary_controls(browser):
 @pytest.mark.sanity
 @pytest.mark.prod_smoke
 def test_discounts_grid_columns_are_visible(browser):
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support import expected_conditions as EC
 
     discounts_page = open_discounts_page(browser)
-    body_text = discounts_page.get_body_text()
 
-    assert "Discount name" in body_text
-    assert "Status" in body_text
+    assert discounts_page.wait.until(
+        EC.visibility_of_element_located(
+            (By.XPATH, "//*[normalize-space()='Discount name']")
+        )
+    )
+    assert discounts_page.wait.until(
+        EC.visibility_of_element_located(
+            (By.XPATH, "//*[normalize-space()='Status']")
+        )
+    )
 
 
 @allure.title("DS-UI-003 Add discount form loads")
