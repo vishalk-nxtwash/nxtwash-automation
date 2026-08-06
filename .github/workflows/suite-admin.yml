@@ -17,8 +17,9 @@ concurrency:
 
 jobs:
   # ── Smoke gate ─────────────────────────────────────────────────────────────
-  # Runs all @smoke tests across the full admin suite first (~10–15 min).
-  # The full matrix only starts if smoke passes — saves 90 min on obvious breaks.
+  # Runs all @smoke tests first (~10–15 min) as an early-warning signal.
+  # Shards run in parallel and are NOT blocked by smoke result — all shard
+  # data is always collected regardless of smoke pass/fail.
   smoke:
     if: github.ref == 'refs/heads/staging'
     uses: ./.github/workflows/run-suite.yml
@@ -32,7 +33,6 @@ jobs:
       timeout_minutes: 20
 
   admin:
-    needs: smoke
     if: github.ref == 'refs/heads/staging'
     strategy:
       fail-fast: false
