@@ -4,10 +4,9 @@ name: Run Suite (reusable)
 # Profile workflows (suite-admin / suite-superadmin / suite-prod-smoke) call this
 # with WHAT to run. Do not add triggers here other than workflow_call.
 #
-# Callers must pass `secrets: inherit` so the job can read the environment-scoped
-# secrets of the GitHub Environment it binds to:
-#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD
-#   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
+# Credentials come from GitHub Environment secrets (ADMIN_PORTAL_USERNAME /
+# ADMIN_PORTAL_PASSWORD).  The inner job binds to the environment so it can
+# read those secrets directly — no secret forwarding from the caller needed.
 
 on:
   workflow_call:
@@ -36,14 +35,11 @@ on:
         description: "Job timeout in minutes"
         type: number
         default: 90
-    secrets:
-      dotenv:
-        description: "Full .env contents (KEY=value lines) for the target environment"
-        required: true
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
@@ -85,13 +81,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # The credentials secret is the full .env contents for this environment.
-      # ConfigManager.load_dotenv() picks these up automatically at runtime.
-      - name: Write .env from secret
+      # Write credentials from GitHub Environment secrets so ConfigManager
+      # can read them via load_dotenv().  The inner job's environment binding
+      # (environment: ${{ inputs.environment }}) makes these secrets available.
+      - name: Write .env from secrets
         env:
-          DOTENV: ${{ secrets.dotenv }}
+          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
+          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
+          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
         run: |
-          printf '%s\n' "$DOTENV" > .env
+          {
+            printf 'ADMIN_PORTAL_USERNAME=%s\n' "$ADMIN_PORTAL_USERNAME"
+            printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$ADMIN_PORTAL_PASSWORD"
+            [ -n "$SUPERADMIN_USERNAME" ] && printf 'SUPERADMIN_USERNAME=%s\n' "$SUPERADMIN_USERNAME"
+            [ -n "$SUPERADMIN_PASSWORD" ] && printf 'SUPERADMIN_PASSWORD=%s\n' "$SUPERADMIN_PASSWORD"
+          } > .env
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
 
       - name: Run tests (headless)
@@ -143,5 +148,5 @@ jobs:
         if: always()
         uses: test-summary/action@v2
         with:
-          paths: results.xml
+          paths: reports/results.xml
         continue-on-error: true
