@@ -16,7 +16,23 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # ── Smoke gate ─────────────────────────────────────────────────────────────
+  # Runs all @smoke tests across the full admin suite first (~10–15 min).
+  # The full matrix only starts if smoke passes — saves 90 min on obvious breaks.
+  smoke:
+    if: github.ref == 'refs/heads/staging'
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-smoke-gate
+      environment: staging
+      test_path: tests/admin_portal
+      marker: "smoke"
+      parallel: "2"
+      timeout_minutes: 20
+
   admin:
+    needs: smoke
     if: github.ref == 'refs/heads/staging'
     strategy:
       fail-fast: false
@@ -28,21 +44,24 @@ jobs:
             path: >-
               tests/admin_portal/overview
               tests/admin_portal/performance_metrics
-          # 164 tests — revenue_overview + general_sales_report
-          - name: reports-revenue
-            path: >-
-              tests/admin_portal/revenue_overview
-              tests/admin_portal/general_sales_report
+          # 100 tests — revenue_overview
+          - name: reports-revenue-a
+            path: tests/admin_portal/revenue_overview
+          # 83 tests — general_sales_report
+          - name: reports-revenue-b
+            path: tests/admin_portal/general_sales_report
           # 151 tests — cash_report + card_declines + transactions
           - name: reports-financial
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
               tests/admin_portal/transactions
-          # 177 tests — labor_shifts + redemptions + wash_activity
-          - name: reports-ops
+          # 86 tests — labor_shifts
+          - name: reports-ops-a
+            path: tests/admin_portal/labor_shifts
+          # ~91 tests — redemptions + wash_activity
+          - name: reports-ops-b
             path: >-
-              tests/admin_portal/labor_shifts
               tests/admin_portal/redemptions
               tests/admin_portal/wash_activity
           # ── Auth & Core (run early; downstream modules depend on this data) ─
@@ -93,11 +112,12 @@ jobs:
               tests/admin_portal/pos_settings
               tests/admin_portal/user_roles
           # ── People & HR ───────────────────────────────────────────────────
-          # 164 tests — users + employees
-          - name: people
-            path: >-
-              tests/admin_portal/users
-              tests/admin_portal/employees
+          # ~77 tests — users
+          - name: people-users
+            path: tests/admin_portal/users
+          # ~87 tests — employees
+          - name: people-employees
+            path: tests/admin_portal/employees
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
