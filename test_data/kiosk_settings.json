@@ -1,21 +1,21 @@
 {
   "reference": {
-    "existing_kiosk":          "VK AK02",
+    "existing_kiosk":          "VK AK03",
     "site":                    "VK AL02",
     "lane":                    "L4",
     "car_recognition_type":    "By License Plate",
     "car_recognition_alt":     "By RFID tag"
   },
   "template": {
-    "kiosk_name":      "VK AK02",
+    "kiosk_name":      "VK AK03",
     "middleware_ip":   "https://middleware-zeus.nxtwash.info",
     "payment_serial":  "1640146298"
   },
   "updated": {
-    "kiosk_name": "VK AK02 edited"
+    "kiosk_name": "VK AK03 edited"
   },
   "create": {
-    "kiosk_name": "VK kiosk auto 3"
+    "kiosk_name": "VK kiosk auto 4"
   },
   "search": {
     "nonexistent": "kiosk-does-not-exist-automation"

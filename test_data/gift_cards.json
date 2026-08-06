@@ -1,15 +1,15 @@
 {
   "reference": {
-    "gift_card_name":       "VK AGC003",
+    "gift_card_name":       "VK AGC004",
     "assignment_locations": ["VK AL11", "VK Test Wash 01", "VK AL08", "VK AL01"]
   },
   "template": {
     "amount":               "15",
     "visible_amount":       "$15.00",
-    "landing_page_code":    "VKAGC003"
+    "landing_page_code":    "VKAGC004"
   },
   "updated": {
-    "landing_page_code":    "VKAGC003-EDIT"
+    "landing_page_code":    "VKAGC004-EDIT"
   },
   "customer_gift_card": {
     "site":           "VK AL11",

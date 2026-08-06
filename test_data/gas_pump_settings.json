@@ -1,11 +1,11 @@
 {
   "reference": {
-    "existing_pump": "VK AGP02",
+    "existing_pump": "VK AGP03",
     "site":          "VK AL02",
     "wash_book":     "VK AWB1"
   },
   "template": {
-    "pump_name":      "VK AGP02",
+    "pump_name":      "VK AGP03",
     "serial_port":    "02",
     "serial_number":  "02",
     "baud_rate":      "02",
@@ -15,10 +15,10 @@
     "wbc_id_code":    "02"
   },
   "create": {
-    "pump_name": "VK AGP03"
+    "pump_name": "VK AGP04"
   },
   "updated": {
-    "pump_name": "VK AGP02 EDIT"
+    "pump_name": "VK AGP03 EDIT"
   },
   "search": {
     "nonexistent": "gas-pump-does-not-exist-automation"

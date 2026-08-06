@@ -1,6 +1,6 @@
 {
   "reference": {
-    "existing_service":          "VK ACS4",
+    "existing_service":          "VK ACS5",
     "assignment_site":           "VK AL29",
     "service_category":          "VK ASC3",
     "inactive_category":         "VK ASC2",
@@ -8,15 +8,15 @@
     "second_applicable_discount":"VK AD01"
   },
   "template": {
-    "service_name":    "VK ACS4",
+    "service_name":    "VK ACS5",
     "global_price":    "15",
     "global_commission":"3",
     "visible_price":   "$15.00",
-    "barcode":         "VK-SVC-002",
+    "barcode":         "VK-SVC-003",
     "description":     "VK automation test description"
   },
   "updated": {
-    "service_name":              "VK ACS4 edited",
+    "service_name":              "VK ACS5 edited",
     "site_override_price":       "10",
     "site_override_price_high":  "20",
     "site_override_commission":  "6"

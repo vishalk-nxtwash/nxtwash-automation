@@ -5,7 +5,7 @@
     "updated_discount":    "Basic discount"
   },
   "template": {
-    "extra_name":          "VK EWA4",
+    "extra_name":          "VK EWA5",
     "global_price":        "15",
     "global_commission":   "2",
     "visible_price":       "$15.00",
@@ -13,7 +13,7 @@
     "second_location_price":"20"
   },
   "updated": {
-    "extra_name": "VK EWA4 updated"
+    "extra_name": "VK EWA5 updated"
   },
   "search": {
     "nonexistent": "wash-extra-does-not-exist-automation"

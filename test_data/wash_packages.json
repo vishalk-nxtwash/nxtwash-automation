@@ -1,23 +1,23 @@
 {
   "reference": {
-    "existing_package":           "VK AWP005",
+    "existing_package":           "VK AWP006",
     "assignment_site":            "VK AL11",
     "applicable_discount":        "Basic Discount",
     "second_applicable_discount": "VK AD01"
   },
   "template": {
-    "package_name":       "VK AWP005",
+    "package_name":       "VK AWP006",
     "points_awarded":     "3",
     "points_redeemed":    "1",
     "global_price":       "14",
     "global_commission":  "4",
     "visible_price":      "$14.00",
-    "barcode":            "AWP004",
-    "controller_code":    "004",
+    "barcode":            "AWP005",
+    "controller_code":    "005",
     "description":        "VK automation test description"
   },
   "updated": {
-    "package_name":             "VK AWP004 edited",
+    "package_name":             "VK AWP005 edited",
     "points_awarded":           "10",
     "points_redeemed":          "5",
     "site_override_price":      "10",
