@@ -200,7 +200,10 @@ class DiscountsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        # JS click avoids ElementClickInterceptedException caused by the outer
+        # page <html> intercepting clicks when the iframe coordinate origin
+        # differs from the outer viewport origin.
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(discount_name)
         self.wait.until(
@@ -215,7 +218,7 @@ class DiscountsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(

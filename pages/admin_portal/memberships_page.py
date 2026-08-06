@@ -384,7 +384,7 @@ class MembershipsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(membership_name)
         self.wait.until(
@@ -412,7 +412,7 @@ class MembershipsPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(

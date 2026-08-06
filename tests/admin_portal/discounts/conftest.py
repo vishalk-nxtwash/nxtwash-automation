@@ -101,6 +101,11 @@ def create_discount_if_missing(browser, discount_name=DISCOUNT_NAME):
         START_TIME,
         SERVICE_CATEGORY
     )
+    # create_discount() navigates into CREATE_FRAME and saves.  After the save
+    # the browser transitions back to the list, but frame context is unreliable.
+    # A fresh open_discounts_page() call guarantees LIST_FRAME is active before
+    # search_discount() runs (avoids ElementClickInterceptedException).
+    discounts_page = open_discounts_page(browser)
     discounts_page.search_discount(discount_name)
     discounts_page.wait_for_discount_row(discount_name)
 
@@ -122,6 +127,7 @@ def create_percentage_discount_if_missing(browser, discount_name=PERCENTAGE_DISC
         START_TIME,
         SERVICE_CATEGORY
     )
+    discounts_page = open_discounts_page(browser)
     discounts_page.search_discount(discount_name)
     discounts_page.wait_for_discount_row(discount_name)
 
@@ -143,6 +149,7 @@ def create_all_locations_discount_if_missing(browser, discount_name=ALL_LOC_DISC
         START_TIME,
         SERVICE_CATEGORY
     )
+    discounts_page = open_discounts_page(browser)
     discounts_page.search_discount(discount_name)
     discounts_page.wait_for_discount_row(discount_name)
 
@@ -170,6 +177,7 @@ def reset_managed_discount(browser):
             START_TIME,
             SERVICE_CATEGORY
         )
+        discounts_page = open_discounts_page(browser)
 
     # Reset mutable fields touched by tests back to a known baseline.
     # ensure_all_locations_switch_off() must run before save: if a previous
@@ -201,6 +209,7 @@ def reset_managed_percentage_discount(browser):
             START_TIME,
             SERVICE_CATEGORY
         )
+        discounts_page = open_discounts_page(browser)
 
     discounts_page.open_edit_discount(MANAGED_PERCENTAGE_DISCOUNT)
     discounts_page.select_percentage_discount_type()

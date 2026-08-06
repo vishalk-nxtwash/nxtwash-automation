@@ -63,10 +63,12 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
 
     # Not in active list — check inactive before trying to create (staging may
     # have deactivated it; creating a duplicate name would fail silently).
-    # Use a short 10s wait so we don't burn 60s when the record simply doesn't exist.
+    # Fresh navigation resets the DOM state after membership_exists() timed out
+    # so that _show_inactive_memberships() and search_membership() work cleanly.
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
 
+    memberships_page = open_memberships_page(browser)
     memberships_page._show_inactive_memberships()
     memberships_page.search_membership(membership_name)
     locator = memberships_page.get_membership_row_locator(membership_name)
@@ -93,6 +95,7 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         FIRST_LOCATION_PRICE,
         FIRST_LOCATION_COMMISSION
     )
+    memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
     memberships_page.wait_for_membership_row(membership_name)
 
@@ -116,9 +119,11 @@ def create_recurring_membership_if_missing(
         return memberships_page
 
     # Not in active list — check inactive before trying to create.
+    # Fresh navigation resets DOM state after membership_exists() timed out.
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
 
+    memberships_page = open_memberships_page(browser)
     memberships_page._show_inactive_memberships()
     memberships_page.search_membership(membership_name)
     locator = memberships_page.get_membership_row_locator(membership_name)
@@ -145,6 +150,7 @@ def create_recurring_membership_if_missing(
         FIRST_LOCATION_PRICE,
         FIRST_LOCATION_COMMISSION
     )
+    memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
     memberships_page.wait_for_membership_row(membership_name)
 
@@ -181,6 +187,8 @@ def reset_managed_membership(browser):
 
     if not membership_found:
         # Not in active view — check inactive filter before creating.
+        # Fresh navigation resets DOM state after wait_for_membership_row timed out.
+        memberships_page = open_memberships_page(browser)
         memberships_page._show_inactive_memberships()
         memberships_page.search_membership(MANAGED_MEMBERSHIP)
         try:
@@ -197,8 +205,9 @@ def reset_managed_membership(browser):
             FIRST_LOCATION_PRICE,
             FIRST_LOCATION_COMMISSION,
         )
-        # create_membership() saves and returns to list — membership is at
-        # baseline from fill_membership_form(), so reset is complete.
+        # create_membership() navigates into CREATE_FRAME; fresh navigation
+        # restores LIST_FRAME before clear_active_filters() runs.
+        memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
