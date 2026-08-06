@@ -1123,10 +1123,16 @@ class WashBooksPage(BasePage):
         The caller must have already called wait_for_cwb_list_loaded() so
         we are already inside the CWB iframe; a second frame-switch attempt
         would time-out if the src changed after initial load.
+        Uses a short timeout so create_customer_wash_book_if_missing doesn't
+        block for the full 420s default when the record doesn't exist yet.
         """
         self.search_cwb(wash_book_number)
         try:
-            self.wait_for_cwb_row(wash_book_number)
+            WebDriverWait(self.driver, 8).until(
+                EC.visibility_of_element_located(
+                    self.get_cwb_row_locator(wash_book_number)
+                )
+            )
             return True
         except TimeoutException:
             return False

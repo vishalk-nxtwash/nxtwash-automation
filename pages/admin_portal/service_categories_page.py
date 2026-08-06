@@ -437,6 +437,7 @@ class ServiceCategoriesPage(BasePage):
         reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if reset_btns:
             self.driver.execute_script("arguments[0].click();", reset_btns[0])
+        self.apply_filters()
 
     # ------------------------------------------------------------------ switch
 

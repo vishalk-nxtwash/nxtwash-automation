@@ -369,7 +369,7 @@ class CustomServicesPage(BasePage):
         buttons = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if buttons:
             self.driver.execute_script("arguments[0].click();", buttons[0])
-        self.wait_for_list_loaded()
+        self.apply_filters()
 
     # ---------------------------------------------------------------------- form navigation
 
