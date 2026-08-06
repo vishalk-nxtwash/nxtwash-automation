@@ -28,7 +28,9 @@ jobs:
               tests/admin_portal/discounts
               tests/admin_portal/memberships
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
+      ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
     with:
       label: admin-retry-${{ matrix.shard.name }}
       environment: staging
