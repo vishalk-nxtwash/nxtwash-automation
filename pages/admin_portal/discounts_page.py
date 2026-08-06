@@ -342,6 +342,7 @@ class DiscountsPage(BasePage):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
         self.click(self.RESET_ALL_BUTTON)
+        self.apply_filters()
 
     def reset_filters_if_active(self):
         try:
