@@ -5,8 +5,10 @@ name: Admin Suite — Retry Failed Shards (staging)
 # the shards that were already green (reports, auth-core, customers).
 #
 # Shards targeted as of 2026-08-06 fixes:
-#   promotions — JS click + fresh open_*_page() after create/timeout in
-#                discounts and memberships conftests and page objects
+#   discounts   — JS click + fresh open_discounts_page() after create/timeout
+#   memberships — JS click + fresh open_memberships_page() after create/timeout
+#
+# Split into separate parallel jobs (combined shard exceeds 2h wall-clock limit).
 
 on:
   workflow_dispatch:
@@ -22,11 +24,12 @@ jobs:
       fail-fast: false
       matrix:
         shard:
-          # ── Promotions ────────────────────────────────────────────────────
-          - name: promotions
-            path: >-
-              tests/admin_portal/discounts
-              tests/admin_portal/memberships
+          # ── Discounts ─────────────────────────────────────────────────────
+          - name: discounts
+            path: tests/admin_portal/discounts
+          # ── Memberships ───────────────────────────────────────────────────
+          - name: memberships
+            path: tests/admin_portal/memberships
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
