@@ -16,22 +16,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # ── Smoke gate ─────────────────────────────────────────────────────────────
-  # Runs all @smoke tests first (~10–15 min) as an early-warning signal.
-  # Shards run in parallel and are NOT blocked by smoke result — all shard
-  # data is always collected regardless of smoke pass/fail.
-  smoke:
-    if: github.ref == 'refs/heads/staging'
-    uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
-    with:
-      label: admin-smoke-gate
-      environment: staging
-      test_path: tests/admin_portal
-      marker: "smoke"
-      parallel: "2"
-      timeout_minutes: 20
-
+  # 16 shards run fully in parallel — each shard runs all tests in its modules
+  # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
     if: github.ref == 'refs/heads/staging'
     strategy:
