@@ -362,6 +362,10 @@ class WashPackagesPage(BasePage):
             body = self.driver.find_element(By.TAG_NAME, "body").text
             if "Filter by (" in body:
                 self.reset_filters()
+                try:
+                    self.apply_filters()
+                except Exception:  # noqa: BLE001
+                    pass
         except Exception:  # noqa: BLE001
             pass
 

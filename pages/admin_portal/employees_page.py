@@ -40,7 +40,7 @@ class AdminEmployeesPage(BasePage):
         "or @name='lastName' or @name='last_name']")
 
     FILTER_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Filter by'] | "
+        "//button[contains(normalize-space(),'Filter by')] | "
         "//button[contains(normalize-space(),'Filter')]")
     # Filter panel controls — verified from DevTools:
     # panel has firstName input, employeeCode input, Active employee switch.
@@ -223,6 +223,14 @@ class AdminEmployeesPage(BasePage):
                 )
             except Exception:
                 pass
+
+    def reset_filters_if_active(self):
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            if "Filter by (" in body:
+                self.reset_filters()
+        except Exception:
+            pass
 
     def filter_result_count_text(self):
         try:
@@ -558,7 +566,7 @@ class AdminEmployeeShiftPage(BasePage):
         "or @placeholder='Last Name' or @placeholder='Search by last name']")
 
     FILTER_BUTTON = (By.XPATH,
-        "//button[normalize-space()='Filter by'] | "
+        "//button[contains(normalize-space(),'Filter by')] | "
         "//button[contains(normalize-space(),'Filter')]")
     FILTER_FIRST_NAME = (By.XPATH,
         "//input[@name='firstName' or @name='first_name' "

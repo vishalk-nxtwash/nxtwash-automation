@@ -221,6 +221,10 @@ class AdminUserRolesPage(BasePage):
             body = self.get_body_text()
             if "Filter by (" in body:
                 self.reset_filters()
+                try:
+                    self.apply_filters()
+                except Exception:
+                    pass
         except Exception:
             pass
 
