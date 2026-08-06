@@ -39,12 +39,11 @@ on:
     secrets:
       dotenv:
         description: "Full .env contents (KEY=value lines) for the target environment"
-        required: false
+        required: true
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
@@ -86,6 +85,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # The credentials secret is the full .env contents for this environment.
+      # ConfigManager.load_dotenv() picks these up automatically at runtime.
       - name: Write .env from secret
         env:
           DOTENV: ${{ secrets.dotenv }}
@@ -142,5 +143,5 @@ jobs:
         if: always()
         uses: test-summary/action@v2
         with:
-          paths: reports/results.xml
+          paths: results.xml
         continue-on-error: true
