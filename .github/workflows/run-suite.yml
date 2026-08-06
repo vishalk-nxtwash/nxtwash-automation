@@ -4,9 +4,10 @@ name: Run Suite (reusable)
 # Profile workflows (suite-admin / suite-superadmin / suite-prod-smoke) call this
 # with WHAT to run. Do not add triggers here other than workflow_call.
 #
-# Callers must pass `secrets: inherit` so the job can read these repo secrets:
+# Callers must pass `secrets: inherit` so the job can read the environment-scoped
+# secrets of the GitHub Environment it binds to:
+#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD
 #   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
-#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD  (optional — only required for superadmin tests)
 
 on:
   workflow_call:
@@ -36,18 +37,9 @@ on:
         type: number
         default: 90
     secrets:
-      ADMIN_PORTAL_USERNAME:
-        description: "Admin portal login username"
+      dotenv:
+        description: "Full .env contents (KEY=value lines) for the target environment"
         required: true
-      ADMIN_PORTAL_PASSWORD:
-        description: "Admin portal login password"
-        required: true
-      SUPERADMIN_USERNAME:
-        description: "Superadmin login username"
-        required: false
-      SUPERADMIN_PASSWORD:
-        description: "Superadmin login password"
-        required: false
 
 jobs:
   run:
@@ -93,19 +85,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Write .env from secrets
+      - name: Write .env from secret
         env:
-          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
-          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
-          SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
-          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
+          DOTENV: ${{ secrets.dotenv }}
         run: |
-          {
-            printf 'ADMIN_PORTAL_USERNAME=%s\n' "$ADMIN_PORTAL_USERNAME"
-            printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$ADMIN_PORTAL_PASSWORD"
-            [ -n "$SUPERADMIN_USERNAME" ] && printf 'SUPERADMIN_USERNAME=%s\n' "$SUPERADMIN_USERNAME"
-            [ -n "$SUPERADMIN_PASSWORD" ] && printf 'SUPERADMIN_PASSWORD=%s\n' "$SUPERADMIN_PASSWORD"
-          } > .env
+          printf '%s\n' "$DOTENV" > .env
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
 
       - name: Run tests (headless)
