@@ -4,9 +4,9 @@ name: Run Suite (reusable)
 # Profile workflows (suite-admin / suite-superadmin / suite-prod-smoke) call this
 # with WHAT to run. Do not add triggers here other than workflow_call.
 #
-# Credentials come from GitHub Environment secrets (ADMIN_PORTAL_USERNAME /
-# ADMIN_PORTAL_PASSWORD).  The inner job binds to the environment so it can
-# read those secrets directly — no secret forwarding from the caller needed.
+# Callers must pass `secrets: inherit` so the job can read these repo secrets:
+#   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
+#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD  (optional — only required for superadmin tests)
 
 on:
   workflow_call:
@@ -35,11 +35,23 @@ on:
         description: "Job timeout in minutes"
         type: number
         default: 90
+    secrets:
+      ADMIN_PORTAL_USERNAME:
+        description: "Admin portal login username"
+        required: true
+      ADMIN_PORTAL_PASSWORD:
+        description: "Admin portal login password"
+        required: true
+      SUPERADMIN_USERNAME:
+        description: "Superadmin login username"
+        required: false
+      SUPERADMIN_PASSWORD:
+        description: "Superadmin login password"
+        required: false
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
@@ -81,9 +93,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Write credentials from GitHub Environment secrets so ConfigManager
-      # can read them via load_dotenv().  The inner job's environment binding
-      # (environment: ${{ inputs.environment }}) makes these secrets available.
       - name: Write .env from secrets
         env:
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
