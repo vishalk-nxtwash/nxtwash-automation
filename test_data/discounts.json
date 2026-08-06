@@ -5,7 +5,7 @@
     "service_category":        "VK ASC1"
   },
   "template": {
-    "discount_name":     "VK AD04",
+    "discount_name":     "AD002",
     "amount":            "5",
     "start_day":         "9",
     "start_time":        "10:00 AM",

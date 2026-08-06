@@ -62,14 +62,33 @@ def create_discount_if_missing(browser, discount_name=DISCOUNT_NAME):
 
     if discounts_page.discount_exists(discount_name):
         discounts_page.open_edit_discount(discount_name)
-        discounts_page.fill_discount_form(
-            discount_name,
-            REQUESTED_SERVICE_CATEGORY,
-            DISCOUNT_AMOUNT,
-            START_DAY,
-            START_TIME,
-            SERVICE_CATEGORY
+        discounts_page.ensure_active_switch_on()
+        discounts_page.click_save_discount()
+        discounts_page.wait_for_list_loaded()
+        return discounts_page
+
+    # reset_filters_if_active() only clears the active-status filter.  A
+    # deactivate test may have left the discount inactive so discount_exists()
+    # (active-only view) returns False.  Reset all filters and re-check before
+    # falling through to create — creating a duplicate name fails silently.
+    from selenium.common.exceptions import TimeoutException as _TE
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    discounts_page.reset_filters()
+    discounts_page.search_discount(discount_name)
+    locator = discounts_page.get_discount_row_locator(discount_name)
+    try:
+        WebDriverWait(discounts_page.driver, 10).until(
+            EC.visibility_of_element_located(locator)
         )
+        inactive_found = True
+    except _TE:
+        inactive_found = False
+
+    if inactive_found:
+        discounts_page.open_edit_discount(discount_name)
+        discounts_page.ensure_active_switch_on()
         discounts_page.click_save_discount()
         discounts_page.wait_for_list_loaded()
         return discounts_page
