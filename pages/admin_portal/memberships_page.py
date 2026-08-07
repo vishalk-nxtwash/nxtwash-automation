@@ -455,8 +455,10 @@ class MembershipsPage(BasePage):
     def open_filter_panel(self):
         """Open the Memberships filter panel."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
+        site_inputs = self.driver.find_elements(*self.FILTER_SITE_INPUT)
+        if not any(el.is_displayed() for el in site_inputs):
+            self.click(self.FILTER_BUTTON)
+            self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def get_visible_membership_types(self):

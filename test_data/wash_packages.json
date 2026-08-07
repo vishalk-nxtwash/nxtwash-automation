@@ -12,12 +12,12 @@
     "global_price":       "14",
     "global_commission":  "4",
     "visible_price":      "$14.00",
-    "barcode":            "AWP005",
-    "controller_code":    "005",
+    "barcode":            "AWP006",
+    "controller_code":    "006",
     "description":        "VK automation test description"
   },
   "updated": {
-    "package_name":             "VK AWP005 edited",
+    "package_name":             "VK AWP006 edited",
     "points_awarded":           "10",
     "points_redeemed":          "5",
     "site_override_price":      "10",
