@@ -30,6 +30,12 @@ jobs:
           # ── Memberships ───────────────────────────────────────────────────
           - name: memberships
             path: tests/admin_portal/memberships
+          # ── Coupon Packages ───────────────────────────────────────────────
+          - name: coupon_packages
+            path: tests/admin_portal/coupon_packages
+          # ── Wash Packages ─────────────────────────────────────────────────
+          - name: wash_packages
+            path: tests/admin_portal/wash_packages
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
