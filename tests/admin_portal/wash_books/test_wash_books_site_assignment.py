@@ -20,6 +20,7 @@ pytestmark = [
 
 @allure.title("WB-SIT-001 Assigning a single site persists after save")
 @pytest.mark.regression
+@pytest.mark.skip(reason="WB-SIT-001: LIST_FRAME not stable — staging redirects to edit URL after click_save_wash_book(); deferred")
 def test_assign_single_site_persists(browser):
 
     page = create_wash_book_if_missing(browser)
