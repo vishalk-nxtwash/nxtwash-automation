@@ -773,10 +773,7 @@ for (var i = 0; i < kids.length; i++) {
             pass
         self.wait_for_list_loaded()
         if save_error:
-            import logging
-            logging.getLogger("nxtwash").warning(
-                "Wash package save had page error: %s", save_error
-            )
+            raise RuntimeError("Wash package save error: %s" % save_error)
 
     def ensure_active_switch_off(self):
         """Turn active switch off if needed."""

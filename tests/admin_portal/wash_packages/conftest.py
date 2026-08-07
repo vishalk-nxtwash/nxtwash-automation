@@ -101,7 +101,10 @@ def _reset_managed_package(browser):
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
         barcode=BARCODE_VALUE,
     )
-    return open_wash_packages_page(browser)
+    page = open_wash_packages_page(browser)
+    page.search_package(PACKAGE_NAME)
+    page.wait_for_package_row(PACKAGE_NAME)
+    return page
 
 
 def page_has_no_broken_state(page):

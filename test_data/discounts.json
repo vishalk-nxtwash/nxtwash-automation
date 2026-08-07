@@ -1,7 +1,7 @@
 {
   "reference": {
     "existing_discount":       "Basic Discount",
-    "all_locations_discount":  "VK AL02",
+    "all_locations_discount":  "VK AL01",
     "service_category":        "Wash Package"
   },
   "template": {

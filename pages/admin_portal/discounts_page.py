@@ -504,7 +504,7 @@ class DiscountsPage(BasePage):
         )
         self._set_input_value(discount_input, str(value))
         self.wait.until(
-            lambda driver: rows[row_index].find_element(
+            lambda driver: self.get_location_rows()[row_index].find_element(
                 By.NAME,
                 "discountValue"
             ).get_attribute("value") == str(value)
