@@ -366,6 +366,15 @@ class WashPackagesPage(BasePage):
                     self.apply_filters()
                 except Exception:  # noqa: BLE001
                     pass
+                try:
+                    self.wait.until(
+                        lambda driver: "Filter by (" not in driver.find_element(
+                            By.TAG_NAME, "body"
+                        ).text
+                    )
+                    self.wait_for_grid_idle()
+                except Exception:  # noqa: BLE001
+                    pass
         except Exception:  # noqa: BLE001
             pass
 

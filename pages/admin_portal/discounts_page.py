@@ -502,13 +502,23 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        self._set_input_value(discount_input, str(value))
-        self.wait.until(
-            lambda driver: self.get_location_rows()[row_index].find_element(
-                By.NAME,
-                "discountValue"
-            ).get_attribute("value") == str(value)
-        )
+        # ActionChains (click + select-all + type) properly triggers React's
+        # controlled-input onChange for Inovua DataGrid cell inputs in headless
+        # CI. The JS native setter + dispatched events does not update React
+        # state for these grid cells.
+        ActionChains(self.driver).click(discount_input) \
+            .key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL) \
+            .send_keys(str(value)).perform()
+
+        def _value_matches(driver):
+            try:
+                return self.get_location_rows()[row_index].find_element(
+                    By.NAME, "discountValue"
+                ).get_attribute("value") == str(value)
+            except StaleElementReferenceException:
+                return False
+
+        self.wait.until(_value_matches)
 
     def select_location_discount_type_by_index(self, row_index, discount_type):
         """Select one visible location row discount type."""
