@@ -1,6 +1,7 @@
 import time
 
 from selenium.common.exceptions import ElementNotInteractableException, StaleElementReferenceException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,8 +27,10 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        element.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(text)
+        # Triple-click selects all text cross-platform (macOS + Linux headless).
+        # Keys.CONTROL+"a" moves cursor on macOS; Keys.COMMAND+"a" does nothing
+        # on Linux. Triple-click is the only reliable OS-agnostic select-all.
+        ActionChains(self.driver).triple_click(element).send_keys(text).perform()
 
     def get_text(self, locator):
 
@@ -97,8 +100,7 @@ class BasePage:
         for _attempt in range(3):
             try:
                 if clear_first:
-                    inner_input.send_keys(Keys.COMMAND, "a")
-                    inner_input.send_keys(Keys.BACKSPACE)
+                    ActionChains(self.driver).triple_click(inner_input).send_keys(Keys.BACKSPACE).perform()
                 inner_input.send_keys(option_text)
                 break
             except (StaleElementReferenceException, ElementNotInteractableException):
@@ -114,7 +116,6 @@ class BasePage:
 
     def hover_element(self, locator):
         """Move the pointer to the centre of the element matched by locator."""
-        from selenium.webdriver.common.action_chains import ActionChains
         el = self.wait.until(EC.visibility_of_element_located(locator))
         ActionChains(self.driver).move_to_element(el).perform()
 

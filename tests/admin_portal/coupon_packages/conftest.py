@@ -43,6 +43,7 @@ def page_has_no_broken_state(page):
 
 
 def create_coupon_package_if_missing(browser):
+    from selenium.common.exceptions import TimeoutException
 
     create_discount_if_missing(browser, DISCOUNT_NAME)
     page = open_coupon_packages_page(browser)
@@ -56,11 +57,30 @@ def create_coupon_package_if_missing(browser):
         page.click_save_coupon_package()
         return open_coupon_packages_page(browser)
 
-    page.create_coupon_package(
-        COUPON_PACKAGE_NAME,
-        DISCOUNT_NAME,
-        GIVEAWAY_SERVICE
-    )
+    # Not in the active list — show all packages (includes inactive) and
+    # check before attempting to create.  A prior deactivate test or a rename
+    # failure may have left the package in a non-active state; creating a
+    # duplicate name would fail silently and leave staging further corrupted.
+    page = open_coupon_packages_page(browser)
+    page.show_all_packages()
+    page.search_coupon_package(COUPON_PACKAGE_NAME)
+    inactive_found = False
+    try:
+        page.wait_for_coupon_package_row(COUPON_PACKAGE_NAME)
+        inactive_found = True
+    except TimeoutException:
+        inactive_found = False
+
+    if inactive_found:
+        page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+        page.clear_assign_discount()
+        page.select_assign_discount(DISCOUNT_NAME)
+        page.ensure_active_switch_on()
+        page.click_save_coupon_package()
+        return open_coupon_packages_page(browser)
+
+    page = open_coupon_packages_page(browser)
+    page.create_coupon_package(COUPON_PACKAGE_NAME, DISCOUNT_NAME, GIVEAWAY_SERVICE)
     page.search_coupon_package(COUPON_PACKAGE_NAME)
     page.wait_for_coupon_package_row(COUPON_PACKAGE_NAME)
 
