@@ -579,11 +579,40 @@ class MembershipsPage(BasePage):
         _log = _logging.getLogger("nxtwash")
         try:
             self.open_filter_panel()
-            self.reset_filters()
+            self.click(self.RESET_ALL_BUTTON)
+            # Re-open panel if Reset All auto-closed it (mirrors user_roles fix)
+            apply_btns = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+            if not any(el.is_displayed() for el in apply_btns):
+                self.click(self.FILTER_BUTTON)
+                self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
             self.apply_filters()
             self.wait_for_grid_idle()
         except Exception as exc:
             _log.warning("clear_active_filters: reset/apply failed: %s", exc)
+        # Belt-and-suspenders: reset the Redux Persist filter state directly.
+        # The app stores filter state in persist:root → tableFilterReducer →
+        # tableFilters.memberships.  If the UI-based reset above failed to commit
+        # the change (e.g. Apply Filters timed out), the stale isActive:false value
+        # persists in localStorage and is rehydrated by Redux on the next navigation.
+        # Resetting it here guarantees the next page load starts with the default filter.
+        try:
+            self.driver.execute_script("""
+                try {
+                    var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                    var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                    var tf = tfr.tableFilters || {};
+                    tf.memberships = {
+                        type: (tf.memberships || {}).type || 0,
+                        isActive: true,
+                        membershipName: ''
+                    };
+                    tfr.tableFilters = tf;
+                    root.tableFilterReducer = JSON.stringify(tfr);
+                    localStorage.setItem('persist:root', JSON.stringify(root));
+                } catch(e) {}
+            """)
+        except Exception as exc:
+            _log.warning("clear_active_filters: redux persist reset failed: %s", exc)
 
     def apply_filters(self):
         """Apply the configured filters and wait for the grid to refresh."""

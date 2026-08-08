@@ -38,6 +38,28 @@ def page_has_no_broken_state(page):
 
 
 def open_memberships_page(browser):
+    # Reset Redux Persist memberships filter BEFORE navigation so the page
+    # loads with the default filter state (isActive:true).  The UI-based
+    # clear_active_filters() handles the in-memory Redux state; this reset
+    # is the belt-and-suspenders for the localStorage rehydration path.
+    try:
+        browser.execute_script("""
+            try {
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                tf.memberships = {
+                    type: (tf.memberships || {}).type || 0,
+                    isActive: true,
+                    membershipName: ''
+                };
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+        """)
+    except Exception:
+        pass
 
     open_admin_path(browser, "/services/memberships")
 
@@ -69,23 +91,28 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     from selenium.webdriver.support import expected_conditions as EC
 
     memberships_page = open_memberships_page(browser)
-    memberships_page._show_inactive_memberships()
-    memberships_page.search_membership(membership_name)
-    locator = memberships_page.get_membership_row_locator(membership_name)
+    inactive_found = False
     try:
-        WebDriverWait(memberships_page.driver, 10).until(
-            EC.visibility_of_element_located(locator)
-        )
-        inactive_found = True
-    except TimeoutException:
-        inactive_found = False
+        memberships_page._show_inactive_memberships()
+        memberships_page.search_membership(membership_name)
+        locator = memberships_page.get_membership_row_locator(membership_name)
+        try:
+            WebDriverWait(memberships_page.driver, 10).until(
+                EC.visibility_of_element_located(locator)
+            )
+            inactive_found = True
+        except TimeoutException:
+            inactive_found = False
+
+        if inactive_found:
+            memberships_page.open_edit_membership_if_visible(membership_name)
+            memberships_page.ensure_active_switch_on()
+            memberships_page.ensure_customer_portal_switch_on()
+            memberships_page.save_and_return_to_list()
+    finally:
+        memberships_page.clear_active_filters()
 
     if inactive_found:
-        memberships_page.open_edit_membership_if_visible(membership_name)
-        memberships_page.ensure_active_switch_on()
-        memberships_page.ensure_customer_portal_switch_on()
-        memberships_page.save_and_return_to_list()
-        memberships_page.clear_active_filters()
         return memberships_page
 
     memberships_page.create_membership(
@@ -124,23 +151,28 @@ def create_recurring_membership_if_missing(
     from selenium.webdriver.support import expected_conditions as EC
 
     memberships_page = open_memberships_page(browser)
-    memberships_page._show_inactive_memberships()
-    memberships_page.search_membership(membership_name)
-    locator = memberships_page.get_membership_row_locator(membership_name)
+    inactive_found = False
     try:
-        WebDriverWait(memberships_page.driver, 10).until(
-            EC.visibility_of_element_located(locator)
-        )
-        inactive_found = True
-    except TimeoutException:
-        inactive_found = False
+        memberships_page._show_inactive_memberships()
+        memberships_page.search_membership(membership_name)
+        locator = memberships_page.get_membership_row_locator(membership_name)
+        try:
+            WebDriverWait(memberships_page.driver, 10).until(
+                EC.visibility_of_element_located(locator)
+            )
+            inactive_found = True
+        except TimeoutException:
+            inactive_found = False
+
+        if inactive_found:
+            memberships_page.open_edit_membership_if_visible(membership_name)
+            memberships_page.ensure_active_switch_on()
+            memberships_page.ensure_customer_portal_switch_on()
+            memberships_page.save_and_return_to_list()
+    finally:
+        memberships_page.clear_active_filters()
 
     if inactive_found:
-        memberships_page.open_edit_membership_if_visible(membership_name)
-        memberships_page.ensure_active_switch_on()
-        memberships_page.ensure_customer_portal_switch_on()
-        memberships_page.save_and_return_to_list()
-        memberships_page.clear_active_filters()
         return memberships_page
 
     memberships_page.create_recurring_membership(
@@ -189,13 +221,17 @@ def reset_managed_membership(browser):
         # Not in active view — check inactive filter before creating.
         # Fresh navigation resets DOM state after wait_for_membership_row timed out.
         memberships_page = open_memberships_page(browser)
-        memberships_page._show_inactive_memberships()
-        memberships_page.search_membership(MANAGED_MEMBERSHIP)
         try:
-            memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
-            membership_found = True
-        except TimeoutException:
-            membership_found = False
+            memberships_page._show_inactive_memberships()
+            memberships_page.search_membership(MANAGED_MEMBERSHIP)
+            try:
+                memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+                membership_found = True
+            except TimeoutException:
+                membership_found = False
+        finally:
+            if not membership_found:
+                memberships_page.clear_active_filters()
 
     if not membership_found:
         memberships_page.create_membership(
@@ -213,22 +249,27 @@ def reset_managed_membership(browser):
 
     # Open edit directly from the current list state, skipping the extra
     # wait_for_list_loaded() call that open_edit_membership() would trigger.
-    memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
+    # try/finally guarantees clear_active_filters() runs even if the edit
+    # or save raises (e.g. when open_edit_membership_if_visible internally
+    # calls _show_inactive_memberships and an exception fires before save).
+    try:
+        memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
 
-    # Reset only the fields that tests actually mutate.  Skipping fill_membership_form()
-    # (location grid ops) and clear_applicable_discounts() (Discount tab navigation)
-    # saves ~4-6 min per fixture cycle on slow staging — the root cause of the 90 min
-    # CI job timeout.
-    memberships_page.ensure_active_switch_on()
-    memberships_page.ensure_customer_portal_switch_on()
-    memberships_page.set_global_price(GLOBAL_PRICE)
-    memberships_page.set_global_commission(GLOBAL_COMMISSION)
-    memberships_page.open_membership_settings()
-    memberships_page.set_barcode("")
-    memberships_page.save_and_return_to_list()
-    # Clear any residual filters (e.g. inactive-only from _show_inactive_memberships)
-    # so the next test sees a clean default list view.
-    memberships_page.clear_active_filters()
+        # Reset only the fields that tests actually mutate.  Skipping fill_membership_form()
+        # (location grid ops) and clear_applicable_discounts() (Discount tab navigation)
+        # saves ~4-6 min per fixture cycle on slow staging — the root cause of the 90 min
+        # CI job timeout.
+        memberships_page.ensure_active_switch_on()
+        memberships_page.ensure_customer_portal_switch_on()
+        memberships_page.set_global_price(GLOBAL_PRICE)
+        memberships_page.set_global_commission(GLOBAL_COMMISSION)
+        memberships_page.open_membership_settings()
+        memberships_page.set_barcode("")
+        memberships_page.save_and_return_to_list()
+    finally:
+        # Clear any residual filters (e.g. inactive-only from _show_inactive_memberships)
+        # so the next test sees a clean default list view.
+        memberships_page.clear_active_filters()
 
     return memberships_page
 

@@ -616,6 +616,31 @@ class DiscountsPage(BasePage):
         )
         return self.row_checkbox_is_checked(checkbox)
 
+    def get_location_row_by_name(self, location_name):
+        """Return the location row whose text starts with location_name."""
+        for row in self.get_location_rows():
+            first_line = row.text.splitlines()[0].strip() if row.text else ""
+            if first_line == location_name:
+                return row
+        raise AssertionError(
+            "Location row '%s' not found in assignment grid" % location_name
+        )
+
+    def location_is_assigned_by_name(self, location_name):
+        """Return whether a named location row is assigned."""
+        row = self.get_location_row_by_name(location_name)
+        checkbox = row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+            "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+        )
+        return self.row_checkbox_is_checked(checkbox)
+
+    def get_location_discount_value_by_name(self, location_name):
+        """Return the discount value input for a named location row."""
+        row = self.get_location_row_by_name(location_name)
+        return row.find_element(By.NAME, "discountValue").get_attribute("value")
+
     def get_location_discount_value_by_index(self, row_index):
         """Return one visible location row discount value."""
         rows = self.get_location_rows()

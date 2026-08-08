@@ -11,6 +11,7 @@ _D = _load("discounts")
 EXISTING_DISCOUNT          = _D["reference"]["existing_discount"]
 MISSING_DISCOUNT           = _D["search"]["nonexistent"]
 DISCOUNT_NAME              = _D["template"]["discount_name"]
+ASSIGNMENT_SITE            = _D["reference"]["assignment_site"]
 REQUESTED_SERVICE_CATEGORY = _D["reference"]["service_category"]
 SERVICE_CATEGORY           = _D["reference"]["service_category"]
 DISCOUNT_AMOUNT            = _D["template"]["amount"]
