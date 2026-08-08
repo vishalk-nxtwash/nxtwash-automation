@@ -148,14 +148,25 @@ def create_employee_if_missing(
         renamed_found = False
 
     if renamed_found:
-        form = open_edit_employee_form(browser, UPDATED_LAST_NAME)
-        form.enter_first_name(first_name)
-        form.enter_last_name(last_name)
-        form.enter_email(email)
-        form.enter_phone(phone)
-        form.ensure_active_switch_on()
-        form.click_save()
-        return open_employees_page(browser)
+        try:
+            form = open_edit_employee_form(browser, UPDATED_LAST_NAME)
+        except Exception:
+            # Another parallel worker renamed it back between our 10 s row-check
+            # and this open attempt.  Re-verify under the canonical name so we
+            # don't fall into the create path and hit a duplicate-email error.
+            page = open_employees_page(browser)
+            if page.employee_exists(last_name):
+                form = open_edit_employee_form(browser, last_name)
+            else:
+                renamed_found = False
+        if renamed_found:
+            form.enter_first_name(first_name)
+            form.enter_last_name(last_name)
+            form.enter_email(email)
+            form.enter_phone(phone)
+            form.ensure_active_switch_on()
+            form.click_save()
+            return open_employees_page(browser)
 
     form = open_create_employee_form(browser)
     form.enter_first_name(first_name)

@@ -37,7 +37,6 @@ def test_filter_panel_opens(browser):
 
 @allure.title("EMP-FLT-002 Filtering by Active status shows only active employees")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_by_active_status(browser, managed_employee):
     page = open_employees_page(browser)
     page.filter_by_status("Active")
