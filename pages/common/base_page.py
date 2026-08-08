@@ -27,10 +27,11 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        # Triple-click selects all text cross-platform (macOS + Linux headless).
-        # Keys.CONTROL+"a" moves cursor on macOS; Keys.COMMAND+"a" does nothing
-        # on Linux. Triple-click is the only reliable OS-agnostic select-all.
-        ActionChains(self.driver).triple_click(element).send_keys(text).perform()
+        # HTMLInputElement.select() selects all text cross-platform without any
+        # keyboard modifier (CTRL+A breaks on macOS, COMMAND+A breaks on Linux).
+        # send_keys then replaces the selection and fires React's input events.
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(text)
 
     def get_text(self, locator):
 
@@ -100,7 +101,8 @@ class BasePage:
         for _attempt in range(3):
             try:
                 if clear_first:
-                    ActionChains(self.driver).triple_click(inner_input).send_keys(Keys.BACKSPACE).perform()
+                    self.driver.execute_script("arguments[0].select();", inner_input)
+                    inner_input.send_keys(Keys.BACKSPACE)
                 inner_input.send_keys(option_text)
                 break
             except (StaleElementReferenceException, ElementNotInteractableException):
