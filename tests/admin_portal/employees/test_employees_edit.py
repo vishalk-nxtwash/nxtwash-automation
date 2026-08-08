@@ -68,13 +68,6 @@ def test_edit_last_name_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-004 Editing Locations assignment saves and reflects in the list")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-004: Location multi-select combobox locator uses label heuristics. "
-        "Verify React Select DOM in DevTools before removing xfail."
-    ),
-)
 def test_edit_locations_persists(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.assign_location(ASSIGNMENT_SITE)
@@ -155,13 +148,6 @@ def test_edit_hire_date_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-009 Editing Employee Code persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-009: Employee code input locator uses name heuristics. "
-        "Verify exact @name attribute in DevTools before removing xfail."
-    ),
-)
 def test_edit_employee_code_persists(browser, managed_employee):
     new_code = "VKE999"
     form = open_edit_employee_form(browser, EMP_LAST_NAME)

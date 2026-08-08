@@ -136,7 +136,6 @@ def test_create_employee_last_name_required(browser):
 
 @allure.title("EMP-CRT-006 Saving without Locations is blocked — Locations is required")
 @pytest.mark.smoke
-@_LOCATION_XFAIL
 def test_create_employee_locations_required(browser):
     form = open_create_employee_form(browser)
     form.enter_first_name(EMP_FIRST_NAME)
@@ -204,7 +203,6 @@ def test_create_employee_invalid_email_rejected(browser):
 
 @allure.title("EMP-CRT-010 Duplicate email address is rejected on save")
 @pytest.mark.regression
-@_LOCATION_XFAIL
 def test_create_employee_duplicate_email_rejected(browser):
     create_employee_if_missing(browser)  # ensure EMP_EMAIL exists
 
@@ -410,13 +408,6 @@ def test_create_employee_hourly_wage_optional(browser):
 
 @allure.title("EMP-CRT-020 Negative hourly wage is rejected with a validation error")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-020: Browser checkValidity() on the wage input depends on a 'min' attribute. "
-        "Verify input constraints in DevTools; server-side rejection also acceptable."
-    ),
-)
 def test_create_employee_negative_wage_rejected(browser):
     form = open_create_employee_form(browser)
     form.enter_first_name(EMP_FIRST_NAME)

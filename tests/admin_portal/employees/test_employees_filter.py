@@ -52,7 +52,6 @@ def test_filter_by_active_status(browser, managed_employee):
 
 @allure.title("EMP-FLT-003 Filtering by Inactive status shows only inactive employees")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_filter_by_inactive_status(browser):
     page = open_employees_page(browser)
     page.filter_by_status("Inactive")
@@ -94,7 +93,6 @@ def test_filter_result_count_matches_rows(browser, managed_employee):
 
 @allure.title("EMP-FLT-005 Clicking Reset All clears filters and restores the full employee list")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_reset_all_clears_filters(browser, managed_employee):
     page = open_employees_page(browser)
     page.filter_by_status("Active")

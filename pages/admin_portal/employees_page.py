@@ -232,6 +232,19 @@ class AdminEmployeesPage(BasePage):
         except Exception:
             pass
 
+    def clear_active_filters(self):
+        """Unconditionally reset all filters regardless of badge state.
+
+        The filter badge count is lazy — it does not render at bare page load,
+        so reset_filters_if_active() always skips the reset on first navigation.
+        This method opens the panel and resets unconditionally, which is the
+        only reliable way to flush a server-side filter state leak.
+        """
+        try:
+            self.reset_filters()
+        except Exception:
+            pass
+
     def filter_result_count_text(self):
         try:
             el = self.wait.until(EC.presence_of_element_located(

@@ -43,7 +43,6 @@ def test_shift_filter_panel_opens_with_controls(browser):
 
 @allure.title("EMP-SH-FLT-002 Filtering by First Name shows only matching employee shifts")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_shift_filter_by_first_name(browser, managed_employee):
     page = open_shift_page(browser)
     page.filter_by_first_name(EMP_FIRST_NAME)
@@ -212,7 +211,6 @@ def test_shift_filter_result_count_matches_rows(browser, managed_employee):
 
 @allure.title("EMP-SH-FLT-009 Reset All clears shift filters and restores the full list")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_shift_reset_all_clears_filters(browser, managed_employee):
     page = open_shift_page(browser)
     page.filter_by_first_name(EMP_FIRST_NAME)

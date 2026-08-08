@@ -55,7 +55,7 @@ def open_employees_page(browser):
     open_admin_path(browser, "/users/employees")
     page = AdminEmployeesPage(browser)
     page.wait_for_loaded()
-    page.reset_filters_if_active()
+    page.clear_active_filters()
     return page
 
 

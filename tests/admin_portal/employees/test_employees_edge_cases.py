@@ -61,13 +61,6 @@ def test_employee_data_persists_after_relogin(browser, managed_employee):
 
 @allure.title("EMP-EC-004 Deactivated employee appears in the Inactive filter — record is not deleted")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EC-004: Inactive filter combo locator uses label heuristics. "
-        "Verify status filter combobox DOM in DevTools before removing xfail."
-    ),
-)
 def test_deactivated_employee_in_inactive_filter(browser, managed_employee):
     from tests.admin_portal.employees.conftest import open_edit_employee_form
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
