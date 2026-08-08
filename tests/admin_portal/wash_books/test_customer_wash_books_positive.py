@@ -17,14 +17,6 @@ pytestmark = [
 
 @allure.title("CWB-CRT-001 Valid customer wash book creates and appears in the listing")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    reason=(
-        "CWB-CRT-001: CWB AWB-AUTO-001 is inactive on staging (left by a prior "
-        "deactivate test); cwb_exists() searches only the active list so returns False, "
-        "then create fails with duplicate-number error. Fixture needs to handle inactive CWBs."
-    ),
-    strict=False,
-)
 def test_create_customer_wash_book(browser):
 
     page = create_customer_wash_book_if_missing(browser)

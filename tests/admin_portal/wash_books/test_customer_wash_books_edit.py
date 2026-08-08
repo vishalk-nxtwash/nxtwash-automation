@@ -20,13 +20,6 @@ pytestmark = [
 
 @allure.title("CWB-EDT-001 Editing number of washes persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "CWB-EDT-001: CWB AWB-AUTO-001 is inactive on staging; fixture can't find it "
-        "with active filter ON so open_edit_cwb fails. Same root cause as CWB-CRT-001."
-    ),
-    strict=False,
-)
 def test_edit_cwb_number_of_washes_persists(browser):
 
     create_customer_wash_book_if_missing(browser)

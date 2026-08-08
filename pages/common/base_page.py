@@ -26,7 +26,7 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(text)
 
     def get_text(self, locator):
@@ -97,7 +97,7 @@ class BasePage:
         for _attempt in range(3):
             try:
                 if clear_first:
-                    inner_input.send_keys(Keys.CONTROL, "a")
+                    inner_input.send_keys(Keys.COMMAND, "a")
                     inner_input.send_keys(Keys.BACKSPACE)
                 inner_input.send_keys(option_text)
                 break

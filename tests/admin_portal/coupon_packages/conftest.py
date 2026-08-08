@@ -31,8 +31,7 @@ def open_coupon_packages_page(browser):
 
     page = CouponPackagesPage(browser)
     page.wait_for_list_loaded()
-    if page.has_active_filters():
-        page.reset_filters()
+    page.reset_filters()
 
     return page
 

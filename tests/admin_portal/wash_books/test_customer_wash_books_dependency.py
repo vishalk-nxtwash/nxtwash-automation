@@ -32,14 +32,6 @@ def test_only_active_wash_books_in_cwb_dropdown(browser):
 
 @allure.title("CWB-DEP-002 CWB number of washes matches the template wash book at creation time")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "CWB-DEP-002: CWB AWB-AUTO-001 is stuck at 8 washes on staging (prior edit "
-        "test's restore step failed); fixture does not reset washes, so grid shows 8 "
-        "but CWB_NUMBER_OF_WASHES == 11. Fixture needs to enforce canonical washes on entry."
-    ),
-    strict=False,
-)
 def test_cwb_washes_reflect_template_wash_book(browser):
 
     create_customer_wash_book_if_missing(browser)
