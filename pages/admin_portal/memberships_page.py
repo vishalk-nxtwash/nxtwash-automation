@@ -265,12 +265,47 @@ class MembershipsPage(BasePage):
             % membership_name
         )
 
-    def wait_for_membership_row(self, membership_name):
-        """Wait until a membership row is visible."""
-        return WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located(
-                self.get_membership_row_locator(membership_name)
+    def wait_for_membership_row(self, membership_name, timeout=60):
+        """Wait until a membership row is visible.
+
+        Fails fast (with a clear error) when the grid shows the Inovua
+        "No records available" empty-state text, rather than waiting out
+        the full `timeout`.  A brief 3-second grace period is allowed so
+        the grid can finish loading before the empty-state check fires.
+        """
+        import time
+        _NO_RECORDS = (
+            By.CSS_SELECTOR,
+            "div.InovuaReactDataGrid__empty-text"
+        )
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            # Check whether the target row is already visible.
+            els = self.driver.find_elements(
+                *self.get_membership_row_locator(membership_name)
             )
+            if els and els[0].is_displayed():
+                return els[0]
+            # Check for the explicit "No records available" sentinel.
+            no_rec = self.driver.find_elements(*_NO_RECORDS)
+            if no_rec and no_rec[0].is_displayed():
+                # Give the grid 3 s in case it's still transitioning from
+                # a loading state into displaying the actual records.
+                try:
+                    return WebDriverWait(self.driver, 3).until(
+                        EC.visibility_of_element_located(
+                            self.get_membership_row_locator(membership_name)
+                        )
+                    )
+                except Exception:
+                    raise TimeoutException(
+                        "Grid shows 'No records available' — '%s' not found"
+                        % membership_name
+                    )
+            time.sleep(0.5)
+        raise TimeoutException(
+            "Timed out after %ss waiting for membership row '%s'"
+            % (timeout, membership_name)
         )
 
     def wait_for_no_membership_row(self, membership_name):
@@ -369,7 +404,11 @@ class MembershipsPage(BasePage):
         self.search_membership(membership_name)
 
         try:
-            self.wait_for_membership_row(membership_name)
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(
+                    self.get_membership_row_locator(membership_name)
+                )
+            )
             return True
         except TimeoutException:
             return False
@@ -455,11 +494,10 @@ class MembershipsPage(BasePage):
     def open_filter_panel(self):
         """Open the Memberships filter panel."""
         self.wait_for_list_loaded()
-        site_inputs = self.driver.find_elements(*self.FILTER_SITE_INPUT)
-        if not any(el.is_displayed() for el in site_inputs):
+        apply_buttons = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+        if not any(el.is_displayed() for el in apply_buttons):
             self.click(self.FILTER_BUTTON)
-            self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+            self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def get_visible_membership_types(self):
         """Return visible membership type values (e.g. 'Recurring') from the grid."""
@@ -517,7 +555,7 @@ class MembershipsPage(BasePage):
             self.ensure_switch_off(self.ACTIVE_MEMBERSHIP_FILTER_SWITCH)
 
     def has_active_filters(self):
-        """Return whether any filters are currently active."""
+        """Return whether any filters are currently active (instant, no wait)."""
         try:
             btn = self.driver.find_element(*self.FILTER_BUTTON)
             return "(" in btn.text
@@ -525,12 +563,27 @@ class MembershipsPage(BasePage):
             return False
 
     def clear_active_filters(self):
-        """Reset all filters unconditionally to guarantee clean state."""
+        """Unconditionally reset all filters and apply, then wait for grid to settle.
+
+        The filter badge count is lazy — it only renders after an interactive
+        event (e.g. typing in the search box), never at bare page load.  Checking
+        the badge first would always return False and skip the reset, leaving a
+        stale server-side filter in place.  Opening the panel and resetting
+        unconditionally is the only reliable way to clear the state.
+
+        wait_for_grid_idle() after apply ensures the grid has finished reloading
+        before the caller issues a search, preventing a race where the search
+        fires while the freshly-cleared grid is still loading.
+        """
+        import logging as _logging
+        _log = _logging.getLogger("nxtwash")
         try:
+            self.open_filter_panel()
             self.reset_filters()
             self.apply_filters()
-        except Exception:
-            pass
+            self.wait_for_grid_idle()
+        except Exception as exc:
+            _log.warning("clear_active_filters: reset/apply failed: %s", exc)
 
     def apply_filters(self):
         """Apply the configured filters and wait for the grid to refresh."""

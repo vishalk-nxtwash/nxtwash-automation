@@ -106,3 +106,4 @@ def test_download_filtered_memberships_starts_file_download(browser, tmp_path):
 
     assert downloaded_files
     assert all(file.stat().st_size > 0 for file in downloaded_files)
+    memberships_page.clear_active_filters()

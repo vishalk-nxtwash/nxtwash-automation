@@ -2,7 +2,7 @@
   "reference": {
     "existing_membership":   "VK AM05",
     "recurring_membership":  "AM004R",
-    "site_membership":       "VK MA3",
+    "site_membership":       "VK MA1",
     "redeem_as_service":     "VK detail wash",
     "filter_site_query":     "carwash",
     "filter_site_label":     "VK Test carwash 2"
