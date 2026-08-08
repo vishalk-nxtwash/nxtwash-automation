@@ -502,20 +502,31 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        # ActionChains (click + select-all + type) properly triggers React's
-        # controlled-input onChange for Inovua DataGrid cell inputs in headless
-        # CI. The JS native setter + dispatched events does not update React
-        # state for these grid cells.
-        ActionChains(self.driver).click(discount_input) \
-            .key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL) \
-            .send_keys(str(value)).perform()
+        # element.send_keys() targets the element directly and works inside
+        # iframes; ActionChains targets the browser's "focused" element and
+        # can lose the iframe context between chained actions.
+        discount_input.click()
+        discount_input.send_keys(Keys.CONTROL + 'a')
+        discount_input.send_keys(str(value))
 
         def _value_matches(driver):
+            # Use find_elements (no wait) to avoid TimeoutException propagating
+            # out of this lambda and aborting the outer wait prematurely.
             try:
-                return self.get_location_rows()[row_index].find_element(
+                elems = driver.find_elements(*self.LOCATION_ROWS)
+                unique, seen = [], set()
+                for elem in elems:
+                    lines = [l.strip() for l in elem.text.splitlines() if l.strip()]
+                    key = "\n".join(lines[:2])
+                    if key and key not in seen:
+                        seen.add(key)
+                        unique.append(elem)
+                if row_index >= len(unique):
+                    return False
+                return unique[row_index].find_element(
                     By.NAME, "discountValue"
                 ).get_attribute("value") == str(value)
-            except StaleElementReferenceException:
+            except Exception:
                 return False
 
         self.wait.until(_value_matches)

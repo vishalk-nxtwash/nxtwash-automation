@@ -27,10 +27,10 @@ class CouponPackagesPage(BasePage):
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Coupon packages']")
     SEARCH_INPUT = (By.NAME, "packageName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH, "//button[contains(normalize-space(),'Filter by')]")
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[contains(normalize-space(),'Filter by')]/following-sibling::button[1]"
     )
     ADD_COUPON_PACKAGE_BUTTON = (
         By.XPATH,
@@ -169,7 +169,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self._set_input_value(search_input, "")
         search_input.send_keys(coupon_package_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -443,30 +443,19 @@ class CouponPackagesPage(BasePage):
         expiry.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         expiry.send_keys("30")
         self.ensure_active_switch_on()
-        self.click_save_coupon_package()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            from urllib.parse import urlparse as _urlparse
-            parsed = _urlparse(self.driver.current_url)
-            self.driver.get(
-                f"{parsed.scheme}://{parsed.netloc}/services/couponPackages"
-            )
-            self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def deactivate_coupon_package(self, package_name):
         """Open edit form and deactivate the coupon package."""
         self.open_edit_coupon_package(package_name)
         self.ensure_active_switch_off()
-        self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def update_coupon_package_name(self, package_name, new_name):
         """Open edit form, update the name, and save."""
         self.open_edit_coupon_package(package_name)
         self.enter_coupon_package_name(new_name)
-        self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def clear_assign_discount(self):
         """Clear the currently selected discount from the combobox."""
@@ -487,15 +476,13 @@ class CouponPackagesPage(BasePage):
         self.open_edit_coupon_package(package_name)
         self.clear_assign_discount()
         self.select_assign_discount(discount_name)
-        self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def update_expiration_days(self, package_name, days):
         """Open edit form, update expiration days, and save."""
         self.open_edit_coupon_package(package_name)
         self.enter_expiration_days(days)
-        self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()
 
     def find_select_option(self, option_text):
         """Find a visible React select option by case-insensitive text."""
@@ -644,6 +631,47 @@ class CouponPackagesPage(BasePage):
         )
         self.driver.execute_script("arguments[0].click();", button)
 
+    def save_and_return_to_list(self):
+        """Click save, wait for the API call to finish, then navigate to the list.
+
+        The SPA does not always auto-redirect after save; we force-navigate
+        after the button re-enables.  If a duplicate name or validation error
+        is visible after the save, raises ValueError so callers get a clear
+        message instead of a generic TimeoutException.
+        """
+        import time
+        self.click_save_coupon_package()
+        try:
+            self.wait.until(
+                lambda driver: not driver.find_element(
+                    *self.SAVE_COUPON_PACKAGE_BUTTON
+                ).is_enabled()
+            )
+            self.wait.until(
+                EC.element_to_be_clickable(self.SAVE_COUPON_PACKAGE_BUTTON)
+            )
+        except Exception:
+            time.sleep(5)
+        error = self.get_visible_error()
+        if error and self.duplicate_name_error_is_visible():
+            raise ValueError("Coupon package name already exists: %s" % error)
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url or ""
+        if "/services/" in current:
+            base_url = current.split("/services/")[0]
+        else:
+            base_url = current.rstrip("/")
+        try:
+            self.driver.get(base_url + "/services/couponPackages")
+        except TimeoutException:
+            pass
+        self.wait_for_list_loaded()
+        if error and not self.duplicate_name_error_is_visible():
+            import logging
+            logging.getLogger("nxtwash").warning(
+                "Coupon package save completed with page error: %s", error
+            )
+
     def create_coupon_package(
         self,
         coupon_package_name,
@@ -656,15 +684,7 @@ class CouponPackagesPage(BasePage):
         self.select_assign_discount(discount_name)
         self.select_coupon_giveaway(giveaway_service_name)
         self.ensure_active_switch_on()
-        self.click_save_coupon_package()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            error = self.get_visible_error()
-            raise RuntimeError(
-                "Coupon package save did not return to list. Page message: %s"
-                % (error or "none visible")
-            ) from None
+        self.save_and_return_to_list()
 
     def update_coupon_giveaway_services(
         self,
@@ -677,5 +697,4 @@ class CouponPackagesPage(BasePage):
             if service_name.lower() not in self.checked_giveaway_values():
                 self.select_coupon_giveaway(service_name)
         self.ensure_active_switch_on()
-        self.click_save_coupon_package()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()

@@ -10,15 +10,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 # prevents both thread-based and signal-based pytest timeouts from firing.
 socket.setdefaulttimeout(60)
 
-# Pinned path for the ChromeDriver binary that matches Chrome 149.0.7827.196.
-# WDM auto-detection fetches the closest cached minor build (155) which doesn't
-# match the installed Chrome (196), causing InvalidSessionIdException crashes.
+# Pinned path for the ChromeDriver binary that matches Chrome 151.0.7922.76.
+# WDM auto-detection fetches the closest cached minor build which doesn't
+# always match the installed Chrome, causing InvalidSessionIdException crashes.
 # CI can override with CHROMEDRIVER_PATH env var pointing to the system binary.
 _PINNED_CHROMEDRIVER = os.environ.get(
     "CHROMEDRIVER_PATH",
     os.path.expanduser(
         "~/.wdm/drivers/chromedriver/mac-arm64/"
-        "149.0.7827.196/chromedriver-mac-arm64/chromedriver"
+        "151.0.7922.77/chromedriver-mac-arm64/chromedriver"
     ),
 )
 
