@@ -216,13 +216,23 @@ class AdminUserRolesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
 
+    def close_filter_panel_if_open(self):
+        """Dismiss the filter panel by clicking Apply — no-op if already closed."""
+        if not self.filter_panel_is_open():
+            return
+        try:
+            self.apply_filters()
+        except Exception:
+            pass
+
     def clear_active_filters(self):
-        """Unconditionally reset all filters — no badge check needed."""
+        """Unconditionally reset all filters and ensure the panel is closed."""
         try:
             self.reset_filters()
         except Exception as exc:
             import logging
             logging.getLogger("nxtwash").warning("clear_active_filters (user_roles): %s", exc)
+        self.close_filter_panel_if_open()
 
     def reset_filters_if_active(self):
         try:
