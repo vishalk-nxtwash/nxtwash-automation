@@ -73,6 +73,7 @@ def test_user_roles_filter_by_site(browser):
 
     # After site filter the grid must render without errors (data-set may vary)
     assert page_has_no_broken_state(page)
+    page.reset_filters()
 
 
 @allure.title("UR-FLT-006 Combined site and active filters return the correct subset")
@@ -90,13 +91,6 @@ def test_user_roles_filter_combined_site_and_active(browser):
 
 @allure.title("UR-FLT-005 Filter result count in pagination matches visible row count")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-FLT-005: Pagination count label format varies by environment. "
-        "Verify label text pattern (e.g. 'Showing X-Y of Z') in DevTools before removing xfail."
-    ),
-)
 def test_user_roles_filter_count_matches_rows(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)

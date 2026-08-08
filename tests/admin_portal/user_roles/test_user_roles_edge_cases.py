@@ -92,13 +92,6 @@ def test_deactivate_assigned_role_documents_behavior(browser, managed_role):
 
 @allure.title("UR-EC-004 Role data persists correctly after logout and re-login")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-EC-004: staging.yaml admin_portal.url points to root (/), so ensure_admin_logged_in "
-        "cannot find the login form after cookie clear. Fix by setting url to the admin login path."
-    ),
-)
 def test_data_persists_after_logout_relogin(browser, managed_role):
     # Confirm baseline state
     page = open_user_roles_page(browser)

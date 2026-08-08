@@ -216,6 +216,14 @@ class AdminUserRolesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
 
+    def clear_active_filters(self):
+        """Unconditionally reset all filters — no badge check needed."""
+        try:
+            self.reset_filters()
+        except Exception as exc:
+            import logging
+            logging.getLogger("nxtwash").warning("clear_active_filters (user_roles): %s", exc)
+
     def reset_filters_if_active(self):
         try:
             body = self.get_body_text()

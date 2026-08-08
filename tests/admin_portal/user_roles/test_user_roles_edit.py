@@ -32,15 +32,6 @@ def test_user_roles_edit_form_opens(browser, managed_role):
 @allure.title("UR-EDT-002 Editing the role name persists after save")
 @pytest.mark.regression
 @pytest.mark.manual
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-EDT-002: enter_text() does not focus the input before typing, so React's "
-        "controlled-input state may not register the name change and the save no-ops. "
-        "Verify manually: open VK UR01 edit form, change name to 'VK UR01 edited', "
-        "save, and confirm the new name appears in the list."
-    ),
-)
 def test_edit_role_name_persists(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.enter_role_name(UPDATED_ROLE_NAME)

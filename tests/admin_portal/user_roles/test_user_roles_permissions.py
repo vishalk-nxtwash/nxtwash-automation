@@ -119,7 +119,6 @@ def test_permissions_persist_after_save(browser, managed_role):
 
 @allure.title("UR-EC-005 Disabling all permissions and saving completes without error")
 @pytest.mark.edge
-@_PERMISSION_XFAIL
 def test_all_permissions_off_saves_ok(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
 
