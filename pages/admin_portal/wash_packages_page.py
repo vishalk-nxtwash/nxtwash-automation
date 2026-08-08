@@ -351,6 +351,15 @@ class WashPackagesPage(BasePage):
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
 
+    def clear_active_filters(self):
+        """Unconditionally reset all filters — no badge check needed."""
+        try:
+            self.reset_filters()
+            self.apply_filters()
+        except Exception as exc:
+            import logging
+            logging.getLogger("nxtwash").warning("clear_active_filters (wash_packages): %s", exc)
+
     def reset_filters_if_active(self):
         """Reset filter panel state if any filter is currently active.
 
@@ -392,7 +401,7 @@ class WashPackagesPage(BasePage):
     def open_edit_package(self, package_name):
         """Open edit package form."""
         self.wait_for_list_loaded()
-        self.reset_filters_if_active()
+        self.clear_active_filters()
         self.search_package(package_name)
         self.wait_for_package_row(package_name)
         # Atomic JS click — InovuaReactDataGrid uses <div> rows, not <tr>.

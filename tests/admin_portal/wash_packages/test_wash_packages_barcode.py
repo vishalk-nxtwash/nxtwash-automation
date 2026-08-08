@@ -38,10 +38,6 @@ def test_wash_package_barcode_persists(managed_package):
 
 @allure.title("WP-BAR-003 Creating a second package with a duplicate barcode is blocked or accepted")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="Staging shows 'Something went wrong' server error for duplicate barcode (product defect).",
-)
 def test_duplicate_barcode_behaviour(browser):
     package_a = "VK bar-a %s" % uuid.uuid4().hex[:6]
     package_b = "VK bar-b %s" % uuid.uuid4().hex[:6]
