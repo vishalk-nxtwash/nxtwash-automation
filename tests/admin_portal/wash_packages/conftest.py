@@ -85,8 +85,11 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
         ASSIGNMENT_SITE
     )
     page = open_wash_packages_page(browser)
-    page.search_package(package_name)
-    page.wait_for_package_row(package_name)
+    if not page.package_exists(package_name):
+        raise RuntimeError(
+            "create_wash_package_if_missing: '%s' not in grid after create — "
+            "possible duplicate name or barcode conflict on staging" % package_name
+        )
 
     return page
 
@@ -123,8 +126,11 @@ def _reset_managed_package(browser):
         barcode=BARCODE_VALUE,
     )
     page = open_wash_packages_page(browser)
-    page.search_package(PACKAGE_NAME)
-    page.wait_for_package_row(PACKAGE_NAME)
+    if not page.package_exists(PACKAGE_NAME):
+        raise RuntimeError(
+            "_reset_managed_package: '%s' not in grid after create — "
+            "check BARCODE_VALUE conflict on staging" % PACKAGE_NAME
+        )
     return page
 
 
