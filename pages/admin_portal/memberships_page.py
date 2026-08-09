@@ -602,7 +602,7 @@ class MembershipsPage(BasePage):
                     var tfr = JSON.parse(root.tableFilterReducer || '{}');
                     var tf = tfr.tableFilters || {};
                     tf.memberships = {
-                        type: (tf.memberships || {}).type || 0,
+                        type: 0,
                         isActive: true,
                         membershipName: ''
                     };
