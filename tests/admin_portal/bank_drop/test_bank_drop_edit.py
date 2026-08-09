@@ -137,7 +137,6 @@ def test_cancel_out_of_edit_form(browser):
 
 @allure.title("BD-PER-002 Edited bank drop changes persist after page reload")
 @pytest.mark.regression
-@pytest.mark.skip(reason="BD-PER-002: order reads back original value after save — xdist race or save-timing; deferred")
 def test_edited_bank_drop_persists_after_reload(managed_bank_drop):
 
     new_order = "4"
