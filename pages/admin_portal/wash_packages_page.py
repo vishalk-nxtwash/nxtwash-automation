@@ -349,10 +349,16 @@ class WashPackagesPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
 
     def clear_active_filters(self):
-        """Unconditionally reset all filters — no badge check needed."""
+        """Reset all filters and wait until the active-filter badge is gone."""
         try:
             self.reset_filters()
             self.apply_filters()
+            self.wait.until(
+                lambda driver: "Filter by (" not in driver.find_element(
+                    By.TAG_NAME, "body"
+                ).text
+            )
+            self.wait_for_grid_idle()
         except Exception as exc:
             import logging
             logging.getLogger("nxtwash").warning("clear_active_filters (wash_packages): %s", exc)
