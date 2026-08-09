@@ -84,7 +84,8 @@ class AdminUserRolesPage(BasePage):
 
     def search_role(self, role_name):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        element.click()
+        # JS click bypasses filter-panel overlay that intercepts native click at (x, 40)
+        self.driver.execute_script("arguments[0].click();", element)
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(role_name)
         self.wait.until(
@@ -93,7 +94,7 @@ class AdminUserRolesPage(BasePage):
 
     def clear_search(self):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        element.click()
+        self.driver.execute_script("arguments[0].click();", element)
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
@@ -221,7 +222,12 @@ class AdminUserRolesPage(BasePage):
         if not self.filter_panel_is_open():
             return
         try:
-            self.apply_filters()
+            btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+            self.driver.execute_script("arguments[0].click();", btn)
+            # Wait for the panel itself to close rather than for the grid to finish
+            # re-loading — with 279+ records on staging the grid re-load can exceed
+            # the 45 s timeout, silently leaving the panel open.
+            WebDriverWait(self.driver, 15).until(lambda d: not self.filter_panel_is_open())
         except Exception:
             pass
 
