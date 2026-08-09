@@ -693,9 +693,16 @@ class AdminEmployeeShiftPage(BasePage):
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def reset_filters(self):
+        from selenium.common.exceptions import StaleElementReferenceException
         self.open_filter_panel()
-        btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        for _attempt in range(3):
+            try:
+                btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
+                self.driver.execute_script("arguments[0].click();", btn)
+                break
+            except StaleElementReferenceException:
+                if _attempt == 2:
+                    raise
         # Reset All triggers an immediate data reload (no need to click Apply).
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         # The panel stays open after Reset All; close it so subsequent clicks
