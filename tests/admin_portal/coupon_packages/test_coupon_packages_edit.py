@@ -34,6 +34,10 @@ def test_edit_coupon_package_name(browser):
         page = open_coupon_packages_page(browser)
 
     page.update_coupon_package_name(COUPON_PACKAGE_NAME, UPDATED_NAME)
+    # open_edit_coupon_package() inside update_coupon_package_name() searches by
+    # the old name, which Redux Persist may rehydrate as a stale filter on the
+    # fresh page load after save.  Reset before searching for the new name.
+    page.reset_filters()
     page.search_coupon_package(UPDATED_NAME)
     row = page.wait_for_coupon_package_row(UPDATED_NAME)
 
