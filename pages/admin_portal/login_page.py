@@ -44,7 +44,16 @@ class AdminLoginPage(BasePage):
 
     def open(self):
         """Open Admin Portal."""
-        self.driver.get(self.config.get_url(self.PORTAL))
+        portal_url = self.config.get_url(self.PORTAL)
+        # Navigate first so execute_script runs on the correct origin, then
+        # wipe cookies + localStorage to guarantee a logged-out state before
+        # the second navigation that the app will redirect to /login.
+        self.driver.get(portal_url)
+        self.driver.delete_all_cookies()
+        self.driver.execute_script(
+            "window.localStorage.clear(); window.sessionStorage.clear();"
+        )
+        self.driver.get(portal_url)
 
     def wait_for_loaded(self):
         """Wait until the Admin login form is visible."""

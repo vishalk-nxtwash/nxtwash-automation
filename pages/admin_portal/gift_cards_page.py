@@ -221,43 +221,25 @@ class GiftCardsPage(BasePage):
 
     def search_gift_card(self, gift_card_name):
         """Search gift card by name."""
-        element = self.wait.until(
-            EC.element_to_be_clickable(self.SEARCH_INPUT)
-        )
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(gift_card_name)
+        self.enter_text(self.SEARCH_INPUT, gift_card_name)
         self.wait.until(
-            lambda driver: driver.find_element(
-                *self.SEARCH_INPUT
-            ).get_attribute("value") == gift_card_name
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == gift_card_name
         )
 
     def clear_gift_card_search(self):
         """Clear the gift card search input."""
-        element = self.wait.until(
-            EC.element_to_be_clickable(self.SEARCH_INPUT)
-        )
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(Keys.BACKSPACE)
         self.wait.until(
-            lambda driver: driver.find_element(
-                *self.SEARCH_INPUT
-            ).get_attribute("value") == ""
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
 
     def search_customer_gift_card(self, gift_card_number):
         """Search customer gift card by number."""
-        element = self.wait.until(
-            EC.element_to_be_clickable(self.CUSTOMER_SEARCH_INPUT)
-        )
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(gift_card_number)
+        self.enter_text(self.CUSTOMER_SEARCH_INPUT, gift_card_number)
         self.wait.until(
-            lambda driver: driver.find_element(
-                *self.CUSTOMER_SEARCH_INPUT
-            ).get_attribute("value") == gift_card_number
+            lambda d: d.find_element(*self.CUSTOMER_SEARCH_INPUT).get_attribute("value") == gift_card_number
         )
 
     def gift_card_exists(self, gift_card_name):
