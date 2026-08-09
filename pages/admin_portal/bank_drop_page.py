@@ -206,8 +206,26 @@ class BankDropPage(BasePage):
         self.enter_text(self.NAME_INPUT, name)
 
     def enter_order(self, order):
-        """Enter Bank Drop order."""
-        self.enter_text(self.ORDER_INPUT, order)
+        """Enter Bank Drop order.
+
+        React-controlled number inputs ignore select()+send_keys because
+        the DOM selection API is a no-op on <input type="number"> in Chrome,
+        so send_keys appends rather than replaces and never fires onChange.
+        Using the native property setter + InputEvent bypasses that gap and
+        updates React's internal state so the submitted value matches what we typed.
+        """
+        element = self.wait.until(EC.visibility_of_element_located(self.ORDER_INPUT))
+        self.driver.execute_script(
+            """
+            var el = arguments[0], val = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            setter.call(el, val);
+            el.dispatchEvent(new InputEvent('input', {bubbles: true}));
+            el.dispatchEvent(new Event('change', {bubbles: true}));
+            """,
+            element, str(order),
+        )
 
     def active_bank_drop_is_on(self):
         """Return whether Active bank drop is enabled."""
