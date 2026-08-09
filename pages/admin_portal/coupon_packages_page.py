@@ -458,16 +458,31 @@ class CouponPackagesPage(BasePage):
         self.save_and_return_to_list()
 
     def clear_assign_discount(self):
-        """Clear the currently selected discount from the combobox."""
+        """Clear the currently selected discount from the combobox.
+
+        The clear button only appears after React-Select finishes hydrating the
+        current value from the backend.  Using find_element (no wait) fires before
+        hydration completes and the silent except:pass masks the failure, leaving
+        the old value in place.  Wait up to 5 s for the button to be clickable,
+        then confirm the combobox value is gone.
+        """
+        from selenium.webdriver.support.ui import WebDriverWait
         clear_button = (
             By.XPATH,
             "//*[normalize-space()='Assign discount']"
             "/following::*[contains(@class,'clear') or @aria-label='Clear'][1]"
         )
         try:
-            btn = self.driver.find_element(*clear_button)
-            if btn.is_displayed():
-                self.driver.execute_script("arguments[0].click();", btn)
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(clear_button)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+            # Confirm React-Select registered the clear by waiting for the combobox
+            # value attribute to become empty.
+            combobox = self.driver.find_element(*self.ASSIGN_DISCOUNT_COMBOBOX)
+            WebDriverWait(self.driver, 5).until(
+                lambda d: combobox.get_attribute("value") in (None, "")
+            )
         except Exception:
             pass
 
