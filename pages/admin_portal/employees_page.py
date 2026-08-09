@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 
 from pages.common.base_page import BasePage
@@ -150,8 +151,13 @@ class AdminEmployeesPage(BasePage):
             return ""
 
     def get_visible_row_count(self):
-        rows = self.driver.find_elements(*self.GRID_ROWS)
-        return len([r for r in rows if r.is_displayed()])
+        for _ in range(3):
+            try:
+                rows = self.driver.find_elements(*self.GRID_ROWS)
+                return len([r for r in rows if r.is_displayed()])
+            except StaleElementReferenceException:
+                time.sleep(0.2)
+        return 0
 
     def click_add_employee(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
@@ -177,7 +183,10 @@ class AdminEmployeesPage(BasePage):
 
     def filter_panel_is_open(self):
         els = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
-        return any(e.is_displayed() for e in els)
+        try:
+            return any(e.is_displayed() for e in els)
+        except StaleElementReferenceException:
+            return False
 
     def open_filter_panel(self):
         if self.filter_panel_is_open():
@@ -623,8 +632,13 @@ class AdminEmployeeShiftPage(BasePage):
         return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_visible_row_count(self):
-        rows = self.driver.find_elements(*self.GRID_ROWS)
-        return len([r for r in rows if r.is_displayed()])
+        for _ in range(3):
+            try:
+                rows = self.driver.find_elements(*self.GRID_ROWS)
+                return len([r for r in rows if r.is_displayed()])
+            except StaleElementReferenceException:
+                time.sleep(0.2)
+        return 0
 
     def search_shift(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
@@ -653,7 +667,10 @@ class AdminEmployeeShiftPage(BasePage):
 
     def filter_panel_is_open(self):
         els = self.driver.find_elements(*self.FILTER_FIRST_NAME)
-        return any(e.is_displayed() for e in els)
+        try:
+            return any(e.is_displayed() for e in els)
+        except StaleElementReferenceException:
+            return False
 
     def open_filter_panel(self):
         if self.filter_panel_is_open():

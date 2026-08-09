@@ -1,3 +1,4 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -823,43 +824,56 @@ class GiftCardsPage(BasePage):
 
     def search_input_is_visible(self):
         """Return whether gift card search input is visible."""
-        return self.wait.until(
-            EC.visibility_of_element_located(self.SEARCH_INPUT)
-        ).is_displayed()
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.SEARCH_INPUT))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
 
     def filter_button_is_clickable(self):
         """Return whether the Filter by button is clickable."""
-        return self.wait.until(
-            EC.element_to_be_clickable(self.FILTER_BUTTON)
-        ).is_displayed()
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
 
     def add_gift_card_button_is_clickable(self):
         """Return whether the Add new gift card button is clickable."""
-        return self.wait.until(
-            EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON)
-        ).is_displayed()
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
 
     def customer_search_input_is_visible(self):
         """Return whether customer gift card search input is visible."""
-        return self.wait.until(
-            EC.visibility_of_element_located(self.CUSTOMER_SEARCH_INPUT)
-        ).is_displayed()
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.CUSTOMER_SEARCH_INPUT))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
 
     def add_customer_gift_card_button_is_clickable(self):
         """Return whether the Add customer gift card button is clickable."""
-        return self.wait.until(
-            EC.element_to_be_clickable(self.ADD_CUSTOMER_GIFT_CARD_BUTTON)
-        ).is_displayed()
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.ADD_CUSTOMER_GIFT_CARD_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
 
     def open_filter_panel(self):
         """Open the gift card filter panel if not already open."""
         # Use the Apply filters button as the open-state indicator: FILTER_SITE_INPUT
         # relies on the "Select site" placeholder which is absent when a site is already
         # selected, so checking it here would always fail after a prior filter.
-        apply_visible = [
-            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
-            if el.is_displayed()
-        ]
+        try:
+            apply_visible = [
+                el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                if el.is_displayed()
+            ]
+        except StaleElementReferenceException:
+            apply_visible = []
         if apply_visible:
             return
 
@@ -931,11 +945,14 @@ class GiftCardsPage(BasePage):
         re-enter via wait_for_list_loaded to avoid stale context.
         """
         filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
-        filter_active = any(
-            "(" in (btn.text or "")
-            for btn in filter_buttons
-            if btn.is_displayed()
-        )
+        try:
+            filter_active = any(
+                "(" in (btn.text or "")
+                for btn in filter_buttons
+                if btn.is_displayed()
+            )
+        except StaleElementReferenceException:
+            filter_active = True
         if not filter_active:
             return
 
@@ -957,10 +974,13 @@ class GiftCardsPage(BasePage):
         # Close the filter panel if Reset All left it open — the panel div
         # (settings-page__form-column) overlays the main content and would
         # intercept clicks on the search input in subsequent operations.
-        apply_open = [
-            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
-            if el.is_displayed()
-        ]
+        try:
+            apply_open = [
+                el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                if el.is_displayed()
+            ]
+        except StaleElementReferenceException:
+            apply_open = []
         if apply_open:
             btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
             self.driver.execute_script("arguments[0].click();", btn)
@@ -973,10 +993,13 @@ class GiftCardsPage(BasePage):
 
     def get_visible_gift_card_row_count(self):
         """Return count of visible gift card rows in the grid."""
-        return len([
-            row for row in self.driver.find_elements(*self.GIFT_CARD_GRID_ROWS)
-            if row.is_displayed()
-        ])
+        try:
+            return len([
+                row for row in self.driver.find_elements(*self.GIFT_CARD_GRID_ROWS)
+                if row.is_displayed()
+            ])
+        except StaleElementReferenceException:
+            return 0
 
     def wait_for_customer_edit_loaded(self):
         """Wait until the customer gift card edit form is visible."""
