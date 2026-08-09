@@ -587,6 +587,14 @@ class MembershipsPage(BasePage):
                 self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
             self.apply_filters()
             self.wait_for_grid_idle()
+            try:
+                self.wait.until(
+                    lambda driver: "Filter by (" not in driver.find_element(
+                        By.TAG_NAME, "body"
+                    ).text
+                )
+            except Exception:
+                pass
         except Exception as exc:
             _log.warning("clear_active_filters: reset/apply failed: %s", exc)
         # Belt-and-suspenders: reset the Redux Persist filter state directly.
