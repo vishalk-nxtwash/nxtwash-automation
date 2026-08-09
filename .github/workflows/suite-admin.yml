@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 16 shards run fully in parallel — each shard runs all tests in its modules
+  # 17 shards run fully in parallel — each shard runs all tests in its modules
   # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
     if: github.ref == 'refs/heads/staging'
@@ -76,11 +76,13 @@ jobs:
               tests/admin_portal/gift_cards
               tests/admin_portal/bank_drop
           # ── Promotions & Loyalty ──────────────────────────────────────────
-          # 139 tests — discounts + memberships
-          - name: promotions
-            path: >-
-              tests/admin_portal/discounts
-              tests/admin_portal/memberships
+          # 73 tests — discounts (split from combined promotions shard that
+          # exceeded the 120-min wall-clock limit when run together)
+          - name: discounts
+            path: tests/admin_portal/discounts
+          # 66 tests — memberships
+          - name: memberships
+            path: tests/admin_portal/memberships
           # ── Customers ─────────────────────────────────────────────────────
           # 97 tests — isolated; complex customer-facing flows
           - name: customers
