@@ -34,6 +34,27 @@ BROKEN_STATE_TEXTS = [
 
 
 def open_wash_packages_page(browser):
+    # Reset Redux Persist wash packages filter BEFORE navigation so the page
+    # loads with the default filter state.  The UI-based clear_active_filters()
+    # handles in-memory Redux state; this reset covers the localStorage
+    # rehydration path that survives driver.get() navigation.
+    try:
+        browser.execute_script("""
+            try {
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                tf.washPackages = {
+                    serviceName: '',
+                    isActive: true
+                };
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+        """)
+    except Exception:
+        pass
 
     open_admin_path(browser, "/services/washPackages")
 
