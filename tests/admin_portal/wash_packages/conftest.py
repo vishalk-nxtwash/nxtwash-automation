@@ -46,7 +46,7 @@ def open_wash_packages_page(browser):
                 var tf = tfr.tableFilters || {};
                 tf.washPackages = {
                     serviceName: '',
-                    isActive: true
+                    isActive: false
                 };
                 tfr.tableFilters = tf;
                 root.tableFilterReducer = JSON.stringify(tfr);
@@ -139,4 +139,7 @@ def managed_package(browser):
     """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
     page = _reset_managed_package(browser)
     yield page
-    _reset_managed_package(browser)
+    try:
+        _reset_managed_package(browser)
+    except Exception:
+        _reset_managed_package(browser)

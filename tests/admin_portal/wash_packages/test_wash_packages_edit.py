@@ -214,11 +214,6 @@ def test_remove_applicable_discount_persists(managed_package):
 
 @allure.title("WP-DSC-001 Service description saves and persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="WP-DSC-001: Description textarea locator (BY.NAME 'description') needs "
-           "verification against the actual form DOM.",
-)
 def test_service_description_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

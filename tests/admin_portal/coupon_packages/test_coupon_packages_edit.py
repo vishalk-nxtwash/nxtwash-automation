@@ -6,6 +6,7 @@ from tests.admin_portal.coupon_packages.conftest import COUPON_PACKAGE_NAME
 from tests.admin_portal.coupon_packages.conftest import DISCOUNT_NAME
 from tests.admin_portal.coupon_packages.conftest import EXPIRATION_DAYS
 from tests.admin_portal.coupon_packages.conftest import GIVEAWAY_SERVICES
+from tests.admin_portal.coupon_packages.conftest import MANAGED_COUPON_PACKAGE
 from tests.admin_portal.coupon_packages.conftest import SECOND_DISCOUNT_NAME
 from tests.admin_portal.coupon_packages.conftest import create_coupon_package_if_missing
 from tests.admin_portal.coupon_packages.conftest import create_inactive_coupon_package_if_missing
@@ -48,12 +49,14 @@ def test_edit_coupon_package_name(browser):
 
 @allure.title("CP-EDT-002 Edit assigned discount persists after save")
 @pytest.mark.regression
-def test_edit_coupon_package_discount(browser):
-
-    create_percentage_discount_if_missing(browser)
-    page = create_coupon_package_if_missing(browser)
-    page.update_assigned_discount(COUPON_PACKAGE_NAME, SECOND_DISCOUNT_NAME)
-    page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+def test_edit_coupon_package_discount(managed_coupon_package):
+    # Uses managed_coupon_package (not the shared VK ACC5) so gw1 cannot reset
+    # the discount mid-test via create_coupon_package_if_missing.  Teardown is
+    # handled by the fixture — no manual reset needed.
+    page = managed_coupon_package
+    create_percentage_discount_if_missing(page.driver)
+    page.update_assigned_discount(MANAGED_COUPON_PACKAGE, SECOND_DISCOUNT_NAME)
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
     # Assign discount hydrates after the name field; wait before asserting.
     page.wait.until(lambda d: SECOND_DISCOUNT_NAME.lower() in page.get_body_text().lower())
 
@@ -61,7 +64,6 @@ def test_edit_coupon_package_discount(browser):
 
     page.click_save_coupon_package()
     page.wait_for_list_loaded()
-    page.update_assigned_discount(COUPON_PACKAGE_NAME, DISCOUNT_NAME)
 
 
 @allure.title("CP-EDT-003 Edit expiration days persists after save")

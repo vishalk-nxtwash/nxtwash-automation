@@ -460,11 +460,11 @@ class CouponPackagesPage(BasePage):
     def clear_assign_discount(self):
         """Clear the currently selected discount from the combobox.
 
-        The clear button only appears after React-Select finishes hydrating the
-        current value from the backend.  Using find_element (no wait) fires before
-        hydration completes and the silent except:pass masks the failure, leaving
-        the old value in place.  Wait up to 5 s for the button to be clickable,
-        then confirm the combobox value is gone.
+        Callers must wait for the combobox to hydrate before calling this method
+        (React-Select's clear button only renders once a value is loaded from the
+        API).  If the field is genuinely empty, this method is a no-op.  If a
+        value is present but the clear button never appears, a RuntimeError is
+        raised so the failure is visible rather than silently ignored.
         """
         from selenium.webdriver.support.ui import WebDriverWait
         clear_button = (
@@ -473,22 +473,31 @@ class CouponPackagesPage(BasePage):
             "/following::*[contains(@class,'clear') or @aria-label='Clear'][1]"
         )
         try:
-            btn = WebDriverWait(self.driver, 5).until(
+            btn = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(clear_button)
             )
             self.driver.execute_script("arguments[0].click();", btn)
-            # Confirm React-Select registered the clear by waiting for the combobox
-            # value attribute to become empty.
             combobox = self.driver.find_element(*self.ASSIGN_DISCOUNT_COMBOBOX)
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 10).until(
                 lambda d: combobox.get_attribute("value") in (None, "")
             )
-        except Exception:
-            pass
+        except TimeoutException:
+            current = self.get_assign_discount_value()
+            if current not in (None, ""):
+                raise RuntimeError(
+                    "clear_assign_discount: field has value %r but clear button "
+                    "did not appear within 10 s" % current
+                )
 
     def update_assigned_discount(self, package_name, discount_name):
         """Open edit form, clear the existing discount, select a new one, and save."""
         self.open_edit_coupon_package(package_name)
+        # Assign discount loads from the API after the name field; wait for it to
+        # hydrate before attempting to clear, otherwise the clear button never
+        # appears and the old value silently survives into the save.
+        self.wait.until(
+            lambda d: self.get_assign_discount_value() not in (None, "")
+        )
         self.clear_assign_discount()
         self.select_assign_discount(discount_name)
         self.save_and_return_to_list()
@@ -536,7 +545,10 @@ class CouponPackagesPage(BasePage):
         option = self.wait.until(
             lambda driver: self.find_select_option(option_text)
         )
-        self.driver.execute_script("arguments[0].click();", option)
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", option
+        )
+        ActionChains(self.driver).move_to_element(option).click().perform()
         self.wait.until(
             lambda driver: option_text.lower() in self.get_body_text().lower()
         )

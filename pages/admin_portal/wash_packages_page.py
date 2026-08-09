@@ -318,31 +318,28 @@ class WashPackagesPage(BasePage):
     def filter_panel_controls_are_visible(self):
         """Return whether expected filter controls are visible."""
         self.open_filter_panel()
-        return (
-            self.wait.until(
-                EC.visibility_of_element_located(self.FILTER_SITE_INPUT)
-            ).is_displayed()
-            and self.wait.until(
-                EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH)
-            ) is not None
-            and self.wait.until(
-                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
-            ).is_displayed()
-            and self.wait.until(
-                EC.element_to_be_clickable(self.RESET_ALL_BUTTON)
-            ).is_displayed()
-        )
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
+            self.wait.until(EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH))
+            self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+            self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
+            return True
+        except TimeoutException:
+            return False
 
     def filter_site_option_is_visible(self, site_name):
         """Return whether a site option is visible in the opened filter panel."""
         self.open_filter_panel()
         self.click(self.FILTER_SITE_INPUT)
-
-        return self.wait.until(
-            EC.visibility_of_element_located(
-                (By.XPATH, "//*[normalize-space()='%s']" % site_name)
+        try:
+            self.wait.until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, "//*[normalize-space()='%s']" % site_name)
+                )
             )
-        ).is_displayed()
+            return True
+        except TimeoutException:
+            return False
 
     def reset_filters(self):
         """Reset filters from the opened filter panel."""
@@ -845,7 +842,8 @@ for (var i = 0; i < kids.length; i++) {
         element = self.wait.until(
             EC.visibility_of_element_located(self.BARCODE_INPUT)
         )
-        self._set_input_value(element, barcode)
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(barcode)
 
     def get_barcode_value(self):
         """Return the current barcode input value."""
