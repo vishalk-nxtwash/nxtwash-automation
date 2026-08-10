@@ -867,11 +867,12 @@ class GiftCardsPage(BasePage):
         """Open filter panel and select a site."""
         self.open_filter_panel()
         self.click(self.FILTER_SITE_INPUT)
-        self.wait.until(
+        option = self.wait.until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//*[normalize-space()='%s']" % site_name)
             )
-        ).click()
+        )
+        self.driver.execute_script("arguments[0].click();", option)
 
     def toggle_active_filter(self):
         """Enable the Active gift card filter to show only active gift cards.
@@ -1010,12 +1011,19 @@ class GiftCardsPage(BasePage):
         """Open the edit form for a customer gift card."""
         self.wait_for_customer_list_loaded()
         self.search_customer_gift_card(gift_card_number)
-        row = self.wait_for_customer_gift_card_row(gift_card_number)
-        edit_button = row.find_element(
+        self.wait_for_customer_gift_card_row(gift_card_number)
+        # Build an absolute XPath so we never go through a potentially-stale
+        # row WebElement — the Inovua virtual grid re-renders rows after search,
+        # making child-element references unreliable.
+        edit_link_locator = (
             By.XPATH,
-            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+            "//*[@data-props-id='giftCardNumber']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[normalize-space()='Edit']/ancestor::a[1]" % gift_card_number
         )
-        edit_button.click()
+        edit_link = self.wait.until(EC.element_to_be_clickable(edit_link_locator))
+        self.driver.execute_script("arguments[0].click();", edit_link)
         self.wait_for_customer_edit_loaded()
 
     def gift_card_option_exists_in_dropdown(self, gift_card_name):

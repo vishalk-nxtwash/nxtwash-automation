@@ -32,6 +32,24 @@ BROKEN_STATE_TEXTS = [
 # ── Navigation helpers ────────────────────────────────────────────────────────
 
 def open_user_roles_page(browser):
+    # Clear userRoles filter from localStorage BEFORE navigation so the page
+    # loads with no active filters.  clear_active_filters() handles the in-memory
+    # Redux state; this reset covers the localStorage rehydration path.
+    try:
+        browser.execute_script("""
+            try {
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                delete tf.userRoles;
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+        """)
+    except Exception:
+        pass
+
     open_admin_path(browser, "/users/userRoles")
     page = AdminUserRolesPage(browser)
     page.wait_for_loaded()
