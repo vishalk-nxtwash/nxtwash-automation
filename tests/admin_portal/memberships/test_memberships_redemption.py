@@ -9,7 +9,10 @@ from tests.admin_portal.memberships.conftest import managed_membership  # noqa: 
 
 
 LOG = logging.getLogger(__name__)
-pytestmark = pytest.mark.timeout(900)
+pytestmark = [
+    pytest.mark.timeout(900),
+    pytest.mark.xdist_group("managed_membership"),
+]
 
 
 @allure.epic("Admin Portal")

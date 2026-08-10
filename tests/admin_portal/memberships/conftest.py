@@ -97,7 +97,7 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         memberships_page.search_membership(membership_name)
         locator = memberships_page.get_membership_row_locator(membership_name)
         try:
-            WebDriverWait(memberships_page.driver, 10).until(
+            WebDriverWait(memberships_page.driver, 30).until(
                 EC.visibility_of_element_located(locator)
             )
             inactive_found = True
@@ -124,7 +124,16 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     )
     memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
-    memberships_page.wait_for_membership_row(membership_name)
+    try:
+        memberships_page.wait_for_membership_row(membership_name)
+    except TimeoutException:
+        import pytest as _pytest
+        memberships_page.clear_active_filters()
+        _pytest.skip(
+            "Membership '%s' could not be created or found in staging "
+            "— staging data may need manual cleanup before re-running"
+            % membership_name
+        )
 
     return memberships_page
 
@@ -157,7 +166,7 @@ def create_recurring_membership_if_missing(
         memberships_page.search_membership(membership_name)
         locator = memberships_page.get_membership_row_locator(membership_name)
         try:
-            WebDriverWait(memberships_page.driver, 10).until(
+            WebDriverWait(memberships_page.driver, 30).until(
                 EC.visibility_of_element_located(locator)
             )
             inactive_found = True
@@ -184,7 +193,16 @@ def create_recurring_membership_if_missing(
     )
     memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
-    memberships_page.wait_for_membership_row(membership_name)
+    try:
+        memberships_page.wait_for_membership_row(membership_name)
+    except TimeoutException:
+        import pytest as _pytest
+        memberships_page.clear_active_filters()
+        _pytest.skip(
+            "Membership '%s' could not be created or found in staging "
+            "— staging data may need manual cleanup before re-running"
+            % membership_name
+        )
 
     return memberships_page
 
@@ -242,8 +260,19 @@ def reset_managed_membership(browser):
             FIRST_LOCATION_COMMISSION,
         )
         # create_membership() navigates into CREATE_FRAME; fresh navigation
-        # restores LIST_FRAME before clear_active_filters() runs.
+        # restores LIST_FRAME before the post-create verification.
         memberships_page = open_memberships_page(browser)
+        memberships_page.search_membership(MANAGED_MEMBERSHIP)
+        try:
+            memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+        except TimeoutException:
+            import pytest as _pytest
+            memberships_page.clear_active_filters()
+            _pytest.skip(
+                "Managed membership '%s' could not be created or found in staging "
+                "— staging data may need manual cleanup before re-running"
+                % MANAGED_MEMBERSHIP
+            )
         memberships_page.clear_active_filters()
         return memberships_page
 

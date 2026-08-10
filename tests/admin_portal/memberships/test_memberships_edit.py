@@ -97,6 +97,7 @@ def test_edit_membership_name_and_restore(browser):
 @allure.story("Membership Settings")
 @allure.title("MB-TYP-003 Edit membership type")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_type(managed_membership):
 
     page = managed_membership
@@ -114,6 +115,7 @@ def test_edit_managed_membership_type(managed_membership):
 @allure.story("Membership Settings")
 @allure.title("MB-EDT-003/MB-EDT-004 Edit global price and commission")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_global_price_and_commission(managed_membership):
 
     page = managed_membership
@@ -136,6 +138,7 @@ def test_edit_managed_membership_global_price_and_commission(managed_membership)
 @allure.story("Membership Settings")
 @allure.title("MB-BAR-001/MB-BAR-002 Membership barcode can be added and cleared")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_barcode_persists(managed_membership):
 
     page = managed_membership
@@ -158,6 +161,7 @@ def test_edit_managed_membership_barcode_persists(managed_membership):
 @allure.title("MB-TGL-004 Hide membership from customer portal")
 @pytest.mark.regression
 @pytest.mark.skip(reason="MB-TGL-004: managed_membership filter state leak — confirm same root cause as MB-EDT-009 on first run; deferred")
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_customer_portal_toggle_off(managed_membership):
 
     page = managed_membership
@@ -175,6 +179,7 @@ def test_edit_managed_membership_customer_portal_toggle_off(managed_membership):
 @allure.story("Membership Settings")
 @allure.title("MB-TGL-003 Show membership on customer portal persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_customer_portal_toggle_on(managed_membership):
 
     page = managed_membership
@@ -198,6 +203,7 @@ def test_edit_managed_membership_customer_portal_toggle_on(managed_membership):
 @allure.title("MB-SIT-002/MB-EDT-006 Assign multiple membership locations")
 @pytest.mark.regression
 @pytest.mark.skip(reason="MB-SIT-002: managed_membership gw0/gw1 race causes filter state leak — 'No records available'; deferred until fixture serialised")
+@pytest.mark.xdist_group("managed_membership")
 def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
 
     page = managed_membership
@@ -228,6 +234,7 @@ def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
 @allure.story("Discount Settings")
 @allure.title("MB-DIS-001 Assign applicable discount persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_applicable_discount_persists(managed_membership):
 
     page = managed_membership
@@ -247,6 +254,7 @@ def test_applicable_discount_persists(managed_membership):
 @allure.story("Discount Settings")
 @allure.title("MB-DIS-003 Remove applicable discount persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_remove_applicable_discount_persists(managed_membership):
 
     page = managed_membership
@@ -274,6 +282,7 @@ def test_remove_applicable_discount_persists(managed_membership):
 @allure.story("Membership Settings")
 @allure.title("MB-LMT-001 Limit membership toggle persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_limit_membership_toggle_persists(managed_membership):
     """Limit membership switch survives a save. Cleans itself up in finally."""
     page = managed_membership
@@ -297,6 +306,7 @@ def test_limit_membership_toggle_persists(managed_membership):
 @allure.story("Membership Settings")
 @allure.title("MB-DESC-001 Membership description saves and persists")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_membership_description_saves(managed_membership):
     """Description field survives a save. Clears itself in finally."""
     page = managed_membership

@@ -587,6 +587,9 @@ class MembershipsPage(BasePage):
                 self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
             self.apply_filters()
             self.wait_for_grid_idle()
+            # Also clear the name search input — "Reset All" only resets the
+            # panel filter options (type, isActive, site), not the search bar.
+            self.clear_membership_search()
             try:
                 self.wait.until(
                     lambda driver: "Filter by (" not in driver.find_element(
@@ -1531,6 +1534,24 @@ class MembershipsPage(BasePage):
             base_url = current.split("/services/")[0]
         else:
             base_url = current.rstrip("/")
+        # Reset membership filter in localStorage before navigation so the list
+        # rehydrates with clean state (no name search, isActive:true).  Without
+        # this, any prior search_membership() call persists through Redux Persist
+        # and reappears as "Filter by (1)" on the freshly loaded list page.
+        try:
+            self.driver.execute_script("""
+                try {
+                    var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                    var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                    var tf = tfr.tableFilters || {};
+                    tf.memberships = { type: 0, isActive: true, membershipName: '' };
+                    tfr.tableFilters = tf;
+                    root.tableFilterReducer = JSON.stringify(tfr);
+                    localStorage.setItem('persist:root', JSON.stringify(root));
+                } catch(e) {}
+            """)
+        except Exception:
+            pass
         try:
             self.driver.get(base_url + "/services/memberships")
         except TimeoutException:

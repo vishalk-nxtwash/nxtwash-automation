@@ -16,6 +16,9 @@ pytestmark = [
     # The managed fixture runs reset_managed_membership in both setup and
     # teardown; each pass takes ~5 min, so the default 180s is not enough.
     pytest.mark.timeout(900),
+    # Ensure all managed_membership tests run on the same xdist worker to
+    # prevent gw0/gw1 from simultaneously resetting the same staging record.
+    pytest.mark.xdist_group("managed_membership"),
 ]
 
 UPDATED_POINTS = "5"

@@ -167,6 +167,7 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.skip(reason="MB-EDT-009: inactive filter left active after re-activation save — clear_active_filters not called in managed_membership restore; deferred")
+@pytest.mark.xdist_group("managed_membership")
 def test_activate_membership(managed_membership):
 
     page = managed_membership
@@ -191,6 +192,7 @@ def test_activate_membership(managed_membership):
 @allure.title("MB-EDT-010 Deactivate membership hides it from the default list")
 @pytest.mark.smoke
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_membership")
 def test_deactivate_membership(managed_membership):
 
     page = managed_membership
