@@ -967,12 +967,15 @@ class GiftCardsPage(BasePage):
         if apply_open:
             btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
             self.driver.execute_script("arguments[0].click();", btn)
-            self.wait.until(
-                lambda d: not any(
-                    el.is_displayed()
-                    for el in d.find_elements(*self.APPLY_FILTERS_BUTTON)
-                )
-            )
+            def _apply_panel_closed(driver):
+                try:
+                    return not any(
+                        el.is_displayed()
+                        for el in driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                    )
+                except StaleElementReferenceException:
+                    return False
+            self.wait.until(_apply_panel_closed)
 
     def get_visible_gift_card_row_count(self):
         """Return count of visible gift card rows in the grid."""
