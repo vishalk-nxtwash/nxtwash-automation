@@ -24,6 +24,8 @@ SITE_OVERRIDE_COMMISSION    = _D["updated"]["site_override_commission"]
 APPLICABLE_DISCOUNT         = _D["reference"]["applicable_discount"]
 SECOND_APPLICABLE_DISCOUNT  = _D["reference"]["second_applicable_discount"]
 BARCODE_VALUE               = _D["template"]["barcode"]
+CONTROLLER_CODE             = _D["template"]["controller_code"]
+LOCATION_PRICE              = _D["template"]["location_price"]
 DESCRIPTION_TEXT            = _D["template"]["description"]
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
@@ -82,7 +84,9 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
         POINTS_REDEEMED,
         GLOBAL_PRICE,
         GLOBAL_COMMISSION,
-        ASSIGNMENT_SITE
+        ASSIGNMENT_SITE,
+        controller_code=CONTROLLER_CODE,
+        location_price=LOCATION_PRICE,
     )
     page = open_wash_packages_page(browser)
     if not page.package_exists(package_name):
@@ -103,6 +107,8 @@ def _reset_managed_package(browser):
         page.fill_package_form(
             PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
             GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
+            controller_code=CONTROLLER_CODE,
+            location_price=LOCATION_PRICE,
         )
         page.save_and_return_to_list()
         return page
@@ -116,6 +122,8 @@ def _reset_managed_package(browser):
         page.fill_package_form(
             PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
             GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
+            controller_code=CONTROLLER_CODE,
+            location_price=LOCATION_PRICE,
         )
         page.save_and_return_to_list()
         return page
@@ -124,6 +132,8 @@ def _reset_managed_package(browser):
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
         barcode=BARCODE_VALUE,
+        controller_code=CONTROLLER_CODE,
+        location_price=LOCATION_PRICE,
     )
     page = open_wash_packages_page(browser)
     if not page.package_exists(PACKAGE_NAME):

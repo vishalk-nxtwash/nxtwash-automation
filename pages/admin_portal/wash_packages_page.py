@@ -92,6 +92,11 @@ class WashPackagesPage(BasePage):
         "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
         "//input[@role='combobox']"
     )
+    DESCRIPTION_ACCORDION_HEADER = (
+        By.XPATH,
+        "//*[normalize-space()='Service description']"
+        "/parent::*[contains(@style,'cursor: pointer')]"
+    )
     DESCRIPTION_TEXTAREA = (By.NAME, "description")
     SITE_ASSIGNMENT_HEADER_CHECKBOX = (
         By.XPATH,
@@ -664,12 +669,32 @@ for (var i = 0; i < kids.length; i++) {
 
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(row_xpath))
 
-    def assign_site_with_price_and_commission(self, site_name, price, commission):
+    def _set_site_input(self, element, value):
+        """Set a React-controlled site-grid input via native setter + events."""
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value'
+            ).set;
+            input.scrollIntoView({block: 'center', inline: 'center'});
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            input.dispatchEvent(new Event('blur', { bubbles: true }));
+            """,
+            element,
+            str(value),
+        )
+
+    def assign_site_with_price_and_commission(
+        self, site_name, price, commission, controller_code=None
+    ):
         """Assign a package to a site and set site-level price/commission."""
         import time as _t
-        # React re-renders triggered by the preceding form-field changes can
-        # reset the virtual grid's scroll position mid-loop.  A short wait lets
-        # the form settle so the grid stays stable during the scroll search.
+        # Let preceding form-field React re-renders settle before touching the grid.
         _t.sleep(2)
         row = self.get_site_row(site_name)
         checkbox = row.find_element(
@@ -687,7 +712,6 @@ for (var i = 0; i < kids.length; i++) {
         )
 
         def _checkbox_checked(d):
-            # Inovua renders duplicate DOM rows; check ALL matching checkboxes.
             try:
                 return any(
                     "inovua-react-toolkit-checkbox--checked" in el.get_attribute("class")
@@ -699,46 +723,32 @@ for (var i = 0; i < kids.length; i++) {
                 return False
 
         if not _checkbox_checked(self.driver):
-            import time as _tc
-            # scrollIntoView centers the row in the inner iframe viewport so
-            # ActionChains.move_to_element() lands on the checkbox correctly.
             self.driver.execute_script(
-                "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
-                checkbox
+                "arguments[0].scrollIntoView({block: 'nearest'});", checkbox
             )
-            _tc.sleep(0.3)
-            ActionChains(self.driver).move_to_element(checkbox).click().perform()
+            _t.sleep(0.3)
+            # JS click is required — ActionChains coordinates are unreliable for
+            # Inovua checkboxes inside iframes (ActionChains offset is relative
+            # to the outer document, but the checkbox lives inside the iframe).
+            self.driver.execute_script("arguments[0].click();", checkbox)
             self.wait.until(_checkbox_checked)
 
         # Re-find row after React re-render triggered by checkbox state change.
         row = self.get_site_row(site_name)
-        price_input = row.find_element(By.NAME, "price")
-        # input.select() + send_keys is more reliable than the native-setter +
-        # dispatchEvent approach for Inovua row inputs. JS select() highlights
-        # all existing text without emitting key events (no Inovua grid shortcut
-        # intercept), and send_keys fires per-character keydown/input events that
-        # React's controlled-input onChange processes correctly.
-        # scrollIntoView first: the price row may be below the visible Chrome
-        # window even after get_site_row positions Inovua's internal scroll; we
-        # must bring it on-screen before send_keys (same pattern as checkbox).
-        import time as _ti
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center',inline:'center'});",
-            price_input
-        )
-        _ti.sleep(0.3)
-        self.driver.execute_script("arguments[0].select();", price_input)
-        price_input.send_keys(str(price))
-        # Re-find after potential React re-render triggered by price change.
+        price_inputs = row.find_elements(By.NAME, "price")
+        if price_inputs:
+            self._set_site_input(price_inputs[0], price)
+
         row = self.get_site_row(site_name)
-        commission_input = row.find_elements(By.NAME, "commission")[0]
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center',inline:'center'});",
-            commission_input
-        )
-        _ti.sleep(0.3)
-        self.driver.execute_script("arguments[0].select();", commission_input)
-        commission_input.send_keys(str(commission))
+        commission_inputs = row.find_elements(By.NAME, "commission")
+        if commission_inputs:
+            self._set_site_input(commission_inputs[0], commission)
+
+        if controller_code is not None:
+            row = self.get_site_row(site_name)
+            cc_inputs = row.find_elements(By.NAME, "controllerCode")
+            if cc_inputs:
+                self._set_site_input(cc_inputs[0], controller_code)
 
     def fill_package_form(
         self,
@@ -749,6 +759,8 @@ for (var i = 0; i < kids.length; i++) {
         global_commission,
         site_name,
         barcode=None,
+        controller_code=None,
+        location_price=None,
     ):
         """Fill package form with package and site assignment details."""
         self.enter_service_name(service_name)
@@ -760,8 +772,9 @@ for (var i = 0; i < kids.length; i++) {
         self.set_global_commission(global_commission)
         self.assign_site_with_price_and_commission(
             site_name,
-            global_price,
-            global_commission
+            location_price if location_price is not None else global_price,
+            global_commission,
+            controller_code=controller_code,
         )
 
     def click_save_package(self):
@@ -872,15 +885,29 @@ for (var i = 0; i < kids.length; i++) {
         )
         return element.get_attribute("value")
 
+    def _expand_description_accordion(self):
+        """Expand the Service description accordion if it is collapsed."""
+        els = self.driver.find_elements(*self.DESCRIPTION_TEXTAREA)
+        if els and els[0].is_displayed():
+            return
+        header = self.wait.until(
+            EC.element_to_be_clickable(self.DESCRIPTION_ACCORDION_HEADER)
+        )
+        header.click()
+        self.wait.until(EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA))
+
     def enter_description(self, text):
-        """Set the service description textarea value."""
+        """Expand the description accordion and set the textarea value."""
+        self._expand_description_accordion()
         element = self.wait.until(
             EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
         )
-        self._set_input_value(element, text)
+        element.clear()
+        element.send_keys(text)
 
     def get_description_value(self):
-        """Return the current description textarea value."""
+        """Expand the description accordion and return the textarea value."""
+        self._expand_description_accordion()
         element = self.wait.until(
             EC.visibility_of_element_located(self.DESCRIPTION_TEXTAREA)
         )
@@ -1005,6 +1032,8 @@ for (var i = 0; i < kids.length; i++) {
         global_commission,
         site_name,
         barcode=None,
+        controller_code=None,
+        location_price=None,
     ):
         """Create an active wash package and force navigation back to the list.
 
@@ -1020,5 +1049,7 @@ for (var i = 0; i < kids.length; i++) {
             global_commission,
             site_name,
             barcode=barcode,
+            controller_code=controller_code,
+            location_price=location_price,
         )
         self.save_and_return_to_list()
