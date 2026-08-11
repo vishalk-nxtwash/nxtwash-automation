@@ -103,9 +103,23 @@ jobs:
           # ~77 tests — users
           - name: people-users
             path: tests/admin_portal/users
-          # ~87 tests — employees
-          - name: people-employees
-            path: tests/admin_portal/employees
+          # ~45 tests — employees CRUD (create, edit, edge cases, export)
+          - name: people-employees-a
+            path: >-
+              tests/admin_portal/employees/test_employees_create.py
+              tests/admin_portal/employees/test_employees_edit.py
+              tests/admin_portal/employees/test_employees_edge_cases.py
+              tests/admin_portal/employees/test_employees_export.py
+          # ~42 tests — employees read + all shift tests
+          - name: people-employees-b
+            path: >-
+              tests/admin_portal/employees/test_employees_list.py
+              tests/admin_portal/employees/test_employees_filter.py
+              tests/admin_portal/employees/test_employees_shift_create.py
+              tests/admin_portal/employees/test_employees_shift_edit.py
+              tests/admin_portal/employees/test_employees_shift_export.py
+              tests/admin_portal/employees/test_employees_shift_filter.py
+              tests/admin_portal/employees/test_employees_shift_list.py
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:

@@ -119,15 +119,21 @@ jobs:
           } > .env
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
 
-      - name: Resolve ChromeDriver path
+      - name: Pre-download ChromeDriver
         run: |
-          # Use the system ChromeDriver installed by setup-chrome (avoids a
-          # webdriver-manager network check on every xdist worker startup).
-          DRIVER_PATH="$(which chromedriver 2>/dev/null || true)"
-          if [ -n "$DRIVER_PATH" ]; then
-            echo "CHROMEDRIVER_PATH=$DRIVER_PATH" >> "$GITHUB_ENV"
-            echo "Using system ChromeDriver: $DRIVER_PATH"
-          fi
+          # Download ChromeDriver once in the main process and export its path.
+          # xdist workers inherit CHROMEDRIVER_PATH and skip the WDM network
+          # check entirely — each worker was previously downloading independently.
+          python - <<'PYEOF'
+          import os
+          from webdriver_manager.chrome import ChromeDriverManager
+          path = ChromeDriverManager().install()
+          print(f"ChromeDriver pre-downloaded: {path}")
+          env_file = os.environ.get("GITHUB_ENV", "")
+          if env_file:
+              with open(env_file, "a") as f:
+                  f.write(f"CHROMEDRIVER_PATH={path}\n")
+          PYEOF
 
       - name: Run tests (headless)
         env:
@@ -146,7 +152,7 @@ jobs:
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
           mkdir -p reports/allure-results reports/screenshots reports/logs
-          pytest $marker_arg ${TEST_PATH} $xdist --dist=loadfile \
+          pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
             --alluredir=reports/allure-results \
             --html=reports/report.html --self-contained-html \
