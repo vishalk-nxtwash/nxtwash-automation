@@ -708,6 +708,12 @@ class AdminEmployeeShiftPage(BasePage):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:
+            pass
 
     def reset_filters(self):
         from selenium.common.exceptions import StaleElementReferenceException
