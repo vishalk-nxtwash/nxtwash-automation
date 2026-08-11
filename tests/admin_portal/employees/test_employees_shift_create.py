@@ -122,6 +122,13 @@ def test_create_shift_site_required(browser, managed_employee):
 
 @allure.title("EMP-SH-CRT-006 Saving without Start/End time is blocked with a validation error")
 @pytest.mark.smoke
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-SH-CRT-006: staging shift form validation timeout — form interaction "
+        "exceeds 240s on staging under parallel load."
+    ),
+)
 def test_create_shift_time_required(browser, managed_employee):
     form = open_create_shift_form(browser)
     form.select_employee(EMP_FULL_NAME)

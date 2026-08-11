@@ -84,12 +84,15 @@ jobs:
           - name: wash-packages-b
             path: tests/admin_portal/wash_extras
           # Split from single 127-test wash-catalog shard to reduce wall-clock.
-          # ~63 tests — wash_books
+          # ~63 tests — wash_books; parallel=2 prevents write collision on shared
+          # managed wash book record that caused assert failures under -n 3.
           - name: wash-catalog-a
             path: tests/admin_portal/wash_books
-          # ~64 tests — coupon_packages
+            parallel: "2"
+          # ~64 tests — coupon_packages; parallel=2 same reason as wash-catalog-a.
           - name: wash-catalog-b
             path: tests/admin_portal/coupon_packages
+            parallel: "2"
           # ── Services & Finance ────────────────────────────────────────────
           # 122 tests — custom_services + gift_cards + bank_drop
           - name: services
@@ -110,11 +113,13 @@ jobs:
           - name: customers
             path: tests/admin_portal/customers
           # ── Hardware Settings ─────────────────────────────────────────────
-          # 117 tests — kiosk_settings + tunnel_settings
-          - name: settings-hw
-            path: >-
-              tests/admin_portal/kiosk_settings
-              tests/admin_portal/tunnel_settings
+          # Split from 117-test settings-hw (was 44m wall-clock bottleneck).
+          # ~73 tests — kiosk_settings (complex iframe flows, inherently slow)
+          - name: settings-kiosk
+            path: tests/admin_portal/kiosk_settings
+          # ~44 tests — tunnel_settings
+          - name: settings-tunnel
+            path: tests/admin_portal/tunnel_settings
           # ── POS & Access Control ──────────────────────────────────────────
           # 126 tests — pos_settings + user_roles
           - name: settings-pos

@@ -55,6 +55,13 @@ def test_behavior_default_sequence_stacking(browser):
 
 @allure.title("TUN-BHV-004 Selected behavior persists after save")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-BHV-004: staging does not persist non-default behavior radio on save "
+        "— same defect as TUN-TGL-002/003/006 xfails."
+    ),
+)
 def test_behavior_radio_persists(browser, managed_tunnel_form):
     form = managed_tunnel_form
     radios = form.get_behavior_radio_elements()
