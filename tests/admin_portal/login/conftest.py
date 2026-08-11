@@ -5,6 +5,10 @@ from pages.admin_portal.login_page import AdminLoginPage
 
 @pytest.fixture
 def login_page(browser):
+    # Auth injection in the browser fixture pre-authenticates the session.
+    # Login tests need an unauthenticated browser — clear state before opening.
+    browser.delete_all_cookies()
+    browser.execute_script("localStorage.clear(); sessionStorage.clear();")
     page = AdminLoginPage(browser)
     page.open()
     page.wait_for_loaded()

@@ -62,9 +62,11 @@ jobs:
               tests/admin_portal/sites
               tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
-          # ~113 tests — wash_packages
+          # ~113 tests — wash_packages; parallel=2: 3 workers caused contention on
+          # shared managed_package record, leading to >240s timeouts under -n 3.
           - name: wash-packages-a
             path: tests/admin_portal/wash_packages
+            parallel: "2"
           # ~44 tests — wash_extras
           - name: wash-packages-b
             path: tests/admin_portal/wash_extras
@@ -109,12 +111,15 @@ jobs:
           - name: people-users
             path: tests/admin_portal/users
           # ~45 tests — employees CRUD (create, edit, edge cases, export)
+          # parallel=2: 3 workers caused contention on shared managed_employee
+          # record, leading to >240s timeouts in edit/edge-case tests under -n 3.
           - name: people-employees-a
             path: >-
               tests/admin_portal/employees/test_employees_create.py
               tests/admin_portal/employees/test_employees_edit.py
               tests/admin_portal/employees/test_employees_edge_cases.py
               tests/admin_portal/employees/test_employees_export.py
+            parallel: "2"
           # ~42 tests — employees read + all shift tests
           - name: people-employees-b
             path: >-
@@ -131,5 +136,5 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: "3"
+      parallel: ${{ matrix.shard.parallel || '3' }}
       timeout_minutes: 120
