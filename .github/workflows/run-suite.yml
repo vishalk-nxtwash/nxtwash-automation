@@ -119,6 +119,16 @@ jobs:
           } > .env
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
 
+      - name: Resolve ChromeDriver path
+        run: |
+          # Use the system ChromeDriver installed by setup-chrome (avoids a
+          # webdriver-manager network check on every xdist worker startup).
+          DRIVER_PATH="$(which chromedriver 2>/dev/null || true)"
+          if [ -n "$DRIVER_PATH" ]; then
+            echo "CHROMEDRIVER_PATH=$DRIVER_PATH" >> "$GITHUB_ENV"
+            echo "Using system ChromeDriver: $DRIVER_PATH"
+          fi
+
       - name: Run tests (headless)
         env:
           HEADLESS: "1"
@@ -136,7 +146,7 @@ jobs:
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
           mkdir -p reports/allure-results reports/screenshots reports/logs
-          pytest $marker_arg ${TEST_PATH} $xdist \
+          pytest $marker_arg ${TEST_PATH} $xdist --dist=loadfile \
             --headless \
             --alluredir=reports/allure-results \
             --html=reports/report.html --self-contained-html \

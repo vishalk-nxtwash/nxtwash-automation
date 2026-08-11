@@ -65,6 +65,9 @@ class DriverFactory:
             options.add_argument("--mute-audio")
             options.add_argument("--no-first-run")
             options.add_argument("--safebrowsing-disable-auto-update")
+            options.add_argument("--disable-sync")
+            options.add_argument("--disable-notifications")
+            options.add_argument("--log-level=3")
         elif detach:
             # Keep the browser open after script execution (local debugging).
             options.add_experimental_option("detach", True)
