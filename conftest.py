@@ -7,7 +7,7 @@ import shutil
 import pytest
 
 # Re-export the browser fixture so every test can request `browser`.
-from fixtures.browser import browser  # noqa: F401
+from fixtures.browser import browser, _worker_auth_state  # noqa: F401
 
 try:  # Allure is optional; failure artifacts still land on disk without it.
     import allure
