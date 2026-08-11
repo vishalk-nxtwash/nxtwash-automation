@@ -1,7 +1,9 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING, SHARDED across parallel runners.
-# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling.
+# Each GitHub runner has 2 vCPUs. Browser tests are IO-bound (waiting for DOM
+# renders / network) so -n 3 outperforms -n 2 despite the core count — the 3rd
+# worker runs while the other two are blocked on IO.
 # Splitting across parallel runners (one per shard) brings wall-clock down to
 # ~the slowest shard.
 # Trigger: manual dispatch only (workflow_dispatch).
@@ -16,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 17 shards run fully in parallel — each shard runs all tests in its modules
+  # 20 shards run fully in parallel — each shard runs all tests in its modules
   # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
     if: github.ref == 'refs/heads/staging'
@@ -36,12 +38,14 @@ jobs:
           # 83 tests — general_sales_report
           - name: reports-revenue-b
             path: tests/admin_portal/general_sales_report
-          # 151 tests — cash_report + card_declines + transactions
-          - name: reports-financial
+          # ~140 tests — cash_report + card_declines
+          - name: reports-financial-a
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
-              tests/admin_portal/transactions
+          # ~122 tests — transactions
+          - name: reports-financial-b
+            path: tests/admin_portal/transactions
           # 86 tests — labor_shifts
           - name: reports-ops-a
             path: tests/admin_portal/labor_shifts
@@ -58,11 +62,12 @@ jobs:
               tests/admin_portal/sites
               tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
-          # 157 tests — wash_packages + wash_extras
-          - name: wash-packages
-            path: >-
-              tests/admin_portal/wash_packages
-              tests/admin_portal/wash_extras
+          # ~113 tests — wash_packages
+          - name: wash-packages-a
+            path: tests/admin_portal/wash_packages
+          # ~44 tests — wash_extras
+          - name: wash-packages-b
+            path: tests/admin_portal/wash_extras
           # 127 tests — wash_books + coupon_packages
           - name: wash-catalog
             path: >-
@@ -126,5 +131,5 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: "2"
+      parallel: "3"
       timeout_minutes: 120
