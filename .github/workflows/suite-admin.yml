@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 22 shards run fully in parallel — each shard runs all tests in its modules
+  # 24 shards run fully in parallel — each shard runs all tests in its modules
   # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
     if: github.ref == 'refs/heads/staging'
@@ -114,9 +114,30 @@ jobs:
             path: tests/admin_portal/customers
           # ── Hardware Settings ─────────────────────────────────────────────
           # Split from 117-test settings-hw (was 44m wall-clock bottleneck).
-          # ~73 tests — kiosk_settings (complex iframe flows, inherently slow)
-          - name: settings-kiosk
-            path: tests/admin_portal/kiosk_settings
+          # kiosk further split because 73 tests at 35m was the new bottleneck.
+          # ~36 tests — kiosk CRUD: create, edit, list, search, filter, edge cases
+          - name: settings-kiosk-a
+            path: >-
+              tests/admin_portal/kiosk_settings/test_kiosk_create.py
+              tests/admin_portal/kiosk_settings/test_kiosk_edit.py
+              tests/admin_portal/kiosk_settings/test_kiosk_list.py
+              tests/admin_portal/kiosk_settings/test_kiosk_search.py
+              tests/admin_portal/kiosk_settings/test_kiosk_filter.py
+              tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py
+              tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py
+          # ~37 tests — kiosk settings panels (device, fleet, flow, gate, etc.)
+          - name: settings-kiosk-b
+            path: >-
+              tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py
+              tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py
+              tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py
           # ~44 tests — tunnel_settings
           - name: settings-tunnel
             path: tests/admin_portal/tunnel_settings
