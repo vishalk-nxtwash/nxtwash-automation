@@ -3,7 +3,8 @@ name: Admin Suite (staging)
 # Full admin-portal suite against STAGING, SHARDED across parallel runners.
 # Each GitHub runner has 2 vCPUs. Browser tests are IO-bound (waiting for DOM
 # renders / network) so -n 3 outperforms -n 2 despite the core count — the 3rd
-# worker runs while the other two are blocked on IO.
+# worker runs while the other two are blocked on IO. Read-only report shards
+# use -n 4 for the same reason (no data-mutation contention risk).
 # Splitting across parallel runners (one per shard) brings wall-clock down to
 # ~the slowest shard.
 # Trigger: manual dispatch only (workflow_dispatch).
@@ -18,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 20 shards run fully in parallel — each shard runs all tests in its modules
+  # 22 shards run fully in parallel — each shard runs all tests in its modules
   # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
     if: github.ref == 'refs/heads/staging'
@@ -27,38 +28,50 @@ jobs:
       matrix:
         shard:
           # ── Reports (read-only, fully parallel-safe) ──────────────────────
+          # parallel=4: report shards never mutate data so contention-free;
+          # 4 IO-bound workers outperform 3 on 2-vCPU runners.
           # 139 tests — overview + performance_metrics
           - name: reports-overview
             path: >-
               tests/admin_portal/overview
               tests/admin_portal/performance_metrics
+            parallel: "4"
           # 100 tests — revenue_overview
           - name: reports-revenue-a
             path: tests/admin_portal/revenue_overview
+            parallel: "4"
           # 83 tests — general_sales_report
           - name: reports-revenue-b
             path: tests/admin_portal/general_sales_report
+            parallel: "4"
           # ~140 tests — cash_report + card_declines
           - name: reports-financial-a
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
+            parallel: "4"
           # ~122 tests — transactions
           - name: reports-financial-b
             path: tests/admin_portal/transactions
+            parallel: "4"
           # 86 tests — labor_shifts
           - name: reports-ops-a
             path: tests/admin_portal/labor_shifts
+            parallel: "4"
           # ~91 tests — redemptions + wash_activity
           - name: reports-ops-b
             path: >-
               tests/admin_portal/redemptions
               tests/admin_portal/wash_activity
-          # ── Auth & Core (run early; downstream modules depend on this data) ─
-          # 131 tests — login + sites + service_categories
-          - name: auth-core
+            parallel: "4"
+          # ── Auth & Core ───────────────────────────────────────────────────
+          # Split from single 131-test auth-core shard to reduce wall-clock.
+          # ~25 tests — login only (auth injection cleared per-test here)
+          - name: auth-login
+            path: tests/admin_portal/login
+          # ~106 tests — sites + service_categories
+          - name: auth-sites
             path: >-
-              tests/admin_portal/login
               tests/admin_portal/sites
               tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
@@ -70,11 +83,13 @@ jobs:
           # ~44 tests — wash_extras
           - name: wash-packages-b
             path: tests/admin_portal/wash_extras
-          # 127 tests — wash_books + coupon_packages
-          - name: wash-catalog
-            path: >-
-              tests/admin_portal/wash_books
-              tests/admin_portal/coupon_packages
+          # Split from single 127-test wash-catalog shard to reduce wall-clock.
+          # ~63 tests — wash_books
+          - name: wash-catalog-a
+            path: tests/admin_portal/wash_books
+          # ~64 tests — coupon_packages
+          - name: wash-catalog-b
+            path: tests/admin_portal/coupon_packages
           # ── Services & Finance ────────────────────────────────────────────
           # 122 tests — custom_services + gift_cards + bank_drop
           - name: services
