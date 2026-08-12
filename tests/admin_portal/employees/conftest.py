@@ -125,7 +125,10 @@ def create_employee_if_missing(
     page = open_employees_page(browser)
 
     if page.employee_exists(last_name, timeout=30):
-        form = open_edit_employee_form(browser, last_name)
+        # employee_exists already searched — row is visible, click edit directly.
+        page.click_edit_for_visible_employee(last_name)
+        form = AdminEmployeeFormPage(browser)
+        form.wait_for_edit_loaded()
         form.enter_first_name(first_name)
         form.enter_last_name(last_name)
         form.enter_email(email)
@@ -149,14 +152,19 @@ def create_employee_if_missing(
 
     if renamed_found:
         try:
-            form = open_edit_employee_form(browser, UPDATED_LAST_NAME)
+            # Row already visible from the search above — click edit directly.
+            page.click_edit_for_visible_employee(UPDATED_LAST_NAME)
+            form = AdminEmployeeFormPage(browser)
+            form.wait_for_edit_loaded()
         except Exception:
             # Another parallel worker renamed it back between our 10 s row-check
             # and this open attempt.  Re-verify under the canonical name so we
             # don't fall into the create path and hit a duplicate-email error.
             page = open_employees_page(browser)
             if page.employee_exists(last_name, timeout=30):
-                form = open_edit_employee_form(browser, last_name)
+                page.click_edit_for_visible_employee(last_name)
+                form = AdminEmployeeFormPage(browser)
+                form.wait_for_edit_loaded()
             else:
                 renamed_found = False
         if renamed_found:

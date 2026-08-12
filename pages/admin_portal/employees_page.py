@@ -181,6 +181,20 @@ class AdminEmployeesPage(BasePage):
                 if _attempt == 2:
                     raise
 
+    def click_edit_for_visible_employee(self, last_name):
+        """Click Edit on a row already visible after a search — skips re-navigation."""
+        from selenium.common.exceptions import StaleElementReferenceException
+        for _attempt in range(3):
+            try:
+                row = self.wait_for_employee_row(last_name, timeout=10)
+                edit_link = row.find_element(By.XPATH,
+                    ".//a[@role='button' and .//span[normalize-space()='Edit']]")
+                self.driver.execute_script("arguments[0].click();", edit_link)
+                return
+            except StaleElementReferenceException:
+                if _attempt == 2:
+                    raise
+
     def filter_panel_is_open(self):
         els = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
         try:
