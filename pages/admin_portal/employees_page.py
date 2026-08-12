@@ -126,7 +126,7 @@ class AdminEmployeesPage(BasePage):
             )
         return self.wait.until(EC.presence_of_element_located(locator))
 
-    def employee_exists(self, last_name):
+    def employee_exists(self, last_name, timeout=120):
         # Reset filters so inactive employees are visible — required if a previous
         # test deactivated the record and the default list shows active-only.
         try:
@@ -135,7 +135,7 @@ class AdminEmployeesPage(BasePage):
             pass
         self.search_employee(last_name)
         try:
-            self.wait_for_employee_row(last_name, timeout=120)
+            self.wait_for_employee_row(last_name, timeout=timeout)
             return True
         except TimeoutException:
             return False

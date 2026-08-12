@@ -124,7 +124,7 @@ def create_employee_if_missing(
 
     page = open_employees_page(browser)
 
-    if page.employee_exists(last_name):
+    if page.employee_exists(last_name, timeout=30):
         form = open_edit_employee_form(browser, last_name)
         form.enter_first_name(first_name)
         form.enter_last_name(last_name)
@@ -155,7 +155,7 @@ def create_employee_if_missing(
             # and this open attempt.  Re-verify under the canonical name so we
             # don't fall into the create path and hit a duplicate-email error.
             page = open_employees_page(browser)
-            if page.employee_exists(last_name):
+            if page.employee_exists(last_name, timeout=30):
                 form = open_edit_employee_form(browser, last_name)
             else:
                 renamed_found = False

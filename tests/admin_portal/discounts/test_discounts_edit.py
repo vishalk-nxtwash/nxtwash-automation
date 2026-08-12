@@ -147,9 +147,9 @@ def test_edit_discount_all_to_selected_locations(managed_discount):
 
     page.open_edit_discount(MANAGED_DISCOUNT)
     page.ensure_all_locations_switch_off()
-    page.assign_location_by_index(0)
     page.set_location_discount_value_by_index(0, DISCOUNT_AMOUNT)
     page.select_location_discount_type_by_index(0, "Amount")
+    page.assign_location_by_index(0)
     page.click_save_discount()
     page.wait_for_list_loaded()
     page.open_edit_discount(MANAGED_DISCOUNT)
