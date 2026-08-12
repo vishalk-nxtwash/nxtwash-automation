@@ -603,8 +603,14 @@ class DiscountsPage(BasePage):
         )
 
         if not self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: self.row_checkbox_is_checked(checkbox))
+            ActionChains(self.driver).move_to_element(checkbox).click(checkbox).perform()
+            self.wait.until(lambda driver: self.row_checkbox_is_checked(
+                rows[row_index].find_element(
+                    By.XPATH,
+                    ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+                    "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+                )
+            ))
 
     def location_is_assigned_by_index(self, row_index):
         """Return whether one visible location row is assigned."""
@@ -1012,5 +1018,11 @@ class DiscountsPage(BasePage):
             "and contains(@class,'InovuaReactDataGrid__checkbox')]"
         )
         if self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))
+            ActionChains(self.driver).move_to_element(checkbox).click(checkbox).perform()
+            self.wait.until(lambda driver: not self.row_checkbox_is_checked(
+                rows[row_index].find_element(
+                    By.XPATH,
+                    ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+                    "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+                )
+            ))

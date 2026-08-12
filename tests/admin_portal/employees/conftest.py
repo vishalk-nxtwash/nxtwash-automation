@@ -205,7 +205,8 @@ def create_employee_if_missing(
     # (most common cause: duplicate email).  In that case the employee already
     # exists — the earlier employee_exists call timed out because staging's
     # InovuaReactDataGrid is slow, not because the record is absent.
-    if browser.current_url == url_before:
+    duplicate = browser.current_url == url_before
+    if duplicate:
         import logging
         logging.getLogger("nxtwash").warning(
             "Employee create did not navigate away — assuming duplicate; "
@@ -219,7 +220,9 @@ def create_employee_if_missing(
     except Exception:
         pass
     page.search_employee(last_name)
-    page.wait_for_employee_row(last_name, timeout=180)
+    # Duplicate path: record already exists so it should appear quickly.
+    # Full create path: allow longer for the grid to refresh after a real save.
+    page.wait_for_employee_row(last_name, timeout=60 if duplicate else 120)
     return page
 
 
