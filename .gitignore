@@ -11,6 +11,8 @@ reports/allure-results/
 reports/allure-report/
 reports/screenshots/
 reports/logs/
+reports/runs/
+reports/*.txt
 
 # Keep the reports/ directory itself and its placeholder files in git.
 !reports/.gitkeep
