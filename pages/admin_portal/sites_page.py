@@ -273,37 +273,42 @@ class SitesPage(BasePage):
 
     def get_site_summary_with_api(self, site_name):
         """Return a site summary by exact name from the authenticated session."""
-        result = self.driver.execute_async_script(
-            self._api_script("""
-            const siteName = arguments[0];
-            const done = arguments[arguments.length - 1];
-            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
-            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
-            const authKey = _la.key ? JSON.parse(_la.key) : "";
-            const params = new URLSearchParams({
-                key: authKey,
-                pageSize: "500",
-                pageNumber: "1"
-            });
+        original_timeout = self.driver.timeouts.script
+        self.driver.set_script_timeout(120)
+        try:
+            result = self.driver.execute_async_script(
+                self._api_script("""
+                const siteName = arguments[0];
+                const done = arguments[arguments.length - 1];
+                const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+                const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+                const authKey = _la.key ? JSON.parse(_la.key) : "";
+                const params = new URLSearchParams({
+                    key: authKey,
+                    pageSize: "500",
+                    pageNumber: "1"
+                });
 
-            fetch(API_BASE + "/api/sites?" + params, {
-                headers: {
-                    accept: "application/json",
-                    authorization: "Bearer " + accessToken
-                }
-            })
-                .then((response) => response.json())
-                .then((body) => {
-                    const sites = body.data || [];
-                    const site = sites.find(
-                        (item) => item.siteName === siteName
-                    );
-                    done(site || null);
+                fetch(API_BASE + "/api/sites?" + params, {
+                    headers: {
+                        accept: "application/json",
+                        authorization: "Bearer " + accessToken
+                    }
                 })
-                .catch((error) => done({ error: String(error) }));
-            """),
-            site_name
-        )
+                    .then((response) => response.json())
+                    .then((body) => {
+                        const sites = body.data || [];
+                        const site = sites.find(
+                            (item) => item.siteName === siteName
+                        );
+                        done(site || null);
+                    })
+                    .catch((error) => done({ error: String(error) }));
+                """),
+                site_name
+            )
+        finally:
+            self.driver.set_script_timeout(original_timeout)
 
         if isinstance(result, dict) and result.get("error"):
             raise AssertionError(result["error"])

@@ -27,8 +27,8 @@
   "customer_wash_book": {
     "number":           "AWB-AUTO-002",
     "updated_number":   "AWB-AUTO-002-U",
-    "number_of_washes": "8",
-    "updated_washes":   "10"
+    "number_of_washes": "11",
+    "updated_washes":   "8"
   },
   "search": {
     "nonexistent": "wash-book-does-not-exist-automation"

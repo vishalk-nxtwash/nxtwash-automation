@@ -373,10 +373,16 @@ class AdminEmployeeFormPage(BasePage):
         """, element, value)
 
     def enter_first_name(self, name):
-        self.enter_text(self.FIRST_NAME_INPUT, name)
+        el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(name)
 
     def enter_last_name(self, name):
-        self.enter_text(self.LAST_NAME_INPUT, name)
+        el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(name)
 
     def clear_first_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
