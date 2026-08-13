@@ -9,7 +9,7 @@
 #   - The fixture is self-healing: if a previous run left the name in a
 #     changed state (e.g. "auto customer1 edited"), it will restore it.
 
-SLOT = 2
+SLOT = 3
 
 CUSTOMER_FIRST = "vk test"
 CUSTOMER_LAST = f"auto customer{SLOT}"
