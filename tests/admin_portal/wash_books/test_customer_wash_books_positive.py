@@ -12,6 +12,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Books"),
     allure.story("Customer Wash Books — Create"),
+    pytest.mark.xdist_group(name="managed_cwb"),
 ]
 
 
