@@ -186,7 +186,6 @@ def create_employee_if_missing(
     form.ensure_active_switch_on()
     # Optional fields — wrapped so a missing input doesn't abort the whole setup
     try:
-        from pages.admin_portal.employees_page import AdminEmployeeFormPage
         from selenium.webdriver.support import expected_conditions as EC
         el = form.wait.until(
             EC.presence_of_element_located(AdminEmployeeFormPage.HIRE_DATE_INPUT)
