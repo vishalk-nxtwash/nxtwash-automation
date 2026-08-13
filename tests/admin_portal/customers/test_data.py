@@ -9,12 +9,12 @@
 #   - The fixture is self-healing: if a previous run left the name in a
 #     changed state (e.g. "auto customer1 edited"), it will restore it.
 
-SLOT = 3
+SLOT = 4
 
 CUSTOMER_FIRST = "vk test"
 CUSTOMER_LAST = f"auto customer{SLOT}"
 CUSTOMER_EMAIL = f"vktestcust{SLOT}@yopmail.com"
-CUSTOMER_PHONE = "1001001"
+CUSTOMER_PHONE = "1111111111"
 CUSTOMER_SITE = "Vk AL01"
 CUSTOMER_DOB = "2026-07-01"
 CUSTOMER_ADDRESS = "Vk test cust 1 test address"

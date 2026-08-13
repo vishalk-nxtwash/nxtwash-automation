@@ -118,6 +118,7 @@ run_shard() {
     # shellcheck disable=SC2086
     "$PYTEST" "$@" \
         $HEADLESS_FLAG \
+        -n 2 \
         --override-ini="addopts=-v --strict-markers --timeout=420 --timeout-method=signal" \
         --alluredir="$allure_dir" \
         --junit-xml="$junit" \
