@@ -408,12 +408,12 @@ class CustomersPage(BasePage):
         self._react_clear_and_type(self.LICENSE_PLATE_SEARCH, plate)
 
     def search_by_phone(self, phone):
-        # tel inputs reformat the value (e.g. 1001001 → (100) 100-1),
-        # so we can't use _react_clear_and_type which waits for exact value match.
+        # Use JS-based value setter so React's onChange fires reliably in CI.
+        # We do not wait for exact value match because tel inputs reformat digits
+        # (e.g. "1001001" → "(100) 100-1") while React still filters on the raw value.
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_SEARCH))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        el.send_keys(phone)
+        self._set_input_value(el, phone)
         time.sleep(0.4)
         self._wait_for_grid_idle()
 

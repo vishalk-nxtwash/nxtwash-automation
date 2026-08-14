@@ -462,12 +462,15 @@ class AdminEmployeeFormPage(BasePage):
                 self.LOCATIONS_COMBOBOX, name, clear_first=False
             )
         # React Select multi-select keeps the dropdown open after each selection.
-        # Press Escape to close it — more reliable than JS-clicking elsewhere
-        # because Escape fires through ActionChains (real browser event), whereas
-        # element.click() via JS doesn't trigger the document-level blur/close
-        # handler that React Select registers.
+        # Press Escape to close it, then wait for the options portal to leave the
+        # DOM — a blind sleep is not enough when 133+ location options are rendered.
         ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
-        time.sleep(0.5)
+        try:
+            WebDriverWait(self.driver, 8).until(
+                EC.invisibility_of_element_located((By.XPATH, "//*[@role='option']"))
+            )
+        except Exception:
+            time.sleep(0.5)
 
     def remove_all_locations(self):
         """Remove all selected location chips by clicking their X buttons."""
@@ -535,7 +538,12 @@ class AdminEmployeeFormPage(BasePage):
         # Dismiss any open dropdown portal before clicking Save — the portal can
         # be positioned over the Save button and intercept the ActionChains click.
         ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
-        time.sleep(0.3)
+        try:
+            WebDriverWait(self.driver, 8).until(
+                EC.invisibility_of_element_located((By.XPATH, "//*[@role='option']"))
+            )
+        except Exception:
+            time.sleep(0.3)
         el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].scrollIntoView(true);", el)
         ActionChains(self.driver).move_to_element(el).click().perform()

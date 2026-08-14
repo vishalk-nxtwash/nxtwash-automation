@@ -103,6 +103,17 @@ def create_customer_wash_book_if_missing(
     page = open_customer_wash_books_page(browser)
 
     if page.cwb_exists(wash_book_number):
+        # Verify wash count matches the constant — prior CI runs may have created
+        # the record with a different value, causing assertion failures downstream.
+        actual = page.get_cwb_number_of_washes_from_row(wash_book_number)
+        if actual == str(CWB_NUMBER_OF_WASHES):
+            return page
+        # Wrong count — update the record so tests see the expected value.
+        page.open_edit_cwb(wash_book_number)
+        page.set_cwb_number_of_washes(CWB_NUMBER_OF_WASHES)
+        page.click_save_cwb()
+        page.wait_for_cwb_list_loaded()
+        page.search_cwb(wash_book_number)
         return page
 
     page.create_customer_wash_book(

@@ -193,6 +193,11 @@ def test_discount_add_location_to_existing(managed_discount):
     if len(rows) < 2:
         pytest.skip("Only one location available — cannot test adding a second")
 
+    # Capture names before modifying — server may reorder rows on reload so
+    # index-based checks after save are unreliable with 133+ locations.
+    loc_0_name = rows[0].text.splitlines()[0].strip()
+    loc_1_name = rows[1].text.splitlines()[0].strip()
+
     page.assign_location_by_index(0)
     if not page.location_is_assigned_by_index(1):
         page.assign_location_by_index(1)
@@ -203,4 +208,7 @@ def test_discount_add_location_to_existing(managed_discount):
     page.wait_for_list_loaded()
     page.open_edit_discount(MANAGED_DISCOUNT)
 
-    assert page.location_is_assigned_by_index(0) or page.location_is_assigned_by_index(1)
+    assert (
+        page.location_is_assigned_by_name(loc_0_name)
+        or page.location_is_assigned_by_name(loc_1_name)
+    )
