@@ -452,25 +452,31 @@ class AdminEmployeeFormPage(BasePage):
     def assign_location(self, site_name):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
 
+    def _close_locations_dropdown(self):
+        # Send Escape to the combobox's inner input, not document.body.
+        # ActionChains.send_keys(ESCAPE) without a focused target misses the
+        # React Select handler. Wait for aria-expanded=false to confirm closure.
+        try:
+            combobox = self.driver.find_element(*self.LOCATIONS_COMBOBOX)
+            if combobox.get_attribute("aria-expanded") == "true":
+                inner = combobox.find_elements(By.XPATH, ".//input")
+                (inner[0] if inner else combobox).send_keys(Keys.ESCAPE)
+                WebDriverWait(self.driver, 8).until(
+                    lambda d: d.find_element(*self.LOCATIONS_COMBOBOX)
+                    .get_attribute("aria-expanded") in (None, "false")
+                )
+        except Exception:
+            time.sleep(0.3)
+
     def assign_locations(self, site_names):
         # Use clear_first=False so CTRL+A+DEL doesn't wipe previously-selected
         # chips — in a multi-select React Select the input auto-clears between
         # selections, so we only need to clear the very first call (or not at all).
-        from selenium.webdriver.common.action_chains import ActionChains
         for name in site_names:
             self.select_react_dropdown_option(
                 self.LOCATIONS_COMBOBOX, name, clear_first=False
             )
-        # React Select multi-select keeps the dropdown open after each selection.
-        # Press Escape to close it, then wait for the options portal to leave the
-        # DOM — a blind sleep is not enough when 133+ location options are rendered.
-        ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
-        try:
-            WebDriverWait(self.driver, 8).until(
-                EC.invisibility_of_element_located((By.XPATH, "//*[@role='option']"))
-            )
-        except Exception:
-            time.sleep(0.5)
+        self._close_locations_dropdown()
 
     def remove_all_locations(self):
         """Remove all selected location chips by clicking their X buttons."""
@@ -535,15 +541,8 @@ class AdminEmployeeFormPage(BasePage):
     def click_save(self):
         import logging
         from selenium.webdriver.common.action_chains import ActionChains
-        # Dismiss any open dropdown portal before clicking Save — the portal can
-        # be positioned over the Save button and intercept the ActionChains click.
-        ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
-        try:
-            WebDriverWait(self.driver, 8).until(
-                EC.invisibility_of_element_located((By.XPATH, "//*[@role='option']"))
-            )
-        except Exception:
-            time.sleep(0.3)
+        # Dismiss any open Locations dropdown before clicking Save.
+        self._close_locations_dropdown()
         el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].scrollIntoView(true);", el)
         ActionChains(self.driver).move_to_element(el).click().perform()

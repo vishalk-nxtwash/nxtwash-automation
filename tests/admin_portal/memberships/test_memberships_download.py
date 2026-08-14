@@ -25,8 +25,13 @@ def wait_for_membership_download(browser, download_dir, memberships_page):
     memberships_page.click_download_memberships()
 
     LOG.info("Waiting for membership export download")
+    # Wait for a new non-zero-byte file — the file may transiently be 0 bytes
+    # immediately after the .crdownload extension is removed.
     WebDriverWait(browser, 20).until(
-        lambda driver: len(set(completed_downloads(download_dir)) - before_files) > 0
+        lambda driver: any(
+            f.stat().st_size > 0
+            for f in (set(completed_downloads(download_dir)) - before_files)
+        )
     )
 
     return set(completed_downloads(download_dir)) - before_files

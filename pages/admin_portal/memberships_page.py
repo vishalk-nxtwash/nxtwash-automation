@@ -1125,10 +1125,15 @@ class MembershipsPage(BasePage):
         (trusted) mouse event is reliable for both checked and unchecked rows
         and correctly propagates through Inovua → React Hook Form onChange.
         """
+        # 'center' scrolls ALL ancestor scroll containers (including the window),
+        # not just the nearest one. With 136+ locations the Inovua grid can be
+        # partially off-screen, leaving the checkbox outside viewport bounds for
+        # ActionChains even though it's visible inside the grid's scroll container.
         self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'nearest'});",
+            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
             checkbox,
         )
+        time.sleep(0.2)
         ActionChains(self.driver).move_to_element(checkbox).click().perform()
 
     def assign_location_by_index_with_price_and_commission(
