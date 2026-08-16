@@ -388,9 +388,21 @@ class GiftCardsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
         )
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(str(amount))
+        # Ctrl+A is readline "go to line start" on macOS, not select-all.
+        # Use JS native setter so the field is cleared cross-platform.
+        self.driver.execute_script(
+            """
+            var input = arguments[0]; var value = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', {bubbles: true}));
+            input.dispatchEvent(new Event('change', {bubbles: true}));
+            """,
+            element,
+            str(amount),
+        )
 
     def enter_landing_page_code(self, landing_page_code):
         """Enter landing page code."""

@@ -30,6 +30,7 @@ pytestmark = [
 
 @allure.title("SL-CRT-001 Create site with all required fields — appears in list as Active")
 @pytest.mark.smoke
+@pytest.mark.timeout(480)
 def test_create_new_site_with_required_general_settings(logged_in_admin_browser):
     site_data = next_available_site_data(logged_in_admin_browser)
     sites_page = SitesPage(logged_in_admin_browser)

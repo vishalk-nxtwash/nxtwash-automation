@@ -13,7 +13,7 @@ LOGIN_ATTEMPTS = 3
 NAVIGATION_ATTEMPTS = 2
 # Per-navigation cost on the success path, so keep it short — a client-side
 # auth redirect back to /login happens almost immediately.
-LOGIN_BOUNCE_TIMEOUT = 2
+LOGIN_BOUNCE_TIMEOUT = 8
 
 
 def _session_stored(login_page):

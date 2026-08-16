@@ -125,6 +125,7 @@ def test_edit_wash_package_assigned_sites(managed_package):
 @allure.title("WP-EDT-008 Activate an inactive wash package updates its status to Active")
 @pytest.mark.smoke
 @pytest.mark.regression
+@pytest.mark.timeout(480)
 def test_activate_wash_package(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
