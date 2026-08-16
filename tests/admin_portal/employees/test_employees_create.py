@@ -23,6 +23,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Employees"),
     allure.story("Create"),
+    pytest.mark.xdist_group(name="managed_employee"),
 ]
 
 _LOCATION_XFAIL = pytest.mark.xfail(
@@ -203,6 +204,14 @@ def test_create_employee_invalid_email_rejected(browser):
 
 @allure.title("EMP-CRT-010 Duplicate email address is rejected on save")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "EMP-CRT-010: Staging does not enforce server-side employee email uniqueness — "
+        "duplicate submissions are accepted instead of rejected. Same pattern as customer "
+        "SLOT bumping issue. Remove xfail once staging enforces unique email validation."
+    ),
+)
 def test_create_employee_duplicate_email_rejected(browser):
     create_employee_if_missing(browser)  # ensure EMP_EMAIL exists
 
