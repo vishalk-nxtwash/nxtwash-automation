@@ -172,7 +172,6 @@ class WashBooksPage(BasePage):
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
         self.switch_to_frame_with_retry(self.LIST_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
         self.wait_for_grid_idle()
 
