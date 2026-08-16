@@ -36,6 +36,7 @@ def test_wash_package_required_name_validation(browser):
 
 @allure.title("WP-NAM-003 Duplicate wash package name is blocked")
 @pytest.mark.regression
+@pytest.mark.xdist_group(name="managed_wp")
 def test_create_duplicate_wash_package_is_blocked(browser):
     create_wash_package_if_missing(browser)
     page = open_wash_packages_page(browser)

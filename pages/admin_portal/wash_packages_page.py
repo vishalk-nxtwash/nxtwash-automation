@@ -138,8 +138,12 @@ class WashPackagesPage(BasePage):
         self.wait.until(lambda driver: self.get_service_name_value() != "")
 
     def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
+        """Get visible text inside the current iframe, falling back to outer shell on detach."""
+        try:
+            return self.driver.find_element(By.TAG_NAME, "body").text
+        except Exception:
+            self.driver.switch_to.default_content()
+            return self.driver.find_element(By.TAG_NAME, "body").text
 
     def search_input_is_visible(self):
         """Return whether the package search input is visible."""
