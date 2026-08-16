@@ -14,6 +14,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Employees"),
     allure.story("Shift — Edit"),
+    pytest.mark.xdist_group(name="managed_employee"),
 ]
 
 _SHIFT_EDIT_XFAIL = pytest.mark.xfail(

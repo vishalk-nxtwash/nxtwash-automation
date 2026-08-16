@@ -13,6 +13,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Employees"),
     allure.story("Shift — List & Search"),
+    pytest.mark.xdist_group(name="managed_employee"),
 ]
 
 _COLUMNS_XFAIL = pytest.mark.xfail(

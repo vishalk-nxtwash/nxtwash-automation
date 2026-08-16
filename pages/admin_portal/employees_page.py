@@ -453,18 +453,21 @@ class AdminEmployeeFormPage(BasePage):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
 
     def _close_locations_dropdown(self):
-        # Send Escape to the combobox's inner input, not document.body.
-        # ActionChains.send_keys(ESCAPE) without a focused target misses the
-        # React Select handler. Wait for aria-expanded=false to confirm closure.
+        # aria-expanded on the combobox container is unreliable in this version of
+        # React Select — always send Escape unconditionally, then click First Name
+        # to force a blur and guarantee the portal is gone before Save is clicked.
         try:
             combobox = self.driver.find_element(*self.LOCATIONS_COMBOBOX)
-            if combobox.get_attribute("aria-expanded") == "true":
-                inner = combobox.find_elements(By.XPATH, ".//input")
-                (inner[0] if inner else combobox).send_keys(Keys.ESCAPE)
-                WebDriverWait(self.driver, 8).until(
-                    lambda d: d.find_element(*self.LOCATIONS_COMBOBOX)
-                    .get_attribute("aria-expanded") in (None, "false")
-                )
+            inner = combobox.find_elements(By.XPATH, ".//input")
+            (inner[0] if inner else combobox).send_keys(Keys.ESCAPE)
+        except Exception:
+            pass
+        try:
+            self.driver.execute_script(
+                "arguments[0].click();",
+                self.driver.find_element(*self.FIRST_NAME_INPUT)
+            )
+            time.sleep(0.3)
         except Exception:
             time.sleep(0.3)
 
