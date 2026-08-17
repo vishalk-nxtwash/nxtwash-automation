@@ -48,6 +48,12 @@ on:
       SUPERADMIN_PASSWORD:
         description: "Superadmin login password"
         required: false
+      PROD_ADMIN_USERNAME:
+        description: "Production admin portal username (required when environment=production)"
+        required: false
+      PROD_ADMIN_PASSWORD:
+        description: "Production admin portal password (required when environment=production)"
+        required: false
 
 jobs:
   run:
@@ -80,6 +86,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
+        continue-on-error: true
 
       # Java is required by the Allure CLI used to render the HTML report.
       - name: Set up Java
@@ -106,14 +113,20 @@ jobs:
 
       - name: Write .env from secrets
         env:
-          ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
-          ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
+          # Production uses dedicated prod secrets; staging uses the default pair.
+          _ADMIN_USER: ${{ inputs.environment == 'production' && secrets.PROD_ADMIN_USERNAME || secrets.ADMIN_PORTAL_USERNAME }}
+          _ADMIN_PASS: ${{ inputs.environment == 'production' && secrets.PROD_ADMIN_PASSWORD || secrets.ADMIN_PORTAL_PASSWORD }}
           SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
           SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
         run: |
+          # Guard: prod run must have prod creds explicitly set.
+          if [ "${{ inputs.environment }}" = "production" ] && [ -z "$_ADMIN_USER" ]; then
+            echo "::error::PROD_ADMIN_USERNAME secret is not set. Add it to the repo secrets before running prod smoke."
+            exit 1
+          fi
           {
-            printf 'ADMIN_PORTAL_USERNAME=%s\n' "$ADMIN_PORTAL_USERNAME"
-            printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$ADMIN_PORTAL_PASSWORD"
+            printf 'ADMIN_PORTAL_USERNAME=%s\n' "$_ADMIN_USER"
+            printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$_ADMIN_PASS"
             [ -n "$SUPERADMIN_USERNAME" ] && printf 'SUPERADMIN_USERNAME=%s\n' "$SUPERADMIN_USERNAME"
             [ -n "$SUPERADMIN_PASSWORD" ] && printf 'SUPERADMIN_PASSWORD=%s\n' "$SUPERADMIN_PASSWORD"
           } > .env

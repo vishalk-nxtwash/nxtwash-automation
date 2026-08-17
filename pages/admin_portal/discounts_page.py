@@ -123,6 +123,13 @@ class DiscountsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Discounts list is visible."""
+        self.driver.switch_to.default_content()
+        # After a save, the edit iframe unmounts before the list iframe mounts.
+        # Waiting for it to vanish first avoids burning the 90s frame-search
+        # budget on iterations where the edit frame is still present.
+        WebDriverWait(self.driver, 30).until(
+            lambda d: not d.find_elements(*self.EDIT_FRAME)
+        )
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
