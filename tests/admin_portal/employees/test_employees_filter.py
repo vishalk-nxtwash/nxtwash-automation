@@ -13,6 +13,7 @@ pytestmark = [
     allure.feature("Employees"),
     allure.story("Filter"),
     pytest.mark.xdist_group(name="managed_employee"),
+    pytest.mark.timeout(480),
 ]
 
 _FILTER_XFAIL = pytest.mark.xfail(

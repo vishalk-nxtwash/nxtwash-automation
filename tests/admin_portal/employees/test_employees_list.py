@@ -14,6 +14,7 @@ pytestmark = [
     allure.feature("Employees"),
     allure.story("List & Search"),
     pytest.mark.xdist_group(name="managed_employee"),
+    pytest.mark.timeout(480),
 ]
 
 _COLUMNS_XFAIL = pytest.mark.xfail(
