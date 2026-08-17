@@ -124,7 +124,7 @@ def create_employee_if_missing(
 
     page = open_employees_page(browser)
 
-    if page.employee_exists(last_name, timeout=30):
+    if page.employee_exists(last_name, timeout=60):
         # employee_exists already searched — row is visible, click edit directly.
         page.click_edit_for_visible_employee(last_name)
         form = AdminEmployeeFormPage(browser)
@@ -161,7 +161,7 @@ def create_employee_if_missing(
             # and this open attempt.  Re-verify under the canonical name so we
             # don't fall into the create path and hit a duplicate-email error.
             page = open_employees_page(browser)
-            if page.employee_exists(last_name, timeout=30):
+            if page.employee_exists(last_name, timeout=60):
                 page.click_edit_for_visible_employee(last_name)
                 form = AdminEmployeeFormPage(browser)
                 form.wait_for_edit_loaded()

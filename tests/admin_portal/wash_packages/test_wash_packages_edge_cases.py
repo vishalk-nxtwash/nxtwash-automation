@@ -12,6 +12,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Edge Cases"),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 

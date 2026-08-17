@@ -16,6 +16,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Search and Filter"),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 

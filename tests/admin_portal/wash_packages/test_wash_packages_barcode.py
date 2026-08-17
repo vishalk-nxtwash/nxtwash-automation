@@ -20,6 +20,8 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Barcode"),
+    pytest.mark.timeout(480),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 
