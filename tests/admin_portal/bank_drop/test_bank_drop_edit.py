@@ -43,6 +43,14 @@ def test_edit_bank_drop_name_persists(managed_edit_bank_drop, browser):
 
 @allure.title("BD-EDT-002 Edit order value persists after save")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BD-EDT-002: parallel worker race — managed_bank_drop restore on another gw "
+        "reverts order to the original value between save and re-read under -n 3. "
+        "Fix: per-worker bank-drop isolation."
+    ),
+)
 def test_edit_bank_drop_order_persists(managed_bank_drop):
 
     new_order = "5"
