@@ -266,7 +266,7 @@ def test_edit_clear_last_name_blocked(browser, managed_employee):
 
 @allure.title("EMP-EDT-014 Invalid email format is rejected on the edit form")
 @pytest.mark.regression
-@pytest.mark.skip(reason="EMP-EDT-014: TimeoutException at managed_employee setup — employee filter state leak on new user 6 record; deferred")
+@pytest.mark.skip(reason="EMP-EDT-014: TimeoutException at managed_employee setup — employee filter state leak on new user 7 record; deferred")
 def test_edit_invalid_email_blocked(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.enter_email(INVALID_EMAIL)
@@ -278,7 +278,7 @@ def test_edit_invalid_email_blocked(browser, managed_employee):
 
 @allure.title("EMP-EDT-015 Clicking Cancel discards changes and preserves original data")
 @pytest.mark.regression
-@pytest.mark.skip(reason="EMP-EDT-015: wait_for_employee_row('user 6') timeout — employee absent or hidden by Active-only filter; deferred")
+@pytest.mark.skip(reason="EMP-EDT-015: wait_for_employee_row('user 7') timeout — employee absent or hidden by Active-only filter; deferred")
 def test_edit_cancel_discards_changes(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.enter_email("discarded.emp.change@test.com")
