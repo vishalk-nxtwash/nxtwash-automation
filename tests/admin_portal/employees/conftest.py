@@ -125,16 +125,9 @@ def create_employee_if_missing(
     page = open_employees_page(browser)
 
     if page.employee_exists(last_name, timeout=30):
-        # employee_exists already searched — row is visible, click edit directly.
-        page.click_edit_for_visible_employee(last_name)
-        form = AdminEmployeeFormPage(browser)
-        form.wait_for_edit_loaded()
-        form.enter_first_name(first_name)
-        form.enter_last_name(last_name)
-        form.enter_email(email)
-        form.enter_phone(phone)
-        form.ensure_active_switch_on()
-        form.click_save()
+        # Employee is active with the canonical last name — nothing to restore.
+        # Re-entering all fields via send_keys corrupts RHF's internal state
+        # and causes headless-CI save failures. Skip the edit/save entirely.
         return open_employees_page(browser)
 
     # Not found under canonical name.  An edit-last-name test may have renamed
@@ -168,10 +161,11 @@ def create_employee_if_missing(
             else:
                 renamed_found = False
         if renamed_found:
-            form.enter_first_name(first_name)
+            # The form loaded all fields from the server — RHF's state is
+            # already correct for email, phone, etc. Only re-enter the last
+            # name (the field EMP-EDT-003 changed); touching other fields via
+            # send_keys would corrupt RHF state and break the headless save.
             form.enter_last_name(last_name)
-            form.enter_email(email)
-            form.enter_phone(phone)
             form.ensure_active_switch_on()
             form.click_save()
             return open_employees_page(browser)
@@ -230,6 +224,23 @@ def create_employee_if_missing(
     # Duplicate path: record already exists so it should appear quickly.
     # Full create path: allow longer for the grid to refresh after a real save.
     page.wait_for_employee_row(last_name, timeout=60 if duplicate else 120)
+
+    if duplicate:
+        # The employee existed but may have been left inactive by a prior run
+        # (e.g. EMP-EDT-011 deactivated it and the restore save failed).
+        # Open edit now and restore to active. Do NOT re-enter text fields —
+        # the form loads them from the server so RHF's state is already correct;
+        # only ensure_active_switch_on() needs to change anything.
+        try:
+            page.click_edit_for_visible_employee(last_name)
+            restore_form = AdminEmployeeFormPage(browser)
+            restore_form.wait_for_edit_loaded()
+            restore_form.ensure_active_switch_on()
+            restore_form.click_save()
+            page = open_employees_page(browser)
+        except Exception:
+            pass
+
     return page
 
 

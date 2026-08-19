@@ -544,15 +544,19 @@ class AdminEmployeeFormPage(BasePage):
     def click_save(self):
         import logging
         from selenium.webdriver.common.action_chains import ActionChains
-        # Dismiss any open Locations dropdown before clicking Save.
         self._close_locations_dropdown()
         el = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].scrollIntoView(true);", el)
-        ActionChains(self.driver).move_to_element(el).click().perform()
-        # After save the form iframe navigates to the list page, removing all
-        # form elements from the DOM. driver.current_url reflects the outer shell
-        # (unchanged in iframe-based nav), so we detect success by watching the
-        # First Name input disappear instead.
+        # Primary: requestSubmit() fires the browser's native submit event
+        # which React Hook Form hooks into via its onSubmit handler.
+        # More reliable than synthetic mouse events in headless Chrome.
+        had_form = self.driver.execute_script(
+            "var f=arguments[0].closest('form');"
+            "if(f){f.requestSubmit(arguments[0]);return true;}return false;",
+            el,
+        )
+        if not had_form:
+            ActionChains(self.driver).move_to_element(el).click().perform()
         try:
             WebDriverWait(self.driver, 15).until(
                 EC.invisibility_of_element_located(self.FIRST_NAME_INPUT)
@@ -566,18 +570,12 @@ class AdminEmployeeFormPage(BasePage):
             logging.getLogger("nxtwash").warning(
                 "Employee save did not navigate away. Page text: %s", body or "(empty)"
             )
-            # Headless-CI / RHF fallback: ActionChains click sometimes does not
-            # trigger form submit in headless Chrome. Dispatch submit via
-            # requestSubmit() so the browser fires the submit event that RHF
-            # handles, then wait again for the form to disappear.
+            # Final fallback: ActionChains click
             try:
-                el2 = self.driver.find_element(*self.SAVE_BUTTON)
-                self.driver.execute_script(
-                    "var f=arguments[0].closest('form');"
-                    "if(f){f.requestSubmit(arguments[0]);}",
-                    el2,
-                )
-                WebDriverWait(self.driver, 15).until(
+                ActionChains(self.driver).move_to_element(
+                    self.driver.find_element(*self.SAVE_BUTTON)
+                ).click().perform()
+                WebDriverWait(self.driver, 10).until(
                     EC.invisibility_of_element_located(self.FIRST_NAME_INPUT)
                 )
             except Exception:
