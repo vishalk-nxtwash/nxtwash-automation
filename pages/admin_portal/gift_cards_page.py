@@ -143,6 +143,8 @@ class GiftCardsPage(BasePage):
             )
         )
 
+    wait_for_loaded = wait_for_list_loaded
+
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
         self.switch_to_frame_with_retry(self.CREATE_FRAME)

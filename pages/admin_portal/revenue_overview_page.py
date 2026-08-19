@@ -185,6 +185,9 @@ class RevenueOverviewPage(BasePage):
         except TimeoutException:
             pass
 
+    wait_for_loaded = wait_for_modal
+
+
     def modal_is_open(self):
         try:
             WebDriverWait(self.driver, 2).until(

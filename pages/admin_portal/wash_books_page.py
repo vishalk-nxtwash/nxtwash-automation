@@ -175,6 +175,8 @@ class WashBooksPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
         self.wait_for_grid_idle()
 
+    wait_for_loaded = wait_for_list_loaded
+
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""
         self.wait.until(

@@ -113,6 +113,8 @@ class RedemptionsPage(BasePage):
         except TimeoutException:
             pass
 
+    wait_for_loaded = wait_for_modal
+
     def modal_is_open(self):
         try:
             btn = WebDriverWait(self.driver, 3).until(

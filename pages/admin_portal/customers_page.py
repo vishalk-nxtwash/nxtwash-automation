@@ -827,7 +827,27 @@ class CustomersPage(BasePage):
         self.driver.execute_script("arguments[0].click();", switch)
 
     def click_save_customer(self):
-        self.click(self.SAVE_CUSTOMER_BUTTON)
+        from selenium.webdriver.common.action_chains import ActionChains
+        el = self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", el)
+        ActionChains(self.driver).move_to_element(el).click().perform()
+        # Headless-CI / RHF fallback: if ActionChains click did not trigger the
+        # form submit event, dispatch it via requestSubmit() so RHF's handler
+        # fires. The caller still owns the wait_for_list_loaded() check.
+        try:
+            WebDriverWait(self.driver, 4).until(
+                EC.invisibility_of_element_located(self.SAVE_CUSTOMER_BUTTON)
+            )
+        except Exception:
+            try:
+                btn = self.driver.find_element(*self.SAVE_CUSTOMER_BUTTON)
+                self.driver.execute_script(
+                    "var f=arguments[0].closest('form');"
+                    "if(f){f.requestSubmit(arguments[0]);}",
+                    btn,
+                )
+            except Exception:
+                pass
 
     def click_cancel(self):
         self.click(self.CANCEL_BUTTON)

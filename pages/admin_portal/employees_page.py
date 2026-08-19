@@ -566,6 +566,22 @@ class AdminEmployeeFormPage(BasePage):
             logging.getLogger("nxtwash").warning(
                 "Employee save did not navigate away. Page text: %s", body or "(empty)"
             )
+            # Headless-CI / RHF fallback: ActionChains click sometimes does not
+            # trigger form submit in headless Chrome. Dispatch submit via
+            # requestSubmit() so the browser fires the submit event that RHF
+            # handles, then wait again for the form to disappear.
+            try:
+                el2 = self.driver.find_element(*self.SAVE_BUTTON)
+                self.driver.execute_script(
+                    "var f=arguments[0].closest('form');"
+                    "if(f){f.requestSubmit(arguments[0]);}",
+                    el2,
+                )
+                WebDriverWait(self.driver, 15).until(
+                    EC.invisibility_of_element_located(self.FIRST_NAME_INPUT)
+                )
+            except Exception:
+                pass
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))

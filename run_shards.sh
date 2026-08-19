@@ -74,11 +74,12 @@ SHARD_4_MODULES=(
 
 # ── Dry-run output ─────────────────────────────────────────────────────────
 if [ "$DRY_RUN" -eq 1 ]; then
-    echo "DRY RUN — shard assignments:"
+    echo "DRY RUN — shard assignments (sequential, one at a time):"
     echo ""
     for s in 1 2 3 4; do
         eval "modules=(\"\${SHARD_${s}_MODULES[@]}\")"
-        echo "Shard $s:"
+        workers=$([ "$s" -eq 2 ] || [ "$s" -eq 4 ] && echo 2 || echo 3)
+        echo "Shard $s  (-n $workers --dist loadscope):"
         for m in "${modules[@]}"; do echo "  $m"; done
         echo ""
     done
@@ -96,10 +97,16 @@ echo "  Mode    : $([ -n "$HEADLESS_FLAG" ] && echo headless || echo headed)"
 echo "════════════════════════════════════════════════════════════════════"
 echo ""
 
-# ── Shard runner (called in subshell via &) ────────────────────────────────
+# ── Shard runner ───────────────────────────────────────────────────────────
+# $1 = shard number, $2 = xdist worker count, $3..N = module paths
+# Runs in the foreground (no &). Shards are sequential so only one shard's
+# Chrome instances are alive at a time — safe on 8 GB RAM.
+# --dist loadscope keeps all tests from the same Python module on the same
+# worker, preventing managed-fixture write contention between workers.
 run_shard() {
     local num=$1
-    shift
+    local workers=$2
+    shift 2
     local log="$RUN_DIR/shard-${num}.log"
     local allure_dir="$RUN_DIR/shard-${num}-allure"
     local junit="$RUN_DIR/shard-${num}-junit.xml"
@@ -108,7 +115,7 @@ run_shard() {
 
     {
         echo "════════════════════════════════════════════════════"
-        echo "  Shard $num started at $(date '+%H:%M:%S')"
+        echo "  Shard $num started at $(date '+%H:%M:%S') (workers: $workers)"
         echo "  Modules:"
         for m in "$@"; do echo "    $m"; done
         echo "════════════════════════════════════════════════════"
@@ -118,7 +125,8 @@ run_shard() {
     # shellcheck disable=SC2086
     "$PYTEST" "$@" \
         $HEADLESS_FLAG \
-        -n 2 \
+        -n "$workers" \
+        --dist loadscope \
         --override-ini="addopts=-v --strict-markers --timeout=420 --timeout-method=signal" \
         --alluredir="$allure_dir" \
         --junit-xml="$junit" \
@@ -132,38 +140,35 @@ run_shard() {
         echo "  Shard $num finished at $(date '+%H:%M:%S') — exit code: $ec"
         echo "════════════════════════════════════════════════════"
     } >> "$log"
-    exit $ec
+    return $ec
 }
 
-# ── Launch all shards ──────────────────────────────────────────────────────
+# ── Launch shards sequentially ─────────────────────────────────────────────
+# One shard at a time → max 3 Chrome instances on 8 GB RAM, no swapping.
+# Each shard completes in ~1–1.5 h so the staging auth token never expires.
+# Shards 2 & 4 use -n 2 (matching CI parallel:2) because they contain
+# write-heavy modules: wash_packages, wash_books, coupon_packages, employees.
 cd "$SCRIPT_DIR"
 
-run_shard 1 "${SHARD_1_MODULES[@]}" &
-PID_1=$!
-
-run_shard 2 "${SHARD_2_MODULES[@]}" &
-PID_2=$!
-
-run_shard 3 "${SHARD_3_MODULES[@]}" &
-PID_3=$!
-
-run_shard 4 "${SHARD_4_MODULES[@]}" &
-PID_4=$!
-
-echo "All 4 shards running. PIDs: $PID_1  $PID_2  $PID_3  $PID_4"
-echo ""
-echo "Monitor live progress (open 4 terminals):"
-echo "  tail -f $RUN_DIR/shard-1.log"
-echo "  tail -f $RUN_DIR/shard-2.log"
-echo "  tail -f $RUN_DIR/shard-3.log"
-echo "  tail -f $RUN_DIR/shard-4.log"
+echo "Shard 1 / 4 starting...  tail -f $RUN_DIR/shard-1.log"
+run_shard 1 3 "${SHARD_1_MODULES[@]}"; EC1=$?
+echo "Shard 1 → $([ "$EC1" -eq 0 ] && echo PASS || echo "FAIL (exit $EC1)")"
 echo ""
 
-# ── Wait for all shards ────────────────────────────────────────────────────
-wait $PID_1; EC1=$?
-wait $PID_2; EC2=$?
-wait $PID_3; EC3=$?
-wait $PID_4; EC4=$?
+echo "Shard 2 / 4 starting...  tail -f $RUN_DIR/shard-2.log"
+run_shard 2 2 "${SHARD_2_MODULES[@]}"; EC2=$?
+echo "Shard 2 → $([ "$EC2" -eq 0 ] && echo PASS || echo "FAIL (exit $EC2)")"
+echo ""
+
+echo "Shard 3 / 4 starting...  tail -f $RUN_DIR/shard-3.log"
+run_shard 3 3 "${SHARD_3_MODULES[@]}"; EC3=$?
+echo "Shard 3 → $([ "$EC3" -eq 0 ] && echo PASS || echo "FAIL (exit $EC3)")"
+echo ""
+
+echo "Shard 4 / 4 starting...  tail -f $RUN_DIR/shard-4.log"
+run_shard 4 2 "${SHARD_4_MODULES[@]}"; EC4=$?
+echo "Shard 4 → $([ "$EC4" -eq 0 ] && echo PASS || echo "FAIL (exit $EC4)")"
+echo ""
 
 echo ""
 echo "All shards finished:"

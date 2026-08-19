@@ -24,7 +24,7 @@ jobs:
     with:
       label: prod-smoke
       environment: production
-      test_path: tests
+      test_path: tests/prod_smoke
       marker: prod_smoke
       parallel: ${{ github.event.inputs.parallel || '2' }}
       reruns: "1"

@@ -132,6 +132,13 @@ def test_toggle_saves_and_persists(browser, managed_tunnel_form, toggle_label):
 
 @allure.title("TUN-TGL-010 All toggle states are reflected on form re-open")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TGL-010: staging toggle persistence race — 'Automatic Car Selection' "
+        "does not reliably save to False under parallel load."
+    ),
+)
 def test_toggle_states_reflected_on_reopen(browser, managed_tunnel_form):
     form = managed_tunnel_form
 

@@ -190,7 +190,17 @@ def create_customer_if_missing(browser):
                     state=CUSTOMER_STATE,
                     city=CUSTOMER_CITY,
                 )
-            except Exception:
+            except Exception as _exc:
+                # A parallel worker may have created the customer a moment ago;
+                # do one more search (with active-only OFF) before giving up.
+                try:
+                    _recovery = open_customers_page(browser)
+                    if _find_customer_row_by_email(_recovery):
+                        _recovery = open_customers_page(browser)
+                        _recovery._reset_active_filter_if_present()
+                        return _recovery
+                except Exception:
+                    pass
                 next_slot = SLOT + 1
                 print(
                     f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
@@ -198,7 +208,7 @@ def create_customer_if_missing(browser):
                     f"  → Open tests/admin_portal/customers/test_data.py and set "
                     f"SLOT = {next_slot}, then re-run."
                 )
-                raise
+                raise _exc
             page = open_customers_page(browser)
             page._reset_active_filter_if_present()
             return page
