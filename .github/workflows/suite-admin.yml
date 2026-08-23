@@ -24,7 +24,7 @@ jobs:
   # 24 shards run fully in parallel — each shard runs all tests in its modules
   # including smoke, regression, and edge cases. No pre-gate needed.
   admin:
-    if: github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/staging' || github.event_name == 'repository_dispatch'
     strategy:
       fail-fast: false
       matrix:
