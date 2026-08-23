@@ -11,6 +11,8 @@ name: Admin Suite (staging)
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [staging-deploy-complete]
 
 # One admin staging run at a time (its shards run in parallel within the run);
 # a second run queues rather than racing on shared staging data.
