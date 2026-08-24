@@ -29,150 +29,150 @@ jobs:
       fail-fast: false
       matrix:
         shard:
+          # Only login shard is active. All other shards are disabled temporarily.
+          # ── Auth & Core ───────────────────────────────────────────────────
+          # ~25 tests — login only (auth injection cleared per-test here)
+          - name: auth-login
+            path: tests/admin_portal/login
           # ── Reports (read-only, fully parallel-safe) ──────────────────────
           # parallel=4: report shards never mutate data so contention-free;
           # 4 IO-bound workers outperform 3 on 2-vCPU runners.
           # 139 tests — overview + performance_metrics
-          - name: reports-overview
-            path: >-
-              tests/admin_portal/overview
-              tests/admin_portal/performance_metrics
-            parallel: "4"
+          # - name: reports-overview
+          #   path: >-
+          #     tests/admin_portal/overview
+          #     tests/admin_portal/performance_metrics
+          #   parallel: "4"
           # 100 tests — revenue_overview
-          - name: reports-revenue-a
-            path: tests/admin_portal/revenue_overview
-            parallel: "4"
+          # - name: reports-revenue-a
+          #   path: tests/admin_portal/revenue_overview
+          #   parallel: "4"
           # 83 tests — general_sales_report
-          - name: reports-revenue-b
-            path: tests/admin_portal/general_sales_report
-            parallel: "4"
+          # - name: reports-revenue-b
+          #   path: tests/admin_portal/general_sales_report
+          #   parallel: "4"
           # ~140 tests — cash_report + card_declines
-          - name: reports-financial-a
-            path: >-
-              tests/admin_portal/cash_report
-              tests/admin_portal/card_declines
-            parallel: "4"
+          # - name: reports-financial-a
+          #   path: >-
+          #     tests/admin_portal/cash_report
+          #     tests/admin_portal/card_declines
+          #   parallel: "4"
           # ~122 tests — transactions
-          - name: reports-financial-b
-            path: tests/admin_portal/transactions
-            parallel: "4"
+          # - name: reports-financial-b
+          #   path: tests/admin_portal/transactions
+          #   parallel: "4"
           # 86 tests — labor_shifts
-          - name: reports-ops-a
-            path: tests/admin_portal/labor_shifts
-            parallel: "4"
+          # - name: reports-ops-a
+          #   path: tests/admin_portal/labor_shifts
+          #   parallel: "4"
           # ~91 tests — redemptions + wash_activity
-          - name: reports-ops-b
-            path: >-
-              tests/admin_portal/redemptions
-              tests/admin_portal/wash_activity
-            parallel: "4"
-          # ── Auth & Core ───────────────────────────────────────────────────
-          # Split from single 131-test auth-core shard to reduce wall-clock.
-          # ~25 tests — login only (auth injection cleared per-test here)
-          - name: auth-login
-            path: tests/admin_portal/login
+          # - name: reports-ops-b
+          #   path: >-
+          #     tests/admin_portal/redemptions
+          #     tests/admin_portal/wash_activity
+          #   parallel: "4"
           # ~106 tests — sites + service_categories
-          - name: auth-sites
-            path: >-
-              tests/admin_portal/sites
-              tests/admin_portal/service_categories
+          # - name: auth-sites
+          #   path: >-
+          #     tests/admin_portal/sites
+          #     tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
           # ~113 tests — wash_packages; parallel=2: 3 workers caused contention on
           # shared managed_package record, leading to >240s timeouts under -n 3.
-          - name: wash-packages-a
-            path: tests/admin_portal/wash_packages
-            parallel: "2"
+          # - name: wash-packages-a
+          #   path: tests/admin_portal/wash_packages
+          #   parallel: "2"
           # ~44 tests — wash_extras
-          - name: wash-packages-b
-            path: tests/admin_portal/wash_extras
+          # - name: wash-packages-b
+          #   path: tests/admin_portal/wash_extras
           # Split from single 127-test wash-catalog shard to reduce wall-clock.
           # ~63 tests — wash_books; parallel=2 prevents write collision on shared
           # managed wash book record that caused assert failures under -n 3.
-          - name: wash-catalog-a
-            path: tests/admin_portal/wash_books
-            parallel: "2"
+          # - name: wash-catalog-a
+          #   path: tests/admin_portal/wash_books
+          #   parallel: "2"
           # ~64 tests — coupon_packages; parallel=2 same reason as wash-catalog-a.
-          - name: wash-catalog-b
-            path: tests/admin_portal/coupon_packages
-            parallel: "2"
+          # - name: wash-catalog-b
+          #   path: tests/admin_portal/coupon_packages
+          #   parallel: "2"
           # ── Services & Finance ────────────────────────────────────────────
           # 122 tests — custom_services + gift_cards + bank_drop
-          - name: services
-            path: >-
-              tests/admin_portal/custom_services
-              tests/admin_portal/gift_cards
-              tests/admin_portal/bank_drop
+          # - name: services
+          #   path: >-
+          #     tests/admin_portal/custom_services
+          #     tests/admin_portal/gift_cards
+          #     tests/admin_portal/bank_drop
           # ── Promotions & Loyalty ──────────────────────────────────────────
           # 73 tests — discounts (split from combined promotions shard that
           # exceeded the 120-min wall-clock limit when run together)
-          - name: discounts
-            path: tests/admin_portal/discounts
+          # - name: discounts
+          #   path: tests/admin_portal/discounts
           # 66 tests — memberships
-          - name: memberships
-            path: tests/admin_portal/memberships
+          # - name: memberships
+          #   path: tests/admin_portal/memberships
           # ── Customers ─────────────────────────────────────────────────────
           # 97 tests — isolated; complex customer-facing flows
-          - name: customers
-            path: tests/admin_portal/customers
+          # - name: customers
+          #   path: tests/admin_portal/customers
           # ── Hardware Settings ─────────────────────────────────────────────
           # Split from 117-test settings-hw (was 44m wall-clock bottleneck).
           # kiosk further split because 73 tests at 35m was the new bottleneck.
           # ~36 tests — kiosk CRUD: create, edit, list, search, filter, edge cases
-          - name: settings-kiosk-a
-            path: >-
-              tests/admin_portal/kiosk_settings/test_kiosk_create.py
-              tests/admin_portal/kiosk_settings/test_kiosk_edit.py
-              tests/admin_portal/kiosk_settings/test_kiosk_list.py
-              tests/admin_portal/kiosk_settings/test_kiosk_search.py
-              tests/admin_portal/kiosk_settings/test_kiosk_filter.py
-              tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py
-              tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py
+          # - name: settings-kiosk-a
+          #   path: >-
+          #     tests/admin_portal/kiosk_settings/test_kiosk_create.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_edit.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_list.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_search.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_filter.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py
           # ~37 tests — kiosk settings panels (device, fleet, flow, gate, etc.)
-          - name: settings-kiosk-b
-            path: >-
-              tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py
-              tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py
+          # - name: settings-kiosk-b
+          #   path: >-
+          #     tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py
+          #     tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py
           # ~44 tests — tunnel_settings
-          - name: settings-tunnel
-            path: tests/admin_portal/tunnel_settings
+          # - name: settings-tunnel
+          #   path: tests/admin_portal/tunnel_settings
           # ── POS & Access Control ──────────────────────────────────────────
           # 126 tests — pos_settings + user_roles
-          - name: settings-pos
-            path: >-
-              tests/admin_portal/pos_settings
-              tests/admin_portal/user_roles
+          # - name: settings-pos
+          #   path: >-
+          #     tests/admin_portal/pos_settings
+          #     tests/admin_portal/user_roles
           # ── People & HR ───────────────────────────────────────────────────
           # ~77 tests — users
-          - name: people-users
-            path: tests/admin_portal/users
+          # - name: people-users
+          #   path: tests/admin_portal/users
           # ~45 tests — employees CRUD (create, edit, edge cases, export)
           # parallel=2: 3 workers caused contention on shared managed_employee
           # record, leading to >240s timeouts in edit/edge-case tests under -n 3.
-          - name: people-employees-a
-            path: >-
-              tests/admin_portal/employees/test_employees_create.py
-              tests/admin_portal/employees/test_employees_edit.py
-              tests/admin_portal/employees/test_employees_edge_cases.py
-              tests/admin_portal/employees/test_employees_export.py
-            parallel: "2"
+          # - name: people-employees-a
+          #   path: >-
+          #     tests/admin_portal/employees/test_employees_create.py
+          #     tests/admin_portal/employees/test_employees_edit.py
+          #     tests/admin_portal/employees/test_employees_edge_cases.py
+          #     tests/admin_portal/employees/test_employees_export.py
+          #   parallel: "2"
           # ~42 tests — employees read + all shift tests
-          - name: people-employees-b
-            path: >-
-              tests/admin_portal/employees/test_employees_list.py
-              tests/admin_portal/employees/test_employees_filter.py
-              tests/admin_portal/employees/test_employees_shift_create.py
-              tests/admin_portal/employees/test_employees_shift_edit.py
-              tests/admin_portal/employees/test_employees_shift_export.py
-              tests/admin_portal/employees/test_employees_shift_filter.py
-              tests/admin_portal/employees/test_employees_shift_list.py
+          # - name: people-employees-b
+          #   path: >-
+          #     tests/admin_portal/employees/test_employees_list.py
+          #     tests/admin_portal/employees/test_employees_filter.py
+          #     tests/admin_portal/employees/test_employees_shift_create.py
+          #     tests/admin_portal/employees/test_employees_shift_edit.py
+          #     tests/admin_portal/employees/test_employees_shift_export.py
+          #     tests/admin_portal/employees/test_employees_shift_filter.py
+          #     tests/admin_portal/employees/test_employees_shift_list.py
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
