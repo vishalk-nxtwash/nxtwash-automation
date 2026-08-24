@@ -178,7 +178,7 @@ jobs:
         run: ~/.allure-cli/bin/allure generate reports/allure-results --clean -o reports/allure-report
 
       - name: Upload test artifacts
-        if: always()
+        if: false  # TEMP: disabled while storage quota resets; restore to always() after 6-12h
         uses: actions/upload-artifact@v4
         with:
           name: test-reports-${{ inputs.label }}-${{ github.run_number }}
