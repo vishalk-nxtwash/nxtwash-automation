@@ -44,6 +44,12 @@ def create_wash_extra_if_missing(browser, extra_name=WASH_EXTRA_NAME):
         page = open_wash_extras_page(browser)
         page.open_edit_extra(extra_name)
         page.fill_extra_form(extra_name, GLOBAL_PRICE, GLOBAL_COMMISSION)
+        try:
+            rows = page.get_location_rows()
+            for i in range(len(rows)):
+                page.set_location_price_by_index(i, GLOBAL_PRICE)
+        except Exception:
+            pass
         page.open_discount_settings()
         page.select_applicable_discount(DISCOUNT_NAME)
         page.click_save_extra()
