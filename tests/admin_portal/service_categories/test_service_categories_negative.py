@@ -72,7 +72,11 @@ def test_create_category_exceeding_max_length(browser):
 @allure.title("SC-NG-004 Create category with leading/trailing/only whitespace")
 @pytest.mark.regression
 @pytest.mark.validation
-@pytest.mark.skip(reason="SC-NG-004: NoSuchElementException on body tag — driver stuck in detached iframe after form re-render; deferred")
+@pytest.mark.xfail(
+    strict=False,
+    reason="Backend accepts whitespace-padded names (strips whitespace and saves); "
+           "the form navigates to list instead of showing a validation rejection.",
+)
 def test_create_category_with_whitespace_name(browser):
 
     page = create_category_if_missing(browser)
@@ -81,7 +85,13 @@ def test_create_category_with_whitespace_name(browser):
     page.enter_category_name("  %s  " % CATEGORY_NAME)
     page.click_save_new()
 
-    # App should trim and treat it as a duplicate, or show a validation error
+    # The form re-renders on validation rejection, which can detach the iframe
+    # context in headless Chrome. Re-enter the frame before reading body text.
+    try:
+        page.wait_for_create_loaded()
+    except Exception:
+        page.wait_for_list_loaded()
+
     body = page.get_body_text()
     assert "Category name" in body or "Save new category" in body, (
         "Expected form to reject a whitespace-padded duplicate name"
@@ -102,7 +112,6 @@ def test_missing_service_category_is_not_returned(browser):
 
 @allure.title("SC-CRUD-004 Create service category is idempotent")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_create_service_category_is_idempotent(browser):
 
     page = create_category_if_missing(browser)
