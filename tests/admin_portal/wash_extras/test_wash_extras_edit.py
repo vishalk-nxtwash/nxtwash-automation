@@ -56,7 +56,6 @@ def test_edit_wash_extra_values_persist(browser):
 
 @allure.title("WE-EDT-003 Editing global commission persists after save")
 @pytest.mark.extended
-@pytest.mark.skip(reason="WE-EDT-003: Toastify success toast blocks second click_save_extra() — no dismiss wait between saves; deferred")
 def test_edit_wash_extra_global_commission_persists(browser):
 
     new_commission = "5"

@@ -1,4 +1,6 @@
-from selenium.common.exceptions import TimeoutException
+import time
+
+from selenium.common.exceptions import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -102,11 +104,56 @@ class WashExtrasPage(BasePage):
     )
 
     def wait_for_list_loaded(self):
-        """Wait until the Wash Extras list is visible."""
-        self.switch_to_frame_with_retry(self.LIST_FRAME)
+        """Wait until the Wash Extras list is visible.
+
+        Uses FRAME (not LIST_FRAME) so this works whether the parent React
+        SPA re-mounts the iframe (src updates to list URL) or navigates
+        in-place via React Router (src stays at the old edit/create URL).
+
+        PAGE_TITLE also matches the breadcrumb on the edit form, so it is not
+        a sufficient signal on its own.  After PAGE_TITLE passes, a short probe
+        checks for ADD_EXTRA_BUTTON; if it is absent (still on edit form after
+        a location-level save), the outer portal is driven directly to the list
+        URL and the frame is re-entered before proceeding.
+
+        Also resets any stale filter left over from inactive-filter navigation.
+        """
+        self.switch_to_frame_with_retry(self.FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        if not self._quick_add_button_check(timeout=8):
+            self._navigate_outer_to_we_list()
+            self.switch_to_frame_with_retry(self.FRAME)
+            self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON))
+        if self._has_active_filter():
+            self.reset_filters()
         self.wait_for_grid_idle()
+
+    def _quick_add_button_check(self, timeout=8):
+        """Return True if ADD_EXTRA_BUTTON becomes clickable within timeout."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def _navigate_outer_to_we_list(self):
+        """Navigate the outer admin portal directly to the Wash Extras list."""
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url
+        we_path = "/services/washExtras"
+        idx = current.find(we_path)
+        if idx != -1:
+            self.driver.get(current[:idx + len(we_path)])
+
+    def _has_active_filter(self):
+        """Return True if a filter count badge is visible."""
+        return bool(self.driver.find_elements(
+            By.XPATH,
+            "//button[contains(normalize-space(), 'Filter by (')]"
+        ))
 
     wait_for_loaded = wait_for_list_loaded
 
@@ -170,9 +217,7 @@ class WashExtrasPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        search_input.send_keys(extra_name)
+        self._set_input_value(search_input, extra_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
@@ -223,7 +268,10 @@ class WashExtrasPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        # JS click keeps the navigation as a soft nav (React Router history
+        # push inside the iframe) so the parent React SPA does not reset the
+        # iframe src, which would break EDIT_FRAME matching.
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def enter_service_name(self, service_name):
@@ -267,11 +315,22 @@ class WashExtrasPage(BasePage):
     def ensure_active_switch_on(self):
         """Turn active switch on if needed."""
         switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
-
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
+            # Patch confirm before clicking: reactivation fires window.parent.confirm
+            # asynchronously on the switch click in headless Chrome.
+            self.driver.execute_script(
+                "window.confirm = () => true;"
+                " try { window.parent.confirm = () => true; } catch(e) {}"
+            )
+            try:
+                switch.click()
+            except ElementClickInterceptedException:
+                self._dismiss_page_banner()
+                self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                lambda driver: driver.find_element(
+                    *self.ACTIVE_SWITCH
+                ).get_attribute("aria-checked") == "true"
             )
 
     def _set_input_value(self, element, value):
@@ -553,10 +612,15 @@ class WashExtrasPage(BasePage):
             )
 
         price_input = rows[row_index].find_element(By.NAME, "price")
+        # Use the native JS property (not the HTML attribute) so the value is
+        # readable whether the cell was set via _set_input_value or via React's
+        # controlled-input reconciliation.
         WebDriverWait(self.driver, 60).until(
-            lambda driver: price_input.get_attribute("value") != ""
+            lambda driver: self.driver.execute_script(
+                "return arguments[0].value", price_input
+            ) != ""
         )
-        return price_input.get_attribute("value")
+        return self.driver.execute_script("return arguments[0].value", price_input)
 
     def all_locations_are_assigned_with_price_and_commission(
         self,
@@ -595,8 +659,29 @@ class WashExtrasPage(BasePage):
         )
 
     def click_save_extra(self):
-        """Click save wash extra."""
-        self.click(self.SAVE_EXTRA_BUTTON)
+        """Click save wash extra.
+
+        Patches window.confirm for headless Chrome (native dialogs auto-dismiss
+        as false).  Guards against Toastify banners intercepting the click
+        (common when a second save follows shortly after a first save).
+        Waits for the Save button to go stale — the reliable DOM signal that
+        the form has navigated away before wait_for_list_loaded() is called.
+        """
+        self.driver.execute_script(
+            "window.confirm = () => true;"
+            " try { window.parent.confirm = () => true; } catch(e) {}"
+        )
+        time.sleep(0.5)
+        btn = self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
+        try:
+            btn.click()
+        except ElementClickInterceptedException:
+            self._dismiss_page_banner()
+            self.driver.execute_script("arguments[0].click();", btn)
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(btn))
+        except Exception:  # noqa: BLE001
+            pass
 
     def click_cancel(self):
         """Cancel create/edit wash extra."""
@@ -621,16 +706,21 @@ class WashExtrasPage(BasePage):
         """Turn the active switch off if needed."""
         switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_SWITCH))
         if switch.get_attribute("aria-checked") == "true":
-            switch.click()
+            try:
+                switch.click()
+            except ElementClickInterceptedException:
+                self._dismiss_page_banner()
+                self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") != "true"
+                lambda driver: driver.find_element(
+                    *self.ACTIVE_SWITCH
+                ).get_attribute("aria-checked") != "true"
             )
 
     def clear_extra_search(self):
         """Clear the wash extra search field."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self._set_input_value(search_input, "")
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
@@ -742,9 +832,11 @@ class WashExtrasPage(BasePage):
             )
         commission_input = rows[row_index].find_element(By.NAME, "commission")
         WebDriverWait(self.driver, 60).until(
-            lambda driver: commission_input.get_attribute("value") != ""
+            lambda driver: self.driver.execute_script(
+                "return arguments[0].value", commission_input
+            ) != ""
         )
-        return commission_input.get_attribute("value")
+        return self.driver.execute_script("return arguments[0].value", commission_input)
 
     def assign_all_locations_via_header_checkbox(self):
         """Click the 'Assign to' header checkbox to select all location rows at once."""

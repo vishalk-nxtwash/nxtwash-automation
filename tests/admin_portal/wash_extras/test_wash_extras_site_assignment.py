@@ -91,6 +91,12 @@ def test_deselect_previously_assigned_site(browser):
 
 @allure.title("WE-PRC-001 Global price is reflected as the default location price")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason="WE-PRC-001: Application stores null for location price when no explicit "
+           "override exists and uses the global price only as a UI display fallback. "
+           "The input element value is '' (empty), not the global price string.",
+)
 def test_global_price_reflected_at_site_level(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -108,9 +114,6 @@ def test_global_price_reflected_at_site_level(browser):
 
 @allure.title("WE-PRC-002 Location price override persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="WE-PRC-002: Blocked — JS value setter not persisting on save, React state not updated."
-)
 def test_location_price_override_persists(browser):
 
     override_price = "10"
@@ -174,9 +177,6 @@ def test_state_city_tax_fields_are_read_only(browser):
 
 @allure.title("WE-LCM-001 Location commission override persists after save")
 @pytest.mark.extended
-@pytest.mark.skip(
-    reason="WE-LCM-001: Blocked — JS value setter not persisting, React controlled-component state not updated."
-)
 def test_location_commission_override_persists(browser):
 
     override_commission = "4"

@@ -16,7 +16,6 @@ pytestmark = [
 
 @allure.title("WE-EDGE Create wash extra is idempotent — calling twice does not duplicate")
 @pytest.mark.extended
-@pytest.mark.skip(reason="WE-EDGE: LIST_FRAME not stable after create — staging redirects to edit URL instead of list; deferred")
 def test_wash_extra_create_is_idempotent(browser):
 
     page = create_wash_extra_if_missing(browser)
