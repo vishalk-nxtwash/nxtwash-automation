@@ -166,7 +166,6 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @allure.title("MB-EDT-009 Activate membership updates Status in list")
 @pytest.mark.smoke
 @pytest.mark.regression
-@pytest.mark.skip(reason="MB-EDT-009: inactive filter left active after re-activation save — clear_active_filters not called in managed_membership restore; deferred")
 @pytest.mark.xdist_group("managed_membership")
 def test_activate_membership(managed_membership):
 
@@ -175,6 +174,9 @@ def test_activate_membership(managed_membership):
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.ensure_active_switch_off()
     page.save_and_return_to_list()
+    # Clear any residual filter state (e.g. inactive-only) so the next
+    # open_edit_membership starts from a clean default list view.
+    page.clear_active_filters()
 
     # Re-activate — open_edit_membership uses inactive-filter fallback
     page.open_edit_membership(MANAGED_MEMBERSHIP)

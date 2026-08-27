@@ -76,7 +76,6 @@ def test_membership_requires_global_price(browser):
 @allure.title("MB-NAM-003 Verify duplicate Membership Name is rejected")
 @pytest.mark.regression
 @pytest.mark.validation
-@pytest.mark.skip(reason="MB-NAM-003: wait_for_membership_row grid stuck in loading state in CI; pytest-timeout fires during time.sleep(0.5) bypassing TimeoutException handler")
 def test_duplicate_membership_name_is_rejected(browser):
 
     LOG.info("Validating duplicate membership name is rejected")
@@ -192,7 +191,6 @@ def test_negative_global_commission_is_rejected(browser):
 @allure.story("Validation")
 @allure.title("MB-PRI-004 Verify decimal price value")
 @pytest.mark.validation
-@pytest.mark.skip(reason="MB-PRI-004: StaleElementReferenceException after create_membership — grid row locator goes stale before assertion; needs staleness-safe wait")
 def test_decimal_global_price_is_accepted_and_saved(browser):
 
     membership_name = "VK decimal %s" % uuid.uuid4().hex[:6]
@@ -219,7 +217,6 @@ def test_decimal_global_price_is_accepted_and_saved(browser):
 @pytest.mark.regression
 @pytest.mark.validation
 @pytest.mark.timeout(900)
-@pytest.mark.skip(reason="MB-BAR-003: StaleElementReferenceException in wait_for_form_save_blocked after set_barcode — element reference goes stale; needs staleness-safe locator")
 def test_duplicate_barcode_is_rejected(managed_membership):
 
     page = managed_membership

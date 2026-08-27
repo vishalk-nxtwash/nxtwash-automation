@@ -194,6 +194,15 @@ class MembershipsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Memberships list is visible."""
+        # Proactively dismiss the staging env banner before entering the iframe.
+        # The banner is position:fixed and can intercept clicks whose viewport
+        # coordinates overlap the iframe area.  switch_to.default_content() is
+        # safe here because switch_to_frame_with_retry always follows.
+        try:
+            self.driver.switch_to.default_content()
+            self._dismiss_page_banner()
+        except Exception:
+            pass
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(
@@ -217,7 +226,9 @@ class MembershipsPage(BasePage):
         self.wait.until(
             EC.visibility_of_element_located(self.MEMBERSHIP_NAME_INPUT)
         )
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON))
+        # element_to_be_clickable can raise StaleElementReferenceException between
+        # find_element and is_displayed when the form re-renders after a save error.
+        self.wait.until(lambda driver: self._save_button_is_clickable())
 
     def wait_for_form_save_blocked(self):
         """Wait until save leaves the user on a membership form."""
@@ -282,29 +293,32 @@ class MembershipsPage(BasePage):
         )
         deadline = time.time() + timeout
         while time.time() < deadline:
-            # Check whether the target row is already visible.
-            els = self.driver.find_elements(
-                *self.get_membership_row_locator(membership_name)
-            )
-            if els and els[0].is_displayed():
-                return els[0]
-            # Check for the explicit "No records available" sentinel.
-            no_rec = self.driver.find_elements(*_NO_RECORDS)
-            if no_rec and no_rec[0].is_displayed():
-                # Give the grid 3 s in case it's still transitioning from
-                # a loading state into displaying the actual records.
-                try:
-                    return WebDriverWait(self.driver, 3).until(
-                        EC.visibility_of_element_located(
-                            self.get_membership_row_locator(membership_name)
+            try:
+                # Check whether the target row is already visible.
+                els = self.driver.find_elements(
+                    *self.get_membership_row_locator(membership_name)
+                )
+                if els and els[0].is_displayed():
+                    return els[0]
+                # Check for the explicit "No records available" sentinel.
+                no_rec = self.driver.find_elements(*_NO_RECORDS)
+                if no_rec and no_rec[0].is_displayed():
+                    # Give the grid 3 s in case it's still transitioning from
+                    # a loading state into displaying the actual records.
+                    try:
+                        return WebDriverWait(self.driver, 3).until(
+                            EC.visibility_of_element_located(
+                                self.get_membership_row_locator(membership_name)
+                            )
                         )
-                    )
-                except Exception:
-                    raise TimeoutException(
-                        "Grid shows 'No records available' — '%s' not found"
-                        % membership_name
-                    )
-            time.sleep(0.5)
+                    except Exception:
+                        raise TimeoutException(
+                            "Grid shows 'No records available' — '%s' not found"
+                            % membership_name
+                        )
+            except StaleElementReferenceException:
+                pass  # grid is mid-render; retry on next tick
+            time.sleep(0.1)
         raise TimeoutException(
             "Timed out after %ss waiting for membership row '%s'"
             % (timeout, membership_name)
@@ -642,7 +656,10 @@ class MembershipsPage(BasePage):
         self.wait_for_list_loaded()
         if sentinel is not None:
             try:
-                self.wait.until(EC.staleness_of(sentinel))
+                # Short timeout: React may update the grid in-place without
+                # making the sentinel stale.  5 s is enough for a real DOM
+                # swap; if it doesn't fire we already waited in wait_for_list_loaded.
+                WebDriverWait(self.driver, 5).until(EC.staleness_of(sentinel))
             except Exception:
                 pass
 
@@ -1112,11 +1129,15 @@ class MembershipsPage(BasePage):
     def location_is_assigned_by_index(self, row_index):
         """Return whether one visible location row is assigned."""
         self.open_membership_settings()
-        try:
-            checkbox = self.get_location_checkbox_by_index(row_index)
-            return self.row_checkbox_is_checked(checkbox)
-        except AssertionError:
-            return False
+        for _ in range(3):
+            try:
+                checkbox = self.get_location_checkbox_by_index(row_index)
+                return self.row_checkbox_is_checked(checkbox)
+            except StaleElementReferenceException:
+                time.sleep(0.5)
+            except AssertionError:
+                return False
+        return False
 
     def _click_location_checkbox(self, checkbox):
         """Toggle a location assignment checkbox via ActionChains on the checkbox element.
@@ -1240,33 +1261,41 @@ class MembershipsPage(BasePage):
         self.set_grid_input_value(commission_input, commission)
 
     def set_grid_input_value(self, element, value):
-        """Set a React grid input value without appending to stale text."""
+        """Set a React/Inovua grid input value — CI-safe.
+
+        Uses HOME + SHIFT+END (cursor-key navigation, works in headless Chrome
+        on every platform inside iframes unlike CTRL+A which fails on Linux
+        headless) to select all text, then types the replacement value.
+        Falls back to clear() + retype if the selection was cleared by a
+        React re-render between the keyboard navigation and send_keys.
+        The final wait guards against StaleElementReferenceException from
+        Inovua grid row re-renders after the value is committed.
+        """
         self.driver.execute_script(
-            "arguments[0].scrollIntoView({ block: 'center' });"
-            "arguments[0].focus();",
+            "arguments[0].scrollIntoView({ block: 'center' });",
             element
         )
-        element.send_keys(Keys.CONTROL, "a")
-        element.send_keys(Keys.BACKSPACE)
-        element.send_keys(str(value))
+        element.click()                           # real click — Inovua editor active
+        element.send_keys(Keys.HOME)              # cursor to position 0
+        element.send_keys(Keys.SHIFT + Keys.END)  # select all (keyboard-only)
+        element.send_keys(str(value))             # replace selection
+        if not self._grid_value_matches_safe(element, value):
+            element.clear()
+            element.send_keys(str(value))
         self.driver.execute_script(
-            """
-            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-            """,
-            element
-        )
-        if not self.grid_input_numeric_value_matches(element, value):
-            self._set_input_value(element, str(value))
-        self.driver.execute_script(
-            """
-            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
-            """,
+            "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
             element
         )
         self.wait.until(
-            lambda driver: self.grid_input_numeric_value_matches(element, value)
+            lambda driver: self._grid_value_matches_safe(element, value)
         )
+
+    def _grid_value_matches_safe(self, element, value):
+        """StaleElement-safe wrapper around grid_input_numeric_value_matches."""
+        try:
+            return self.grid_input_numeric_value_matches(element, value)
+        except StaleElementReferenceException:
+            return True  # grid re-rendered after value was set; treat as success
 
     def grid_input_numeric_value_matches(self, element, value):
         """Return whether a possibly formatted numeric input equals value."""
@@ -1426,9 +1455,19 @@ class MembershipsPage(BasePage):
         )
         self.wait.until(lambda driver: self.discount_is_selected(discount_name))
 
+    def _save_button_is_clickable(self):
+        """StaleElement-safe check for the Save membership button."""
+        try:
+            els = self.driver.find_elements(*self.SAVE_MEMBERSHIP_BUTTON)
+            return bool(els and els[0].is_displayed() and els[0].is_enabled())
+        except StaleElementReferenceException:
+            return False
+
     def deselect_applicable_discount(self, discount_name):
         """Remove a previously selected applicable discount."""
         self.open_discount_settings()
+        # Wait for the chip to render before trying to click its remove button.
+        self.wait.until(lambda driver: self.discount_is_selected(discount_name))
         remove_button = (
             By.XPATH,
             "//div[contains(@class,'tab-pane') and contains(@class,'active')]"

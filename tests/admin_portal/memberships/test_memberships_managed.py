@@ -15,15 +15,6 @@ pytestmark = [
     allure.story("Managed data"),
     pytest.mark.timeout(900),
     pytest.mark.xdist_group("managed_membership"),
-    # MANUAL CHECK: managed_membership fixture teardown calls set_global_price/
-    # set_global_commission via set_grid_input_value, which uses Keys.CONTROL+A
-    # that fails silently in headless Linux iframes; stale element in final
-    # wait.until causes intermittent fixture ERROR.
-    # Fix: replace Keys.CONTROL+A with execute_script('arguments[0].select()')
-    # and add StaleElementReferenceException guard to wait.until lambda.
-    pytest.mark.skip(reason="MANUAL CHECK: managed_membership fixture teardown intermittently "
-                            "errors in headless CI — set_grid_input_value CTRL+A + stale element "
-                            "risk in set_global_price/commission. Needs js.select() fix before re-enabling."),
 ]
 
 UPDATED_POINTS = "5"

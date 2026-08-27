@@ -20,7 +20,6 @@ pytestmark = [
 @allure.story("Redemption Settings")
 @allure.title("MB-RED-001 Redemption single location assignment persists")
 @pytest.mark.regression
-@pytest.mark.skip(reason="MB-RED-001: managed_membership gw0/gw1 race causes filter state leak and 900s timeout — deferred until fixture serialised")
 def test_redemption_single_location_persists(managed_membership):
 
     page = managed_membership
@@ -45,7 +44,6 @@ def test_redemption_single_location_persists(managed_membership):
 @allure.story("Redemption Settings")
 @allure.title("MB-RED-002 Redemption multiple locations persist")
 @pytest.mark.regression
-@pytest.mark.skip(reason="MB-RED-002: managed_membership gw0/gw1 race causes filter state leak and 900s timeout — deferred until fixture serialised")
 def test_redeem_at_multiple_locations_persists(managed_membership):
 
     page = managed_membership

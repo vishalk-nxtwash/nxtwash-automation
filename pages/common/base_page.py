@@ -1,6 +1,10 @@
 import time
 
-from selenium.common.exceptions import ElementNotInteractableException, StaleElementReferenceException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    StaleElementReferenceException,
+)
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -15,11 +19,40 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 45)
 
-    def click(self, locator):
+    def _dismiss_page_banner(self):
+        """Remove the staging 'dev-environment-unstable' Toastify banner.
 
-        self.wait.until(
-            EC.element_to_be_clickable(locator)
-        ).click()
+        The banner is position:fixed and can appear over iframe content,
+        causing ElementClickInterceptedException on any click whose viewport
+        coordinates map to the banner's bounding box.  We try both the current
+        document and the parent document (same-origin iframes only; cross-origin
+        access is caught and silently ignored).
+        """
+        for script in (
+            "var t=document.getElementById('dev-environment-unstable');"
+            "if(t){t.click();t.remove();}",
+            "try{var t=window.parent.document"
+            ".getElementById('dev-environment-unstable');"
+            "if(t){t.click();t.remove();}}catch(e){}",
+        ):
+            try:
+                self.driver.execute_script(script)
+            except Exception:
+                pass
+        time.sleep(0.4)
+
+    def click(self, locator):
+        try:
+            self.wait.until(EC.element_to_be_clickable(locator)).click()
+        except ElementClickInterceptedException:
+            # _dismiss_page_banner may not reach the parent-doc toast when we
+            # are inside a cross-origin iframe (window.parent.document throws
+            # SecurityError).  Fall back to a JS click which dispatches a DOM
+            # event inside the current frame and bypasses ChromeDriver's
+            # coordinate-based interception check entirely.
+            self._dismiss_page_banner()
+            element = self.wait.until(EC.element_to_be_clickable(locator))
+            self.driver.execute_script("arguments[0].click();", element)
 
     def enter_text(self, locator, text):
 
