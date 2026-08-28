@@ -22,7 +22,6 @@ pytestmark = [
 
 @allure.title("WP-LTY-001 Valid points awarded value persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-LTY-001: managed_package fixture times out in headless CI. Fix: decouple site-assignment from fixture reset path.")
 def test_loyalty_points_awarded_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -36,7 +35,6 @@ def test_loyalty_points_awarded_persists(managed_package):
 
 @allure.title("WP-LTY-002 Valid points to redeem value persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-LTY-002: managed_package fixture times out in headless CI. Fix: same as WP-LTY-001.")
 def test_loyalty_points_redeemed_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

@@ -75,11 +75,6 @@ def test_add_wash_package_form_loads(browser):
 
 @allure.title("WP-UI Discount settings tab loads with applicable discounts combobox")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-UI: Form tab navigation times out in headless CI. "
-           "Fix: use window.location.origin fallback in wait_for_list_loaded; "
-           "add explicit wait for tab panel to be active after click."
-)
 def test_discount_settings_tab_loads(browser):
     page = open_wash_packages_page(browser)
     page.open_edit_package(EXISTING_PACKAGE)
@@ -91,7 +86,6 @@ def test_discount_settings_tab_loads(browser):
 
 @allure.title("WP-UI Filter panel exposes site dropdown and active service controls")
 @pytest.mark.regression
-@pytest.mark.skip(reason="WP-UI: StaleElementReferenceException in open_filter_panel — find_elements refs go stale before is_displayed() in list comprehension")
 def test_wash_packages_filter_panel_shows_controls(browser):
     page = open_wash_packages_page(browser)
 

@@ -6,6 +6,7 @@ from tests.admin_portal.wash_packages.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     PACKAGE_NAME,
+    SECOND_ASSIGNMENT_SITE,
     SITE_OVERRIDE_COMMISSION,
     SITE_OVERRIDE_PRICE,
     SITE_OVERRIDE_PRICE_HIGH,
@@ -22,9 +23,23 @@ pytestmark = [
 ]
 
 
+@allure.title("WP-SIT-001 Assigning a single site persists after save")
+@pytest.mark.regression
+def test_assign_single_site_persists(managed_package):
+    page = managed_package
+    page.open_edit_package(PACKAGE_NAME)
+    page.assign_site_with_price_and_commission(
+        ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
+    )
+    page.save_and_return_to_list()
+
+    page.open_edit_package(PACKAGE_NAME)
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("WP-SIT-002 Site assignment persists after re-save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-SIT-002: managed_package fixture times out in headless CI. Fix: decouple site-assignment from fixture reset path.")
 def test_assign_multiple_sites_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -42,7 +57,6 @@ def test_assign_multiple_sites_persists(managed_package):
 
 @allure.title("WP-SIT-003 Select all sites via the header checkbox")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-SIT-003: managed_package fixture times out in headless CI. Fix: same as WP-SIT-002.")
 def test_select_all_sites_via_header_checkbox(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -64,9 +78,32 @@ def test_save_wash_package_without_site_selection(browser):
     assert page_has_no_broken_state(page)
 
 
+@allure.title("WP-SIT-008 Deselecting a previously assigned site removes it after save")
+@pytest.mark.regression
+@pytest.mark.timeout(480)
+def test_deselect_assigned_site_removes_it(managed_package):
+    page = managed_package
+    # First add a second site so the package always has at least one assigned site
+    # after the original is unassigned (server rejects zero-site packages silently).
+    page.open_edit_package(PACKAGE_NAME)
+    page.assign_site_with_price_and_commission(
+        SECOND_ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
+    )
+    page.save_and_return_to_list()
+
+    # Now unassign the original site — one site (SECOND_ASSIGNMENT_SITE) remains
+    page.open_edit_package(PACKAGE_NAME)
+    page.unassign_site(ASSIGNMENT_SITE)
+    page.save_and_return_to_list()
+
+    page.open_edit_package(PACKAGE_NAME)
+    assert not page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page.site_is_assigned(SECOND_ASSIGNMENT_SITE)
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("WP-PRC-001 Global price is reflected at the site level by default")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-PRC-001: managed_package fixture times out in headless CI. Fix: same as WP-SIT-002.")
 def test_global_price_reflected_at_site(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -77,11 +114,6 @@ def test_global_price_reflected_at_site(managed_package):
 
 @allure.title("WP-PRC-002 Location price override for a specific site persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-PRC-002: _set_site_input uses JS native setter which bypasses "
-           "React Hook Form — price value not persisted in save payload. "
-           "Fix: replace with js.select()+send_keys pattern."
-)
 def test_location_price_override_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -97,7 +129,6 @@ def test_location_price_override_persists(managed_package):
 
 @allure.title("WP-PRC-003 Location price override higher than global price persists")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-PRC-003: managed_package fixture times out in headless CI. Fix: same as WP-SIT-002.")
 def test_location_price_override_higher_than_global_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -113,7 +144,6 @@ def test_location_price_override_higher_than_global_persists(managed_package):
 
 @allure.title("WP-PRC-004 Location price override lower than global price persists")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-PRC-004: managed_package fixture times out in headless CI. Fix: same as WP-SIT-002.")
 def test_location_price_override_lower_than_global_persists(managed_package):
     lower_price = str(int(GLOBAL_PRICE) - 10)
     page = managed_package
@@ -130,11 +160,6 @@ def test_location_price_override_lower_than_global_persists(managed_package):
 
 @allure.title("WP-PRC-005 Location commission override for a specific site persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-PRC-005: _set_site_input uses JS native setter which bypasses "
-           "React Hook Form — commission value not persisted in save payload. "
-           "Fix: replace with js.select()+send_keys pattern."
-)
 def test_location_commission_override_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -150,7 +175,6 @@ def test_location_commission_override_persists(managed_package):
 
 @allure.title("WP-PRC-006 Location commission override higher than global commission persists")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP WP-PRC-006: managed_package fixture times out in headless CI. Fix: same as WP-SIT-002.")
 def test_location_commission_higher_than_global_persists(managed_package):
     higher_commission = str(int(GLOBAL_COMMISSION) + 10)
     page = managed_package

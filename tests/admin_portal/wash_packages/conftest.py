@@ -9,6 +9,7 @@ _D = _load("wash_packages")
 EXISTING_PACKAGE            = _D["reference"]["existing_package"]
 MISSING_PACKAGE             = _D["search"]["nonexistent"]
 ASSIGNMENT_SITE             = _D["reference"]["assignment_site"]
+SECOND_ASSIGNMENT_SITE      = _D["reference"]["second_assignment_site"]
 PACKAGE_NAME                = _D["template"]["package_name"]
 UPDATED_PACKAGE_NAME        = _D["updated"]["package_name"]
 POINTS_AWARDED              = _D["template"]["points_awarded"]
@@ -73,11 +74,29 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
 
     if page.package_exists(package_name):
         # Package already exists — re-navigate to get a clean list state.
-        # Do NOT open the edit form here: saving triggers a SPA redirect back
-        # to /edit/:id which makes the subsequent open_wash_packages_page hang.
-        # Value resets belong to _reset_managed_package / managed_package fixture.
         return open_wash_packages_page(browser)
 
+    # Package not in active list — may be inactive from a prior test run.
+    # Reactivate rather than re-creating to avoid barcode/name duplicate errors.
+    page = open_wash_packages_page(browser)
+    try:
+        page.open_filter_panel()
+        page.toggle_active_service_filter()
+        page.apply_filters()
+        if page.package_exists(package_name):
+            page.open_edit_package(package_name)
+            page.ensure_active_switch_on()
+            page.save_and_return_to_list()
+            return open_wash_packages_page(browser)
+    except Exception:
+        pass
+    finally:
+        try:
+            page.clear_active_filters()
+        except Exception:
+            pass
+
+    page = open_wash_packages_page(browser)
     page.create_package(
         package_name,
         POINTS_AWARDED,
@@ -98,18 +117,29 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
     return page
 
 
+def _restore_package_fields(page):
+    """Reset mutable fields to baseline; only touch the Inovua site grid if needed."""
+    page.enter_service_name(PACKAGE_NAME)
+    page.set_loyalty_points(POINTS_AWARDED, POINTS_REDEEMED)
+    page.ensure_active_switch_on()
+    page.set_global_price(GLOBAL_PRICE)
+    page.set_global_commission(GLOBAL_COMMISSION)
+    if not page.site_is_assigned(ASSIGNMENT_SITE):
+        page.assign_site_with_price_and_commission(
+            ASSIGNMENT_SITE,
+            LOCATION_PRICE,
+            GLOBAL_COMMISSION,
+            controller_code=CONTROLLER_CODE,
+        )
+
+
 def _reset_managed_package(browser):
     """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline."""
     page = open_wash_packages_page(browser)
     if page.package_exists(PACKAGE_NAME):
         page = open_wash_packages_page(browser)
         page.open_edit_package(PACKAGE_NAME)
-        page.fill_package_form(
-            PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
-            GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
-            controller_code=CONTROLLER_CODE,
-            location_price=LOCATION_PRICE,
-        )
+        _restore_package_fields(page)
         page.save_and_return_to_list()
         return page
 
@@ -119,14 +149,27 @@ def _reset_managed_package(browser):
     if page.package_exists(UPDATED_PACKAGE_NAME):
         page = open_wash_packages_page(browser)
         page.open_edit_package(UPDATED_PACKAGE_NAME)
-        page.fill_package_form(
-            PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
-            GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
-            controller_code=CONTROLLER_CODE,
-            location_price=LOCATION_PRICE,
-        )
+        _restore_package_fields(page)
         page.save_and_return_to_list()
         return page
+
+    # Neither name found in active list — test_deactivate may have left the
+    # package inactive.  Show inactive entries and restore if found.
+    page = open_wash_packages_page(browser)
+    try:
+        page.open_filter_panel()
+        page.toggle_active_service_filter()
+        page.apply_filters()
+        for name in (PACKAGE_NAME, UPDATED_PACKAGE_NAME):
+            if page.package_exists(name):
+                page.open_edit_package(name)
+                _restore_package_fields(page)
+                page.save_and_return_to_list()
+                return page
+    except Exception:
+        pass
+    finally:
+        page.clear_active_filters()
 
     page.create_package(
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,

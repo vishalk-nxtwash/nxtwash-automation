@@ -20,11 +20,6 @@ pytestmark = [
 
 @allure.title("WP-FRM-001 Managed wash package starts at baseline before each test")
 @pytest.mark.sanity
-@pytest.mark.skip(
-    reason="CI-SKIP WP-FRM-001: managed_package fixture itself times out in "
-           "headless CI — Inovua site-grid in reset path. This is the root "
-           "fixture; fixing it unblocks all managed_package cascade failures."
-)
 def test_managed_package_provided_at_baseline(managed_package):
     page = managed_package
     page.search_package(PACKAGE_NAME)
@@ -36,13 +31,6 @@ def test_managed_package_provided_at_baseline(managed_package):
 
 @allure.title("WP-FRM-002 Managed package mutation is reverted on teardown")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "WP-FRM-002: managed_package fixture teardown TimeoutException — staging "
-        "grid does not reload in time after mutation restore under -n 2."
-    ),
-)
 def test_managed_package_mutation_is_reset_on_teardown(browser, managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

@@ -97,7 +97,10 @@ class WashPackagesPage(BasePage):
         "//*[normalize-space()='Service description']"
         "/parent::*[contains(@style,'cursor: pointer')]"
     )
-    DESCRIPTION_TEXTAREA = (By.NAME, "description")
+    DESCRIPTION_TEXTAREA = (
+        By.XPATH,
+        "//*[normalize-space()='Service description']/following::textarea[1]"
+    )
     SITE_ASSIGNMENT_HEADER_CHECKBOX = (
         By.XPATH,
         "//*[contains(@class,'InovuaReactDataGrid__column-header--first')]"
@@ -314,12 +317,14 @@ class WashPackagesPage(BasePage):
     def open_filter_panel(self):
         """Open the Wash Packages filter panel."""
         self.wait_for_list_loaded()
-        visible_site_inputs = [
-            element for element in self.driver.find_elements(*self.FILTER_SITE_INPUT)
-            if element.is_displayed()
-        ]
-        if visible_site_inputs:
-            return
+        try:
+            if any(
+                el.is_displayed()
+                for el in self.driver.find_elements(*self.FILTER_SITE_INPUT)
+            ):
+                return
+        except Exception:
+            pass
 
         button = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
@@ -340,16 +345,36 @@ class WashPackagesPage(BasePage):
 
     def filter_site_option_is_visible(self, site_name):
         """Return whether a site option is visible in the opened filter panel."""
-        self.open_filter_panel()
-        self.click(self.FILTER_SITE_INPUT)
+        from selenium.common.exceptions import StaleElementReferenceException
+        # If the panel is already open (e.g. from a prior call), close it first
+        # so the React Select component remounts cleanly before we click it.
         try:
+            els = self.driver.find_elements(*self.FILTER_SITE_INPUT)
+            if els and els[0].is_displayed():
+                btn = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+                self.driver.execute_script("arguments[0].click();", btn)
+                self.wait.until(lambda d: not any(
+                    e.is_displayed() for e in d.find_elements(*self.FILTER_SITE_INPUT)
+                ))
+        except Exception:
+            pass
+        self.open_filter_panel()
+        try:
+            for _ in range(3):
+                try:
+                    self.wait.until(
+                        EC.element_to_be_clickable(self.FILTER_SITE_INPUT)
+                    ).click()
+                    break
+                except StaleElementReferenceException:
+                    continue
             self.wait.until(
                 EC.visibility_of_element_located(
                     (By.XPATH, "//*[normalize-space()='%s']" % site_name)
                 )
             )
             return True
-        except TimeoutException:
+        except Exception:
             return False
 
     def reset_filters(self):
@@ -462,7 +487,8 @@ class WashPackagesPage(BasePage):
 
     def open_discount_settings(self):
         """Open Discount settings tab."""
-        self.click(self.DISCOUNT_SETTINGS_TAB)
+        tab = self.wait.until(EC.element_to_be_clickable(self.DISCOUNT_SETTINGS_TAB))
+        self.driver.execute_script("arguments[0].click();", tab)
         self.wait.until(
             EC.visibility_of_element_located(self.APPLICABLE_DISCOUNTS_TITLE)
         )
@@ -565,23 +591,14 @@ class WashPackagesPage(BasePage):
             )
 
     def _set_input_value(self, element, value):
-        """Set a React-controlled input value and dispatch change events."""
+        """Set a React-controlled input value via keyboard — CI-safe for RHF."""
         self.driver.execute_script(
-            """
-            const input = arguments[0];
-            const value = arguments[1];
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype,
-                'value'
-            ).set;
-            input.focus();
-            setter.call(input, value);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-            """,
-            element,
-            value
+            "arguments[0].scrollIntoView({ block: 'center' });", element
         )
+        element.click()
+        element.send_keys(Keys.HOME)
+        element.send_keys(Keys.SHIFT + Keys.END)
+        element.send_keys(str(value))
 
     def set_global_price(self, price):
         """Set package global price."""
@@ -676,23 +693,16 @@ for (var i = 0; i < kids.length; i++) {
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(row_xpath))
 
     def _set_site_input(self, element, value):
-        """Set a React-controlled site-grid input via native setter + events."""
+        """Set a React-controlled site-grid input via keyboard — CI-safe."""
         self.driver.execute_script(
-            """
-            const input = arguments[0];
-            const value = arguments[1];
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value'
-            ).set;
-            input.scrollIntoView({block: 'center', inline: 'center'});
-            input.focus();
-            setter.call(input, value);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-            input.dispatchEvent(new Event('blur', { bubbles: true }));
-            """,
-            element,
-            str(value),
+            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element
+        )
+        element.click()
+        element.send_keys(Keys.HOME)
+        element.send_keys(Keys.SHIFT + Keys.END)
+        element.send_keys(str(value))
+        self.driver.execute_script(
+            "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));", element
         )
 
     def assign_site_with_price_and_commission(
@@ -837,7 +847,7 @@ for (var i = 0; i < kids.length; i++) {
     def toggle_active_service_filter(self):
         """Toggle the Active service filter switch inside the open filter panel."""
         switch = self.wait.until(
-            EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH)
+            EC.element_to_be_clickable(self.ACTIVE_SERVICE_FILTER_SWITCH)
         )
         self.driver.execute_script("arguments[0].click();", switch)
 
@@ -857,10 +867,12 @@ for (var i = 0; i < kids.length; i++) {
             EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
         )
         self.driver.execute_script("arguments[0].click();", button)
-        # Wait for the list to update without switching frames — we are already inside
-        # the list iframe; calling wait_for_list_loaded() would re-enter the frame and
-        # break subsequent calls to filter/download methods.
+        # ADD_PACKAGE_BUTTON is always present, so wait for it first (fast proxy),
+        # then wait for the Inovua grid load mask to clear (actual reload signal).
+        # wait_for_list_loaded() is NOT called here — it switches frames and breaks
+        # subsequent filter/download calls that assume we're still in LIST_FRAME.
         self.wait.until(EC.element_to_be_clickable(self.ADD_PACKAGE_BUTTON))
+        self.wait_for_grid_idle()
 
     def enter_barcode(self, barcode):
         """Set the barcode input value."""
@@ -932,7 +944,7 @@ for (var i = 0; i < kids.length; i++) {
                 % discount_name
             ))
         )
-        remove_btn.click()
+        self.driver.execute_script("arguments[0].click();", remove_btn)
         self.wait.until(lambda driver: not self.discount_is_selected(discount_name))
 
     def unassign_site(self, site_name):

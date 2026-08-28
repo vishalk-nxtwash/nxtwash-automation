@@ -2,8 +2,9 @@
   "reference": {
     "existing_package":           "VK AWP006",
     "assignment_site":            "VK AL11",
+    "second_assignment_site":     "VK AL22",
     "applicable_discount":        "Basic Discount",
-    "second_applicable_discount": "VK AD01"
+    "second_applicable_discount": "VK AL01"
   },
   "template": {
     "package_name":       "VK AWP006",

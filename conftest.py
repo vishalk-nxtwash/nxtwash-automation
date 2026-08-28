@@ -135,10 +135,11 @@ _QUARANTINE_TIMING = (
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
     "test_wash_packages_edit.py::test_remove_applicable_discount_persists",
+    "test_wash_packages_edit.py::test_edit_wash_package_name_persists",
+    "test_wash_packages_edit.py::test_edit_wash_package_global_price_persists",
     "test_wash_packages_export.py::test_wash_packages_export_after_filter",
     "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
     "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
-    "test_wash_packages_site_assignment.py::test_location_price_override_persists",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
     # Overview tests carry their own in-code xfail(strict=False) markers
     # (legacy Overview iframe), so they are not listed here.

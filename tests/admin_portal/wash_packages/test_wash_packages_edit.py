@@ -28,10 +28,6 @@ pytestmark = [
 
 @allure.title("WP-EDT-001 Edit wash package name persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-001: wait_for_package_row(UPDATED_PACKAGE_NAME) times out after rename "
-           "in headless CI — Inovua grid does not surface the renamed row reliably after search."
-)
 def test_edit_wash_package_name_persists(browser, managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -48,7 +44,6 @@ def test_edit_wash_package_name_persists(browser, managed_package):
 
 @allure.title("WP-EDT-002 Edit global price persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="WP-EDT-002: _set_input_value JS setter doesn't reliably flush into RHF form state; save submits original value — needs blur event or ActionChains fix")
 def test_edit_wash_package_global_price_persists(managed_package):
     new_price = "45"
     page = managed_package
@@ -63,11 +58,6 @@ def test_edit_wash_package_global_price_persists(managed_package):
 
 @allure.title("WP-EDT-003 Edit global commission persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-003: JS native setter bypasses React Hook Form state for "
-           "commission field — value sets in DOM but RHF save payload carries original. "
-           "Fix: replace _set_input_value with js.select()+send_keys pattern."
-)
 def test_edit_wash_package_global_commission_persists(managed_package):
     new_commission = "12"
     page = managed_package
@@ -82,11 +72,6 @@ def test_edit_wash_package_global_commission_persists(managed_package):
 
 @allure.title("WP-EDT-004 Edit loyalty points persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-004: JS native setter bypasses React Hook Form state for "
-           "loyalty points fields — same root cause as WP-EDT-003. "
-           "Fix: replace _set_input_value with js.select()+send_keys pattern."
-)
 def test_edit_wash_package_loyalty_points_persist(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -101,12 +86,6 @@ def test_edit_wash_package_loyalty_points_persist(managed_package):
 
 @allure.title("WP-EDT-005 Editing site assignment persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-005: site_is_assigned('VK AL11') returns False — "
-           "Inovua grid interaction does not complete reliably in headless CI. "
-           "Fix: retry on StaleElementReferenceException; decouple site-grid "
-           "from managed fixture reset."
-)
 def test_edit_wash_package_assigned_sites(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -159,11 +138,6 @@ def test_deactivate_wash_package(managed_package):
 
 @allure.title("WP-DIS-001 Applicable discount assigned to wash package persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-DIS-001: managed_package fixture times out in headless "
-           "CI (Inovua site-grid in reset path). Fix: remove site-assignment "
-           "from fixture reset; only reassign if site is missing."
-)
 def test_assign_applicable_discount_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -180,10 +154,6 @@ def test_assign_applicable_discount_persists(managed_package):
 
 @allure.title("WP-DIS-002 Assigning multiple discounts persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-DIS-002: managed_package fixture times out in headless "
-           "CI. Fix: same as WP-DIS-001."
-)
 def test_assign_multiple_discounts_persist(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -228,13 +198,43 @@ def test_remove_applicable_discount_persists(managed_package):
     assert page_has_no_broken_state(page)
 
 
+@allure.title("WP-EDT-007 Editing discount configuration persists after save")
+@pytest.mark.regression
+def test_edit_wash_package_discount_persists(managed_package):
+    page = managed_package
+    page.open_edit_package(PACKAGE_NAME)
+    page.open_discount_settings()
+    page.select_applicable_discount(APPLICABLE_DISCOUNT)
+    page.save_and_return_to_list()
+
+    page.open_edit_package(PACKAGE_NAME)
+    page.open_discount_settings()
+    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+    assert page_has_no_broken_state(page)
+
+
+@allure.title("WP-DSC-002 Saving a wash package without a description succeeds")
+@pytest.mark.regression
+def test_save_wash_package_without_description(browser):
+    import uuid
+    package_name = "VK no-desc %s" % uuid.uuid4().hex[:6]
+    page = open_wash_packages_page(browser)
+    page.open_create_package()
+    page.enter_service_name(package_name)
+    page.set_global_price(GLOBAL_PRICE)
+    page.set_global_commission(GLOBAL_COMMISSION)
+    page.assign_site_with_price_and_commission(ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION)
+    # Description intentionally left empty
+    page.save_and_return_to_list()
+    page.search_package(package_name)
+
+    assert page.wait_for_package_row(package_name).is_displayed()
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("WP-DSC-001 Service description saves and persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="WP-DSC-001: description textarea locator needs DevTools verification "
-    "— accordion opens but By.NAME 'description' not found; inspect the textarea "
-    "name attribute in the edit form before re-enabling"
-)
+@pytest.mark.timeout(480)
 def test_service_description_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

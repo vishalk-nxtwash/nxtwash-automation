@@ -101,11 +101,6 @@ def test_search_inactive_wash_package_returns_it(managed_package):
 
 @allure.title("WP-FLT-001 Filter by site narrows results to packages at that site")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-FLT-001: Filter panel site-dropdown times out in "
-           "headless CI. Fix: use window.location.origin-based navigation "
-           "fallback in wait_for_list_loaded; increase React Select wait."
-)
 def test_filter_by_site_narrows_results(browser):
     create_wash_package_if_missing(browser)
     page = open_wash_packages_page(browser)
