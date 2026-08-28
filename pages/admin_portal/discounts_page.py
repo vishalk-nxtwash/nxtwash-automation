@@ -511,11 +511,11 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        # element.send_keys() targets the element directly and works inside
-        # iframes; ActionChains targets the browser's "focused" element and
-        # can lose the iframe context between chained actions.
-        discount_input.click()
-        discount_input.send_keys(Keys.CONTROL + 'a')
+        # JS .select() clears the field without CTRL+A, which is intercepted by
+        # the Inovua global keydown handler inside the legacy iframe.
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", discount_input
+        )
         discount_input.send_keys(str(value))
 
         def _value_matches(driver):
@@ -902,7 +902,9 @@ class DiscountsPage(BasePage):
 
     def click_download_button(self):
         """Click the export/download button."""
-        self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)).click()
+        self._dismiss_page_banner()
+        element = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", element)
 
     def fill_percentage_discount_form(
         self,
