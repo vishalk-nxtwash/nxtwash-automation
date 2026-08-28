@@ -20,7 +20,6 @@ pytestmark = [
 
 @allure.title("WB-SIT-001 Assigning a single site persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="WB-SIT-001: LIST_FRAME not stable — staging redirects to edit URL after click_save_wash_book(); deferred")
 def test_assign_single_site_persists(browser):
 
     page = create_wash_book_if_missing(browser)
@@ -59,7 +58,6 @@ def test_assign_multiple_sites_persists(browser):
 
 @allure.title("WB-SIT-003 Location price override persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="WB-SIT-003: save-timing issue — price reads back empty after click_save_wash_book; deferred pending save-wait fix")
 def test_location_price_override_persists(browser):
 
     override_price = "45"

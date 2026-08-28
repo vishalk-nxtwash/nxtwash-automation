@@ -1,4 +1,6 @@
-from selenium.common.exceptions import TimeoutException
+import time
+
+from selenium.common.exceptions import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,6 +11,10 @@ from pages.common.base_page import BasePage
 
 class WashBooksPage(BasePage):
 
+    FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/washBooks')]"
+    )
     LIST_FRAME = (
         By.XPATH,
         "//iframe[contains(@src,'/services/washBooks')"
@@ -120,6 +126,10 @@ class WashBooksPage(BasePage):
         By.XPATH,
         "//button[@role='tab' and normalize-space()='Customer wash books']"
     )
+    CWB_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerWashBooks')]"
+    )
     CWB_LIST_FRAME = (
         By.XPATH,
         "//iframe[contains(@src,'/services/customerWashBooks')"
@@ -170,10 +180,40 @@ class WashBooksPage(BasePage):
     )
 
     def wait_for_list_loaded(self):
-        """Wait until the Wash Books list is visible."""
-        self.switch_to_frame_with_retry(self.LIST_FRAME)
+        """Wait until the Wash Books list is visible.
+
+        Uses the general FRAME locator so this works whether staging navigated
+        to the list URL or stayed on an edit URL after save.  If ADD_WASH_BOOK_BUTTON
+        doesn't appear within a short window the outer portal is driven directly
+        to the list URL and the frame is re-entered.
+        """
+        self.switch_to_frame_with_retry(self.FRAME)
+        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        if not self._quick_wb_add_button_check(timeout=8):
+            self._navigate_outer_to_wb_list()
+            self.switch_to_frame_with_retry(self.FRAME)
+            self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
         self.wait_for_grid_idle()
+
+    def _quick_wb_add_button_check(self, timeout=8):
+        """Return True if ADD_WASH_BOOK_BUTTON becomes clickable within timeout."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def _navigate_outer_to_wb_list(self):
+        """Navigate the outer admin portal directly to the Wash Books list."""
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url
+        wb_path = "/services/washBooks"
+        idx = current.find(wb_path)
+        if idx != -1:
+            self.driver.get(current[:idx + len(wb_path)])
 
     wait_for_loaded = wait_for_list_loaded
 
@@ -962,10 +1002,21 @@ class WashBooksPage(BasePage):
 
     def click_save_wash_book(self):
         """Click save wash book."""
-        button = self.wait.until(
-            EC.element_to_be_clickable(self.SAVE_WASH_BOOK_BUTTON)
+        self.driver.execute_script(
+            "window.confirm = () => true;"
+            " try { window.parent.confirm = () => true; } catch(e) {}"
         )
-        self.driver.execute_script("arguments[0].click();", button)
+        time.sleep(0.5)
+        btn = self.wait.until(EC.element_to_be_clickable(self.SAVE_WASH_BOOK_BUTTON))
+        try:
+            btn.click()
+        except ElementClickInterceptedException:
+            self._dismiss_page_banner()
+            self.driver.execute_script("arguments[0].click();", btn)
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(btn))
+        except Exception:
+            pass
 
     def fill_wash_book_form(
         self,
@@ -1045,22 +1096,40 @@ class WashBooksPage(BasePage):
         self.wait_for_cwb_list_loaded()
 
     def wait_for_cwb_list_loaded(self):
-        """Wait until the Customer Wash Books listing is ready."""
-        long_wait = WebDriverWait(self.driver, 60)
-        self.switch_to_frame_with_retry(self.CWB_LIST_FRAME)
-        long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
-        long_wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
-        # Wait for either the grid header OR the results summary to confirm
-        # the grid has fully initialised (header renders even for empty lists,
-        # but takes longer than the Add button becoming clickable).
-        long_wait.until(
-            lambda d: d.find_elements(
-                By.XPATH,
-                "//*[contains(@class,'InovuaReactDataGrid__header')]"
-                " | //*[contains(normalize-space(),'Showing')]"
-            )
-        )
+        """Wait until the Customer Wash Books listing is ready.
+
+        Uses the general CWB_FRAME locator so this works whether staging
+        navigated to the list URL or stayed on an edit URL after save.
+        If CWB_ADD_BUTTON doesn't appear within a short window the outer
+        portal is driven directly to the list URL and the frame is re-entered.
+        """
+        self.switch_to_frame_with_retry(self.CWB_FRAME)
+        self.wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
+        if not self._quick_cwb_add_button_check(timeout=8):
+            self._navigate_outer_to_cwb_list()
+            self.switch_to_frame_with_retry(self.CWB_FRAME)
+            self.wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
+        self.wait.until(EC.element_to_be_clickable(self.CWB_ADD_BUTTON))
         self.wait_for_grid_idle()
+
+    def _quick_cwb_add_button_check(self, timeout=8):
+        """Return True if CWB_ADD_BUTTON becomes clickable within timeout."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(self.CWB_ADD_BUTTON)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def _navigate_outer_to_cwb_list(self):
+        """Navigate the outer admin portal directly to the Customer Wash Books list."""
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url
+        cwb_path = "/services/customerWashBooks"
+        idx = current.find(cwb_path)
+        if idx != -1:
+            self.driver.get(current[:idx + len(cwb_path)])
 
     def wait_for_cwb_create_loaded(self):
         """Wait until the CWB create form is ready.
@@ -1086,13 +1155,23 @@ class WashBooksPage(BasePage):
         long_wait.until(lambda driver: self.get_cwb_wash_book_number_value() != "")
 
     def search_cwb(self, wash_book_number):
-        """Search customer wash books by wash book number."""
+        """Search customer wash books by wash book number.
+
+        Ctrl+A is intercepted by Inovua's global keydown handler inside the
+        iframe, so JS select() is used to highlight existing text and
+        ActionChains sends BACKSPACE + the new value to the focused element
+        without issuing a refocus (which would deselect).
+        """
+        from selenium.webdriver.common.action_chains import ActionChains
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.CWB_SEARCH_INPUT)
         )
-        search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        search_input.send_keys(str(wash_book_number))
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", search_input
+        )
+        ActionChains(self.driver).send_keys(Keys.BACKSPACE).send_keys(
+            str(wash_book_number)
+        ).perform()
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.CWB_SEARCH_INPUT
@@ -1189,8 +1268,21 @@ class WashBooksPage(BasePage):
 
     def click_save_cwb(self):
         """Click the Save customer wash book button."""
-        button = self.wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
-        self.driver.execute_script("arguments[0].click();", button)
+        self.driver.execute_script(
+            "window.confirm = () => true;"
+            " try { window.parent.confirm = () => true; } catch(e) {}"
+        )
+        time.sleep(0.5)
+        btn = self.wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
+        try:
+            btn.click()
+        except ElementClickInterceptedException:
+            self._dismiss_page_banner()
+            self.driver.execute_script("arguments[0].click();", btn)
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(btn))
+        except Exception:
+            pass
 
     def cwb_active_switch_is_on(self):
         """Return whether the Active customer wash book switch is on."""
