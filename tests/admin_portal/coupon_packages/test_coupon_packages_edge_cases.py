@@ -33,13 +33,6 @@ def test_coupon_package_long_name_does_not_break_form(browser):
 
 @allure.title("CP-EXD-001 Valid positive expiration days saves and persists")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "CP-EXD-001: TimeoutException or parallel write collision on shared coupon "
-        "package record under -n 3 workers."
-    ),
-)
 def test_coupon_package_valid_expiration_days(browser):
 
     page = create_coupon_package_if_missing(browser)
@@ -51,13 +44,6 @@ def test_coupon_package_valid_expiration_days(browser):
 
 @allure.title("CP-EXD-002 Zero expiration days creates package with no expiry")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "CP-EXD-002: parallel write collision — another worker resets expiration "
-        "days between save and re-read under -n 3."
-    ),
-)
 def test_coupon_package_zero_expiration_days(browser):
 
     page = create_coupon_package_if_missing(browser)
