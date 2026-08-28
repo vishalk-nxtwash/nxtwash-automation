@@ -566,6 +566,11 @@ class GiftCardsPage(BasePage):
             % location_name
         )
 
+        # Reset to top before each search so upward re-renders (after location
+        # assignment or main-toggle enable) don't leave the target row above the
+        # viewport with a downward-only scroll loop.
+        self.driver.execute_script("arguments[0].scrollTop = 0;", scroller)
+
         def _find_or_scroll(driver):
             rows = driver.find_elements(*row_locator)
             if rows and rows[0].is_displayed():
@@ -620,7 +625,8 @@ class GiftCardsPage(BasePage):
         switch = row.find_element(By.XPATH, "(.//button[@role='switch'])[last()]")
 
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
+            # JS click bypasses coordinate-based banner interception inside the iframe.
+            self.driver.execute_script("arguments[0].click();", switch)
             # Wait via a fresh locator to avoid stale reference after re-render.
             self.wait.until(
                 EC.presence_of_element_located((
@@ -661,11 +667,10 @@ class GiftCardsPage(BasePage):
         for location_name in location_names:
             self.assign_location(location_name)
         self.enable_all_main_toggles()
-        # Enable per-location Show on CP AFTER main toggles: the "Show on customer
-        # portal" main switch triggers a grid re-render that resets per-location
-        # CP switches to OFF, so they must be set last.
-        for location_name in location_names:
-            self.enable_location_show_on_cp(location_name)
+        # Per-location Show on CP is not set here: the API does not persist the
+        # per-location switch value (see GC-PER-002 / GC-CRT-011 xfail).
+        # Tests that specifically cover that feature call enable_location_show_on_cp
+        # directly after open_create_gift_card().
         # Enter amount last — toggle/checkbox interactions trigger React
         # re-renders that reset the amount field to its server value if set earlier.
         self.enter_gift_card_amount(amount)
@@ -674,12 +679,9 @@ class GiftCardsPage(BasePage):
         """Click save gift card."""
         from selenium.webdriver.support.ui import WebDriverWait
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
-        button.click()
-        # Wait for the button to go stale (SPA navigated away after a
-        # successful save).  Without this, an immediately-following driver.get()
-        # can cancel the in-flight save XHR before the server persists the
-        # change.  Validation failures keep the button in the DOM so we time
-        # out silently after 10 s and let the caller inspect the form state.
+        # JS click bypasses ChromeDriver coordinate-based toast interception
+        # (staging banner overlays the iframe at the save-button coordinates).
+        self.driver.execute_script("arguments[0].click();", button)
         try:
             WebDriverWait(self.driver, 10).until(EC.staleness_of(button))
         except TimeoutException:
