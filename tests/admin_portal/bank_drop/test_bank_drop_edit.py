@@ -28,7 +28,6 @@ pytestmark = [
 
 @allure.title("BD-EDT-001 Edit bank drop name persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP BD-EDT-001: managed_edit_bank_drop fixture fails in headless CI. Fix: decouple fixture from form frame switch; add retry on TimeoutException.")
 def test_edit_bank_drop_name_persists(managed_edit_bank_drop, browser):
 
     page = managed_edit_bank_drop
@@ -115,10 +114,6 @@ def test_deactivate_active_bank_drop(browser):
 
 @allure.title("BD-EDT-005 Edit form pre-populates existing name and order values")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="STAGING-ERROR BD-EDT-005: BANK_DROP_ORDER='2' but staging record has order='5'; "
-           "staging data mismatch — update BANK_DROP_ORDER constant after manual verification."
-)
 def test_edit_form_prepopulates_existing_values(browser):
 
     create_bank_drop_if_missing(browser)
@@ -149,11 +144,6 @@ def test_cancel_out_of_edit_form(browser):
 
 @allure.title("BD-PER-002 Edited bank drop changes persist after page reload")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="BD-PER-002: RHF submit payload carries original order value despite JS native setter "
-           "updating React visual state. enter_order() needs real keystrokes (ActionChains) to "
-           "trigger RHF field registration. Verify manually until fixed."
-)
 def test_edited_bank_drop_persists_after_reload(managed_bank_drop):
 
     new_order = "4"

@@ -56,6 +56,22 @@ def test_create_inactive_bank_drop(browser):
     assert inactive_name not in page.get_body_text()
 
 
+@allure.title("BD-CRT-003 Create bank drop with required fields only appears in list")
+@pytest.mark.regression
+def test_create_bank_drop_required_fields_only(browser):
+
+    name = "VK req-only %s" % uuid.uuid4().hex[:6]
+    page = open_bank_drop_page(browser)
+    page.open_create()
+    page.enter_name(name)
+    page.enter_order("88")
+    page.click_save()
+    page.wait_for_list_loaded()
+
+    assert page.wait_for_bank_drop_row(name).is_displayed()
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("BD-CRT-004 Cancel out of add form discards data and returns to list")
 @pytest.mark.regression
 def test_cancel_out_of_add_form(browser):

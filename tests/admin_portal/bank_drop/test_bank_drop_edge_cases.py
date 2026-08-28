@@ -73,6 +73,34 @@ def test_duplicate_order_documents_behavior(browser):
     assert page_has_no_broken_state(page)
 
 
+@allure.title("BD-VAL-008 Long bank drop name does not break the form")
+@pytest.mark.edge
+def test_long_name_does_not_break_form(browser):
+
+    page = open_bank_drop_page(browser)
+    page.open_create()
+    page.enter_name(LONG_BANK_DROP_NAME)
+    page.enter_order("85")
+    page.click_save()
+
+    # Either saves (navigates to list) or stays in form — neither should break the UI.
+    assert page_has_no_broken_state(page)
+
+
+@allure.title("BD-VAL-009 XSS in bank drop name is treated as literal text")
+@pytest.mark.edge
+def test_xss_name_does_not_execute_script(browser):
+
+    page = open_bank_drop_page(browser)
+    page.open_create()
+    page.enter_name(XSS_BANK_DROP_NAME)
+    page.enter_order("84")
+    page.click_save()
+
+    # Page must remain usable; no JS execution (alert would surface as Selenium WebDriverException).
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("BD-ORD-002 Changing order value re-sequences the bank drop in the list")
 @pytest.mark.edge
 @pytest.mark.skip(
