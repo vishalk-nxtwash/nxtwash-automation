@@ -690,6 +690,14 @@ class DiscountsPage(BasePage):
         """Return whether Active service switch is on."""
         return self.switch_is_on(self.ACTIVE_SWITCH)
 
+    def wait_for_active_switch_settled(self, expected_on, timeout=None):
+        """Wait for the active switch to reflect its actual state after form hydration."""
+        from selenium.webdriver.support.ui import WebDriverWait
+        aria = "true" if expected_on else "false"
+        locator = self.ACTIVE_SWITCH
+        wait = WebDriverWait(self.driver, timeout) if timeout is not None else self.wait
+        wait.until(lambda d: d.find_element(*locator).get_attribute("aria-checked") == aria)
+
     def all_locations_switch_is_on(self):
         """Return whether Allow discount at all locations switch is on."""
         return self.switch_is_on(self.ALL_LOCATIONS_SWITCH)

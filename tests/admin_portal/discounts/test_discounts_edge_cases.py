@@ -120,14 +120,7 @@ def test_discount_expiring_today_accepted(browser):
 
 @allure.title("DS-EC-005 Change discount type from amount to percentage")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "DS-EC-005: parallel worker write collision — another gw worker restores "
-        "MANAGED_DISCOUNT type between save and re-read under -n 3. "
-        "Fix: per-worker discount isolation."
-    ),
-)
+@pytest.mark.xdist_group("discounts_managed")
 def test_discount_type_change_amount_to_percentage(managed_discount):
 
     page = managed_discount
@@ -146,6 +139,7 @@ def test_discount_type_change_amount_to_percentage(managed_discount):
 
 @allure.title("DS-EC-006 Change discount type from percentage to amount")
 @pytest.mark.regression
+@pytest.mark.xdist_group("discounts_managed")
 def test_discount_type_change_percentage_to_amount(managed_percentage_discount):
 
     page = managed_percentage_discount
@@ -164,6 +158,7 @@ def test_discount_type_change_percentage_to_amount(managed_percentage_discount):
 
 @allure.title("DS-EC-007 Remove assigned location from discount")
 @pytest.mark.regression
+@pytest.mark.xdist_group("discounts_managed")
 def test_discount_remove_assigned_location(managed_discount):
 
     page = managed_discount
@@ -182,6 +177,7 @@ def test_discount_remove_assigned_location(managed_discount):
 
 @allure.title("DS-EC-008 Add location to existing discount")
 @pytest.mark.regression
+@pytest.mark.xdist_group("discounts_managed")
 def test_discount_add_location_to_existing(managed_discount):
 
     page = managed_discount

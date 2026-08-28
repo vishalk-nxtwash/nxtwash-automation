@@ -1,8 +1,8 @@
 import allure
 import pytest
 
+from tests.admin_portal.admin_session import open_admin_path
 from tests.admin_portal.discounts.conftest import ALL_LOC_DISCOUNT_NAME
-from tests.admin_portal.discounts.conftest import ASSIGNMENT_SITE
 from tests.admin_portal.discounts.conftest import DISCOUNT_AMOUNT
 from tests.admin_portal.discounts.conftest import DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import MANAGED_DISCOUNT
@@ -61,22 +61,19 @@ def test_discount_create_is_idempotent(browser):
 
 @allure.title("DS-HP-004 Specific location settings persist")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "Staging data accumulation: VK AD05 was created when the location grid "
-        "sorted differently; the originally-assigned location is no longer at a "
-        "predictable grid index, and the Inovua virtual grid only renders ~15 of "
-        "74+ rows in the DOM. Remove xfail after staging cleanup + discount recreation."
-    ),
-    strict=False,
-)
 def test_discount_first_location_settings_persist(browser):
 
     discounts_page = create_discount_if_missing(browser)
     discounts_page.open_edit_discount(DISCOUNT_NAME)
+    discounts_page.set_location_discount_value_by_index(0, DISCOUNT_AMOUNT)
+    discounts_page.select_location_discount_type_by_index(0, "Amount")
+    discounts_page.assign_location_by_index(0)
+    discounts_page.click_save_discount()
+    discounts_page.wait_for_list_loaded()
+    discounts_page.open_edit_discount(DISCOUNT_NAME)
 
-    assert discounts_page.location_is_assigned_by_name(ASSIGNMENT_SITE)
-    assert discounts_page.get_location_discount_value_by_name(ASSIGNMENT_SITE) == DISCOUNT_AMOUNT
+    assert discounts_page.location_is_assigned_by_index(0)
+    assert discounts_page.get_location_discount_value_by_index(0) == DISCOUNT_AMOUNT
 
 
 @allure.title("DS-HP-002 Create percentage discount")
@@ -110,12 +107,7 @@ def test_create_discount_assign_all_locations(browser):
 
 @allure.title("DS-HP-006 Activate discount")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — headless: after two consecutive edit-save cycles the grid search "
-        "does not resolve within the 10s wait. Passes reliably in non-headless mode."
-    )
-)
+@pytest.mark.xdist_group("discounts_managed")
 def test_activate_discount(managed_discount):
 
     page = managed_discount
@@ -123,31 +115,39 @@ def test_activate_discount(managed_discount):
     page.ensure_active_switch_off()
     page.click_save_discount()
     page.wait_for_list_loaded()
+    page.open_filter_panel()
+    page.set_active_discount_filter(False)
+    page.apply_filters()
 
     page.open_edit_discount(MANAGED_DISCOUNT)
+    page.wait_for_active_switch_settled(expected_on=False)
     page.ensure_active_switch_on()
     page.click_save_discount()
     page.wait_for_list_loaded()
-
+    # Switch back to active-only so the assertion is unambiguous in the presence
+    # of inactive duplicates that may linger from earlier failed runs.
+    page.open_filter_panel()
+    page.set_active_discount_filter(True)
+    page.apply_filters()
     page.search_discount(MANAGED_DISCOUNT)
+
     assert page.get_discount_status(MANAGED_DISCOUNT) == "Active"
 
 
 @allure.title("DS-HP-007 Deactivate discount")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — headless: after two consecutive edit-save cycles the grid search "
-        "does not resolve within the 10s wait. Passes reliably in non-headless mode."
-    )
-)
+@pytest.mark.xdist_group("discounts_managed")
 def test_deactivate_discount(managed_discount):
 
     page = managed_discount
     page.open_edit_discount(MANAGED_DISCOUNT)
     page.ensure_active_switch_off()
     page.click_save_discount()
+    open_admin_path(page.driver, "/services/discounts")
     page.wait_for_list_loaded()
-
+    page.open_filter_panel()
+    page.set_active_discount_filter(False)
+    page.apply_filters()
     page.search_discount(MANAGED_DISCOUNT)
+
     assert page.get_discount_status(MANAGED_DISCOUNT) == "Inactive"

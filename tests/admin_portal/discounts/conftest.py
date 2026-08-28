@@ -167,18 +167,40 @@ MANAGED_DISCOUNT = managed_name("Discount")
 
 def reset_managed_discount(browser):
     """Ensure the managed discount exists and reset its mutable fields."""
+    from selenium.common.exceptions import TimeoutException as _TE
+    from selenium.webdriver.support.ui import WebDriverWait as _WDW
+    from selenium.webdriver.support import expected_conditions as _EC
+
     discounts_page = open_discounts_page(browser)
+    found_inactive = False
 
     if not discounts_page.discount_exists(MANAGED_DISCOUNT):
-        discounts_page.create_discount(
-            MANAGED_DISCOUNT,
-            REQUESTED_SERVICE_CATEGORY,
-            DISCOUNT_AMOUNT,
-            START_DAY,
-            START_TIME,
-            SERVICE_CATEGORY
-        )
-        discounts_page = open_discounts_page(browser)
+        # discount_exists uses active-only filter; the discount may just be inactive.
+        # Check show-all before creating to avoid accumulating inactive duplicates.
+        discounts_page.open_filter_panel()
+        discounts_page.set_active_discount_filter(False)
+        discounts_page.apply_filters()
+        discounts_page.search_discount(MANAGED_DISCOUNT)
+        try:
+            _WDW(discounts_page.driver, 10).until(
+                _EC.visibility_of_element_located(
+                    discounts_page.get_discount_row_locator(MANAGED_DISCOUNT)
+                )
+            )
+            found_inactive = True
+        except _TE:
+            open_admin_path(browser, "/services/discounts")
+            discounts_page = DiscountsPage(browser)
+            discounts_page.wait_for_list_loaded()
+            discounts_page.create_discount(
+                MANAGED_DISCOUNT,
+                REQUESTED_SERVICE_CATEGORY,
+                DISCOUNT_AMOUNT,
+                START_DAY,
+                START_TIME,
+                SERVICE_CATEGORY
+            )
+            discounts_page = open_discounts_page(browser)
 
     # Reset mutable fields touched by tests back to a known baseline.
     # ensure_all_locations_switch_off() must run before save: if a previous
@@ -186,6 +208,10 @@ def reset_managed_discount(browser):
     discounts_page.open_edit_discount(MANAGED_DISCOUNT)
     discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
     discounts_page.select_amount_discount_type()
+    if found_inactive:
+        # Opening an inactive record: wait for the form to hydrate to the actual
+        # inactive state before activating to avoid the aria-checked race.
+        discounts_page.wait_for_active_switch_settled(expected_on=False, timeout=10)
     discounts_page.ensure_active_switch_on()
     discounts_page.ensure_all_locations_switch_off()
     discounts_page.click_save_discount()
