@@ -147,3 +147,59 @@ def test_overview_single_day_no_date_no_broken_state(overview_page):
 @_IFRAME_XFAIL
 def test_overview_single_day_today_matches_today_preset(overview_page):
     assert overview_page.dashboard_has_any_text(["Today", "Cars Washed", "Revenue"])
+
+
+# ── New coverage: OV-FLT-002, 004, 007, 009, 010, 014 ────────────────────────
+
+@allure.title("OV-FLT-002 Default page load shows all-sites aggregated view")
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_default_load_shows_all_sites(overview_page):
+    assert overview_page.dashboard_has_any_text(["All Sites", "All", "Site"])
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.title("OV-FLT-004 Selecting multiple sites aggregates selected sites only")
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_multiple_site_selection_aggregates(overview_page):
+    overview_page.select_site_filter(OVERVIEW_SITE)
+    overview_page.select_site_filter("Vk test carwash 1")
+    assert overview_page.dashboard_has_any_text(["Cars Washed", "Revenue"])
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.title("OV-FLT-007 Date preset dropdown defaults to Today on page load")
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_date_preset_defaults_to_today(overview_page):
+    assert overview_page.dashboard_text_contains("Today")
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.title("OV-FLT-009 Selecting Yesterday preset updates dashboard to prior day")
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_yesterday_preset_updates_dashboard(overview_page):
+    overview_page.select_date_preset("Yesterday")
+    assert overview_page.dashboard_has_any_text(["Yesterday", "Cars Washed", "Revenue"])
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.title("OV-FLT-010 Selecting This Week and Last Week presets update dashboard correctly")
+@pytest.mark.parametrize("preset", ["This Week", "Last Week"])
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_weekly_presets_update_dashboard(overview_page, preset):
+    overview_page.select_date_preset(preset)
+    assert overview_page.dashboard_has_any_text([preset, "Cars Washed", "Revenue"])
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.title("OV-FLT-014 Single Day checkbox switches dashboard to single-date input mode")
+@pytest.mark.regression
+@_IFRAME_XFAIL
+def test_overview_single_day_checkbox_switches_to_single_date_mode(overview_page):
+    overview_page.toggle_single_day_checkbox()
+    assert overview_page.dashboard_has_any_text(["Single Day", "Date", "Today"])
+    assert not overview_page.has_broken_state_text()

@@ -45,6 +45,12 @@ class AdminLoginPage(BasePage):
     def open(self):
         """Open Admin Portal."""
         portal_url = self.config.get_url(self.PORTAL)
+        # Return to top-level context before clearing auth state.  When called
+        # mid-test the driver may still track a service-categories or other
+        # legacy iframe; execute_script then runs against that iframe's origin
+        # instead of the portal's, leaving the portal's localStorage intact and
+        # causing the second get() to stay on the overview instead of /login.
+        self.driver.switch_to.default_content()
         # Navigate first so execute_script runs on the correct origin, then
         # wipe cookies + localStorage to guarantee a logged-out state before
         # the second navigation that the app will redirect to /login.
@@ -76,9 +82,19 @@ class AdminLoginPage(BasePage):
         return "/login" in self.driver.current_url
 
     def logo_is_visible(self):
-        """Return whether the logo image is visible."""
-        elements = self.driver.find_elements(*self.LOGO_IMAGE)
-        return bool(elements) and elements[0].is_displayed()
+        """Return whether the logo image is present and visible.
+
+        The img has loading='lazy' and the login fixture navigates through
+        multiple redirects before settling — allow up to 15s for the element
+        to mount before declaring it absent.
+        """
+        try:
+            el = WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(self.LOGO_IMAGE)
+            )
+            return el.is_displayed()
+        except Exception:
+            return False
 
     def get_logo_src(self):
         """Return login logo image source."""

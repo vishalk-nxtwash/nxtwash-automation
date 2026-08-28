@@ -89,6 +89,12 @@ def test_login_validation_invalid_email_formats(login_page, email):
     assert "Overview" not in login_page.get_body_text()
 
 
+def test_login_validation_email_label_is_correct(login_page):
+
+    assert login_page.email_label_is_visible()
+    assert "Email" in login_page.get_body_text()
+
+
 def test_login_validation_maximum_email_length_does_not_break_ui(login_page):
 
     long_email = "a" * 245 + "@example.com"

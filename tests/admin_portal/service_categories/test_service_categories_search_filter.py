@@ -24,7 +24,6 @@ pytestmark = [
     "and clear"
 )
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_service_categories_search_variants_and_clear(browser):
     LOG.info("Verifying Service Categories search variants")
     page = create_category_if_missing(browser)

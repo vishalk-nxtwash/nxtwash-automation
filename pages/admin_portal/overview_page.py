@@ -263,6 +263,16 @@ class AdminOverviewPage(BasePage):
                 end, to_date,
             )
 
+    def toggle_single_day_checkbox(self):
+        """Click the Single Day checkbox inside the legacy dashboard."""
+        with self._in_iframe():
+            self.wait.until(EC.element_to_be_clickable((
+                By.XPATH,
+                "//*[normalize-space()='Single Day']/preceding::input[@type='checkbox'][1]"
+                " | //*[normalize-space()='Single Day']/following::input[@type='checkbox'][1]"
+                " | //*[normalize-space()='Single Day']",
+            ))).click()
+
     def open_overview_in_new_tab(self):
         """Open Overview in a second browser tab."""
         self.driver.execute_script(

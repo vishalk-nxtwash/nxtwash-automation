@@ -1,6 +1,7 @@
 import allure
 import pytest
 
+from tests.admin_portal.admin_session import ensure_admin_logged_in
 from tests.admin_portal.service_categories.conftest import CATEGORY_NAME
 from tests.admin_portal.service_categories.conftest import MANAGED_CATEGORY
 from tests.admin_portal.service_categories.conftest import MANAGED_CATEGORY_EDITED
@@ -17,6 +18,31 @@ pytestmark = [
 ]
 
 
+@allure.title("SC-EC-004 Service category data persists after re-login")
+@pytest.mark.regression
+def test_service_categories_data_persists_after_relogin(browser):
+    """Category list must show the same records after a full logout + re-login cycle.
+
+    Staging keeps the server session alive even after client-side auth state
+    is cleared (the SPA does not always redirect to /login), so we use
+    ensure_admin_logged_in which handles both cases: going through the login
+    form when the SPA redirects, or confirming the live session otherwise.
+    """
+    page = create_category_if_missing(browser)
+    page.search_category(CATEGORY_NAME)
+    assert page.wait_for_category_row(CATEGORY_NAME).is_displayed()
+
+    browser.switch_to.default_content()
+    browser.delete_all_cookies()
+    browser.execute_script("window.localStorage.clear(); window.sessionStorage.clear();")
+    ensure_admin_logged_in(browser)
+
+    page = open_service_categories_page(browser)
+    page.search_category(CATEGORY_NAME)
+    assert page.wait_for_category_row(CATEGORY_NAME).is_displayed()
+    assert page_has_no_broken_state(page)
+
+
 @allure.title("SC-EDGE-001 Long service category name does not break form")
 @pytest.mark.regression
 def test_service_category_long_name_does_not_break_form(browser):
@@ -31,6 +57,7 @@ def test_service_category_long_name_does_not_break_form(browser):
 
 @allure.title("SC-EC-003 Activate-Deactivate-Activate cycle")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_category")
 def test_activate_deactivate_activate_cycle(managed_category):
 
     page = managed_category
@@ -53,6 +80,7 @@ def test_activate_deactivate_activate_cycle(managed_category):
 
 @allure.title("SC-EC-005 Edit inactive category saves changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_category")
 def test_edit_inactive_category_saves_changes(managed_category):
     """Deactivate the managed category, then edit it while inactive.
 
@@ -80,6 +108,7 @@ def test_edit_inactive_category_saves_changes(managed_category):
 
 @allure.title("SC-EC-006 Deactivated category is findable via inactive filter")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_category")
 def test_deactivated_category_findable_via_filter(managed_category):
 
     page = managed_category
@@ -121,7 +150,6 @@ def test_cancel_add_new_does_not_create_category(browser):
 
 @allure.title("SC-EC-008 Cancel edit does not save changes")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_cancel_edit_does_not_save_changes(browser):
 
     ghost_name = CATEGORY_NAME + " ghost edit"

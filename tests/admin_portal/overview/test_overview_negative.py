@@ -95,6 +95,27 @@ def test_overview_zero_data_visually_distinct_from_loading(overview_page):
 @allure.feature("Overview")
 @allure.story("Negative")
 @allure.title(
+    "OV-EST-001 New site with no transactions shows '--' or '0' on all dashboard cards"
+)
+@pytest.mark.regression
+@pytest.mark.xfail(
+    reason="Known product/environment gap: legacy Overview iframe is empty.",
+    strict=False,
+)
+def test_overview_new_site_zero_transactions_shows_placeholder(overview_page):
+    """A site with zero transaction history must show '--' or '0' on all cards.
+
+    Asserts no calculation errors or blank/missing values appear when there is
+    no underlying data for the selected site and date range.
+    """
+    assert overview_page.dashboard_has_any_text(["--", "0", "Cars Washed"])
+    assert not overview_page.has_broken_state_text()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Overview")
+@allure.story("Negative")
+@allure.title(
     "OV-EST-004 Employees table shows 'No records available' when no employees "
     "are assigned to the selected site"
 )

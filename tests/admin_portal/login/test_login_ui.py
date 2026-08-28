@@ -22,7 +22,6 @@ def test_login_page_url_is_correct(browser, login_page):
     ).rstrip("/") + "/login"
 
 
-@pytest.mark.skip(reason="needs_inspection: logo img alt attribute changed on staging — update LOGO_IMAGE locator in login_page.py after checking /login HTML")
 def test_login_logo_is_available(login_page):
 
     assert login_page.logo_is_visible()
@@ -62,7 +61,6 @@ def test_login_browser_title(login_page):
     assert "Admin Portal NxtWash" == login_page.get_browser_title()
 
 
-@pytest.mark.skip(reason="needs_inspection: depends on LOGO_IMAGE locator — fix test_login_logo_is_available first")
 def test_login_layout_renders_after_refresh(browser, login_page):
 
     browser.refresh()

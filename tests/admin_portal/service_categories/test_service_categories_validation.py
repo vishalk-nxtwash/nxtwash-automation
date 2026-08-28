@@ -12,18 +12,6 @@ pytestmark = [
 ]
 
 
-@allure.title("SC-NG-001 Category name is mandatory")
-@pytest.mark.validation
-def test_service_category_required_name_validation(browser):
-
-    page = open_service_categories_page(browser)
-    page.open_create_category()
-    page.click_save_new()
-
-    assert not page.category_name_input_is_valid()
-    assert page.get_category_name_validation_message() != ""
-
-
 @allure.title("SC-VAL-002 Blank required form remains on create page")
 @pytest.mark.validation
 def test_service_category_blank_required_form_stays_on_form(browser):

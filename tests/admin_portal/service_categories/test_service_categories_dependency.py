@@ -16,7 +16,6 @@ pytestmark = [
 
 @allure.title("SC-DEP-001 Created category is selectable in discount creation")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_category_available_in_discount_creation(browser):
 
     create_category_if_missing(browser)
