@@ -18,6 +18,8 @@ from tests.admin_portal.gift_cards.conftest import open_customer_gift_cards_page
 from tests.admin_portal.gift_cards.conftest import open_gift_cards_page
 from tests.admin_portal.gift_cards.conftest import page_has_no_broken_state
 
+KNOWN_DISCOUNT = "VK AD05"
+
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -147,6 +149,24 @@ def test_toggle_active_customer_gift_card(browser):
 )
 def test_set_expiration_date_on_gift_card(browser):
     pass
+
+
+@allure.title("GC-EDT-004 Change discount assignment on existing gift card persists after save")
+@pytest.mark.regression
+def test_change_discount_assignment_persists(browser):
+
+    temp_name = "VK EDT004-%s" % uuid.uuid4().hex[:6]
+    lp_code = "VKEDT4" + uuid.uuid4().hex[:5].upper()
+    page = open_gift_cards_page(browser)
+    page.create_gift_card(temp_name, GIFT_CARD_AMOUNT, lp_code, [ASSIGNMENT_LOCATIONS[0]])
+
+    page.open_edit_gift_card(temp_name)
+    page.select_discount_in_gift_card_form(KNOWN_DISCOUNT)
+    page.click_save_gift_card()
+    page.wait_for_list_loaded()
+
+    page.open_edit_gift_card(temp_name)
+    assert KNOWN_DISCOUNT in page.get_body_text()
 
 
 @allure.title("GC-EDT-005 Toggle open price on existing gift card persists after save")

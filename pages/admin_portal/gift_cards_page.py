@@ -444,6 +444,23 @@ class GiftCardsPage(BasePage):
             )
         )
 
+    def select_discount_in_gift_card_form(self, discount_name):
+        """Select a discount in the GC create/edit form."""
+        self.select_option_by_label("Select discount", discount_name)
+
+    def get_selected_discount_in_gift_card_form(self):
+        """Return the currently selected discount name, or empty string if none."""
+        try:
+            el = self.driver.find_element(
+                By.XPATH,
+                "//*[normalize-space()='Select discount']"
+                "/ancestor::*[contains(@class,'form-select__wrapper')][1]"
+                "//*[contains(@class,'form-select__single-value')]",
+            )
+            return el.text.strip()
+        except Exception:
+            return ""
+
     def select_customer_gift_card_site(self, site_name):
         """Select site on customer gift card form."""
         self.select_option_by_label("Select site", site_name)
