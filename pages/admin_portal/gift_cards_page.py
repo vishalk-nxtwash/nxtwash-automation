@@ -888,6 +888,24 @@ class GiftCardsPage(BasePage):
         )
         self.driver.execute_script("arguments[0].click();", option)
 
+    def set_active_gift_card_filter(self, on):
+        """Set the Active gift card filter switch to the desired state."""
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_GIFT_CARD_FILTER_SWITCH)
+        )
+        is_on = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.get_attribute("checked") == "true"
+        )
+        if is_on != on:
+            self.driver.execute_script("arguments[0].click();", switch)
+            desired = "true" if on else "false"
+            self.wait.until(
+                lambda d: d.find_element(
+                    *self.ACTIVE_GIFT_CARD_FILTER_SWITCH
+                ).get_attribute("aria-checked") == desired
+            )
+
     def toggle_active_filter(self):
         """Enable the Active gift card filter to show only active gift cards.
 
@@ -1057,3 +1075,22 @@ class GiftCardsPage(BasePage):
             return option is not None
         except TimeoutException:
             return False
+
+    def get_landing_page_code_value(self):
+        """Return the current landing page code input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.LANDING_PAGE_CODE_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def _dismiss_page_banner(self):
+        """Remove Toastify dev-environment banner that can intercept button clicks."""
+        self.driver.execute_script(
+            "document.querySelectorAll('.Toastify__toast').forEach(e => e.remove());"
+        )
+
+    def click_download_button(self):
+        """Click the export/download button using JS to bypass overlay banners."""
+        self._dismiss_page_banner()
+        element = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", element)
