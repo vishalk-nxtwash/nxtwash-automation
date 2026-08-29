@@ -29,7 +29,6 @@ pytestmark = [
 
 @allure.title("CS-CRT-001 Create active custom service appears in list with Active status")
 @pytest.mark.smoke
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-001: wait_for_list_loaded LIST_FRAME switch times out in headless CI. Fix: use window.location.origin for fallback navigation; increase frame wait to 120s.")
 def test_create_active_custom_service(browser):
 
     page = create_service_if_missing(browser)
@@ -87,7 +86,6 @@ def test_create_form_has_save_and_cancel_buttons(browser):
 
 @allure.title("CS-CRT-005 New service global price is visible in the list grid")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-005: same root cause as CS-CRT-001 — wait_for_list_loaded times out.")
 def test_new_service_global_price_visible_in_list(browser):
 
     page = create_service_if_missing(browser)
@@ -99,7 +97,6 @@ def test_new_service_global_price_visible_in_list(browser):
 
 @allure.title("CS-CRT-006 Service with barcode can be created successfully")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-006: same root cause as CS-CRT-001.")
 def test_create_service_with_barcode(browser):
 
     name = "VK barcode-%s" % uuid.uuid4().hex[:6]
@@ -122,7 +119,6 @@ def test_create_service_with_barcode(browser):
 
 @allure.title("CS-CRT-007 Service with description can be created successfully")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-007: same root cause as CS-CRT-001.")
 def test_create_service_with_description(browser):
 
     name = "VK desc-%s" % uuid.uuid4().hex[:6]
@@ -144,7 +140,6 @@ def test_create_service_with_description(browser):
 
 @allure.title("CS-CRT-008 Service with Force receipt printing enabled can be created")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-008: same root cause as CS-CRT-001.")
 def test_create_service_with_force_receipt_enabled(browser):
 
     name = "VK receipt-%s" % uuid.uuid4().hex[:6]
@@ -166,7 +161,6 @@ def test_create_service_with_force_receipt_enabled(browser):
 
 @allure.title("CS-CRT-009 Service with Open price enabled can be created")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-009: same root cause as CS-CRT-001.")
 def test_create_service_with_open_price_enabled(browser):
 
     name = "VK openprice-%s" % uuid.uuid4().hex[:6]
@@ -188,7 +182,6 @@ def test_create_service_with_open_price_enabled(browser):
 
 @allure.title("CS-CRT-010 Site-level price override is saved correctly")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-010: same root cause as CS-CRT-001.")
 def test_site_level_price_override_saved(browser):
 
     name = "VK siteprice-%s" % uuid.uuid4().hex[:6]
@@ -209,7 +202,6 @@ def test_site_level_price_override_saved(browser):
 
 @allure.title("CS-CRT-011 Enable tax exemption per site is saved correctly")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-011: same root cause as CS-CRT-001.")
 def test_enable_tax_exemption_per_site(browser):
 
     name = "VK taxex-%s" % uuid.uuid4().hex[:6]
@@ -231,7 +223,6 @@ def test_enable_tax_exemption_per_site(browser):
 
 @allure.title("CS-CRT-012 Service with applicable discount can be created")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-012: same root cause as CS-CRT-001.")
 def test_create_service_with_applicable_discount(browser):
 
     name = "VK discount-%s" % uuid.uuid4().hex[:6]
@@ -266,7 +257,6 @@ def test_state_city_sales_tax_columns_are_read_only(browser):
 
 @allure.title("CS-CRT-014 Created service data persists after page reload")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CRT-014: same root cause as CS-CRT-001.")
 def test_created_service_persists_after_reload(browser):
 
     create_service_if_missing(browser)

@@ -25,7 +25,6 @@ pytestmark = [
 
 @allure.title("CS-SRH-001 Search by exact service name returns the correct service")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-SRH-001: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_search_exact_service_name(browser):
 
     create_service_if_missing(browser)
@@ -39,7 +38,6 @@ def test_search_exact_service_name(browser):
 
 @allure.title("CS-SRH-002 Search by partial name returns matching services")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-SRH-002: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_search_partial_service_name(browser):
 
     create_service_if_missing(browser)
@@ -66,7 +64,6 @@ def test_search_non_existing_service_returns_empty(browser):
 
 @allure.title("CS-SRH-004 Clearing search restores the full list")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-SRH-004: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_clear_search_restores_full_list(browser):
 
     create_service_if_missing(browser)
@@ -81,7 +78,6 @@ def test_clear_search_restores_full_list(browser):
 
 @allure.title("CS-FLT-001 Filter by site narrows the list to services assigned to that site")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-FLT-001: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_filter_by_site_narrows_results(browser):
 
     create_service_if_missing(browser)
@@ -96,7 +92,6 @@ def test_filter_by_site_narrows_results(browser):
 
 @allure.title("CS-FLT-002 Active service toggle shows active services only")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-FLT-002: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_active_service_filter_shows_active_only(browser):
 
     create_service_if_missing(browser)
@@ -112,7 +107,6 @@ def test_active_service_filter_shows_active_only(browser):
 
 @allure.title("CS-FLT-003 Active service filter off shows all services including inactive")
 @pytest.mark.regression
-@pytest.mark.skip(reason="Manual: Active service filter toggle updates DOM but React state does not change — same root cause as CS-EDT-004. Needs app-level investigation.")
 def test_active_service_filter_off_shows_all(browser):
 
     inactive = "VK flt-inact-%s" % uuid.uuid4().hex[:6]
@@ -138,7 +132,6 @@ def test_active_service_filter_off_shows_all(browser):
 
 @allure.title("CS-FLT-004 Site filter combined with active toggle shows correct results")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-FLT-004: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_site_and_active_filter_combined(browser):
 
     create_service_if_missing(browser)
@@ -154,7 +147,6 @@ def test_site_and_active_filter_combined(browser):
 
 @allure.title("CS-FLT-005 Reset all clears applied filters and restores full list")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-FLT-005: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_reset_filters_clears_filters(browser):
 
     create_service_if_missing(browser)

@@ -37,7 +37,6 @@ def test_discount_settings_tab_is_visible_on_create(browser):
 
 @allure.title("CS-DSC-002 Applicable discount can be selected and persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CS-DSC-002: managed_service fixture error — get_site_row uses EC.visibility_of_element_located on Inovua rows (always False); deferred")
 def test_applicable_discount_persists_after_save(managed_service):
 
     page = managed_service
@@ -55,7 +54,6 @@ def test_applicable_discount_persists_after_save(managed_service):
 
 @allure.title("CS-DSC-003 Multiple applicable discounts can be selected")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_multiple_applicable_discounts_can_be_selected(managed_service):
 
     page = managed_service
@@ -75,7 +73,6 @@ def test_multiple_applicable_discounts_can_be_selected(managed_service):
 
 @allure.title("CS-DSC-004 Removing an applicable discount persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CS-DSC-004: managed_service fixture error — get_site_row uses EC.visibility_of_element_located on Inovua rows (always False); deferred")
 def test_remove_applicable_discount_persists(managed_service):
 
     page = managed_service
@@ -99,7 +96,6 @@ def test_remove_applicable_discount_persists(managed_service):
 
 @allure.title("CS-DSC-005 Discount tab is accessible on the edit form")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-DSC-005: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_discount_tab_accessible_on_edit_form(browser):
 
     create_service_if_missing(browser)
@@ -115,7 +111,6 @@ def test_discount_tab_accessible_on_edit_form(browser):
 
 @allure.title("CS-DSC-006 Discount combobox filters options by typing")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_discount_combobox_filters_by_typing(browser):
 
     page = open_custom_services_page(browser)
@@ -126,7 +121,14 @@ def test_discount_combobox_filters_by_typing(browser):
     combobox.click()
     combobox.send_keys("Basic")
 
-    options = page.driver.find_elements(By.XPATH, "//*[@role='option']")
-    visible_options = [o.text.strip() for o in options if o.is_displayed()]
+    # Wait for at least one option to appear before collecting, then read text
+    # directly from the DOM to avoid StaleElementReferenceException caused by
+    # React Select re-rendering the options list while we iterate.
+    page.wait.until(EC.presence_of_element_located((By.XPATH, "//*[@role='option']")))
+    visible_options = page.driver.execute_script(
+        "return Array.from(document.querySelectorAll('[role=option]'))"
+        ".filter(el => el.offsetParent !== null)"
+        ".map(el => el.textContent.trim());"
+    )
     assert any("Basic" in opt for opt in visible_options)
     assert page_has_no_broken_state(page)

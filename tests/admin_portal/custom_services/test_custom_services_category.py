@@ -45,7 +45,6 @@ def test_service_category_dropdown_lists_active_categories_only(browser):
 
 @allure.title("CS-CAT-002 Selected service category persists after save and reopen")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CAT-002: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_selected_category_persists_after_save(browser):
 
     create_service_if_missing(browser)
@@ -58,7 +57,6 @@ def test_selected_category_persists_after_save(browser):
 
 @allure.title("CS-CAT-003 Service category field can be re-selected and persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-CAT-003: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_service_category_can_be_changed(browser):
 
     name = "VK cat-%s" % uuid.uuid4().hex[:6]

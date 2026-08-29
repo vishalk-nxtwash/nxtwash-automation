@@ -32,7 +32,6 @@ pytestmark = [
 
 @allure.title("CS-EDT-001 Edit service name persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_edit_service_name_persists(browser):
 
     original = "VK EDT001-%s" % uuid.uuid4().hex[:6]
@@ -52,7 +51,6 @@ def test_edit_service_name_persists(browser):
 
 @allure.title("CS-EDT-002 Edit global price persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-EDT-002: managed_service fixture times out in headless CI. Fix: use window.location.origin fallback in wait_for_list_loaded.")
 def test_edit_global_price_persists(managed_service):
 
     page = managed_service
@@ -68,7 +66,6 @@ def test_edit_global_price_persists(managed_service):
 
 @allure.title("CS-EDT-003 Edit site-level price override persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-EDT-003: managed_service fixture times out in headless CI. Fix: same as CS-EDT-002.")
 def test_edit_site_price_override_persists(managed_service):
 
     page = managed_service
@@ -118,7 +115,6 @@ def test_activate_inactive_service(browser):
 
 @allure.title("CS-EDT-005 Deactivate an active service hides it from the default list")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-EDT-005: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_deactivate_active_service(browser):
 
     temp = "VK deact-%s" % uuid.uuid4().hex[:6]
@@ -136,7 +132,6 @@ def test_deactivate_active_service(browser):
 
 @allure.title("CS-EDT-006 Edit form pre-populates existing name, category, price, commission")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-EDT-006: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_edit_form_prepopulates_existing_values(browser):
 
     create_service_if_missing(browser)
@@ -153,7 +148,6 @@ def test_edit_form_prepopulates_existing_values(browser):
 
 @allure.title("CS-EDT-007 Cancel out of edit form discards changes")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-EDT-007: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_cancel_out_of_edit_form(browser):
 
     create_service_if_missing(browser)
@@ -189,7 +183,6 @@ def test_edit_barcode_and_description_persist(managed_service):
 
 @allure.title("CS-PER-001 Created service data persists after page reload")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-PER-001: wait_for_list_loaded times out in headless CI. Fix: same as CS-CRT-001.")
 def test_created_service_persists_after_reload(browser):
 
     create_service_if_missing(browser)
@@ -202,7 +195,6 @@ def test_created_service_persists_after_reload(browser):
 
 @allure.title("CS-PER-002 Edited service changes persist after page reload")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP CS-PER-002: managed_service fixture times out in headless CI. Fix: same as CS-EDT-002.")
 def test_edited_service_persists_after_reload(managed_service):
 
     page = managed_service

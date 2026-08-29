@@ -127,8 +127,28 @@ class CustomServicesPage(BasePage):
     # ---------------------------------------------------------------------- waits
 
     def wait_for_list_loaded(self):
-        """Wait until the Custom Services list is visible."""
-        self.switch_to_frame_with_retry(self.LIST_FRAME)
+        """Wait until the Custom Services list is visible.
+
+        After click_save_service() the app does not auto-navigate back to the
+        list iframe.  If the frame is not found within 10 s we navigate with
+        driver.get() (synchronous — blocks until the page load event fires)
+        rather than execute_script (asynchronous) so the frame is reliably
+        present when switch_to_frame_with_retry runs.
+        """
+        try:
+            self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=10)
+        except TimeoutException:
+            self.driver.switch_to.default_content()
+            current_url = self.driver.current_url
+            if '/services/customServices' in current_url:
+                target_url = (
+                    current_url.split('/services/customServices')[0]
+                    + '/services/customServices'
+                )
+            else:
+                target_url = '/'.join(current_url.split('/')[:3]) + '/services/customServices'
+            self.driver.get(target_url)
+            self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_SERVICE_BUTTON))
         self.wait_for_grid_idle()
@@ -353,9 +373,9 @@ class CustomServicesPage(BasePage):
     def toggle_active_service_filter(self):
         """Toggle the Active service switch in the open filter panel."""
         switch = self.wait.until(
-            EC.presence_of_element_located(self.ACTIVE_SERVICE_FILTER_SWITCH)
+            EC.element_to_be_clickable(self.ACTIVE_SERVICE_FILTER_SWITCH)
         )
-        self.driver.execute_script("arguments[0].click();", switch)
+        switch.click()
 
     def apply_filters(self):
         """Click Apply filters and wait for the grid to refresh."""
@@ -387,7 +407,7 @@ class CustomServicesPage(BasePage):
         edit_button = row.find_element(
             By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     # ---------------------------------------------------------------------- form inputs
@@ -563,7 +583,7 @@ class CustomServicesPage(BasePage):
             "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
             % site_name
         )
-        return self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+        return self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a site and set site-level price and commission."""
@@ -721,17 +741,20 @@ class CustomServicesPage(BasePage):
     # ---------------------------------------------------------------------- save / cancel
 
     def click_save_service(self):
-        """Click the Save custom service button and wait for the save to settle."""
+        """Click the Save custom service button and wait for the save to settle.
+
+        Switches to default_content only when the save succeeded (button went
+        stale / form navigated away).  Stays in the current frame when save is
+        blocked by validation so callers can inspect form error state.
+        """
         self.driver.execute_script("window.scrollTo(0, 0);")
         btn = self.wait.until(EC.element_to_be_clickable(self.SAVE_SERVICE_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
-        # Wait for the button to go stale or the iframe to unload before the
-        # caller navigates away — prevents races with in-flight POST requests.
         try:
             WebDriverWait(self.driver, 10).until(EC.staleness_of(btn))
+            self.driver.switch_to.default_content()
         except Exception:
             pass
-        self.driver.switch_to.default_content()
 
     def click_cancel(self):
         """Click Cancel to discard the form."""
