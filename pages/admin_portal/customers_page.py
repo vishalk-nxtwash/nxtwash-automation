@@ -1066,6 +1066,17 @@ class CustomersPage(BasePage):
         except TimeoutException:
             return False
 
+    def open_first_visible_edit(self):
+        """Click the Edit button on the first visible table row and wait for the edit form."""
+        row = self.wait.until(
+            EC.visibility_of_element_located((By.XPATH, "//table//tr[td]"))
+        )
+        edit_btn = row.find_element(
+            By.XPATH, ".//button[.//*[normalize-space()='Edit']]"
+        )
+        self.driver.execute_script("arguments[0].click();", edit_btn)
+        self.wait_for_edit_loaded()
+
     def car_row_visible(self, plate):
         try:
             self.wait.until(

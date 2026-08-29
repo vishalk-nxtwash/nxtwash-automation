@@ -4,8 +4,7 @@ import allure
 import pytest
 
 from tests.admin_portal.customers.conftest import (
-    CUSTOMER_FIRST,
-    CUSTOMER_LAST,
+    CUSTOMER_EMAIL,
     CUSTOMER_LICENSE_PLATE,
     CUSTOMER_CAR_RFID,
     create_customer_if_missing,
@@ -25,10 +24,9 @@ def _open_managed_customer_cars_tab(browser):
     """Open the managed customer's edit form and navigate to the Cars settings tab."""
     page = create_customer_if_missing(browser)
     page.open_filter_panel()
-    page.filter_by_first_name(CUSTOMER_FIRST)
-    page.filter_by_last_name(CUSTOMER_LAST)
+    page.filter_by_email(CUSTOMER_EMAIL)
     page.apply_filters()
-    page.open_edit_customer_from_row(CUSTOMER_LAST)
+    page.open_first_visible_edit()
     page.open_cars_settings_tab()
     return page
 
@@ -50,10 +48,9 @@ def _add_car(page, plate, rfid=None):
 def test_cars_settings_tab_accessible_on_existing_customer(browser):
     page = create_customer_if_missing(browser)
     page.open_filter_panel()
-    page.filter_by_first_name(CUSTOMER_FIRST)
-    page.filter_by_last_name(CUSTOMER_LAST)
+    page.filter_by_email(CUSTOMER_EMAIL)
     page.apply_filters()
-    page.open_edit_customer_from_row(CUSTOMER_LAST)
+    page.open_first_visible_edit()
 
     assert not page.cars_settings_tab_is_disabled()
     assert page_has_no_broken_state(page)
@@ -255,10 +252,9 @@ def test_add_car_then_refresh_car_persists(browser):
     # Reload and navigate back to Cars tab
     page = open_customers_page(browser)
     page.open_filter_panel()
-    page.filter_by_first_name(CUSTOMER_FIRST)
-    page.filter_by_last_name(CUSTOMER_LAST)
+    page.filter_by_email(CUSTOMER_EMAIL)
     page.apply_filters()
-    page.open_edit_customer_from_row(CUSTOMER_LAST)
+    page.open_first_visible_edit()
     page.open_cars_settings_tab()
 
     assert page.car_row_visible(plate)
