@@ -1078,6 +1078,56 @@ class CustomersPage(BasePage):
         except TimeoutException:
             return False
 
+    def get_car_row(self, plate):
+        """Return the cars-list table row containing the given license plate."""
+        return self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//table//tr[td and .//*[contains(normalize-space(),'%s')]]" % plate,
+            ))
+        )
+
+    def car_row_has_text(self, plate, text):
+        """Return True if the car row for the given plate contains specific text."""
+        try:
+            row = self.get_car_row(plate)
+            return text.lower() in row.text.lower()
+        except Exception:  # noqa: BLE001
+            return False
+
+    def _confirm_action_dialog(self):
+        """Accept a Yes/Confirm dialog that may appear after a destructive action."""
+        try:
+            btn = WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable((
+                    By.XPATH,
+                    "//*[@role='dialog']//button[normalize-space()='Yes'"
+                    " or normalize-space()='Confirm'"
+                    " or normalize-space()='OK']",
+                ))
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+        except TimeoutException:
+            pass
+
+    def blacklist_car_from_row(self, plate):
+        """Click the Blacklist button on the car row for the given plate."""
+        row = self.get_car_row(plate)
+        btn = row.find_element(
+            By.XPATH, ".//button[contains(normalize-space(),'Blacklist')]"
+        )
+        self.driver.execute_script("arguments[0].click();", btn)
+        self._confirm_action_dialog()
+
+    def deactivate_car_from_row(self, plate):
+        """Click the Deactivate button on the car row for the given plate."""
+        row = self.get_car_row(plate)
+        btn = row.find_element(
+            By.XPATH, ".//button[contains(normalize-space(),'Deactivate')]"
+        )
+        self.driver.execute_script("arguments[0].click();", btn)
+        self._confirm_action_dialog()
+
     # ─────────────────────────────────────────────────────────────────────────
     # Payment settings
     # ─────────────────────────────────────────────────────────────────────────
