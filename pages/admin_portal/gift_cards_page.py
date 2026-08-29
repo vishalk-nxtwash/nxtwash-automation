@@ -595,7 +595,9 @@ class GiftCardsPage(BasePage):
         )
 
         if not self._checkbox_is_checked(checkbox):
-            checkbox.click()
+            # JS click bypasses the staging toast banner that intercepts native
+            # coordinate-based clicks inside the cross-origin iframe.
+            self.driver.execute_script("arguments[0].click();", checkbox)
             # Wait via a fresh locator — virtual grid re-renders the row after
             # the click, making the original stale-element wait unreliable.
             self.wait.until(
