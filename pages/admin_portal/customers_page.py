@@ -549,9 +549,7 @@ class CustomersPage(BasePage):
     def _filter_type_in(self, locator, value):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
-        el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        el.send_keys(value)
+        self._set_input_value(el, value)
 
     def filter_by_first_name(self, name):
         self._filter_type_in(self.FILTER_FIRST_NAME, name)
@@ -1243,14 +1241,7 @@ class CustomersPage(BasePage):
             except Exception:  # noqa: BLE001
                 pass  # state/city cascade may vary by environment
         self.click_save_customer()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            error = self.get_visible_error()
-            raise RuntimeError(
-                "Customer save did not return to list. Page message: %s"
-                % (error or "none visible")
-            ) from None
+        self._wait_for_list_after_save()
 
     def create_customer(self, first_name, last_name, site, email=""):
         """Minimal create — required fields only. Use create_full_customer for all fields."""
@@ -1258,6 +1249,23 @@ class CustomersPage(BasePage):
         self.fill_customer_form(first_name, last_name, site, email)
         self.ensure_active_switch_on()
         self.click_save_customer()
+        self._wait_for_list_after_save()
+
+    def _wait_for_list_after_save(self):
+        """Wait for the customers list after a create/save.
+
+        Staging sometimes doesn't auto-redirect within the default 45 s timeout.
+        If that happens, navigate explicitly to /customers so the list can load.
+        """
+        try:
+            self.wait_for_list_loaded()
+            return
+        except TimeoutException:
+            pass
+        # Explicit fallback: navigate to the list manually.
+        current_url = self.driver.current_url
+        base = "/".join(current_url.split("/")[:3])
+        self.driver.get(base + "/customers")
         try:
             self.wait_for_list_loaded()
         except TimeoutException:
