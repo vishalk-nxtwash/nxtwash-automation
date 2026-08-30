@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -177,6 +179,7 @@ def create_customer_if_missing(browser):
         if not _find_customer_row_by_email(page):
             # Customer truly doesn't exist — create it.
             page = open_customers_page(browser)
+            _creation_exc = None
             try:
                 page.create_full_customer(
                     first_name=CUSTOMER_FIRST,
@@ -191,27 +194,39 @@ def create_customer_if_missing(browser):
                     city=CUSTOMER_CITY,
                 )
             except Exception as _exc:
-                # A parallel worker may have created the customer a moment ago;
-                # do one more search (with active-only OFF) before giving up.
+                # Could be a duplicate-email reject (another test created the
+                # customer a moment ago) or a slow-staging redirect that was
+                # masked. Record the error and fall through to the index-wait
+                # loop below — the customer may already be in the DB.
+                _creation_exc = _exc
+
+            # The staging search index updates asynchronously. Even when the
+            # customer was just saved, the filter API can return 0 results for
+            # several seconds. Retry with back-off before giving up.
+            for _delay in (2, 5, 10, 20):
+                time.sleep(_delay)
                 try:
-                    _recovery = open_customers_page(browser)
-                    if _find_customer_row_by_email(_recovery):
-                        _recovery = open_customers_page(browser)
-                        _recovery._reset_active_filter_if_present()
-                        return _recovery
+                    _chk = open_customers_page(browser)
+                    if _find_customer_row_by_email(_chk):
+                        _chk = open_customers_page(browser)
+                        _chk._reset_active_filter_if_present()
+                        return _chk
                 except Exception:
                     pass
-                next_slot = SLOT + 1
-                print(
-                    f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
-                    f"could not be created.\n"
-                    f"  → Open tests/admin_portal/customers/test_data.py and set "
-                    f"SLOT = {next_slot}, then re-run."
-                )
-                raise _exc
-            page = open_customers_page(browser)
-            page._reset_active_filter_if_present()
-            return page
+
+            next_slot = SLOT + 1
+            print(
+                f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
+                f"could not be created.\n"
+                f"  → Open tests/admin_portal/customers/test_data.py and set "
+                f"SLOT = {next_slot}, then re-run."
+            )
+            if _creation_exc is not None:
+                raise _creation_exc
+            raise RuntimeError(
+                f"Customer '{CUSTOMER_EMAIL}' not visible in list 37 s after "
+                f"create_full_customer returned OK. Check staging search index."
+            )
         # Customer found with active-only OFF → it's deactivated → restore.
 
     # ── Restore: reactivate and/or correct the name ───────────────────────────

@@ -1255,13 +1255,23 @@ class CustomersPage(BasePage):
         """Wait for the customers list after a create/save.
 
         Staging sometimes doesn't auto-redirect within the default 45 s timeout.
-        If that happens, navigate explicitly to /customers so the list can load.
+        If that happens, check for a visible error on the form page first (e.g.
+        duplicate email), then navigate explicitly to /customers so the list can
+        load regardless.
         """
         try:
             self.wait_for_list_loaded()
             return
         except TimeoutException:
             pass
+        # Before navigating away, surface any error the form is displaying.
+        # This catches silent failures like "email already in use" that would
+        # otherwise be lost when we redirect to /customers.
+        form_error = self.get_visible_error()
+        if form_error:
+            raise RuntimeError(
+                "Customer save rejected. Form shows: %s" % form_error[:300]
+            ) from None
         # Explicit fallback: navigate to the list manually.
         current_url = self.driver.current_url
         base = "/".join(current_url.split("/")[:3])
