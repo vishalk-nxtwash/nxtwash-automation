@@ -17,16 +17,17 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Cars Settings"),
+    # Staging's search index can lag up to ~90 s after customer creation or
+    # reactivation. Each test also spends up to ~155 s in create_customer_if_missing
+    # on the first run. 480 s gives comfortable headroom.
+    pytest.mark.timeout(480),
 ]
 
 
 def _open_managed_customer_cars_tab(browser):
     """Open the managed customer's edit form and navigate to the Cars settings tab."""
     page = create_customer_if_missing(browser)
-    page.open_filter_panel()
-    page.filter_by_email(CUSTOMER_EMAIL)
-    page.apply_filters()
-    page.open_first_visible_edit()
+    page.filter_by_email_and_open_edit(CUSTOMER_EMAIL)
     page.open_cars_settings_tab()
     return page
 
@@ -47,10 +48,7 @@ def _add_car(page, plate, rfid=None):
 @pytest.mark.smoke
 def test_cars_settings_tab_accessible_on_existing_customer(browser):
     page = create_customer_if_missing(browser)
-    page.open_filter_panel()
-    page.filter_by_email(CUSTOMER_EMAIL)
-    page.apply_filters()
-    page.open_first_visible_edit()
+    page.filter_by_email_and_open_edit(CUSTOMER_EMAIL)
 
     assert not page.cars_settings_tab_is_disabled()
     assert page_has_no_broken_state(page)
@@ -251,10 +249,7 @@ def test_add_car_then_refresh_car_persists(browser):
 
     # Reload and navigate back to Cars tab
     page = open_customers_page(browser)
-    page.open_filter_panel()
-    page.filter_by_email(CUSTOMER_EMAIL)
-    page.apply_filters()
-    page.open_first_visible_edit()
+    page.filter_by_email_and_open_edit(CUSTOMER_EMAIL)
     page.open_cars_settings_tab()
 
     assert page.car_row_visible(plate)

@@ -200,17 +200,20 @@ def create_customer_if_missing(browser):
                 # loop below — the customer may already be in the DB.
                 _creation_exc = _exc
 
-            # The staging search index updates asynchronously. Even when the
-            # customer was just saved, the filter API can return 0 results for
-            # several seconds. Retry with back-off before giving up.
+            # The staging search index updates asynchronously. Retry with
+            # back-off. When the customer is found (active or inactive),
+            # run restore to guarantee active state and correct name before
+            # returning — the creation may have been rejected with a duplicate-
+            # email error leaving an existing inactive customer untouched.
             for _delay in (2, 5, 10, 20):
                 time.sleep(_delay)
                 try:
                     _chk = open_customers_page(browser)
                     if _find_customer_row_by_email(_chk):
-                        _chk = open_customers_page(browser)
-                        _chk._reset_active_filter_if_present()
-                        return _chk
+                        _restore_customer_state(browser)
+                        _done = open_customers_page(browser)
+                        _done._reset_active_filter_if_present()
+                        return _done
                 except Exception:
                     pass
 

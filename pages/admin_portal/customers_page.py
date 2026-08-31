@@ -1075,6 +1075,33 @@ class CustomersPage(BasePage):
         self.driver.execute_script("arguments[0].click();", edit_btn)
         self.wait_for_edit_loaded()
 
+    def filter_by_email_and_open_edit(self, email, max_wait=90):
+        """Filter by email (active-only ON) and open the first row's edit form.
+
+        Retries every 15 s to absorb staging search-index lag after customer
+        creation or reactivation. max_wait caps the total retry window in
+        seconds; when exhausted, delegates to open_first_visible_edit which
+        raises TimeoutException if there are still 0 rows.
+        """
+        deadline = time.time() + max_wait
+        first_attempt = True
+        while True:
+            if not first_attempt:
+                time.sleep(15)
+                base = "/".join(self.driver.current_url.split("/")[:3])
+                self.driver.get(base + "/customers")
+                self.wait_for_list_loaded()
+            first_attempt = False
+            self.open_filter_panel()
+            self.filter_by_email(email)
+            self.apply_filters()
+            if self.get_visible_row_count() > 0:
+                self.open_first_visible_edit()
+                return
+            if time.time() >= deadline:
+                self.open_first_visible_edit()  # raises TimeoutException if 0 rows
+                return
+
     def car_row_visible(self, plate):
         try:
             self.wait.until(
