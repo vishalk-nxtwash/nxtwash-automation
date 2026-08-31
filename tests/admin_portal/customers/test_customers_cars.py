@@ -17,10 +17,10 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Cars Settings"),
-    # Staging's search index can lag up to ~90 s after customer creation or
-    # reactivation. Each test also spends up to ~155 s in create_customer_if_missing
-    # on the first run. 480 s gives comfortable headroom.
-    pytest.mark.timeout(480),
+    # create_customer_if_missing can take up to 390 s on first run (index lag).
+    # filter_by_email_and_open_edit retries for up to 300 s in the worst case.
+    # 600 s gives headroom for both in sequence.
+    pytest.mark.timeout(600),
 ]
 
 

@@ -52,10 +52,6 @@ __all__ = [
 # Shared helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Set to True after _restore_customer_state runs at least once this session,
-# guaranteeing the phone number is written to the managed customer in the DB.
-_phone_ensured_this_session = False
-
 
 def open_customers_page(browser):
     open_admin_path(browser, "/customers")
@@ -155,14 +151,9 @@ def create_customer_if_missing(browser):
             if el.is_displayed()
         ]
         if rows_with_name:
-            # Active and correct name.
-            # On the first call this session, run restore once to guarantee the
-            # phone number is written to the DB (it may have been missing if the
-            # customer was created before the enter_phone fix was added).
-            global _phone_ensured_this_session
-            if not _phone_ensured_this_session:
-                _phone_ensured_this_session = True
-                _restore_customer_state(browser)
+            # Customer is active with the correct name — nothing to fix.
+            # Return immediately without any write so the staging search index
+            # is not invalidated and subsequent tests can find the customer at once.
             page = open_customers_page(browser)
             page._reset_active_filter_if_present()
             return page
@@ -205,7 +196,7 @@ def create_customer_if_missing(browser):
             # run restore to guarantee active state and correct name before
             # returning — the creation may have been rejected with a duplicate-
             # email error leaving an existing inactive customer untouched.
-            for _delay in (2, 5, 10, 20):
+            for _delay in (30, 60, 120, 180):
                 time.sleep(_delay)
                 try:
                     _chk = open_customers_page(browser)
@@ -227,7 +218,7 @@ def create_customer_if_missing(browser):
             if _creation_exc is not None:
                 raise _creation_exc
             raise RuntimeError(
-                f"Customer '{CUSTOMER_EMAIL}' not visible in list 37 s after "
+                f"Customer '{CUSTOMER_EMAIL}' not visible in list 390 s after "
                 f"create_full_customer returned OK. Check staging search index."
             )
         # Customer found with active-only OFF → it's deactivated → restore.

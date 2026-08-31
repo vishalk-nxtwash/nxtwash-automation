@@ -598,17 +598,22 @@ class CustomersPage(BasePage):
     def apply_filters(self):
         try:
             # Blur the focused filter input so React commits any typed value
-            # before the Apply handler reads it. JS blur() fires the native
-            # blur event, which React's onBlur picks up in both headed and
-            # headless Chrome.
+            # before the Apply handler reads it.
             self.driver.execute_script(
                 "if (document.activeElement) document.activeElement.blur();"
             )
-            btn = WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+            # Use presence_of_element_located (not element_to_be_clickable) so
+            # the button is found even when the filter panel is taller than the
+            # viewport and the Apply button is scrolled below the visible area.
+            # element_to_be_clickable requires the element to be in-viewport on
+            # some WebDriver builds and silently times out in headless Chrome.
+            btn = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(self.APPLY_FILTERS_BUTTON)
             )
-            # JS click is coordinate-independent — works correctly in headless
-            # Chrome even when the Apply button sits inside a scrollable panel.
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", btn
+            )
+            time.sleep(0.2)  # Let scroll settle
             self.driver.execute_script("arguments[0].click();", btn)
             time.sleep(0.5)  # Give the grid time to start re-rendering
         except TimeoutException:
@@ -1075,13 +1080,13 @@ class CustomersPage(BasePage):
         self.driver.execute_script("arguments[0].click();", edit_btn)
         self.wait_for_edit_loaded()
 
-    def filter_by_email_and_open_edit(self, email, max_wait=90):
+    def filter_by_email_and_open_edit(self, email, max_wait=300):
         """Filter by email (active-only ON) and open the first row's edit form.
 
         Retries every 15 s to absorb staging search-index lag after customer
-        creation or reactivation. max_wait caps the total retry window in
-        seconds; when exhausted, delegates to open_first_visible_edit which
-        raises TimeoutException if there are still 0 rows.
+        creation or reactivation. max_wait caps the total retry window (default
+        300 s — generous enough for staging's slow index). Raises TimeoutException
+        with a descriptive message when the deadline expires with 0 rows.
         """
         deadline = time.time() + max_wait
         first_attempt = True
@@ -1099,8 +1104,10 @@ class CustomersPage(BasePage):
                 self.open_first_visible_edit()
                 return
             if time.time() >= deadline:
-                self.open_first_visible_edit()  # raises TimeoutException if 0 rows
-                return
+                raise TimeoutException(
+                    "filter_by_email_and_open_edit: email '%s' returned 0 rows "
+                    "after %gs of retries — check staging search index." % (email, max_wait)
+                )
 
     def car_row_visible(self, plate):
         try:
