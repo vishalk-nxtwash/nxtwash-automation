@@ -19,7 +19,6 @@ pytestmark = [
 
 @allure.title("UR-SRH-001 Exact name search returns the matching role")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP UR-SRH-001: create_role_if_missing times out in headless CI. Fix: same as CS-CRT-001.")
 def test_user_roles_search_exact_name(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)
@@ -31,11 +30,6 @@ def test_user_roles_search_exact_name(browser):
 
 @allure.title("UR-SRH-002 Partial name search returns matching roles")
 @pytest.mark.regression
-@pytest.mark.manual
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-SRH-002: create_role_if_missing fails — staging server in 'Something went wrong' "
-           "state after earlier duplicate-role form submission; page never loads."
-)
 def test_user_roles_search_partial_name(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)
@@ -46,7 +40,7 @@ def test_user_roles_search_partial_name(browser):
 
 
 @allure.title("UR-SRH-003 Searching a non-existent name shows an empty state")
-@pytest.mark.edge
+@pytest.mark.regression
 def test_user_roles_search_nonexistent_shows_empty(browser):
     page = open_user_roles_page(browser)
     page.search_role(NONEXISTENT_ROLE)
@@ -57,10 +51,6 @@ def test_user_roles_search_nonexistent_shows_empty(browser):
 
 @allure.title("UR-SRH-004 Clearing search after a query restores the full list")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-SRH-004: create_role_if_missing fails — staging server in 'Something went wrong' "
-           "state after earlier duplicate-role form submission; page never loads."
-)
 def test_user_roles_clear_search_restores_list(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)

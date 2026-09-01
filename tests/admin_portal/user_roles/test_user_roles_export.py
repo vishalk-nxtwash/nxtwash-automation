@@ -14,18 +14,18 @@ pytestmark = [
 ]
 
 
-@allure.title("UR-EXP-001 Export button is clickable and does not break the page")
+@allure.title("UR-EXP-001 Export panel opens and export can be submitted without error")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-EXP-001: Export button locator targets text 'Export'/'Download'. "
-        "Verify exact button label and element type in DevTools before removing xfail."
-    ),
-)
 def test_user_roles_export_button_clickable(browser):
     page = open_user_roles_page(browser)
-    page.click_export_button()
-    page.wait_for_loaded()
+
+    if page.driver.execute_script(page._JS_FIND_EXPORT_BTN) is None:
+        pytest.skip("Export button not available on this environment")
+
+    with allure.step("Click the download icon to open the export panel"):
+        page.click_export_button()
+
+    with allure.step("Submit the export form"):
+        page.submit_export()
 
     assert page_has_no_broken_state(page)

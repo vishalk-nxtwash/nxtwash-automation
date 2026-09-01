@@ -15,21 +15,11 @@ pytestmark = [
     allure.story("Permissions"),
 ]
 
-# A representative section used in toggle tests.
 _SAMPLE_SECTION = "Sites"
-
-_PERMISSION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Permission accordion locators use a JS ancestor-walk that requires DOM "
-        "verification. Remove xfail once section structure is confirmed in DevTools."
-    ),
-)
 
 
 @allure.title("UR-PRM-001 Permission section headers are visible and collapsed by default")
 @pytest.mark.regression
-@_PERMISSION_XFAIL
 def test_permission_sections_collapsed_by_default(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
 
@@ -42,7 +32,6 @@ def test_permission_sections_collapsed_by_default(browser, managed_role):
 
 @allure.title("UR-PRM-002 Expanding a permission section reveals its child toggles")
 @pytest.mark.regression
-@_PERMISSION_XFAIL
 def test_expand_permission_section_reveals_toggles(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.expand_permission_section(_SAMPLE_SECTION)
@@ -56,7 +45,6 @@ def test_expand_permission_section_reveals_toggles(browser, managed_role):
 
 @allure.title("UR-PRM-003 Enabling the parent switch enables all child permissions")
 @pytest.mark.regression
-@_PERMISSION_XFAIL
 def test_parent_toggle_on_enables_all_children(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.expand_permission_section(_SAMPLE_SECTION)
@@ -70,11 +58,10 @@ def test_parent_toggle_on_enables_all_children(browser, managed_role):
 
 @allure.title("UR-PRM-004 Disabling the parent switch disables all child permissions")
 @pytest.mark.regression
-@_PERMISSION_XFAIL
 def test_parent_toggle_off_disables_all_children(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.expand_permission_section(_SAMPLE_SECTION)
-    form.enable_permission_section(_SAMPLE_SECTION)   # ensure parent is on first
+    form.enable_permission_section(_SAMPLE_SECTION)
     form.disable_permission_section(_SAMPLE_SECTION)
 
     assert form.all_section_children_off(_SAMPLE_SECTION), (
@@ -85,11 +72,10 @@ def test_parent_toggle_off_disables_all_children(browser, managed_role):
 
 @allure.title("UR-PRM-005 A child permission can be toggled independently of the parent")
 @pytest.mark.regression
-@_PERMISSION_XFAIL
 def test_child_toggle_independent(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.expand_permission_section(_SAMPLE_SECTION)
-    form.enable_permission_section(_SAMPLE_SECTION)   # all children ON
+    form.enable_permission_section(_SAMPLE_SECTION)
 
     before = form.get_first_child_permission_state(_SAMPLE_SECTION)
     form.toggle_first_child_permission(_SAMPLE_SECTION)
@@ -101,7 +87,6 @@ def test_child_toggle_independent(browser, managed_role):
 
 @allure.title("UR-PRM-006 Permission toggle state persists after save and reopening the form")
 @pytest.mark.smoke
-@_PERMISSION_XFAIL
 def test_permissions_persist_after_save(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.expand_permission_section(_SAMPLE_SECTION)
@@ -119,10 +104,6 @@ def test_permissions_persist_after_save(browser, managed_role):
 
 @allure.title("UR-EC-005 Disabling all permissions and saving completes without error")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_all_permissions_off_saves_ok(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
 

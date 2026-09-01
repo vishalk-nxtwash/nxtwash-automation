@@ -46,6 +46,12 @@ class AdminUserRolesPage(BasePage):
         By.XPATH,
         "//*[normalize-space()='Select site']/following::input[1]"
     )
+    # Anchor from "Select site" label/placeholder — works whether "Select site" is
+    # a placeholder inside the control (ancestor path) or an external label (following path).
+    SITE_FILTER_CONTROL = (By.XPATH,
+        "//*[contains(@class,'nxt-select__placeholder') and contains(normalize-space(),'Select site')]"
+        "/ancestor::*[contains(@class,'nxt-select__control')][1]"
+    )
     ACTIVE_FILTER_SWITCH = (
         By.XPATH,
         "//*[normalize-space()='Active' or normalize-space()='Show active only']"
@@ -56,22 +62,25 @@ class AdminUserRolesPage(BasePage):
         "//button[normalize-space()='Apply filters']"
     )
     RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
-    EXPORT_BUTTON = (
+    # Export: first click the download icon to open the panel, then submit the form
+    EXPORT_ICON_BUTTON = (
         By.XPATH,
-        "//button[contains(normalize-space(),'Export') or contains(normalize-space(),'Download')] | "
-        "//span[contains(normalize-space(),'Export') or contains(normalize-space(),'Download')]"
-        "/ancestor::button[1]"
+        "//button[.//svg[contains(@class,'lucide-download')]]"
     )
+    EXPORT_SUBMIT_BUTTON = (
+        By.XPATH,
+        "//button[@type='submit' and @form='user-roles-export-form']"
+    )
+    # Rows-per-page is an nxt-select whose current value reads "Show N"
     ROWS_PER_PAGE_SELECT = (
         By.XPATH,
-        "//select[contains(@name,'pageSize') or contains(@name,'perPage') "
-        "or contains(@name,'size')] | "
-        "//*[@aria-label='Rows per page' or @aria-label='Per page' "
-        "or contains(@class,'per-page')]//select"
+        "//div[contains(@class,'nxt-select__control') and "
+        ".//*[contains(@class,'nxt-select__single-value') "
+        "and contains(normalize-space(),'Show')]]"
     )
 
-    def wait_for_loaded(self):
-        self.switch_to_frame_with_retry(self.LIST_FRAME)
+    def wait_for_loaded(self, frame_timeout=45):
+        self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=frame_timeout)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.ADD_ROLE_BUTTON))
         # Wait for the data-loading spinner to clear so body text reflects real rows
@@ -84,9 +93,9 @@ class AdminUserRolesPage(BasePage):
 
     def search_role(self, role_name):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        # JS click bypasses filter-panel overlay that intercepts native click at (x, 40)
-        self.driver.execute_script("arguments[0].click();", element)
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        # JS click + select(): select() is cross-platform and reliable in headless Chrome;
+        # CTRL+A can mis-fire in headless when modifier key release timing is off.
+        self.driver.execute_script("arguments[0].click(); arguments[0].select();", element)
         element.send_keys(role_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == role_name
@@ -94,8 +103,8 @@ class AdminUserRolesPage(BasePage):
 
     def clear_search(self):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        self.driver.execute_script("arguments[0].click();", element)
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self.driver.execute_script("arguments[0].click(); arguments[0].select();", element)
+        element.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -196,15 +205,44 @@ class AdminUserRolesPage(BasePage):
         except Exception:
             self.driver.execute_script("arguments[0].click();", switch)
 
+    def _active_filter_switch_is_on(self):
+        switch = self.wait.until(EC.presence_of_element_located(self.ACTIVE_FILTER_SWITCH))
+        aria = switch.get_attribute("aria-checked")
+        if aria is not None:
+            return aria.lower() == "true"
+        return switch.is_selected()
+
+    def ensure_active_filter_on(self):
+        """Set the active-only switch to ON regardless of its current state."""
+        self.open_filter_panel()
+        if not self._active_filter_switch_is_on():
+            switch = self.wait.until(EC.element_to_be_clickable(self.ACTIVE_FILTER_SWITCH))
+            try:
+                switch.click()
+            except Exception:
+                self.driver.execute_script("arguments[0].click();", switch)
+
     def select_site_filter(self, site_name):
         self.open_filter_panel()
-        self.click(self.SITE_FILTER_INPUT)
+        control = self._find_site_filter_control()   # may switch to default_content
+        self.driver.execute_script("arguments[0].click();", control)
         self.wait.until(
             EC.element_to_be_clickable(
                 (By.XPATH,
-                 "//*[@role='option' and normalize-space()='%s']" % site_name)
+                 "//*[contains(@class,'nxt-select__option') and normalize-space()='%s']" % site_name)
             )
         ).click()
+        # Wait for the dropdown menu to close before the caller applies the filter
+        try:
+            WebDriverWait(self.driver, 8).until(
+                EC.invisibility_of_element_located(
+                    (By.CSS_SELECTOR, "[class*='select__menu']")
+                )
+            )
+        except Exception:
+            pass
+        # Re-enter the iframe — _find_site_filter_control may have switched to default_content
+        self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=30)
 
     def apply_filters(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
@@ -232,9 +270,15 @@ class AdminUserRolesPage(BasePage):
             pass
 
     def clear_active_filters(self):
-        """Unconditionally reset all filters and ensure the panel is closed."""
+        """Reset active filters and ensure the panel is closed.
+
+        Skips reset_filters() when no filters are active to avoid the 45-second
+        wait for the "Reset all" button that never appears on a clean page load.
+        """
         try:
-            self.reset_filters()
+            body = self.get_body_text()
+            if "Filter by (" in body:
+                self.reset_filters()
         except Exception as exc:
             import logging
             logging.getLogger("nxtwash").warning("clear_active_filters (user_roles): %s", exc)
@@ -252,32 +296,104 @@ class AdminUserRolesPage(BasePage):
         except Exception:
             pass
 
+    # JavaScript that finds the export button by walking SVG class via getAttribute()
+    # (XPath @class evaluation on SVG is unreliable in headless Chrome)
+    _JS_FIND_EXPORT_BTN = """
+        var svgs = document.querySelectorAll('svg');
+        for (var i = 0; i < svgs.length; i++) {
+            var cls = svgs[i].getAttribute('class') || '';
+            if (cls.indexOf('lucide-download') >= 0) {
+                var btn = svgs[i].closest('button');
+                if (btn) return btn;
+            }
+        }
+        return null;
+    """
+
     def click_export_button(self):
-        el = self.wait.until(EC.element_to_be_clickable(self.EXPORT_BUTTON))
-        self.driver.execute_script("arguments[0].click();", el)
+        # XPath @class on SVG elements is unreliable in headless Chrome; use JS.
+        # Try the current iframe context first, then fall back to the parent document.
+        for _switch in (None, "default"):
+            if _switch == "default":
+                self.driver.switch_to.default_content()
+            el = self.driver.execute_script(self._JS_FIND_EXPORT_BTN)
+            if el:
+                self.driver.execute_script("arguments[0].click();", el)
+                return
+        raise TimeoutException("Export icon button (lucide-download) not found in any frame")
+
+    def submit_export(self):
+        """Click the Export submit button inside the export panel."""
+        # Submit button uses @type and @form — regular attributes work fine with XPath.
+        try:
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.EXPORT_SUBMIT_BUTTON)
+            )
+        except Exception:
+            self.driver.switch_to.default_content()
+            btn = self.wait.until(EC.element_to_be_clickable(self.EXPORT_SUBMIT_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
+
+    def _find_rows_per_page_control(self):
+        """Return the rows-per-page nxt-select control, trying iframe then parent doc."""
+        try:
+            return WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.ROWS_PER_PAGE_SELECT)
+            )
+        except Exception:
+            pass
+        self.driver.switch_to.default_content()
+        return self.wait.until(EC.element_to_be_clickable(self.ROWS_PER_PAGE_SELECT))
 
     def get_rows_per_page_options(self):
-        """Return a list of string values from the rows-per-page select control."""
-        sel = self.wait.until(EC.presence_of_element_located(self.ROWS_PER_PAGE_SELECT))
-        from selenium.webdriver.support.ui import Select
-        return [o.text.strip() for o in Select(sel).options if o.text.strip()]
+        """Return all option labels from the rows-per-page nxt-select (e.g. 'Show 25')."""
+        control = self._find_rows_per_page_control()
+        self.driver.execute_script("arguments[0].click();", control)
+        options = self.wait.until(
+            EC.presence_of_all_elements_located(
+                (By.CSS_SELECTOR, ".nxt-select__option")
+            )
+        )
+        return [o.text.strip() for o in options if o.text.strip()]
 
     def select_rows_per_page(self, value):
-        """Select a specific rows-per-page value (e.g. '25', '50')."""
-        sel = self.wait.until(EC.element_to_be_clickable(self.ROWS_PER_PAGE_SELECT))
-        from selenium.webdriver.support.ui import Select
-        Select(sel).select_by_visible_text(str(value))
+        """Select a rows-per-page option. Accepts 'Show 25' or bare '25'."""
+        control = self._find_rows_per_page_control()
+        self.driver.execute_script("arguments[0].click();", control)
+        label = str(value) if "Show" in str(value) else "Show %s" % value
+        self.wait.until(
+            EC.element_to_be_clickable((
+                By.XPATH,
+                "//*[contains(@class,'nxt-select__option') and normalize-space()='%s']" % label
+            ))
+        ).click()
+
+    def _find_site_filter_control(self):
+        # Try within the current iframe context first
+        try:
+            return WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.SITE_FILTER_CONTROL)
+            )
+        except Exception:
+            pass
+        # Filter panel is portalled to the main document — switch out and search there
+        self.driver.switch_to.default_content()
+        return self.wait.until(EC.element_to_be_clickable(self.SITE_FILTER_CONTROL))
 
     def get_site_filter_all_options(self):
         """Return all site names visible in the opened site filter dropdown."""
         self.open_filter_panel()
-        self.click(self.SITE_FILTER_INPUT)
+        control = self._find_site_filter_control()   # may switch to default_content
+        self.driver.execute_script("arguments[0].click();", control)
         options = self.wait.until(
             EC.presence_of_all_elements_located(
-                (By.XPATH, "//*[@role='option']")
+                (By.CSS_SELECTOR, ".nxt-select__option")
             )
         )
-        return [o.text.strip() for o in options if o.text.strip()]
+        result = [o.text.strip() for o in options if o.text.strip()]
+        # Re-enter the iframe — _find_site_filter_control may have switched to default_content
+        self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=30)
+        return result
 
     def get_visible_row_count(self):
         rows = self.driver.find_elements(
@@ -375,18 +491,11 @@ class AdminUserRoleFormPage(BasePage):
         ).get_attribute("value")
 
     def enter_priority(self, value):
-        el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
-        # React controlled numeric input: JS setter + input event required to update state
-        self.driver.execute_script("""
-            var input = arguments[0];
-            var val = arguments[1];
-            var setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value'
-            ).set;
-            setter.call(input, val);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-        """, el, str(value))
+        # type="text" inputmode="numeric" — send_keys triggers React's synthetic events correctly
+        el = self.wait.until(EC.element_to_be_clickable(self.PRIORITY_INPUT))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a")
+        el.send_keys(str(value))
 
     def type_priority_raw(self, value):
         """Type into the priority field via real keystrokes — use for invalid-input tests."""
@@ -515,28 +624,31 @@ class AdminUserRoleFormPage(BasePage):
             self.wait.until(lambda d: not self._location_checkbox(site_name).is_selected())
 
     # ── Permission accordion ─────────────────────────────────────────────────
+    # Toggles are <input type="checkbox" name="SectionName"> inside a <label>.
+    # The section header contains a <svg class="lucide-chevron-down"> that gets
+    # the class "rotate-180" when the section is expanded.
 
     def _section_header(self, section_name):
         """Return the clickable accordion header element for a permission section."""
         els = self.driver.find_elements(
             By.XPATH,
-            "//button[normalize-space()='%s'] | "
-            "//*[@role='button' and normalize-space()='%s']" % (section_name, section_name)
+            "//*[.//svg[contains(@class,'lucide-chevron-down')] "
+            "and .//*[normalize-space()='%s']]" % section_name
         )
         if not els:
-            from selenium.common.exceptions import TimeoutException
             raise TimeoutException("Permission section header not found: %s" % section_name)
         return els[0]
 
     def permission_section_is_expanded(self, section_name):
-        """Return True if the section accordion is open (children are visible)."""
-        header = self._section_header(section_name)
-        expanded = header.get_attribute("aria-expanded")
-        if expanded is not None:
-            return expanded == "true"
-        # Fallback: check if siblings contain visible switches
-        children = self._get_section_child_switches(section_name)
-        return any(sw.is_displayed() for sw in children)
+        """Return True if the section accordion is open (chevron is rotate-180)."""
+        try:
+            header = self._section_header(section_name)
+            svg = header.find_element(
+                By.XPATH, ".//svg[contains(@class,'lucide-chevron-down')]"
+            )
+            return "rotate-180" in (svg.get_attribute("class") or "")
+        except Exception:
+            return False
 
     def expand_permission_section(self, section_name):
         if not self.permission_section_is_expanded(section_name):
@@ -544,27 +656,26 @@ class AdminUserRoleFormPage(BasePage):
             self.driver.execute_script(
                 "arguments[0].scrollIntoView({block:'center'});", header
             )
-            header.click()
+            self.driver.execute_script("arguments[0].click();", header)
             self.wait.until(lambda d: self.permission_section_is_expanded(section_name))
 
     def _get_section_child_switches(self, section_name):
-        """Return all child switch buttons within a permission section."""
+        """Return all child checkbox inputs within a permission section."""
         return self.driver.execute_script("""
             var sectionName = arguments[0];
-            var headers = Array.from(document.querySelectorAll('button, [role="button"]'));
-            var header = headers.find(function(el) {
-                return el.textContent.trim() === sectionName;
-            });
-            if (!header) return [];
-            // Walk up to find the section container, then find all switches below it
-            var container = header.parentElement;
-            for (var i = 0; i < 5; i++) {
+            var input = document.querySelector(
+                'input[type="checkbox"][name="' + sectionName + '"]'
+            );
+            if (!input) return [];
+            var container = input.parentElement;
+            for (var i = 0; i < 8; i++) {
                 if (!container) break;
-                var switches = container.querySelectorAll('button[role="switch"]');
-                // Return all switches except the header's own parent switch
-                if (switches.length > 1) {
-                    return Array.from(switches).filter(function(sw) {
-                        return !header.contains(sw) && sw !== header;
+                var checkboxes = Array.from(
+                    container.querySelectorAll('input[type="checkbox"]')
+                );
+                if (checkboxes.length >= 2) {
+                    return checkboxes.filter(function(cb) {
+                        return cb.name !== sectionName && cb.name !== '';
                     });
                 }
                 container = container.parentElement;
@@ -573,107 +684,106 @@ class AdminUserRoleFormPage(BasePage):
         """, section_name)
 
     def _get_section_parent_switch(self, section_name):
-        """Return the parent (master) switch for the given section, if present."""
-        return self.driver.execute_script("""
-            var sectionName = arguments[0];
-            var headers = Array.from(document.querySelectorAll('button, [role="button"]'));
-            var header = headers.find(function(el) {
-                return el.textContent.trim() === sectionName;
-            });
-            if (!header) return null;
-            var container = header.closest('li, .accordion-item, [class*="section"]');
-            if (!container) container = header.parentElement;
-            // The parent switch is the first visible switch in the header row
-            var rowSwitches = header.parentElement
-                ? header.parentElement.querySelectorAll('button[role="switch"]')
-                : [];
-            return rowSwitches.length > 0 ? rowSwitches[0] : null;
-        """, section_name)
+        """Return the parent checkbox input for the given section."""
+        els = self.driver.find_elements(
+            By.XPATH,
+            "//input[@type='checkbox' and @name='%s']" % section_name
+        )
+        return els[0] if els else None
 
     def all_section_children_on(self, section_name):
         children = self._get_section_child_switches(section_name)
         if not children:
             return False
-        return all(sw.get_attribute("aria-checked") == "true" for sw in children)
+        return all(cb.is_selected() for cb in children)
 
     def all_section_children_off(self, section_name):
         children = self._get_section_child_switches(section_name)
         if not children:
             return False
-        return all(sw.get_attribute("aria-checked") == "false" for sw in children)
+        return all(not cb.is_selected() for cb in children)
 
     def enable_permission_section(self, section_name):
-        """Turn the parent switch ON for a permission section."""
-        parent = self._get_section_parent_switch(section_name)
-        if parent and parent.get_attribute("aria-checked") != "true":
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", parent
+        """Turn the parent checkbox ON for a permission section."""
+        cb = self._get_section_parent_switch(section_name)
+        if cb and not cb.is_selected():
+            label = self.driver.find_element(
+                By.XPATH,
+                "//input[@type='checkbox' and @name='%s']/parent::label" % section_name
             )
-            parent.click()
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", label
+            )
+            self.driver.execute_script("arguments[0].click();", label)
             self.wait.until(
-                lambda d: (
-                    self._get_section_parent_switch(section_name).get_attribute("aria-checked")
-                    == "true"
-                )
+                lambda d: d.find_element(
+                    By.XPATH,
+                    "//input[@type='checkbox' and @name='%s']" % section_name
+                ).is_selected()
             )
 
     def disable_permission_section(self, section_name):
-        """Turn the parent switch OFF for a permission section."""
-        parent = self._get_section_parent_switch(section_name)
-        if parent and parent.get_attribute("aria-checked") != "false":
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", parent
+        """Turn the parent checkbox OFF for a permission section."""
+        cb = self._get_section_parent_switch(section_name)
+        if cb and cb.is_selected():
+            label = self.driver.find_element(
+                By.XPATH,
+                "//input[@type='checkbox' and @name='%s']/parent::label" % section_name
             )
-            parent.click()
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", label
+            )
+            self.driver.execute_script("arguments[0].click();", label)
             self.wait.until(
-                lambda d: (
-                    self._get_section_parent_switch(section_name).get_attribute("aria-checked")
-                    == "false"
-                )
+                lambda d: not d.find_element(
+                    By.XPATH,
+                    "//input[@type='checkbox' and @name='%s']" % section_name
+                ).is_selected()
             )
 
     def toggle_first_child_permission(self, section_name):
-        """Toggle the first child switch in a section and return the new state."""
+        """Toggle the first child checkbox in a section and return the new state."""
         children = self._get_section_child_switches(section_name)
         if not children:
             return None
         child = children[0]
-        before = child.get_attribute("aria-checked")
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});", child
+        before = child.is_selected()
+        label = self.driver.execute_script(
+            "return arguments[0].closest('label');", child
         )
-        child.click()
-        expected = "false" if before == "true" else "true"
-        self.wait.until(lambda d: child.get_attribute("aria-checked") == expected)
-        return expected == "true"
+        target = label if label else child
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", target
+        )
+        self.driver.execute_script("arguments[0].click();", target)
+        expected = not before
+        self.wait.until(
+            lambda d: self._get_section_child_switches(section_name)[0].is_selected() == expected
+        )
+        return expected
 
     def get_first_child_permission_state(self, section_name):
         children = self._get_section_child_switches(section_name)
         if not children:
             return None
-        return children[0].get_attribute("aria-checked") == "true"
+        return children[0].is_selected()
 
     def any_section_header_visible(self):
         """Return True if at least one known permission section header is visible."""
         for name in self.KNOWN_PERMISSION_SECTIONS:
             els = self.driver.find_elements(
                 By.XPATH,
-                "//button[normalize-space()='%s'] | "
-                "//*[@role='button' and normalize-space()='%s']" % (name, name)
+                "//*[.//svg[contains(@class,'lucide-chevron-down')] "
+                "and .//*[normalize-space()='%s']]" % name
             )
             if any(el.is_displayed() for el in els):
                 return True
         return False
 
     def any_section_expanded(self):
-        """Return True if any permission section is currently expanded."""
-        for name in self.KNOWN_PERMISSION_SECTIONS:
-            els = self.driver.find_elements(
-                By.XPATH,
-                "//button[normalize-space()='%s'][@aria-expanded='true'] | "
-                "//*[@role='button' and normalize-space()='%s'][@aria-expanded='true']"
-                % (name, name)
-            )
-            if els:
-                return True
-        return False
+        """Return True if any permission section accordion is currently open."""
+        expanded = self.driver.find_elements(
+            By.XPATH,
+            "//svg[contains(@class,'lucide-chevron-down') and contains(@class,'rotate-180')]"
+        )
+        return any(e.is_displayed() for e in expanded)

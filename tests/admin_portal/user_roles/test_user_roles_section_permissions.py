@@ -21,6 +21,7 @@ pytestmark = [
 _SECTION_CASES = [
     ("Sites",             "UR-PRM-008"),
     ("Services",          "UR-PRM-009/010/011"),
+    ("Gift Cards",        "UR-PRM-011b"),
     ("Customers",         "UR-PRM-012/013"),
     ("Users",             "UR-PRM-014"),
     ("Employees",         "UR-PRM-015"),
@@ -34,22 +35,12 @@ _SECTION_CASES = [
     ("Reports",           "UR-PRM-023"),
 ]
 
-_SECTION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Section permission locators use a JS ancestor-walk that requires DOM verification. "
-        "Remove xfail once each section structure is confirmed in DevTools."
-    ),
-)
-
-
 @pytest.mark.parametrize(
     "section,tc_ids",
     _SECTION_CASES,
     ids=[s.replace(" ", "_") for s, _ in _SECTION_CASES],
 )
 @pytest.mark.regression
-@_SECTION_XFAIL
 def test_section_permissions_persist_after_save(browser, managed_role, section, tc_ids):
     allure.dynamic.title(
         "%s — all sub-permissions persist after save (%s)" % (section, tc_ids)

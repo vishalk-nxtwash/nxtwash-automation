@@ -1,6 +1,7 @@
 {
   "reference": {
     "default_role":    "Admin Portal User",
+    "predefined_roles": ["Admin Portal User", "POS Operator/Admin Portal User", "POS Operator"],
     "assignment_site": "VK AL11"
   },
   "template": {

@@ -59,12 +59,16 @@ def test_create_inactive_user_role(browser):
     form.ensure_active_switch_off()
     form.click_save()
 
-    # Inactive roles may be hidden by default; check body or re-enable filter
     page = open_user_roles_page(browser)
     assert page_has_no_broken_state(page)
-    # Verify inactive role is not surfaced in the default (active-only) view
+    # Search and check: inactive roles are hidden from the default active-only view.
+    # If the app surfaces the role anyway its status must be Inactive.
     page.search_role(role_name)
-    assert role_name not in page.get_body_text() or page.get_role_status(role_name) == "Inactive"
+    body = page.get_body_text()
+    if role_name in body:
+        assert page.get_role_status(role_name) == "Inactive", (
+            "Role '%s' appears in default view but is not marked Inactive" % role_name
+        )
 
 
 @allure.title("UR-CRT-004 Submitting the create form without a name blocks save")
@@ -77,13 +81,17 @@ def test_create_role_name_required(browser):
 
     url = browser.current_url
     if "/new" in url or "/edit/" in url:
-        # Save blocked — check validation state
-        assert not form.role_name_input_is_valid() or form.role_name_validation_message() != ""
+        # Correctly blocked by validation
+        assert not form.role_name_input_is_valid() or form.role_name_validation_message() != "", (
+            "Expected a validation error on the role name field when saving with no name"
+        )
         assert page_has_no_broken_state(form)
     else:
-        # Server accepted empty name (product finding) — verify no broken state on list
+        # Server accepted empty name — product finding; at minimum no broken state
         page = open_user_roles_page(browser)
-        assert page_has_no_broken_state(page)
+        assert page_has_no_broken_state(page), (
+            "Server accepted empty role name and page is in a broken state"
+        )
 
 
 @allure.title("UR-CRT-005 Submitting the create form without a priority blocks save")
@@ -94,22 +102,24 @@ def test_create_role_priority_required(browser):
     # Leave priority empty
     form.click_save()
 
-    # Stay on create form or show validation
-    body = form.get_body_text()
-    assert (
-        not form.priority_input_is_valid()
-        or "priority" in body.lower()
-        or "userRoles" in browser.current_url
-    )
-    assert page_has_no_broken_state(form)
+    url = browser.current_url
+    if "/new" in url or "/edit/" in url:
+        # Correctly blocked by validation
+        body = form.get_body_text()
+        assert not form.priority_input_is_valid() or "priority" in body.lower(), (
+            "Expected a validation error on the priority field when saving with no value"
+        )
+        assert page_has_no_broken_state(form)
+    else:
+        # Server accepted missing priority — product finding; at minimum no broken state
+        page = open_user_roles_page(browser)
+        assert page_has_no_broken_state(page), (
+            "Server accepted missing priority and page is in a broken state"
+        )
 
 
 @allure.title("UR-CRT-006 Submitting a duplicate role name is blocked")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-CRT-006: staging server enters 'Something went wrong' error state "
-           "after this duplicate-name form submission; subsequent navigations to /userRoles time out."
-)
 def test_create_duplicate_role_rejected(browser):
     create_role_if_missing(browser)
     form = open_create_role_form(browser)
@@ -138,10 +148,6 @@ def test_create_role_cancel_discards(browser):
 
 @allure.title("UR-CRT-008 Role name with leading/trailing whitespace is trimmed or rejected")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-CRT-008: staging server enters 'Something went wrong' error state "
-           "after whitespace-padded name submission; subsequent open_user_roles_page call times out."
-)
 def test_create_role_name_whitespace_trimmed_or_rejected(browser):
     padded_name = "  VK UR whitespace  "
     stripped_name = padded_name.strip()
@@ -171,9 +177,14 @@ def test_create_role_name_max_length_saves(browser):
     form.enter_priority(ROLE_PRIORITY)
     form.click_save()
 
-    # Either the role is saved successfully (name visible in list) or a length-limit
-    # validation error is shown. Both are acceptable; broken state is not.
-    assert page_has_no_broken_state(form)
+    url = browser.current_url
+    if "/new" in url or "/edit/" in url:
+        # Validation blocked save — max length enforcement triggered
+        assert page_has_no_broken_state(form), "Form in broken state after max-length validation"
+    else:
+        # Save succeeded — verify list page is stable
+        page = open_user_roles_page(browser)
+        assert page_has_no_broken_state(page), "Page broken after max-length role save"
 
 
 @allure.title("UR-CRT-011 Newly created role appears in the list immediately after save")

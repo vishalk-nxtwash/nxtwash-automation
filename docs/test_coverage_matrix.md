@@ -151,6 +151,50 @@ redemption multi-location.
 
 ---
 
+## 4. User Roles — Filter module
+
+> **Note:** Create, Edit, List, Search, Location, Permissions, and Export tests
+> exist and are largely passing. This section focuses on the Filter module where
+> a blocker was hit.
+
+| Doc TC | Scenario | Status | Automated test / note |
+|--------|----------|--------|-----------------------|
+| UR-FLT-001 | Filter panel opens (site dropdown + active toggle visible) | ✅ | `test_user_roles_filter_panel_opens` |
+| UR-FLT-002 | Active filter shows only active roles | ✅ | `test_user_roles_filter_active_shows_active_only` |
+| UR-FLT-003 | Toggle active off shows all roles (including inactive) | ✅ | `test_user_roles_filter_off_shows_all` |
+| UR-FLT-004 | Site filter narrows results to roles at that site | ⏭ MANUAL | `test_user_roles_filter_by_site` — **SKIP** (see blocker below) |
+| UR-FLT-005 | Filter result count in pagination matches visible rows | ✅ | `test_user_roles_filter_count_matches_rows` |
+| UR-FLT-006 | Combined site + active filters return correct subset | ⏭ MANUAL | `test_user_roles_filter_combined_site_and_active` — **SKIP** |
+| UR-FLT-007 | Reset All clears all filters and restores the full list | ⏭ MANUAL | `test_user_roles_reset_all_clears_filters` — **SKIP** |
+| UR-FLT-008 | Site filter dropdown lists sites in alphabetical order | ⏭ MANUAL | `test_user_roles_site_filter_alphabetical` — **SKIP** |
+
+### UR-FLT-004/006/007/008 — Site filter blocker (manual check required)
+
+**Status:** Skipped in CI until resolved.
+
+**Root cause:** The site-filter `nxt-select` control (`SITE_FILTER_CONTROL` locator
+in `user_roles_page.py`) cannot be found during headless automation. Five XPath
+strategies were tried targeting `nxt-select__placeholder` / `nxt-select__control`
+class names. All fail in both the `LIST_FRAME` iframe context and the main document
+context.
+
+**Evidence:** Manual browser inspection shows the element with classes
+`nxt-select__control` and `nxt-select__placeholder`. In the automated headless run
+the element is not found anywhere — suggesting the class names rendered by the
+browser differ from the manual inspection, possibly due to a different JS bundle,
+classNamePrefix config, or CSS-in-JS behaviour in headless mode.
+
+**To unblock:**
+1. Run `test_user_roles_filter_by_site` **without** `--headless` (visible browser).
+2. Open the filter panel and inspect the site-select DOM — note the actual class
+   names on the control and placeholder elements.
+3. Update `SITE_FILTER_CONTROL` in `pages/admin_portal/user_roles_page.py`
+   with the correct locator.
+4. Remove the `@pytest.mark.skip` decorators from FLT-004, 006, 007, 008 in
+   `tests/admin_portal/user_roles/test_user_roles_filter.py`.
+
+---
+
 ## Cross-feature themes
 1. **ID alignment (done for mapped tests)** — tests that map 1:1 to a doc TC have
    been retitled to the doc IDs (`DS-`, `SC-HP/RG`, `MB-`). Tests that are extra

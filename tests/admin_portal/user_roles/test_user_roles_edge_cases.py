@@ -36,6 +36,7 @@ def test_duplicate_name_vs_inactive_role(browser):
     form.click_save()
 
     # Attempt to create another with the same name
+    # open_create_role_form → open_user_roles_page which recovers from any post-create broken state
     form = open_create_role_form(browser)
     form.enter_role_name(unique_name)
     form.enter_priority(ROLE_PRIORITY)
@@ -48,10 +49,6 @@ def test_duplicate_name_vs_inactive_role(browser):
 
 @allure.title("UR-EC-002 Role name that differs only in letter case documents uniqueness behavior")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-EC-002: staging server enters 'Something went wrong' error state "
-           "after this case-variant duplicate submission; subsequent navigations to /userRoles time out."
-)
 def test_case_sensitivity_duplicate(browser):
     create_role_if_missing(browser)
     upper_name = ROLE_NAME.upper()
@@ -84,10 +81,6 @@ def test_predefined_role_fields_editable(browser):
 
 @allure.title("UR-EC-006 Deactivating a role that is assigned to users documents the outcome")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_deactivate_assigned_role_documents_behavior(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.ensure_active_switch_off()
@@ -100,10 +93,6 @@ def test_deactivate_assigned_role_documents_behavior(browser, managed_role):
 
 @allure.title("UR-EC-004 Role data persists correctly after logout and re-login")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_data_persists_after_logout_relogin(browser, managed_role):
     # Confirm baseline state
     page = open_user_roles_page(browser)
@@ -137,10 +126,6 @@ def test_priority_zero_documents_behavior(browser):
 
 @allure.title("UR-EC-008 Creating two roles with the same priority — document behavior")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="STAGING-ERROR UR-EC-008: staging server enters 'Something went wrong' error state "
-           "after this duplicate-priority form submission; subsequent navigations to /userRoles time out."
-)
 def test_duplicate_priority_documents_behavior(browser):
     create_role_if_missing(browser)
 
@@ -157,10 +142,6 @@ def test_duplicate_priority_documents_behavior(browser):
 
 @allure.title("UR-BUG-001 Deactivate label reads 'user role' not 'access level' (UX bug)")
 @pytest.mark.edge
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_deactivate_label_correct_terminology(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     body = form.get_body_text()

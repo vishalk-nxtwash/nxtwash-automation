@@ -22,7 +22,6 @@ pytestmark = [
 
 @allure.title("UR-EDT-001 Clicking Edit opens the edit form at the correct URL")
 @pytest.mark.smoke
-@pytest.mark.skip(reason="CI-SKIP UR-EDT-001: managed_role fixture fails in headless CI. Fix: same as WP-FRM-001 — decouple fixture from Inovua grid interaction.")
 def test_user_roles_edit_form_opens(browser, managed_role):
     open_user_roles_page(browser).open_edit_role(ROLE_NAME)
 
@@ -31,11 +30,6 @@ def test_user_roles_edit_form_opens(browser, managed_role):
 
 @allure.title("UR-EDT-002 Editing the role name persists after save")
 @pytest.mark.regression
-@pytest.mark.manual
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_edit_role_name_persists(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.enter_role_name(UPDATED_ROLE_NAME)
@@ -55,17 +49,6 @@ def test_edit_role_name_persists(browser, managed_role):
 
 @allure.title("UR-EDT-003 Editing the priority persists after save")
 @pytest.mark.regression
-@pytest.mark.manual
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-EDT-003: JS nativeValueSetter approach for the priority number input does not "
-        "reliably update React's controlled-input state; the save stores the original DB value "
-        "rather than the entered one. "
-        "Verify manually: open VK UR01 edit form, change priority to 8, save, reopen and "
-        "confirm priority reads 8."
-    ),
-)
 def test_edit_role_priority_persists(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.enter_priority(UPDATED_ROLE_PRIORITY)
@@ -101,7 +84,6 @@ def test_activate_inactive_role(browser, managed_role):
 @allure.title("UR-EDT-005 Deactivating an active role hides it from the default list")
 @pytest.mark.smoke
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP UR-EDT-005: managed_role fixture fails in headless CI. Fix: same as WP-FRM-001.")
 def test_deactivate_active_role(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.ensure_active_switch_off()
@@ -134,10 +116,6 @@ def test_edit_role_cancel_discards(browser, managed_role):
 
 @allure.title("UR-EDT-008 Clearing the name on the edit form blocks save with validation")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="MANUAL CHECK: managed_role fixture errors in CI — staging server in 'Something went wrong' "
-           "state after earlier create-form submission; xfail cannot catch fixture ERRORs."
-)
 def test_edit_role_name_required(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)
     form.clear_role_name()
