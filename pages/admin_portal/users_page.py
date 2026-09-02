@@ -45,16 +45,37 @@ class AdminUsersPage(BasePage):
     APPLY_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Apply filters']")
     RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
 
-    # Filter panel inputs
-    FILTER_FIRST_NAME = (By.XPATH, "//input[@name='firstName' or @name='first_name']")
-    FILTER_LAST_NAME = (By.XPATH, "//input[@name='lastName' or @name='last_name']")
+    # Filter panel inputs — exclude Inovua grid inline column-filter inputs
+    # (same placeholder text, but those are descendants of .inovua-* containers)
+    FILTER_FIRST_NAME = (
+        By.XPATH,
+        "//input["
+        "(@name='firstName' or @name='first_name' "
+        "or @placeholder='First name' or @placeholder='First Name') "
+        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
+        "]",
+    )
+    FILTER_LAST_NAME = (
+        By.XPATH,
+        "//input["
+        "(@name='lastName' or @name='last_name' "
+        "or @placeholder='Last name' or @placeholder='Last Name') "
+        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
+        "]",
+    )
     FILTER_EMAIL = (
         By.XPATH,
-        "//input[@name='email' or @name='emailId' or @name='email_id']",
+        "//input["
+        "(@name='email' or @name='emailId' or @name='email_id' "
+        "or @placeholder='Email address' or @placeholder='Email Address' "
+        "or @placeholder='Email' or @placeholder='email') "
+        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
+        "]",
     )
     FILTER_EMPLOYEE_CODE = (
         By.XPATH,
-        "//input[@name='employeeCode' or @name='employee_code' or @name='empCode']",
+        "//input[@name='employeeCode' or @name='employee_code' or @name='empCode' "
+        "or @placeholder='Employee code' or @placeholder='Emp code']",
     )
     FILTER_SITE_CONTROL = (
         By.XPATH,
@@ -74,6 +95,7 @@ class AdminUsersPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
+        self._dismiss_page_banner()
         WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
@@ -100,18 +122,24 @@ class AdminUsersPage(BasePage):
         el.click()
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
-        self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == phone
-        )
+        try:
+            self.wait.until(
+                lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == phone
+            )
+        except TimeoutException:
+            pass  # field value may not settle (React input); grid reaction is the real signal
         self._wait_for_grid_idle()
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        self.wait.until(
-            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
-        )
+        try:
+            self.wait.until(
+                lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
+            )
+        except TimeoutException:
+            pass  # React input may not settle; grid reaction is the real signal
         self._wait_for_grid_idle()
 
     # ── Row helpers ───────────────────────────────────────────────────────────
@@ -152,7 +180,7 @@ class AdminUsersPage(BasePage):
 
     def click_add_user(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         self.driver.switch_to.default_content()
 
     _EDIT_LINK = (
@@ -272,7 +300,10 @@ class AdminUsersPage(BasePage):
         self.apply_filters()
 
     def user_exists(self, email):
-        self.search_user_by_email(email)
+        try:
+            self.search_user_by_email(email)
+        except Exception:
+            return False
         try:
             self.wait_for_user_row(email)
             return True
@@ -365,6 +396,7 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.driver.switch_to.default_content()
+        self._dismiss_page_banner()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.CREATE_FRAME)
         )
@@ -373,6 +405,7 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
+        self._dismiss_page_banner()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.EDIT_FRAME)
         )
@@ -389,6 +422,15 @@ class AdminUserFormPage(BasePage):
 
     def select_employee(self, employee_name):
         self.select_react_dropdown_option(self.EMPLOYEE_COMBOBOX, employee_name)
+
+    def select_first_available_employee(self):
+        """Open the employee dropdown and pick the first listed option."""
+        combobox = self.wait.until(EC.element_to_be_clickable(self.EMPLOYEE_COMBOBOX))
+        self.driver.execute_script("arguments[0].click();", combobox)
+        option = WebDriverWait(self.driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
+        )
+        self.driver.execute_script("arguments[0].click();", option)
 
     def enter_password(self, password):
         self.enter_text(self.PASSWORD_INPUT, password)

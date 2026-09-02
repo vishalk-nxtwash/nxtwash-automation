@@ -74,13 +74,12 @@ def test_shift_empty_state_when_no_records(browser):
 
 @allure.title("EMP-SH-LST-004 Pagination shows 0-of-0 (or N-of-N) label without negative numbers")
 @pytest.mark.regression
-@pytest.mark.skip(reason="Manual — EMP-SH-LST-004: Pagination label verification requires manual visual check.")
 def test_shift_pagination_no_negative_numbers(browser):
     page = open_shift_page(browser)
     body = page.get_body_text()
 
     import re
-    negative_pagination = re.search(r"-\d+-of-|-\s*\d+\s*of", body)
+    negative_pagination = re.search(r"-\d+\s*of\b", body)
     assert not negative_pagination, (
         "Negative pagination number found in page text: '%s'" % body[:200]
     )

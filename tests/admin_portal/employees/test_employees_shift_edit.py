@@ -109,3 +109,30 @@ def test_shift_edit_activate_inactive_shift(browser, managed_employee):
     assert page_has_no_broken_state(form), (
         "Page shows error after activating shift"
     )
+
+
+@allure.title("EMP-SH-EDT-006 Deactivating an active shift saves it as inactive")
+@pytest.mark.regression
+@_SHIFT_EDIT_XFAIL
+def test_shift_edit_deactivate_active_shift(browser, managed_employee):
+    form = _open_first_shift_edit(browser)
+    form.ensure_active_switch_off()
+    form.click_save()
+
+    assert page_has_no_broken_state(form), (
+        "Page shows error after deactivating shift"
+    )
+
+
+@allure.title("EMP-SH-EDT-007 Clicking Cancel on the edit form discards changes and returns to the list")
+@pytest.mark.regression
+@_SHIFT_EDIT_XFAIL
+def test_shift_edit_cancel_discards_changes(browser, managed_employee):
+    form = _open_first_shift_edit(browser)
+    form.click_cancel()
+
+    assert (
+        "employeeShift" in browser.current_url
+        and "new" not in browser.current_url
+    ), "Cancel did not return to the shift list"
+    assert page_has_no_broken_state(form)

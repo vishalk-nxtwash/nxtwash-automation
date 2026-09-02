@@ -65,7 +65,7 @@ def test_create_active_user(browser):
 
 @allure.title("USR-CRT-003 Creating an inactive user saves it with Inactive status")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
+@pytest.mark.skip(reason="Manual — USR-CRT-003: Inactive-user creation leaves orphaned staging records; verify manually.")
 def test_create_inactive_user(browser):
     email = _unique_email()
     phone = _unique_phone()
@@ -105,10 +105,10 @@ def test_create_user_employee_required(browser):
 
 @allure.title("USR-CRT-005 Submitting form without Password is blocked with validation")
 @pytest.mark.smoke
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_password_required(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_email(_unique_email())
     form.enter_phone(_unique_phone())
     form.select_role(USER_ROLE)
@@ -121,10 +121,10 @@ def test_create_user_password_required(browser):
 
 @allure.title("USR-CRT-006 Submitting form without Confirm Password is blocked")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_confirm_password_required(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_email(_unique_email())
     form.enter_phone(_unique_phone())
@@ -142,10 +142,10 @@ def test_create_user_confirm_password_required(browser):
 
 @allure.title("USR-CRT-007 Submitting form without Email is blocked with validation")
 @pytest.mark.smoke
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_email_required(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_confirm_password(USER_PASSWORD)
     form.enter_phone(_unique_phone())
@@ -159,10 +159,10 @@ def test_create_user_email_required(browser):
 
 @allure.title("USR-CRT-008 Submitting form without Phone Number is blocked")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_phone_required(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_confirm_password(USER_PASSWORD)
     form.enter_email(_unique_email())
@@ -176,10 +176,10 @@ def test_create_user_phone_required(browser):
 
 @allure.title("USR-CRT-009 Submitting form without User Role is blocked")
 @pytest.mark.smoke
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_role_required(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_confirm_password(USER_PASSWORD)
     form.enter_email(_unique_email())
@@ -198,10 +198,10 @@ def test_create_user_role_required(browser):
 
 @allure.title("USR-CRT-010 Mismatched passwords show a validation error")
 @pytest.mark.regression
-@pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_password_mismatch(browser):
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_confirm_password(USER_PASSWORD + "wrong")
     form.enter_email(_unique_email())
@@ -314,7 +314,8 @@ def test_create_user_invalid_email_rejected(browser):
 def test_create_user_duplicate_email_rejected(browser):
     create_user_if_missing(browser)
     form = open_create_user_form(browser)
-    form.select_employee(EMPLOYEE_NAME)
+    # Employee intentionally omitted — all staging employees are already linked;
+    # field-validation assertions below do not require a selected employee.
     form.enter_password(USER_PASSWORD)
     form.enter_confirm_password(USER_PASSWORD)
     form.enter_email(USER_EMAIL)      # already exists

@@ -1,4 +1,7 @@
 import pytest
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.admin_portal.users_page import AdminUserFormPage, AdminUsersPage
 from tests.admin_portal.admin_session import open_admin_path
@@ -76,19 +79,48 @@ def create_user_if_missing(
     employee_name=EMPLOYEE_NAME,
     role=USER_ROLE,
 ):
+    # Open a fresh list page — active-only filter is ON by default after navigation.
     page = open_users_page(browser)
 
-    if page.user_exists(email):
-        # User is active — reset to known baseline via edit
-        form = open_edit_user_form(browser, email)
+    # Build a combined filter: active=OFF + email match, so we find the user
+    # regardless of whether a prior test left them inactive.
+    page.open_filter_panel()
+    switch = WebDriverWait(browser, 15).until(
+        EC.presence_of_element_located(AdminUsersPage.ACTIVE_FILTER_SWITCH)
+    )
+    if switch.get_attribute("aria-checked") == "true":
+        try:
+            switch.click()
+        except Exception:  # noqa: BLE001
+            browser.execute_script("arguments[0].click();", switch)
+    page._enter_filter_field(AdminUsersPage.FILTER_EMAIL, email)
+    page.apply_filters()
+    # Grid now shows 0 or 1 rows: users (active or inactive) matching the email.
+
+    try:
+        page.wait_for_user_row(email)
+        visible_links = [
+            lnk for lnk in page.driver.find_elements(*AdminUsersPage._EDIT_LINK)
+            if lnk.is_displayed()
+        ]
+        if not visible_links:
+            raise TimeoutException("No edit links visible for: %s" % email)
+        page.driver.execute_script("arguments[0].click();", visible_links[0])
+        page.driver.switch_to.default_content()
+
+        form = AdminUserFormPage(browser)
+        form.wait_for_edit_loaded()
         form.enter_email(email)
         form.enter_phone(phone)
         form.select_role(role)
         form.ensure_active_switch_on()
         form.click_save()
         return open_users_page(browser)
+    except Exception:  # noqa: BLE001
+        pass  # user not found — fall through to create
 
-    # User truly doesn't exist (or is inactive) — create it.
+    # User does not exist — create it.
+    page = open_users_page(browser)
     form = open_create_user_form(browser)
     try:
         form.fill_create_form(employee_name, password, email, phone, role)
@@ -108,4 +140,10 @@ def managed_user(browser):
     """Ensure USER_EMAIL user exists at baseline before the test; restore after."""
     page = create_user_if_missing(browser)
     yield page
-    create_user_if_missing(browser)
+    try:
+        create_user_if_missing(browser)
+    except Exception as exc:  # noqa: BLE001
+        import logging
+        logging.getLogger("nxtwash").warning(
+            "managed_user teardown could not restore user baseline: %s", exc
+        )

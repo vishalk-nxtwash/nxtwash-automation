@@ -185,28 +185,33 @@ def test_edit_employee_code_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-010 Activating an inactive employee saves it as Active")
 @pytest.mark.smoke
-@pytest.mark.skip(
-    reason="Manual: after deactivation the employee disappears from the default "
-    "(Active-only) list view, so the automation cannot re-open the edit form "
-    "without first switching the filter to Inactive. Verify the deactivate → "
-    "reactivate flow manually until the test is updated to apply that filter."
-)
 def test_activate_inactive_employee(browser, managed_employee):
-    # First deactivate
+    from pages.admin_portal.employees_page import AdminEmployeeFormPage
+
+    # Deactivate first
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.ensure_active_switch_off()
     form.click_save()
 
-    # Then activate
-    form2 = open_edit_employee_form(browser, EMP_LAST_NAME)
+    # open_edit_employee_form resets filters internally (active-only view), so the
+    # deactivated employee becomes invisible. Instead: navigate to list, filter by
+    # Inactive, search, then click Edit manually.
+    page = open_employees_page(browser)
+    page.filter_by_status("Inactive")
+    page.apply_filters()
+    page.search_employee(EMP_LAST_NAME)
+    page.click_edit_for_visible_employee(EMP_LAST_NAME)
+
+    form2 = AdminEmployeeFormPage(browser)
+    form2.wait_for_edit_loaded()
     form2.ensure_active_switch_on()
     form2.click_save()
 
-    page = open_employees_page(browser)
-    assert page.get_employee_status(EMP_LAST_NAME) == "Active", (
+    page2 = open_employees_page(browser)
+    assert page2.get_employee_status(EMP_LAST_NAME) == "Active", (
         "Employee status should be Active after re-activation"
     )
-    assert page_has_no_broken_state(page)
+    assert page_has_no_broken_state(page2)
 
 
 @allure.title("EMP-EDT-011 Deactivating an active employee saves it as Inactive")

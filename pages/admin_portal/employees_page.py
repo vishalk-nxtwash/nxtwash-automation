@@ -65,11 +65,26 @@ class AdminEmployeesPage(BasePage):
         "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer",
+    )
+
+    def _wait_for_grid_idle(self):
+        try:
+            self.wait.until(
+                lambda d: not any(
+                    m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
+                )
+            )
+        except Exception:
+            pass
 
     def wait_for_loaded(self):
         self.switch_to_frame_with_retry(self.EMP_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
+        self._wait_for_grid_idle()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -77,24 +92,21 @@ class AdminEmployeesPage(BasePage):
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(last_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
         )
-        # Allow the grid time to begin filtering before checking LOAD_MASK
-        time.sleep(3)
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
-        time.sleep(3)
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
 
     @staticmethod
     def _xpath_string(value):
@@ -223,14 +235,14 @@ class AdminEmployeesPage(BasePage):
     def apply_filters(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
 
     def reset_filters(self):
         self.open_filter_panel()
         btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         # Reset All triggers an immediate data reload (no need to click Apply).
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
         # The panel stays open after Reset All; close it so subsequent clicks
         # (e.g. the search input) are not intercepted.
         try:
@@ -666,11 +678,26 @@ class AdminEmployeeShiftPage(BasePage):
         "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer",
+    )
+
+    def _wait_for_grid_idle(self):
+        try:
+            self.wait.until(
+                lambda d: not any(
+                    m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
+                )
+            )
+        except Exception:
+            pass
 
     def wait_for_loaded(self):
         self.switch_to_frame_with_retry(self.SHIFT_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
+        self._wait_for_grid_idle()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -687,23 +714,21 @@ class AdminEmployeeShiftPage(BasePage):
     def search_shift(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(last_name)
-        el.send_keys(Keys.RETURN)
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == last_name
         )
-        time.sleep(1)
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == ""
         )
-        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
+        self._wait_for_grid_idle()
 
     def click_add_shift(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_SHIFT_BUTTON))

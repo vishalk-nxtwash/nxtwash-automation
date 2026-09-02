@@ -19,14 +19,6 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Filter field locators use name/label heuristics — verify exact field names "
-        "in DevTools before removing xfail."
-    ),
-)
-
 
 @allure.title("USR-FLT-001 Filter panel opens with all expected controls")
 @pytest.mark.smoke
@@ -39,7 +31,6 @@ def test_users_filter_panel_opens(browser):
 
 @allure.title("USR-FLT-002 Filter by First Name returns matching users")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_users_filter_by_first_name(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -52,7 +43,6 @@ def test_users_filter_by_first_name(browser):
 
 @allure.title("USR-FLT-003 Filter by Last Name returns matching users")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_users_filter_by_last_name(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -77,7 +67,6 @@ def test_users_filter_by_email(browser):
 
 @allure.title("USR-FLT-005 Filter by Employee code returns the correct user")
 @pytest.mark.regression
-@_FILTER_XFAIL
 def test_users_filter_by_employee_code(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

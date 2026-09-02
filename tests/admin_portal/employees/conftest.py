@@ -136,6 +136,7 @@ def create_employee_if_missing(
     # attempt would hit a duplicate-email error and then hang for 180 s waiting
     # for a row that never appears under the old name.
     from selenium.common.exceptions import TimeoutException as _TE
+    page = open_employees_page(browser)
     page.search_employee(UPDATED_LAST_NAME)
     try:
         page.wait_for_employee_row(UPDATED_LAST_NAME, timeout=10)
