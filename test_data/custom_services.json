@@ -1,11 +1,11 @@
 {
   "reference": {
     "existing_service":          "VK ACS5",
-    "assignment_site":           "VK AL29",
+    "assignment_site":           "VK AL168",
     "service_category":          "VK ASC3",
     "inactive_category":         "VK ASC2",
     "applicable_discount":       "Basic Discount",
-    "second_applicable_discount":"VK AD01"
+    "second_applicable_discount":"VK AL01"
   },
   "template": {
     "service_name":    "VK ACS5",

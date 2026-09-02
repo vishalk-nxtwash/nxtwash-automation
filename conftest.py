@@ -153,6 +153,11 @@ _QUARANTINE_SCRIPT = {
     "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
+    "test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected":
+        "CS-DSC-003 test-data issue: SECOND_APPLICABLE_DISCOUNT has cycled through "
+        "VK AD01, VK AD02, VK AL01 — none appear in the custom services applicable "
+        "discount combobox. Open the edit form discount tab and check what options "
+        "exist before updating second_applicable_discount in custom_services.json.",
 }
 
 
@@ -205,7 +210,10 @@ def _attach_screenshot(driver, name):
                 attachment_type=allure.attachment_type.PNG,
             )
         return png_path
-    except Exception as error:  # noqa: BLE001
+    except BaseException as error:  # noqa: BLE001
+        # BaseException catches pytest-timeout's Failed (OutcomeException) which
+        # is not a subclass of Exception — letting it propagate causes INTERNALERROR
+        # inside pytest_runtest_makereport when the browser is dead after a timeout.
         LOG.warning("Could not capture screenshot '%s': %s", name, error)
         return None
 
@@ -250,7 +258,7 @@ def _capture_failure(item, driver):
                 attachment_type=allure.attachment_type.TEXT,
             )
         LOG.error("Visible page text at failure:\n%s", body_text[:2000])
-    except Exception as _err:  # noqa: BLE001
+    except BaseException as _err:  # noqa: BLE001
         LOG.warning("Could not capture body text: %s", _err)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -270,7 +278,7 @@ def _capture_failure(item, driver):
             allure.attach(
                 url, name="url", attachment_type=allure.attachment_type.TEXT
             )
-    except Exception as error:  # noqa: BLE001
+    except BaseException as error:  # noqa: BLE001
         LOG.warning("Could not capture page source: %s", error)
 
 

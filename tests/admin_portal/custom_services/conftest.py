@@ -48,6 +48,7 @@ def create_service_if_missing(browser, service_name=SERVICE_NAME):
     if page.service_exists(service_name):
         page.open_edit_service(service_name)
         page.ensure_active_switch_on()
+        page.set_global_price(GLOBAL_PRICE)
         page.click_save_service()
         return open_custom_services_page(browser)
 
@@ -71,6 +72,7 @@ def create_service_if_missing(browser, service_name=SERVICE_NAME):
     if inactive_found:
         page.open_edit_service(service_name)
         page.ensure_active_switch_on()
+        page.set_global_price(GLOBAL_PRICE)
         page.click_save_service()
         return open_custom_services_page(browser)
 

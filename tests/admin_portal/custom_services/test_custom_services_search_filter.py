@@ -124,6 +124,9 @@ def test_active_service_filter_off_shows_all(browser):
     page.open_filter_panel()
     page.toggle_active_service_filter()
     page.apply_filters()
+    # 144+ services in staging means 100-per-page pagination; search narrows to
+    # 1 result so the inactive service is guaranteed visible on the current page.
+    page.search_service(inactive)
 
     body = page.get_body_text()
     assert inactive in body

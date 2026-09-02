@@ -1,7 +1,7 @@
 import re
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -207,9 +207,8 @@ class CustomServicesPage(BasePage):
     def search_service(self, service_name):
         """Search for a custom service by name."""
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(service_name)
+        # Use React-native setter: CTRL+A does not select-all on macOS Chrome.
+        self._set_input_value(element, service_name)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -220,8 +219,7 @@ class CustomServicesPage(BasePage):
     def clear_service_search(self):
         """Clear the search input and wait for the grid to refresh."""
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        self._set_input_value(element, "")
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -235,7 +233,7 @@ class CustomServicesPage(BasePage):
             By.XPATH,
             "//*[@data-props-id='serviceName']"
             "[.//span[normalize-space()='%s']]"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
+            "/ancestor::*[contains(concat(' ',normalize-space(@class),' '),' InovuaReactDataGrid__row ')][1]"
             % service_name
         )
 
@@ -394,14 +392,20 @@ class CustomServicesPage(BasePage):
     # ---------------------------------------------------------------------- form navigation
 
     def open_create_service(self):
-        """Open the Add new custom service form."""
-        self.wait_for_list_loaded()
+        """Open the Add new custom service form.
+
+        Requires the driver to already be in the LIST_FRAME context — call
+        wait_for_list_loaded() before invoking this method.
+        """
         self.click(self.ADD_SERVICE_BUTTON)
         self.wait_for_create_loaded()
 
     def open_edit_service(self, service_name):
-        """Open the edit form for an existing custom service."""
-        self.wait_for_list_loaded()
+        """Open the edit form for an existing custom service.
+
+        Requires the driver to already be in the LIST_FRAME context — call
+        wait_for_list_loaded() before invoking this method.
+        """
         self.search_service(service_name)
         row = self.wait_for_service_row(service_name)
         edit_button = row.find_element(
@@ -565,25 +569,71 @@ class CustomServicesPage(BasePage):
 
     # ---------------------------------------------------------------------- site assignment
 
+    # JS that finds the Inovua virtual list's scrollable child container and
+    # scrolls it — dispatching a native 'scroll' event so React's onScroll
+    # handler updates the virtual window (WheelEvent and scrollTop-only both
+    # failed; only a real 'scroll' event triggers Inovua's row re-render).
+    _INOVUA_SCROLL_JS = """
+    var grid = arguments[0];
+    var delta = arguments[1];
+    function findScroller(el, depth) {
+        if (depth > 6) return null;
+        var s = window.getComputedStyle(el);
+        if ((s.overflowY === 'auto' || s.overflowY === 'scroll')
+                && el.scrollHeight > el.clientHeight + 10) {
+            return el;
+        }
+        for (var i = 0; i < el.children.length; i++) {
+            var found = findScroller(el.children[i], depth + 1);
+            if (found) return found;
+        }
+        return null;
+    }
+    var scroller = findScroller(grid, 0);
+    if (!scroller) return false;
+    scroller.scrollTop += delta;
+    scroller.dispatchEvent(new Event('scroll'));
+    return true;
+    """
+
     def get_site_row(self, site_name):
-        """Return the site assignment grid row for a given site."""
-        # InovuaReactDataGrid--native-scroll uses a JS-managed virtual scroll
-        # (inovua-react-scroll-container) that ignores CSS scroll APIs.
-        # ASSIGNMENT_SITE must be in the grid's initially-rendered row batch
-        # (first ~14 rows), otherwise it will never appear without the grid's
-        # own scroll controls. Bring the grid body into view to ensure the
-        # initial batch is rendered, then locate the target row directly.
+        """Return the site assignment grid row for a given site.
+
+        Inovua DataGrid virtualizes rows — the actual scrollable container is a
+        nested child of .InovuaReactDataGrid.  Scrolling requires finding that
+        child, incrementing its scrollTop, and dispatching a native 'scroll' event
+        so React's onScroll handler updates the rendered row window.
+        """
+        grid = self.wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.InovuaReactDataGrid'))
+        )
         self.driver.execute_script(
-            "var el = document.querySelector('.InovuaReactDataGrid__body');"
-            "if (el) el.scrollIntoView({block: 'start', behavior: 'instant'});"
+            "arguments[0].scrollIntoView({block:'start',behavior:'instant'});", grid
         )
         xpath = (
             "//*[@data-props-id='assignTo']"
             "[.//*[normalize-space()='%s']]"
-            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
+            "/ancestor::*[contains(concat(' ',normalize-space(@class),' '),' InovuaReactDataGrid__row ')][1]"
             % site_name
         )
-        return self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
+        try:
+            return self.driver.find_element(By.XPATH, xpath)
+        except NoSuchElementException:
+            pass
+
+        deadline = time.time() + 45
+        total_scrolled = 0
+        while time.time() < deadline:
+            try:
+                return self.driver.find_element(By.XPATH, xpath)
+            except NoSuchElementException:
+                if total_scrolled < 8000:
+                    self.driver.execute_script(
+                        self._INOVUA_SCROLL_JS, grid, 600
+                    )
+                    total_scrolled += 600
+                time.sleep(0.4)
+        raise TimeoutException("Site row '%s' not found after scrolling" % site_name)
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a site and set site-level price and commission."""
@@ -614,13 +664,12 @@ class CustomServicesPage(BasePage):
                 (By.XPATH,
                  "//*[@data-props-id='assignTo']"
                  "[.//*[normalize-space()='%s']]"
-                 "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
+                 "/ancestor::*[contains(concat(' ',normalize-space(@class),' '),' InovuaReactDataGrid__row ')][1]"
                  "//input[@name='price']" % site_name)
             )
         )
         price_input.click()
-        price_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        price_input.send_keys(str(price))
+        self._set_input_value(price_input, str(price))
         price_input.send_keys(Keys.TAB)
 
         commission_input = self.wait.until(
@@ -628,12 +677,11 @@ class CustomServicesPage(BasePage):
                 (By.XPATH,
                  "//*[@data-props-id='assignTo']"
                  "[.//*[normalize-space()='%s']]"
-                 "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
+                 "/ancestor::*[contains(concat(' ',normalize-space(@class),' '),' InovuaReactDataGrid__row ')][1]"
                  "//input[@name='commission']" % site_name)
             )
         )
-        commission_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        commission_input.send_keys(str(commission))
+        self._set_input_value(commission_input, str(commission))
         commission_input.send_keys(Keys.TAB)
 
     def toggle_site_tax_exemption(self, site_name):
