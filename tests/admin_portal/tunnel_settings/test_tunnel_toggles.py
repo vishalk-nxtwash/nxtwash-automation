@@ -5,6 +5,7 @@ from tests.admin_portal.tunnel_settings.conftest import (
     TUNNEL_NAME,
     open_create_tunnel_form,
     open_edit_tunnel_form,
+    open_edit_tunnel_form_by_url,
     page_has_no_broken_state,
 )
 
@@ -55,15 +56,6 @@ def test_toggle_defaults_on_create_form(browser, toggle_label, expected_on):
 # TUN-TGL-001..008 — each toggle saves and persists both ON and OFF
 # ---------------------------------------------------------------------------
 
-_TGL_008_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "TUN-TGL-008: setting Active=False hides the tunnel from the list "
-        "(list filters to active tunnels only); open_edit_tunnel_form cannot "
-        "navigate back to the record to verify the OFF state persisted."
-    ),
-)
-
 _TGL_FALSE_XFAIL = pytest.mark.xfail(
     strict=False,
     reason=(
@@ -86,7 +78,6 @@ _XFAIL_TC_IDS = {
     "TUN-TGL-002": _TGL_FALSE_XFAIL,
     "TUN-TGL-003": _TGL_FALSE_XFAIL,
     "TUN-TGL-006": _TGL_FALSE_XFAIL,
-    "TUN-TGL-008": _TGL_008_XFAIL,
 }
 
 _SKIP_MARK = pytest.mark.skip(
@@ -111,10 +102,18 @@ def test_toggle_saves_and_persists(browser, managed_tunnel_form, toggle_label):
     form = managed_tunnel_form
 
     for state in (True, False):
+        # Capture outer-page URL before save — needed if the tunnel disappears from
+        # the list (Active=False hides it; direct navigation is required to verify).
+        pre_save_url = browser.current_url
+
         form.set_toggle(toggle_label, state)
         form.click_save()
 
-        form2 = open_edit_tunnel_form(browser, TUNNEL_NAME)
+        if toggle_label == "Active tunnel configuration" and not state:
+            form2 = open_edit_tunnel_form_by_url(browser, pre_save_url)
+        else:
+            form2 = open_edit_tunnel_form(browser, TUNNEL_NAME)
+
         actual = form2.get_toggle_state(toggle_label)
         assert actual == state, (
             "Toggle '%s' not persisted as %s after save" % (toggle_label, state)

@@ -18,15 +18,6 @@ pytestmark = [
 
 @allure.title("TUN-TSN-001 Tunnel settings section expands and collapses")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "TUN-TSN-001: section_is_expanded('Tunnel settings') proxy uses "
-        "CONTROLLER_ID_COMBOBOX which does not exist in the form. The actual form "
-        "body reveals the section contains only the 8 toggle switches — no Controller "
-        "ID dropdown. Proxy always returns False. Pending DevTools verification."
-    ),
-)
 def test_tunnel_settings_section_expand_collapse(browser, managed_tunnel_form):
     form = managed_tunnel_form
     form.expand_section("Tunnel settings")

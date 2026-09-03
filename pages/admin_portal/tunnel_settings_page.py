@@ -38,8 +38,7 @@ class TunnelSettingsListPage(BasePage):
         "//*[contains(@class,'inovua-react-toolkit-load-mask')]")
 
     def wait_for_loaded(self):
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.TUNNEL_LIST_FRAME))
+        self.switch_to_frame_with_retry(self.TUNNEL_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_TUNNEL_BUTTON))
 
@@ -190,14 +189,8 @@ class TunnelSettingsFormPage(BasePage):
 
     # ── Frame switching ───────────────────────────────────────────────────────
 
-    def _switch_to_form_frame(self, frame_locator):
-        self.driver.switch_to.default_content()
-        try:
-            WebDriverWait(self.driver, 5).until(
-                EC.frame_to_be_available_and_switch_to_it(frame_locator)
-            )
-        except TimeoutException:
-            pass
+    def _switch_to_form_frame(self, frame_locator, timeout=60):
+        self.switch_to_frame_with_retry(frame_locator, timeout=timeout)
 
     def _switch_to_any_form_frame(self):
         """Try each known iframe pattern in order; stay on main page if none found."""
@@ -516,12 +509,13 @@ class TunnelSettingsFormPage(BasePage):
         raise TimeoutException("Section header not found: %s" % section_name)
 
     def section_is_expanded(self, section_name):
-        # "Tunnel settings" special-case: the operational toggle XPath can match
-        # elements outside the accordion (visible regardless of section state), so
-        # it cannot reliably proxy for section expansion.  Use the Controller ID
-        # combobox instead — it is inside the accordion and only visible when open.
         if section_name == "Tunnel settings":
-            els = self.driver.find_elements(*self.CONTROLLER_ID_COMBOBOX)
+            # The heading may not use the heading__header-title class convention so
+            # the JS walk below won't find it.  Use the visibility of a label that is
+            # unique to this section's content — "Auto send" is only rendered inside
+            # the Tunnel settings accordion and its element is hidden when collapsed.
+            els = self.driver.find_elements(By.XPATH,
+                "//*[normalize-space()='Auto send' or normalize-space()='MOXA auto send']")
             return any(e.is_displayed() for e in els)
 
         # Primary: JS walk from the confirmed heading__header-title element.

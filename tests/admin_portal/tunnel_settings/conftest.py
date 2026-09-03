@@ -58,6 +58,17 @@ def open_edit_tunnel_form(browser, name=TUNNEL_NAME):
     return form
 
 
+def open_edit_tunnel_form_by_url(browser, edit_url):
+    """Navigate directly to a tunnel edit URL — used when the tunnel is inactive
+    and hidden from the active-only list (e.g. after setting Active=False)."""
+    from urllib.parse import urlparse
+    path = urlparse(edit_url).path
+    open_admin_path(browser, path)
+    form = TunnelSettingsFormPage(browser)
+    form.wait_for_edit_loaded()
+    return form
+
+
 def page_has_no_broken_state(page):
     try:
         body = page.get_body_text().lower()
