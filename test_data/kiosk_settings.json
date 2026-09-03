@@ -1,6 +1,6 @@
 {
   "reference": {
-    "existing_kiosk":          "VK AK03",
+    "existing_kiosk":          "VK AK01",
     "site":                    "VK AL02",
     "lane":                    "L4",
     "car_recognition_type":    "By License Plate",

@@ -19,7 +19,6 @@ pytestmark = [
 
 @allure.title("KSK-SRH-001 Search by exact kiosk name returns the matching kiosk")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP KSK-SRH-001: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_search_by_exact_name(browser, managed_kiosk):
     page = open_kiosk_page(browser)
     page.search_kiosk(KSK_NAME)
@@ -33,7 +32,6 @@ def test_search_by_exact_name(browser, managed_kiosk):
 
 @allure.title("KSK-SRH-002 Search by partial kiosk name returns matching results")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP KSK-SRH-002: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_search_by_partial_name(browser, managed_kiosk):
     partial = KSK_NAME[:5]
     page = open_kiosk_page(browser)
@@ -64,7 +62,6 @@ def test_search_nonexistent_name(browser):
 
 @allure.title("KSK-SRH-004 Clearing the search field restores the full kiosk list")
 @pytest.mark.extended
-@pytest.mark.skip(reason="CI-SKIP KSK-SRH-004: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_clear_search_restores_list(browser, managed_kiosk):
     page = open_kiosk_page(browser)
     page.search_kiosk(KSK_NAME)

@@ -18,8 +18,11 @@ class AdminKioskSettingsPage(BasePage):
     KSK_CREATE_FRAME = (By.XPATH,
         "//iframe[contains(@src,'/kiosk_settings/kiosks/new')]")
     KSK_EDIT_FRAME = (By.XPATH,
-        "//iframe[contains(@src,'/kiosk_settings/kiosks/') "
-        "and not(contains(@src,'/kiosk_settings/kiosks/new'))]")
+        "//iframe["
+        "(contains(@src,'/kiosk_settings/kiosks/') or "
+        " (contains(@src,'/kiosk_settings/kiosks') and contains(@src,'?'))) "
+        "and not(contains(@src,'/new'))"
+        "]")
 
     ADD_KIOSK_BUTTON = (By.XPATH,
         "//span[@data-type='primary' and contains(normalize-space(),'Add new kiosk')] | "
@@ -52,28 +55,42 @@ class AdminKioskSettingsPage(BasePage):
     RESET_ALL_BUTTON = (By.XPATH,
         "//button[contains(normalize-space(),'Reset all')] | "
         "//button[contains(normalize-space(),'Reset All')] | "
+        "//button[contains(normalize-space(),'Clear all')] | "
+        "//button[contains(normalize-space(),'Clear All')] | "
         "//span[contains(normalize-space(),'Reset all')] | "
         "//span[contains(normalize-space(),'Reset All')] | "
-        "//*[@role='button' and contains(normalize-space(),'Reset')]")
+        "//*[@role='button' and (contains(normalize-space(),'Reset') or contains(normalize-space(),'Clear all'))]")
 
     GRID_ROWS = (By.XPATH,
         "//*[contains(@class,'InovuaReactDataGrid__row')] | "
         "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
 
     EDIT_LINK = (By.XPATH,
-        "//a[@role='button' and contains(@class,'table-page__page-content__table__edit')]")
+        "//a[@role='button' and contains(@class,'table-page__page-content__table__edit')] | "
+        "//a[contains(@href,'/kiosk_settings/kiosks/') and not(contains(@href,'/new'))] | "
+        "//a[contains(@class,'edit') and contains(@href,'/kiosk')]")
+
+    # Configurator chooser dialog that appears when clicking Edit on some kiosks.
+    CONFIGURATOR_DIALOG = (By.XPATH,
+        "//*[contains(normalize-space(),'Choose which kiosk configurator') or "
+        "contains(normalize-space(),'kiosk configurator to use')]")
+    CONFIGURATOR_LEGACY_BTN = (By.XPATH,
+        "//button[normalize-space()='Legacy'] | "
+        "//span[@role='button' and normalize-space()='Legacy'] | "
+        "//*[@role='button' and normalize-space()='Legacy']")
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))] | "
         "//*[contains(@class,'inovua-react-toolkit-load-mask')]")
 
     def wait_for_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
+        self.switch_to_frame_with_retry(self.KSK_LIST_FRAME, timeout=60)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))
         # The filter badge count is fetched asynchronously after the page renders.
         # Wait for the button text to stabilize so reset_filters_if_active() sees the final state.
         self._wait_for_filter_stable()
+        # Dismiss any staging/environment toasts that overlay the iframe and intercept clicks.
+        self._dismiss_toasts()
 
     def _wait_for_filter_stable(self, stable_for=1.0, timeout=15):
         """Poll the filter button until its text hasn't changed for stable_for seconds."""
@@ -93,6 +110,37 @@ class AdminKioskSettingsPage(BasePage):
             elif text and (time.monotonic() - last_change) >= stable_for:
                 return
             time.sleep(0.2)
+
+    def _dismiss_toasts(self):
+        """Click away any Toastify banners in the outer document.
+
+        Staging emits a persistent 'dev-environment-unstable' warning toast that
+        overlaps the iframe and intercepts native clicks on iframe elements.
+        We switch to the outer document, dismiss all visible toasts, then re-enter
+        the list iframe so subsequent actions work cleanly.
+        """
+        TOAST = (By.XPATH, "//*[contains(@class,'Toastify__toast') and @role='alert']")
+        try:
+            self.driver.switch_to.default_content()
+            toasts = self.driver.find_elements(*TOAST)
+            for toast in toasts:
+                try:
+                    if toast.is_displayed():
+                        self.driver.execute_script("arguments[0].click();", toast)
+                except Exception:
+                    pass
+            WebDriverWait(self.driver, 5).until(
+                lambda d: not any(t.is_displayed() for t in d.find_elements(*TOAST))
+            )
+        except Exception:
+            pass
+        finally:
+            try:
+                WebDriverWait(self.driver, 10).until(
+                    EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME)
+                )
+            except Exception:
+                pass
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -167,7 +215,34 @@ class AdminKioskSettingsPage(BasePage):
         self.search_kiosk(name)
         self.wait_for_kiosk_row(name)
         edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
-        self.driver.execute_script("arguments[0].click();", edit_link)
+        # Prefer navigating the outer page to the edit URL so the shell renders a
+        # real KSK_EDIT_FRAME iframe that wait_for_edit_loaded() can switch into.
+        # If the href is just the list root URL or empty, fall back to a JS click
+        # (React Router in-frame navigation — wait_for_edit_loaded handles this too).
+        href = edit_link.get_attribute("href") or ""
+        _kiosk_base = "/kiosk_settings/kiosks"
+        _is_list_root = (
+            not href
+            or href.rstrip("/").endswith(_kiosk_base)
+            and "?" not in href
+        )
+        if href and _kiosk_base in href and "/new" not in href and not _is_list_root:
+            self.driver.switch_to.default_content()
+            self.driver.get(href)
+        else:
+            self.driver.execute_script("arguments[0].click();", edit_link)
+        # Some kiosks show a "Choose which kiosk configurator to use" dialog
+        # before opening the edit form.  Click "Legacy" to proceed.
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.visibility_of_element_located(self.CONFIGURATOR_DIALOG)
+            )
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.CONFIGURATOR_LEGACY_BTN)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+        except Exception:
+            pass  # No configurator dialog — edit form opens directly.
 
     def filter_panel_is_open(self):
         els = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
@@ -243,9 +318,13 @@ class AdminKioskSettingsPage(BasePage):
         if "Filter by (" not in self.get_body_text():
             return
 
-        # Native click required for Radix Dialog trigger.
+        # Native click preferred for Radix Dialog trigger; JS-click fallback handles
+        # any residual overlay that survives toast dismissal.
         btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
-        btn.click()
+        try:
+            btn.click()
+        except Exception:
+            self.driver.execute_script("arguments[0].click();", btn)
 
         # Dialog renders in the iframe's DOM.  Try current context first.
         reset_btn = None
@@ -462,6 +541,37 @@ class AdminKioskFormPage(BasePage):
 
     # ── Flow/Appearance Settings ─────────────────────────────────────────────
 
+    # Second batch of "remaining" toggles covered by KSK-FLW-009
+    ENABLE_LOG_WRITE_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'Enable log write') or "
+        "contains(normalize-space(),'log write')]"
+        "/following::button[@role='switch'][1]")
+
+    USE_SOFTWARE_KEYBOARD_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'software keyboard') or "
+        "contains(normalize-space(),'Software keyboard')]"
+        "/following::button[@role='switch'][1]")
+
+    HIDE_HELP_BUTTON_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'Hide help') or "
+        "contains(normalize-space(),'hide help')]"
+        "/following::button[@role='switch'][1]")
+
+    ENABLE_DC_DIRECT_TIP_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'DC direct tip') or "
+        "contains(normalize-space(),'direct tip')]"
+        "/following::button[@role='switch'][1]")
+
+    ENABLE_AUTO_NAVIGATE_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'auto navigate') or "
+        "contains(normalize-space(),'Auto navigate')]"
+        "/following::button[@role='switch'][1]")
+
+    ACCEPT_CASH_WITHOUT_ACCEPTOR_TOGGLE = (By.XPATH,
+        "//*[contains(normalize-space(),'cash without acceptor') or "
+        "contains(normalize-space(),'Cash without acceptor')]"
+        "/following::button[@role='switch'][1]")
+
     WEX_WASH_CARDS_TOGGLE = (By.XPATH,
         "//*[contains(normalize-space(),'Wex') or "
         "contains(normalize-space(),'Wash card') or "
@@ -568,18 +678,41 @@ class AdminKioskFormPage(BasePage):
     # ── Load / frame ─────────────────────────────────────────────────────────
 
     def wait_for_create_loaded(self):
-        # Save/Cancel buttons live in the outer shell, not the iframe — don't look for them here.
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(AdminKioskSettingsPage.KSK_CREATE_FRAME, timeout=60)
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
 
     def wait_for_edit_loaded(self):
-        self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(
-            EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_EDIT_FRAME)
-        )
+        """Wait for the kiosk name input in the edit form.
+
+        Handles multiple iframe architectures:
+        1. Dedicated edit iframe (KSK_EDIT_FRAME) — outer-page navigation
+        2. Current iframe context (React Router in-frame navigation from list)
+        3. List iframe re-entered explicitly (fallback for React Router case)
+        """
+        # Try each context briefly so we do not spend 60 s in the wrong one.
+        for ctx_fn, visible_timeout in (
+            (lambda: self.switch_to_frame_with_retry(
+                AdminKioskSettingsPage.KSK_EDIT_FRAME, timeout=20), 15),
+            (lambda: None, 5),   # current context after JS click (list iframe)
+            (lambda: self.switch_to_frame_with_retry(
+                AdminKioskSettingsPage.KSK_LIST_FRAME, timeout=8), 10),
+        ):
+            try:
+                ctx_fn()
+                WebDriverWait(self.driver, visible_timeout).until(
+                    EC.visibility_of_element_located(self.KIOSK_NAME_INPUT)
+                )
+                # Found — wait for the pre-populated value.
+                self.wait.until(
+                    lambda d: d.find_element(
+                        *self.KIOSK_NAME_INPUT
+                    ).get_attribute("value") != ""
+                )
+                return
+            except Exception:
+                continue
+        # Final long-wait in edit frame (slow cold-start page load)
+        self.switch_to_frame_with_retry(AdminKioskSettingsPage.KSK_EDIT_FRAME, timeout=45)
         self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
         self.wait.until(
             lambda d: d.find_element(*self.KIOSK_NAME_INPUT).get_attribute("value") != ""
@@ -593,6 +726,10 @@ class AdminKioskFormPage(BasePage):
             return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Core form actions ─────────────────────────────────────────────────────
+
+    def get_kiosk_name_value(self):
+        el = self.wait.until(EC.presence_of_element_located(self.KIOSK_NAME_INPUT))
+        return el.get_attribute("value") or ""
 
     def enter_kiosk_name(self, name):
         self.enter_text(self.KIOSK_NAME_INPUT, name)
@@ -646,24 +783,24 @@ class AdminKioskFormPage(BasePage):
             pass
 
     def click_save(self):
-        # Save button is inside KSK_CREATE_FRAME / KSK_EDIT_FRAME alongside the form fields.
         url_before = self.driver.current_url
         el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
-        # Switch to default_content so current_url reflects the outer-page navigation.
         self.driver.switch_to.default_content()
         try:
             WebDriverWait(self.driver, 10).until(lambda d: d.current_url != url_before)
-            # URL changed — save succeeded, caller handles next navigation.
+            # URL changed — outer-page navigation: save succeeded.
         except Exception:
-            # URL unchanged — validation blocked the save.
-            # Re-enter the form iframe so post-save checks (e.g. aria-invalid) still work.
+            # URL unchanged: either validation blocked save (form stays) or
+            # React Router navigated within the same iframe.
+            # Re-enter the best available iframe for post-save assertions.
             for frame_loc in (
                 AdminKioskSettingsPage.KSK_CREATE_FRAME,
                 AdminKioskSettingsPage.KSK_EDIT_FRAME,
+                AdminKioskSettingsPage.KSK_LIST_FRAME,
             ):
                 try:
-                    WebDriverWait(self.driver, 5).until(
+                    WebDriverWait(self.driver, 3).until(
                         EC.frame_to_be_available_and_switch_to_it(frame_loc)
                     )
                     break
@@ -940,6 +1077,23 @@ class AdminKioskFormPage(BasePage):
 
     def enter_dedup_timer(self, value):
         self.enter_text(self.DEDUP_TIMER_INPUT, str(value))
+
+    def ensure_secondary_flow_toggles_on(self):
+        """Toggle ON the second batch of Flow/Appearance switches (KSK-FLW-009)."""
+        for locator in (
+            self.ENABLE_LOG_WRITE_TOGGLE,
+            self.USE_SOFTWARE_KEYBOARD_TOGGLE,
+            self.HIDE_HELP_BUTTON_TOGGLE,
+            self.ENABLE_DC_DIRECT_TIP_TOGGLE,
+            self.ENABLE_AUTO_NAVIGATE_TOGGLE,
+            self.ACCEPT_CASH_WITHOUT_ACCEPTOR_TOGGLE,
+        ):
+            try:
+                toggle = self.wait.until(EC.element_to_be_clickable(locator))
+                if toggle.get_attribute("aria-checked") != "true":
+                    self.driver.execute_script("arguments[0].click();", toggle)
+            except Exception:
+                pass
 
     def get_all_flow_toggle_states(self):
         toggles = self.driver.find_elements(By.XPATH, "//button[@role='switch']")

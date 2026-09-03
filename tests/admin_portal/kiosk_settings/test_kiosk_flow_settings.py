@@ -105,11 +105,12 @@ def test_flow_sign_membership_heading_saves(browser, managed_kiosk_form):
     assert page_has_no_broken_state(form)
 
 
-@allure.title("KSK-FLW-007 Remaining flow/appearance toggles save correctly")
+@allure.title("KSK-FLW-007 First batch of remaining flow toggles saves correctly")
 @pytest.mark.extended
 @_SETTINGS_XFAIL
 def test_flow_remaining_toggles_save(browser, managed_kiosk_form):
-    # Covers KSK-FLW-007 and KSK-FLW-009 — same remaining-toggles block
+    # KSK-FLW-007: Use phone for vehicle creation, Extras disable auto skip,
+    # Enable SMS marketing, Is prepaid retrieved ticket
     form = managed_kiosk_form
     form.expand_section("Flow")
     form.ensure_flow_toggle_on(form.WEX_WASH_CARDS_TOGGLE)
@@ -136,10 +137,18 @@ def test_flow_wex_wash_cards_toggle_saves(browser, managed_kiosk_form):
     assert page_has_no_broken_state(form2)
 
 
-@allure.title("KSK-FLW-009 Remaining flow toggles save correctly")
-@pytest.mark.skip(reason="Covered by KSK-FLW-007 — same remaining-toggles block in Flow/Appearance section.")
-def test_flow_remaining_toggles_save_duplicate(browser, managed_kiosk_form):
-    pass
+@allure.title("KSK-FLW-009 Second batch of remaining flow toggles saves correctly")
+@pytest.mark.extended
+@_SETTINGS_XFAIL
+def test_flow_secondary_toggles_save(browser, managed_kiosk_form):
+    # KSK-FLW-009: Enable log write, Use software keyboard, Hide help button,
+    # Enable DC direct tip, Enable auto navigate to buy wash, Accept cash without acceptor
+    form = managed_kiosk_form
+    form.expand_section("Flow")
+    form.ensure_secondary_flow_toggles_on()
+    form.click_save()
+
+    assert page_has_no_broken_state(form)
 
 
 @allure.title("KSK-FLW-010 Deduplication timer accepts numeric input and saves")

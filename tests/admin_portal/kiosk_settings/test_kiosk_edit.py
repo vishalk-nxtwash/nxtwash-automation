@@ -31,27 +31,17 @@ _LOCATION_XFAIL = pytest.mark.xfail(
 
 @allure.title("KSK-EDT-001 Edit form opens pre-populated with kiosk name")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-EDT-001: Assertion checks body text for kiosk name but <input> values "
-        "do not appear in Selenium body text — needs manual check or assertion "
-        "changed to read input value via get_attribute('value')."
-    ),
-)
 def test_edit_form_opens_prepopulated(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
-    body = form.get_body_text()
 
-    assert KSK_NAME in body, (
-        "Kiosk name '%s' not pre-populated in edit form" % KSK_NAME
+    assert KSK_NAME in form.get_kiosk_name_value(), (
+        "Kiosk name '%s' not pre-populated in edit form input" % KSK_NAME
     )
     assert page_has_no_broken_state(form)
 
 
 @allure.title("KSK-EDT-002 Editing kiosk name saves and persists in the list")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP KSK-EDT-002: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_edit_kiosk_name_persists(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     form.enter_kiosk_name(KSK_UPDATED_NAME)
@@ -101,7 +91,6 @@ def test_edit_kiosk_lane_persists(browser, managed_kiosk):
 
 @allure.title("KSK-EDT-005 Clearing kiosk name on the edit form blocks save with validation")
 @pytest.mark.regression
-@pytest.mark.skip(reason="CI-SKIP KSK-EDT-005: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_edit_clear_name_blocked(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.KIOSK_NAME_INPUT))
@@ -120,22 +109,13 @@ def test_edit_clear_name_blocked(browser, managed_kiosk):
 
 @allure.title("KSK-EDT-006 Clicking Cancel discards changes and preserves original name")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-EDT-006: Assertion checks body text for kiosk name but <input> values "
-        "do not appear in Selenium body text — needs manual check or assertion "
-        "changed to read input value via get_attribute('value')."
-    ),
-)
 def test_edit_cancel_discards_changes(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     form.enter_kiosk_name("discarded-kiosk-name-change")
     form.click_cancel()
 
     form2 = open_edit_kiosk_form(browser, KSK_NAME)
-    body = form2.get_body_text()
-    assert KSK_NAME in body, (
+    assert KSK_NAME in form2.get_kiosk_name_value(), (
         "Original kiosk name was not preserved after clicking Cancel"
     )
     assert page_has_no_broken_state(form2)

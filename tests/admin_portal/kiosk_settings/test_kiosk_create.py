@@ -161,12 +161,43 @@ def test_new_kiosk_appears_immediately(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("KSK-CRT-010 Generate connection code modal opens and shows a code after create")
+@allure.title("KSK-CRT-010 Duplicate kiosk name is rejected or clearly handled")
 @pytest.mark.regression
 @pytest.mark.xfail(
     strict=False,
     reason=(
-        "KSK-CRT-010: Generate connection code button and modal locators use heuristics "
+        "KSK-CRT-010: Duplicate name behavior not confirmed in staging — "
+        "verify whether server rejects or silently allows before removing xfail."
+    ),
+)
+def test_create_kiosk_duplicate_name(browser, managed_kiosk):
+    form = open_create_kiosk_form(browser)
+    form.enter_kiosk_name(KSK_NAME)
+    form.click_save()
+
+    body = form.get_body_text().lower()
+    is_blocked = (
+        "already exists" in body
+        or "duplicate" in body
+        or "taken" in body
+        or not form.kiosk_name_input_is_valid()
+    )
+    page = open_kiosk_page(browser)
+    page.search_kiosk(KSK_NAME)
+    rows = page.get_visible_row_count()
+
+    assert is_blocked or rows <= 1, (
+        "Duplicate kiosk name '%s' was silently accepted — expected rejection or single record" % KSK_NAME
+    )
+    assert page_has_no_broken_state(page)
+
+
+@allure.title("KSK-CRT-011 Generate connection code modal opens and shows a code after create")
+@pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "KSK-CRT-011: Generate connection code button and modal locators use heuristics "
         "— verify class names in DevTools before removing xfail. "
         "Requires managed_kiosk fixture (KSK_SITE / KSK_LANE must exist in staging)."
     ),
