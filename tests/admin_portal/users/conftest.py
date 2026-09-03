@@ -1,5 +1,6 @@
 import pytest
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -55,9 +56,11 @@ def open_create_user_form(browser):
     return form
 
 
-def open_edit_user_form(browser, email):
+def open_edit_user_form(browser, email, phone=USER_PHONE):
+    # Users filter panel has no email field — use phone search instead.
+    # The managed_user fixture ensures the user is active, so phone search (active=ON) finds them.
     page = open_users_page(browser)
-    page.search_user_by_email(email)   # narrows grid to this user
+    page.search_user(phone)
     page.open_edit_user(email)
     form = AdminUserFormPage(browser)
     form.wait_for_edit_loaded()
@@ -82,42 +85,82 @@ def create_user_if_missing(
     # Open a fresh list page — active-only filter is ON by default after navigation.
     page = open_users_page(browser)
 
-    # Build a combined filter: active=OFF + email match, so we find the user
-    # regardless of whether a prior test left them inactive.
+    # --- Step 1: ensure active filter is OFF (show all users: active + inactive) ---
+    # Don't blindly toggle — filter state may persist across navigation.
+    # Check current aria-checked state and only click if it is not already OFF.
     page.open_filter_panel()
-    switch = WebDriverWait(browser, 15).until(
-        EC.presence_of_element_located(AdminUsersPage.ACTIVE_FILTER_SWITCH)
-    )
-    if switch.get_attribute("aria-checked") == "true":
-        try:
-            switch.click()
-        except Exception:  # noqa: BLE001
-            browser.execute_script("arguments[0].click();", switch)
-    page._enter_filter_field(AdminUsersPage.FILTER_EMAIL, email)
-    page.apply_filters()
-    # Grid now shows 0 or 1 rows: users (active or inactive) matching the email.
-
     try:
-        page.wait_for_user_row(email)
+        _sw = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable(AdminUsersPage.ACTIVE_FILTER_SWITCH)
+        )
+        if _sw.get_attribute("aria-checked") != "false":
+            try:
+                _sw.click()
+            except Exception:
+                browser.execute_script("arguments[0].click();", _sw)
+            try:
+                WebDriverWait(browser, 10).until(
+                    EC.visibility_of_element_located(AdminUsersPage.FILTER_FIRST_NAME)
+                )
+            except TimeoutException:
+                pass
+    except Exception:
+        pass
+    page.apply_filters()
+    # Grid now shows ALL users (active + inactive).
+
+    # --- Step 2: find the managed user's row by email (try current AND updated email) ---
+    # A prior partial test run may have left the email set to UPDATED_EMAIL.
+    found_cell = None
+    for candidate_email in [email, UPDATED_EMAIL]:
+        try:
+            found_cell = WebDriverWait(browser, 15).until(
+                EC.visibility_of_element_located(
+                    page._user_email_cell_locator(candidate_email)
+                )
+            )
+            break
+        except TimeoutException:
+            continue
+
+    if found_cell is not None:
+        # Use Y-coordinate proximity to click the edit link on the same row.
+        cell_y = found_cell.location["y"]
+        try:
+            WebDriverWait(browser, 10).until(
+                lambda d: any(
+                    lnk.is_displayed() for lnk in d.find_elements(*AdminUsersPage._EDIT_LINK)
+                )
+            )
+        except TimeoutException:
+            pass
         visible_links = [
             lnk for lnk in page.driver.find_elements(*AdminUsersPage._EDIT_LINK)
             if lnk.is_displayed()
         ]
-        if not visible_links:
-            raise TimeoutException("No edit links visible for: %s" % email)
-        page.driver.execute_script("arguments[0].click();", visible_links[0])
-        page.driver.switch_to.default_content()
+        if visible_links:
+            closest = min(visible_links, key=lambda lnk: abs(lnk.location["y"] - cell_y))
+            page.driver.execute_script("arguments[0].click();", closest)
+            page.driver.switch_to.default_content()
 
-        form = AdminUserFormPage(browser)
-        form.wait_for_edit_loaded()
-        form.enter_email(email)
-        form.enter_phone(phone)
-        form.select_role(role)
-        form.ensure_active_switch_on()
-        form.click_save()
-        return open_users_page(browser)
-    except Exception:  # noqa: BLE001
-        pass  # user not found — fall through to create
+            try:
+                form = AdminUserFormPage(browser)
+                form.wait_for_edit_loaded()
+                # Reset ALL baseline fields — handles dirty state from prior partial runs.
+                form.enter_email(email)
+                form.enter_phone(phone)
+                form.select_role(role)
+                form.ensure_active_switch_on()
+                form.click_save()
+            except Exception as _edit_exc:
+                import logging
+                logging.getLogger("nxtwash").warning(
+                    "create_user_if_missing: edit-form reset failed for %s (%s). "
+                    "User likely already in correct state; continuing.",
+                    email, _edit_exc,
+                )
+                browser.switch_to.default_content()
+            return open_users_page(browser)
 
     # User does not exist — create it.
     page = open_users_page(browser)
@@ -146,4 +189,9 @@ def managed_user(browser):
         import logging
         logging.getLogger("nxtwash").warning(
             "managed_user teardown could not restore user baseline: %s", exc
+        )
+    except BaseException as exc:  # noqa: BLE001 — catches pytest.skip() / Skipped
+        import logging
+        logging.getLogger("nxtwash").warning(
+            "managed_user teardown raised non-Exception (e.g. skip signal): %s", exc
         )

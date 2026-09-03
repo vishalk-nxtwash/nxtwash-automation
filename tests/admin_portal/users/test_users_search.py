@@ -53,6 +53,13 @@ def test_users_search_nonexistent_phone_shows_empty(browser):
 
 @allure.title("USR-SRH-004 Clearing the phone search restores the full user list")
 @pytest.mark.regression
+@pytest.mark.skip(
+    reason=(
+        "Manual — USR-SRH-004: Requires managed user vkuser02@yopmail.com to be active "
+        "on staging with employee 'test user 2' and role 'VK UR02'. "
+        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
+    )
+)
 def test_users_search_clear_restores_list(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

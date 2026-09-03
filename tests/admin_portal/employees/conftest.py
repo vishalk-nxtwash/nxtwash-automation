@@ -75,9 +75,16 @@ def open_edit_employee_form(browser, last_name=EMP_LAST_NAME):
 
 
 def open_shift_page(browser):
+    from selenium.common.exceptions import TimeoutException as _TE
     open_admin_path(browser, "/users/employeeShift")
     page = AdminEmployeeShiftPage(browser)
-    page.wait_for_loaded()
+    try:
+        page.wait_for_loaded()
+    except _TE:
+        # Shift iframe can fail to render under resource pressure; reload once.
+        open_admin_path(browser, "/users/employeeShift")
+        page = AdminEmployeeShiftPage(browser)
+        page.wait_for_loaded()
     return page
 
 

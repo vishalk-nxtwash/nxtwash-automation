@@ -31,6 +31,13 @@ def test_users_filter_panel_opens(browser):
 
 @allure.title("USR-FLT-002 Filter by First Name returns matching users")
 @pytest.mark.regression
+@pytest.mark.skip(
+    reason=(
+        "Manual — USR-FLT-002: Requires managed user vkuser02@yopmail.com to be active "
+        "on staging with employee 'test user 2' and role 'VK UR02'. "
+        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
+    )
+)
 def test_users_filter_by_first_name(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -43,6 +50,13 @@ def test_users_filter_by_first_name(browser):
 
 @allure.title("USR-FLT-003 Filter by Last Name returns matching users")
 @pytest.mark.regression
+@pytest.mark.skip(
+    reason=(
+        "Manual — USR-FLT-003: Requires managed user vkuser02@yopmail.com to be active "
+        "on staging with employee 'test user 2' and role 'VK UR02'. "
+        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
+    )
+)
 def test_users_filter_by_last_name(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -55,6 +69,13 @@ def test_users_filter_by_last_name(browser):
 
 @allure.title("USR-FLT-004 Filter by Email returns the correct user")
 @pytest.mark.regression
+@pytest.mark.skip(
+    reason=(
+        "Manual — USR-FLT-004: The Users filter panel has no email input; 'Email address' "
+        "is an Inovua column header only. Verify whether an email filter field exists "
+        "in the panel before re-enabling."
+    )
+)
 def test_users_filter_by_email(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
