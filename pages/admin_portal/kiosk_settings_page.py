@@ -158,8 +158,10 @@ class AdminKioskSettingsPage(BasePage):
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        # HTMLInputElement.select() reliably selects all text cross-platform;
+        # Ctrl+A is OS-specific and doesn't fire the React change event on macOS.
+        self.driver.execute_script("arguments[0].select();", el)
+        el.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -210,11 +212,38 @@ class AdminKioskSettingsPage(BasePage):
     def click_add_kiosk(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+        # The configurator dialog ("Choose which kiosk configurator to use") appears
+        # in the outer page after the click, not inside the list iframe.  Switch to
+        # default_content so we can see and dismiss it.
+        self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, 8).until(
+                EC.visibility_of_element_located(self.CONFIGURATOR_DIALOG)
+            )
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.CONFIGURATOR_LEGACY_BTN)
+            )
+            self.driver.execute_script("arguments[0].click();", btn)
+        except Exception:
+            pass  # No configurator dialog — form opens directly.
 
     def open_edit_kiosk(self, name):
         self.search_kiosk(name)
         self.wait_for_kiosk_row(name)
-        edit_link = self.wait.until(EC.element_to_be_clickable(self.EDIT_LINK))
+        # Scope the edit link to the row that contains this kiosk name so that
+        # when multiple kiosks are visible (e.g. an active site filter left from
+        # a prior test) we don't pick up a different kiosk's edit link.
+        _row_edit = (By.XPATH,
+            "//*[contains(@class,'InovuaReactDataGrid__row') and "
+            "    .//*[normalize-space()='{n}' or @title='{n}']]"
+            "//a[@role='button' and contains(@class,'__edit')] | "
+            "//*[contains(@class,'InovuaReactDataGrid__row') and "
+            "    .//*[normalize-space()='{n}' or @title='{n}']]"
+            "//a[contains(@href,'/kiosk_settings/kiosks/') and not(contains(@href,'/new'))] | "
+            "//*[@role='row' and .//*[normalize-space()='{n}' or @title='{n}']]"
+            "//a[contains(@href,'/kiosk_settings/kiosks/') and not(contains(@href,'/new'))]"
+            .format(n=name))
+        edit_link = self.wait.until(EC.element_to_be_clickable(_row_edit))
         # Prefer navigating the outer page to the edit URL so the shell renders a
         # real KSK_EDIT_FRAME iframe that wait_for_edit_loaded() can switch into.
         # If the href is just the list root URL or empty, fall back to a JS click
@@ -388,11 +417,29 @@ class AdminKioskSettingsPage(BasePage):
         return [o.text.strip() for o in options if o.text.strip()]
 
     def wait_for_create_frame(self, timeout=60):
-        """Switch to default content and wait for the create-form iframe to appear."""
+        """Switch to the create form, in a dedicated iframe or the list iframe.
+
+        Returns True with the driver inside the create-form frame context,
+        or False if the frame never appeared.
+        """
         self.driver.switch_to.default_content()
+        # Primary: dedicated create iframe (outer-page nav to /kiosk_settings/kiosks/new).
+        # switch_to_frame_with_retry handles StaleElementReferenceException that
+        # EC.frame_to_be_available_and_switch_to_it silently misses.
         try:
-            WebDriverWait(self.driver, timeout).until(
-                EC.frame_to_be_available_and_switch_to_it(self.KSK_CREATE_FRAME)
+            self.switch_to_frame_with_retry(self.KSK_CREATE_FRAME, timeout=max(timeout - 20, 20))
+            return True
+        except Exception:
+            pass
+        # Fallback: React Router opened the form inside the list iframe.
+        try:
+            self.driver.switch_to.default_content()
+            self.switch_to_frame_with_retry(self.KSK_LIST_FRAME, timeout=15)
+            _name_input = (By.XPATH,
+                "//input[@name='kioskName' or @name='name' or @name='kiosk_name' or "
+                "@placeholder='Kiosk name' or @placeholder='Name']")
+            WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(_name_input)
             )
             return True
         except Exception:

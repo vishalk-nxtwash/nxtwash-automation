@@ -123,10 +123,6 @@ def test_edit_cancel_discards_changes(browser, managed_kiosk):
 
 @allure.title("KSK-EDT-007 Configure panel is visible on the edit form with tabs")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-EDT-007: Configure panel and tab locators use heuristics — verify in DevTools.",
-)
 def test_edit_form_configure_panel_visible(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
 
