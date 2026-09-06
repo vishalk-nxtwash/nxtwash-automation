@@ -1,8 +1,8 @@
 {
   "reference": {
     "existing_pos":         "VK APOS05",
-    "site":                 "VK AL03",
-    "lane":                 "L1",
+    "site":                 "VK Test carwash 2",
+    "lane":                 "Kiosk Lane 2",
     "allow_checkout":       "With assigned customer only",
     "allow_checkout_no_customer": "No customer assigned"
   },

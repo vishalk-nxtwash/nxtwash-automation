@@ -91,3 +91,21 @@ def test_device_serial_persists(browser, managed_pos_form):
         "Payment serial '%s' not found in body after save" % POS_PAYMENT_SERIAL
     )
     assert page_has_no_broken_state(form2)
+
+
+@allure.title("POS-DEV-005 Check or re-generate code button opens popup and Close dismisses it")
+@pytest.mark.regression
+def test_check_or_regenerate_code_opens_popup(browser, managed_pos_form):
+    form = managed_pos_form
+    form.click_check_or_regenerate_code()
+
+    body = form.get_body_text()
+    assert (
+        "code" in body.lower()
+        or "generate" in body.lower()
+        or "check" in body.lower()
+        or "qr" in body.lower()
+    ), "Popup with code content should appear after clicking check/re-generate"
+
+    form.close_connection_code_modal()
+    assert page_has_no_broken_state(form)

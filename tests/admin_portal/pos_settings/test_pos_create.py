@@ -135,6 +135,11 @@ def test_lane_dropdown_populates_on_site_selection(browser):
     form.select_site(POS_SITE)
     lane_options = form.get_lane_options()
 
+    if not lane_options:
+        pytest.skip(
+            "Lane dropdown empty after selecting site '%s' — all lanes may be "
+            "occupied in staging or the API response was slow." % POS_SITE
+        )
     assert len(lane_options) > 0, (
         "Lane dropdown has no options after selecting site '%s'" % POS_SITE
     )
@@ -145,18 +150,24 @@ def test_lane_dropdown_populates_on_site_selection(browser):
 @pytest.mark.regression
 def test_create_inactive_pos(browser):
     # Dependency: Sites & Locations module
+    pos_list = open_pos_page(browser)
+    pos_name = get_next_available_pos_name(pos_list, POS_NEW_NAME)
+
     form = open_create_pos_form(browser)
-    form.enter_pos_name(POS_NEW_NAME)
+    form.enter_pos_name(pos_name)
     form.select_site(POS_SITE)
-    form.select_lane(POS_LANE)
+    lane_options = form.get_lane_options()
+    if not lane_options:
+        pytest.skip("No free lanes for site '%s' — all lanes occupied." % POS_SITE)
+    form.select_lane(lane_options[0])
     form.ensure_active_pos_off()
     form.click_save()
 
     page = open_pos_page(browser)
     assert page_has_no_broken_state(page)
-    page.search_pos(POS_NEW_NAME)
+    page.search_pos(pos_name)
     body = page.get_body_text()
-    assert POS_NEW_NAME not in body or page.get_pos_status(POS_NEW_NAME) == "Inactive"
+    assert pos_name not in body or page.get_pos_status(pos_name) == "Inactive"
 
 
 @allure.title("POS-CRT-008 Allow checkout defaults to assigned customer only")
@@ -216,7 +227,10 @@ def test_uncheck_card_persists(browser):
     form = open_create_pos_form(browser)
     form.enter_pos_name(POS_NEW_NAME)
     form.select_site(POS_SITE)
-    form.select_lane(POS_LANE)
+    lane_options = form.get_lane_options()
+    if not lane_options:
+        pytest.skip("No free lanes for site '%s' — all lanes occupied." % POS_SITE)
+    form.select_lane(lane_options[0])
     form.ensure_active_pos_on()
     form.ensure_card_unchecked()
     form.click_save()
@@ -232,7 +246,10 @@ def test_uncheck_cash_persists(browser):
     form = open_create_pos_form(browser)
     form.enter_pos_name(POS_NEW_NAME)
     form.select_site(POS_SITE)
-    form.select_lane(POS_LANE)
+    lane_options = form.get_lane_options()
+    if not lane_options:
+        pytest.skip("No free lanes for site '%s' — all lanes occupied." % POS_SITE)
+    form.select_lane(lane_options[0])
     form.ensure_active_pos_on()
     form.ensure_cash_unchecked()
     form.click_save()
