@@ -68,6 +68,17 @@ def open_create_employee_form(browser):
 
 def open_edit_employee_form(browser, last_name=EMP_LAST_NAME):
     page = open_employees_page(browser)
+    if last_name == EMP_LAST_NAME:
+        # The lastName column search bar is non-functional in the current UI
+        # (no server-side filter fires on typing/Enter/blur), so name-based
+        # open_edit_employee reliably times out on staging with 929+ employees.
+        # Use the employee-code filter (always ≤1 row) instead.
+        found_row = _find_employee_by_code(page, EMP_CODE, timeout=30)
+        if found_row is not None:
+            _open_edit_from_row(page, found_row)
+            form = AdminEmployeeFormPage(browser)
+            form.wait_for_edit_loaded()
+            return form
     page.open_edit_employee(last_name)
     form = AdminEmployeeFormPage(browser)
     form.wait_for_edit_loaded()
@@ -114,8 +125,77 @@ def page_has_no_broken_state(page):
 
 
 # ---------------------------------------------------------------------------
-# Upsert helper
+# Upsert helpers
 # ---------------------------------------------------------------------------
+
+
+def _find_employee_by_code(page, emp_code, timeout=30):
+    """Filter by employee code (unique field) and return the first grid row.
+
+    Name-based searches are unreliable on the staging grid: when many employees
+    share the same last-name prefix, InovuaReactDataGrid's virtual scroller
+    omits the target row from the DOM, causing 60-second timeouts even when the
+    record exists.  The code filter returns ≤ 1 row, guaranteeing the row is
+    always rendered regardless of grid size.
+
+    Searches active employees first (the default view after Reset All), then
+    retries with the inactive view in case a previous test deactivated the
+    managed employee without restoring it.
+    """
+    from selenium.webdriver.support import expected_conditions as _EC
+    from selenium.webdriver.support.ui import WebDriverWait as _WDW
+
+    def _apply_and_get(include_inactive):
+        """Apply code filter; include_inactive=True adds the Inactive status filter."""
+        try:
+            page.clear_active_filters()
+            # Under staging load (929+ employees, parallel workers) the Reset-All
+            # API call takes longer than _wait_for_grid_idle's 10-second timeout.
+            # If the load mask is still visible when we click the filter button,
+            # it intercepts the click and the panel never opens.
+            try:
+                _WDW(page.driver, 30).until(
+                    lambda d: not any(
+                        m.is_displayed()
+                        for m in d.find_elements(*AdminEmployeesPage.GRID_LOAD_MASK)
+                    )
+                )
+            except Exception:
+                pass
+            page.open_filter_panel()
+            el = _WDW(page.driver, 20).until(
+                _EC.element_to_be_clickable(AdminEmployeesPage.FILTER_EMPLOYEE_CODE_INPUT)
+            )
+            el.click()
+            el.clear()
+            el.send_keys(emp_code)
+            if include_inactive:
+                # Toggle the active-employee switch so inactive records are visible.
+                page.filter_by_status("Inactive")
+            page.apply_filters()
+            _WDW(page.driver, timeout).until(
+                lambda d: len(d.find_elements(*AdminEmployeesPage.GRID_ROWS)) > 0
+            )
+            rows = page.driver.find_elements(*AdminEmployeesPage.GRID_ROWS)
+            return rows[0] if rows else None
+        except Exception:
+            return None
+
+    # Pass 1: active-employees view (default after Reset All).
+    row = _apply_and_get(include_inactive=False)
+    if row is not None:
+        return row
+    # Pass 2: inactive-employees view — the managed employee may have been
+    # deactivated by a test that failed before it could restore it.
+    return _apply_and_get(include_inactive=True)
+
+
+def _open_edit_from_row(page, row):
+    """Click the Edit link inside a visible grid row."""
+    from selenium.webdriver.common.by import By as _By
+    edit_link = row.find_element(_By.XPATH,
+        ".//a[@role='button' and .//span[normalize-space()='Edit']]")
+    page.driver.execute_script("arguments[0].click();", edit_link)
 
 
 def create_employee_if_missing(
@@ -131,62 +211,49 @@ def create_employee_if_missing(
 
     page = open_employees_page(browser)
 
-    if page.employee_exists(last_name, timeout=30):
-        # Employee is active with the canonical last name — nothing to restore.
-        # Re-entering all fields via send_keys corrupts RHF's internal state
-        # and causes headless-CI save failures. Skip the edit/save entirely.
+    # Use employee code (unique field) as the primary existence check.
+    # Name-based searches hit a virtual-scroll truncation bug: when many
+    # employees share the same last-name prefix the target row may not be
+    # rendered, causing 60-second false-negatives. The code filter always
+    # returns ≤ 1 row so the row is guaranteed to be in the DOM.
+    found_row = _find_employee_by_code(page, EMP_CODE, timeout=30)
+
+    if found_row is not None:
+        # Employee exists. Open edit to read the current last name.
+        # If it is already canonical, just cancel (avoids an unnecessary
+        # save round-trip and the >15-second API wait that triggers a
+        # spurious warning). If it was renamed by an edit test, restore it.
+        try:
+            _open_edit_from_row(page, found_row)
+            restore_form = AdminEmployeeFormPage(browser)
+            restore_form.wait_for_edit_loaded()
+            current_last = restore_form.driver.find_element(
+                *AdminEmployeeFormPage.LAST_NAME_INPUT
+            ).get_attribute("value")
+            last_ok = current_last.lower().strip() == last_name.lower()
+            active_ok = restore_form.active_switch_is_on()
+            if last_ok and active_ok:
+                restore_form.click_cancel()
+            else:
+                if not last_ok:
+                    restore_form.enter_last_name(last_name)
+                restore_form.ensure_active_switch_on()
+                restore_form.click_save()
+        except Exception:
+            pass
         return open_employees_page(browser)
 
-    # Not found under canonical name.  An edit-last-name test may have renamed
-    # it to UPDATED_LAST_NAME and failed to restore.  Check the known-updated
-    # name with a short timeout before falling through to create — a create
-    # attempt would hit a duplicate-email error and then hang for 180 s waiting
-    # for a row that never appears under the old name.
-    from selenium.common.exceptions import TimeoutException as _TE
-    page = open_employees_page(browser)
-    page.search_employee(UPDATED_LAST_NAME)
-    try:
-        page.wait_for_employee_row(UPDATED_LAST_NAME, timeout=10)
-        renamed_found = True
-    except _TE:
-        renamed_found = False
-
-    if renamed_found:
-        try:
-            # Row already visible from the search above — click edit directly.
-            page.click_edit_for_visible_employee(UPDATED_LAST_NAME)
-            form = AdminEmployeeFormPage(browser)
-            form.wait_for_edit_loaded()
-        except Exception:
-            # Another parallel worker renamed it back between our 10 s row-check
-            # and this open attempt.  Re-verify under the canonical name so we
-            # don't fall into the create path and hit a duplicate-email error.
-            page = open_employees_page(browser)
-            if page.employee_exists(last_name, timeout=30):
-                page.click_edit_for_visible_employee(last_name)
-                form = AdminEmployeeFormPage(browser)
-                form.wait_for_edit_loaded()
-            else:
-                renamed_found = False
-        if renamed_found:
-            # The form loaded all fields from the server — RHF's state is
-            # already correct for email, phone, etc. Only re-enter the last
-            # name (the field EMP-EDT-003 changed); touching other fields via
-            # send_keys would corrupt RHF state and break the headless save.
-            form.enter_last_name(last_name)
-            form.ensure_active_switch_on()
-            form.click_save()
-            return open_employees_page(browser)
-
+    # Employee not found by code → CREATE.
     form = open_create_employee_form(browser)
-    form.enter_first_name(first_name)
-    form.enter_last_name(last_name)
-    form.enter_email(email)
-    form.enter_phone(phone)
-    form.enter_employee_code(EMP_CODE)
-    form.assign_locations(locations)
-    form.ensure_active_switch_on()
-    # Optional fields — wrapped so a missing input doesn't abort the whole setup
+    # Optional dropdowns first — each triggers a React re-render; if they come
+    # after text inputs, the re-render can wipe RHF's internal state for text
+    # fields (confirmed by staging behaviour). Setting them first means the
+    # re-renders fire before any text field is written.
+    try:
+        form.select_state(EMP_STATE)
+        form.select_city(EMP_CITY)
+    except Exception:
+        pass
     try:
         from selenium.webdriver.support import expected_conditions as EC
         el = form.wait.until(
@@ -195,6 +262,15 @@ def create_employee_if_missing(
         form._set_input_value(el, EMP_HIRE_DATE)
     except Exception:
         pass
+    # Required text fields after optional dropdowns — proven order from
+    # test_create_employee_multiple_locations: text first, then locations,
+    # then switch; assign_locations and ensure_active_switch_on both trigger
+    # re-renders that preserve text values when text was set before them.
+    form.enter_first_name(first_name)
+    form.enter_last_name(last_name)
+    form.enter_email(email)
+    form.enter_phone(phone)
+    form.enter_employee_code(EMP_CODE)
     try:
         form.enter_address(EMP_ADDRESS)
     except Exception:
@@ -203,52 +279,50 @@ def create_employee_if_missing(
         form.enter_zip(EMP_ZIP)
     except Exception:
         pass
-    try:
-        form.select_state(EMP_STATE)
-        form.select_city(EMP_CITY)
-    except Exception:
-        pass
+    form.assign_locations(locations)
+    form.ensure_active_switch_on()
     url_before = browser.current_url
     form.click_save()
-    # Detect silent failure: if URL didn't change, the form rejected the save
-    # (most common cause: duplicate email).  In that case the employee already
-    # exists — the earlier employee_exists call timed out because staging's
-    # InovuaReactDataGrid is slow, not because the record is absent.
+    # Detect silent failure: URL unchanged means duplicate email — the employee
+    # exists but the code filter returned nothing (race or index lag).
     duplicate = browser.current_url == url_before
     if duplicate:
         import logging
         logging.getLogger("nxtwash").warning(
-            "Employee create did not navigate away — assuming duplicate; "
-            "searching list with extended timeout"
+            "Employee create did not navigate away — duplicate email; "
+            "retrying lookup by employee code"
         )
+        page = open_employees_page(browser)
+        found_row2 = _find_employee_by_code(page, EMP_CODE, timeout=30)
+        if found_row2 is not None:
+            try:
+                _open_edit_from_row(page, found_row2)
+                restore_form2 = AdminEmployeeFormPage(browser)
+                restore_form2.wait_for_edit_loaded()
+                current_last2 = restore_form2.driver.find_element(
+                    *AdminEmployeeFormPage.LAST_NAME_INPUT
+                ).get_attribute("value")
+                last2_ok = current_last2.lower().strip() == last_name.lower()
+                active2_ok = restore_form2.active_switch_is_on()
+                if last2_ok and active2_ok:
+                    restore_form2.click_cancel()
+                else:
+                    if not last2_ok:
+                        restore_form2.enter_last_name(last_name)
+                    restore_form2.ensure_active_switch_on()
+                    restore_form2.click_save()
+            except Exception:
+                pass
+        return open_employees_page(browser)
+
+    # Genuine CREATE — wait for the grid to reflect the new record.
     page = open_employees_page(browser)
-    # Reset filters so inactive employees are visible (active-only filter
-    # would hide a previously deactivated record, causing a false miss).
     try:
         page.reset_filters()
     except Exception:
         pass
     page.search_employee(last_name)
-    # Duplicate path: record already exists so it should appear quickly.
-    # Full create path: allow longer for the grid to refresh after a real save.
-    page.wait_for_employee_row(last_name, timeout=60 if duplicate else 120)
-
-    if duplicate:
-        # The employee existed but may have been left inactive by a prior run
-        # (e.g. EMP-EDT-011 deactivated it and the restore save failed).
-        # Open edit now and restore to active. Do NOT re-enter text fields —
-        # the form loads them from the server so RHF's state is already correct;
-        # only ensure_active_switch_on() needs to change anything.
-        try:
-            page.click_edit_for_visible_employee(last_name)
-            restore_form = AdminEmployeeFormPage(browser)
-            restore_form.wait_for_edit_loaded()
-            restore_form.ensure_active_switch_on()
-            restore_form.click_save()
-            page = open_employees_page(browser)
-        except Exception:
-            pass
-
+    page.wait_for_employee_row(last_name, timeout=120)
     return page
 
 

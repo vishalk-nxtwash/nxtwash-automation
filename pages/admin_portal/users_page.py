@@ -491,12 +491,13 @@ class AdminUserFormPage(BasePage):
     def enter_email(self, email):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(email)
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.click()
+        el.clear()
 
     def get_email_value(self):
         return self.wait.until(

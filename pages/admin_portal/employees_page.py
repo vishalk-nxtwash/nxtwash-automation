@@ -48,7 +48,7 @@ class AdminEmployeesPage(BasePage):
     # There is NO status combobox.
     FILTER_FIRST_NAME_INPUT = (By.XPATH, "//input[@name='firstName']")
     FILTER_EMPLOYEE_CODE_INPUT = (By.XPATH, "//input[@name='employeeCode']")
-    FILTER_ACTIVE_SWITCH = (By.XPATH, "//button[@role='switch' and @value='on']")
+    FILTER_ACTIVE_SWITCH = (By.XPATH, "//button[@role='switch']")
     APPLY_FILTERS_BUTTON = (By.XPATH,
         "//button[normalize-space()='Apply filters'] | "
         "//button[normalize-space()='Apply']")
@@ -275,10 +275,13 @@ class AdminEmployeesPage(BasePage):
         This method opens the panel and resets unconditionally, which is the
         only reliable way to flush a server-side filter state leak.
         """
-        try:
-            self.reset_filters()
-        except Exception:
-            pass
+        for _attempt in range(2):
+            try:
+                self.reset_filters()
+                return
+            except Exception:
+                if _attempt == 0:
+                    time.sleep(1)
 
     def filter_result_count_text(self):
         try:
@@ -387,22 +390,24 @@ class AdminEmployeeFormPage(BasePage):
     def enter_first_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(name)
 
     def enter_last_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(name)
 
     def clear_first_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.click()
+        el.clear()
 
     def clear_last_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.click()
+        el.clear()
 
     def get_first_name_value(self):
         return self.wait.until(
@@ -415,11 +420,15 @@ class AdminEmployeeFormPage(BasePage):
         ).get_attribute("value")
 
     def enter_email(self, email):
-        self.enter_text(self.EMAIL_INPUT, email)
+        el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
+        el.click()
+        el.clear()
+        el.send_keys(email)
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.click()
+        el.clear()
 
     def get_email_value(self):
         return self.wait.until(
@@ -427,11 +436,15 @@ class AdminEmployeeFormPage(BasePage):
         ).get_attribute("value")
 
     def enter_phone(self, phone):
-        self.enter_text(self.PHONE_INPUT, phone)
+        el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
+        el.click()
+        el.clear()
+        el.send_keys(phone)
 
     def clear_phone(self):
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.click()
+        el.clear()
 
     def get_phone_value(self):
         return self.wait.until(
@@ -445,7 +458,10 @@ class AdminEmployeeFormPage(BasePage):
         self.enter_text(self.ZIP_INPUT, zip_code)
 
     def enter_employee_code(self, code):
-        self.enter_text(self.EMPLOYEE_CODE_INPUT, code)
+        el = self.wait.until(EC.element_to_be_clickable(self.EMPLOYEE_CODE_INPUT))
+        el.click()
+        el.clear()
+        el.send_keys(code)
 
     def get_employee_code_value(self):
         return self.wait.until(
@@ -465,9 +481,10 @@ class AdminEmployeeFormPage(BasePage):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
 
     def _close_locations_dropdown(self):
-        # aria-expanded on the combobox container is unreliable in this version of
-        # React Select — always send Escape unconditionally, then click First Name
-        # to force a blur and guarantee the portal is gone before Save is clicked.
+        # Send Escape to close the React Select dropdown, then blur the active
+        # element to dismiss the portal.  Do NOT click FIRST_NAME_INPUT: that
+        # fires a React focus event which can trigger a reconciliation that resets
+        # controlled text-field values to their (empty) RHF store state.
         try:
             combobox = self.driver.find_element(*self.LOCATIONS_COMBOBOX)
             inner = combobox.find_elements(By.XPATH, ".//input")
@@ -475,10 +492,7 @@ class AdminEmployeeFormPage(BasePage):
         except Exception:
             pass
         try:
-            self.driver.execute_script(
-                "arguments[0].click();",
-                self.driver.find_element(*self.FIRST_NAME_INPUT)
-            )
+            self.driver.execute_script("document.activeElement.blur();")
             time.sleep(0.3)
         except Exception:
             time.sleep(0.3)
@@ -756,7 +770,7 @@ class AdminEmployeeShiftPage(BasePage):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(self.FILTER_FIRST_NAME))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.clear()
         el.send_keys(first_name)
 
     def filter_by_site(self, site_name):
