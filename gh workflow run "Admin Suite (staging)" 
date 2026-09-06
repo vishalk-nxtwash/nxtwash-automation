@@ -1,0 +1,21 @@
+gh workflow run "Admin Suite (staging)" \
+  --repo NxtWashLLC/nxtwash-automation-suite \
+  --ref optimisation/admin-automation-test-cases
+
+
+gh secret set ADMIN_PORTAL_USERNAME \
+  --repo NxtWashLLC/nxtwash-automation-suite \
+  --body "vkuser01@yopmail.com"
+
+gh secret set ADMIN_PORTAL_PASSWORD \
+  --repo NxtWashLLC/nxtwash-automation-suite \
+  --body "test"
+  
+
+gh workflow run suite-admin.yml \
+  --repo NxtWashLLC/nxtwash-automation-suite \
+  --ref staging
+  
+to trigger workflow manually:
+
+gh workflow run "Admin Suite (staging)" --repo vishalk-nxtwash/nxtwash-automation --ref staging
