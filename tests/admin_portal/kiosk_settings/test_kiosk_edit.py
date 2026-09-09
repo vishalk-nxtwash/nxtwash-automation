@@ -94,7 +94,10 @@ def test_edit_kiosk_lane_persists(browser, managed_kiosk):
 def test_edit_clear_name_blocked(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.KIOSK_NAME_INPUT))
-    el.send_keys(Keys.COMMAND + "a")
+    # Keys.COMMAND is macOS-only; on Linux CI it is the Meta key and does not
+    # select all text, leaving the field non-empty and allowing save to succeed.
+    # JS .select() is cross-platform and already the pattern in BasePage.enter_text.
+    form.driver.execute_script("arguments[0].select();", el)
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

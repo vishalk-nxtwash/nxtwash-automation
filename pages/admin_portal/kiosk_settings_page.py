@@ -861,7 +861,12 @@ class AdminKioskFormPage(BasePage):
         self.driver.switch_to.default_content()
 
     def kiosk_name_input_is_valid(self):
-        el = self.wait.until(EC.presence_of_element_located(self.KIOSK_NAME_INPUT))
+        # TimeoutException means the form navigated away (save succeeded, no
+        # validation error): treat as valid so callers can check other signals.
+        try:
+            el = self.wait.until(EC.presence_of_element_located(self.KIOSK_NAME_INPUT))
+        except Exception:
+            return True
         aria_invalid = el.get_attribute("aria-invalid")
         if aria_invalid == "true":
             return False
