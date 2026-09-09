@@ -693,13 +693,17 @@ for (var i = 0; i < kids.length; i++) {
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(row_xpath))
 
     def _set_site_input(self, element, value):
-        """Set a React-controlled site-grid input via keyboard — CI-safe."""
+        """Set a React-controlled site-grid input — CI-safe.
+
+        Keys.HOME + Keys.SHIFT + Keys.END is intercepted by the Inovua grid's
+        own keyboard handler in headless CI, preventing select-all. Use JS
+        .select() + send_keys (same pattern as BasePage.enter_text) instead.
+        """
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element
         )
         element.click()
-        element.send_keys(Keys.HOME)
-        element.send_keys(Keys.SHIFT + Keys.END)
+        self.driver.execute_script("arguments[0].select();", element)
         element.send_keys(str(value))
         self.driver.execute_script(
             "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));", element
@@ -710,8 +714,6 @@ for (var i = 0; i < kids.length; i++) {
     ):
         """Assign a package to a site and set site-level price/commission."""
         import time as _t
-        # Let preceding form-field React re-renders settle before touching the grid.
-        _t.sleep(2)
         row = self.get_site_row(site_name)
         checkbox = row.find_element(
             By.XPATH,
@@ -949,21 +951,38 @@ for (var i = 0; i < kids.length; i++) {
 
     def unassign_site(self, site_name):
         """Uncheck the site row checkbox in the site assignment grid."""
-        row = self.get_site_row(site_name)
-        checkbox = row.find_element(
+        # Re-find the checkbox on every poll so a React re-render after the
+        # click does not leave a stale element reference in the closure.
+        _cb_locator = (
             By.XPATH,
-            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[normalize-space()='%s']]"
+            "//*[contains(@class,'inovua-react-toolkit-checkbox')"
+            " and not(contains(@class,'__icon'))]" % site_name,
         )
 
-        def checkbox_is_unchecked():
-            return "inovua-react-toolkit-checkbox--unchecked" in checkbox.get_attribute("class")
+        def _is_unchecked(d):
+            try:
+                els = d.find_elements(*_cb_locator)
+                return bool(els) and all(
+                    "inovua-react-toolkit-checkbox--unchecked" in (el.get_attribute("class") or "")
+                    for el in els
+                )
+            except Exception:
+                return False
 
-        if not checkbox_is_unchecked():
+        if not _is_unchecked(self.driver):
+            row = self.get_site_row(site_name)
+            checkbox = row.find_element(
+                By.XPATH,
+                ".//*[contains(@class,'inovua-react-toolkit-checkbox')"
+                " and not(contains(@class,'__icon'))]"
+            )
             self.driver.execute_script(
                 "arguments[0].scrollIntoView({block:'center'});", checkbox
             )
             self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: checkbox_is_unchecked())
+            self.wait.until(_is_unchecked)
 
     def get_site_price_value(self, site_name):
         """Return the site-level price input value for the given site row."""

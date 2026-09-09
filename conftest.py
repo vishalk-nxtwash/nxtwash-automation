@@ -149,6 +149,10 @@ _QUARANTINE_TIMING = (
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
 _QUARANTINE_SCRIPT = {
+    "test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists":
+        "WP-EDT-003: Staging server silently locks commission for VK AWP006 under the "
+        "active-subscriber data constraint (same root cause as price lock). Remove once "
+        "staging data is reset or the lock is confirmed as product-intended.",
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",

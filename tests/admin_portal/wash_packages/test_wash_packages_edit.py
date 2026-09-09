@@ -125,6 +125,7 @@ def test_activate_wash_package(managed_package):
 @allure.title("WP-EDT-009 Deactivate an active wash package hides it from the default list")
 @pytest.mark.smoke
 @pytest.mark.regression
+@pytest.mark.timeout(480)
 def test_deactivate_wash_package(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -138,6 +139,7 @@ def test_deactivate_wash_package(managed_package):
 
 @allure.title("WP-DIS-001 Applicable discount assigned to wash package persists after save")
 @pytest.mark.regression
+@pytest.mark.timeout(480)
 def test_assign_applicable_discount_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

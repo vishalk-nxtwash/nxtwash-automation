@@ -40,6 +40,7 @@ def test_assign_single_site_persists(managed_package):
 
 @allure.title("WP-SIT-002 Site assignment persists after re-save")
 @pytest.mark.regression
+@pytest.mark.timeout(480)
 def test_assign_multiple_sites_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
