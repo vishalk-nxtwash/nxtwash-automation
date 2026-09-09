@@ -64,17 +64,22 @@ def test_employee_data_persists_after_relogin(browser, managed_employee):
 @allure.title("EMP-EC-004 Deactivated employee appears in the Inactive filter — record is not deleted")
 @pytest.mark.regression
 def test_deactivated_employee_in_inactive_filter(browser, managed_employee):
-    from tests.admin_portal.employees.conftest import open_edit_employee_form
+    from tests.admin_portal.employees.conftest import (
+        EMP_CODE, _find_employee_by_code, open_edit_employee_form,
+    )
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.ensure_active_switch_off()
     form.click_save()
 
     page = open_employees_page(browser)
-    page.filter_by_status("Inactive")
-    page.apply_filters()
-    body = page.get_body_text()
-
-    assert EMP_LAST_NAME in body, (
+    # get_body_text() fails here: 97+ inactive "user 5" records push "user 9"
+    # past the Inovua virtual-grid viewport so it is never rendered into the DOM.
+    # Filter by employee code (unique field → ≤1 row) so the target is always
+    # in the rendered viewport regardless of how many other inactive rows exist.
+    # _find_employee_by_code tries active first (returns None — employee is now
+    # inactive), then retries with the Inactive status filter (returns the row).
+    found = _find_employee_by_code(page, EMP_CODE, timeout=30)
+    assert found is not None, (
         "Deactivated employee '%s' should appear under Inactive filter, not be deleted"
         % EMP_LAST_NAME
     )

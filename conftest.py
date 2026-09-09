@@ -164,6 +164,13 @@ _QUARANTINE_SCRIPT = {
         "VK AD01, VK AD02, VK AL01 — none appear in the custom services applicable "
         "discount combobox. Open the edit form discount tab and check what options "
         "exist before updating second_applicable_discount in custom_services.json.",
+    "test_users_edit.py::test_deactivate_active_user":
+        "USR-EDT-007: Staging has 10 duplicate vkuser02@yopmail.com user records — "
+        "the app does not enforce email uniqueness so repeated CI runs created "
+        "duplicates. managed_user fixture resets only one instance; 9 active "
+        "duplicates remain visible in the active-only list after the managed one is "
+        "deactivated, causing the assertion to fail. "
+        "Delete duplicate users in staging admin to un-xfail.",
 }
 
 

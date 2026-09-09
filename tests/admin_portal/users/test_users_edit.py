@@ -148,10 +148,17 @@ def test_deactivate_active_user(browser, managed_user):
     form.click_save()
 
     page = open_users_page(browser)
-    page.search_user_by_email(USER_EMAIL)
+    # Filter by email with the Active filter ON (default) so only active users
+    # matching the email are shown.  A successfully deactivated user must be absent.
+    # Do NOT call search_user_by_email() here — that method turns the Active filter
+    # OFF to expose all users, making inactive users visible and defeating this check.
+    page.filter_by_email(USER_EMAIL)
+    page.apply_filters()
     body = page.get_body_text()
 
-    assert USER_EMAIL not in body or page.get_user_status(USER_EMAIL) == "Inactive"
+    assert USER_EMAIL not in body, (
+        "Deactivated user '%s' still visible in the active-only list" % USER_EMAIL
+    )
     assert page_has_no_broken_state(page)
 
 
