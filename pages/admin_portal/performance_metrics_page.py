@@ -391,11 +391,12 @@ class PerformanceMetricsPage(BasePage):
     # ── Date preset (non-searchable React Select) ─────────────────────────────
 
     def _open_date_preset_dropdown(self):
-        """Open the date preset React Select using a real browser click.
+        """Open the date preset React Select via a JS mousedown dispatch.
 
-        ActionChains on the outer nxt-select__control reliably triggers React
-        Select's onMouseDown handler.  The previous approach (JS pointer-event
-        dispatch) was not consistently recognised by the React event system.
+        React Select's non-searchable dropdowns open on onMouseDown, not onClick.
+        ActionChains click does not reliably fire mousedown on React's synthetic
+        event layer in headless Chrome, so the dropdown never renders its options.
+        Dispatching mousedown directly into the DOM is the reliable path in CI.
         """
         ctrl_locator = (By.XPATH,
             "//div[contains(@class,'nxt-select__control') "
@@ -403,7 +404,11 @@ class PerformanceMetricsPage(BasePage):
         ctrl = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(ctrl_locator)
         )
-        ActionChains(self.driver).move_to_element(ctrl).click(ctrl).perform()
+        self.driver.execute_script(
+            "arguments[0].dispatchEvent("
+            "new MouseEvent('mousedown',{bubbles:true,cancelable:true}));",
+            ctrl
+        )
         time.sleep(0.6)
 
     def select_date_preset(self, preset):
@@ -427,20 +432,25 @@ class PerformanceMetricsPage(BasePage):
         """Return all visible date preset option labels.
 
         Options render in a React Select portal (document.body) so Selenium's
-        is_displayed() is unreliable for them.  Use offsetParent !== null as the
-        visibility signal instead.
+        is_displayed() is unreliable for them.  Use getBoundingClientRect().height > 0
+        as the visibility signal — offsetParent is null for fixed-position portals
+        in headless Chrome even when the element is visually shown.  The class filter
+        is kept broad ([class*="__option"] / [class*="-option"]) so a library version
+        change that renames nxt-select__option does not silently return [].
         """
         self._open_date_preset_dropdown()
         time.sleep(0.3)
         options = self.driver.execute_script("""
-            return Array.from(document.querySelectorAll('[role="option"]'))
-                .filter(function(el) {
-                    var cls = el.className || '';
-                    return el.offsetParent !== null
-                        && el.textContent.trim()
-                        && cls.indexOf('nxt-select__option') !== -1
-                        && cls.indexOf('nxt-multi-select') === -1;
-                }).map(function(el) { return el.textContent.trim(); });
+            var candidates = Array.from(document.querySelectorAll(
+                '[role="option"], [class*="__option"], [class*="-option"]'
+            ));
+            return candidates.filter(function(el) {
+                var cls = el.className || '';
+                var r = el.getBoundingClientRect();
+                return r.height > 0
+                    && el.textContent.trim()
+                    && cls.indexOf('nxt-multi-select') === -1;
+            }).map(function(el) { return el.textContent.trim(); });
         """)
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
