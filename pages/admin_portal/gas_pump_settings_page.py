@@ -689,8 +689,12 @@ class GasPumpSettingsFormPage(BasePage):
             )
         el = rows[row_index].find_element(By.XPATH,
             ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
-        el.click()
-        el.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
+        # JS click bypasses ChromeDriver's coordinate-based interception check;
+        # the staging Toastify banner (position:fixed in the cross-origin parent
+        # doc) blocks el.click() at certain viewport positions even inside iframes.
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
+        self.driver.execute_script("arguments[0].click();", el)
+        self.driver.execute_script("arguments[0].select();", el)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];
