@@ -733,7 +733,17 @@ class WashExtrasPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)).click()
 
     def reset_filters(self):
-        """Click Reset all to clear active filters."""
+        """Click Reset all to clear active filters, opening the panel first if needed.
+
+        wait_for_list_loaded() calls this method when a filter badge is detected.
+        The badge persists after apply_filters() closes the panel, so Reset all
+        is not visible at that point — open the panel before clicking Reset all.
+        """
+        reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
+        if not any(b.is_displayed() for b in reset_btns):
+            button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", button)
+            self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
 
     def set_filter_site(self, site_name):

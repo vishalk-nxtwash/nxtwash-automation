@@ -141,6 +141,8 @@ _QUARANTINE_TIMING = (
     "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
     "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
+    "test_wash_extras_site_assignment.py::test_location_price_override_persists",
+    "test_wash_extras_site_assignment.py::test_location_commission_override_persists",
     # Overview tests carry their own in-code xfail(strict=False) markers
     # (legacy Overview iframe), so they are not listed here.
 )
