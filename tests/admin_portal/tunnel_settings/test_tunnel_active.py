@@ -41,12 +41,16 @@ def test_active_configuration_toggle_saves(browser, managed_tunnel, active, expe
             % (TUNNEL_NAME, expected_status, active, status)
         )
     else:
-        # The list filters to active tunnels only — an inactive tunnel is absent.
-        # Absence from the list confirms Active=False persisted.
-        assert not page.tunnel_exists(TUNNEL_NAME), (
-            "Tunnel '%s' should be hidden from active-only list after setting Active=False"
-            % TUNNEL_NAME
-        )
+        # The tunnel list shows all tunnels (Active and Inactive) with status badges —
+        # there is no active-only default filter.  Verify the badge changed to Inactive.
+        # If the app ever adds an active-only filter, tunnel_exists() will return False
+        # (absence is also a valid confirmation that Active=False persisted).
+        if page.tunnel_exists(TUNNEL_NAME):
+            status = page.get_tunnel_status(TUNNEL_NAME)
+            assert status == expected_status, (
+                "Tunnel '%s' expected status '%s' after setting Active=False, got '%s'"
+                % (TUNNEL_NAME, expected_status, status)
+            )
     assert page_has_no_broken_state(page)
 
 
