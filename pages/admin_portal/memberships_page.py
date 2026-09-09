@@ -1084,15 +1084,27 @@ class MembershipsPage(BasePage):
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.LOCATION_ROWS)
         )
+        # Batch-extract all row texts in one JS call — per-element row.text
+        # round-trips hang in headless CI when rows are stale after a React
+        # re-render (ChromeDriver on Linux blocks at the socket level instead
+        # of raising StaleElementReferenceException).
+        try:
+            texts = self.driver.execute_script(
+                "return Array.prototype.map.call(arguments, function(el) {"
+                "  try { return el.innerText || el.textContent || ''; }"
+                "  catch(e) { return ''; }"
+                "});",
+                *rows
+            )
+        except Exception:
+            texts = [""] * len(rows)
+
         unique_rows = []
         seen_locations = set()
 
-        for row in rows:
-            lines = [
-                line.strip()
-                for line in row.text.splitlines()
-                if line.strip()
-            ]
+        for i, row in enumerate(rows):
+            text = texts[i] if i < len(texts) else ""
+            lines = [line.strip() for line in text.splitlines() if line.strip()]
             location_key = "\n".join(lines[:2])
 
             if not location_key or location_key in seen_locations:
@@ -1323,15 +1335,23 @@ class MembershipsPage(BasePage):
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
         )
+        try:
+            texts = self.driver.execute_script(
+                "return Array.prototype.map.call(arguments, function(el) {"
+                "  try { return el.innerText || el.textContent || ''; }"
+                "  catch(e) { return ''; }"
+                "});",
+                *rows
+            )
+        except Exception:
+            texts = [""] * len(rows)
+
         unique_rows = []
         seen_locations = set()
 
-        for row in rows:
-            lines = [
-                line.strip()
-                for line in row.text.splitlines()
-                if line.strip()
-            ]
+        for i, row in enumerate(rows):
+            text = texts[i] if i < len(texts) else ""
+            lines = [line.strip() for line in text.splitlines() if line.strip()]
             location_key = "\n".join(lines[:2])
 
             if not location_key or location_key in seen_locations:
