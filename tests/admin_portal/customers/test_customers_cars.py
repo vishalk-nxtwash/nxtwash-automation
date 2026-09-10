@@ -17,6 +17,9 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Cars Settings"),
+    # Serialise on the same xdist worker as all other managed-customer tests so
+    # only one worker goes through the slow creation / restore path.
+    pytest.mark.xdist_group(name="managed_customer"),
     # create_customer_if_missing can take up to 390 s on first run (index lag).
     # filter_by_email_and_open_edit retries for up to 300 s in the worst case.
     # 600 s gives headroom for both in sequence.

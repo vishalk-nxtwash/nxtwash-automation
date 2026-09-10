@@ -529,22 +529,42 @@ class CustomersPage(BasePage):
         return switch.is_selected()
 
     def ensure_active_filter_off(self):
-        """Turn off the 'Active accounts only' filter toggle if it is on."""
-        # Open the panel first — switch is not in the DOM while the panel is closed.
+        """Turn off the 'Active accounts only' filter toggle if it is currently on."""
         self.open_filter_panel()
         try:
-            # aria-checked lives on the wrapper ancestor, not the <input> itself.
-            wrapper = WebDriverWait(self.driver, 5).until(
-                lambda d: d.find_element(
-                    By.XPATH,
-                    "//input[@name='isActive']/ancestor::*[@aria-checked][1]"
-                )
+            inp = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
             )
-            if wrapper.get_attribute("aria-checked") == "false":
-                return
-            self._click_react_switch(wrapper, False)
         except TimeoutException:
-            pass
+            return
+        # is_selected() on the hidden checkbox is the authoritative state — it works
+        # regardless of whether the wrapper carries aria-checked or not.
+        if not inp.is_selected():
+            return  # Already off
+        # Click strategy 1: aria-checked wrapper (React Switch pattern).
+        try:
+            wrapper = self.driver.find_element(
+                By.XPATH,
+                "//input[@name='isActive']/ancestor::*[@aria-checked][1]",
+            )
+            self.driver.execute_script("arguments[0].click();", wrapper)
+        except Exception:  # noqa: BLE001
+            # Fallback: climb to the nearest label or direct parent and click that.
+            parent = self.driver.execute_script(
+                "return arguments[0].closest('label') || arguments[0].parentElement;",
+                inp,
+            )
+            if parent:
+                self.driver.execute_script("arguments[0].click();", parent)
+        # Verify with is_selected() — works even when aria-checked is absent.
+        try:
+            WebDriverWait(self.driver, 3).until(
+                lambda d: not d.find_element(
+                    *self.FILTER_ACTIVE_ACCOUNTS_SWITCH
+                ).is_selected()
+            )
+        except TimeoutException:
+            pass  # Best-effort; proceed even if state cannot be confirmed
 
     def _filter_type_in(self, locator, value):
         self.open_filter_panel()

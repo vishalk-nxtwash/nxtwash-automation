@@ -13,6 +13,8 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Payment Settings"),
+    pytest.mark.xdist_group(name="managed_customer"),
+    pytest.mark.timeout(600),
 ]
 
 # NOTE: This file only verifies that Payment Settings fields and sections are
