@@ -1243,19 +1243,23 @@ class MembershipsPage(BasePage):
         commission
     ):
         """Set one visible location row price/commission without assigning it."""
+        # is_displayed() is intentionally omitted — Inovua virtual-scroll renders
+        # row containers before their inputs, so the last row's input is in the DOM
+        # and enabled but off-screen (is_displayed()=False).  set_grid_input_value
+        # already calls scrollIntoView before interacting, so off-screen inputs work.
         price_inputs = [
             element
             for element in self.wait.until(
                 EC.presence_of_all_elements_located((By.NAME, "price"))
             )
-            if element.is_displayed() and element.is_enabled()
+            if element.is_enabled()
         ]
         commission_inputs = [
             element
             for element in self.wait.until(
                 EC.presence_of_all_elements_located((By.NAME, "commission"))
             )[1:]
-            if element.is_displayed() and element.is_enabled()
+            if element.is_enabled()
         ]
 
         if row_index >= len(price_inputs) or row_index >= len(commission_inputs):
