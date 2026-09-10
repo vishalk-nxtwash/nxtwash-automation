@@ -481,7 +481,11 @@ class GasPumpSettingsFormPage(BasePage):
                 self.driver.execute_script(
                     "arguments[0].scrollIntoView({block:'center'});", toggle
                 )
-                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
+                # JS click bypasses ChromeDriver coordinate-based interception —
+                # the staging Toastify banner (position:fixed in the cross-origin
+                # parent doc) blocks ActionChains.click() at certain viewport
+                # positions even inside iframes.
+                self.driver.execute_script("arguments[0].click();", toggle)
         except Exception:
             pass
 
@@ -496,7 +500,7 @@ class GasPumpSettingsFormPage(BasePage):
                 self.driver.execute_script(
                     "arguments[0].scrollIntoView({block:'center'});", toggle
                 )
-                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
+                self.driver.execute_script("arguments[0].click();", toggle)
         except Exception:
             pass
 
