@@ -611,11 +611,33 @@ class TunnelSettingsFormPage(BasePage):
         url_before = self.driver.current_url
         el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+        # For the tunnel-settings SPA the outer URL is /tunnel_settings/tunnels for
+        # BOTH list and edit views (the edit form lives in an iframe, not a new route).
+        # A URL-change wait therefore always times out, and the caller's subsequent
+        # browser.get() on the same URL reloads the page — cancelling any in-flight
+        # save XHR from the iframe before it completes.
+        #
+        # Strategy: wait up to 15 s for either (a) an outer URL redirect or (b) a
+        # "Saved" / "Success" acknowledgement visible inside the current frame, which
+        # confirms the server finished processing the request.  If neither appears,
+        # fall back to a 3-second sleep so trivially slow servers are still covered.
         try:
-            WebDriverWait(self.driver, 5).until(lambda d: d.current_url != url_before)
-            self.driver.switch_to.default_content()
-        except Exception:
-            pass
+            WebDriverWait(self.driver, 15).until(
+                lambda d: d.current_url != url_before
+                or any(
+                    e.is_displayed()
+                    for e in d.find_elements(
+                        By.XPATH,
+                        "//*[contains(normalize-space(),'Saved')"
+                        " or contains(normalize-space(),'Success')"
+                        " or contains(normalize-space(),'Updated')"
+                        " or contains(normalize-space(),'saved')]"
+                    )
+                )
+            )
+        except Exception:  # noqa: BLE001
+            time.sleep(3)
+        self.driver.switch_to.default_content()
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
