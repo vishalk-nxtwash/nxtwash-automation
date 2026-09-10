@@ -19,6 +19,7 @@ pytestmark = [
     allure.feature("Customers"),
     allure.story("Edit"),
     pytest.mark.xdist_group(name="managed_customer"),
+    pytest.mark.timeout(600),
 ]
 
 
