@@ -32,9 +32,11 @@ jobs:
       fail-fast: false
       matrix:
         shard:
-          # Only login shard is active. Other shards are disabled temporarily.
+          # Validation shards only — expand once runner is confirmed working.
           - name: login
             path: tests/admin_portal/login
+          - name: settings-gas-pump
+            path: tests/admin_portal/gas_pump_settings
           # - name: wash-books
           #   path: tests/admin_portal/wash_books
           # - name: wash-extras
