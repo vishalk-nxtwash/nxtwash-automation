@@ -270,11 +270,16 @@ class TunnelSettingsFormPage(BasePage):
         self.enter_controller_ip(controller_ip)
 
     def name_input_is_valid(self):
+        # click_save() leaves the driver in default_content after every save attempt
+        # (including validation-blocked ones). Re-enter the iframe so the element
+        # lookup finds TUNNEL_NAME_INPUT inside the form frame, not the outer page.
+        self._switch_to_any_form_frame()
         el = self.wait.until(EC.presence_of_element_located(self.TUNNEL_NAME_INPUT))
         return el.get_attribute("aria-invalid") != "true"
 
     def controller_ip_is_valid(self):
         try:
+            self._switch_to_any_form_frame()
             el = self.wait.until(EC.presence_of_element_located(self.CONTROLLER_IP_INPUT))
             return el.get_attribute("aria-invalid") != "true"
         except Exception:

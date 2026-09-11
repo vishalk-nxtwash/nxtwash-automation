@@ -183,9 +183,9 @@ def test_create_then_refresh_data_persists(browser):
     # Force a full page reload to exercise server-side persistence.
     page = open_customers_page(browser)
 
-    # Retry up to 60 s: staging search index lags a few seconds after creation,
+    # Retry up to 120 s: staging search index lags after creation,
     # so an immediate filter query can return 0 rows even though the row was saved.
-    deadline = time.time() + 60
+    deadline = time.time() + 120
     while True:
         page.open_filter_panel()
         # Turn off active-only so the customer is found regardless of its active

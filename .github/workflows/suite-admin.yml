@@ -115,8 +115,11 @@ jobs:
             path: tests/admin_portal/memberships
           # ── Customers ─────────────────────────────────────────────────────
           # 97 tests — isolated; complex customer-facing flows
+          # timeout: 180 — managed_customer fixture can take up to 390 s per test
+          # when staging search index is slow; 120 min is routinely exceeded.
           - name: customers
             path: tests/admin_portal/customers
+            timeout: 180
           # ── Hardware Settings ─────────────────────────────────────────────
           # Split from 117-test settings-hw (was 44m wall-clock bottleneck).
           # kiosk further split because 73 tests at 35m was the new bottleneck.
@@ -186,4 +189,4 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ matrix.shard.parallel || '3' }}
-      timeout_minutes: 120
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
