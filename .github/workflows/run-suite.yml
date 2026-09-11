@@ -79,12 +79,6 @@ jobs:
       - name: Set up Python
         run: python3.11 --version
 
-      - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-        continue-on-error: true
-
       # Java is required by the Allure CLI used to render the HTML report.
       - name: Set up Java
         uses: actions/setup-java@v4
