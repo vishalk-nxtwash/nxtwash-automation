@@ -1249,38 +1249,29 @@ class MembershipsPage(BasePage):
         commission
     ):
         """Set one visible location row price/commission without assigning it."""
-        # is_displayed() is intentionally omitted — Inovua virtual-scroll renders
-        # row containers before their inputs, so the last row's input is in the DOM
-        # and enabled but off-screen (is_displayed()=False).  set_grid_input_value
-        # already calls scrollIntoView before interacting, so off-screen inputs work.
-        price_inputs = [
-            element
-            for element in self.wait.until(
-                EC.presence_of_all_elements_located((By.NAME, "price"))
-            )
-            if element.is_enabled()
-        ]
-        commission_inputs = [
-            element
-            for element in self.wait.until(
-                EC.presence_of_all_elements_located((By.NAME, "commission"))
-            )[1:]
-            if element.is_enabled()
-        ]
-
-        if row_index >= len(price_inputs) or row_index >= len(commission_inputs):
+        rows = self.get_location_rows()
+        if row_index >= len(rows):
             raise AssertionError(
                 "Expected at least %s location rows, found %s"
-                % (
-                    row_index + 1,
-                    min(len(price_inputs), len(commission_inputs))
-                )
+                % (row_index + 1, len(rows))
             )
+        # Scroll the target row into view so the Inovua virtual-scroll fully
+        # initialises its inputs before we query them via is_enabled().
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({ block: 'center' });", rows[row_index]
+        )
 
-        price_input = price_inputs[row_index]
-        commission_input = commission_inputs[row_index]
-        self.set_grid_input_value(price_input, price)
-        self.set_grid_input_value(commission_input, commission)
+        def _enabled(name, skip_first=False):
+            all_els = self.driver.find_elements(By.NAME, name)
+            subset = all_els[1:] if skip_first else all_els
+            enabled = [el for el in subset if el.is_enabled()]
+            return enabled if len(enabled) > row_index else None
+
+        price_inputs      = WebDriverWait(self.driver, 30).until(lambda d: _enabled("price"))
+        commission_inputs = WebDriverWait(self.driver, 30).until(lambda d: _enabled("commission", skip_first=True))
+
+        self.set_grid_input_value(price_inputs[row_index], price)
+        self.set_grid_input_value(commission_inputs[row_index], commission)
 
     def set_grid_input_value(self, element, value):
         """Set a React/Inovua grid input value — CI-safe.
