@@ -192,8 +192,12 @@ class MembershipsPage(BasePage):
         "and normalize-space()='%s']"
     )
 
-    def wait_for_list_loaded(self):
-        """Wait until the Memberships list is visible."""
+    def wait_for_list_loaded(self, allow_readonly=False):
+        """Wait until the Memberships list is visible.
+
+        allow_readonly=True skips the Add button gate, which may be absent for
+        read-only users (e.g. prod-smoke runs against production).
+        """
         # Proactively dismiss the staging env banner before entering the iframe.
         # The banner is position:fixed and can intercept clicks whose viewport
         # coordinates overlap the iframe area.  switch_to.default_content() is
@@ -205,12 +209,14 @@ class MembershipsPage(BasePage):
             pass
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(
-            EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
-        )
+        if not allow_readonly:
+            self.wait.until(
+                EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
+            )
         self.wait_for_grid_idle()
 
-    wait_for_loaded = wait_for_list_loaded
+    def wait_for_loaded(self, allow_readonly=False):
+        self.wait_for_list_loaded(allow_readonly=allow_readonly)
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""

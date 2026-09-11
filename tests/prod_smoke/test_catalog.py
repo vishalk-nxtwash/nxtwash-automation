@@ -26,7 +26,7 @@ pytestmark = [
 def test_wash_packages_loads(browser):
     open_admin_path(browser, "/services/washPackages")
     page = WashPackagesPage(browser)
-    page.wait_for_loaded()
+    page.wait_for_loaded(allow_readonly=True)
 
     assert page_is_up(browser)
 
@@ -46,7 +46,7 @@ def test_service_categories_loads(browser):
 def test_memberships_loads(browser):
     open_admin_path(browser, "/services/memberships")
     page = MembershipsPage(browser)
-    page.wait_for_loaded()
+    page.wait_for_loaded(allow_readonly=True)
 
     assert page_is_up(browser)
 

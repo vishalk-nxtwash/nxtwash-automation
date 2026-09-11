@@ -307,11 +307,17 @@ class AdminLoginPage(BasePage):
 
         60s (not 30s) so the post-login redirect+render survives a loaded CI
         runner where several headless Chrome instances compete for CPU.
+        Accepts any path under the portal base URL so that environments that
+        route post-login to /overview (rather than /) do not time out on the
+        exact-match check.
         """
         long_wait = WebDriverWait(self.driver, 60)
-
+        base = self.config.get_url(self.PORTAL).rstrip("/")
         long_wait.until(
-            lambda driver: driver.current_url == self.config.get_url(self.PORTAL)
+            lambda driver: (
+                driver.current_url.startswith(base)
+                and "/login" not in driver.current_url
+            )
         )
         long_wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
 
