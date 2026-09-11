@@ -47,7 +47,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
@@ -69,7 +69,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           cache: "pip"
 
       - name: Set up Chrome
@@ -115,6 +115,7 @@ jobs:
           marker_arg=""
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
+          rm -rf allure-results allure-report
           pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
             --reruns "${RERUNS}" --reruns-delay 3 \
