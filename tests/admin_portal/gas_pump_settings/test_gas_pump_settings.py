@@ -139,14 +139,17 @@ class TestGasPumpCreate:
             GPS_BAUD_RATE, GPS_LINK_TIMEOUT,
             GPS_FETCH_INTERVAL, GPS_CODE_LENGTH,
         )
-        if active:
-            form.ensure_active_pump_on()
-        else:
-            form.ensure_active_pump_off()
         form.select_wbc_wash_book(0, GPS_WASH_BOOK)
         form.enter_wbc_id_code(0, GPS_WBC_ID_CODE)
         form.click_check_regen_code()
         form.click_modal_close()
+        # Set toggle AFTER the regen-code modal closes: the server response from
+        # click_check_regen_code() can trigger a React re-render that resets the
+        # Active toggle to its default (ON). Setting it last guarantees it sticks.
+        if active:
+            form.ensure_active_pump_on()
+        else:
+            form.ensure_active_pump_off()
         form.click_save()
 
         page = open_gas_pump_list(browser)
