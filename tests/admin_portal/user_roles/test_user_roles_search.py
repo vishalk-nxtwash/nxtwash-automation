@@ -33,9 +33,9 @@ def test_user_roles_search_exact_name(browser):
 def test_user_roles_search_partial_name(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)
-    page.search_role(ROLE_NAME[:4])
+    page.search_role(ROLE_NAME[:6])
 
-    assert ROLE_NAME in page.get_body_text()
+    assert page.wait_for_role_row(ROLE_NAME).is_displayed()
     assert page_has_no_broken_state(page)
 
 

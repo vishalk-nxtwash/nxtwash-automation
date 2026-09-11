@@ -133,7 +133,7 @@ class AdminPOSSettingsPage(BasePage):
 
     def search_pos(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         self.driver.execute_script(self._JS_CLEAR_INPUT, el)
         el.send_keys(name)
         self.wait.until(
@@ -270,7 +270,15 @@ class AdminPOSSettingsPage(BasePage):
 
     def filter_by_site(self, site):
         self.open_filter_panel()
-        self.select_react_dropdown_option(self.FILTER_SITE_COMBOBOX, site)
+        combobox = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_COMBOBOX))
+        self.driver.execute_script("arguments[0].click();", combobox)
+        # The dropdown options menu is portalled to the parent document — switch out to find them.
+        self.driver.switch_to.default_content()
+        option = WebDriverWait(self.driver, 60).until(
+            lambda d: self._find_react_option(site)
+        )
+        self.driver.execute_script("arguments[0].click();", option)
+        self.switch_to_frame_with_retry(self.POS_LIST_FRAME, timeout=30)
 
     def filter_active_pos_on(self):
         self.open_filter_panel()

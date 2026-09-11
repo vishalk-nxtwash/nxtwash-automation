@@ -148,7 +148,7 @@ def test_edit_payment_methods_persists(browser, managed_pos):
 def test_edit_blank_name_blocked(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.POS_NAME_INPUT))
-    el.send_keys(Keys.COMMAND + "a")
+    form.driver.execute_script("arguments[0].select();", el)
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 
@@ -163,13 +163,6 @@ def test_edit_blank_name_blocked(browser, managed_pos):
 
 @allure.title("POS-EDT-009 Activate inactive POS shows Active badge")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "POS-EDT-009: After deactivating, re-opening edit form requires inactive POS "
-        "to be visible in the list — verify default filter behavior in DevTools."
-    ),
-)
 def test_activate_inactive_pos(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     form.ensure_active_pos_off()

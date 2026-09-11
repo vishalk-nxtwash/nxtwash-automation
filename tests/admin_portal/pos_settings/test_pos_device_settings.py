@@ -49,7 +49,7 @@ def test_device_serial_required(browser, managed_pos_form):
     el = form.wait.until(
         lambda d: d.find_element(*form.PAYMENT_SERIAL_INPUT)
     )
-    el.send_keys(Keys.COMMAND + "a")
+    form.driver.execute_script("arguments[0].select();", el)
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

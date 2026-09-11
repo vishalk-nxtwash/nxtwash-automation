@@ -48,7 +48,7 @@ def test_middleware_ip_required(browser, managed_pos_form):
     el = form.wait.until(
         lambda d: d.find_element(*form.MIDDLEWARE_IP_INPUT)
     )
-    el.send_keys(Keys.COMMAND + "a")
+    form.driver.execute_script("arguments[0].select();", el)
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

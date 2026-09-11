@@ -122,7 +122,6 @@ def test_car_recognition_mutually_exclusive(browser, managed_pos_form):
 
 @allure.title("POS-FLW-006 Show notes toggles save ON/OFF and persist")
 @pytest.mark.regression
-@_FLW_XFAIL
 def test_show_notes_toggles_save(browser, managed_pos_form):
     form = managed_pos_form
     form.expand_section(_FLOW_SECTION)
