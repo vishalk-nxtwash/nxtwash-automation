@@ -11,11 +11,13 @@ from pages.superadmin.edit_company_page import EditCompanyPage
 from pages.superadmin.login_page import LoginPage
 from pages.superadmin.sidebar import Sidebar
 
-# Test company used for all companies-module tests — created automatically if absent.
-TEST_COMPANY = "VK automation Company Test"
+# Test company used for all companies-module tests.
+# NxtWash enforces lowercase-no-spaces company names (the form normalizes any input),
+# so "VK automation Company Test" is stored and displayed as "vkautomationcompanytest".
+TEST_COMPANY = "vkautomationcompanytest"
 
 _COMPANY_SETUP = {
-    "site_name": "vkautotestco",   # unique slug — "vkautomationcompanytest" already used by a prior fixture run
+    "site_name": "vkautotestco",
     "password": "VkAuto@2024!",
     "address1": "123 Automation Street",
     "zip": "78701",

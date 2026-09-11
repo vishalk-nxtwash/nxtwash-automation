@@ -17,7 +17,10 @@ class EditCompanyPage(BasePage):
     CONFIRM_NO_BUTTON = (By.XPATH, "//button[normalize-space()='No']")
 
     # ── Base settings fields ──────────────────────────────────────────────────
-    COMPANY_NAME_INPUT = (By.NAME, "companyName")
+    # Label-relative XPath: on staging the create form has swapped name attrs
+    # ("Company name" label → name="siteName"). Same may apply to the edit form.
+    COMPANY_NAME_INPUT = (By.XPATH,
+        "//*[normalize-space(text())='Company name']/following::input[1]")
     EMAIL_INPUT = (By.NAME, "email")
     PHONE_INPUT = (By.NAME, "phone")
 

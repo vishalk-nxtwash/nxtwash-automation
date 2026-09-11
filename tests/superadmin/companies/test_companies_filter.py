@@ -11,7 +11,7 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_PARTIAL_MATCH_TERM = "VK"  # matches "VK automation Company Test"
+_PARTIAL_MATCH_TERM = "vk"  # matches "vkautomationcompanytest" and "vktestcompany"
 
 
 def test_filter_button_opens_filter_panel(companies_page):
@@ -142,6 +142,9 @@ def test_apply_filters_updates_list_and_record_count(companies_page):
 
 def test_reset_filters_restores_full_list(companies_page):
     """SA-CMP-FLT-011 — Reset clears inputs and restores the full company list."""
+    # Server stores filter state across requests; reset first so baseline reflects full list.
+    companies_page.open_filters()
+    companies_page.reset_filters()
     initial_count = len(companies_page.get_visible_company_names())
 
     companies_page.filter_by_company_name(TEST_COMPANY)
