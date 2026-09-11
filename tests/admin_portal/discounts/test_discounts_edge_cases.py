@@ -126,10 +126,13 @@ def test_discount_type_change_amount_to_percentage(managed_discount):
     page = managed_discount
 
     page.open_edit_discount(MANAGED_DISCOUNT)
-    page.select_percentage_discount_type()
     page.set_discount_amount(PERCENTAGE_AMOUNT)
     page.set_location_discount_value_by_index(0, PERCENTAGE_AMOUNT)
     page.select_location_discount_type_by_index(0, "Percentage")
+    # Select percentage type LAST — the preceding amount/location interactions
+    # can trigger React re-renders that reset the top-level type radio back to
+    # "Amount". Setting it immediately before save guarantees it sticks.
+    page.select_percentage_discount_type()
     page.click_save_discount()
     page.wait_for_list_loaded()
     page.open_edit_discount(MANAGED_DISCOUNT)

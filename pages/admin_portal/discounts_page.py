@@ -667,7 +667,11 @@ class DiscountsPage(BasePage):
     def fill_required_unassigned_location_values(self):
         """Fill required discount values for unassigned locations."""
         for row_index in range(1, len(self.get_location_rows())):
-            self.set_location_discount_value_by_index(row_index, "0")
+            # Use "1" not "0": the React discount-value input enforces min > 0
+            # and reverts to its previous value when "0" is entered, causing
+            # the _value_matches wait inside set_location_discount_value_by_index
+            # to time out.
+            self.set_location_discount_value_by_index(row_index, "1")
             self.select_location_discount_type_by_index(row_index, "Amount")
 
     def switch_is_on(self, locator):
@@ -719,10 +723,21 @@ class DiscountsPage(BasePage):
 
     def set_discount_start(self, day, time_text):
         """Set discount start date in the visible date picker."""
+        from datetime import date as _date
         start_date = self.wait.until(
             EC.element_to_be_clickable(self.DATE_INPUTS)
         )
         start_date.click()
+
+        # If the requested day has already passed this month, advance the
+        # calendar to next month so the server receives a future date.
+        # (The server rejects past start dates; react-datepicker may still
+        # render the cell as clickable even when disabled by CSS.)
+        if int(day) < _date.today().day:
+            self.wait.until(EC.element_to_be_clickable((By.XPATH,
+                "//button[contains(@aria-label,'Next') or "
+                "contains(@class,'react-datepicker__navigation--next')]"
+            ))).click()
 
         day_locator = (
             By.XPATH,

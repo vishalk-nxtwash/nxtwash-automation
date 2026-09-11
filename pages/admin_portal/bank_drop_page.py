@@ -219,6 +219,9 @@ class BankDropPage(BasePage):
         element = self.wait.until(EC.element_to_be_clickable(self.ORDER_INPUT))
         element.clear()
         element.send_keys(str(order))
+        self.wait.until(
+            lambda d: d.find_element(*self.ORDER_INPUT).get_attribute("value") == str(order)
+        )
 
     def active_bank_drop_is_on(self):
         """Return whether Active bank drop is enabled."""

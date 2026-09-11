@@ -49,6 +49,14 @@ def create_service_if_missing(browser, service_name=SERVICE_NAME):
         page.open_edit_service(service_name)
         page.ensure_active_switch_on()
         page.set_global_price(GLOBAL_PRICE)
+        # Also restore the site-level override: a previous test (e.g. site-
+        # override-high) may have raised it to $20, which is what the list
+        # grid's servicePrice column actually displays. assign_site_with_price_
+        # and_commission skips the checkbox click when the site is already
+        # assigned — it only updates the price and commission fields.
+        page.assign_site_with_price_and_commission(
+            ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
+        )
         page.click_save_service()
         return open_custom_services_page(browser)
 
