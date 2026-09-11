@@ -79,13 +79,6 @@ jobs:
       - name: Set up Python
         run: python3.11 --version
 
-      # Java is required by the Allure CLI used to render the HTML report.
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
       - name: Install dependencies
         run: |
           python3.11 -m pip install --upgrade pip
