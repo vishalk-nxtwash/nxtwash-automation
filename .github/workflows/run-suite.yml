@@ -113,7 +113,7 @@ jobs:
       - name: Generate Allure report
         if: always()
         run: |
-          npm install -g allure-commandline --silent
+          command -v allure >/dev/null 2>&1 || npm install -g allure-commandline --silent
           allure generate allure-results --clean -o allure-report
 
       - name: Upload test artifacts
