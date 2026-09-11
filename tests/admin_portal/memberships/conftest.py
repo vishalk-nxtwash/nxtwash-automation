@@ -303,4 +303,27 @@ def reset_managed_membership(browser):
     return memberships_page
 
 
-managed_membership = managed_resource(reset_managed_membership)
+def _ensure_managed_membership_exists(browser):
+    """Setup-only guard: return early if the managed membership is active.
+
+    Skips the open-edit + field-reset + save cycle that reset_managed_membership
+    performs, saving ~30-60 s per managed test in setup. Teardown always calls
+    the full reset, so dirty state never bleeds between tests.
+    Falls back to the full reset for inactive or missing records.
+    """
+    from selenium.common.exceptions import TimeoutException
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(MANAGED_MEMBERSHIP)
+    try:
+        memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+        memberships_page.clear_active_filters()
+        return memberships_page
+    except TimeoutException:
+        memberships_page.clear_active_filters()
+
+    # Record is inactive or missing — fall back to full reset which handles both.
+    return reset_managed_membership(browser)
+
+
+managed_membership = managed_resource(reset_managed_membership, ensure=_ensure_managed_membership_exists)

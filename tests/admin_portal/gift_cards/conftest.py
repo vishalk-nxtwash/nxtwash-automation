@@ -135,4 +135,12 @@ def _reset_managed_gift_card(browser):
     return open_gift_cards_page(browser)
 
 
-managed_gift_card = managed_resource(_reset_managed_gift_card)
+def _ensure_managed_gift_card_exists(browser):
+    """Setup-only guard: return early if the managed gift card exists."""
+    page = open_gift_cards_page(browser)
+    if page.gift_card_exists(MANAGED_GIFT_CARD):
+        return page
+    return _reset_managed_gift_card(browser)
+
+
+managed_gift_card = managed_resource(_reset_managed_gift_card, ensure=_ensure_managed_gift_card_exists)

@@ -154,4 +154,12 @@ def _reset_managed_wash_book(browser):
     return open_wash_books_page(browser)
 
 
-managed_wash_book = managed_resource(_reset_managed_wash_book)
+def _ensure_managed_wash_book_exists(browser):
+    """Setup-only guard: return early if the managed wash book exists."""
+    page = open_wash_books_page(browser)
+    if page.wash_book_exists(MANAGED_WASH_BOOK):
+        return page
+    return _reset_managed_wash_book(browser)
+
+
+managed_wash_book = managed_resource(_reset_managed_wash_book, ensure=_ensure_managed_wash_book_exists)

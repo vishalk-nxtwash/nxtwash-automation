@@ -50,18 +50,26 @@ def managed_name(label):
     return "%s %s" % (AUTOTEST_PREFIX, label)
 
 
-def managed_resource(reset):
+def managed_resource(reset, ensure=None):
     """Return a pytest fixture that keeps a dedicated record at baseline.
 
-    ``reset(browser)`` must ensure the record exists and bring its mutable
-    fields to a known baseline, returning the feature page object. It runs both
-    before the test (setup) and after it (teardown), so every test starts from a
-    clean record and never leaves dirty state behind — even if it fails.
+    ``reset(browser)`` brings all mutable fields to a known baseline and runs
+    in teardown after every test. It also runs in setup when no ``ensure`` is
+    provided (backward-compatible behaviour).
+
+    ``ensure(browser)``, when supplied, is the cheaper setup-only alternative:
+    it only checks that the record exists and creates it if missing, but skips
+    field-level reset. The teardown always runs the full ``reset`` so dirty
+    state from one test never leaks to the next.
+
+    Splitting setup/teardown halves fixture overhead for modules whose reset
+    involves opening an edit form and re-saving unchanged fields (~30-60 s each).
     """
+    _setup = ensure if ensure is not None else reset
 
     @pytest.fixture
     def _managed_fixture(browser):
-        page = reset(browser)
+        page = _setup(browser)
         try:
             yield page
         finally:

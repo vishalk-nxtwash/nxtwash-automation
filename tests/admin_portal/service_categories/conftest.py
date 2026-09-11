@@ -157,4 +157,13 @@ def reset_managed_category(browser):
     return page
 
 
-managed_category = managed_resource(reset_managed_category)
+def _ensure_managed_category_exists(browser):
+    """Setup-only guard: return early if the managed category is active."""
+    page = open_service_categories_page(browser)
+    page.search_category(MANAGED_CATEGORY)
+    if page._quick_category_row(MANAGED_CATEGORY, timeout=6) is not None:
+        return page
+    return reset_managed_category(browser)
+
+
+managed_category = managed_resource(reset_managed_category, ensure=_ensure_managed_category_exists)

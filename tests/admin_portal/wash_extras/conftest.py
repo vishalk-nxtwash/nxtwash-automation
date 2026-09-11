@@ -136,4 +136,12 @@ def _reset_managed_wash_extra(browser):
     return open_wash_extras_page(browser)
 
 
-managed_wash_extra = managed_resource(_reset_managed_wash_extra)
+def _ensure_managed_wash_extra_exists(browser):
+    """Setup-only guard: return early if the managed wash extra exists."""
+    page = open_wash_extras_page(browser)
+    if page.extra_exists(MANAGED_WASH_EXTRA):
+        return page
+    return _reset_managed_wash_extra(browser)
+
+
+managed_wash_extra = managed_resource(_reset_managed_wash_extra, ensure=_ensure_managed_wash_extra_exists)

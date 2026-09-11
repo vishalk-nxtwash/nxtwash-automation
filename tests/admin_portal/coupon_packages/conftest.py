@@ -129,4 +129,12 @@ def _reset_managed_coupon_package(browser):
     return open_coupon_packages_page(browser)
 
 
-managed_coupon_package = managed_resource(_reset_managed_coupon_package)
+def _ensure_managed_coupon_package_exists(browser):
+    """Setup-only guard: return early if the managed coupon package exists."""
+    page = open_coupon_packages_page(browser)
+    if page.coupon_package_exists(MANAGED_COUPON_PACKAGE):
+        return page
+    return _reset_managed_coupon_package(browser)
+
+
+managed_coupon_package = managed_resource(_reset_managed_coupon_package, ensure=_ensure_managed_coupon_package_exists)

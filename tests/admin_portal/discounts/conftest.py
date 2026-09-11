@@ -220,7 +220,15 @@ def reset_managed_discount(browser):
     return discounts_page
 
 
-managed_discount = managed_resource(reset_managed_discount)
+def _ensure_managed_discount_exists(browser):
+    """Setup-only guard: return early if the managed discount is active."""
+    discounts_page = open_discounts_page(browser)
+    if discounts_page.discount_exists(MANAGED_DISCOUNT):
+        return discounts_page
+    return reset_managed_discount(browser)
+
+
+managed_discount = managed_resource(reset_managed_discount, ensure=_ensure_managed_discount_exists)
 
 
 def reset_managed_percentage_discount(browser):
@@ -248,4 +256,12 @@ def reset_managed_percentage_discount(browser):
     return discounts_page
 
 
-managed_percentage_discount = managed_resource(reset_managed_percentage_discount)
+def _ensure_managed_percentage_discount_exists(browser):
+    """Setup-only guard: return early if the managed percentage discount is active."""
+    discounts_page = open_discounts_page(browser)
+    if discounts_page.discount_exists(MANAGED_PERCENTAGE_DISCOUNT):
+        return discounts_page
+    return reset_managed_percentage_discount(browser)
+
+
+managed_percentage_discount = managed_resource(reset_managed_percentage_discount, ensure=_ensure_managed_percentage_discount_exists)
