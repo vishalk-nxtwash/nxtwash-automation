@@ -63,6 +63,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Free disk space
+        run: |
+          echo "=== Disk before cleanup ==="
+          df -h /
+          # Chrome crash dumps, temp profiles, and scoped dirs left by previous
+          # runs on this self-hosted runner are the primary cause of 0 MB disk.
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 ~/.config/google-chrome/Crash\ Reports \
+                 ~/.config/google-chrome/Crashpad
+          echo "=== Disk after cleanup ==="
+          df -h /
+
       # Hard safety gate: PRODUCTION must never run mutating suites. Only the
       # read-only `prod_smoke` marker is allowed (other tests create data that
       # cannot be deleted).
