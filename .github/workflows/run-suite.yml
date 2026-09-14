@@ -57,7 +57,7 @@ on:
 
 jobs:
   run:
-    runs-on: self-hosted
+    runs-on: [self-hosted, nxtwash-staging]
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
