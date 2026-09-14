@@ -253,7 +253,10 @@ class CompaniesPage(BasePage):
     # ── Filter ────────────────────────────────────────────────────────────────
 
     def open_filters(self):
-        self.click(self.FILTER_BUTTON)
+        # Only click if the panel isn't already open; clicking again would toggle it closed.
+        els = self.driver.find_elements(*self.COMPANY_NAME_FILTER)
+        if not els or not els[0].is_displayed():
+            self.click(self.FILTER_BUTTON)
         self.wait.until(EC.visibility_of_element_located(self.COMPANY_NAME_FILTER))
 
     def filter_panel_is_open(self):
