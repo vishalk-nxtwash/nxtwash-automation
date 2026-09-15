@@ -1,0 +1,43 @@
+name: Cleanup Runners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    strategy:
+      matrix:
+        slot: [1, 2]
+      fail-fast: false
+    runs-on: self-hosted
+
+    steps:
+      - name: Disk before
+        run: df -h /
+
+      - name: Remove test artifacts from workspace
+        run: |
+          work="${GITHUB_WORKSPACE%/*/*}"
+          find "$work" -maxdepth 4 \( \
+            -name "allure-results" -o -name "allure-report" \
+            -o -name "screenshots" -o -name "logs" \) \
+            -type d -exec rm -rf {} + 2>/dev/null || true
+          find "$work" -maxdepth 4 \( \
+            -name "report.html" -o -name "results.xml" \) \
+            -delete 2>/dev/null || true
+
+      - name: Clean pip cache
+        run: python3.11 -m pip cache purge 2>/dev/null || true
+
+      - name: Clean npm cache
+        run: npm cache clean --force 2>/dev/null || true
+
+      - name: Clean Chrome crash temp profiles
+        run: |
+          find /tmp -maxdepth 2 -name ".com.google.Chrome*" -type d \
+            -exec rm -rf {} + 2>/dev/null || true
+          find /tmp -maxdepth 1 -mtime +0 -not -name "." \
+            -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Disk after
+        run: df -h /
