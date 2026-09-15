@@ -700,7 +700,14 @@ class WashExtrasPage(BasePage):
         wait_for_list_loaded() calls this when a filter badge is detected.
         The badge persists after apply_filters() closes the panel, so Reset all
         is not visible at that point — open the panel before clicking Reset all.
+
+        No-op when no active filter exists: the button is disabled (not clickable)
+        when the filter count is zero, so calling wait_for_list_loaded() inside
+        open_filter_panel() may already have auto-reset the filter before this
+        explicit call arrives.
         """
+        if not self._has_active_filter():
+            return
         reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if not any(b.is_displayed() for b in reset_btns):
             button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
