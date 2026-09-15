@@ -1,0 +1,43 @@
+name: Runner Cleanup
+
+# One-shot manual trigger to free disk / process state on the self-hosted runner.
+# Run this before a suite when the runner is clogged, or after a crashed run
+# leaves stale Chrome processes and temp dirs behind.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: [self-hosted, nxtwash-staging]
+    timeout-minutes: 10
+
+    steps:
+      - name: Disk before cleanup
+        run: df -h /
+
+      - name: Kill stale browser processes
+        run: |
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+
+      - name: Remove Chrome temp dirs
+        run: |
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 ~/.config/google-chrome/Crash\ Reports \
+                 ~/.config/google-chrome/Crashpad \
+                 2>/dev/null || true
+
+      - name: Purge pip wheel cache
+        run: python3.11 -m pip cache purge 2>/dev/null || true
+
+      - name: Remove stale test reports
+        run: |
+          find . -maxdepth 4 -name "allure-results" -type d -exec rm -rf {} + 2>/dev/null || true
+          find . -maxdepth 4 -name "allure-report"  -type d -exec rm -rf {} + 2>/dev/null || true
+          find . -maxdepth 4 -name "screenshots"    -type d -exec rm -rf {} + 2>/dev/null || true
+          find . -maxdepth 4 -name "logs"            -type d -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Disk after cleanup
+        run: df -h /
