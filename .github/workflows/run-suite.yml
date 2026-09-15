@@ -152,3 +152,18 @@ jobs:
           paths: results.xml
         continue-on-error: true
 
+      - name: Post-run cleanup
+        if: always()
+        run: |
+          # Delete large artifact dirs immediately after upload so they do not
+          # accumulate on the self-hosted runner disk between runs.
+          rm -rf allure-results allure-report screenshots logs \
+                 report.html results.xml \
+                 2>/dev/null || true
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 2>/dev/null || true
+          df -h /
+
