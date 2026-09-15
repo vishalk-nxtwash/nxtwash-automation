@@ -10,11 +10,6 @@ on:
   push:
     branches: [staging]
   workflow_dispatch:
-    inputs:
-      reruns:
-        description: "Flaky-test reruns per test"
-        required: false
-        default: "2"
   schedule:
     - cron: "0 3 * * 0"
   repository_dispatch:
@@ -57,5 +52,5 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
-      reruns: ${{ github.event.inputs.reruns || '2' }}
       timeout_minutes: 60
+
