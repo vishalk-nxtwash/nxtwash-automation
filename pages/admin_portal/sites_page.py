@@ -3,6 +3,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
@@ -217,16 +218,37 @@ class SitesPage(BasePage):
         """Prepend an API_BASE constant so JS uses the configured API host."""
         return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
+    def _get_auth(self, timeout=15):
+        """Wait for Redux-persist to rehydrate, then return auth credentials."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                lambda d: d.execute_script(
+                    "try { return !!JSON.parse(localStorage.getItem('persist:root')); }"
+                    " catch(e) { return false; }"
+                )
+            )
+        except TimeoutException:
+            raise AssertionError(
+                f"persist:root not found in localStorage after {timeout}s — "
+                "Redux has not rehydrated. Check if the app changed its persist key."
+            )
+        return self.driver.execute_script(
+            "const root = JSON.parse(localStorage.getItem('persist:root'));"
+            "const auth = JSON.parse(root.authSessionReducer);"
+            "return { accessToken: auth.accessToken, key: auth.key };"
+        )
+
     def get_site_summary_with_api(self, site_name):
         """Return a site summary by exact name from the authenticated session."""
+        auth = self._get_auth()
         result = self.driver.execute_async_script(
             self._api_script("""
             const siteName = arguments[0];
+            const accessToken = arguments[1];
+            const key = arguments[2];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
             const params = new URLSearchParams({
-                key: auth.key,
+                key: key,
                 pageSize: "500",
                 pageNumber: "1"
             });
@@ -234,7 +256,7 @@ class SitesPage(BasePage):
             fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 }
             })
                 .then((response) => response.json())
@@ -247,7 +269,9 @@ class SitesPage(BasePage):
                 })
                 .catch((error) => done({ error: String(error) }));
             """),
-            site_name
+            site_name,
+            auth["accessToken"],
+            auth["key"]
         )
 
         if isinstance(result, dict) and result.get("error"):
@@ -262,21 +286,22 @@ class SitesPage(BasePage):
         if not summary:
             return None
 
+        auth = self._get_auth()
         result = self.driver.execute_async_script(
             self._api_script("""
             const siteId = arguments[0];
+            const accessToken = arguments[1];
+            const key = arguments[2];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
             const params = new URLSearchParams({
-                key: auth.key,
+                key: key,
                 id: siteId
             });
 
             fetch(API_BASE + "/api/sites?" + params, {
                 headers: {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 }
             })
                 .then(async (response) => done({
@@ -285,7 +310,9 @@ class SitesPage(BasePage):
                 }))
                 .catch((error) => done({ error: String(error) }));
             """),
-            summary["siteId"]
+            summary["siteId"],
+            auth["accessToken"],
+            auth["key"]
         )
 
         if result.get("error"):
@@ -298,6 +325,7 @@ class SitesPage(BasePage):
 
     def get_site_details_by_name_and_code_with_api(self, site_name, site_code):
         """Return full site details matching both site name and site code."""
+        auth = self._get_auth()
         original_timeout = self.driver.timeouts.script
         self.driver.set_script_timeout(120)
 
@@ -306,16 +334,16 @@ class SitesPage(BasePage):
                 self._api_script("""
                 const siteName = arguments[0];
                 const siteCode = arguments[1];
+                const accessToken = arguments[2];
+                const key = arguments[3];
                 const done = arguments[arguments.length - 1];
-                const root = JSON.parse(localStorage.getItem("persist:root"));
-                const auth = JSON.parse(root.authSessionReducer);
                 const headers = {
                     accept: "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 };
                 const baseUrl = API_BASE + "/api/sites";
                 const listParams = new URLSearchParams({
-                    key: auth.key,
+                    key: key,
                     pageSize: "500",
                     pageNumber: "1"
                 });
@@ -331,7 +359,7 @@ class SitesPage(BasePage):
                             const details = await Promise.all(
                                 chunk.map(async (site) => {
                                     const params = new URLSearchParams({
-                                        key: auth.key,
+                                        key: key,
                                         id: site.siteId
                                     });
                                     const response = await fetch(
@@ -358,7 +386,9 @@ class SitesPage(BasePage):
                     .catch((error) => done({ error: String(error) }));
                 """),
                 site_name,
-                site_code
+                site_code,
+                auth["accessToken"],
+                auth["key"]
             )
         finally:
             self.driver.set_script_timeout(original_timeout)
@@ -370,16 +400,17 @@ class SitesPage(BasePage):
 
     def create_site_from_reference_with_api(self, site_name, reference_site):
         """Create a site by copying a reference site's saved settings."""
+        auth = self._get_auth()
         result = self.driver.execute_async_script(
             self._api_script("""
             const siteName = arguments[0];
             const referenceSite = arguments[1];
+            const accessToken = arguments[2];
+            const key = arguments[3];
             const done = arguments[arguments.length - 1];
-            const root = JSON.parse(localStorage.getItem("persist:root"));
-            const auth = JSON.parse(root.authSessionReducer);
 
             const payload = JSON.parse(JSON.stringify(referenceSite));
-            payload.key = auth.key;
+            payload.key = key;
             payload.siteId = 0;
             payload.siteName = siteName;
             payload.siteCode = siteName;
@@ -403,7 +434,7 @@ class SitesPage(BasePage):
                 headers: {
                     accept: "application/json",
                     "content-type": "application/json",
-                    authorization: "Bearer " + auth.accessToken
+                    authorization: "Bearer " + accessToken
                 },
                 body: JSON.stringify(payload)
             })
@@ -414,7 +445,9 @@ class SitesPage(BasePage):
                 .catch((error) => done({ error: String(error) }));
             """),
             site_name,
-            reference_site
+            reference_site,
+            auth["accessToken"],
+            auth["key"]
         )
 
         if result.get("error"):
