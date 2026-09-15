@@ -49,6 +49,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Pre-run cleanup
+        run: |
+          echo "=== Disk before cleanup ==="
+          df -h /
+          # Kill any Chrome/chromedriver left over from a previous crashed run.
+          # These hold open file handles that prevent /tmp from being reclaimed.
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+          # Chrome writes a temp profile (~50-100 MB) per instance; they
+          # accumulate in /tmp when a test run is killed mid-flight.
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 ~/.config/google-chrome/Crash\ Reports \
+                 ~/.config/google-chrome/Crashpad \
+                 2>/dev/null || true
+          # Purge pip wheel cache — all deps are pre-installed on this runner
+          # so the cache only grows the disk between runs without being needed.
+          python3.11 -m pip cache purge 2>/dev/null || true
+          echo "=== Disk after cleanup ==="
+          df -h /
+
       # Hard safety gate: PRODUCTION must never run mutating suites. Only the
       # read-only `prod_smoke` marker is allowed (other tests create data that
       # cannot be deleted).
