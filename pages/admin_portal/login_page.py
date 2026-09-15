@@ -265,15 +265,38 @@ class AdminLoginPage(BasePage):
         """Return whether persisted localStorage has an authorized session."""
         return self.driver.execute_script(
             """
-            const root = window.localStorage.getItem('persist:root');
-            if (!root) return false;
-            try {
-                const persisted = JSON.parse(root);
-                const auth = JSON.parse(persisted.authSessionReducer || '{}');
-                return auth.isAuthorized === true && Boolean(auth.accessToken);
-            } catch (error) {
-                return false;
+            function hasAuthProps(obj) {
+                const authorized = obj.isAuthorized === true
+                    || obj.isAuthenticated === true;
+                const hasToken = Boolean(
+                    obj.accessToken || obj.token || obj.access_token
+                );
+                return authorized && hasToken;
             }
+
+            const root = window.localStorage.getItem('persist:root');
+            if (root) {
+                try {
+                    const persisted = JSON.parse(root);
+                    for (const key of Object.keys(persisted)) {
+                        if (!/auth|session/i.test(key)) continue;
+                        try {
+                            if (hasAuthProps(JSON.parse(persisted[key] || '{}')))
+                                return true;
+                        } catch (_) {}
+                    }
+                } catch (_) {}
+            }
+
+            return Object.keys(window.localStorage)
+                .filter(key => /auth|token|session/i.test(key))
+                .some(key => {
+                    try {
+                        return hasAuthProps(
+                            JSON.parse(window.localStorage.getItem(key) || '{}')
+                        );
+                    } catch (_) { return false; }
+                });
             """
         )
 
@@ -298,3 +321,4 @@ class AdminLoginPage(BasePage):
         """Wait until browser is no longer on login page."""
         long_wait = WebDriverWait(self.driver, 30)
         long_wait.until(lambda driver: "/login" not in driver.current_url)
+
