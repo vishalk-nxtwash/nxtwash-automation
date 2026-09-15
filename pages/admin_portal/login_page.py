@@ -292,7 +292,9 @@ class AdminLoginPage(BasePage):
             """
             function hasAuthProps(obj) {
                 const authorized = obj.isAuthorized === true
-                    || obj.isAuthenticated === true;
+                    || obj.isAuthorized === 'true'
+                    || obj.isAuthenticated === true
+                    || obj.isAuthenticated === 'true';
                 const hasToken = Boolean(
                     obj.accessToken || obj.token || obj.access_token
                 );
