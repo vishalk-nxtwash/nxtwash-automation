@@ -1,7 +1,14 @@
 name: Cleanup Runners
 
+# Manual trigger only — run this when the self-hosted runner disk is filling up.
+# For a disk-at-0 emergency (runner can't start jobs), SSH to the EC2 instance
+# and run scripts/cleanup_runner.sh directly instead.
+
 on:
   workflow_dispatch:
+  schedule:
+    # Run weekly (Sunday 02:00 UTC) so artifacts don't accumulate between manual runs.
+    - cron: "0 2 * * 0"
 
 jobs:
   cleanup:
@@ -15,16 +22,32 @@ jobs:
       - name: Disk before
         run: df -h /
 
-      - name: Remove test artifacts from workspace
+      - name: Kill stale Chrome processes
         run: |
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+
+      - name: Remove test artifacts from all runner workspaces
+        run: |
+          # Walk up from GITHUB_WORKSPACE (_work/<repo>/<repo>) to the _work parent.
           work="${GITHUB_WORKSPACE%/*/*}"
-          find "$work" -maxdepth 4 \( \
+          echo "Scanning workspace root: $work"
+          find "$work" -maxdepth 5 \( \
             -name "allure-results" -o -name "allure-report" \
-            -o -name "screenshots" -o -name "logs" \) \
+            -o -name "screenshots" -o -name "logs" \
+            -o -name "reports" \) \
             -type d -exec rm -rf {} + 2>/dev/null || true
-          find "$work" -maxdepth 4 \( \
+          find "$work" -maxdepth 5 \( \
             -name "report.html" -o -name "results.xml" \) \
             -delete 2>/dev/null || true
+          find "$work" -maxdepth 6 -name "__pycache__" -type d \
+            -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Clean Chrome temp profiles in /tmp
+        run: |
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 2>/dev/null || true
 
       - name: Clean pip cache
         run: python3.11 -m pip cache purge 2>/dev/null || true
@@ -32,12 +55,6 @@ jobs:
       - name: Clean npm cache
         run: npm cache clean --force 2>/dev/null || true
 
-      - name: Clean Chrome crash temp profiles
-        run: |
-          find /tmp -maxdepth 2 -name ".com.google.Chrome*" -type d \
-            -exec rm -rf {} + 2>/dev/null || true
-          find /tmp -maxdepth 1 -mtime +0 -not -name "." \
-            -exec rm -rf {} + 2>/dev/null || true
-
       - name: Disk after
+        if: always()
         run: df -h /
