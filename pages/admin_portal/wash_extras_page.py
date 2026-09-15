@@ -1,6 +1,10 @@
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import (
+    StaleElementReferenceException,
+    TimeoutException,
+    WebDriverException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -100,6 +104,20 @@ class WashExtrasPage(BasePage):
         "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
     )
 
+    def _safe_is_visible(self, locator):
+        """Return the element if visible, False otherwise.
+
+        Catches StaleElementReferenceException and Chrome's DevTools Protocol
+        "Node with given id does not belong to the document" WebDriverException,
+        both of which occur when the iframe navigates between find_element and
+        is_displayed(). Returning False lets WebDriverWait.until() retry.
+        """
+        try:
+            el = self.driver.find_element(*locator)
+            return el if el.is_displayed() else False
+        except (StaleElementReferenceException, WebDriverException):
+            return False
+
     def wait_for_list_loaded(self):
         """Wait until the Wash Extras list is visible.
 
@@ -116,11 +134,11 @@ class WashExtrasPage(BasePage):
         Also resets any stale filter left over from inactive-filter navigation.
         """
         self.switch_to_frame_with_retry(self.FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait.until(lambda d: self._safe_is_visible(self.PAGE_TITLE))
         if not self._quick_add_button_check(timeout=8):
             self._navigate_outer_to_we_list()
             self.switch_to_frame_with_retry(self.FRAME)
-            self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+            self.wait.until(lambda d: self._safe_is_visible(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON))
         if self._has_active_filter():
             self.reset_filters()
@@ -688,7 +706,8 @@ class WashExtrasPage(BasePage):
             button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
             self.driver.execute_script("arguments[0].click();", button)
             self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
-        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+        element = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", element)
 
     def set_filter_site(self, site_name):
         """Type a site name into the filter panel and select the matching option."""
