@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,6 +45,10 @@ class WashExtrasPage(BasePage):
     ADD_EXTRA_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='+ Add new wash extra']"
+    )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
     )
     APPLY_FILTERS_BUTTON = (
         By.XPATH,
@@ -95,28 +101,77 @@ class WashExtrasPage(BasePage):
     )
 
     def wait_for_list_loaded(self):
-        """Wait until the Wash Extras list is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
-        self.driver.switch_to.default_content()
-        long_wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        """Wait until the Wash Extras list is visible.
+
+        Uses FRAME (not LIST_FRAME) so this works whether the parent React
+        SPA re-mounts the iframe (src updates to list URL) or navigates
+        in-place via React Router (src stays at the old edit/create URL).
+
+        PAGE_TITLE also matches the breadcrumb on the edit form, so it is not
+        a sufficient signal on its own.  After PAGE_TITLE passes, a short probe
+        checks for ADD_EXTRA_BUTTON; if it is absent (still on edit form after
+        a location-level save), the outer portal is driven directly to the list
+        URL and the frame is re-entered before proceeding.
+
+        Also resets any stale filter left over from inactive-filter navigation.
+        """
+        self.switch_to_frame_with_retry(self.FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        if not self._quick_add_button_check(timeout=8):
+            self._navigate_outer_to_we_list()
+            self.switch_to_frame_with_retry(self.FRAME)
+            self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON))
+        if self._has_active_filter():
+            self.reset_filters()
+        self.wait_for_grid_idle()
+
+    def _quick_add_button_check(self, timeout=8):
+        """Return True if ADD_EXTRA_BUTTON becomes clickable within timeout."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def _navigate_outer_to_we_list(self):
+        """Navigate the outer admin portal directly to the Wash Extras list."""
+        self.driver.switch_to.default_content()
+        current = self.driver.current_url
+        we_path = "/services/washExtras"
+        idx = current.find(we_path)
+        if idx != -1:
+            self.driver.get(current[:idx + len(we_path)])
+
+    def _has_active_filter(self):
+        """Return True if a filter count badge is visible."""
+        return bool(self.driver.find_elements(
+            By.XPATH,
+            "//button[contains(normalize-space(), 'Filter by (')]"
+        ))
+
+    wait_for_loaded = wait_for_list_loaded
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create extra form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
 
     def wait_for_edit_loaded(self):
         """Wait until the edit extra form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.SERVICE_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_EXTRA_BUTTON))
         self.wait.until(lambda driver: self.get_service_name_value() != "")
