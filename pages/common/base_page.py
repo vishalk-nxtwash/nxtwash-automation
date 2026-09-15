@@ -1,6 +1,9 @@
 import time
 
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    StaleElementReferenceException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,11 +17,27 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 20)
 
-    def click(self, locator):
+    def _dismiss_page_banner(self):
+        for script in (
+            "var t=document.getElementById('dev-environment-unstable');"
+            "if(t){t.click();t.remove();}",
+            "try{var t=window.parent.document"
+            ".getElementById('dev-environment-unstable');"
+            "if(t){t.click();t.remove();}}catch(e){}",
+        ):
+            try:
+                self.driver.execute_script(script)
+            except Exception:
+                pass
+        time.sleep(0.4)
 
-        self.wait.until(
-            EC.element_to_be_clickable(locator)
-        ).click()
+    def click(self, locator):
+        try:
+            self.wait.until(EC.element_to_be_clickable(locator)).click()
+        except ElementClickInterceptedException:
+            self._dismiss_page_banner()
+            element = self.wait.until(EC.element_to_be_clickable(locator))
+            self.driver.execute_script("arguments[0].click();", element)
 
     def enter_text(self, locator, text):
 
