@@ -1,9 +1,9 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING, SHARDED across parallel runners.
-# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling and
-# the full 423-test suite on a single runner takes ~2h+. Splitting it across
-# parallel runners (one per shard) brings wall-clock down to ~the slowest shard.
+# Each GitHub runner has only 2 vCPUs, so `-n 1` is the safe per-runner ceiling.
+# max-parallel: 3 caps concurrent shards to stay within the runner's 3.7 GB RAM
+# (3 shards × 1 Chrome × ~500 MB = ~1.5 GB — well within limit).
 # Triggers: every push to `staging`, manual dispatch, weekly Sunday 03:00 UTC.
 
 on:
@@ -25,6 +25,7 @@ jobs:
   admin:
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         shard:
           - name: login
@@ -35,7 +36,6 @@ jobs:
             path: tests/admin_portal/sites
           - name: service-categories
             path: tests/admin_portal/service_categories
-            parallel: "2"
           # - name: wash-books
           #   path: tests/admin_portal/wash_books
           # - name: wash-packages
@@ -53,6 +53,5 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: "2"
+      parallel: "1"
       timeout_minutes: 60
-
