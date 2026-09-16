@@ -203,3 +203,20 @@ jobs:
         with:
           paths: reports/results.xml
         continue-on-error: true
+
+      - name: Post-run cleanup
+        if: always()
+        run: |
+          # Remove large artifact dirs so they don't accumulate on the runner
+          # disk between runs.
+          rm -rf reports/allure-results reports/allure-report \
+                 reports/screenshots reports/logs \
+                 reports/report.html reports/results.xml \
+                 2>/dev/null || true
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 2>/dev/null || true
+          echo "=== Disk after cleanup ==="
+          df -h /
