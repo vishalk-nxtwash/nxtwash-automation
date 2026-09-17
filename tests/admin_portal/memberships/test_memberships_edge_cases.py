@@ -9,6 +9,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Memberships"),
     allure.story("Edge Cases"),
+    pytest.mark.timeout(480),
 ]
 
 
