@@ -1,0 +1,32 @@
+{
+  "reference": {
+    "existing_package":           "VK AWP006",
+    "assignment_site":            "VK AL11",
+    "second_assignment_site":     "VK AL22",
+    "applicable_discount":        "Basic Discount",
+    "second_applicable_discount": "VK AL01"
+  },
+  "template": {
+    "package_name":       "VK AWP006",
+    "points_awarded":     "3",
+    "points_redeemed":    "1",
+    "global_price":       "14",
+    "global_commission":  "4",
+    "visible_price":      "$14.00",
+    "barcode":            "AWP006",
+    "controller_code":    "12",
+    "location_price":     "15",
+    "description":        "VK automation test description"
+  },
+  "updated": {
+    "package_name":             "VK AWP006 edited",
+    "points_awarded":           "10",
+    "points_redeemed":          "5",
+    "site_override_price":      "10",
+    "site_override_price_high": "20",
+    "site_override_commission": "6"
+  },
+  "search": {
+    "nonexistent": "wash-package-does-not-exist-automation"
+  }
+}
