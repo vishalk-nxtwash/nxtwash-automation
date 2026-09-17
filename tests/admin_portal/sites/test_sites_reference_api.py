@@ -1,9 +1,9 @@
 import pytest
 
 from core.config_manager import ConfigManager
-from pages.admin_portal.login_page import AdminLoginPage
 from pages.admin_portal.sidebar import AdminSidebar
 from pages.admin_portal.sites_page import SitesPage
+from tests.admin_portal.admin_session import ensure_admin_logged_in
 
 
 SITE_NAME = "vkauto1"
@@ -18,13 +18,13 @@ def sites_url():
 
 @pytest.fixture
 def logged_in_admin_browser(browser):
-
-    login_page = AdminLoginPage(browser)
-    login_page.open()
-    login_page.wait_for_loaded()
-    login_page.login()
-    login_page.wait_for_overview()
-
+    # The browser fixture pre-injects auth state (cookies + localStorage).
+    # Navigating directly to the portal and calling ensure_admin_logged_in
+    # is more reliable than a manual login flow, which times out when the
+    # app redirects an already-authenticated session away from /login.
+    base_url = ConfigManager().get_url("admin_portal").rstrip("/")
+    browser.get(base_url)
+    ensure_admin_logged_in(browser)
     return browser
 
 
