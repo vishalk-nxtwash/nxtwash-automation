@@ -38,13 +38,6 @@ def test_discounts_export_after_filter(browser):
 
 @allure.title("DS-EXP-003 Export record count matches filtered grid count")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "Cannot reliably verify downloaded file record count in this environment "
-        "without file-system download polling. Tracked for future implementation."
-    ),
-    strict=False,
-)
 def test_discounts_export_record_count_matches_grid(browser):
 
     discounts_page = open_discounts_page(browser)
@@ -57,13 +50,6 @@ def test_discounts_export_record_count_matches_grid(browser):
 
 @allure.title("DS-EXP-004 Export data matches grid data")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "Cannot verify exported file contents without file-system download access. "
-        "Tracked for future implementation with download folder inspection."
-    ),
-    strict=False,
-)
 def test_discounts_export_data_matches_grid(browser):
 
     discounts_page = create_discount_if_missing(browser)
