@@ -60,7 +60,7 @@ jobs:
           # Chrome writes a temp profile (~50-100 MB) per instance; they
           # accumulate in /tmp when a test run is killed mid-flight.
           rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* \
+                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
@@ -163,7 +163,7 @@ jobs:
           pkill -f "chrome" || true
           pkill -f "chromedriver" || true
           rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* \
+                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
                  2>/dev/null || true
           df -h /
 
