@@ -15,11 +15,6 @@ from tests.admin_portal.sites.conftest import (
 # These are inferred from the SL-CP-001 assertion that "Memberships", "Washbooks",
 # and "Gift cards" labels are visible in the tab.  Each locator finds the first
 # <input type="checkbox"> that follows the matching label text.
-#
-# TO VERIFY: open the edit form in Chrome, switch to the CP tab, open DevTools,
-# right-click the Memberships toggle → Inspect, and confirm the nearby input has
-# type="checkbox".  If the toggle is a <button role="switch"> instead, update the
-# XPaths to use @role='switch' and remove the xfail markers on the CP tests.
 _CP_MEMBERSHIPS_SWITCH = (
     By.XPATH,
     "//*[normalize-space()='Memberships']/following::input[@type='checkbox'][1]",
@@ -260,13 +255,6 @@ def test_edit_site_contact_email_persists_after_refresh(
 
 @allure.title("SL-LAN-003 Added lane creates a visible row in the Lanes settings tab")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Lane row locator (name/placeholder containing 'lane') needs DOM "
-        "verification on the Lanes settings tab. Remove xfail once stable."
-    ),
-)
 def test_add_lane_creates_visible_row(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Lanes settings")
@@ -339,10 +327,6 @@ def test_edit_site_cc_processor_labels_visible(logged_in_admin_browser):
 
 @allure.title("SL-CP-002 Memberships toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
 def test_edit_site_customer_portal_memberships_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -357,10 +341,6 @@ def test_edit_site_customer_portal_memberships_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-003 Washbooks toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
 def test_edit_site_customer_portal_washbooks_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -375,10 +355,6 @@ def test_edit_site_customer_portal_washbooks_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-004 Gift cards toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
 def test_edit_site_customer_portal_gift_cards_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -393,10 +369,6 @@ def test_edit_site_customer_portal_gift_cards_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-005 Show-on-portal toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
 def test_edit_site_customer_portal_show_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -411,13 +383,6 @@ def test_edit_site_customer_portal_show_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-007 Customer Portal Memberships setting persists after save and re-open")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Depends on CP toggle interaction (SL-CP-002). "
-        "Remove xfail once toggle locators are confirmed stable."
-    ),
-)
 def test_edit_site_customer_portal_settings_persist(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Customer Portal / Mobile app settings")
