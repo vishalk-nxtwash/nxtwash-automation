@@ -3,6 +3,7 @@ import re
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -28,15 +29,26 @@ class DiscountsPage(BasePage):
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Discounts']")
-    SEARCH_INPUT = (By.NAME, "discountName")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input[placeholder='Discount name']")
+    FILTER_BUTTON = (
+        By.XPATH,
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]"
+    )
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[contains("
+        "translate(normalize-space(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"
+        ",'filter by')]/following-sibling::button[1]"
     )
     ADD_DISCOUNT_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='+ Add new discount']"
+    )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
     )
     SAVE_DISCOUNT_BUTTON = (
         By.XPATH,
@@ -111,35 +123,45 @@ class DiscountsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Discounts list is visible."""
-        from selenium.webdriver.support.ui import WebDriverWait
         self.driver.switch_to.default_content()
+        # After a save, the edit iframe unmounts before the list iframe mounts.
+        # Waiting for it to vanish first avoids burning the 90s frame-search
+        # budget on iterations where the edit frame is still present.
         WebDriverWait(self.driver, 30).until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
+            lambda d: not d.find_elements(*self.EDIT_FRAME)
         )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
+        self.wait_for_grid_idle()
+
+    wait_for_loaded = wait_for_list_loaded
+
+    def wait_for_grid_idle(self):
+        """Wait until the React grid load mask is not blocking interactions."""
+        from selenium.webdriver.support.ui import WebDriverWait
+        WebDriverWait(self.driver, 60).until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create discount form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
 
     def wait_for_edit_loaded(self):
         """Wait until the edit discount form is visible."""
-        from selenium.webdriver.support.ui import WebDriverWait
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
         WebDriverWait(self.driver, 30).until(
             lambda driver: self.get_discount_name_value() != ""
         )
+        self.wait_for_grid_idle()
 
     def get_body_text(self):
         """Get visible text inside the current iframe."""
@@ -193,6 +215,7 @@ class DiscountsPage(BasePage):
                 *self.SEARCH_INPUT
             ).get_attribute("value") == discount_name
         )
+        self.wait_for_grid_idle()
 
     def clear_discount_search(self):
         """Clear the discount search box."""
@@ -205,6 +228,7 @@ class DiscountsPage(BasePage):
                 *self.SEARCH_INPUT
             ).get_attribute("value") == ""
         )
+        self.wait_for_grid_idle()
 
     def discount_exists(self, discount_name):
         """Return whether the discount exists in the list."""
@@ -226,8 +250,10 @@ class DiscountsPage(BasePage):
         ).text.strip()
 
     def open_filter_panel(self):
-        """Open the Discounts filter panel."""
+        """Open the Discounts filter panel (idempotent — no-op if already open)."""
         self.wait_for_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
@@ -319,6 +345,19 @@ class DiscountsPage(BasePage):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
         self.click(self.RESET_ALL_BUTTON)
+        self.apply_filters()
+
+    def reset_filters_if_active(self):
+        try:
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            if "Filter by (" in body:
+                self.reset_filters()
+                try:
+                    self.apply_filters()
+                except Exception:
+                    pass
+        except Exception:
+            pass
 
     def open_create_discount(self):
         """Open create discount form."""
@@ -349,7 +388,10 @@ class DiscountsPage(BasePage):
 
     def enter_discount_name(self, discount_name):
         """Enter discount name."""
-        self.enter_text(self.DISCOUNT_NAME_INPUT, discount_name)
+        element = self.wait.until(
+            EC.element_to_be_clickable(self.DISCOUNT_NAME_INPUT)
+        )
+        self._set_input_value(element, discount_name)
 
     def get_discount_name_value(self):
         """Return the current discount name input value."""
@@ -441,8 +483,7 @@ class DiscountsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.DISCOUNT_AMOUNT_INPUT)
         )
-        element.clear()
-        element.send_keys(str(amount))
+        self._set_input_value(element, str(amount))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.DISCOUNT_AMOUNT_INPUT
@@ -467,14 +508,37 @@ class DiscountsPage(BasePage):
             )
 
         discount_input = rows[row_index].find_element(By.NAME, "discountValue")
-        discount_input.clear()
-        discount_input.send_keys(str(value))
-        self.wait.until(
-            lambda driver: rows[row_index].find_element(
-                By.NAME,
-                "discountValue"
-            ).get_attribute("value") == str(value)
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
+        # JS .select() clears the field without CTRL+A, which is intercepted by
+        # the Inovua global keydown handler inside the legacy iframe.
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", discount_input
+        )
+        discount_input.send_keys(str(value))
+
+        def _value_matches(driver):
+            # Use find_elements (no wait) to avoid TimeoutException propagating
+            # out of this lambda and aborting the outer wait prematurely.
+            try:
+                elems = driver.find_elements(*self.LOCATION_ROWS)
+                unique, seen = [], set()
+                for elem in elems:
+                    lines = [l.strip() for l in elem.text.splitlines() if l.strip()]
+                    key = "\n".join(lines[:2])
+                    if key and key not in seen:
+                        seen.add(key)
+                        unique.append(elem)
+                if row_index >= len(unique):
+                    return False
+                return unique[row_index].find_element(
+                    By.NAME, "discountValue"
+                ).get_attribute("value") == str(value)
+            except Exception:
+                return False
+
+        self.wait.until(_value_matches)
 
     def select_location_discount_type_by_index(self, row_index, discount_type):
         """Select one visible location row discount type."""
@@ -548,8 +612,14 @@ class DiscountsPage(BasePage):
         )
 
         if not self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: self.row_checkbox_is_checked(checkbox))
+            ActionChains(self.driver).move_to_element(checkbox).click(checkbox).perform()
+            self.wait.until(lambda driver: self.row_checkbox_is_checked(
+                rows[row_index].find_element(
+                    By.XPATH,
+                    ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+                    "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+                )
+            ))
 
     def location_is_assigned_by_index(self, row_index):
         """Return whether one visible location row is assigned."""
@@ -560,6 +630,31 @@ class DiscountsPage(BasePage):
             "and contains(@class,'InovuaReactDataGrid__checkbox')]"
         )
         return self.row_checkbox_is_checked(checkbox)
+
+    def get_location_row_by_name(self, location_name):
+        """Return the location row whose text starts with location_name."""
+        for row in self.get_location_rows():
+            first_line = row.text.splitlines()[0].strip() if row.text else ""
+            if first_line == location_name:
+                return row
+        raise AssertionError(
+            "Location row '%s' not found in assignment grid" % location_name
+        )
+
+    def location_is_assigned_by_name(self, location_name):
+        """Return whether a named location row is assigned."""
+        row = self.get_location_row_by_name(location_name)
+        checkbox = row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+            "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+        )
+        return self.row_checkbox_is_checked(checkbox)
+
+    def get_location_discount_value_by_name(self, location_name):
+        """Return the discount value input for a named location row."""
+        row = self.get_location_row_by_name(location_name)
+        return row.find_element(By.NAME, "discountValue").get_attribute("value")
 
     def get_location_discount_value_by_index(self, row_index):
         """Return one visible location row discount value."""
@@ -572,7 +667,11 @@ class DiscountsPage(BasePage):
     def fill_required_unassigned_location_values(self):
         """Fill required discount values for unassigned locations."""
         for row_index in range(1, len(self.get_location_rows())):
-            self.set_location_discount_value_by_index(row_index, "0")
+            # Use "1" not "0": the React discount-value input enforces min > 0
+            # and reverts to its previous value when "0" is entered, causing
+            # the _value_matches wait inside set_location_discount_value_by_index
+            # to time out.
+            self.set_location_discount_value_by_index(row_index, "1")
             self.select_location_discount_type_by_index(row_index, "Amount")
 
     def switch_is_on(self, locator):
@@ -595,6 +694,14 @@ class DiscountsPage(BasePage):
         """Return whether Active service switch is on."""
         return self.switch_is_on(self.ACTIVE_SWITCH)
 
+    def wait_for_active_switch_settled(self, expected_on, timeout=None):
+        """Wait for the active switch to reflect its actual state after form hydration."""
+        from selenium.webdriver.support.ui import WebDriverWait
+        aria = "true" if expected_on else "false"
+        locator = self.ACTIVE_SWITCH
+        wait = WebDriverWait(self.driver, timeout) if timeout is not None else self.wait
+        wait.until(lambda d: d.find_element(*locator).get_attribute("aria-checked") == aria)
+
     def all_locations_switch_is_on(self):
         """Return whether Allow discount at all locations switch is on."""
         return self.switch_is_on(self.ALL_LOCATIONS_SWITCH)
@@ -605,14 +712,32 @@ class DiscountsPage(BasePage):
 
     def ensure_all_locations_switch_on(self):
         """Turn Allow discount at all locations on if needed."""
-        self.ensure_switch_on(self.ALL_LOCATIONS_SWITCH)
+        switch = self.wait.until(EC.element_to_be_clickable(self.ALL_LOCATIONS_SWITCH))
+        if switch.get_attribute("aria-checked") != "true":
+            ActionChains(self.driver).move_to_element(switch).click(switch).perform()
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.ALL_LOCATIONS_SWITCH
+                ).get_attribute("aria-checked") == "true"
+            )
 
     def set_discount_start(self, day, time_text):
         """Set discount start date in the visible date picker."""
+        from datetime import date as _date
         start_date = self.wait.until(
             EC.element_to_be_clickable(self.DATE_INPUTS)
         )
         start_date.click()
+
+        # If the requested day has already passed this month, advance the
+        # calendar to next month so the server receives a future date.
+        # (The server rejects past start dates; react-datepicker may still
+        # render the cell as clickable even when disabled by CSS.)
+        if int(day) < _date.today().day:
+            self.wait.until(EC.element_to_be_clickable((By.XPATH,
+                "//button[contains(@aria-label,'Next') or "
+                "contains(@class,'react-datepicker__navigation--next')]"
+            ))).click()
 
         day_locator = (
             By.XPATH,
@@ -666,8 +791,8 @@ class DiscountsPage(BasePage):
         self.ensure_active_switch_on()
         self.set_location_discount_value_by_index(0, discount_amount)
         self.select_location_discount_type_by_index(0, "Amount")
-        self.fill_required_unassigned_location_values()
         self.assign_location_by_index(0)
+        self.fill_required_unassigned_location_values()
 
     def create_discount(
         self,
@@ -689,7 +814,14 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def update_discount(
         self,
@@ -738,11 +870,9 @@ class DiscountsPage(BasePage):
 
     def ensure_all_locations_switch_off(self):
         """Turn Allow discount at all locations switch off if needed."""
-        switch = self.wait.until(
-            EC.presence_of_element_located(self.ALL_LOCATIONS_SWITCH)
-        )
+        switch = self.wait.until(EC.element_to_be_clickable(self.ALL_LOCATIONS_SWITCH))
         if switch.get_attribute("aria-checked") == "true":
-            self.driver.execute_script("arguments[0].click();", switch)
+            ActionChains(self.driver).move_to_element(switch).click(switch).perform()
             self.wait.until(
                 lambda driver: driver.find_element(
                     *self.ALL_LOCATIONS_SWITCH
@@ -779,7 +909,9 @@ class DiscountsPage(BasePage):
         )
         self.wait.until(EC.element_to_be_clickable(time_locator)).click()
         end_date.send_keys(Keys.ESCAPE)
-        self.wait.until(lambda driver: time_text in end_date.get_attribute("value"))
+        self.wait.until(
+            lambda driver: time_text in self._get_date_input_by_index(1).get_attribute("value")
+        )
 
     def get_discount_end_value(self):
         """Return discount end date input value."""
@@ -793,7 +925,9 @@ class DiscountsPage(BasePage):
 
     def click_download_button(self):
         """Click the export/download button."""
-        self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)).click()
+        self._dismiss_page_banner()
+        element = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", element)
 
     def fill_percentage_discount_form(
         self,
@@ -813,8 +947,8 @@ class DiscountsPage(BasePage):
         self.ensure_active_switch_on()
         self.set_location_discount_value_by_index(0, discount_amount)
         self.select_location_discount_type_by_index(0, "Percentage")
-        self.fill_required_unassigned_location_values()
         self.assign_location_by_index(0)
+        self.fill_required_unassigned_location_values()
 
     def create_percentage_discount(
         self,
@@ -836,7 +970,25 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Percentage discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+
+    def _wait_for_location_rows_hidden(self):
+        """Wait until the per-location grid collapses after all-locations is toggled on.
+
+        When RHF registers the all-locations toggle, the app hides the per-location
+        assignment grid. If rows are still present the toggle did not register with
+        React and saving would silently fail validation.
+        """
+        self.wait.until(
+            lambda driver: len(driver.find_elements(*self.LOCATION_ROWS)) == 0
+        )
 
     def fill_discount_form_all_locations(
         self,
@@ -855,6 +1007,7 @@ class DiscountsPage(BasePage):
         self.set_discount_start(start_day, start_time)
         self.ensure_active_switch_on()
         self.ensure_all_locations_switch_on()
+        self._wait_for_location_rows_hidden()
 
     def create_discount_all_locations(
         self,
@@ -876,7 +1029,14 @@ class DiscountsPage(BasePage):
             service_category_fallback
         )
         self.click_save_discount()
-        self.wait_for_list_loaded()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "All-locations discount save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def unassign_location_by_index(self, row_index):
         """Unassign one visible location row (uncheck if currently checked)."""
@@ -892,5 +1052,11 @@ class DiscountsPage(BasePage):
             "and contains(@class,'InovuaReactDataGrid__checkbox')]"
         )
         if self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script("arguments[0].click();", checkbox)
-            self.wait.until(lambda driver: not self.row_checkbox_is_checked(checkbox))
+            ActionChains(self.driver).move_to_element(checkbox).click(checkbox).perform()
+            self.wait.until(lambda driver: not self.row_checkbox_is_checked(
+                rows[row_index].find_element(
+                    By.XPATH,
+                    ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+                    "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+                )
+            ))
