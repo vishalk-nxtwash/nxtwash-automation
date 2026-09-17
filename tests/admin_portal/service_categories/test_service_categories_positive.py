@@ -67,6 +67,7 @@ def test_edit_service_category_name(browser):
 
 @allure.title("SC-HP-004 Activate Category")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_category")
 def test_activate_service_category(managed_category):
 
     page = managed_category
@@ -91,6 +92,7 @@ def test_activate_service_category(managed_category):
 
 @allure.title("SC-HP-005 Deactivate Category")
 @pytest.mark.regression
+@pytest.mark.xdist_group("managed_category")
 def test_deactivate_service_category(managed_category):
 
     page = managed_category
