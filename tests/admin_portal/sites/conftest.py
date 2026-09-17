@@ -1,26 +1,35 @@
+import logging
 import random
 
 import pytest
 
 from pages.admin_portal.sites_page import CreateSitePage
+from pages.admin_portal.sites_page import EditSitePage
 from pages.admin_portal.sites_page import SitesPage
 from tests.admin_portal.admin_session import ensure_admin_logged_in
 from tests.admin_portal.admin_session import open_admin_path
 
 
-BASE_SITE_NAME = "VK AL"
-BASE_SITE_CODE = "AL"
-BASE_SITE_NUMBER = 1
-SITE_EMAIL_TEMPLATE = "vkal%02d@yopmail.com"
-SITE_CONTACT_EMAIL_TEMPLATE = "vkal%dsite@yopmail.com"
-STATE = "California"
-CITY = "Columbia"
-ZIP_CODE = "95310"
-TIME_ZONE = "(UTC-05:00) Eastern Time (US & Canada)"
-PAY_WEEK_START_DAY = "Monday"
-STATE_SALES_TAX = "5"
-CITY_SALES_TAX = "3"
-MISSING_SITE = "VK SITE DOES NOT EXIST"
+LOG = logging.getLogger("nxtwash")
+
+
+from tests.admin_portal._data import load as _load
+
+_D = _load("sites")
+
+BASE_SITE_NAME              = _D["template"]["base_name"]
+BASE_SITE_CODE              = _D["template"]["base_code"]
+BASE_SITE_NUMBER            = _D["template"]["base_number"]
+SITE_EMAIL_TEMPLATE         = _D["template"]["email_template"]
+SITE_CONTACT_EMAIL_TEMPLATE = _D["template"]["contact_email_template"]
+STATE                       = _D["template"]["state"]
+CITY                        = _D["template"]["city"]
+ZIP_CODE                    = _D["template"]["zip_code"]
+TIME_ZONE                   = _D["template"]["time_zone"]
+PAY_WEEK_START_DAY          = _D["template"]["pay_week_start_day"]
+STATE_SALES_TAX = _D["template"]["state_sales_tax"]
+CITY_SALES_TAX  = _D["template"]["city_sales_tax"]
+MISSING_SITE    = _D["search"]["nonexistent"]
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
     "Internal Server Error",
@@ -35,6 +44,29 @@ def logged_in_admin_browser(browser):
     ensure_admin_logged_in(browser)
 
     return browser
+
+
+@pytest.fixture
+def managed_site(logged_in_admin_browser):
+    """Ensure the baseline site (VK AL01) exists before the test; restore active state after."""
+    site_data = create_site_if_missing(logged_in_admin_browser)
+    yield site_data
+
+    try:
+        sites_page = open_sites_page(logged_in_admin_browser)
+        if not sites_page.site_exists_in_ui(site_data["site_name"]):
+            sites_page.open_edit_site(site_data["site_name"], include_inactive=True)
+            edit_page = EditSitePage(logged_in_admin_browser)
+            edit_page.wait_for_loaded()
+            edit_page.ensure_active_switch_on()
+            edit_page.click_save()
+            open_sites_page(logged_in_admin_browser)
+    except Exception as exc:
+        LOG.warning(
+            "managed_site teardown could not restore '%s': %s",
+            site_data["site_name"],
+            exc,
+        )
 
 
 def open_sites_page(browser):
