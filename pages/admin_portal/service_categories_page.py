@@ -320,6 +320,8 @@ class ServiceCategoriesPage(BasePage):
         """Remove any filter and return to the default list view."""
         try:
             self.wait_for_list_loaded()
+            # Clear search before opening the filter panel — the Filter button
+            # is disabled when the grid is in an empty-results state.
             self.clear_category_search()
             self.reset_filters()
             self.wait_for_list_loaded()
@@ -389,6 +391,10 @@ class ServiceCategoriesPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
+        # _set_input_value uses React's native setter + dispatchEvent atomically.
+        # select() + send_keys() is racy: a React re-render between the two
+        # resets the native selection, causing send_keys to append rather than
+        # replace, making the value-equality wait time out.
         self._set_input_value(search_input, category_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -478,6 +484,7 @@ class ServiceCategoriesPage(BasePage):
             )
         time.sleep(0.5)
         self.wait_for_grid_idle()
+        # Wait for the filtered rows to be present (noop for empty result sets).
         try:
             self.wait.until(EC.presence_of_element_located(self.GRID_ROWS))
         except Exception:  # noqa: BLE001
