@@ -44,11 +44,26 @@ class AdminLoginPage(BasePage):
 
     def open(self):
         """Open Admin Portal."""
-        self.driver.get(self.config.get_url(self.PORTAL))
+        portal_url = self.config.get_url(self.PORTAL)
+        # Return to top-level context before clearing auth state.  When called
+        # mid-test the driver may still track a service-categories or other
+        # legacy iframe; execute_script then runs against that iframe's origin
+        # instead of the portal's, leaving the portal's localStorage intact and
+        # causing the second get() to stay on the overview instead of /login.
+        self.driver.switch_to.default_content()
+        # Navigate first so execute_script runs on the correct origin, then
+        # wipe cookies + localStorage to guarantee a logged-out state before
+        # the second navigation that the app will redirect to /login.
+        self.driver.get(portal_url)
+        self.driver.delete_all_cookies()
+        self.driver.execute_script(
+            "window.localStorage.clear(); window.sessionStorage.clear();"
+        )
+        self.driver.get(portal_url)
 
     def wait_for_loaded(self):
         """Wait until the Admin login form is visible."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
 
         long_wait.until(lambda driver: "/login" in driver.current_url)
         long_wait.until(EC.visibility_of_element_located(self.LOGIN_TITLE))
@@ -67,9 +82,19 @@ class AdminLoginPage(BasePage):
         return "/login" in self.driver.current_url
 
     def logo_is_visible(self):
-        """Return whether the logo image is visible."""
-        elements = self.driver.find_elements(*self.LOGO_IMAGE)
-        return bool(elements) and elements[0].is_displayed()
+        """Return whether the logo image is present and visible.
+
+        The img has loading='lazy' and the login fixture navigates through
+        multiple redirects before settling — allow up to 15s for the element
+        to mount before declaring it absent.
+        """
+        try:
+            el = WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(self.LOGO_IMAGE)
+            )
+            return el.is_displayed()
+        except Exception:
+            return False
 
     def get_logo_src(self):
         """Return login logo image source."""
@@ -307,11 +332,17 @@ class AdminLoginPage(BasePage):
 
         60s (not 30s) so the post-login redirect+render survives a loaded CI
         runner where several headless Chrome instances compete for CPU.
+        Accepts any path under the portal base URL so that environments that
+        route post-login to /overview (rather than /) do not time out on the
+        exact-match check.
         """
         long_wait = WebDriverWait(self.driver, 60)
-
+        base = self.config.get_url(self.PORTAL).rstrip("/")
         long_wait.until(
-            lambda driver: driver.current_url == self.config.get_url(self.PORTAL)
+            lambda driver: (
+                driver.current_url.startswith(base)
+                and "/login" not in driver.current_url
+            )
         )
         long_wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
 
@@ -321,6 +352,6 @@ class AdminLoginPage(BasePage):
 
     def wait_until_redirected_away_from_login(self):
         """Wait until browser is no longer on login page."""
-        long_wait = WebDriverWait(self.driver, 30)
+        long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(lambda driver: "/login" not in driver.current_url)
 
