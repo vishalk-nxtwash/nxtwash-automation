@@ -68,6 +68,11 @@ class DriverFactory:
             options.add_argument("--disable-sync")
             options.add_argument("--disable-notifications")
             options.add_argument("--log-level=3")
+            # Cap memory usage per Chrome instance to prevent exhaustion over
+            # long sequential runs (76+ tests × ~22 min on a 3.7 GB runner).
+            options.add_argument("--js-flags=--max_old_space_size=256")
+            options.add_argument("--renderer-process-limit=1")
+            options.add_argument("--disable-site-isolation-trials")
         elif detach:
             # Keep the browser open after script execution (local debugging).
             options.add_experimental_option("detach", True)
