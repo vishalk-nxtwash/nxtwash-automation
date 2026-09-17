@@ -2,7 +2,7 @@ name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING, SHARDED across parallel runners.
 # Each GitHub runner has only 2 vCPUs, so `-n 1` is the safe per-runner ceiling.
-# max-parallel: 3 caps concurrent shards to stay within the runner's 3.7 GB RAM
+# max-parallel: 2 caps concurrent shards to stay within the runner's 3.7 GB RAM
 # (3 shards × 1 Chrome × ~500 MB = ~1.5 GB — well within limit).
 # Triggers: every push to `staging`, manual dispatch, weekly Sunday 03:00 UTC.
 
@@ -25,7 +25,7 @@ jobs:
   admin:
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         shard:
           # - name: login
