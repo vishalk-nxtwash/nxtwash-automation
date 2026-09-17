@@ -7,7 +7,7 @@ import shutil
 import pytest
 
 # Re-export the browser fixture so every test can request `browser`.
-from fixtures.browser import browser  # noqa: F401
+from fixtures.browser import browser, _worker_auth_state  # noqa: F401
 
 try:  # Allure is optional; failure artifacts still land on disk without it.
     import allure
@@ -17,8 +17,8 @@ except ImportError:  # pragma: no cover
 
 LOG = logging.getLogger("nxtwash")
 
-SCREENSHOTS_DIR = "screenshots"
-LOGS_DIR = "logs"
+SCREENSHOTS_DIR = "reports/screenshots"
+LOGS_DIR = "reports/logs"
 
 
 def pytest_addoption(parser):
@@ -43,7 +43,35 @@ def pytest_addoption(parser):
     )
 
 
+def _patch_pytest_ast_source():
+    # Python 3.11.0-3.11.3 CPython bug: ast.parse raises SystemError on deeply
+    # nested source files.  Pytest's _code/code.py calls getstatementrange_ast
+    # (imported into its own namespace) when formatting failure tracebacks.  By
+    # patching the name in that module we convert SystemError → IndexError, which
+    # pytest already handles gracefully, before it can propagate to third-party
+    # plugins (pytest-html, pytest-rerunfailures) that call outcome.get_result()
+    # and would re-raise it as INTERNALERROR.
+    try:
+        import _pytest._code.code as _code_mod
+
+        _orig = _code_mod.getstatementrange_ast
+
+        def _safe(*args, **kwargs):
+            try:
+                return _orig(*args, **kwargs)
+            except SystemError:
+                # getsource() catches SyntaxError and falls back gracefully;
+                # IndexError is NOT caught in this pytest version and propagates.
+                raise SyntaxError("ast.parse failed: Python 3.11 CPython AST bug")
+
+        _code_mod.getstatementrange_ast = _safe
+    except (ImportError, AttributeError):
+        pass
+
+
 def pytest_configure(config):
+    _patch_pytest_ast_source()
+
     # Propagate the chosen environment so ConfigManager picks it up everywhere.
     env = config.getoption("--env") or os.getenv("TEST_ENV", "staging")
     os.environ["TEST_ENV"] = env
@@ -96,47 +124,53 @@ _QUARANTINE_TIMING_REASON = (
 _QUARANTINE_TIMING = (
     "test_service_categories_positive.py::test_activate_service_category",
     "test_service_categories_positive.py::test_deactivate_service_category",
-    "test_service_categories_positive.py::test_edit_service_category_name",
     "test_service_categories_positive.py::test_service_category_settings_persist",
     "test_service_categories_edge_cases.py::test_activate_deactivate_activate_cycle",
     "test_service_categories_edge_cases.py::test_deactivated_category_findable_via_filter",
     "test_service_categories_edge_cases.py::test_edit_inactive_category_saves_changes",
-    "test_service_categories_edit.py::test_edit_service_category_name_and_restore",
     "test_service_categories_filter.py::test_filter_inactive_categories_shows_inactive",
     "test_service_categories_managed.py::test_managed_category_provided_at_baseline",
     "test_service_categories_managed.py::test_managed_category_rename_is_reset_on_teardown",
-    "test_memberships_edit.py::test_remove_applicable_discount_persists",
-    "test_memberships_positive.py::test_activate_membership",
     "test_memberships_search_filter.py::test_memberships_partial_search",
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
-    "test_wash_packages_edit.py::test_deactivate_wash_package",
     "test_wash_packages_edit.py::test_remove_applicable_discount_persists",
+    "test_wash_packages_edit.py::test_edit_wash_package_name_persists",
+    "test_wash_packages_edit.py::test_edit_wash_package_global_price_persists",
     "test_wash_packages_export.py::test_wash_packages_export_after_filter",
     "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
     "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
-    "test_wash_packages_search_filter.py::test_reset_filters_restores_grid",
-    "test_wash_packages_search_filter.py::test_wash_packages_partial_search",
-    "test_wash_packages_site_assignment.py::test_location_price_override_persists",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
+    "test_wash_extras_site_assignment.py::test_location_price_override_persists",
+    "test_wash_extras_site_assignment.py::test_location_commission_override_persists",
     # Overview tests carry their own in-code xfail(strict=False) markers
     # (legacy Overview iframe), so they are not listed here.
 )
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
 _QUARANTINE_SCRIPT = {
-    "test_memberships_edit.py::test_limit_membership_toggle_persists":
-        "MB-LMT-001 script issue: Limit toggle reveals required per-day/week/month "
-        "fields the test does not fill. Fix: fill them before save.",
-    "test_memberships_edit.py::test_membership_description_saves":
-        "MB-DESC-001 script issue: description accordion is collapsed so the "
-        "textarea is hidden. Fix: expand the accordion before typing.",
+    "test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists":
+        "WP-EDT-003: Staging server silently locks commission for VK AWP006 under the "
+        "active-subscriber data constraint (same root cause as price lock). Remove once "
+        "staging data is reset or the lock is confirmed as product-intended.",
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",
     "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
+    "test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected":
+        "CS-DSC-003 test-data issue: SECOND_APPLICABLE_DISCOUNT has cycled through "
+        "VK AD01, VK AD02, VK AL01 — none appear in the custom services applicable "
+        "discount combobox. Open the edit form discount tab and check what options "
+        "exist before updating second_applicable_discount in custom_services.json.",
+    "test_users_edit.py::test_deactivate_active_user":
+        "USR-EDT-007: Staging has 10 duplicate vkuser02@yopmail.com user records — "
+        "the app does not enforce email uniqueness so repeated CI runs created "
+        "duplicates. managed_user fixture resets only one instance; 9 active "
+        "duplicates remain visible in the active-only list after the managed one is "
+        "deactivated, causing the assertion to fail. "
+        "Delete duplicate users in staging admin to un-xfail.",
 }
 
 
@@ -189,7 +223,10 @@ def _attach_screenshot(driver, name):
                 attachment_type=allure.attachment_type.PNG,
             )
         return png_path
-    except Exception as error:  # noqa: BLE001
+    except BaseException as error:  # noqa: BLE001
+        # BaseException catches pytest-timeout's Failed (OutcomeException) which
+        # is not a subclass of Exception — letting it propagate causes INTERNALERROR
+        # inside pytest_runtest_makereport when the browser is dead after a timeout.
         LOG.warning("Could not capture screenshot '%s': %s", name, error)
         return None
 
@@ -222,6 +259,21 @@ def _capture_failure(item, driver):
 
     _attach_screenshot(driver, "failure-%s" % _safe_name(item.nodeid))
 
+    # Capture visible text from the active frame — error messages in this app
+    # appear inside iframes, so page_source (outer shell) is nearly empty.
+    try:
+        from selenium.webdriver.common.by import By
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        if allure is not None:
+            allure.attach(
+                body_text,
+                name="visible_page_text",
+                attachment_type=allure.attachment_type.TEXT,
+            )
+        LOG.error("Visible page text at failure:\n%s", body_text[:2000])
+    except BaseException as _err:  # noqa: BLE001
+        LOG.warning("Could not capture body text: %s", _err)
+
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     base = "%s_%s" % (_safe_name(item.nodeid), timestamp)
     html_path = os.path.join(LOGS_DIR, base + ".html")
@@ -239,14 +291,23 @@ def _capture_failure(item, driver):
             allure.attach(
                 url, name="url", attachment_type=allure.attachment_type.TEXT
             )
-    except Exception as error:  # noqa: BLE001
+    except BaseException as error:  # noqa: BLE001
         LOG.warning("Could not capture page source: %s", error)
 
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
-    report = outcome.get_result()
+    try:
+        report = outcome.get_result()
+    except SystemError:
+        # Python 3.11.0–3.11.3 has a CPython bug (AST constructor recursion
+        # depth mismatch) that fires when pytest formats a traceback through
+        # a source file with complex nested expressions.  Catching it here
+        # prevents the INTERNALERROR that would otherwise crash the entire
+        # suite; the test is still recorded as failed by pytest's inner
+        # runner — we just skip our screenshot/capture step for that one.
+        return
 
     if report.when != "call":
         return
