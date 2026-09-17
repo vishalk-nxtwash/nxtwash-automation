@@ -157,7 +157,6 @@ def test_create_site_with_zero_tax_rates(logged_in_admin_browser):
 
 @allure.title("SL-CRT-016 Site count in page title increments after creating a new site")
 @pytest.mark.regression
-@pytest.mark.xfail(reason="Count stays cached in same sites_page object after creation; page needs re-navigation to reflect new count. Verify manually.", strict=False)
 def test_site_count_increments_after_create(logged_in_admin_browser):
     sites_page = open_sites_page(logged_in_admin_browser)
     initial_count = sites_page.get_site_count_from_title()
