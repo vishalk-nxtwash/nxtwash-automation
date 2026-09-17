@@ -1,5 +1,7 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -9,7 +11,8 @@ class GiftCardsPage(BasePage):
 
     LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/giftCards?')]"
+        "//iframe[contains(@src,'/services/giftCards')"
+        " and not(contains(@src,'/services/giftCards/'))]"
     )
     CREATE_FRAME = (
         By.XPATH,
@@ -22,11 +25,17 @@ class GiftCardsPage(BasePage):
     )
     CUSTOMER_LIST_FRAME = (
         By.XPATH,
-        "//iframe[contains(@src,'/services/customerGiftCards?')]"
+        "//iframe[contains(@src,'/services/customerGiftCards')"
+        " and not(contains(@src,'/services/customerGiftCards/'))]"
     )
     CUSTOMER_CREATE_FRAME = (
         By.XPATH,
         "//iframe[contains(@src,'/services/customerGiftCards/new')]"
+    )
+    CUSTOMER_EDIT_FRAME = (
+        By.XPATH,
+        "//iframe[contains(@src,'/services/customerGiftCards/') "
+        "and not(contains(@src,'/services/customerGiftCards/new'))]"
     )
 
     PAGE_TITLE = (By.XPATH, "//*[normalize-space()='Gift cards']")
@@ -36,10 +45,10 @@ class GiftCardsPage(BasePage):
     )
     SEARCH_INPUT = (By.NAME, "giftCardName")
     CUSTOMER_SEARCH_INPUT = (By.NAME, "giftCardNumber")
-    FILTER_BUTTON = (By.XPATH, "//button[normalize-space()='Filter by']")
+    FILTER_BUTTON = (By.XPATH, "//button[starts-with(normalize-space(), 'Filter by')]")
     DOWNLOAD_BUTTON = (
         By.XPATH,
-        "//button[normalize-space()='Filter by']/following-sibling::button[1]"
+        "//button[starts-with(normalize-space(), 'Filter by')]/following-sibling::button[1]"
     )
     ADD_GIFT_CARD_BUTTON = (
         By.XPATH,
@@ -62,6 +71,26 @@ class GiftCardsPage(BasePage):
         "//button[normalize-space()='Save customer gift card']"
     )
     CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
+
+    APPLY_FILTERS_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Apply filters']"
+    )
+    RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
+    FILTER_SITE_INPUT = (
+        By.XPATH,
+        "//*[normalize-space()='Select site']/following::input[1]"
+    )
+    ACTIVE_GIFT_CARD_FILTER_SWITCH = (
+        By.XPATH,
+        "//*[normalize-space()='Active gift card']"
+        "/following::*[@role='switch' or self::input][1]"
+    )
+    GIFT_CARD_GRID_ROWS = (
+        By.XPATH,
+        "//*[contains(@class,'InovuaReactDataGrid__row') "
+        "and .//*[@data-props-id='giftCardName']]"
+    )
 
     GIFT_CARD_NAME_INPUT = (By.NAME, "giftCardName")
     GIFT_CARD_AMOUNT_INPUT = (By.NAME, "giftCardAmount")
@@ -102,19 +131,23 @@ class GiftCardsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Gift Cards list is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+        # Wait for the grid column headers — the inovua grid initialises
+        # asynchronously; in headless mode the header can lag behind the add
+        # button, causing body-text assertions to see an empty page.
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//*[normalize-space()='Gift card name']")
+            )
+        )
+
+    wait_for_loaded = wait_for_list_loaded
 
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CREATE_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CREATE_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
         )
@@ -122,20 +155,31 @@ class GiftCardsPage(BasePage):
 
     def wait_for_edit_loaded(self):
         """Wait until the edit gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.EDIT_FRAME))
+        self.switch_to_frame_with_retry(self.EDIT_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
         )
         self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
         self.wait.until(lambda driver: self.get_gift_card_name_value() != "")
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.GIFT_CARD_AMOUNT_INPUT
+            ).get_attribute("value") != ""
+        )
+        # Wait for the assign-to grid to finish its async render before filling
+        # the form — the grid's data load triggers a React re-render that can
+        # reset controlled inputs (amount, landing page code) to their server
+        # values if we type into them before the grid settles.
+        self.wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR,
+                 ".service-sites-table .InovuaReactDataGrid__row")
+            )
+        )
 
     def wait_for_customer_list_loaded(self):
         """Wait until the Customer Gift Cards list is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(self.CUSTOMER_LIST_FRAME)
-        )
+        self.switch_to_frame_with_retry(self.CUSTOMER_LIST_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(self.CUSTOMER_PAGE_TITLE)
         )
@@ -145,12 +189,7 @@ class GiftCardsPage(BasePage):
 
     def wait_for_customer_create_loaded(self):
         """Wait until the create customer gift card form is visible."""
-        self.driver.switch_to.default_content()
-        self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(
-                self.CUSTOMER_CREATE_FRAME
-            )
-        )
+        self.switch_to_frame_with_retry(self.CUSTOMER_CREATE_FRAME)
         self.wait.until(
             EC.visibility_of_element_located(
                 self.CUSTOMER_GIFT_CARD_NUMBER_INPUT
@@ -184,19 +223,26 @@ class GiftCardsPage(BasePage):
 
     def search_gift_card(self, gift_card_name):
         """Search gift card by name."""
-        element = self.wait.until(
-            EC.visibility_of_element_located(self.SEARCH_INPUT)
+        self.enter_text(self.SEARCH_INPUT, gift_card_name)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == gift_card_name
         )
-        element.clear()
-        element.send_keys(gift_card_name)
+
+    def clear_gift_card_search(self):
+        """Clear the gift card search input."""
+        element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(Keys.BACKSPACE)
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
+        )
 
     def search_customer_gift_card(self, gift_card_number):
         """Search customer gift card by number."""
-        element = self.wait.until(
-            EC.visibility_of_element_located(self.CUSTOMER_SEARCH_INPUT)
+        self.enter_text(self.CUSTOMER_SEARCH_INPUT, gift_card_number)
+        self.wait.until(
+            lambda d: d.find_element(*self.CUSTOMER_SEARCH_INPUT).get_attribute("value") == gift_card_number
         )
-        element.clear()
-        element.send_keys(gift_card_number)
 
     def gift_card_exists(self, gift_card_name):
         """Return whether a gift card exists in the list."""
@@ -303,7 +349,9 @@ class GiftCardsPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        # The inovua load-mask briefly covers the grid while data loads; JS
+        # click bypasses the overlay so we don't need a separate mask wait.
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def get_gift_card_name_value(self):
@@ -339,7 +387,24 @@ class GiftCardsPage(BasePage):
 
     def enter_gift_card_amount(self, amount):
         """Enter gift card amount."""
-        self.enter_text(self.GIFT_CARD_AMOUNT_INPUT, str(amount))
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
+        )
+        # Ctrl+A is readline "go to line start" on macOS, not select-all.
+        # Use JS native setter so the field is cleared cross-platform.
+        self.driver.execute_script(
+            """
+            var input = arguments[0]; var value = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', {bubbles: true}));
+            input.dispatchEvent(new Event('change', {bubbles: true}));
+            """,
+            element,
+            str(amount),
+        )
 
     def enter_landing_page_code(self, landing_page_code):
         """Enter landing page code."""
@@ -378,6 +443,23 @@ class GiftCardsPage(BasePage):
                 )
             )
         )
+
+    def select_discount_in_gift_card_form(self, discount_name):
+        """Select a discount in the GC create/edit form."""
+        self.select_option_by_label("Select discount", discount_name)
+
+    def get_selected_discount_in_gift_card_form(self):
+        """Return the currently selected discount name, or empty string if none."""
+        try:
+            el = self.driver.find_element(
+                By.XPATH,
+                "//*[normalize-space()='Select discount']"
+                "/ancestor::*[contains(@class,'form-select__wrapper')][1]"
+                "//*[contains(@class,'form-select__single-value')]",
+            )
+            return el.text.strip()
+        except Exception:
+            return ""
 
     def select_customer_gift_card_site(self, site_name):
         """Select site on customer gift card form."""
@@ -426,12 +508,14 @@ class GiftCardsPage(BasePage):
 
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
-        switch = self.wait.until(EC.element_to_be_clickable(locator))
+        switch = self.wait.until(EC.presence_of_element_located(locator))
 
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
+            # JS click bypasses the settings-page__form-column overlay that
+            # intercepts regular clicks when the assignment grid is tall.
+            self.driver.execute_script("arguments[0].click();", switch)
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                lambda driver: driver.find_element(*locator).get_attribute("aria-checked") == "true"
             )
 
     def enable_all_main_toggles(self):
@@ -463,17 +547,44 @@ class GiftCardsPage(BasePage):
         )
 
     def get_location_row(self, location_name):
-        """Return the location assignment row."""
-        return self.wait.until(
-            EC.visibility_of_element_located(
-                (
-                    By.XPATH,
-                    "//*[normalize-space()='%s']"
-                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
-                    % location_name
-                )
+        """Return the location assignment row, scrolling the virtual grid as needed.
+
+        InovuaReactDataGrid uses virtual scrolling — only rows near the current
+        viewport are rendered in the DOM.  Scroll the grid's own scroller element
+        (data-name="scroller" inside .service-sites-table) 300 px per poll until
+        the target row becomes visible.
+        """
+        scroller = self.wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, ".service-sites-table [data-name='scroller']")
             )
         )
+        row_locator = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            % location_name
+        )
+
+        # Reset to top before each search so upward re-renders (after location
+        # assignment or main-toggle enable) don't leave the target row above the
+        # viewport with a downward-only scroll loop.
+        self.driver.execute_script("arguments[0].scrollTop = 0;", scroller)
+
+        def _find_or_scroll(driver):
+            rows = driver.find_elements(*row_locator)
+            if rows and rows[0].is_displayed():
+                # Scroll the row to the top of the grid viewport so it clears
+                # the settings-page__form-column overlay at the bottom edge.
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'start'});", rows[0]
+                )
+                refreshed = driver.find_elements(*row_locator)
+                return refreshed[0] if refreshed and refreshed[0].is_displayed() else False
+            driver.execute_script("arguments[0].scrollTop += 300;", scroller)
+            return False
+
+        return self.wait.until(_find_or_scroll)
 
     def assign_location(self, location_name):
         """Assign a gift card to one location."""
@@ -484,8 +595,21 @@ class GiftCardsPage(BasePage):
         )
 
         if not self._checkbox_is_checked(checkbox):
-            checkbox.click()
-            self.wait.until(lambda driver: self._checkbox_is_checked(checkbox))
+            # JS click bypasses the staging toast banner that intercepts native
+            # coordinate-based clicks inside the cross-origin iframe.
+            self.driver.execute_script("arguments[0].click();", checkbox)
+            # Wait via a fresh locator — virtual grid re-renders the row after
+            # the click, making the original stale-element wait unreliable.
+            self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+                    "//*[contains(@class,'inovua-react-toolkit-checkbox--checked')"
+                    " and not(contains(@class,'inovua-react-toolkit-checkbox--unchecked'))]"
+                    % location_name
+                ))
+            )
 
     def location_is_assigned(self, location_name):
         """Return whether a location is assigned."""
@@ -503,9 +627,17 @@ class GiftCardsPage(BasePage):
         switch = row.find_element(By.XPATH, "(.//button[@role='switch'])[last()]")
 
         if switch.get_attribute("aria-checked") != "true":
-            switch.click()
+            # JS click bypasses coordinate-based banner interception inside the iframe.
+            self.driver.execute_script("arguments[0].click();", switch)
+            # Wait via a fresh locator to avoid stale reference after re-render.
             self.wait.until(
-                lambda driver: switch.get_attribute("aria-checked") == "true"
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "(//*[normalize-space()='%s']"
+                    "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+                    "//button[@role='switch'])[last()][@aria-checked='true']"
+                    % location_name
+                ))
             )
 
     def location_show_on_cp_is_on(self, location_name):
@@ -530,14 +662,32 @@ class GiftCardsPage(BasePage):
     ):
         """Fill gift card form with requested settings."""
         self.enter_gift_card_name(gift_card_name)
-        self.enter_gift_card_amount(amount)
         self.enter_landing_page_code(landing_page_code)
+        # Assign location checkboxes BEFORE enabling main toggles: toggling the
+        # main switches causes a form reflow that pushes grid rows behind the
+        # settings-page__form-column overlay, making checkbox clicks unclickable.
+        for location_name in location_names:
+            self.assign_location(location_name)
         self.enable_all_main_toggles()
-        self.assign_all_locations_and_show_on_cp(location_names)
+        # Per-location Show on CP is not set here: the API does not persist the
+        # per-location switch value (see GC-PER-002 / GC-CRT-011 xfail).
+        # Tests that specifically cover that feature call enable_location_show_on_cp
+        # directly after open_create_gift_card().
+        # Enter amount last — toggle/checkbox interactions trigger React
+        # re-renders that reset the amount field to its server value if set earlier.
+        self.enter_gift_card_amount(amount)
 
     def click_save_gift_card(self):
         """Click save gift card."""
-        self.click(self.SAVE_GIFT_CARD_BUTTON)
+        from selenium.webdriver.support.ui import WebDriverWait
+        button = self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+        # JS click bypasses ChromeDriver coordinate-based toast interception
+        # (staging banner overlays the iframe at the save-button coordinates).
+        self.driver.execute_script("arguments[0].click();", button)
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(button))
+        except TimeoutException:
+            pass
 
     def click_save_customer_gift_card(self):
         """Click save customer gift card."""
@@ -563,7 +713,24 @@ class GiftCardsPage(BasePage):
             location_names
         )
         self.click_save_gift_card()
-        self.wait_for_list_loaded()
+        # After saving, the outer SPA sometimes redirects to /new instead of
+        # the list (same quirk as edit); use the same fallback as edit save.
+        self.wait_for_list_after_edit_save()
+
+    def wait_for_list_after_edit_save(self):
+        """Wait for the gift card list after an edit save.
+
+        Saving an inactive card can redirect the outer SPA to /new instead of
+        the list; falls back to an explicit full-page navigation when that happens.
+        """
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            from urllib.parse import urlparse
+            self.driver.switch_to.default_content()
+            parsed = urlparse(self.driver.current_url)
+            self.driver.get(f"{parsed.scheme}://{parsed.netloc}/services/giftCards")
+            self.wait_for_list_loaded()
 
     def update_gift_card_settings(
         self,
@@ -581,13 +748,7 @@ class GiftCardsPage(BasePage):
             location_names
         )
         self.click_save_gift_card()
-
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            self.wait_for_edit_loaded()
-            self.click_cancel()
-            self.wait_for_list_loaded()
+        self.wait_for_list_after_edit_save()
 
     def fill_customer_gift_card_form(
         self,
@@ -619,4 +780,338 @@ class GiftCardsPage(BasePage):
             amount
         )
         self.click_save_customer_gift_card()
+        try:
+            self.wait_for_customer_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Customer gift card save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
+
+    def ensure_switch_off(self, locator):
+        """Turn a switch off if needed."""
+        switch = self.wait.until(EC.presence_of_element_located(locator))
+
+        if switch.get_attribute("aria-checked") != "false":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: driver.find_element(*locator).get_attribute("aria-checked") == "false"
+            )
+
+    def gift_card_amount_input_is_valid(self):
+        """Return native validity state for gift card amount."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_gift_card_amount_validation_message(self):
+        """Return native validation message for gift card amount."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def customer_gift_card_amount_input_is_valid(self):
+        """Return native validity state for customer gift card amount."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_AMOUNT_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].checkValidity();",
+            element
+        )
+
+    def get_customer_gift_card_amount_validation_message(self):
+        """Return native validation message for customer gift card amount."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_AMOUNT_INPUT)
+        )
+        return self.driver.execute_script(
+            "return arguments[0].validationMessage;",
+            element
+        )
+
+    def search_input_is_visible(self):
+        """Return whether gift card search input is visible."""
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.SEARCH_INPUT))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
+
+    def filter_button_is_clickable(self):
+        """Return whether the Filter by button is clickable."""
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
+
+    def add_gift_card_button_is_clickable(self):
+        """Return whether the Add new gift card button is clickable."""
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
+
+    def customer_search_input_is_visible(self):
+        """Return whether customer gift card search input is visible."""
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.CUSTOMER_SEARCH_INPUT))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
+
+    def add_customer_gift_card_button_is_clickable(self):
+        """Return whether the Add customer gift card button is clickable."""
+        try:
+            self.wait.until(EC.element_to_be_clickable(self.ADD_CUSTOMER_GIFT_CARD_BUTTON))
+            return True
+        except (TimeoutException, StaleElementReferenceException):
+            return False
+
+    def open_filter_panel(self):
+        """Open the gift card filter panel if not already open."""
+        # Use the Apply filters button as the open-state indicator: FILTER_SITE_INPUT
+        # relies on the "Select site" placeholder which is absent when a site is already
+        # selected, so checking it here would always fail after a prior filter.
+        try:
+            apply_visible = [
+                el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                if el.is_displayed()
+            ]
+        except StaleElementReferenceException:
+            apply_visible = []
+        if apply_visible:
+            return
+
+        button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+        self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
+
+    def select_site_filter(self, site_name):
+        """Open filter panel and select a site."""
+        self.open_filter_panel()
+        self.click(self.FILTER_SITE_INPUT)
+        option = self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//*[normalize-space()='%s']" % site_name)
+            )
+        )
+        self.driver.execute_script("arguments[0].click();", option)
+
+    def set_active_gift_card_filter(self, on):
+        """Set the Active gift card filter switch to the desired state."""
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_GIFT_CARD_FILTER_SWITCH)
+        )
+        is_on = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.get_attribute("checked") == "true"
+        )
+        if is_on != on:
+            self.driver.execute_script("arguments[0].click();", switch)
+            desired = "true" if on else "false"
+            self.wait.until(
+                lambda d: d.find_element(
+                    *self.ACTIVE_GIFT_CARD_FILTER_SWITCH
+                ).get_attribute("aria-checked") == desired
+            )
+
+    def toggle_active_filter(self):
+        """Enable the Active gift card filter to show only active gift cards.
+
+        The list shows active cards by default so the switch may already be ON
+        when the panel opens; this method ensures it is ON rather than blindly
+        toggling (which would flip it to inactive-only mode).
+        """
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_GIFT_CARD_FILTER_SWITCH)
+        )
+        is_on = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.get_attribute("checked") == "true"
+        )
+        if is_on:
+            return
+        self.driver.execute_script("arguments[0].click();", switch)
+        self.wait.until(
+            lambda d: (
+                d.find_element(*self.ACTIVE_GIFT_CARD_FILTER_SWITCH).get_attribute("aria-checked") == "true"
+                or d.find_element(*self.ACTIVE_GIFT_CARD_FILTER_SWITCH).get_attribute("checked") == "true"
+            )
+        )
+
+    def apply_filters(self):
+        """Click Apply filters and wait for the grid to refresh.
+
+        Waits for either the gift card or customer gift card add button so this
+        method works from both the gift card list and the customer gift card list.
+        """
+        button = self.wait.until(
+            EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
+        )
+        self.driver.execute_script("arguments[0].click();", button)
+        self.wait.until(
+            lambda driver: any(
+                el.is_displayed()
+                for locator in (
+                    self.ADD_GIFT_CARD_BUTTON,
+                    self.ADD_CUSTOMER_GIFT_CARD_BUTTON,
+                )
+                for el in driver.find_elements(*locator)
+            )
+        )
+
+    def reset_all_filters(self):
+        """Click Reset all inside the open filter panel, then resync to the list.
+
+        Fast-returns when the filter button shows no active filter count — avoids
+        opening the panel unnecessarily and keeps the common (no-filter) path cheap.
+        Reset All may reload the legacy iframe, so we exit to default_content and
+        re-enter via wait_for_list_loaded to avoid stale context.
+        """
+        filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
+        try:
+            filter_active = any(
+                "(" in (btn.text or "")
+                for btn in filter_buttons
+                if btn.is_displayed()
+            )
+        except StaleElementReferenceException:
+            filter_active = True
+        if not filter_active:
+            return
+
+        self.open_filter_panel()
+        buttons = self.driver.find_elements(*self.RESET_ALL_BUTTON)
+        if buttons:
+            self.driver.execute_script("arguments[0].click();", buttons[0])
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            from urllib.parse import urlparse
+            self.driver.switch_to.default_content()
+            parsed = urlparse(self.driver.current_url)
+            self.driver.get(
+                "%s://%s/services/giftCards" % (parsed.scheme, parsed.netloc)
+            )
+            self.wait_for_list_loaded()
+
+        # Close the filter panel if Reset All left it open — the panel div
+        # (settings-page__form-column) overlays the main content and would
+        # intercept clicks on the search input in subsequent operations.
+        try:
+            apply_open = [
+                el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                if el.is_displayed()
+            ]
+        except StaleElementReferenceException:
+            apply_open = []
+        if apply_open:
+            btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", btn)
+            def _apply_panel_closed(driver):
+                try:
+                    return not any(
+                        el.is_displayed()
+                        for el in driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+                    )
+                except StaleElementReferenceException:
+                    return False
+            self.wait.until(_apply_panel_closed)
+
+    def get_visible_gift_card_row_count(self):
+        """Return count of visible gift card rows in the grid."""
+        try:
+            return len([
+                row for row in self.driver.find_elements(*self.GIFT_CARD_GRID_ROWS)
+                if row.is_displayed()
+            ])
+        except StaleElementReferenceException:
+            return 0
+
+    def wait_for_customer_edit_loaded(self):
+        """Wait until the customer gift card edit form is visible."""
+        self.switch_to_frame_with_retry(self.CUSTOMER_EDIT_FRAME)
+        self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_NUMBER_INPUT)
+        )
+        self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_GIFT_CARD_BUTTON))
+        self.wait.until(lambda driver: self.get_customer_gift_card_number_value() != "")
+
+    def get_customer_gift_card_number_value(self):
+        """Return current customer gift card number input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_NUMBER_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def get_customer_gift_card_amount_value(self):
+        """Return current customer gift card amount input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.CUSTOMER_GIFT_CARD_AMOUNT_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def open_edit_customer_gift_card(self, gift_card_number):
+        """Open the edit form for a customer gift card."""
         self.wait_for_customer_list_loaded()
+        self.search_customer_gift_card(gift_card_number)
+        self.wait_for_customer_gift_card_row(gift_card_number)
+        # Build an absolute XPath so we never go through a potentially-stale
+        # row WebElement — the Inovua virtual grid re-renders rows after search,
+        # making child-element references unreliable.
+        edit_link_locator = (
+            By.XPATH,
+            "//*[@data-props-id='giftCardNumber']"
+            "[.//span[normalize-space()='%s']]"
+            "/ancestor::*[contains(@class,'InovuaReactDataGrid__row')][1]"
+            "//*[normalize-space()='Edit']/ancestor::a[1]" % gift_card_number
+        )
+        edit_link = self.wait.until(EC.element_to_be_clickable(edit_link_locator))
+        self.driver.execute_script("arguments[0].click();", edit_link)
+        self.wait_for_customer_edit_loaded()
+
+    def gift_card_option_exists_in_dropdown(self, gift_card_name):
+        """Return whether a gift card name appears in the Select gift card dropdown."""
+        select_input = self.get_select_input_by_label("Select gift card")
+        select_input.click()
+        select_input.send_keys(gift_card_name)
+
+        try:
+            from selenium.webdriver.support.ui import WebDriverWait
+            option = WebDriverWait(self.driver, 10).until(
+                lambda d: self._find_react_option(gift_card_name)
+            )
+            return option is not None
+        except TimeoutException:
+            return False
+
+    def get_landing_page_code_value(self):
+        """Return the current landing page code input value."""
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.LANDING_PAGE_CODE_INPUT)
+        )
+        return element.get_attribute("value")
+
+    def _dismiss_page_banner(self):
+        """Remove Toastify dev-environment banner that can intercept button clicks."""
+        self.driver.execute_script(
+            "document.querySelectorAll('.Toastify__toast').forEach(e => e.remove());"
+        )
+
+    def click_download_button(self):
+        """Click the export/download button using JS to bypass overlay banners."""
+        self._dismiss_page_banner()
+        element = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
+        self.driver.execute_script("arguments[0].click();", element)
