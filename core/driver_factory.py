@@ -1,14 +1,8 @@
 import os
-import socket
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
-# Set a 60-second default socket timeout so ChromeDriver HTTP requests don't
-# block indefinitely when Chrome freezes.  Without this, a frozen Chrome
-# prevents both thread-based and signal-based pytest timeouts from firing.
-socket.setdefaulttimeout(60)
 
 # Pinned path for the ChromeDriver binary that matches Chrome 151.0.7922.76.
 # WDM auto-detection fetches the closest cached minor build which doesn't
