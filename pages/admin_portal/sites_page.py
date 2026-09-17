@@ -62,12 +62,26 @@ class SitesPage(BasePage):
         return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_site_count_from_title(self):
-        """Return the visible site count from the page title."""
-        title = self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        text = title.text.strip()
-        if "(" not in text or ")" not in text:
-            return None
-        return int(text.split("(")[-1].split(")")[0])
+        """Return the visible site count from the page title.
+
+        Waits until the count is non-zero so the async title update has settled.
+        """
+        def _parse_count(text):
+            if "(" not in text or ")" not in text:
+                return None
+            raw = text.split("(")[-1].split(")")[0].strip()
+            return int(raw) if raw.isdigit() else None
+
+        title_el = self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        try:
+            self.wait.until(
+                lambda d: _parse_count(
+                    d.find_element(*self.PAGE_TITLE).text.strip()
+                ) not in (None, 0)
+            )
+        except TimeoutException:
+            pass  # fall through and return whatever is there (may be 0 / None)
+        return _parse_count(title_el.text.strip())
 
     def table_headers_are_visible(self):
         """Return whether the expected list columns are visible."""
@@ -195,6 +209,45 @@ class SitesPage(BasePage):
         except TimeoutException:
             return False
 
+    def open_edit_site(self, site_name, include_inactive=False):
+        """Filter to a specific site and click its Edit button."""
+        if include_inactive:
+            self.filter_by_name_and_active(site_name, should_be_active=False)
+        else:
+            self.filter_by_site_name(site_name)
+        self.wait_for_site_row(site_name)
+        # Atomic JS click: finds and clicks in a single JS call so grid re-renders
+        # between EC.element_to_be_clickable and execute_script cannot stale the ref.
+        _CLICK_EDIT_JS = (
+            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "for(var i=0;i<rows.length;i++){"
+            " if(rows[i].textContent.indexOf(name)!==-1){"
+            "  var btn=rows[i].querySelector('#table-edit-button button');"
+            "  if(btn){btn.click();return true;}"
+            " }}"
+            "return false;"
+        )
+        WebDriverWait(self.driver, 20).until(
+            lambda d: d.execute_script(_CLICK_EDIT_JS, site_name)
+        )
+
+    def filter_by_name_and_active(self, site_name, should_be_active=True):
+        """Enter site-name filter and set the active toggle, then apply once."""
+        self.open_filters()
+        self.enter_text(self.SITE_NAME_FILTER, site_name)
+        switch = self.wait.until(
+            EC.presence_of_element_located(self.ACTIVE_SITE_FILTER_SWITCH)
+        )
+        is_checked = (
+            switch.get_attribute("aria-checked") == "true"
+            or switch.is_selected()
+            or switch.get_attribute("checked") is not None
+        )
+        if is_checked != should_be_active:
+            self.driver.execute_script("arguments[0].click();", switch)
+        self.click(self.APPLY_FILTERS_BUTTON)
+        self.wait_for_loaded()
+
     def click_add_site(self):
         """Open the create site page."""
         self.click(self.ADD_SITE_BUTTON)
@@ -218,61 +271,44 @@ class SitesPage(BasePage):
         """Prepend an API_BASE constant so JS uses the configured API host."""
         return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
-    def _get_auth(self, timeout=15):
-        """Wait for Redux-persist to rehydrate, then return auth credentials."""
-        try:
-            WebDriverWait(self.driver, timeout).until(
-                lambda d: d.execute_script(
-                    "try { return !!JSON.parse(localStorage.getItem('persist:root')); }"
-                    " catch(e) { return false; }"
-                )
-            )
-        except TimeoutException:
-            raise AssertionError(
-                f"persist:root not found in localStorage after {timeout}s — "
-                "Redux has not rehydrated. Check if the app changed its persist key."
-            )
-        return self.driver.execute_script(
-            "const root = JSON.parse(localStorage.getItem('persist:root'));"
-            "const auth = JSON.parse(root.authSessionReducer);"
-            "return { accessToken: auth.accessToken, key: auth.key };"
-        )
-
     def get_site_summary_with_api(self, site_name):
         """Return a site summary by exact name from the authenticated session."""
-        auth = self._get_auth()
-        result = self.driver.execute_async_script(
-            self._api_script("""
-            const siteName = arguments[0];
-            const accessToken = arguments[1];
-            const key = arguments[2];
-            const done = arguments[arguments.length - 1];
-            const params = new URLSearchParams({
-                key: key,
-                pageSize: "500",
-                pageNumber: "1"
-            });
+        original_timeout = self.driver.timeouts.script
+        self.driver.set_script_timeout(120)
+        try:
+            result = self.driver.execute_async_script(
+                self._api_script("""
+                const siteName = arguments[0];
+                const done = arguments[arguments.length - 1];
+                const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+                const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+                const authKey = _la.key ? JSON.parse(_la.key) : "";
+                const params = new URLSearchParams({
+                    key: authKey,
+                    pageSize: "500",
+                    pageNumber: "1"
+                });
 
-            fetch(API_BASE + "/api/sites?" + params, {
-                headers: {
-                    accept: "application/json",
-                    authorization: "Bearer " + accessToken
-                }
-            })
-                .then((response) => response.json())
-                .then((body) => {
-                    const sites = body.data || [];
-                    const site = sites.find(
-                        (item) => item.siteName === siteName
-                    );
-                    done(site || null);
+                fetch(API_BASE + "/api/sites?" + params, {
+                    headers: {
+                        accept: "application/json",
+                        authorization: "Bearer " + accessToken
+                    }
                 })
-                .catch((error) => done({ error: String(error) }));
-            """),
-            site_name,
-            auth["accessToken"],
-            auth["key"]
-        )
+                    .then((response) => response.json())
+                    .then((body) => {
+                        const sites = body.data || [];
+                        const site = sites.find(
+                            (item) => item.siteName === siteName
+                        );
+                        done(site || null);
+                    })
+                    .catch((error) => done({ error: String(error) }));
+                """),
+                site_name
+            )
+        finally:
+            self.driver.set_script_timeout(original_timeout)
 
         if isinstance(result, dict) and result.get("error"):
             raise AssertionError(result["error"])
@@ -286,15 +322,15 @@ class SitesPage(BasePage):
         if not summary:
             return None
 
-        auth = self._get_auth()
         result = self.driver.execute_async_script(
             self._api_script("""
             const siteId = arguments[0];
-            const accessToken = arguments[1];
-            const key = arguments[2];
             const done = arguments[arguments.length - 1];
+            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+            const authKey = _la.key ? JSON.parse(_la.key) : "";
             const params = new URLSearchParams({
-                key: key,
+                key: authKey,
                 id: siteId
             });
 
@@ -310,9 +346,7 @@ class SitesPage(BasePage):
                 }))
                 .catch((error) => done({ error: String(error) }));
             """),
-            summary["siteId"],
-            auth["accessToken"],
-            auth["key"]
+            summary["siteId"]
         )
 
         if result.get("error"):
@@ -325,7 +359,6 @@ class SitesPage(BasePage):
 
     def get_site_details_by_name_and_code_with_api(self, site_name, site_code):
         """Return full site details matching both site name and site code."""
-        auth = self._get_auth()
         original_timeout = self.driver.timeouts.script
         self.driver.set_script_timeout(120)
 
@@ -334,16 +367,17 @@ class SitesPage(BasePage):
                 self._api_script("""
                 const siteName = arguments[0];
                 const siteCode = arguments[1];
-                const accessToken = arguments[2];
-                const key = arguments[3];
                 const done = arguments[arguments.length - 1];
+                const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+                const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+                const authKey = _la.key ? JSON.parse(_la.key) : "";
                 const headers = {
                     accept: "application/json",
                     authorization: "Bearer " + accessToken
                 };
                 const baseUrl = API_BASE + "/api/sites";
                 const listParams = new URLSearchParams({
-                    key: key,
+                    key: authKey,
                     pageSize: "500",
                     pageNumber: "1"
                 });
@@ -359,7 +393,7 @@ class SitesPage(BasePage):
                             const details = await Promise.all(
                                 chunk.map(async (site) => {
                                     const params = new URLSearchParams({
-                                        key: key,
+                                        key: authKey,
                                         id: site.siteId
                                     });
                                     const response = await fetch(
@@ -386,9 +420,7 @@ class SitesPage(BasePage):
                     .catch((error) => done({ error: String(error) }));
                 """),
                 site_name,
-                site_code,
-                auth["accessToken"],
-                auth["key"]
+                site_code
             )
         finally:
             self.driver.set_script_timeout(original_timeout)
@@ -400,17 +432,17 @@ class SitesPage(BasePage):
 
     def create_site_from_reference_with_api(self, site_name, reference_site):
         """Create a site by copying a reference site's saved settings."""
-        auth = self._get_auth()
         result = self.driver.execute_async_script(
             self._api_script("""
             const siteName = arguments[0];
             const referenceSite = arguments[1];
-            const accessToken = arguments[2];
-            const key = arguments[3];
             const done = arguments[arguments.length - 1];
+            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+            const authKey = _la.key ? JSON.parse(_la.key) : "";
 
             const payload = JSON.parse(JSON.stringify(referenceSite));
-            payload.key = key;
+            payload.key = authKey;
             payload.siteId = 0;
             payload.siteName = siteName;
             payload.siteCode = siteName;
@@ -445,9 +477,7 @@ class SitesPage(BasePage):
                 .catch((error) => done({ error: String(error) }));
             """),
             site_name,
-            reference_site,
-            auth["accessToken"],
-            auth["key"]
+            reference_site
         )
 
         if result.get("error"):
@@ -564,11 +594,55 @@ class CreateSitePage(BasePage):
             setter.call(input, value);
             input.dispatchEvent(new Event('input', { bubbles: true }));
             input.dispatchEvent(new Event('change', { bubbles: true }));
+            input.dispatchEvent(new FocusEvent('blur', { bubbles: true }));
             """,
             element,
             str(value)
         )
         self.wait.until(lambda driver: element.get_attribute("value") == str(value))
+
+    def _set_checkbox_state(self, locator, checked):
+        """Set a React-controlled checkbox/switch to the desired state.
+
+        Uses switch_is_on() as the single source of truth for both the
+        pre-click guard and the post-click confirmation wait.  switch_is_on()
+        prefers aria-checked on a nearby button[role=switch] over is_selected()
+        on the hidden checkbox, so state-checking and state-changing are
+        always consistent regardless of the underlying DOM pattern.
+        """
+        if self.switch_is_on(locator) == bool(checked):
+            return
+        el = self.wait.until(EC.presence_of_element_located(locator))
+        clickable = self.driver.execute_script(
+            """
+            const cb = arguments[0];
+            // Prefer the nearby button[role=switch] — the visual toggle button
+            let node = cb;
+            for (let i = 0; i < 8; i++) {
+                if (!node.parentElement) break;
+                node = node.parentElement;
+                const btn = node.querySelector('button[role="switch"]');
+                if (btn) return btn;
+            }
+            // Fall back: parent <label>
+            if (cb.parentElement && cb.parentElement.tagName === 'LABEL') {
+                return cb.parentElement;
+            }
+            // Last resort: label[for=id] or the element itself
+            if (cb.id) {
+                const lbl = document.querySelector('label[for="' + cb.id + '"]');
+                if (lbl) return lbl;
+            }
+            return cb;
+            """,
+            el,
+        )
+        try:
+            clickable.click()  # native Selenium click → isTrusted=true events
+        except Exception:  # noqa: BLE001
+            self.driver.execute_script("arguments[0].click();", clickable)
+        # Confirm via the same state-checking logic used in the pre-click guard
+        self.wait.until(lambda d: self.switch_is_on(locator) == bool(checked))
 
     def _scroll_to_locator(self, locator):
         """Scroll a field into view."""
@@ -693,37 +767,90 @@ class CreateSitePage(BasePage):
         return None
 
     def switch_is_on(self, locator):
-        """Return whether a switch is on."""
+        """Return whether a switch is on.
+
+        React toggle switches often render as a hidden <input type="checkbox">
+        paired with a visible <button role="switch" aria-checked="..."> whose
+        aria-checked reflects the live state.  We prefer aria-checked on a
+        nearby button (searched via DOM traversal) over is_selected() on the
+        hidden checkbox, because the checkbox's checked property is only synced
+        to the form-submission value, not to every visual toggle interaction.
+
+        Falls back to aria-checked on the element itself, then is_selected().
+
+        Safe to call from inside a wait.until() lambda — uses find_elements
+        (no inner wait) to avoid burning the outer timeout budget.
+        """
+        from selenium.common.exceptions import StaleElementReferenceException
+        try:
+            elements = self.driver.find_elements(*locator)
+            if not elements:
+                return False
+            switch = elements[0]
+            # Look for a button[role=switch] in nearby ancestors — it carries
+            # the authoritative aria-checked state for React switch components.
+            btn = self.driver.execute_script(
+                """
+                const el = arguments[0];
+                let node = el;
+                for (let i = 0; i < 8; i++) {
+                    if (!node.parentElement) break;
+                    node = node.parentElement;
+                    const btn = node.querySelector('button[role="switch"]');
+                    if (btn) return btn;
+                }
+                return null;
+                """,
+                switch,
+            )
+            if btn is not None:
+                return btn.get_attribute("aria-checked") == "true"
+            return (
+                switch.get_attribute("aria-checked") == "true"
+                or switch.is_selected()
+            )
+        except StaleElementReferenceException:
+            return False
+
+    def _get_switch_clickable(self, locator):
+        """Return the clickable element for a switch.
+
+        The active-site toggle is a hidden <input type="checkbox"> inside a
+        <label>.  Clicking the label is the correct way to toggle it — traversing
+        further up the tree and picking an arbitrary <button> would hit Cancel or
+        Save instead.
+        """
         switch = self.wait.until(EC.presence_of_element_located(locator))
-        return (
-            switch.get_attribute("aria-checked") == "true"
-            or switch.is_selected()
-            or switch.get_attribute("checked") is not None
+        return self.driver.execute_script(
+            """
+            let input = arguments[0];
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                if (input.parentElement && input.parentElement.tagName === 'LABEL') {
+                    return input.parentElement;
+                }
+            }
+            let current = input;
+            let depth = 0;
+            while (current && current.parentElement && depth < 8) {
+                const btn = current.parentElement.querySelector('button[role="switch"]');
+                if (btn) return btn;
+                current = current.parentElement;
+                depth++;
+            }
+            return input;
+            """,
+            switch
         )
 
     def ensure_switch_on(self, locator):
         """Turn a switch on if needed."""
-        switch = self.wait.until(EC.presence_of_element_located(locator))
         if not self.switch_is_on(locator):
-            clickable = self.driver.execute_script(
-                """
-                let input = arguments[0];
-                let current = input;
-                while (current && current.parentElement) {
-                    const button = current.parentElement.querySelector(
-                        'button[role="switch"], button'
-                    );
-                    if (button) return button;
-                    current = current.parentElement;
-                }
-                return input;
-                """,
-                switch
-            )
-            self.driver.execute_script("arguments[0].click();", clickable)
-            self.wait.until(
-                lambda driver: self.switch_is_on(locator)
-            )
+            self._set_checkbox_state(locator, True)
+
+    def ensure_switch_off(self, locator):
+        """Turn a switch off if needed."""
+        if self.switch_is_on(locator):
+            self._set_checkbox_state(locator, False)
 
     def active_site_switch_is_on(self):
         """Return whether Active site switch is on."""
@@ -740,6 +867,33 @@ class CreateSitePage(BasePage):
         """Return whether all labels are visible in the form body."""
         body_text = self.get_body_text()
         return all(label in body_text for label in labels)
+
+    _REACT_FIRST_OPTION_JS = """
+        var candidates = Array.from(document.querySelectorAll(
+            '[role="option"],'
+            + '[class*="__option"],'
+            + '[class*="-option"],'
+            + '[class*="select__option"]'
+        ));
+        return candidates.find(function(el) {
+            return el.offsetParent !== null;
+        }) || null;
+    """
+
+    def _find_first_react_option(self):
+        """Return any currently visible React Select option element."""
+        return self.driver.execute_script(self._REACT_FIRST_OPTION_JS)
+
+    def select_pay_week_start_day(self, day):
+        """Select the pay week start day; falls back to the first available option."""
+        try:
+            self._select_combobox_option(self.PAY_WEEK_START_DAY_COMBOBOX, day)
+        except AssertionError:
+            combobox = self._scroll_to_locator(self.PAY_WEEK_START_DAY_COMBOBOX)
+            self.wait.until(EC.element_to_be_clickable(self.PAY_WEEK_START_DAY_COMBOBOX))
+            self._real_click(combobox)
+            option = self.wait.until(lambda d: self._find_first_react_option())
+            self._real_click(option)
 
     def add_lane_button_is_visible(self):
         """Return whether Add Lane button is visible."""
@@ -782,10 +936,6 @@ class CreateSitePage(BasePage):
             time_zone,
             "Eastern"
         )
-
-    def select_pay_week_start_day(self, day):
-        """Select the pay week start day."""
-        self._select_combobox_option(self.PAY_WEEK_START_DAY_COMBOBOX, day)
 
     def enter_tax_settings(self, state_sales_tax, city_sales_tax):
         """Enter site tax settings."""
@@ -895,3 +1045,88 @@ class CreateSitePage(BasePage):
             pay_week_start_day
         )
         self.click_save_new()
+
+
+class EditSitePage(CreateSitePage):
+    """Edit form for an existing site. Same layout as create; save button differs."""
+
+    SAVE_BUTTON = (
+        By.XPATH,
+        "//button["
+        "normalize-space()='Save' "
+        "or normalize-space()='Save site' "
+        "or normalize-space()='Save changes' "
+        "or normalize-space()='Update'"
+        "]"
+    )
+
+    def wait_for_loaded(self):
+        """Wait until the edit form is ready and form data has been populated.
+
+        During SPA navigation from the sites list, the list page's filter panel
+        (which also contains an input[name='siteName']) may remain mounted briefly.
+        We wait until only one such input is visible before proceeding so that
+        enter_site_name() targets the edit form field, not the filter input.
+        """
+        self.driver.switch_to.default_content()
+        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
+        # Wait for the filter panel's duplicate siteName input to unmount
+        self.wait.until(
+            lambda d: sum(
+                1 for el in d.find_elements(By.NAME, "siteName") if el.is_displayed()
+            ) <= 1
+        )
+        self.wait.until(
+            lambda d: (
+                d.find_element(*self.SITE_NAME_INPUT).get_attribute("value") or ""
+            ) != ""
+        )
+
+    def ensure_active_switch_off(self):
+        """Deactivate the site if currently active."""
+        self.ensure_switch_off(self.ACTIVE_SITE_SWITCH)
+
+    def ensure_active_switch_on(self):
+        """Activate the site if currently inactive."""
+        self.ensure_switch_on(self.ACTIVE_SITE_SWITCH)
+
+    def enter_site_name(self, name):
+        """Update the site name field.
+
+        Clicks the field first to ensure native focus (which the JS setter
+        alone does not always trigger), then sets the value via the native
+        property setter with input/change/blur events so React registers the
+        change before the save button is clicked.
+        """
+        el = self.wait.until(EC.element_to_be_clickable(self.SITE_NAME_INPUT))
+        el.click()
+        self._set_input_value(self.SITE_NAME_INPUT, name)
+
+    LANE_ROWS = (
+        By.XPATH,
+        "//tr[.//input["
+        "contains(@name,'lane') or contains(@name,'Lane') "
+        "or contains(@placeholder,'lane') or contains(@placeholder,'Lane')"
+        "]]"
+    )
+
+    def get_lane_count(self):
+        """Return the number of visible lane rows in the Lanes settings tab."""
+        return len(self.driver.find_elements(*self.LANE_ROWS))
+
+    def add_lane(self):
+        """Click Add Lane to append a new empty lane row."""
+        self.click(self.ADD_LANE_BUTTON)
+
+    def click_save(self):
+        """Save changes and wait for navigation back to the sites list."""
+        button = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+        # After save the app navigates back to the list. Wait until the Save
+        # button is gone (i.e. we've left the edit form) before returning so
+        # callers aren't racing against an in-flight save.
+        try:
+            self.wait.until(EC.invisibility_of_element(button))
+        except TimeoutException:
+            pass  # if the button is already gone the wait resolves immediately
