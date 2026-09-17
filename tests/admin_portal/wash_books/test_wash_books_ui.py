@@ -41,6 +41,9 @@ def test_wash_books_page_loads_with_primary_controls(browser):
 def test_wash_books_grid_columns_are_visible(browser):
 
     page = open_wash_books_page(browser)
+    # Column header text renders after the grid container; wait until it
+    # appears in the DOM before reading body_text.
+    page.wait.until(lambda d: "Wash book name" in page.get_body_text())
     body_text = page.get_body_text()
 
     assert "ID" in body_text
@@ -64,7 +67,7 @@ def test_customer_wash_books_tab_is_accessible(browser):
     assert page_has_no_broken_state(cwb_page)
 
 
-@allure.title("WB-ADD Add wash book form loads with required fields")
+@allure.title("Add wash book form loads with required fields")
 @pytest.mark.smoke
 def test_add_wash_book_form_loads(browser):
 
