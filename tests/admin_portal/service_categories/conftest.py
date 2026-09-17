@@ -1,13 +1,17 @@
+from selenium.webdriver.common.by import By
+
 from pages.admin_portal.service_categories_page import ServiceCategoriesPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._data import load as _load
 
+_D = _load("service_categories")
 
-CATEGORY_NAME = "VK ASC1"
-INACTIVE_CATEGORY_NAME = "VK ASC2"
-MISSING_CATEGORY = "category-does-not-exist-automation"
-UPDATED_CATEGORY_NAME = "VK ASC1 edited"
+CATEGORY_NAME          = _D["reference"]["active_category"]
+INACTIVE_CATEGORY_NAME = _D["reference"]["inactive_category"]
+MISSING_CATEGORY       = _D["search"]["nonexistent"]
+UPDATED_CATEGORY_NAME  = _D["updated"]["category_name"]
 
 BROKEN_STATE_TEXTS = [
     "Something went wrong",
@@ -54,9 +58,11 @@ def create_inactive_category_if_missing(browser, category_name=INACTIVE_CATEGORY
         return page
 
     if page.get_category_status(category_name) != "Inactive":
+        import time
         page.open_edit_category(category_name)
         page.ensure_active_switch_off()
         page.click_save_changes()
+        time.sleep(3)
         page = open_service_categories_page(browser)
 
     return page
@@ -82,37 +88,82 @@ def reset_managed_category(browser):
     - Does not exist yet  → create it
     - Deactivated by test → re-activate it
     """
+    import time
     page = open_service_categories_page(browser)
 
-    if page.category_exists(MANAGED_CATEGORY_EDITED):
-        # Rename back — bypass update_category_name to avoid wait_for_list_loaded
-        # failing when the category was opened via the inactive-filter fallback.
-        # A brief sleep after save gives the API time to complete before we
-        # force-navigate fresh.
-        import time
-        page.open_edit_category(MANAGED_CATEGORY_EDITED)
+    # Fast path: the default list only shows Active categories, so if the
+    # managed name appears in a quick probe the state is already correct.
+    # Skipping the two full category_exists() calls saves ~200 s per call.
+    page.search_category(MANAGED_CATEGORY)
+    if page._quick_category_row(MANAGED_CATEGORY, timeout=6) is not None:
+        return page
+
+    # Full reset: category is missing, renamed, or inactive.
+    # Check MANAGED_CATEGORY_EDITED in the active list first (fast 6-second probe).
+    page.search_category(MANAGED_CATEGORY_EDITED)
+    edited_active = page._quick_category_row(MANAGED_CATEGORY_EDITED, timeout=6)
+
+    if edited_active is not None:
+        # Test renamed the category and left it active.
+        edit_btn = edited_active.find_element(
+            By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        page.driver.execute_script("arguments[0].click();", edit_btn)
+        page.wait_for_edit_loaded()
         page.enter_category_name(MANAGED_CATEGORY)
         page.ensure_active_switch_on()
         page.click_save_changes()
         time.sleep(3)
-        page = open_service_categories_page(browser)
-    elif not page.category_exists(MANAGED_CATEGORY):
-        page.create_category(MANAGED_CATEGORY)
-        page.search_category(MANAGED_CATEGORY)
-        page.wait_for_category_row(MANAGED_CATEGORY)
-        return page
+        return open_service_categories_page(browser)
 
-    # Restore active status if a test deactivated the category
-    page.search_category(MANAGED_CATEGORY)
-    if page.get_category_status(MANAGED_CATEGORY) != "Active":
-        import time
-        page.open_edit_category(MANAGED_CATEGORY)
+    # Neither MANAGED_CATEGORY nor MANAGED_CATEGORY_EDITED in the active list.
+    # Apply the inactive filter ONCE and check both names in a single pass —
+    # avoids the two expensive category_exists() calls that each open/reset
+    # the filter panel independently (~130 s each).
+    inactive_row, found_name = page._find_first_matching_inactive(
+        MANAGED_CATEGORY_EDITED, MANAGED_CATEGORY
+    )
+
+    if found_name == MANAGED_CATEGORY_EDITED:
+        # Deactivated and renamed by a previous test.
+        edit_btn = inactive_row.find_element(
+            By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        page.driver.execute_script("arguments[0].click();", edit_btn)
+        page.wait_for_edit_loaded()
+        page.enter_category_name(MANAGED_CATEGORY)
         page.ensure_active_switch_on()
         page.click_save_changes()
         time.sleep(3)
-        page = open_service_categories_page(browser)
+        return open_service_categories_page(browser)
 
+    if found_name == MANAGED_CATEGORY:
+        # Exists but was deactivated by a previous test.
+        edit_btn = inactive_row.find_element(
+            By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        )
+        page.driver.execute_script("arguments[0].click();", edit_btn)
+        page.wait_for_edit_loaded()
+        page.ensure_active_switch_on()
+        page.click_save_changes()
+        time.sleep(3)
+        return open_service_categories_page(browser)
+
+    # Neither name found anywhere — create fresh.
+    page = open_service_categories_page(browser)
+    page.create_category(MANAGED_CATEGORY)
+    page.search_category(MANAGED_CATEGORY)
+    page.wait_for_category_row(MANAGED_CATEGORY)
     return page
 
 
-managed_category = managed_resource(reset_managed_category)
+def _ensure_managed_category_exists(browser):
+    """Setup-only guard: return early if the managed category is active."""
+    page = open_service_categories_page(browser)
+    page.search_category(MANAGED_CATEGORY)
+    if page._quick_category_row(MANAGED_CATEGORY, timeout=6) is not None:
+        return page
+    return reset_managed_category(browser)
+
+
+managed_category = managed_resource(reset_managed_category, ensure=_ensure_managed_category_exists)
