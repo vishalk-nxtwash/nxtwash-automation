@@ -1,3 +1,6 @@
+import allure
+import pytest
+
 from pages.admin_portal.sites_page import SitesPage
 
 from tests.admin_portal.sites.conftest import open_create_site_page
@@ -5,8 +8,16 @@ from tests.admin_portal.sites.conftest import open_sites_page
 from tests.admin_portal.sites.conftest import page_has_no_broken_state
 
 
-def test_sites_locations_page_ui_elements(logged_in_admin_browser):
+pytestmark = [
+    allure.epic("Admin Portal"),
+    allure.feature("Sites / Locations"),
+    allure.story("UI"),
+]
 
+
+@allure.title("SL-LST-001 Sites/Locations page loads with all primary controls")
+@pytest.mark.smoke
+def test_sites_locations_page_ui_elements(logged_in_admin_browser):
     sites_page = open_sites_page(logged_in_admin_browser)
 
     assert "Sites/Locations" in sites_page.get_body_text()
@@ -16,8 +27,9 @@ def test_sites_locations_page_ui_elements(logged_in_admin_browser):
     assert page_has_no_broken_state(sites_page)
 
 
+@allure.title("SL-FLT-001 Filter panel opens with site name field and active toggle")
+@pytest.mark.smoke
 def test_sites_filter_panel_ui_elements(logged_in_admin_browser):
-
     sites_page = open_sites_page(logged_in_admin_browser)
     sites_page.open_filters()
 
@@ -29,8 +41,9 @@ def test_sites_filter_panel_ui_elements(logged_in_admin_browser):
     assert "Reset filters" in body_text
 
 
+@allure.title("SL-CRT General settings form shows all sections with active switch ON by default")
+@pytest.mark.regression
 def test_create_site_general_settings_ui_elements(logged_in_admin_browser):
-
     create_page = open_create_site_page(logged_in_admin_browser)
 
     body_text = create_page.get_body_text()
@@ -44,8 +57,9 @@ def test_create_site_general_settings_ui_elements(logged_in_admin_browser):
     assert create_page.active_site_switch_is_on()
 
 
+@allure.title("SL-CRT-018 Cancel on Add site screen returns to the Sites list")
+@pytest.mark.regression
 def test_create_site_cancel_returns_to_list(logged_in_admin_browser):
-
     create_page = open_create_site_page(logged_in_admin_browser)
     create_page.click_cancel()
 
