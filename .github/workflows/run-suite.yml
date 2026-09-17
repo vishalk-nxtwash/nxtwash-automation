@@ -119,6 +119,7 @@ jobs:
           rm -rf allure-results allure-report
           pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
+            --reruns 1 --reruns-delay 5 \
             --alluredir=allure-results \
             --html=report.html --self-contained-html \
             --junitxml=results.xml
@@ -166,4 +167,3 @@ jobs:
                  /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
                  2>/dev/null || true
           df -h /
-
