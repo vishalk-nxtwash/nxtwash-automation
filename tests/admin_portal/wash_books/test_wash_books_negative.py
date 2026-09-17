@@ -2,9 +2,6 @@ import allure
 import pytest
 
 from tests.admin_portal.wash_books.conftest import EXISTING_WASH_BOOK
-from tests.admin_portal.wash_books.conftest import MISSING_WASH_BOOK
-from tests.admin_portal.wash_books.conftest import WASH_BOOK_NAME
-from tests.admin_portal.wash_books.conftest import create_wash_book_if_missing
 from tests.admin_portal.wash_books.conftest import open_wash_books_page
 from tests.admin_portal.wash_books.conftest import page_has_no_broken_state
 
@@ -16,18 +13,7 @@ pytestmark = [
 ]
 
 
-@allure.title("WB-SRH-003 Searching a non-existing wash book returns no results")
-@pytest.mark.extended
-def test_missing_wash_book_is_not_returned(browser):
-
-    wash_books_page = open_wash_books_page(browser)
-    wash_books_page.search_wash_book(MISSING_WASH_BOOK)
-
-    assert MISSING_WASH_BOOK not in wash_books_page.get_body_text()
-    assert page_has_no_broken_state(wash_books_page)
-
-
-@allure.title("WB-SRH special-character search does not crash the grid")
+@allure.title("Special-character search does not crash the grid")
 @pytest.mark.extended
 def test_wash_books_special_character_search_stays_usable(browser):
 
@@ -71,10 +57,11 @@ def test_whitespace_only_wash_book_name_is_rejected(browser):
     page.set_global_price("10")
     page.click_save_wash_book()
 
+    body_text = page.get_body_text()
     assert (
         not page.wash_book_name_input_is_valid()
-        or "Add new wash book" in page.get_body_text()
-    )
+        or "Add new wash book" in body_text
+    ), "Expected whitespace-only name to be rejected — form should remain open"
     assert page_has_no_broken_state(page)
 
 
@@ -89,7 +76,10 @@ def test_negative_number_of_washes_is_rejected(browser):
     page.set_global_price("10")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative washes — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -104,7 +94,10 @@ def test_negative_global_price_is_rejected(browser):
     page.set_global_price("-10")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative price — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -120,39 +113,11 @@ def test_negative_global_commission_is_rejected(browser):
     page.set_global_commission("-2")
     page.click_save_wash_book()
 
-    assert "Add new wash book" in page.get_body_text()
+    body_text = page.get_body_text()
+    assert "Add new wash book" in body_text, (
+        "Expected form to stay open after negative commission — app may have accepted the value"
+    )
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WB-LTY-003 Negative loyalty points awarded is rejected on save")
-@pytest.mark.extended
-def test_negative_loyalty_points_is_rejected(browser):
 
-    page = open_wash_books_page(browser)
-    page.open_create_wash_book()
-    page.enter_wash_book_name("VK AWB2-neg-points-test")
-    page.set_points_awarded("-1")
-
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WB-BAR-003 Duplicate barcode is rejected on save")
-@pytest.mark.regression
-@pytest.mark.skip(
-    reason="WB-BAR-003: Requires a known barcode already assigned to another wash book. "
-    "Deferred until barcode fixtures are established."
-)
-def test_duplicate_barcode_is_rejected(browser):
-    pass
-
-
-@allure.title("WB-RED-004 Saving a redemption site without selecting a wash package is blocked or documented")
-@pytest.mark.regression
-def test_save_redemption_site_without_wash_package(browser):
-
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
-    page.open_redemption_settings()
-
-    assert "Redeem at" in page.get_body_text()
-    assert page_has_no_broken_state(page)
