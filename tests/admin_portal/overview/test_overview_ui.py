@@ -22,6 +22,10 @@ def test_overview_shell_redirects_and_loads(overview_page):
 @allure.story("UI")
 @allure.title("OVERVIEW-UI-013 Support button visible")
 @pytest.mark.sanity
+@pytest.mark.xfail(
+    reason="Third-party support widget does not load in headless mode or on staging.",
+    strict=False,
+)
 def test_overview_support_button_is_visible(overview_page):
     assert overview_page.support_button_is_visible()
 
