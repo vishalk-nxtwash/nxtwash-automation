@@ -511,7 +511,15 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        self._set_input_value(discount_input, str(value))
+        # JS .select() clears the field without CTRL+A, which is intercepted by
+        # the Inovua global keydown handler inside the legacy iframe.
+        self.driver.execute_script(
+            "arguments[0].click(); arguments[0].select();", discount_input
+        )
+        discount_input.send_keys(str(value))
+        # ENTER commits the Inovua DataGrid cell to the form's React state,
+        # preventing a subsequent re-render from resetting the value to its default.
+        discount_input.send_keys(Keys.ENTER)
 
         def _value_matches(driver):
             # Use find_elements (no wait) to avoid TimeoutException propagating
@@ -730,8 +738,7 @@ class DiscountsPage(BasePage):
         # the navigation registers (same pattern used in set_discount_end).
         if int(day) < _date.today().day:
             next_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH,
-                "//button[contains(@aria-label,'Next') or "
-                "contains(@class,'react-datepicker__navigation--next')]"
+                "//*[contains(@class,'react-datepicker__navigation--next')]"
             )))
             self.driver.execute_script("arguments[0].click();", next_btn)
 
