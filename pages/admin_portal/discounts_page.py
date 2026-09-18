@@ -517,9 +517,6 @@ class DiscountsPage(BasePage):
             "arguments[0].click(); arguments[0].select();", discount_input
         )
         discount_input.send_keys(str(value))
-        # ENTER commits the Inovua DataGrid cell to the form's React state,
-        # preventing a subsequent re-render from resetting the value to its default.
-        discount_input.send_keys(Keys.ENTER)
 
         def _value_matches(driver):
             # Use find_elements (no wait) to avoid TimeoutException propagating
@@ -737,7 +734,7 @@ class DiscountsPage(BasePage):
         # JS click avoids mousedown-bubbling that can close the picker before
         # the navigation registers (same pattern used in set_discount_end).
         if int(day) < _date.today().day:
-            next_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH,
+            next_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,
                 "//*[contains(@class,'react-datepicker__navigation--next')]"
             )))
             self.driver.execute_script("arguments[0].click();", next_btn)
