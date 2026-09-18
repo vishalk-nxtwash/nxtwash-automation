@@ -29,10 +29,6 @@ def test_password_visibility_toggle_shows_password(login_page):
     assert login_page.password_input_type() == "text"
 
 
-@pytest.mark.xfail(
-    reason="Known product gap: password visibility icon disappears after typing.",
-    strict=False,
-)
 def test_password_visibility_toggle_hides_password_again(login_page):
 
     if not login_page.password_visibility_toggle_exists():
