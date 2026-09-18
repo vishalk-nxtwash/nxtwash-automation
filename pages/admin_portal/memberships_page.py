@@ -1609,10 +1609,14 @@ class MembershipsPage(BasePage):
             """)
         except Exception:
             pass
+        target = base_url + "/services/memberships"
         try:
-            self.driver.get(base_url + "/services/memberships")
+            self.driver.get(target)
         except TimeoutException:
-            pass  # page load timeout on slow staging; iframe content may still render
+            # First attempt timed out on slow staging; retry once.  If the
+            # second attempt also raises, let it propagate — the caller gets a
+            # real error instead of wait_for_list_loaded() running on the wrong page.
+            self.driver.get(target)
         self.wait_for_list_loaded()
         if save_error:
             import logging

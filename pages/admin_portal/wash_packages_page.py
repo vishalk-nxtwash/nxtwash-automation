@@ -825,10 +825,11 @@ for (var i = 0; i < kids.length; i++) {
         save_error = self.get_visible_error()
         self.driver.switch_to.default_content()
         origin = self.driver.execute_script("return window.location.origin")
+        target = origin + "/services/washPackages"
         try:
-            self.driver.get(origin + "/services/washPackages")
+            self.driver.get(target)
         except TimeoutException:
-            pass
+            self.driver.get(target)
         self.wait_for_list_loaded()
         if save_error:
             raise RuntimeError("Wash package save error: %s" % save_error)
