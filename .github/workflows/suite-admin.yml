@@ -28,24 +28,24 @@ jobs:
       max-parallel: 3
       matrix:
         shard:
-          - name: sites
-            path: tests/admin_portal/sites
-          - name: service-categories
-            path: tests/admin_portal/service_categories
           - name: discounts
             path: tests/admin_portal/discounts
-          - name: overview
-            path: tests/admin_portal/overview
+          - name: memberships
+            path: tests/admin_portal/memberships
+          - name: wash-packages
+            path: tests/admin_portal/wash_packages tests/admin_portal/gift_cards
+          # - name: sites
+          #   path: tests/admin_portal/sites
+          # - name: service-categories
+          #   path: tests/admin_portal/service_categories
+          # - name: overview
+          #   path: tests/admin_portal/overview
           # - name: login
           #   path: tests/admin_portal/login
           # - name: wash-extras
           #   path: tests/admin_portal/wash_extras
           # - name: wash-books
           #   path: tests/admin_portal/wash_books
-          # - name: wash-packages
-          #   path: tests/admin_portal/wash_packages tests/admin_portal/gift_cards
-          # - name: memberships
-          #   path: tests/admin_portal/memberships
           # - name: coupon-packages
           #   path: tests/admin_portal/coupon_packages tests/admin_portal/gift_cards
     uses: ./.github/workflows/run-suite.yml
