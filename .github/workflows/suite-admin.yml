@@ -29,9 +29,10 @@ jobs:
           #   path: tests/admin_portal/memberships
           #   parallel: "2"
           #   timeout: 180
+          - name: wash-packages
+            path: tests/admin_portal/wash_packages
+
           # --- queued when ready ---
-          # - name: wash-packages
-          #   path: tests/admin_portal/wash_packages
           # - name: wash-books
           #   path: tests/admin_portal/wash_books
           # - name: wash-extras
