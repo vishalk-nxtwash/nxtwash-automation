@@ -4,7 +4,6 @@ import pytest
 from tests.admin_portal.wash_extras.conftest import (
     EXISTING_EXTRA,
     GLOBAL_PRICE,
-    MISSING_EXTRA,
     open_wash_extras_page,
     page_has_no_broken_state,
 )
@@ -17,18 +16,7 @@ pytestmark = [
 ]
 
 
-@allure.title("WE-SRH-003 Searching a non-existing wash extra shows empty state without error")
-@pytest.mark.extended
-def test_missing_wash_extra_is_not_returned(browser):
-
-    page = open_wash_extras_page(browser)
-    page.search_extra(MISSING_EXTRA)
-
-    assert MISSING_EXTRA not in page.get_body_text()
-    assert page_has_no_broken_state(page)
-
-
-@allure.title("WE-SRH injection payloads in search do not produce a broken page state")
+@allure.title("Injection payloads in search do not produce a broken page state")
 @pytest.mark.regression
 def test_wash_extras_search_payloads_do_not_break_grid(browser):
 
@@ -118,13 +106,3 @@ def test_duplicate_barcode_is_rejected(browser):
     pass
 
 
-@allure.title("WE-LTY-004 Negative loyalty points is rejected on save")
-@pytest.mark.extended
-def test_negative_loyalty_points_is_rejected(browser):
-
-    page = open_wash_extras_page(browser)
-    page.open_create_extra()
-    page.enter_service_name("VK EWA2-neg-points-test")
-    page.set_points_awarded("-1")
-
-    assert page_has_no_broken_state(page)

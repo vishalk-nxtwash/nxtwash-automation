@@ -6,6 +6,7 @@ from tests.admin_portal.wash_packages.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     PACKAGE_NAME,
+    SECOND_ASSIGNMENT_SITE,
     SITE_OVERRIDE_COMMISSION,
     SITE_OVERRIDE_PRICE,
     SITE_OVERRIDE_PRICE_HIGH,
@@ -18,24 +19,40 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Site Assignment"),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
+
+
+@allure.title("WP-SIT-001 Assigning a single site persists after save")
+@pytest.mark.regression
+def test_assign_single_site_persists(managed_package):
+    page = managed_package
+    page.open_edit_package(PACKAGE_NAME)
+    page.assign_site_with_price_and_commission(
+        ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
+    )
+    page.save_and_return_to_list()
+
+    page.open_edit_package(PACKAGE_NAME)
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-SIT-002 Site assignment persists after re-save")
 @pytest.mark.regression
+@pytest.mark.timeout(480)
 def test_assign_multiple_sites_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    body = page.get_body_text()
-
-    assert ASSIGNMENT_SITE in body
+    # site_is_assigned scrolls the Inovua virtual grid to find the row;
+    # get_body_text() only captures the currently rendered virtual viewport.
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 
@@ -45,9 +62,7 @@ def test_select_all_sites_via_header_checkbox(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.select_all_sites()
-    body = page.get_body_text()
-
-    assert ASSIGNMENT_SITE in body
+    assert page.site_is_assigned(ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 
@@ -61,6 +76,30 @@ def test_save_wash_package_without_site_selection(browser):
     page.set_global_commission(GLOBAL_COMMISSION)
     page.click_save_package()
 
+    assert page_has_no_broken_state(page)
+
+
+@allure.title("WP-SIT-008 Deselecting a previously assigned site removes it after save")
+@pytest.mark.regression
+@pytest.mark.timeout(480)
+def test_deselect_assigned_site_removes_it(managed_package):
+    page = managed_package
+    # First add a second site so the package always has at least one assigned site
+    # after the original is unassigned (server rejects zero-site packages silently).
+    page.open_edit_package(PACKAGE_NAME)
+    page.assign_site_with_price_and_commission(
+        SECOND_ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
+    )
+    page.save_and_return_to_list()
+
+    # Now unassign the original site — one site (SECOND_ASSIGNMENT_SITE) remains
+    page.open_edit_package(PACKAGE_NAME)
+    page.unassign_site(ASSIGNMENT_SITE)
+    page.save_and_return_to_list()
+
+    page.open_edit_package(PACKAGE_NAME)
+    assert not page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page.site_is_assigned(SECOND_ASSIGNMENT_SITE)
     assert page_has_no_broken_state(page)
 
 
@@ -82,8 +121,7 @@ def test_location_price_override_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, SITE_OVERRIDE_PRICE, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE
@@ -98,8 +136,7 @@ def test_location_price_override_higher_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, SITE_OVERRIDE_PRICE_HIGH, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE_HIGH
@@ -115,8 +152,7 @@ def test_location_price_override_lower_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, lower_price, GLOBAL_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == lower_price
@@ -131,8 +167,7 @@ def test_location_commission_override_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, SITE_OVERRIDE_COMMISSION
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_commission_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_COMMISSION
@@ -148,8 +183,7 @@ def test_location_commission_higher_than_global_persists(managed_package):
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, higher_commission
     )
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_site_commission_value(ASSIGNMENT_SITE) == higher_commission

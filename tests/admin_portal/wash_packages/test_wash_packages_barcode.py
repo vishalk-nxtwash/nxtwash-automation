@@ -20,6 +20,8 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Barcode"),
+    pytest.mark.timeout(480),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 
@@ -29,8 +31,7 @@ def test_wash_package_barcode_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
     page.enter_barcode(BARCODE_VALUE)
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.get_barcode_value() == BARCODE_VALUE

@@ -16,7 +16,7 @@ pytestmark = [
 
 
 @allure.title("WP-VAL Blank required form stays on the create page")
-@pytest.mark.validation
+@pytest.mark.smoke
 def test_wash_package_blank_required_form_stays_on_form(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()
@@ -27,7 +27,7 @@ def test_wash_package_blank_required_form_stays_on_form(browser):
 
 
 @allure.title("WP-PRI-004 Decimal global price is accepted and the form remains usable")
-@pytest.mark.validation
+@pytest.mark.edge
 def test_wash_package_decimal_price_is_accepted(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()
@@ -39,7 +39,7 @@ def test_wash_package_decimal_price_is_accepted(browser):
 
 
 @allure.title("WP-COM-002 Decimal global commission is accepted by the form")
-@pytest.mark.validation
+@pytest.mark.edge
 def test_wash_package_decimal_commission_is_accepted(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()
@@ -52,7 +52,7 @@ def test_wash_package_decimal_commission_is_accepted(browser):
 
 
 @allure.title("WP-VAL Invalid numeric inputs do not break the create form")
-@pytest.mark.validation
+@pytest.mark.edge
 def test_wash_package_invalid_numeric_values_do_not_break_form(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()

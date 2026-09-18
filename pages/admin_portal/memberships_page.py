@@ -1295,10 +1295,6 @@ class MembershipsPage(BasePage):
         if not self._grid_value_matches_safe(element, value):
             element.clear()
             element.send_keys(str(value))
-        # ENTER commits the Inovua DataGrid cell to the form's React state.
-        # Synthetic blur dispatch alone does not trigger a commit; without this
-        # a subsequent re-render resets the cell to its previous default value.
-        element.send_keys(Keys.ENTER)
         self.driver.execute_script(
             "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
             element

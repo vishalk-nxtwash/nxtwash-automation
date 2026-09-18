@@ -49,8 +49,7 @@ def test_create_inactive_wash_package(browser):
         ASSIGNMENT_SITE,
     )
     page.ensure_active_switch_off()
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(package_name)
 
     assert package_name not in page.get_body_text()
@@ -71,8 +70,7 @@ def test_create_wash_package_without_barcode(browser):
         ASSIGNMENT_SITE,
     )
     # Barcode field intentionally left empty
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(package_name)
 
     assert page.wait_for_package_row(package_name).is_displayed()
@@ -90,8 +88,7 @@ def test_create_wash_package_without_loyalty_points(browser):
     page.set_global_commission(GLOBAL_COMMISSION)
     page.assign_site_with_price_and_commission(ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION)
     # Loyalty points intentionally omitted
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(package_name)
 
     assert page.wait_for_package_row(package_name).is_displayed()
@@ -112,8 +109,7 @@ def test_create_wash_package_without_discount(browser):
         ASSIGNMENT_SITE,
     )
     # Discount settings tab intentionally skipped
-    page.click_save_package()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_package(package_name)
 
     assert page.wait_for_package_row(package_name).is_displayed()

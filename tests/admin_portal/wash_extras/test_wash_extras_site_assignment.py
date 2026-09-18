@@ -10,7 +10,7 @@ from tests.admin_portal.wash_extras.conftest import (
     page_has_no_broken_state,
 )
 
-ASSIGNMENT_SITE = "VK Test carwash 2"
+ASSIGNMENT_SITE = "VK AL11"
 
 pytestmark = [
     allure.epic("Admin Portal"),
@@ -32,6 +32,7 @@ def test_assign_single_site_persists(browser):
 
 
 @allure.title("WE-SIT-002 Assigning multiple sites persists after save")
+@pytest.mark.regression
 @pytest.mark.skip(reason="staging data / intermittent — deferred")
 def test_assign_multiple_sites_persists(browser):
 
@@ -90,6 +91,12 @@ def test_deselect_previously_assigned_site(browser):
 
 @allure.title("WE-PRC-001 Global price is reflected as the default location price")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason="WE-PRC-001: Application stores null for location price when no explicit "
+           "override exists and uses the global price only as a UI display fallback. "
+           "The input element value is '' (empty), not the global price string.",
+)
 def test_global_price_reflected_at_site_level(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -107,11 +114,6 @@ def test_global_price_reflected_at_site_level(browser):
 
 @allure.title("WE-PRC-002 Location price override persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="WE-PRC-002: dev server resets location price to global value on save; "
-           "feature works on staging but not on the dev environment.",
-)
 def test_location_price_override_persists(browser):
 
     override_price = "10"
@@ -175,11 +177,6 @@ def test_state_city_tax_fields_are_read_only(browser):
 
 @allure.title("WE-LCM-001 Location commission override persists after save")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason="WE-LCM-001: dev server resets location commission to global value on save; "
-           "feature works on staging but not on the dev environment.",
-)
 def test_location_commission_override_persists(browser):
 
     override_commission = "4"

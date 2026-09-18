@@ -36,6 +36,7 @@ def test_wash_package_required_name_validation(browser):
 
 @allure.title("WP-NAM-003 Duplicate wash package name is blocked")
 @pytest.mark.regression
+@pytest.mark.xdist_group(name="managed_wp")
 def test_create_duplicate_wash_package_is_blocked(browser):
     create_wash_package_if_missing(browser)
     page = open_wash_packages_page(browser)
@@ -74,13 +75,6 @@ def test_wash_package_required_price_validation(browser):
 @allure.title("WP-PRI-005 Negative global price is rejected by the form")
 @pytest.mark.regression
 @pytest.mark.validation
-@pytest.mark.xfail(
-    reason=(
-        "WP-PRI-005: Price input has no min=0 HTML5 constraint — negative values "
-        "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
-    ),
-    strict=False,
-)
 def test_negative_global_price_is_rejected(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()
@@ -95,13 +89,6 @@ def test_negative_global_price_is_rejected(browser):
 @allure.title("WP-COM-003 Negative global commission is rejected by the form")
 @pytest.mark.regression
 @pytest.mark.validation
-@pytest.mark.xfail(
-    reason=(
-        "WP-COM-003: Commission input has no min=0 HTML5 constraint — negative values "
-        "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
-    ),
-    strict=False,
-)
 def test_negative_global_commission_is_rejected(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()

@@ -38,7 +38,7 @@ def test_wash_extras_grid_columns_are_visible(browser):
     assert "Status" in body_text
 
 
-@allure.title("WE-FLT filter panel shows expected controls")
+@allure.title("Filter panel shows expected controls")
 @pytest.mark.regression
 def test_wash_extras_filter_panel_shows_controls(browser):
 
@@ -50,7 +50,7 @@ def test_wash_extras_filter_panel_shows_controls(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WE-ADD Add wash extra form loads with required fields and default active switch")
+@allure.title("Add wash extra form loads with required fields and default active switch")
 @pytest.mark.smoke
 def test_add_wash_extra_form_loads(browser):
 
