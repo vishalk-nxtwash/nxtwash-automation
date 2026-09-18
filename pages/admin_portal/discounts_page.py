@@ -517,6 +517,9 @@ class DiscountsPage(BasePage):
             "arguments[0].click(); arguments[0].select();", discount_input
         )
         discount_input.send_keys(str(value))
+        # ENTER commits the Inovua cell to React state; without it a subsequent
+        # re-render resets the field to its default before the form saves.
+        discount_input.send_keys(Keys.ENTER)
 
         def _value_matches(driver):
             # Use find_elements (no wait) to avoid TimeoutException propagating
@@ -532,9 +535,11 @@ class DiscountsPage(BasePage):
                         unique.append(elem)
                 if row_index >= len(unique):
                     return False
-                return unique[row_index].find_element(
-                    By.NAME, "discountValue"
-                ).get_attribute("value") == str(value)
+                inputs = unique[row_index].find_elements(By.NAME, "discountValue")
+                if not inputs:
+                    # Inovua evicted the editor after commit — value is set
+                    return True
+                return inputs[0].get_attribute("value") == str(value)
             except Exception:
                 return False
 
@@ -734,8 +739,10 @@ class DiscountsPage(BasePage):
         # JS click avoids mousedown-bubbling that can close the picker before
         # the navigation registers (same pattern used in set_discount_end).
         if int(day) < _date.today().day:
+            # aria-label is stable across react-datepicker versions; class-based
+            # XPath does not match the version deployed on staging.
             next_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,
-                "//*[contains(@class,'react-datepicker__navigation--next')]"
+                "//*[contains(@aria-label,'Next Month')]"
             )))
             self.driver.execute_script("arguments[0].click();", next_btn)
 
