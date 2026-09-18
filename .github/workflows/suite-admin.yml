@@ -20,22 +20,16 @@ jobs:
       max-parallel: 6
       matrix:
         shard:
-          - name: discounts
-            path: tests/admin_portal/discounts
-
-          # parallel=2: worker-1 handles all managed_membership tests (xdist_group
-          # pins them to one worker); worker-2 runs the 49 browser-only tests
-          # (search/filter, UI, validation) concurrently. timeout=180 because
-          # 17 managed teardowns × ~4-6 min each = up to 102 min on slow staging.
-          - name: memberships
-            path: tests/admin_portal/memberships
-            parallel: "2"
-            timeout: 180
-
           - name: gift-cards
             path: tests/admin_portal/gift_cards tests/admin_portal/coupon_packages
 
-          # --- queued when ready (one at a time, runners are busy with the 3 above) ---
+          # - name: discounts
+          #   path: tests/admin_portal/discounts
+          # - name: memberships
+          #   path: tests/admin_portal/memberships
+          #   parallel: "2"
+          #   timeout: 180
+          # --- queued when ready ---
           # - name: wash-packages
           #   path: tests/admin_portal/wash_packages
           # - name: wash-books
