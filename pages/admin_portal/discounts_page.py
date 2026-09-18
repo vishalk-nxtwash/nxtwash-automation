@@ -511,12 +511,7 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        # JS .select() clears the field without CTRL+A, which is intercepted by
-        # the Inovua global keydown handler inside the legacy iframe.
-        self.driver.execute_script(
-            "arguments[0].click(); arguments[0].select();", discount_input
-        )
-        discount_input.send_keys(str(value))
+        self._set_input_value(discount_input, str(value))
 
         def _value_matches(driver):
             # Use find_elements (no wait) to avoid TimeoutException propagating
@@ -727,17 +722,18 @@ class DiscountsPage(BasePage):
         start_date = self.wait.until(
             EC.element_to_be_clickable(self.DATE_INPUTS)
         )
-        start_date.click()
+        self.driver.execute_script("arguments[0].click();", start_date)
 
         # If the requested day has already passed this month, advance the
         # calendar to next month so the server receives a future date.
-        # (The server rejects past start dates; react-datepicker may still
-        # render the cell as clickable even when disabled by CSS.)
+        # JS click avoids mousedown-bubbling that can close the picker before
+        # the navigation registers (same pattern used in set_discount_end).
         if int(day) < _date.today().day:
-            self.wait.until(EC.element_to_be_clickable((By.XPATH,
+            next_btn = self.wait.until(EC.element_to_be_clickable((By.XPATH,
                 "//button[contains(@aria-label,'Next') or "
                 "contains(@class,'react-datepicker__navigation--next')]"
-            ))).click()
+            )))
+            self.driver.execute_script("arguments[0].click();", next_btn)
 
         day_locator = (
             By.XPATH,
