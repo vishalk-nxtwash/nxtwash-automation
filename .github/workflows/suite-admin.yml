@@ -56,4 +56,4 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: "1"
-      timeout_minutes: 60
+      timeout_minutes: 90

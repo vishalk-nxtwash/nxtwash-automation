@@ -1,10 +1,12 @@
+import uuid as _uuid
+
 import pytest
 
 from pages.admin_portal.wash_packages_page import WashPackagesPage
 from tests.admin_portal.admin_session import open_admin_path
 
 
-EXISTING_PACKAGE = "Plus Wash"
+EXISTING_PACKAGE = "VK AWP1"
 MISSING_PACKAGE = "wash-package-does-not-exist-automation"
 ASSIGNMENT_SITE = "VK Test carwash 2"
 PACKAGE_NAME = "VK AWP1"
@@ -21,7 +23,7 @@ SITE_OVERRIDE_PRICE_HIGH = "40"     # higher than GLOBAL_PRICE
 SITE_OVERRIDE_COMMISSION = "8"      # higher than GLOBAL_COMMISSION
 APPLICABLE_DISCOUNT = "Basic Discount"
 SECOND_APPLICABLE_DISCOUNT = "VK AD01"
-BARCODE_VALUE = "VK-BAR-001"
+BARCODE_VALUE = "VK-BAR-" + _uuid.uuid4().hex[:8]
 DESCRIPTION_TEXT = "VK automation test description"
 BROKEN_STATE_TEXTS = [
     "Something went wrong",

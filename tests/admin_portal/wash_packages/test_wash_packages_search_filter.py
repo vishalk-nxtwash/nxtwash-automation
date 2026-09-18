@@ -23,8 +23,8 @@ pytestmark = [
 
 @allure.title("WP-SRH-001 Search exact wash package name returns the correct record")
 @pytest.mark.regression
-def test_wash_packages_existing_search(browser):
-    page = open_wash_packages_page(browser)
+def test_wash_packages_existing_search(managed_package):
+    page = managed_package
     page.search_package(EXISTING_PACKAGE)
 
     assert page.wait_for_package_row(EXISTING_PACKAGE).is_displayed()
@@ -33,8 +33,8 @@ def test_wash_packages_existing_search(browser):
 
 @allure.title("WP-SRH-002 Partial name search returns matching records")
 @pytest.mark.regression
-def test_wash_packages_partial_search(browser):
-    page = open_wash_packages_page(browser)
+def test_wash_packages_partial_search(managed_package):
+    page = managed_package
     page.search_package(EXISTING_PACKAGE[:4])
 
     assert EXISTING_PACKAGE in page.get_body_text()
