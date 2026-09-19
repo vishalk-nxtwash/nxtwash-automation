@@ -5,10 +5,10 @@ name: Admin Suite (staging)
 # Waves 2-4 use if: !cancelled() — they proceed even when a prior wave has test
 # failures so you see the full picture in one run; they only skip on a manual cancel.
 #
-# parallel choices (per shard):
-#   "2" + timeout 180  — shards with heavy managed-fixture teardowns
-#   "2"                — everything else; 2 vCPUs per runner is the hard ceiling
-#                        (parallel: 4 caused CPU starvation → SIGALRM mid-formatter)
+# parallel: 1 across the board — one Chrome per runner at a time.
+# Peak RAM per runner: ~1.3 GB (well within 3.7 GB).
+# parallel: 2 caused OOM kills after ~25 min (2 Chrome × ~900 MB = ~2.8 GB peak).
+# timeout: 180 default — largest shards (~280 tests × 30s serial) need ~140 min.
 
 on:
   push:
@@ -38,7 +38,6 @@ jobs:
               tests/admin_portal/wash_packages
               tests/admin_portal/wash_books
               tests/admin_portal/wash_extras
-            parallel: "2"
             timeout: 180
 
           - name: people
@@ -46,7 +45,6 @@ jobs:
               tests/admin_portal/customers
               tests/admin_portal/employees
               tests/admin_portal/labor_shifts
-            parallel: "2"
             timeout: 180
 
           - name: revenue-metrics
@@ -61,8 +59,8 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 2  (191 + 267 + 260 = 718 tests)
@@ -101,8 +99,8 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 3  (190 + 212 + 206 = 608 tests)
@@ -121,7 +119,6 @@ jobs:
               tests/admin_portal/custom_services
               tests/admin_portal/service_categories
               tests/admin_portal/bank_drop
-            parallel: "2"
             timeout: 180
 
           - name: sites-settings
@@ -129,7 +126,6 @@ jobs:
               tests/admin_portal/sites
               tests/admin_portal/kiosk_settings
               tests/admin_portal/tunnel_settings
-            parallel: "2"
 
           - name: pos-hardware
             path: >-
@@ -144,8 +140,8 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 4  (267 tests)
@@ -170,5 +166,5 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
