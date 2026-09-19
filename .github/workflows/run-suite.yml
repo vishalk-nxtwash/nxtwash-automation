@@ -60,7 +60,7 @@ jobs:
           # Chrome writes a temp profile (~50-100 MB) per instance; they
           # accumulate in /tmp when a test run is killed mid-flight.
           rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
@@ -99,6 +99,38 @@ jobs:
         run: |
           printf '%s\n' "$DOTENV" > .env
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
+
+      - name: Pre-download ChromeDriver
+        run: |
+          # Download ChromeDriver once in the main process and export its path.
+          # xdist workers inherit CHROMEDRIVER_PATH and skip the WDM network
+          # check entirely — each worker was previously downloading independently.
+          python3.11 - <<'PYEOF'
+          import os
+          from webdriver_manager.chrome import ChromeDriverManager
+          path = ChromeDriverManager().install()
+          print(f"ChromeDriver pre-downloaded: {path}")
+          env_file = os.environ.get("GITHUB_ENV", "")
+          if env_file:
+              with open(env_file, "a") as f:
+                  f.write(f"CHROMEDRIVER_PATH={path}\n")
+          PYEOF
+
+      - name: Spot interruption watchdog
+        run: |
+          (
+            while true; do
+              CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+                http://169.254.169.254/latest/meta-data/spot/termination-time \
+                --connect-timeout 1 --max-time 2)
+              if [ "$CODE" = "200" ]; then
+                echo "::warning::Spot interruption detected — stopping pytest gracefully."
+                pkill -SIGTERM -f pytest || true
+                break
+              fi
+              sleep 5
+            done
+          ) &
 
       - name: Run tests (headless)
         env:

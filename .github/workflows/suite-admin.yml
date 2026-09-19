@@ -24,13 +24,13 @@ concurrency:
   cancel-in-progress: false
 
 # ──────────────────────────────────────────────────────────────────────────────
-# WAVE 1  (243 + 281 + 286 = 810 tests)
+# WAVE 1  (243 + 95 + 186 + 286 = 810 tests)
 # ──────────────────────────────────────────────────────────────────────────────
 jobs:
   wave-1:
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 4
       matrix:
         shard:
           - name: wash-services
@@ -40,12 +40,21 @@ jobs:
               tests/admin_portal/wash_extras
             timeout: 180
 
-          - name: people
+          # 95 tests — customers only (managed fixture, slow index lag)
+          # Separated from HR so the managed-customer serialisation group does not
+          # block 186 independent employee/labor_shift tests.
+          - name: people-customers
+            path: tests/admin_portal/customers
+            parallel: "2"
+            timeout: 120
+
+          # 186 tests — employees + labor_shifts (no managed record contention)
+          - name: people-hr
             path: >-
-              tests/admin_portal/customers
               tests/admin_portal/employees
               tests/admin_portal/labor_shifts
-            timeout: 180
+            parallel: "3"
+            timeout: 90
 
           - name: revenue-metrics
             path: >-
