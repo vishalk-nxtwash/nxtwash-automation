@@ -284,17 +284,36 @@ def reset_managed_membership(browser):
     try:
         memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
 
-        # Reset only the fields that tests actually mutate.  Skipping fill_membership_form()
-        # (location grid ops) and clear_applicable_discounts() (Discount tab navigation)
-        # saves ~4-6 min per fixture cycle on slow staging — the root cause of the 90 min
-        # CI job timeout.
-        memberships_page.ensure_active_switch_on()
-        memberships_page.ensure_customer_portal_switch_on()
-        memberships_page.set_global_price(GLOBAL_PRICE)
-        memberships_page.set_global_commission(GLOBAL_COMMISSION)
+        # Reset only the fields that tests actually mutate.  Skip individual
+        # writes when the field is already at baseline; skip the save entirely
+        # when no field changed — saves ~30-60 s per clean fixture cycle.
+        needs_save = False
+
+        if not memberships_page.active_switch_is_on():
+            memberships_page.ensure_active_switch_on()
+            needs_save = True
+
+        if not memberships_page.customer_portal_switch_is_on():
+            memberships_page.ensure_customer_portal_switch_on()
+            needs_save = True
+
+        if memberships_page.get_global_price_value() != str(GLOBAL_PRICE):
+            memberships_page.set_global_price(GLOBAL_PRICE)
+            needs_save = True
+
+        if memberships_page.get_global_commission_value() != str(GLOBAL_COMMISSION):
+            memberships_page.set_global_commission(GLOBAL_COMMISSION)
+            needs_save = True
+
         memberships_page.open_membership_settings()
-        memberships_page.set_barcode("")
-        memberships_page.save_and_return_to_list()
+        if memberships_page.get_barcode_value() != "":
+            memberships_page.set_barcode("")
+            needs_save = True
+
+        if needs_save:
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
     finally:
         # Clear any residual filters (e.g. inactive-only from _show_inactive_memberships)
         # so the next test sees a clean default list view.

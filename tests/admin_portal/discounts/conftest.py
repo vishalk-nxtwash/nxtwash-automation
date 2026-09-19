@@ -203,19 +203,40 @@ def reset_managed_discount(browser):
             discounts_page = open_discounts_page(browser)
 
     # Reset mutable fields touched by tests back to a known baseline.
-    # ensure_all_locations_switch_off() must run before save: if a previous
-    # run left all-locations=on, saving with it on triggers BUG 4 and times out.
+    # Skip individual writes when the field is already correct; skip the save
+    # entirely when nothing changed — saves ~30-60 s per clean fixture cycle.
+    # ensure_all_locations_switch_off() must run before save: if a previous run
+    # left all-locations=on, saving with it on triggers BUG 4 and times out.
     discounts_page.open_edit_discount(MANAGED_DISCOUNT)
-    discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
-    discounts_page.select_amount_discount_type()
+
     if found_inactive:
-        # Opening an inactive record: wait for the form to hydrate to the actual
-        # inactive state before activating to avoid the aria-checked race.
+        # Wait for the form to hydrate to inactive state before reading the
+        # switch to avoid the aria-checked race on slow staging.
         discounts_page.wait_for_active_switch_settled(expected_on=False, timeout=10)
-    discounts_page.ensure_active_switch_on()
-    discounts_page.ensure_all_locations_switch_off()
-    discounts_page.click_save_discount()
-    discounts_page.wait_for_list_loaded()
+
+    needs_save = False
+
+    if not discounts_page.active_switch_is_on():
+        discounts_page.ensure_active_switch_on()
+        needs_save = True
+
+    if not discounts_page.amount_discount_type_is_selected():
+        discounts_page.select_amount_discount_type()
+        needs_save = True
+
+    if discounts_page.get_discount_amount_value() != str(DISCOUNT_AMOUNT):
+        discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
+        needs_save = True
+
+    if discounts_page.all_locations_switch_is_on():
+        discounts_page.ensure_all_locations_switch_off()
+        needs_save = True
+
+    if needs_save:
+        discounts_page.click_save_discount()
+        discounts_page.wait_for_list_loaded()
+    else:
+        discounts_page = open_discounts_page(browser)
 
     return discounts_page
 
@@ -247,11 +268,26 @@ def reset_managed_percentage_discount(browser):
         discounts_page = open_discounts_page(browser)
 
     discounts_page.open_edit_discount(MANAGED_PERCENTAGE_DISCOUNT)
-    discounts_page.select_percentage_discount_type()
-    discounts_page.set_discount_amount(PERCENTAGE_AMOUNT)
-    discounts_page.ensure_active_switch_on()
-    discounts_page.click_save_discount()
-    discounts_page.wait_for_list_loaded()
+
+    needs_save = False
+
+    if not discounts_page.percentage_discount_type_is_selected():
+        discounts_page.select_percentage_discount_type()
+        needs_save = True
+
+    if discounts_page.get_discount_amount_value() != str(PERCENTAGE_AMOUNT):
+        discounts_page.set_discount_amount(PERCENTAGE_AMOUNT)
+        needs_save = True
+
+    if not discounts_page.active_switch_is_on():
+        discounts_page.ensure_active_switch_on()
+        needs_save = True
+
+    if needs_save:
+        discounts_page.click_save_discount()
+        discounts_page.wait_for_list_loaded()
+    else:
+        discounts_page = open_discounts_page(browser)
 
     return discounts_page
 
