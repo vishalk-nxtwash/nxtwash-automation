@@ -1,5 +1,16 @@
 name: Admin Suite (staging)
 
+# Full admin-portal suite against STAGING, sharded across 4 sequential waves.
+# Within each wave all shards run in parallel across the 3 self-hosted runners.
+# Waves 2-4 use if: !cancelled() — they proceed even when a prior wave has test
+# failures so you see the full picture in one run; they only skip on a manual cancel.
+#
+# parallel choices (per shard):
+#   "2" + timeout 180  — shards with heavy managed-fixture teardowns
+#   "2"                — shards with light managed fixtures
+#   "3"                — default for mixed CRUD shards
+#   "4"                — pure read-only / report shards (no staging data mutations)
+
 on:
   push:
     branches: [staging]
@@ -13,38 +24,37 @@ concurrency:
   group: admin-suite-staging
   cancel-in-progress: false
 
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 1  (243 + 281 + 286 = 810 tests)
+# ──────────────────────────────────────────────────────────────────────────────
 jobs:
-  admin:
+  wave-1:
     strategy:
       fail-fast: false
-      max-parallel: 6
+      max-parallel: 3
       matrix:
         shard:
-          - name: gift-cards
-            path: tests/admin_portal/gift_cards tests/admin_portal/coupon_packages
+          - name: wash-services
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_books
+              tests/admin_portal/wash_extras
+            parallel: "2"
+            timeout: 180
 
-          # - name: discounts
-          #   path: tests/admin_portal/discounts
-          # - name: memberships
-          #   path: tests/admin_portal/memberships
-          #   parallel: "2"
-          #   timeout: 180
-          - name: wash-packages
-            path: tests/admin_portal/wash_packages
+          - name: people
+            path: >-
+              tests/admin_portal/customers
+              tests/admin_portal/employees
+              tests/admin_portal/labor_shifts
+            parallel: "2"
+            timeout: 180
 
-          # --- queued when ready ---
-          # - name: wash-books
-          #   path: tests/admin_portal/wash_books
-          # - name: wash-extras
-          #   path: tests/admin_portal/wash_extras
-          # - name: sites
-          #   path: tests/admin_portal/sites
-          # - name: service-categories
-          #   path: tests/admin_portal/service_categories
-          # - name: overview
-          #   path: tests/admin_portal/overview
-          # - name: login
-          #   path: tests/admin_portal/login
+          - name: revenue-metrics
+            path: >-
+              tests/admin_portal/revenue_overview
+              tests/admin_portal/performance_metrics
+            parallel: "4"
 
     uses: ./.github/workflows/run-suite.yml
     secrets:
@@ -53,5 +63,116 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '1' }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 2  (191 + 267 + 260 = 718 tests)
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-2:
+    needs: wave-1
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          - name: promotions
+            path: >-
+              tests/admin_portal/gift_cards
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/discounts
+
+          - name: auth-users
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/users
+              tests/admin_portal/user_roles
+              tests/admin_portal/overview
+
+          - name: financial
+            path: >-
+              tests/admin_portal/transactions
+              tests/admin_portal/cash_report
+              tests/admin_portal/general_sales_report
+            parallel: "4"
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 3  (190 + 212 + 206 = 608 tests)
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-3:
+    needs: wave-2
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          - name: memberships-services
+            path: >-
+              tests/admin_portal/memberships
+              tests/admin_portal/custom_services
+              tests/admin_portal/service_categories
+              tests/admin_portal/bank_drop
+            parallel: "2"
+            timeout: 180
+
+          - name: sites-settings
+            path: >-
+              tests/admin_portal/sites
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+            parallel: "2"
+
+          - name: pos-hardware
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/card_declines
+              tests/admin_portal/gas_pump_settings
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 4  (267 tests)
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-4:
+    needs: wave-3
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          - name: activity
+            path: >-
+              tests/admin_portal/wash_activity
+              tests/admin_portal/redemptions
+            parallel: "4"
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
       timeout_minutes: ${{ matrix.shard.timeout || 120 }}
