@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from pages.admin_portal.wash_packages_page import WashPackagesPage
@@ -118,12 +120,34 @@ def create_wash_package_if_missing(browser, package_name=PACKAGE_NAME):
 
 
 def _restore_package_fields(page):
-    """Reset mutable fields to baseline; only touch the Inovua site grid if needed."""
-    page.enter_service_name(PACKAGE_NAME)
-    page.set_loyalty_points(POINTS_AWARDED, POINTS_REDEEMED)
-    page.ensure_active_switch_on()
-    page.set_global_price(GLOBAL_PRICE)
-    page.set_global_commission(GLOBAL_COMMISSION)
+    """Reset mutable fields to baseline; only write fields that differ.
+
+    Returns True if any field was changed and a save is required, False if the
+    record was already at baseline and no save is needed.
+    """
+    needs_save = False
+
+    if page.get_service_name_value() != PACKAGE_NAME:
+        page.enter_service_name(PACKAGE_NAME)
+        needs_save = True
+
+    if (page.get_points_awarded_value() != str(POINTS_AWARDED)
+            or page.get_points_redeemed_value() != str(POINTS_REDEEMED)):
+        page.set_loyalty_points(POINTS_AWARDED, POINTS_REDEEMED)
+        needs_save = True
+
+    if not page.active_switch_is_on():
+        page.ensure_active_switch_on()
+        needs_save = True
+
+    if page.get_global_price_value() != str(GLOBAL_PRICE):
+        page.set_global_price(GLOBAL_PRICE)
+        needs_save = True
+
+    if page.get_global_commission_value() != str(GLOBAL_COMMISSION):
+        page.set_global_commission(GLOBAL_COMMISSION)
+        needs_save = True
+
     if not page.site_is_assigned(ASSIGNMENT_SITE):
         page.assign_site_with_price_and_commission(
             ASSIGNMENT_SITE,
@@ -131,46 +155,67 @@ def _restore_package_fields(page):
             GLOBAL_COMMISSION,
             controller_code=CONTROLLER_CODE,
         )
+        needs_save = True
+
+    return needs_save
 
 
 def _reset_managed_package(browser):
-    """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline."""
-    page = open_wash_packages_page(browser)
-    if page.package_exists(PACKAGE_NAME):
-        page = open_wash_packages_page(browser)
-        page.open_edit_package(PACKAGE_NAME)
-        _restore_package_fields(page)
-        page.save_and_return_to_list()
-        return page
+    """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline.
 
-    # PACKAGE_NAME not found — check whether a prior interrupted run left it
-    # renamed to UPDATED_PACKAGE_NAME; rename it back if so.
-    page = open_wash_packages_page(browser)
-    if page.package_exists(UPDATED_PACKAGE_NAME):
+    Retries with back-off to absorb staging search index lag (the 10 s
+    WebDriverWait in package_exists() is often too short when the server is
+    slow after a write).
+    """
+    for _attempt in range(3):
         page = open_wash_packages_page(browser)
-        page.open_edit_package(UPDATED_PACKAGE_NAME)
-        _restore_package_fields(page)
-        page.save_and_return_to_list()
-        return page
 
-    # Neither name found in active list — test_deactivate may have left the
-    # package inactive.  Show inactive entries and restore if found.
-    page = open_wash_packages_page(browser)
-    try:
-        page.open_filter_panel()
-        page.toggle_active_service_filter()
-        page.apply_filters()
-        for name in (PACKAGE_NAME, UPDATED_PACKAGE_NAME):
-            if page.package_exists(name):
-                page.open_edit_package(name)
-                _restore_package_fields(page)
+        # Active list — PACKAGE_NAME
+        if page.package_exists(PACKAGE_NAME):
+            page = open_wash_packages_page(browser)
+            page.open_edit_package(PACKAGE_NAME)
+            if _restore_package_fields(page):
                 page.save_and_return_to_list()
-                return page
-    except Exception:
-        pass
-    finally:
-        page.clear_active_filters()
+            return open_wash_packages_page(browser)
 
+        # Active list — UPDATED_PACKAGE_NAME (prior run may have renamed it)
+        page = open_wash_packages_page(browser)
+        if page.package_exists(UPDATED_PACKAGE_NAME):
+            page = open_wash_packages_page(browser)
+            page.open_edit_package(UPDATED_PACKAGE_NAME)
+            if _restore_package_fields(page):
+                page.save_and_return_to_list()
+            return open_wash_packages_page(browser)
+
+        # Neither found in active list — test_deactivate may have left it inactive.
+        page = open_wash_packages_page(browser)
+        _found_inactive = False
+        try:
+            page.open_filter_panel()
+            page.toggle_active_service_filter()
+            page.apply_filters()
+            for name in (PACKAGE_NAME, UPDATED_PACKAGE_NAME):
+                if page.package_exists(name):
+                    page.open_edit_package(name)
+                    _restore_package_fields(page)
+                    page.save_and_return_to_list()
+                    _found_inactive = True
+                    break
+        except Exception:
+            pass
+        finally:
+            try:
+                page.clear_active_filters()
+            except Exception:
+                pass
+        if _found_inactive:
+            return open_wash_packages_page(browser)
+
+        # Package not found anywhere — wait for staging index lag before retrying.
+        if _attempt < 2:
+            time.sleep(20 * (_attempt + 1))  # 20 s, then 40 s
+
+    page = open_wash_packages_page(browser)
     page.create_package(
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
