@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from pages.admin_portal.wash_packages_page import WashPackagesPage
@@ -159,46 +161,61 @@ def _restore_package_fields(page):
 
 
 def _reset_managed_package(browser):
-    """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline."""
-    page = open_wash_packages_page(browser)
-    if page.package_exists(PACKAGE_NAME):
-        page = open_wash_packages_page(browser)
-        page.open_edit_package(PACKAGE_NAME)
-        if _restore_package_fields(page):
-            page.save_and_return_to_list()
-            return page
-        return open_wash_packages_page(browser)
+    """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline.
 
-    # PACKAGE_NAME not found — check whether a prior interrupted run left it
-    # renamed to UPDATED_PACKAGE_NAME; rename it back if so.
-    page = open_wash_packages_page(browser)
-    if page.package_exists(UPDATED_PACKAGE_NAME):
+    Retries with back-off to absorb staging search index lag (the 10 s
+    WebDriverWait in package_exists() is often too short when the server is
+    slow after a write).
+    """
+    for _attempt in range(3):
         page = open_wash_packages_page(browser)
-        page.open_edit_package(UPDATED_PACKAGE_NAME)
-        if _restore_package_fields(page):
-            page.save_and_return_to_list()
-            return page
-        return open_wash_packages_page(browser)
 
-    # Neither name found in active list — test_deactivate may have left the
-    # package inactive.  Show inactive entries and restore if found.
-    page = open_wash_packages_page(browser)
-    try:
-        page.open_filter_panel()
-        page.toggle_active_service_filter()
-        page.apply_filters()
-        for name in (PACKAGE_NAME, UPDATED_PACKAGE_NAME):
-            if page.package_exists(name):
-                page.open_edit_package(name)
-                if _restore_package_fields(page):
+        # Active list — PACKAGE_NAME
+        if page.package_exists(PACKAGE_NAME):
+            page = open_wash_packages_page(browser)
+            page.open_edit_package(PACKAGE_NAME)
+            if _restore_package_fields(page):
+                page.save_and_return_to_list()
+            return open_wash_packages_page(browser)
+
+        # Active list — UPDATED_PACKAGE_NAME (prior run may have renamed it)
+        page = open_wash_packages_page(browser)
+        if page.package_exists(UPDATED_PACKAGE_NAME):
+            page = open_wash_packages_page(browser)
+            page.open_edit_package(UPDATED_PACKAGE_NAME)
+            if _restore_package_fields(page):
+                page.save_and_return_to_list()
+            return open_wash_packages_page(browser)
+
+        # Neither found in active list — test_deactivate may have left it inactive.
+        page = open_wash_packages_page(browser)
+        _found_inactive = False
+        try:
+            page.open_filter_panel()
+            page.toggle_active_service_filter()
+            page.apply_filters()
+            for name in (PACKAGE_NAME, UPDATED_PACKAGE_NAME):
+                if page.package_exists(name):
+                    page.open_edit_package(name)
+                    _restore_package_fields(page)
                     page.save_and_return_to_list()
-                    return page
-                return open_wash_packages_page(browser)
-    except Exception:
-        pass
-    finally:
-        page.clear_active_filters()
+                    _found_inactive = True
+                    break
+        except Exception:
+            pass
+        finally:
+            try:
+                page.clear_active_filters()
+            except Exception:
+                pass
+        if _found_inactive:
+            return open_wash_packages_page(browser)
 
+        # Package not found anywhere — wait for staging index lag before retrying.
+        if _attempt < 2:
+            time.sleep(20 * (_attempt + 1))  # 20 s, then 40 s
+
+    page = open_wash_packages_page(browser)
     page.create_package(
         PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
         GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
