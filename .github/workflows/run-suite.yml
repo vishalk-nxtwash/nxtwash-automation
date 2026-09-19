@@ -74,7 +74,7 @@ jobs:
           # Chrome writes a temp profile (~50-100 MB) per instance; they
           # accumulate in /tmp when a test run is killed mid-flight.
           rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
@@ -153,6 +153,22 @@ jobs:
                   f.write(f"CHROMEDRIVER_PATH={path}\n")
           PYEOF
 
+      - name: Spot interruption watchdog
+        run: |
+          (
+            while true; do
+              CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+                http://169.254.169.254/latest/meta-data/spot/termination-time \
+                --connect-timeout 1 --max-time 2)
+              if [ "$CODE" = "200" ]; then
+                echo "::warning::Spot interruption detected — stopping pytest gracefully."
+                pkill -SIGTERM -f pytest || true
+                break
+              fi
+              sleep 5
+            done
+          ) &
+
       - name: Run tests (headless)
         env:
           HEADLESS: "1"
@@ -203,20 +219,3 @@ jobs:
         with:
           paths: reports/results.xml
         continue-on-error: true
-
-      - name: Post-run cleanup
-        if: always()
-        run: |
-          # Remove large artifact dirs so they don't accumulate on the runner
-          # disk between runs.
-          rm -rf reports/allure-results reports/allure-report \
-                 reports/screenshots reports/logs \
-                 reports/report.html reports/results.xml \
-                 2>/dev/null || true
-          pkill -f "chrome" || true
-          pkill -f "chromedriver" || true
-          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
-                 2>/dev/null || true
-          echo "=== Disk after cleanup ==="
-          df -h /

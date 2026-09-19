@@ -566,6 +566,38 @@ class CustomersPage(BasePage):
         except TimeoutException:
             pass  # Best-effort; proceed even if state cannot be confirmed
 
+    def ensure_active_filter_on(self):
+        """Turn ON the 'Active accounts only' toggle if it is currently off."""
+        try:
+            inp = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
+            )
+        except TimeoutException:
+            return
+        if inp.is_selected():
+            return  # Already on
+        try:
+            wrapper = self.driver.find_element(
+                By.XPATH,
+                "//input[@name='isActive']/ancestor::*[@aria-checked][1]",
+            )
+            self.driver.execute_script("arguments[0].click();", wrapper)
+        except Exception:  # noqa: BLE001
+            parent = self.driver.execute_script(
+                "return arguments[0].closest('label') || arguments[0].parentElement;",
+                inp,
+            )
+            if parent:
+                self.driver.execute_script("arguments[0].click();", parent)
+        try:
+            WebDriverWait(self.driver, 3).until(
+                lambda d: d.find_element(
+                    *self.FILTER_ACTIVE_ACCOUNTS_SWITCH
+                ).is_selected()
+            )
+        except TimeoutException:
+            pass
+
     def _filter_type_in(self, locator, value):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
@@ -1100,13 +1132,14 @@ class CustomersPage(BasePage):
         self.driver.execute_script("arguments[0].click();", edit_btn)
         self.wait_for_edit_loaded()
 
-    def filter_by_email_and_open_edit(self, email, max_wait=300):
+    def filter_by_email_and_open_edit(self, email, max_wait=60):
         """Filter by email (active-only ON) and open the first row's edit form.
 
         Retries every 15 s to absorb staging search-index lag after customer
         creation or reactivation. max_wait caps the total retry window (default
-        300 s — generous enough for staging's slow index). Raises TimeoutException
-        with a descriptive message when the deadline expires with 0 rows.
+        60 s — create_customer_if_missing already waits for index readiness before
+        calling this). Raises TimeoutException with a descriptive message when
+        the deadline expires with 0 rows.
         """
         deadline = time.time() + max_wait
         first_attempt = True
@@ -1118,6 +1151,7 @@ class CustomersPage(BasePage):
                 self.wait_for_list_loaded()
             first_attempt = False
             self.open_filter_panel()
+            self.ensure_active_filter_on()
             self.filter_by_email(email)
             self.apply_filters()
             if self.get_visible_row_count() > 0:

@@ -134,6 +134,7 @@ def create_customer_if_missing(browser):
 
     # ── Phase 1: quick check — is customer active with the correct name? ──────
     page.open_filter_panel()
+    page.ensure_active_filter_on()
     page.filter_by_email(CUSTOMER_EMAIL)
     page.apply_filters()
 
@@ -225,6 +226,30 @@ def create_customer_if_missing(browser):
 
     # ── Restore: reactivate and/or correct the name ───────────────────────────
     _restore_customer_state(browser)
+
+    # Verify the customer is now visible as active before declaring success.
+    # Staging's search index can lag 15–45 s after a save/reactivation, so
+    # poll with back-off rather than returning immediately.
+    for _delay in (0, 15, 30, 45):
+        if _delay:
+            time.sleep(_delay)
+        try:
+            _v = open_customers_page(browser)
+            _v.open_filter_panel()
+            _v.ensure_active_filter_on()
+            _v.filter_by_email(CUSTOMER_EMAIL)
+            _v.apply_filters()
+            if _v.get_visible_row_count() > 0:
+                break
+        except Exception:
+            pass
+    else:
+        raise RuntimeError(
+            f"Customer '{CUSTOMER_EMAIL}' still not visible as active after "
+            f"restoration (90 s total). Check that click_save_customer() "
+            f"submitted on this environment — look for a visible form error."
+        )
+
     page = open_customers_page(browser)
     page._reset_active_filter_if_present()
     return page

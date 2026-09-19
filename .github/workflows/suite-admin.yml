@@ -24,14 +24,14 @@ concurrency:
   cancel-in-progress: false
 
 # ── Wave 1 ────────────────────────────────────────────────────────────────────
-# All 3 runners fire immediately.
+# All 4 runners fire immediately.
 # Wash services first: managed-fixture teardowns are the longest per-test cost
 # and finishing them early frees runners sooner for lighter waves.
 jobs:
   wave1:
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 4
       matrix:
         shard:
           # 243 tests — wash_packages (26 managed) + wash_books + wash_extras
@@ -45,16 +45,21 @@ jobs:
             parallel: "2"
             timeout: 180
 
-          # 281 tests — customers (managed) + employees (managed) + labor_shifts
-          # parallel=2 + timeout=180: managed_customer reset can take ~390 s on
-          # a slow staging search index; 120 min was routinely exceeded.
-          - name: people
+          # 95 tests — customers only (managed fixture, slow index lag)
+          # Separated from HR so the managed-customer serialisation group does not
+          # block 186 independent employee/labor_shift tests.
+          - name: people-customers
+            path: tests/admin_portal/customers
+            parallel: "2"
+            timeout: 120
+
+          # 186 tests — employees + labor_shifts (no managed record contention)
+          - name: people-hr
             path: >-
-              tests/admin_portal/customers
               tests/admin_portal/employees
               tests/admin_portal/labor_shifts
-            parallel: "2"
-            timeout: 180
+            parallel: "3"
+            timeout: 90
 
           # 286 tests — revenue_overview + performance_metrics
           # Read-only report shards; parallel=4 for extra IO throughput.
