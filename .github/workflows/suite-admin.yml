@@ -14,6 +14,11 @@ on:
   push:
     branches: [staging]
   workflow_dispatch:
+    inputs:
+      waves:
+        description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Default: all.'
+        required: false
+        default: 'all'
   schedule:
     - cron: "0 3 * * 0"
   repository_dispatch:
@@ -28,6 +33,7 @@ concurrency:
 # ──────────────────────────────────────────────────────────────────────────────
 jobs:
   wave-1:
+    if: inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -76,7 +82,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-2:
     needs: wave-1
-    if: ${{ !cancelled() }}
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2'))
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -116,7 +122,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-3:
     needs: wave-2
-    if: ${{ !cancelled() }}
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '3'))
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -157,7 +163,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-4:
     needs: wave-3
-    if: ${{ !cancelled() }}
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '4'))
     strategy:
       fail-fast: false
       max-parallel: 3
