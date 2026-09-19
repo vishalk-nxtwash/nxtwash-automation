@@ -1,187 +1,192 @@
 name: Admin Suite (staging)
 
-# Full admin-portal suite against STAGING, SHARDED across parallel runners.
-# Each GitHub runner has 2 vCPUs. Browser tests are IO-bound (waiting for DOM
-# renders / network) so -n 3 outperforms -n 2 despite the core count — the 3rd
-# worker runs while the other two are blocked on IO. Read-only report shards
-# use -n 4 for the same reason (no data-mutation contention risk).
-# Splitting across parallel runners (one per shard) brings wall-clock down to
-# ~the slowest shard.
-# Trigger: manual dispatch only (workflow_dispatch).
+# Full admin-portal suite against STAGING, sharded across 3 self-hosted runners
+# in 4 sequential waves.  All 3 runners fire within each wave; Wave N+1 starts
+# only after every shard in Wave N has finished (pass or fail).
+# Domain grouping keeps related failures together in the run summary.
+#
+# Parallelism guide (per shard):
+#   parallel: "2" — shard contains managed fixtures; -n 3 causes contention on
+#                   the shared record and produces >240 s teardown spikes.
+#   parallel: "3" — default for mutation shards without managed record contention.
+#   parallel: "4" — read-only report shards; no mutation risk, extra worker wins
+#                   on IO-bound staging latency.
+#   timeout: 180  — shards with managed fixtures whose full reset can take ~3 min
+#                   per test cycle; 120 min default is routinely exceeded at -n 2.
 
 on:
   workflow_dispatch:
   repository_dispatch:
     types: [staging-deploy-complete]
 
-# One admin staging run at a time (its shards run in parallel within the run);
-# a second run queues rather than racing on shared staging data.
 concurrency:
   group: admin-suite-staging
   cancel-in-progress: false
 
+# ── Wave 1 ────────────────────────────────────────────────────────────────────
+# All 3 runners fire immediately.
+# Wash services first: managed-fixture teardowns are the longest per-test cost
+# and finishing them early frees runners sooner for lighter waves.
 jobs:
-  # All shards run fully in parallel — each shard runs all tests in its modules
-  # including smoke, regression, and edge cases. No pre-gate needed.
-  admin:
-    if: github.ref == 'refs/heads/staging' || github.event_name == 'repository_dispatch'
+  wave1:
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         shard:
-          # ── Auth & Core ───────────────────────────────────────────────────
-          # ~25 tests — login only (auth injection cleared per-test here)
-          - name: auth-login
-            path: tests/admin_portal/login
-          # ~106 tests — sites + service_categories
-          # parallel=2: managed_category tests have xdist_group so they
-          # serialize on one worker; parallel=2 avoids reference-data contention
-          # on the shared CATEGORY_NAME reference record.
-          - name: auth-sites
+          # 243 tests — wash_packages (26 managed) + wash_books + wash_extras
+          # parallel=2: managed_package fixture serialises on one xdist worker;
+          # -n 3 caused >240 s teardown contention on the shared package record.
+          - name: wash-services
             path: >-
-              tests/admin_portal/sites
-              tests/admin_portal/service_categories
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_books
+              tests/admin_portal/wash_extras
             parallel: "2"
-          # ── Reports (read-only, fully parallel-safe) ──────────────────────
-          # parallel=4: report shards never mutate data so contention-free;
-          # 4 IO-bound workers outperform 3 on 2-vCPU runners.
-          # 139 tests — overview + performance_metrics
-          - name: reports-overview
+            timeout: 180
+
+          # 281 tests — customers (managed) + employees (managed) + labor_shifts
+          # parallel=2 + timeout=180: managed_customer reset can take ~390 s on
+          # a slow staging search index; 120 min was routinely exceeded.
+          - name: people
             path: >-
-              tests/admin_portal/overview
+              tests/admin_portal/customers
+              tests/admin_portal/employees
+              tests/admin_portal/labor_shifts
+            parallel: "2"
+            timeout: 180
+
+          # 286 tests — revenue_overview + performance_metrics
+          # Read-only report shards; parallel=4 for extra IO throughput.
+          - name: revenue-metrics
+            path: >-
+              tests/admin_portal/revenue_overview
               tests/admin_portal/performance_metrics
             parallel: "4"
-          # 100 tests — revenue_overview
-          - name: reports-revenue-a
-            path: tests/admin_portal/revenue_overview
-            parallel: "4"
-          # 83 tests — general_sales_report
-          - name: reports-revenue-b
-            path: tests/admin_portal/general_sales_report
-            parallel: "4"
-          # ~140 tests — cash_report + card_declines
-          - name: reports-financial-a
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ── Wave 2 ────────────────────────────────────────────────────────────────────
+# Starts after all Wave 1 shards finish.  Runs even if Wave 1 had test
+# failures — only a workflow cancellation skips this wave.
+  wave2:
+    needs: wave1
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          # 191 tests — gift_cards (1 managed) + coupon_packages (1 managed) + discounts (16 managed)
+          # parallel=2: discounts managed_discount and managed_percentage_discount
+          # fixtures both use xdist_group serialisation; -n 3 caused save timeouts.
+          - name: promotions
             path: >-
-              tests/admin_portal/cash_report
-              tests/admin_portal/card_declines
-            parallel: "4"
-          # ~122 tests — transactions
-          - name: reports-financial-b
-            path: tests/admin_portal/transactions
-            parallel: "4"
-          # 86 tests — labor_shifts
-          - name: reports-ops-a
-            path: tests/admin_portal/labor_shifts
-            parallel: "4"
-          # ~91 tests — redemptions + wash_activity
-          - name: reports-ops-b
-            path: >-
-              tests/admin_portal/redemptions
-              tests/admin_portal/wash_activity
-            parallel: "4"
-          # ── Wash Catalog ──────────────────────────────────────────────────
-          # ~113 tests — wash_packages; parallel=2: 3 workers caused contention on
-          # shared managed_package record, leading to >240s timeouts under -n 3.
-          - name: wash-packages-a
-            path: tests/admin_portal/wash_packages
-            parallel: "2"
-          # ~44 tests — wash_extras
-          - name: wash-packages-b
-            path: tests/admin_portal/wash_extras
-          # Split from single 127-test wash-catalog shard to reduce wall-clock.
-          # ~63 tests — wash_books; parallel=2 prevents write collision on shared
-          # managed wash book record that caused assert failures under -n 3.
-          - name: wash-catalog-a
-            path: tests/admin_portal/wash_books
-            parallel: "2"
-          # ~64 tests — coupon_packages; parallel=2 same reason as wash-catalog-a.
-          - name: wash-catalog-b
-            path: tests/admin_portal/coupon_packages
-            parallel: "2"
-          # ── Services & Finance ────────────────────────────────────────────
-          # 122 tests — custom_services + gift_cards + bank_drop
-          - name: services
-            path: >-
-              tests/admin_portal/custom_services
               tests/admin_portal/gift_cards
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/discounts
+            parallel: "2"
+
+          # 267 tests — login + users + user_roles + overview
+          # No managed fixtures; -n 3 default is safe.
+          - name: auth-users
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/users
+              tests/admin_portal/user_roles
+              tests/admin_portal/overview
+
+          # 260 tests — transactions + cash_report + general_sales_report
+          # Read-only financial reports; parallel=4 for IO throughput.
+          - name: financial
+            path: >-
+              tests/admin_portal/transactions
+              tests/admin_portal/cash_report
+              tests/admin_portal/general_sales_report
+            parallel: "4"
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ── Wave 3 ────────────────────────────────────────────────────────────────────
+# Starts after all Wave 2 shards finish.
+  wave3:
+    needs: wave2
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          # 190 tests — memberships (17 managed) + custom_services + service_categories (7 managed) + bank_drop
+          # parallel=2 + timeout=180: two managed-fixture groups serialise on
+          # separate xdist workers; combined teardown load needs the extra headroom.
+          - name: memberships-services
+            path: >-
+              tests/admin_portal/memberships
+              tests/admin_portal/custom_services
+              tests/admin_portal/service_categories
               tests/admin_portal/bank_drop
-          # ── Promotions & Loyalty ──────────────────────────────────────────
-          # 73 tests — discounts (split from combined promotions shard that
-          # exceeded the 120-min wall-clock limit when run together)
-          - name: discounts
-            path: tests/admin_portal/discounts
-          # 66 tests — memberships
-          - name: memberships
-            path: tests/admin_portal/memberships
-          # ── Customers ─────────────────────────────────────────────────────
-          # 97 tests — isolated; complex customer-facing flows
-          # timeout: 180 — managed_customer fixture can take up to 390 s per test
-          # when staging search index is slow; 120 min is routinely exceeded.
-          - name: customers
-            path: tests/admin_portal/customers
+            parallel: "2"
             timeout: 180
-          # ── Hardware Settings ─────────────────────────────────────────────
-          # Split from 117-test settings-hw (was 44m wall-clock bottleneck).
-          # kiosk further split because 73 tests at 35m was the new bottleneck.
-          # ~36 tests — kiosk CRUD: create, edit, list, search, filter, edge cases
-          - name: settings-kiosk-a
+
+          # 212 tests — sites + kiosk_settings + tunnel_settings
+          # parallel=2: kiosk managed fixtures contend on shared device record.
+          - name: sites-settings
             path: >-
-              tests/admin_portal/kiosk_settings/test_kiosk_create.py
-              tests/admin_portal/kiosk_settings/test_kiosk_edit.py
-              tests/admin_portal/kiosk_settings/test_kiosk_list.py
-              tests/admin_portal/kiosk_settings/test_kiosk_search.py
-              tests/admin_portal/kiosk_settings/test_kiosk_filter.py
-              tests/admin_portal/kiosk_settings/test_kiosk_edge_cases.py
-              tests/admin_portal/kiosk_settings/test_kiosk_dependencies.py
-          # ~37 tests — kiosk settings panels (device, fleet, flow, gate, etc.)
-          - name: settings-kiosk-b
-            path: >-
-              tests/admin_portal/kiosk_settings/test_kiosk_active_connection.py
-              tests/admin_portal/kiosk_settings/test_kiosk_device_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_fleet_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_flow_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_gate_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_localization_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_middleware_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_service_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_timer_settings.py
-              tests/admin_portal/kiosk_settings/test_kiosk_tunnel_settings.py
-          # ~44 tests — tunnel_settings
-          - name: settings-tunnel
-            path: tests/admin_portal/tunnel_settings
-          # ~17 tests — gas_pump_settings
-          - name: settings-gas-pump
-            path: tests/admin_portal/gas_pump_settings
-          # ── POS & Access Control ──────────────────────────────────────────
-          # 126 tests — pos_settings + user_roles
-          - name: settings-pos
+              tests/admin_portal/sites
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+            parallel: "2"
+
+          # 206 tests — pos_settings + card_declines + gas_pump_settings
+          # No managed fixtures with write contention; -n 3 default.
+          - name: pos-hardware
             path: >-
               tests/admin_portal/pos_settings
-              tests/admin_portal/user_roles
-          # ── People & HR ───────────────────────────────────────────────────
-          # ~77 tests — users
-          - name: people-users
-            path: tests/admin_portal/users
-          # ~45 tests — employees CRUD (create, edit, edge cases, export)
-          # parallel=2: 3 workers caused contention on shared managed_employee
-          # record, leading to >240s timeouts in edit/edge-case tests under -n 3.
-          - name: people-employees-a
+              tests/admin_portal/card_declines
+              tests/admin_portal/gas_pump_settings
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '3' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 120 }}
+
+# ── Wave 4 ────────────────────────────────────────────────────────────────────
+# Starts after all Wave 3 shards finish.  Uses 1 of 3 runners.
+  wave4:
+    needs: wave3
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          # 267 tests — wash_activity + redemptions
+          # Read-only activity reports; parallel=4 for IO throughput.
+          - name: activity
             path: >-
-              tests/admin_portal/employees/test_employees_create.py
-              tests/admin_portal/employees/test_employees_edit.py
-              tests/admin_portal/employees/test_employees_edge_cases.py
-              tests/admin_portal/employees/test_employees_export.py
-            parallel: "2"
-          # ~42 tests — employees read + all shift tests
-          - name: people-employees-b
-            path: >-
-              tests/admin_portal/employees/test_employees_list.py
-              tests/admin_portal/employees/test_employees_filter.py
-              tests/admin_portal/employees/test_employees_shift_create.py
-              tests/admin_portal/employees/test_employees_shift_edit.py
-              tests/admin_portal/employees/test_employees_shift_export.py
-              tests/admin_portal/employees/test_employees_shift_filter.py
-              tests/admin_portal/employees/test_employees_shift_list.py
+              tests/admin_portal/wash_activity
+              tests/admin_portal/redemptions
+            parallel: "4"
+
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
