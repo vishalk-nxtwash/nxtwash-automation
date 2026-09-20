@@ -54,9 +54,31 @@ __all__ = [
 
 
 def open_customers_page(browser):
+    # Reset Redux Persist customer filter BEFORE navigation so the page loads
+    # with no filter applied.  Without this, a filter applied by a previous test
+    # can survive via Redux rehydration and hide the managed customer.
+    try:
+        browser.execute_script("""
+            try {
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                tf.customers = { firstName: '', lastName: '', email: '',
+                                 phone: '', isActive: false };
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+        """)
+    except Exception:
+        pass
     open_admin_path(browser, "/customers")
     page = CustomersPage(browser)
     page.wait_for_list_loaded()
+    try:
+        page._reset_active_filter_if_present()
+    except Exception:
+        pass
     return page
 
 

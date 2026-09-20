@@ -52,6 +52,24 @@ SHIFT_SITE = ASSIGNMENT_SITE
 
 
 def open_employees_page(browser):
+    # Reset Redux Persist employee filter BEFORE navigation so the page loads
+    # with no filter applied.  Without this, Redux rehydrates from its initial
+    # state (isActive: true) and the page shows "Active only" before
+    # clear_active_filters() fires — an inactive managed employee is invisible.
+    try:
+        browser.execute_script("""
+            try {
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                tf.employees = { employeeCode: '', isActive: false, status: '' };
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+        """)
+    except Exception:
+        pass
     open_admin_path(browser, "/users/employees")
     page = AdminEmployeesPage(browser)
     page.wait_for_loaded()

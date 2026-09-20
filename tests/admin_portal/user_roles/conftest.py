@@ -33,14 +33,21 @@ BROKEN_STATE_TEXTS = [
 # ── Internal helpers ──────────────────────────────────────────────────────────
 
 def _clear_filter_storage(browser):
-    """Remove userRoles entry from the persisted Redux filter state."""
+    """Reset the persisted Redux userRoles filter to a known-clean state.
+
+    Deleting the key lets Redux fall back to its reducer initial state, which
+    has isActive: true (active-only on) — an inactive managed role becomes
+    invisible on the next test's page load.  Setting it to an explicit clean
+    object (isActive: false, no name, no site) guarantees all roles are shown
+    when Redux rehydrates, even if the default Redux state differs.
+    """
     try:
         browser.execute_script("""
             try {
                 var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
                 var tfr = JSON.parse(root.tableFilterReducer || '{}');
                 var tf = tfr.tableFilters || {};
-                delete tf.userRoles;
+                tf.userRoles = { roleName: '', isActive: false, site: '' };
                 tfr.tableFilters = tf;
                 root.tableFilterReducer = JSON.stringify(tfr);
                 localStorage.setItem('persist:root', JSON.stringify(root));

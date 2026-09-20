@@ -44,7 +44,7 @@ jobs:
               tests/admin_portal/wash_packages
               tests/admin_portal/wash_books
               tests/admin_portal/wash_extras
-            timeout: 180
+            timeout: 220
 
           # 95 tests — customers only (managed fixture, slow index lag)
           # Separated from HR so the managed-customer serialisation group does not
@@ -78,14 +78,17 @@ jobs:
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
-# WAVE 2  (191 + 267 + 260 = 718 tests)
+# WAVE 2  (191 + ~120 + ~150 + 260 = ~721 tests)
+# auth-users split: user_roles has 80+ tests with ~75s permission matrix tests
+# each; mixing them with login/users/overview caused the 180-min timeout.
+# auth-roles runs alone so its 150-min budget is not shared with faster tests.
 # ──────────────────────────────────────────────────────────────────────────────
   wave-2:
     needs: wave-1
     if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2'))
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 4
       matrix:
         shard:
           - name: promotions
@@ -98,8 +101,12 @@ jobs:
             path: >-
               tests/admin_portal/login
               tests/admin_portal/users
-              tests/admin_portal/user_roles
               tests/admin_portal/overview
+            timeout: 90
+
+          - name: auth-roles
+            path: tests/admin_portal/user_roles
+            timeout: 180
 
           - name: financial
             path: >-

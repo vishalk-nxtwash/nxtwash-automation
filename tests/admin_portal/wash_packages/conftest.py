@@ -238,11 +238,25 @@ def page_has_no_broken_state(page):
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
 
 
+def _browser_is_alive(browser):
+    """Return True if the WebDriver session responds to a lightweight JS eval."""
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 @pytest.fixture
 def managed_package(browser):
     """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
     page = _reset_managed_package(browser)
     yield page
+    # Skip teardown when Chrome died during the test — the session is gone and
+    # _reset_managed_package's 3-attempt retry loop would waste 60 s of sleep
+    # before failing anyway.  The next test's setup will restore the package.
+    if not _browser_is_alive(browser):
+        return
     try:
         _reset_managed_package(browser)
     except Exception:

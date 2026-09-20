@@ -136,7 +136,6 @@ _QUARANTINE_TIMING = (
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
     "test_wash_packages_edit.py::test_remove_applicable_discount_persists",
     "test_wash_packages_edit.py::test_edit_wash_package_name_persists",
-    "test_wash_packages_edit.py::test_edit_wash_package_global_price_persists",
     "test_wash_packages_export.py::test_wash_packages_export_after_filter",
     "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
     "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
@@ -149,10 +148,6 @@ _QUARANTINE_TIMING = (
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
 _QUARANTINE_SCRIPT = {
-    "test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists":
-        "WP-EDT-003: Staging server silently locks commission for VK AWP006 under the "
-        "active-subscriber data constraint (same root cause as price lock). Remove once "
-        "staging data is reset or the lock is confirmed as product-intended.",
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",
@@ -300,13 +295,11 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     try:
         report = outcome.get_result()
-    except SystemError:
-        # Python 3.11.0–3.11.3 has a CPython bug (AST constructor recursion
-        # depth mismatch) that fires when pytest formats a traceback through
-        # a source file with complex nested expressions.  Catching it here
-        # prevents the INTERNALERROR that would otherwise crash the entire
-        # suite; the test is still recorded as failed by pytest's inner
-        # runner — we just skip our screenshot/capture step for that one.
+    except BaseException:
+        # BaseException catches both the CPython 3.11 AST SystemError and any
+        # signal-driven exception (e.g. pytest-timeout's Failed raised by SIGALRM)
+        # that fires during result extraction.  Either way we skip the capture
+        # step — the test is already recorded as failed by pytest's inner runner.
         return
 
     if report.when != "call":
@@ -316,8 +309,16 @@ def pytest_runtest_makereport(item, call):
     if driver is None:
         return
 
-    if report.failed:
-        _capture_failure(item, driver)
-    elif item.get_closest_marker("visual"):
-        # Record the final on-screen state for visual spec validation.
-        _attach_screenshot(driver, "final-state")
+    # Guard the entire capture block: if SIGALRM fires here (pytest-timeout
+    # interrupt mid-WebDriver socket read), or if Chrome is already dead, the
+    # exception must NOT propagate out of this hook — xdist treats an unhandled
+    # exception from a hookwrapper as a worker crash (INTERNALERROR), which
+    # kills the entire shard session.
+    try:
+        if report.failed:
+            _capture_failure(item, driver)
+        elif item.get_closest_marker("visual"):
+            # Record the final on-screen state for visual spec validation.
+            _attach_screenshot(driver, "final-state")
+    except BaseException:
+        pass
