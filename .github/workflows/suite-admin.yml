@@ -1,7 +1,10 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING, sharded across 4 sequential waves.
-# Within each wave all shards run in parallel across the 3 self-hosted runners.
+# Within each wave up to 3 shards run in parallel (3 self-hosted runners available:
+# admin-staging-01/02/03).  Wave-1 has 4 shards — the 4th queues and starts as soon
+# as the fastest of the first 3 finishes (people-hr ~90 min → queue clears before
+# wash-services 220 min deadline).
 # Waves 2-4 use if: !cancelled() — they proceed even when a prior wave has test
 # failures so you see the full picture in one run; they only skip on a manual cancel.
 #
@@ -36,7 +39,7 @@ jobs:
     if: inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 3
       matrix:
         shard:
           - name: wash-services

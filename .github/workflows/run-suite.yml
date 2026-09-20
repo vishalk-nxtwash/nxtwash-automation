@@ -127,8 +127,15 @@ jobs:
                 http://169.254.169.254/latest/meta-data/spot/termination-time \
                 --connect-timeout 1 --max-time 2)
               if [ "$CODE" = "200" ]; then
-                echo "::warning::Spot interruption detected — stopping pytest gracefully."
-                pkill -SIGTERM -f pytest || true
+                echo "::warning::Spot interruption — killing Chrome and stopping pytest (90s grace)."
+                # 1. Kill Chrome first — teardown hangs waiting for WebDriver if Chrome is alive
+                pkill -9 -f "chrome" 2>/dev/null || true
+                pkill -9 -f "chromedriver" 2>/dev/null || true
+                # 2. Signal pytest to stop collecting new tests and finish current teardown
+                pkill -SIGTERM -f pytest 2>/dev/null || true
+                # 3. Give pytest 90 s to write allure-results; hard-kill if still running
+                sleep 90
+                pkill -9 -f pytest 2>/dev/null || true
                 break
               fi
               sleep 5
