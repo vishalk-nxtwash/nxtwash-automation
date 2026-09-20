@@ -38,7 +38,17 @@ PUMP_IS_CONNECTED = False
 # ---------------------------------------------------------------------------
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_gas_pump_list(browser):
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "gasPumpDevices", "gasPumpSettings")
     open_admin_path(browser, "/gas_pump_settings/device_list")
     page = GasPumpSettingsListPage(browser)
     page.wait_for_loaded()
@@ -197,6 +207,8 @@ def managed_gas_pump(browser):
     """Ensure VK AGP02 exists at the active baseline before each test; restore after."""
     page = ensure_gas_pump_created(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     ensure_gas_pump_created(browser)
 
 

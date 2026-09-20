@@ -45,6 +45,41 @@ _IS_CI = bool(
 AUTOTEST_PREFIX = "CI-AUTOTEST" if _IS_CI else "AUTOTEST"
 
 
+def clear_redux_filters(browser, *table_keys):
+    """Delete named entries from Redux Persist's tableFilterReducer before navigation.
+
+    Prevents the SPA from rehydrating with a stale filter (e.g. active-only ON
+    from a previous test) that would hide inactive managed records the moment the
+    page loads — before any UI-level ``clear_active_filters()`` can fire.
+
+    Each ``table_key`` should match the key used in
+    ``tableFilterReducer.tableFilters`` (camelCase, same as the Redux slice).
+    Deleting the key makes Redux fall back to the reducer initial state; the
+    caller's ``clear_active_filters()`` / ``reset_filters_if_active()`` call
+    then normalises that initial state to "no filter active".
+    """
+    if not table_keys:
+        return
+    try:
+        browser.execute_script(
+            """
+            try {
+                var keys = arguments[0];
+                var root = JSON.parse(localStorage.getItem('persist:root') || '{}');
+                var tfr = JSON.parse(root.tableFilterReducer || '{}');
+                var tf = tfr.tableFilters || {};
+                for (var i = 0; i < keys.length; i++) { delete tf[keys[i]]; }
+                tfr.tableFilters = tf;
+                root.tableFilterReducer = JSON.stringify(tfr);
+                localStorage.setItem('persist:root', JSON.stringify(root));
+            } catch(e) {}
+            """,
+            list(table_keys),
+        )
+    except Exception:
+        pass
+
+
 def managed_name(label):
     """Build a sweeper-identifiable name for a managed record."""
     return "%s %s" % (AUTOTEST_PREFIX, label)
@@ -73,6 +108,14 @@ def managed_resource(reset, ensure=None):
         try:
             yield page
         finally:
+            # Skip teardown when Chrome is dead — reset(browser) would trigger the
+            # upsert helper's full retry/create cycle against an unresponsive driver,
+            # generating a cascade of ERRORs for zero benefit.  The next test's
+            # setup handles restoration from a fresh browser session.
+            try:
+                browser.execute_script("return 1")
+            except Exception:
+                return
             reset(browser)
 
     return _managed_fixture

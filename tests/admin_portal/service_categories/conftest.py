@@ -22,12 +22,15 @@ BROKEN_STATE_TEXTS = [
 
 
 def open_service_categories_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "serviceCategories")
     open_admin_path(browser, "/services/serviceCategories")
-
     page = ServiceCategoriesPage(browser)
     page.wait_for_list_loaded()
-
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     return page
 
 

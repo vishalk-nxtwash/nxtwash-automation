@@ -26,13 +26,12 @@ BROKEN_STATE_TEXTS = [
 
 
 def open_coupon_packages_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "couponPackages")
     open_admin_path(browser, "/services/couponPackages")
-
     page = CouponPackagesPage(browser)
     page.wait_for_list_loaded()
     page.reset_filters()
-
     return page
 
 

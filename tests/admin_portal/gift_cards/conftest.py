@@ -26,7 +26,8 @@ BROKEN_STATE_TEXTS = [
 
 
 def open_gift_cards_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "giftCards")
     open_admin_path(browser, "/services/giftCards")
 
     page = GiftCardsPage(browser)

@@ -281,9 +281,19 @@ def create_customer_if_missing(browser):
 # Fixtures
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 @pytest.fixture
 def managed_customer(browser):
     """Ensure the managed customer exists before the test; restore after."""
     page = create_customer_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     create_customer_if_missing(browser)

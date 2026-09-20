@@ -38,13 +38,12 @@ def page_has_no_broken_state(page):
 
 
 def open_wash_books_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "washBooks")
     open_admin_path(browser, "/services/washBooks")
-
     wash_books_page = WashBooksPage(browser)
     wash_books_page.wait_for_list_loaded()
     wash_books_page.clear_all_filters()
-
     return wash_books_page
 
 

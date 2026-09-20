@@ -27,7 +27,17 @@ NONEXISTENT_KSK_NAME     = _D["search"]["nonexistent"]
 # ---------------------------------------------------------------------------
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_kiosk_page(browser):
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "kiosks", "kioskSettings")
     open_admin_path(browser, "/kiosk_settings/kiosks")
     page = AdminKioskSettingsPage(browser)
     page.wait_for_loaded()
@@ -113,6 +123,8 @@ def managed_kiosk(browser):
             "Reference kiosk '%s' not found in staging — pre-seed required" % KSK_NAME
         )
     yield page
+    if not _browser_is_alive(browser):
+        return
     # Restore kiosk name if an edit test renamed it.
     try:
         restore_page = open_kiosk_page(browser)

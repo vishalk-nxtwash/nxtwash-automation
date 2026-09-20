@@ -47,13 +47,12 @@ def page_has_no_broken_state(page):
 
 
 def open_discounts_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "discounts")
     open_admin_path(browser, "/services/discounts")
-
     discounts_page = DiscountsPage(browser)
     discounts_page.wait_for_list_loaded()
     discounts_page.reset_filters_if_active()
-
     return discounts_page
 
 

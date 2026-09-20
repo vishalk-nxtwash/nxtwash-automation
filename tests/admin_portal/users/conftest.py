@@ -41,7 +41,17 @@ BROKEN_STATE_TEXTS = [
 
 # ── Navigation helpers ────────────────────────────────────────────────────────
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_users_page(browser):
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "users")
     open_admin_path(browser, "/users/users")
     page = AdminUsersPage(browser)
     page.wait_for_loaded()
@@ -183,6 +193,8 @@ def managed_user(browser):
     """Ensure USER_EMAIL user exists at baseline before the test; restore after."""
     page = create_user_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     try:
         create_user_if_missing(browser)
     except Exception as exc:  # noqa: BLE001

@@ -34,7 +34,17 @@ NONEXISTENT_TUNNEL_NAME = _D["search"]["nonexistent"]
 # ---------------------------------------------------------------------------
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_tunnel_list(browser):
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "tunnels", "tunnelSettings")
     open_admin_path(browser, "/tunnel_settings/tunnels")
     page = TunnelSettingsListPage(browser)
     page.wait_for_loaded()
@@ -220,6 +230,8 @@ def managed_tunnel(browser):
     """Ensure VK AT02 exists with the full fixture config before each test; restore after."""
     page = ensure_tunnel_created(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     ensure_tunnel_created(browser)
 
 

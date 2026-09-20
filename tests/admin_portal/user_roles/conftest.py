@@ -163,9 +163,19 @@ def make_unique_role_name():
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 @pytest.fixture
 def managed_role(browser):
     """Ensure ROLE_NAME exists with baseline settings before the test; restore after."""
     page = create_role_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     create_role_if_missing(browser)

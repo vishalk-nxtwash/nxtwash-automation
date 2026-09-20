@@ -25,13 +25,20 @@ BROKEN_STATE_TEXTS = [
 ]
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_bank_drop_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "bankDrop")
     open_admin_path(browser, "/services/bankDrop")
-
     page = BankDropPage(browser)
     page.wait_for_list_loaded()
-
     return page
 
 
@@ -91,6 +98,8 @@ def managed_edit_bank_drop(browser):
     """Stable fixture for BD-EDT-001: VK EDT002 exists before the test, restored after."""
     page = _reset_edit_bank_drop(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     try:
         _reset_edit_bank_drop(browser)
     except Exception:  # noqa: BLE001
@@ -102,6 +111,8 @@ def managed_bank_drop(browser):
     """Ensure BANK_DROP_NAME exists at baseline before and after the test."""
     page = create_bank_drop_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     # Reset order and active status to baseline so later tests see clean state.
     reset = open_bank_drop_page(browser)
     if reset.bank_drop_exists(BANK_DROP_NAME):

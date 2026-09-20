@@ -52,6 +52,8 @@ def managed_site(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     yield site_data
 
+    if not _browser_is_alive(logged_in_admin_browser):
+        return
     try:
         sites_page = open_sites_page(logged_in_admin_browser)
         if not sites_page.site_exists_in_ui(site_data["site_name"]):
@@ -69,13 +71,24 @@ def managed_site(logged_in_admin_browser):
         )
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_sites_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "sites")
     open_admin_path(browser, "/sites")
-
     sites_page = SitesPage(browser)
     sites_page.wait_for_loaded()
-
+    try:
+        sites_page.reset_filters()
+    except Exception:
+        pass
     return sites_page
 
 

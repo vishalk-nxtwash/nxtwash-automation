@@ -31,13 +31,24 @@ BROKEN_STATE_TEXTS = [
 ]
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_custom_services_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "customServices")
     open_admin_path(browser, "/services/customServices")
-
     page = CustomServicesPage(browser)
     page.wait_for_list_loaded()
-
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     return page
 
 
@@ -109,4 +120,6 @@ def managed_service(browser):
     """Ensure SERVICE_NAME exists at baseline before the test and restore after."""
     page = create_service_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     create_service_if_missing(browser)

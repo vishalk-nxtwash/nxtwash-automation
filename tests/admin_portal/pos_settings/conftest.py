@@ -80,10 +80,24 @@ def get_free_lane(browser, site=POS_SITE):
     return None  # every lane is occupied
 
 
+def _browser_is_alive(browser):
+    try:
+        browser.execute_script("return 1")
+        return True
+    except Exception:
+        return False
+
+
 def open_pos_page(browser):
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "pos", "posSettings")
     open_admin_path(browser, "/pos_settings/pos")
     page = AdminPOSSettingsPage(browser)
     page.wait_for_loaded()
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     return page
 
 
@@ -202,6 +216,8 @@ def _restore_managed_pos(browser):
 def managed_pos(browser):
     page = create_pos_if_missing(browser)
     yield page
+    if not _browser_is_alive(browser):
+        return
     _restore_managed_pos(browser)
 
 

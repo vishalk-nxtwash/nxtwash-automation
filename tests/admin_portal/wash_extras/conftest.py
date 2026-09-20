@@ -27,12 +27,15 @@ BROKEN_STATE_TEXTS = [
 
 
 def open_wash_extras_page(browser):
-
+    from tests.admin_portal._managed import clear_redux_filters
+    clear_redux_filters(browser, "washExtras")
     open_admin_path(browser, "/services/washExtras")
-
     page = WashExtrasPage(browser)
     page.wait_for_list_loaded()
-
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     return page
 
 
