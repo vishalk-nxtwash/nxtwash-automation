@@ -59,8 +59,11 @@ jobs:
           pkill -f "chromedriver" || true
           # Chrome writes a temp profile (~50-100 MB) per instance; they
           # accumulate in /tmp when a test run is killed mid-flight.
-          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
+          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
+                 /tmp/chrome_* \
+                 /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
                  /tmp/scoped_dir* /tmp/.chromium* \
+                 /tmp/pytest-of-* \
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
@@ -194,7 +197,10 @@ jobs:
                  2>/dev/null || true
           pkill -f "chrome" || true
           pkill -f "chromedriver" || true
-          rm -rf /tmp/.com.google.Chrome* /tmp/chrome_* /tmp/.org.chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/org.chromium.Chromium.* \
+          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
+                 /tmp/chrome_* \
+                 /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* \
+                 /tmp/pytest-of-* \
                  2>/dev/null || true
           df -h /
