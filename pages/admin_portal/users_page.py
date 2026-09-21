@@ -45,37 +45,16 @@ class AdminUsersPage(BasePage):
     APPLY_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Apply filters']")
     RESET_ALL_BUTTON = (By.XPATH, "//button[normalize-space()='Reset all']")
 
-    # Filter panel inputs — exclude Inovua grid inline column-filter inputs
-    # (same placeholder text, but those are descendants of .inovua-* containers)
-    FILTER_FIRST_NAME = (
-        By.XPATH,
-        "//input["
-        "(@name='firstName' or @name='first_name' "
-        "or @placeholder='First name' or @placeholder='First Name') "
-        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
-        "]",
-    )
-    FILTER_LAST_NAME = (
-        By.XPATH,
-        "//input["
-        "(@name='lastName' or @name='last_name' "
-        "or @placeholder='Last name' or @placeholder='Last Name') "
-        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
-        "]",
-    )
+    # Filter panel inputs
+    FILTER_FIRST_NAME = (By.XPATH, "//input[@name='firstName' or @name='first_name']")
+    FILTER_LAST_NAME = (By.XPATH, "//input[@name='lastName' or @name='last_name']")
     FILTER_EMAIL = (
         By.XPATH,
-        "//input["
-        "(@name='email' or @name='emailId' or @name='email_id' "
-        "or @placeholder='Email address' or @placeholder='Email Address' "
-        "or @placeholder='Email' or @placeholder='email') "
-        "and not(ancestor::*[contains(@class,'inovua') or contains(@class,'Inovua')])"
-        "]",
+        "//input[@name='email' or @name='emailId' or @name='email_id']",
     )
     FILTER_EMPLOYEE_CODE = (
         By.XPATH,
-        "//input[@name='employeeCode' or @name='employee_code' or @name='empCode' "
-        "or @placeholder='Employee code' or @placeholder='Emp code']",
+        "//input[@name='employeeCode' or @name='employee_code' or @name='empCode']",
     )
     FILTER_SITE_CONTROL = (
         By.XPATH,
@@ -95,8 +74,7 @@ class AdminUsersPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        self._dismiss_page_banner()
-        WebDriverWait(self.driver, 90).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
         self._wait_for_grid_idle()
@@ -122,34 +100,19 @@ class AdminUsersPage(BasePage):
         el.click()
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
-        try:
-            self.wait.until(
-                lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == phone
-            )
-        except TimeoutException:
-            pass  # field value may not settle (React input); grid reaction is the real signal
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == phone
+        )
         self._wait_for_grid_idle()
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        try:
-            self.wait.until(
-                lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
-            )
-        except TimeoutException:
-            pass  # React input may not settle; grid reaction is the real signal
+        self.wait.until(
+            lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
+        )
         self._wait_for_grid_idle()
-        # Grid data arrives before rows are rendered; wait for at least one edit link.
-        try:
-            self.wait.until(
-                lambda d: any(
-                    lnk.is_displayed() for lnk in d.find_elements(*self._EDIT_LINK)
-                )
-            )
-        except TimeoutException:
-            pass  # grid may genuinely be empty (no active users)
 
     # ── Row helpers ───────────────────────────────────────────────────────────
 
@@ -167,7 +130,7 @@ class AdminUsersPage(BasePage):
 
     def wait_for_user_row(self, email):
         return self.wait.until(
-            EC.visibility_of_element_located(self._user_email_cell_locator(email))
+            EC.presence_of_element_located(self._user_email_cell_locator(email))
         )
 
     def get_user_status(self, email):
@@ -189,7 +152,7 @@ class AdminUsersPage(BasePage):
 
     def click_add_user(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
-        self.driver.execute_script("arguments[0].click();", el)
+        el.click()
         self.driver.switch_to.default_content()
 
     _EDIT_LINK = (
@@ -198,7 +161,7 @@ class AdminUsersPage(BasePage):
     )
 
     def open_edit_user(self, email):
-        # Ensure the user's email cell is visible; toggle active=OFF if hidden.
+        # Check if user is visible; if not it may be inactive.
         cells = self.driver.find_elements(*self._user_email_cell_locator(email))
         if not any(c.is_displayed() for c in cells):
             self.toggle_active_filter()
@@ -212,21 +175,20 @@ class AdminUsersPage(BasePage):
                 )
             except TimeoutException:
                 raise TimeoutException("User row not found for email: %s" % email)
-
-        email_cell = self.wait_for_user_row(email)
-        cell_y = email_cell.location["y"]
-
-        # Wait for at least one edit link to render, then pick the link whose Y-position
-        # is closest to the email cell — this handles multi-row grids without relying on
-        # DOM structure (Inovua DataGrid rows are not parent-child related to cells).
+        # Confirm email cell visible, then click the first VISIBLE edit link.
+        # (Inovua DataGrid keeps hidden-row elements in DOM; must skip them.)
+        self.wait_for_user_row(email)
         self.wait.until(
-            lambda d: any(lnk.is_displayed() for lnk in d.find_elements(*self._EDIT_LINK))
+            lambda d: any(
+                lnk.is_displayed()
+                for lnk in d.find_elements(*self._EDIT_LINK)
+            )
         )
-        visible = [lnk for lnk in self.driver.find_elements(*self._EDIT_LINK) if lnk.is_displayed()]
-        if not visible:
-            raise TimeoutException("No edit links visible for email: %s" % email)
-        closest = min(visible, key=lambda lnk: abs(lnk.location["y"] - cell_y))
-        self.driver.execute_script("arguments[0].click();", closest)
+        visible = [
+            lnk for lnk in self.driver.find_elements(*self._EDIT_LINK)
+            if lnk.is_displayed()
+        ]
+        self.driver.execute_script("arguments[0].click();", visible[0])
         self.driver.switch_to.default_content()
 
     # ── Filter panel ──────────────────────────────────────────────────────────
@@ -304,56 +266,15 @@ class AdminUsersPage(BasePage):
     # ── Export ────────────────────────────────────────────────────────────────
 
     def search_user_by_email(self, email):
-        """No email-filter panel — toggle active=OFF so all users (active+inactive) are visible."""
-        # The Users filter panel has no email input; the best narrowing we can do
-        # without knowing the phone is to show everyone and let open_edit_user pick
-        # the right row by Y-coordinate proximity to the email cell.
+        """Use the filter panel to narrow the list to a specific email, then apply."""
         self.open_filter_panel()
-        try:
-            switch = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(self.ACTIVE_FILTER_SWITCH)
-            )
-            if switch.get_attribute("aria-checked") == "true":
-                try:
-                    switch.click()
-                except Exception:
-                    self.driver.execute_script("arguments[0].click();", switch)
-                try:
-                    WebDriverWait(self.driver, 10).until(
-                        EC.visibility_of_element_located(self.FILTER_FIRST_NAME)
-                    )
-                except TimeoutException:
-                    pass
-        except Exception:
-            pass
+        self._enter_filter_field(self.FILTER_EMAIL, email)
         self.apply_filters()
 
-    def user_exists(self, email, timeout=10):
-        """Return True if a user row with this email is visible (active or inactive)."""
-        # No email-filter panel — toggle active=OFF to expose all users, then scan for the cell.
-        self.open_filter_panel()
+    def user_exists(self, email):
+        self.search_user_by_email(email)
         try:
-            switch = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(self.ACTIVE_FILTER_SWITCH)
-            )
-            if switch.get_attribute("aria-checked") == "true":
-                try:
-                    switch.click()
-                except Exception:
-                    self.driver.execute_script("arguments[0].click();", switch)
-                try:
-                    WebDriverWait(self.driver, 10).until(
-                        EC.visibility_of_element_located(self.FILTER_FIRST_NAME)
-                    )
-                except TimeoutException:
-                    pass
-            self.apply_filters()
-        except Exception:
-            pass
-        try:
-            WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(self._user_email_cell_locator(email))
-            )
+            self.wait_for_user_row(email)
             return True
         except TimeoutException:
             return False
@@ -394,11 +315,9 @@ class AdminUserFormPage(BasePage):
     )
     ACTIVE_SWITCH = (
         By.XPATH,
-        # Prefer exact 'Active' label to avoid 'Active employee' when both exist.
-        # Fallback uses no <form> scope — React SPA forms often use <div>, not <form>.
-        "//*[normalize-space()='Active']"
+        "//*[contains(normalize-space(),'Active')]"
         "/ancestor::*[.//button[@role='switch']][1]//button[@role='switch'] | "
-        "//button[@role='switch'][last()]",
+        "//form//button[@role='switch'][1]",
     )
     SAVE_BUTTON = (
         By.XPATH,
@@ -446,7 +365,6 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.driver.switch_to.default_content()
-        self._dismiss_page_banner()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.CREATE_FRAME)
         )
@@ -455,7 +373,6 @@ class AdminUserFormPage(BasePage):
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
-        self._dismiss_page_banner()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.EDIT_FRAME)
         )
@@ -473,15 +390,6 @@ class AdminUserFormPage(BasePage):
     def select_employee(self, employee_name):
         self.select_react_dropdown_option(self.EMPLOYEE_COMBOBOX, employee_name)
 
-    def select_first_available_employee(self):
-        """Open the employee dropdown and pick the first listed option."""
-        combobox = self.wait.until(EC.element_to_be_clickable(self.EMPLOYEE_COMBOBOX))
-        self.driver.execute_script("arguments[0].click();", combobox)
-        option = WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
-        )
-        self.driver.execute_script("arguments[0].click();", option)
-
     def enter_password(self, password):
         self.enter_text(self.PASSWORD_INPUT, password)
 
@@ -491,13 +399,12 @@ class AdminUserFormPage(BasePage):
     def enter_email(self, email):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(email)
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_email_value(self):
         return self.wait.until(

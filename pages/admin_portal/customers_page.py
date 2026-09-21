@@ -529,79 +529,29 @@ class CustomersPage(BasePage):
         return switch.is_selected()
 
     def ensure_active_filter_off(self):
-        """Turn off the 'Active accounts only' filter toggle if it is currently on."""
+        """Turn off the 'Active accounts only' filter toggle if it is on."""
+        # Open the panel first — switch is not in the DOM while the panel is closed.
         self.open_filter_panel()
         try:
-            inp = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
-            )
-        except TimeoutException:
-            return
-        # is_selected() on the hidden checkbox is the authoritative state — it works
-        # regardless of whether the wrapper carries aria-checked or not.
-        if not inp.is_selected():
-            return  # Already off
-        # Click strategy 1: aria-checked wrapper (React Switch pattern).
-        try:
-            wrapper = self.driver.find_element(
-                By.XPATH,
-                "//input[@name='isActive']/ancestor::*[@aria-checked][1]",
-            )
-            self.driver.execute_script("arguments[0].click();", wrapper)
-        except Exception:  # noqa: BLE001
-            # Fallback: climb to the nearest label or direct parent and click that.
-            parent = self.driver.execute_script(
-                "return arguments[0].closest('label') || arguments[0].parentElement;",
-                inp,
-            )
-            if parent:
-                self.driver.execute_script("arguments[0].click();", parent)
-        # Verify with is_selected() — works even when aria-checked is absent.
-        try:
-            WebDriverWait(self.driver, 3).until(
-                lambda d: not d.find_element(
-                    *self.FILTER_ACTIVE_ACCOUNTS_SWITCH
-                ).is_selected()
-            )
-        except TimeoutException:
-            pass  # Best-effort; proceed even if state cannot be confirmed
-
-    def ensure_active_filter_on(self):
-        """Turn ON the 'Active accounts only' toggle if it is currently off."""
-        try:
-            inp = WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(self.FILTER_ACTIVE_ACCOUNTS_SWITCH)
-            )
-        except TimeoutException:
-            return
-        if inp.is_selected():
-            return  # Already on
-        try:
-            wrapper = self.driver.find_element(
-                By.XPATH,
-                "//input[@name='isActive']/ancestor::*[@aria-checked][1]",
-            )
-            self.driver.execute_script("arguments[0].click();", wrapper)
-        except Exception:  # noqa: BLE001
-            parent = self.driver.execute_script(
-                "return arguments[0].closest('label') || arguments[0].parentElement;",
-                inp,
-            )
-            if parent:
-                self.driver.execute_script("arguments[0].click();", parent)
-        try:
-            WebDriverWait(self.driver, 3).until(
+            # aria-checked lives on the wrapper ancestor, not the <input> itself.
+            wrapper = WebDriverWait(self.driver, 5).until(
                 lambda d: d.find_element(
-                    *self.FILTER_ACTIVE_ACCOUNTS_SWITCH
-                ).is_selected()
+                    By.XPATH,
+                    "//input[@name='isActive']/ancestor::*[@aria-checked][1]"
+                )
             )
+            if wrapper.get_attribute("aria-checked") == "false":
+                return
+            self._click_react_switch(wrapper, False)
         except TimeoutException:
             pass
 
     def _filter_type_in(self, locator, value):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
-        self._set_input_value(el, value)
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(value)
 
     def filter_by_first_name(self, name):
         self._filter_type_in(self.FILTER_FIRST_NAME, name)
@@ -650,22 +600,17 @@ class CustomersPage(BasePage):
     def apply_filters(self):
         try:
             # Blur the focused filter input so React commits any typed value
-            # before the Apply handler reads it.
+            # before the Apply handler reads it. JS blur() fires the native
+            # blur event, which React's onBlur picks up in both headed and
+            # headless Chrome.
             self.driver.execute_script(
                 "if (document.activeElement) document.activeElement.blur();"
             )
-            # Use presence_of_element_located (not element_to_be_clickable) so
-            # the button is found even when the filter panel is taller than the
-            # viewport and the Apply button is scrolled below the visible area.
-            # element_to_be_clickable requires the element to be in-viewport on
-            # some WebDriver builds and silently times out in headless Chrome.
-            btn = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(self.APPLY_FILTERS_BUTTON)
+            btn = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
             )
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", btn
-            )
-            time.sleep(0.2)  # Let scroll settle
+            # JS click is coordinate-independent — works correctly in headless
+            # Chrome even when the Apply button sits inside a scrollable panel.
             self.driver.execute_script("arguments[0].click();", btn)
             time.sleep(0.5)  # Give the grid time to start re-rendering
         except TimeoutException:
@@ -1121,48 +1066,6 @@ class CustomersPage(BasePage):
         except TimeoutException:
             return False
 
-    def open_first_visible_edit(self):
-        """Click the Edit button on the first visible table row and wait for the edit form."""
-        row = self.wait.until(
-            EC.visibility_of_element_located((By.XPATH, "//table//tr[td]"))
-        )
-        edit_btn = row.find_element(
-            By.XPATH, ".//button[.//*[normalize-space()='Edit']]"
-        )
-        self.driver.execute_script("arguments[0].click();", edit_btn)
-        self.wait_for_edit_loaded()
-
-    def filter_by_email_and_open_edit(self, email, max_wait=60):
-        """Filter by email (active-only ON) and open the first row's edit form.
-
-        Retries every 15 s to absorb staging search-index lag after customer
-        creation or reactivation. max_wait caps the total retry window (default
-        60 s — create_customer_if_missing already waits for index readiness before
-        calling this). Raises TimeoutException with a descriptive message when
-        the deadline expires with 0 rows.
-        """
-        deadline = time.time() + max_wait
-        first_attempt = True
-        while True:
-            if not first_attempt:
-                time.sleep(15)
-                base = "/".join(self.driver.current_url.split("/")[:3])
-                self.driver.get(base + "/customers")
-                self.wait_for_list_loaded()
-            first_attempt = False
-            self.open_filter_panel()
-            self.ensure_active_filter_on()
-            self.filter_by_email(email)
-            self.apply_filters()
-            if self.get_visible_row_count() > 0:
-                self.open_first_visible_edit()
-                return
-            if time.time() >= deadline:
-                raise TimeoutException(
-                    "filter_by_email_and_open_edit: email '%s' returned 0 rows "
-                    "after %gs of retries — check staging search index." % (email, max_wait)
-                )
-
     def car_row_visible(self, plate):
         try:
             self.wait.until(
@@ -1174,56 +1077,6 @@ class CustomersPage(BasePage):
             return True
         except TimeoutException:
             return False
-
-    def get_car_row(self, plate):
-        """Return the cars-list table row containing the given license plate."""
-        return self.wait.until(
-            EC.presence_of_element_located((
-                By.XPATH,
-                "//table//tr[td and .//*[contains(normalize-space(),'%s')]]" % plate,
-            ))
-        )
-
-    def car_row_has_text(self, plate, text):
-        """Return True if the car row for the given plate contains specific text."""
-        try:
-            row = self.get_car_row(plate)
-            return text.lower() in row.text.lower()
-        except Exception:  # noqa: BLE001
-            return False
-
-    def _confirm_action_dialog(self):
-        """Accept a Yes/Confirm dialog that may appear after a destructive action."""
-        try:
-            btn = WebDriverWait(self.driver, 3).until(
-                EC.element_to_be_clickable((
-                    By.XPATH,
-                    "//*[@role='dialog']//button[normalize-space()='Yes'"
-                    " or normalize-space()='Confirm'"
-                    " or normalize-space()='OK']",
-                ))
-            )
-            self.driver.execute_script("arguments[0].click();", btn)
-        except TimeoutException:
-            pass
-
-    def blacklist_car_from_row(self, plate):
-        """Click the Blacklist button on the car row for the given plate."""
-        row = self.get_car_row(plate)
-        btn = row.find_element(
-            By.XPATH, ".//button[contains(normalize-space(),'Blacklist')]"
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
-        self._confirm_action_dialog()
-
-    def deactivate_car_from_row(self, plate):
-        """Click the Deactivate button on the car row for the given plate."""
-        row = self.get_car_row(plate)
-        btn = row.find_element(
-            By.XPATH, ".//button[contains(normalize-space(),'Deactivate')]"
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
-        self._confirm_action_dialog()
 
     # ─────────────────────────────────────────────────────────────────────────
     # Payment settings
@@ -1329,7 +1182,14 @@ class CustomersPage(BasePage):
             except Exception:  # noqa: BLE001
                 pass  # state/city cascade may vary by environment
         self.click_save_customer()
-        self._wait_for_list_after_save()
+        try:
+            self.wait_for_list_loaded()
+        except TimeoutException:
+            error = self.get_visible_error()
+            raise RuntimeError(
+                "Customer save did not return to list. Page message: %s"
+                % (error or "none visible")
+            ) from None
 
     def create_customer(self, first_name, last_name, site, email=""):
         """Minimal create — required fields only. Use create_full_customer for all fields."""
@@ -1337,33 +1197,6 @@ class CustomersPage(BasePage):
         self.fill_customer_form(first_name, last_name, site, email)
         self.ensure_active_switch_on()
         self.click_save_customer()
-        self._wait_for_list_after_save()
-
-    def _wait_for_list_after_save(self):
-        """Wait for the customers list after a create/save.
-
-        Staging sometimes doesn't auto-redirect within the default 45 s timeout.
-        If that happens, check for a visible error on the form page first (e.g.
-        duplicate email), then navigate explicitly to /customers so the list can
-        load regardless.
-        """
-        try:
-            self.wait_for_list_loaded()
-            return
-        except TimeoutException:
-            pass
-        # Before navigating away, surface any error the form is displaying.
-        # This catches silent failures like "email already in use" that would
-        # otherwise be lost when we redirect to /customers.
-        form_error = self.get_visible_error()
-        if form_error:
-            raise RuntimeError(
-                "Customer save rejected. Form shows: %s" % form_error[:300]
-            ) from None
-        # Explicit fallback: navigate to the list manually.
-        current_url = self.driver.current_url
-        base = "/".join(current_url.split("/")[:3])
-        self.driver.get(base + "/customers")
         try:
             self.wait_for_list_loaded()
         except TimeoutException:

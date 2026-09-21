@@ -48,7 +48,7 @@ class AdminEmployeesPage(BasePage):
     # There is NO status combobox.
     FILTER_FIRST_NAME_INPUT = (By.XPATH, "//input[@name='firstName']")
     FILTER_EMPLOYEE_CODE_INPUT = (By.XPATH, "//input[@name='employeeCode']")
-    FILTER_ACTIVE_SWITCH = (By.XPATH, "//button[@role='switch']")
+    FILTER_ACTIVE_SWITCH = (By.XPATH, "//button[@role='switch' and @value='on']")
     APPLY_FILTERS_BUTTON = (By.XPATH,
         "//button[normalize-space()='Apply filters'] | "
         "//button[normalize-space()='Apply']")
@@ -65,26 +65,11 @@ class AdminEmployeesPage(BasePage):
         "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
-    GRID_LOAD_MASK = (
-        By.CSS_SELECTOR,
-        ".inovua-react-toolkit-load-mask__background-layer",
-    )
-
-    def _wait_for_grid_idle(self):
-        try:
-            self.wait.until(
-                lambda d: not any(
-                    m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
-                )
-            )
-        except Exception:
-            pass
 
     def wait_for_loaded(self):
         self.switch_to_frame_with_retry(self.EMP_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
-        self._wait_for_grid_idle()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -92,21 +77,24 @@ class AdminEmployeesPage(BasePage):
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == last_name
         )
-        self._wait_for_grid_idle()
+        # Allow the grid time to begin filtering before checking LOAD_MASK
+        time.sleep(3)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
-        self._wait_for_grid_idle()
+        time.sleep(3)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     @staticmethod
     def _xpath_string(value):
@@ -235,14 +223,14 @@ class AdminEmployeesPage(BasePage):
     def apply_filters(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
-        self._wait_for_grid_idle()
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def reset_filters(self):
         self.open_filter_panel()
         btn = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
         # Reset All triggers an immediate data reload (no need to click Apply).
-        self._wait_for_grid_idle()
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         # The panel stays open after Reset All; close it so subsequent clicks
         # (e.g. the search input) are not intercepted.
         try:
@@ -275,13 +263,10 @@ class AdminEmployeesPage(BasePage):
         This method opens the panel and resets unconditionally, which is the
         only reliable way to flush a server-side filter state leak.
         """
-        for _attempt in range(2):
-            try:
-                self.reset_filters()
-                return
-            except Exception:
-                if _attempt == 0:
-                    time.sleep(1)
+        try:
+            self.reset_filters()
+        except Exception:
+            pass
 
     def filter_result_count_text(self):
         try:
@@ -390,24 +375,22 @@ class AdminEmployeeFormPage(BasePage):
     def enter_first_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
 
     def enter_last_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
 
     def clear_first_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
-        el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def clear_last_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
-        el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_first_name_value(self):
         return self.wait.until(
@@ -420,15 +403,11 @@ class AdminEmployeeFormPage(BasePage):
         ).get_attribute("value")
 
     def enter_email(self, email):
-        el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.click()
-        el.clear()
-        el.send_keys(email)
+        self.enter_text(self.EMAIL_INPUT, email)
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_email_value(self):
         return self.wait.until(
@@ -436,15 +415,11 @@ class AdminEmployeeFormPage(BasePage):
         ).get_attribute("value")
 
     def enter_phone(self, phone):
-        el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
-        el.click()
-        el.clear()
-        el.send_keys(phone)
+        self.enter_text(self.PHONE_INPUT, phone)
 
     def clear_phone(self):
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
-        el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_phone_value(self):
         return self.wait.until(
@@ -458,10 +433,7 @@ class AdminEmployeeFormPage(BasePage):
         self.enter_text(self.ZIP_INPUT, zip_code)
 
     def enter_employee_code(self, code):
-        el = self.wait.until(EC.element_to_be_clickable(self.EMPLOYEE_CODE_INPUT))
-        el.click()
-        el.clear()
-        el.send_keys(code)
+        self.enter_text(self.EMPLOYEE_CODE_INPUT, code)
 
     def get_employee_code_value(self):
         return self.wait.until(
@@ -481,10 +453,9 @@ class AdminEmployeeFormPage(BasePage):
         self.select_react_dropdown_option(self.LOCATIONS_COMBOBOX, site_name)
 
     def _close_locations_dropdown(self):
-        # Send Escape to close the React Select dropdown, then blur the active
-        # element to dismiss the portal.  Do NOT click FIRST_NAME_INPUT: that
-        # fires a React focus event which can trigger a reconciliation that resets
-        # controlled text-field values to their (empty) RHF store state.
+        # aria-expanded on the combobox container is unreliable in this version of
+        # React Select — always send Escape unconditionally, then click First Name
+        # to force a blur and guarantee the portal is gone before Save is clicked.
         try:
             combobox = self.driver.find_element(*self.LOCATIONS_COMBOBOX)
             inner = combobox.find_elements(By.XPATH, ".//input")
@@ -492,7 +463,10 @@ class AdminEmployeeFormPage(BasePage):
         except Exception:
             pass
         try:
-            self.driver.execute_script("document.activeElement.blur();")
+            self.driver.execute_script(
+                "arguments[0].click();",
+                self.driver.find_element(*self.FIRST_NAME_INPUT)
+            )
             time.sleep(0.3)
         except Exception:
             time.sleep(0.3)
@@ -692,26 +666,11 @@ class AdminEmployeeShiftPage(BasePage):
         "//tr[contains(@class,'row') and not(contains(@class,'header'))]")
     LOAD_MASK = (By.XPATH,
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
-    GRID_LOAD_MASK = (
-        By.CSS_SELECTOR,
-        ".inovua-react-toolkit-load-mask__background-layer",
-    )
-
-    def _wait_for_grid_idle(self):
-        try:
-            self.wait.until(
-                lambda d: not any(
-                    m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
-                )
-            )
-        except Exception:
-            pass
 
     def wait_for_loaded(self):
         self.switch_to_frame_with_retry(self.SHIFT_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
-        self._wait_for_grid_idle()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -728,21 +687,23 @@ class AdminEmployeeShiftPage(BasePage):
     def search_shift(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
+        el.send_keys(Keys.RETURN)
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == last_name
         )
-        self._wait_for_grid_idle()
+        time.sleep(1)
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SHIFT_SEARCH_INPUT))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SHIFT_SEARCH_INPUT).get_attribute("value") == ""
         )
-        self._wait_for_grid_idle()
+        self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
 
     def click_add_shift(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ADD_SHIFT_BUTTON))
@@ -770,7 +731,7 @@ class AdminEmployeeShiftPage(BasePage):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(self.FILTER_FIRST_NAME))
         el.click()
-        el.clear()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(first_name)
 
     def filter_by_site(self, site_name):

@@ -76,13 +76,11 @@ def test_wash_package_required_price_validation(browser):
 @pytest.mark.regression
 @pytest.mark.validation
 @pytest.mark.xfail(
-    strict=False,
     reason=(
-        "WP-PRI-005: The form fires 'Please select at least one location' before "
-        "per-field HTML5 validation, so global_price_input_is_valid() never sees an "
-        "invalid state when no location is selected. Unblock by pre-selecting a site "
-        "or by adding a min=0 attribute on the global price input server-side."
+        "WP-PRI-005: Price input has no min=0 HTML5 constraint — negative values "
+        "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
     ),
+    strict=False,
 )
 def test_negative_global_price_is_rejected(browser):
     page = open_wash_packages_page(browser)
@@ -99,13 +97,11 @@ def test_negative_global_price_is_rejected(browser):
 @pytest.mark.regression
 @pytest.mark.validation
 @pytest.mark.xfail(
-    strict=False,
     reason=(
-        "WP-COM-003: The form fires 'Please select at least one location' before "
-        "per-field HTML5 validation, so global_commission_input_is_valid() never sees "
-        "an invalid state when no location is selected. Unblock by pre-selecting a site "
-        "or by adding a min=0 attribute on the global commission input server-side."
+        "WP-COM-003: Commission input has no min=0 HTML5 constraint — negative values "
+        "pass checkValidity(). Product should enforce min=0. Remove xfail once fixed."
     ),
+    strict=False,
 )
 def test_negative_global_commission_is_rejected(browser):
     page = open_wash_packages_page(browser)

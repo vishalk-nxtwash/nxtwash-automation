@@ -1,5 +1,0 @@
-2026-07-10 15:18:52,887 INFO nxtwash: Test run starting against 'staging' environment
-============================= test session starts ==============================
-collecting ... collected 100 items
-
-tests/admin_portal/revenue_overview/test_revenue_overview.py::test_page_loads_at_correct_url 

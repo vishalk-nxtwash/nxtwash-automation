@@ -88,6 +88,8 @@ def create_kiosk_if_missing(browser, name=KSK_NAME, site=KSK_SITE, lane=KSK_LANE
     form.select_site(site)
     form.select_lane(lane)
     form.enter_middleware_ip(KSK_MIDDLEWARE_IP)
+    form.click_generate_connection_code()
+    form.click_close_code_modal()
     form.click_save()
     page = open_kiosk_page(browser)
     page.search_kiosk(name)
@@ -102,26 +104,9 @@ def create_kiosk_if_missing(browser, name=KSK_NAME, site=KSK_SITE, lane=KSK_LANE
 
 @pytest.fixture
 def managed_kiosk(browser):
-    """Provides a page pointed at the pre-seeded reference kiosk.
-
-    Skips cleanly if the kiosk is absent.  Teardown restores the kiosk name
-    in case an edit test renamed it (KSK_NAME → KSK_UPDATED_NAME).
-    """
-    page = open_kiosk_page(browser)
-    if not page.kiosk_exists(KSK_NAME):
-        pytest.skip(
-            "Reference kiosk '%s' not found in staging — pre-seed required" % KSK_NAME
-        )
+    page = create_kiosk_if_missing(browser)
     yield page
-    # Restore kiosk name if an edit test renamed it.
-    try:
-        restore_page = open_kiosk_page(browser)
-        if not restore_page.kiosk_exists(KSK_NAME) and restore_page.kiosk_exists(KSK_UPDATED_NAME):
-            form = open_edit_kiosk_form(browser, KSK_UPDATED_NAME)
-            form.enter_kiosk_name(KSK_NAME)
-            form.click_save()
-    except Exception:
-        pass
+    create_kiosk_if_missing(browser)
 
 
 @pytest.fixture

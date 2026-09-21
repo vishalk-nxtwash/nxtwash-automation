@@ -511,11 +511,11 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        # JS .select() clears the field without CTRL+A, which is intercepted by
-        # the Inovua global keydown handler inside the legacy iframe.
-        self.driver.execute_script(
-            "arguments[0].click(); arguments[0].select();", discount_input
-        )
+        # element.send_keys() targets the element directly and works inside
+        # iframes; ActionChains targets the browser's "focused" element and
+        # can lose the iframe context between chained actions.
+        discount_input.click()
+        discount_input.send_keys(Keys.CONTROL + 'a')
         discount_input.send_keys(str(value))
 
         def _value_matches(driver):
@@ -667,11 +667,7 @@ class DiscountsPage(BasePage):
     def fill_required_unassigned_location_values(self):
         """Fill required discount values for unassigned locations."""
         for row_index in range(1, len(self.get_location_rows())):
-            # Use "1" not "0": the React discount-value input enforces min > 0
-            # and reverts to its previous value when "0" is entered, causing
-            # the _value_matches wait inside set_location_discount_value_by_index
-            # to time out.
-            self.set_location_discount_value_by_index(row_index, "1")
+            self.set_location_discount_value_by_index(row_index, "0")
             self.select_location_discount_type_by_index(row_index, "Amount")
 
     def switch_is_on(self, locator):
@@ -694,14 +690,6 @@ class DiscountsPage(BasePage):
         """Return whether Active service switch is on."""
         return self.switch_is_on(self.ACTIVE_SWITCH)
 
-    def wait_for_active_switch_settled(self, expected_on, timeout=None):
-        """Wait for the active switch to reflect its actual state after form hydration."""
-        from selenium.webdriver.support.ui import WebDriverWait
-        aria = "true" if expected_on else "false"
-        locator = self.ACTIVE_SWITCH
-        wait = WebDriverWait(self.driver, timeout) if timeout is not None else self.wait
-        wait.until(lambda d: d.find_element(*locator).get_attribute("aria-checked") == aria)
-
     def all_locations_switch_is_on(self):
         """Return whether Allow discount at all locations switch is on."""
         return self.switch_is_on(self.ALL_LOCATIONS_SWITCH)
@@ -723,21 +711,10 @@ class DiscountsPage(BasePage):
 
     def set_discount_start(self, day, time_text):
         """Set discount start date in the visible date picker."""
-        from datetime import date as _date
         start_date = self.wait.until(
             EC.element_to_be_clickable(self.DATE_INPUTS)
         )
         start_date.click()
-
-        # If the requested day has already passed this month, advance the
-        # calendar to next month so the server receives a future date.
-        # (The server rejects past start dates; react-datepicker may still
-        # render the cell as clickable even when disabled by CSS.)
-        if int(day) < _date.today().day:
-            self.wait.until(EC.element_to_be_clickable((By.XPATH,
-                "//button[contains(@aria-label,'Next') or "
-                "contains(@class,'react-datepicker__navigation--next')]"
-            ))).click()
 
         day_locator = (
             By.XPATH,
@@ -925,9 +902,7 @@ class DiscountsPage(BasePage):
 
     def click_download_button(self):
         """Click the export/download button."""
-        self._dismiss_page_banner()
-        element = self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON))
-        self.driver.execute_script("arguments[0].click();", element)
+        self.wait.until(EC.element_to_be_clickable(self.DOWNLOAD_BUTTON)).click()
 
     def fill_percentage_discount_form(
         self,

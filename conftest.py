@@ -135,42 +135,23 @@ _QUARANTINE_TIMING = (
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
     "test_wash_packages_edit.py::test_remove_applicable_discount_persists",
-    "test_wash_packages_edit.py::test_edit_wash_package_name_persists",
-    "test_wash_packages_edit.py::test_edit_wash_package_global_price_persists",
     "test_wash_packages_export.py::test_wash_packages_export_after_filter",
     "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
     "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
+    "test_wash_packages_site_assignment.py::test_location_price_override_persists",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
-    "test_wash_extras_site_assignment.py::test_location_price_override_persists",
-    "test_wash_extras_site_assignment.py::test_location_commission_override_persists",
     # Overview tests carry their own in-code xfail(strict=False) markers
     # (legacy Overview iframe), so they are not listed here.
 )
 
 # Known script/data issues with specific root causes (nodeid fragment -> reason).
 _QUARANTINE_SCRIPT = {
-    "test_wash_packages_edit.py::test_edit_wash_package_global_commission_persists":
-        "WP-EDT-003: Staging server silently locks commission for VK AWP006 under the "
-        "active-subscriber data constraint (same root cause as price lock). Remove once "
-        "staging data is reset or the lock is confirmed as product-intended.",
     "test_memberships_redemption.py::test_redeem_at_multiple_locations_persists":
         "MB-RDM-002 test-data issue: the service is only configured at one staging "
         "location, so multi-location redemption cannot be exercised.",
     "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
-    "test_custom_services_discount.py::test_multiple_applicable_discounts_can_be_selected":
-        "CS-DSC-003 test-data issue: SECOND_APPLICABLE_DISCOUNT has cycled through "
-        "VK AD01, VK AD02, VK AL01 — none appear in the custom services applicable "
-        "discount combobox. Open the edit form discount tab and check what options "
-        "exist before updating second_applicable_discount in custom_services.json.",
-    "test_users_edit.py::test_deactivate_active_user":
-        "USR-EDT-007: Staging has 10 duplicate vkuser02@yopmail.com user records — "
-        "the app does not enforce email uniqueness so repeated CI runs created "
-        "duplicates. managed_user fixture resets only one instance; 9 active "
-        "duplicates remain visible in the active-only list after the managed one is "
-        "deactivated, causing the assertion to fail. "
-        "Delete duplicate users in staging admin to un-xfail.",
 }
 
 
@@ -223,10 +204,7 @@ def _attach_screenshot(driver, name):
                 attachment_type=allure.attachment_type.PNG,
             )
         return png_path
-    except BaseException as error:  # noqa: BLE001
-        # BaseException catches pytest-timeout's Failed (OutcomeException) which
-        # is not a subclass of Exception — letting it propagate causes INTERNALERROR
-        # inside pytest_runtest_makereport when the browser is dead after a timeout.
+    except Exception as error:  # noqa: BLE001
         LOG.warning("Could not capture screenshot '%s': %s", name, error)
         return None
 
@@ -271,7 +249,7 @@ def _capture_failure(item, driver):
                 attachment_type=allure.attachment_type.TEXT,
             )
         LOG.error("Visible page text at failure:\n%s", body_text[:2000])
-    except BaseException as _err:  # noqa: BLE001
+    except Exception as _err:  # noqa: BLE001
         LOG.warning("Could not capture body text: %s", _err)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -291,7 +269,7 @@ def _capture_failure(item, driver):
             allure.attach(
                 url, name="url", attachment_type=allure.attachment_type.TEXT
             )
-    except BaseException as error:  # noqa: BLE001
+    except Exception as error:  # noqa: BLE001
         LOG.warning("Could not capture page source: %s", error)
 
 

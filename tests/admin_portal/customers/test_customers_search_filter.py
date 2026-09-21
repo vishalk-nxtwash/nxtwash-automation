@@ -19,8 +19,6 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Search and Filter"),
-    pytest.mark.xdist_group(name="managed_customer"),
-    pytest.mark.timeout(600),
 ]
 
 

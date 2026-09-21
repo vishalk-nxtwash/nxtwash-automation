@@ -23,12 +23,15 @@ def test_sites_export_button_clickable(logged_in_admin_browser):
 
 @allure.title("SL-EXP-001 Export file content validation")
 @pytest.mark.regression
-@pytest.mark.skip(
+@pytest.mark.xfail(
     reason=(
         "File/content validation needs browser download-directory configuration "
         "and a CSV/XLS parser. Button clickability is verified above; "
         "full export assertion is deferred."
     ),
+    strict=False,
 )
 def test_sites_export_file_content(logged_in_admin_browser):
-    pass
+    sites_page = open_sites_page(logged_in_admin_browser)
+    assert sites_page.download_button_is_clickable()
+    raise AssertionError("Download file/content validation is not implemented.")

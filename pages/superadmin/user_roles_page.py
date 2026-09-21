@@ -295,7 +295,7 @@ class CreateUserRolePage(BasePage):
 
         return not create_company.is_selected()
 
-    def upsert_role_with_api(self, role_name):
+    def upsert_role_with_api(self, role_name, is_active=True):
         """Create or update role through the authenticated browser session.
 
         The current UI submit omits required empty child permission arrays from
@@ -461,3 +461,117 @@ class CreateUserRolePage(BasePage):
             raise AssertionError(result)
 
         return result["body"]
+
+
+class EditUserRolePage(BasePage):
+
+    ROLE_NAME_INPUT = (
+        By.XPATH,
+        "//input[@name='name' or @name='roleName' or @name='role']"
+    )
+    ROLE_NAME_CLEAR_BUTTON = (
+        By.XPATH,
+        "//input[@name='name' or @name='roleName' or @name='role']"
+        "/following-sibling::button[1]"
+    )
+    SAVE_CHANGES_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Save changes' or normalize-space()='Save']"
+    )
+    CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
+    CONFIRM_YES_BUTTON = (By.XPATH, "//button[normalize-space()='Yes']")
+    CONFIRM_NO_BUTTON = (By.XPATH, "//button[normalize-space()='No']")
+    ACTIVE_TOGGLE = (
+        By.XPATH,
+        "//input[@type='checkbox']"
+        "[ancestor::*[contains(normalize-space(),'Active')]]"
+    )
+    EXPAND_PERMISSION_BUTTONS = CreateUserRolePage.EXPAND_PERMISSION_BUTTONS
+    PERMISSION_CHECKBOXES = CreateUserRolePage.PERMISSION_CHECKBOXES
+
+    def wait_for_loaded(self):
+        self.wait.until(EC.presence_of_element_located(self.ROLE_NAME_INPUT))
+
+    def get_role_name(self):
+        return self.driver.find_element(*self.ROLE_NAME_INPUT).get_attribute("value")
+
+    def set_role_name(self, name):
+        el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
+        el.clear()
+        el.send_keys(name)
+
+    def click_role_name_clear_button(self):
+        self.click(self.ROLE_NAME_CLEAR_BUTTON)
+
+    def click_save_changes(self):
+        self.click(self.SAVE_CHANGES_BUTTON)
+
+    def click_cancel(self):
+        self.click(self.CANCEL_BUTTON)
+
+    def confirm_yes_if_present(self, timeout=6):
+        short_wait = WebDriverWait(self.driver, timeout)
+        try:
+            short_wait.until(
+                EC.element_to_be_clickable(self.CONFIRM_YES_BUTTON)
+            ).click()
+            short_wait.until(
+                EC.invisibility_of_element_located(self.CONFIRM_YES_BUTTON)
+            )
+        except TimeoutException:
+            return
+
+    def confirm_no(self):
+        self.click(self.CONFIRM_NO_BUTTON)
+
+    def get_active_toggle_state(self):
+        try:
+            toggle = self.driver.find_element(*self.ACTIVE_TOGGLE)
+            return toggle.is_selected()
+        except Exception:
+            return None
+
+    def set_active_toggle(self, should_be_active):
+        current = self.get_active_toggle_state()
+        if current == should_be_active:
+            return
+        toggle = self.driver.find_element(*self.ACTIVE_TOGGLE)
+        self.driver.execute_script("arguments[0].click();", toggle)
+
+    def expand_permission_groups(self):
+        if getattr(self, "_permission_groups_expanded", False):
+            return
+        buttons = self.driver.find_elements(*self.EXPAND_PERMISSION_BUTTONS)
+        for button in buttons:
+            try:
+                if not button.is_displayed() or not button.is_enabled():
+                    continue
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});", button
+                )
+                button.click()
+            except StaleElementReferenceException:
+                return
+        self._permission_groups_expanded = True
+
+    def get_permission_checkboxes(self):
+        self.expand_permission_groups()
+        return self.wait.until(
+            lambda driver: (
+                driver.find_elements(*self.PERMISSION_CHECKBOXES)
+                if len(driver.find_elements(*self.PERMISSION_CHECKBOXES)) > 1
+                else False
+            )
+        )
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
+    def wait_for_any_text(self, *texts, timeout=10):
+        texts_lower = [t.lower() for t in texts]
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: any(
+                t in driver.find_element(By.TAG_NAME, "body").text.lower()
+                for t in texts_lower
+            )
+        )

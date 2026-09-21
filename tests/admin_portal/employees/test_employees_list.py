@@ -2,10 +2,8 @@ import allure
 import pytest
 
 from tests.admin_portal.employees.conftest import (
-    EMP_CODE,
     EMP_LAST_NAME,
     NONEXISTENT_LAST_NAME,
-    _find_employee_by_code,
     open_employees_page,
     page_has_no_broken_state,
 )
@@ -77,18 +75,8 @@ def test_shift_status_inactive_when_no_active_shift(browser, managed_employee):
 @allure.title("EMP-LST-004 Status column shows Active/Inactive badge correctly per employee")
 @pytest.mark.regression
 def test_status_column_shows_badge(browser, managed_employee):
-    from selenium.webdriver.common.by import By as _By
     page = open_employees_page(browser)
-    # The lastName search bar is non-functional in the current UI; use the
-    # employee-code filter to locate the row without relying on name search.
-    row = _find_employee_by_code(page, EMP_CODE, timeout=30)
-    assert row is not None, "Managed employee not found via employee-code filter"
-    try:
-        badge = row.find_element(_By.XPATH,
-            ".//*[normalize-space()='Active' or normalize-space()='Inactive']")
-        status = badge.text.strip()
-    except Exception:
-        status = ""
+    status = page.get_employee_status(EMP_LAST_NAME)
 
     assert status in ("Active", "Inactive"), (
         "Status badge must be 'Active' or 'Inactive'; got: '%s'" % status
@@ -152,13 +140,6 @@ def test_results_per_page_updates_rows(browser):
 
 @allure.title("EMP-SRH-001 Search by exact last name returns the matching employee")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — EMP-SRH-001: The inline lastName column filter is non-functional "
-        "in the current UI (typing/Enter/blur produce no server-side filter). "
-        "Same root cause as the EMP-SRH-003 skip. Verify in browser when fixed."
-    )
-)
 def test_search_by_exact_last_name(browser, managed_employee):
     page = open_employees_page(browser)
     page.search_employee(EMP_LAST_NAME)
@@ -172,13 +153,6 @@ def test_search_by_exact_last_name(browser, managed_employee):
 
 @allure.title("EMP-SRH-002 Search by partial last name returns all matching employees")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — EMP-SRH-002: The inline lastName column filter is non-functional "
-        "in the current UI (typing/Enter/blur produce no server-side filter). "
-        "Same root cause as the EMP-SRH-003 skip. Verify in browser when fixed."
-    )
-)
 def test_search_by_partial_last_name(browser, managed_employee):
     partial = EMP_LAST_NAME[:4]
     page = open_employees_page(browser)
@@ -193,11 +167,7 @@ def test_search_by_partial_last_name(browser, managed_employee):
 
 @allure.title("EMP-SRH-003 Searching a non-existent last name shows an empty state")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="Manual — EMP-SRH-003: The inline lastName column filter is non-functional "
-    "in the current UI (typing/Enter/blur produce no server-side filter). "
-    "Verify empty-state behaviour manually in the browser."
-)
+@pytest.mark.skip(reason="Manual — EMP-SRH-003: Empty-state verification requires manual check of filter panel behaviour.")
 def test_search_nonexistent_shows_empty_state(browser):
     page = open_employees_page(browser)
     page.search_employee(NONEXISTENT_LAST_NAME)

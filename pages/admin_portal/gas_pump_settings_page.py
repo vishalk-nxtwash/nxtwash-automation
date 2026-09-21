@@ -481,11 +481,7 @@ class GasPumpSettingsFormPage(BasePage):
                 self.driver.execute_script(
                     "arguments[0].scrollIntoView({block:'center'});", toggle
                 )
-                # JS click bypasses ChromeDriver coordinate-based interception —
-                # the staging Toastify banner (position:fixed in the cross-origin
-                # parent doc) blocks ActionChains.click() at certain viewport
-                # positions even inside iframes.
-                self.driver.execute_script("arguments[0].click();", toggle)
+                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
         except Exception:
             pass
 
@@ -500,7 +496,7 @@ class GasPumpSettingsFormPage(BasePage):
                 self.driver.execute_script(
                     "arguments[0].scrollIntoView({block:'center'});", toggle
                 )
-                self.driver.execute_script("arguments[0].click();", toggle)
+                ActionChains(self.driver).move_to_element(toggle).click(toggle).perform()
         except Exception:
             pass
 
@@ -693,12 +689,8 @@ class GasPumpSettingsFormPage(BasePage):
             )
         el = rows[row_index].find_element(By.XPATH,
             ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
-        # JS click bypasses ChromeDriver's coordinate-based interception check;
-        # the staging Toastify banner (position:fixed in the cross-origin parent
-        # doc) blocks el.click() at certain viewport positions even inside iframes.
-        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
-        self.driver.execute_script("arguments[0].click();", el)
-        self.driver.execute_script("arguments[0].select();", el)
+        el.click()
+        el.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];

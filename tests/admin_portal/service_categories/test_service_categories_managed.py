@@ -13,7 +13,6 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Service Categories"),
     allure.story("Managed data"),
-    pytest.mark.xdist_group("managed_category"),
 ]
 
 

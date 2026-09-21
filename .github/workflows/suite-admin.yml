@@ -31,7 +31,7 @@ jobs:
   wave1:
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         shard:
           # 243 tests — wash_packages (26 managed) + wash_books + wash_extras
@@ -58,16 +58,16 @@ jobs:
             path: >-
               tests/admin_portal/employees
               tests/admin_portal/labor_shifts
-            parallel: "3"
-            timeout: 90
+            parallel: "2"
+            timeout: 120
 
           # 286 tests — revenue_overview + performance_metrics
-          # Read-only report shards; parallel=4 for extra IO throughput.
+          # parallel=2: reduced from 4 to cap peak Chrome processes on single runner.
           - name: revenue-metrics
             path: >-
               tests/admin_portal/revenue_overview
               tests/admin_portal/performance_metrics
-            parallel: "4"
+            parallel: "2"
 
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
@@ -86,7 +86,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         shard:
           # 191 tests — gift_cards (1 managed) + coupon_packages (1 managed) + discounts (16 managed)
@@ -100,22 +100,23 @@ jobs:
             parallel: "2"
 
           # 267 tests — login + users + user_roles + overview
-          # No managed fixtures; -n 3 default is safe.
+          # parallel=2: capped for single-runner memory safety.
           - name: auth-users
             path: >-
               tests/admin_portal/login
               tests/admin_portal/users
               tests/admin_portal/user_roles
               tests/admin_portal/overview
+            parallel: "2"
 
           # 260 tests — transactions + cash_report + general_sales_report
-          # Read-only financial reports; parallel=4 for IO throughput.
+          # parallel=2: reduced from 4 for single-runner memory safety.
           - name: financial
             path: >-
               tests/admin_portal/transactions
               tests/admin_portal/cash_report
               tests/admin_portal/general_sales_report
-            parallel: "4"
+            parallel: "2"
 
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
@@ -133,7 +134,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         shard:
           # 190 tests — memberships (17 managed) + custom_services + service_categories (7 managed) + bank_drop
@@ -158,12 +159,13 @@ jobs:
             parallel: "2"
 
           # 206 tests — pos_settings + card_declines + gas_pump_settings
-          # No managed fixtures with write contention; -n 3 default.
+          # parallel=2: capped for single-runner memory safety.
           - name: pos-hardware
             path: >-
               tests/admin_portal/pos_settings
               tests/admin_portal/card_declines
               tests/admin_portal/gas_pump_settings
+            parallel: "2"
 
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit

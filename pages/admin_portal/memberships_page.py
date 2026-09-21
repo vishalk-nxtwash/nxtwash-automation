@@ -192,12 +192,8 @@ class MembershipsPage(BasePage):
         "and normalize-space()='%s']"
     )
 
-    def wait_for_list_loaded(self, allow_readonly=False):
-        """Wait until the Memberships list is visible.
-
-        allow_readonly=True skips the Add button gate, which may be absent for
-        read-only users (e.g. prod-smoke runs against production).
-        """
+    def wait_for_list_loaded(self):
+        """Wait until the Memberships list is visible."""
         # Proactively dismiss the staging env banner before entering the iframe.
         # The banner is position:fixed and can intercept clicks whose viewport
         # coordinates overlap the iframe area.  switch_to.default_content() is
@@ -209,14 +205,12 @@ class MembershipsPage(BasePage):
             pass
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        if not allow_readonly:
-            self.wait.until(
-                EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
-            )
+        self.wait.until(
+            EC.element_to_be_clickable(self.ADD_MEMBERSHIP_BUTTON)
+        )
         self.wait_for_grid_idle()
 
-    def wait_for_loaded(self, allow_readonly=False):
-        self.wait_for_list_loaded(allow_readonly=allow_readonly)
+    wait_for_loaded = wait_for_list_loaded
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""
@@ -1090,27 +1084,15 @@ class MembershipsPage(BasePage):
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.LOCATION_ROWS)
         )
-        # Batch-extract all row texts in one JS call — per-element row.text
-        # round-trips hang in headless CI when rows are stale after a React
-        # re-render (ChromeDriver on Linux blocks at the socket level instead
-        # of raising StaleElementReferenceException).
-        try:
-            texts = self.driver.execute_script(
-                "return Array.prototype.map.call(arguments, function(el) {"
-                "  try { return el.innerText || el.textContent || ''; }"
-                "  catch(e) { return ''; }"
-                "});",
-                *rows
-            )
-        except Exception:
-            texts = [""] * len(rows)
-
         unique_rows = []
         seen_locations = set()
 
-        for i, row in enumerate(rows):
-            text = texts[i] if i < len(texts) else ""
-            lines = [line.strip() for line in text.splitlines() if line.strip()]
+        for row in rows:
+            lines = [
+                line.strip()
+                for line in row.text.splitlines()
+                if line.strip()
+            ]
             location_key = "\n".join(lines[:2])
 
             if not location_key or location_key in seen_locations:
@@ -1249,29 +1231,34 @@ class MembershipsPage(BasePage):
         commission
     ):
         """Set one visible location row price/commission without assigning it."""
-        rows = self.get_location_rows()
-        if row_index >= len(rows):
+        price_inputs = [
+            element
+            for element in self.wait.until(
+                EC.presence_of_all_elements_located((By.NAME, "price"))
+            )
+            if element.is_displayed() and element.is_enabled()
+        ]
+        commission_inputs = [
+            element
+            for element in self.wait.until(
+                EC.presence_of_all_elements_located((By.NAME, "commission"))
+            )[1:]
+            if element.is_displayed() and element.is_enabled()
+        ]
+
+        if row_index >= len(price_inputs) or row_index >= len(commission_inputs):
             raise AssertionError(
                 "Expected at least %s location rows, found %s"
-                % (row_index + 1, len(rows))
+                % (
+                    row_index + 1,
+                    min(len(price_inputs), len(commission_inputs))
+                )
             )
-        # Scroll the target row into view so the Inovua virtual-scroll fully
-        # initialises its inputs before we query them via is_enabled().
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({ block: 'center' });", rows[row_index]
-        )
 
-        def _enabled(name, skip_first=False):
-            all_els = self.driver.find_elements(By.NAME, name)
-            subset = all_els[1:] if skip_first else all_els
-            enabled = [el for el in subset if el.is_enabled()]
-            return enabled if len(enabled) > row_index else None
-
-        price_inputs      = WebDriverWait(self.driver, 30).until(lambda d: _enabled("price"))
-        commission_inputs = WebDriverWait(self.driver, 30).until(lambda d: _enabled("commission", skip_first=True))
-
-        self.set_grid_input_value(price_inputs[row_index], price)
-        self.set_grid_input_value(commission_inputs[row_index], commission)
+        price_input = price_inputs[row_index]
+        commission_input = commission_inputs[row_index]
+        self.set_grid_input_value(price_input, price)
+        self.set_grid_input_value(commission_input, commission)
 
     def set_grid_input_value(self, element, value):
         """Set a React/Inovua grid input value — CI-safe.
@@ -1336,23 +1323,15 @@ class MembershipsPage(BasePage):
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
         )
-        try:
-            texts = self.driver.execute_script(
-                "return Array.prototype.map.call(arguments, function(el) {"
-                "  try { return el.innerText || el.textContent || ''; }"
-                "  catch(e) { return ''; }"
-                "});",
-                *rows
-            )
-        except Exception:
-            texts = [""] * len(rows)
-
         unique_rows = []
         seen_locations = set()
 
-        for i, row in enumerate(rows):
-            text = texts[i] if i < len(texts) else ""
-            lines = [line.strip() for line in text.splitlines() if line.strip()]
+        for row in rows:
+            lines = [
+                line.strip()
+                for line in row.text.splitlines()
+                if line.strip()
+            ]
             location_key = "\n".join(lines[:2])
 
             if not location_key or location_key in seen_locations:

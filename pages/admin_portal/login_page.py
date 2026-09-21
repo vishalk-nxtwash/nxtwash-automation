@@ -45,12 +45,6 @@ class AdminLoginPage(BasePage):
     def open(self):
         """Open Admin Portal."""
         portal_url = self.config.get_url(self.PORTAL)
-        # Return to top-level context before clearing auth state.  When called
-        # mid-test the driver may still track a service-categories or other
-        # legacy iframe; execute_script then runs against that iframe's origin
-        # instead of the portal's, leaving the portal's localStorage intact and
-        # causing the second get() to stay on the overview instead of /login.
-        self.driver.switch_to.default_content()
         # Navigate first so execute_script runs on the correct origin, then
         # wipe cookies + localStorage to guarantee a logged-out state before
         # the second navigation that the app will redirect to /login.
@@ -82,19 +76,9 @@ class AdminLoginPage(BasePage):
         return "/login" in self.driver.current_url
 
     def logo_is_visible(self):
-        """Return whether the logo image is present and visible.
-
-        The img has loading='lazy' and the login fixture navigates through
-        multiple redirects before settling — allow up to 15s for the element
-        to mount before declaring it absent.
-        """
-        try:
-            el = WebDriverWait(self.driver, 15).until(
-                EC.visibility_of_element_located(self.LOGO_IMAGE)
-            )
-            return el.is_displayed()
-        except Exception:
-            return False
+        """Return whether the logo image is visible."""
+        elements = self.driver.find_elements(*self.LOGO_IMAGE)
+        return bool(elements) and elements[0].is_displayed()
 
     def get_logo_src(self):
         """Return login logo image source."""
@@ -290,40 +274,15 @@ class AdminLoginPage(BasePage):
         """Return whether persisted localStorage has an authorized session."""
         return self.driver.execute_script(
             """
-            function hasAuthProps(obj) {
-                const authorized = obj.isAuthorized === true
-                    || obj.isAuthorized === 'true'
-                    || obj.isAuthenticated === true
-                    || obj.isAuthenticated === 'true';
-                const hasToken = Boolean(
-                    obj.accessToken || obj.token || obj.access_token
-                );
-                return authorized && hasToken;
-            }
-
             const root = window.localStorage.getItem('persist:root');
-            if (root) {
-                try {
-                    const persisted = JSON.parse(root);
-                    for (const key of Object.keys(persisted)) {
-                        if (!/auth|session/i.test(key)) continue;
-                        try {
-                            if (hasAuthProps(JSON.parse(persisted[key] || '{}')))
-                                return true;
-                        } catch (_) {}
-                    }
-                } catch (_) {}
+            if (!root) return false;
+            try {
+                const persisted = JSON.parse(root);
+                const auth = JSON.parse(persisted.authSessionReducer || '{}');
+                return auth.isAuthorized === true && Boolean(auth.accessToken);
+            } catch (error) {
+                return false;
             }
-
-            return Object.keys(window.localStorage)
-                .filter(key => /auth|token|session/i.test(key))
-                .some(key => {
-                    try {
-                        return hasAuthProps(
-                            JSON.parse(window.localStorage.getItem(key) || '{}')
-                        );
-                    } catch (_) { return false; }
-                });
             """
         )
 
@@ -332,17 +291,11 @@ class AdminLoginPage(BasePage):
 
         60s (not 30s) so the post-login redirect+render survives a loaded CI
         runner where several headless Chrome instances compete for CPU.
-        Accepts any path under the portal base URL so that environments that
-        route post-login to /overview (rather than /) do not time out on the
-        exact-match check.
         """
         long_wait = WebDriverWait(self.driver, 60)
-        base = self.config.get_url(self.PORTAL).rstrip("/")
+
         long_wait.until(
-            lambda driver: (
-                driver.current_url.startswith(base)
-                and "/login" not in driver.current_url
-            )
+            lambda driver: driver.current_url == self.config.get_url(self.PORTAL)
         )
         long_wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
 
@@ -354,4 +307,3 @@ class AdminLoginPage(BasePage):
         """Wait until browser is no longer on login page."""
         long_wait = WebDriverWait(self.driver, 60)
         long_wait.until(lambda driver: "/login" not in driver.current_url)
-

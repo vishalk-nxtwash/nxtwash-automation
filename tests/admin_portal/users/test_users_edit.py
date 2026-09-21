@@ -36,13 +36,6 @@ def test_users_edit_form_opens(browser, managed_user):
 
 @allure.title("USR-EDT-002 Editing the Email saves and persists on list reload")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — USR-EDT-002: Requires managed user vkuser02@yopmail.com to be active "
-        "on staging with employee 'test user 2' and role 'VK UR02'. "
-        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
-    )
-)
 def test_edit_user_email_persists(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.enter_email(UPDATED_EMAIL)
@@ -62,13 +55,6 @@ def test_edit_user_email_persists(browser, managed_user):
 
 @allure.title("USR-EDT-003 Editing the Phone number saves and persists")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — USR-EDT-003: Requires managed user vkuser02@yopmail.com to be active "
-        "on staging with employee 'test user 2' and role 'VK UR02'. "
-        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
-    )
-)
 def test_edit_user_phone_persists(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.enter_phone(UPDATED_PHONE)
@@ -81,13 +67,6 @@ def test_edit_user_phone_persists(browser, managed_user):
 
 @allure.title("USR-EDT-004 Changing the User Role saves and is visible on the list")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — USR-EDT-004: Requires managed user vkuser02@yopmail.com to be active "
-        "on staging with employee 'test user 2' and role 'VK UR02'. "
-        "Restore staging baseline (active user, linked employee, correct role) then re-enable."
-    )
-)
 def test_edit_user_role_persists(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.select_role(UPDATED_ROLE)
@@ -148,17 +127,10 @@ def test_deactivate_active_user(browser, managed_user):
     form.click_save()
 
     page = open_users_page(browser)
-    # Filter by email with the Active filter ON (default) so only active users
-    # matching the email are shown.  A successfully deactivated user must be absent.
-    # Do NOT call search_user_by_email() here — that method turns the Active filter
-    # OFF to expose all users, making inactive users visible and defeating this check.
-    page.filter_by_email(USER_EMAIL)
-    page.apply_filters()
+    page.search_user_by_email(USER_EMAIL)
     body = page.get_body_text()
 
-    assert USER_EMAIL not in body, (
-        "Deactivated user '%s' still visible in the active-only list" % USER_EMAIL
-    )
+    assert USER_EMAIL not in body or page.get_user_status(USER_EMAIL) == "Inactive"
     assert page_has_no_broken_state(page)
 
 

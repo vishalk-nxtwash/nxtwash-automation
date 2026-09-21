@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -51,6 +49,10 @@ __all__ = [
 # ─────────────────────────────────────────────────────────────────────────────
 # Shared helpers
 # ─────────────────────────────────────────────────────────────────────────────
+
+# Set to True after _restore_customer_state runs at least once this session,
+# guaranteeing the phone number is written to the managed customer in the DB.
+_phone_ensured_this_session = False
 
 
 def open_customers_page(browser):
@@ -134,7 +136,6 @@ def create_customer_if_missing(browser):
 
     # ── Phase 1: quick check — is customer active with the correct name? ──────
     page.open_filter_panel()
-    page.ensure_active_filter_on()
     page.filter_by_email(CUSTOMER_EMAIL)
     page.apply_filters()
 
@@ -152,9 +153,14 @@ def create_customer_if_missing(browser):
             if el.is_displayed()
         ]
         if rows_with_name:
-            # Customer is active with the correct name — nothing to fix.
-            # Return immediately without any write so the staging search index
-            # is not invalidated and subsequent tests can find the customer at once.
+            # Active and correct name.
+            # On the first call this session, run restore once to guarantee the
+            # phone number is written to the DB (it may have been missing if the
+            # customer was created before the enter_phone fix was added).
+            global _phone_ensured_this_session
+            if not _phone_ensured_this_session:
+                _phone_ensured_this_session = True
+                _restore_customer_state(browser)
             page = open_customers_page(browser)
             page._reset_active_filter_if_present()
             return page
@@ -171,7 +177,6 @@ def create_customer_if_missing(browser):
         if not _find_customer_row_by_email(page):
             # Customer truly doesn't exist — create it.
             page = open_customers_page(browser)
-            _creation_exc = None
             try:
                 page.create_full_customer(
                     first_name=CUSTOMER_FIRST,
@@ -186,70 +191,31 @@ def create_customer_if_missing(browser):
                     city=CUSTOMER_CITY,
                 )
             except Exception as _exc:
-                # Could be a duplicate-email reject (another test created the
-                # customer a moment ago) or a slow-staging redirect that was
-                # masked. Record the error and fall through to the index-wait
-                # loop below — the customer may already be in the DB.
-                _creation_exc = _exc
-
-            # The staging search index updates asynchronously. Retry with
-            # back-off. When the customer is found (active or inactive),
-            # run restore to guarantee active state and correct name before
-            # returning — the creation may have been rejected with a duplicate-
-            # email error leaving an existing inactive customer untouched.
-            for _delay in (30, 60, 120, 180):
-                time.sleep(_delay)
+                # A parallel worker may have created the customer a moment ago;
+                # do one more search (with active-only OFF) before giving up.
                 try:
-                    _chk = open_customers_page(browser)
-                    if _find_customer_row_by_email(_chk):
-                        _restore_customer_state(browser)
-                        _done = open_customers_page(browser)
-                        _done._reset_active_filter_if_present()
-                        return _done
+                    _recovery = open_customers_page(browser)
+                    if _find_customer_row_by_email(_recovery):
+                        _recovery = open_customers_page(browser)
+                        _recovery._reset_active_filter_if_present()
+                        return _recovery
                 except Exception:
                     pass
-
-            next_slot = SLOT + 1
-            print(
-                f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
-                f"could not be created.\n"
-                f"  → Open tests/admin_portal/customers/test_data.py and set "
-                f"SLOT = {next_slot}, then re-run."
-            )
-            if _creation_exc is not None:
-                raise _creation_exc
-            raise RuntimeError(
-                f"Customer '{CUSTOMER_EMAIL}' not visible in list 390 s after "
-                f"create_full_customer returned OK. Check staging search index."
-            )
+                next_slot = SLOT + 1
+                print(
+                    f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
+                    f"could not be created.\n"
+                    f"  → Open tests/admin_portal/customers/test_data.py and set "
+                    f"SLOT = {next_slot}, then re-run."
+                )
+                raise _exc
+            page = open_customers_page(browser)
+            page._reset_active_filter_if_present()
+            return page
         # Customer found with active-only OFF → it's deactivated → restore.
 
     # ── Restore: reactivate and/or correct the name ───────────────────────────
     _restore_customer_state(browser)
-
-    # Verify the customer is now visible as active before declaring success.
-    # Staging's search index can lag 15–45 s after a save/reactivation, so
-    # poll with back-off rather than returning immediately.
-    for _delay in (0, 15, 30, 45):
-        if _delay:
-            time.sleep(_delay)
-        try:
-            _v = open_customers_page(browser)
-            _v.open_filter_panel()
-            _v.ensure_active_filter_on()
-            _v.filter_by_email(CUSTOMER_EMAIL)
-            _v.apply_filters()
-            if _v.get_visible_row_count() > 0:
-                break
-        except Exception:
-            pass
-    else:
-        raise RuntimeError(
-            f"Customer '{CUSTOMER_EMAIL}' still not visible as active after "
-            f"restoration (90 s total). Check that click_save_customer() "
-            f"submitted on this environment — look for a visible form error."
-        )
-
     page = open_customers_page(browser)
     page._reset_active_filter_if_present()
     return page

@@ -29,9 +29,8 @@ class AdminPOSSettingsPage(BasePage):
 
     SEARCH_INPUT = (By.XPATH,
         "//input[@name='posName' or @name='pos_name' or "
-        "@placeholder='Search POS' or @placeholder='Search by POS name' or "
-        "(@placeholder='POS name' and not(ancestor::*[contains(@class,'filter') "
-        "or contains(@class,'form-select')]))]")
+        "@placeholder='Search' or @placeholder='Search POS' or "
+        "@placeholder='POS name' or @placeholder='Search by POS name']")
 
     FILTER_BUTTON = (By.XPATH,
         "//button[normalize-space()='Filter by'] | "
@@ -91,50 +90,29 @@ class AdminPOSSettingsPage(BasePage):
             if btn.is_displayed()
         )
         if not filter_active:
-            try:
-                if self.filter_panel_is_open():
-                    self.close_filter_panel()
-            except Exception:
-                pass
             return
-        # "Reset all" clears every active filter (site, Active POS, etc.).
-        # Then we explicitly turn Active POS off so the list shows ALL POS
-        # (including inactive ones) — this lets pos_exists() find them regardless
-        # of their active/inactive state.
-        try:
-            self.reset_filters()
-        except Exception:
-            pass
-        try:
-            self.filter_active_pos_off()
-        except Exception:
-            pass
-        try:
-            self.apply_filters()
-        except Exception:
-            pass
-        try:
-            if self.filter_panel_is_open():
-                self.close_filter_panel()
-        except Exception:
-            pass
+        self.reset_filters()
+        apply_open = [
+            el for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
+            if el.is_displayed()
+        ]
+        if apply_open:
+            btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", btn)
+            self.wait.until(
+                lambda d: not any(
+                    el.is_displayed()
+                    for el in d.find_elements(*self.APPLY_FILTERS_BUTTON)
+                )
+            )
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
 
-    _JS_CLEAR_INPUT = """
-        var el = arguments[0];
-        var setter = Object.getOwnPropertyDescriptor(
-            window.HTMLInputElement.prototype, 'value').set;
-        setter.call(el, '');
-        el.dispatchEvent(new Event('input', {bubbles: true}));
-        el.dispatchEvent(new Event('change', {bubbles: true}));
-    """
-
     def search_pos(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        self.driver.execute_script("arguments[0].click();", el)
-        self.driver.execute_script(self._JS_CLEAR_INPUT, el)
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == name
@@ -145,7 +123,7 @@ class AdminPOSSettingsPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        self.driver.execute_script(self._JS_CLEAR_INPUT, el)
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -270,15 +248,7 @@ class AdminPOSSettingsPage(BasePage):
 
     def filter_by_site(self, site):
         self.open_filter_panel()
-        combobox = self.wait.until(EC.element_to_be_clickable(self.FILTER_SITE_COMBOBOX))
-        self.driver.execute_script("arguments[0].click();", combobox)
-        # The dropdown options menu is portalled to the parent document — switch out to find them.
-        self.driver.switch_to.default_content()
-        option = WebDriverWait(self.driver, 60).until(
-            lambda d: self._find_react_option(site)
-        )
-        self.driver.execute_script("arguments[0].click();", option)
-        self.switch_to_frame_with_retry(self.POS_LIST_FRAME, timeout=30)
+        self.select_react_dropdown_option(self.FILTER_SITE_COMBOBOX, site)
 
     def filter_active_pos_on(self):
         self.open_filter_panel()
@@ -441,20 +411,10 @@ class AdminPOSFormPage(BasePage):
         "contains(normalize-space(),'Generate connection code')] | "
         "//button[contains(normalize-space(),'Generate connection code')]")
 
-    CHECK_REGENERATE_CODE_BUTTON = (By.XPATH,
-        "//span[@data-type='primary' and "
-        "contains(normalize-space(),'Check or re-generate code')] | "
-        "//button[.//span[@data-type='primary' and "
-        "contains(normalize-space(),'Check or re-generate code')]] | "
-        "//*[contains(@class,'nxt-button') and "
-        "contains(normalize-space(),'Check or re-generate code')]")
-
     CONNECTION_CODE_VALUE = (By.XPATH,
         "//div[contains(@class,'generate-code-modal__code_qr-descr__value')]")
 
     GENERATE_CODE_CLOSE = (By.XPATH,
-        "//span[@data-type='cancelModal' and contains(normalize-space(),'Close')] | "
-        "//button[.//span[@data-type='cancelModal' and contains(normalize-space(),'Close')]] | "
         "//button[@type='button' and ("
         "contains(@class,'btn-close') or contains(@class,'modal-close') or "
         "contains(@class,'close') or normalize-space()='Close' or "
@@ -480,61 +440,18 @@ class AdminPOSFormPage(BasePage):
         "contains(normalize-space(),'Home page')]"
         "/following::div[contains(@class,'form-select__control')][1]")
 
-    CATEGORIES_LIST_ITEMS = (By.XPATH,
-        "//*[contains(@class,'service-categories')]//li | "
-        "//*[contains(@class,'categories-list')]//li | "
-        "//*[contains(@class,'category-row')] | "
-        "//*[contains(@class,'categories-settings')]"
-        "//*[contains(@class,'row') or contains(@class,'item')]")
-
-    # ── Flow/appearance settings section ─────────────────────────────────────
-
-    CAR_RECOGNITION_PLATE_RADIO = (By.XPATH,
-        "//*[contains(normalize-space(),'license plate') or "
-        "contains(normalize-space(),'License plate') or "
-        "contains(normalize-space(),'By plate')]"
-        "/ancestor::*[.//input[@type='radio']][1]//input[@type='radio'] | "
-        "//input[@type='radio' and (@value='plate' or @value='licencePlate' "
-        "or @value='license_plate')]")
-
-    CAR_RECOGNITION_RFID_RADIO = (By.XPATH,
-        "//*[contains(normalize-space(),'RFID') or "
-        "contains(normalize-space(),'rfid') or "
-        "contains(normalize-space(),'By RFID')]"
-        "/ancestor::*[.//input[@type='radio']][1]//input[@type='radio'] | "
-        "//input[@type='radio' and (@value='rfid' or @value='RFID')]")
-
-    SHOW_NOTES_ALL_TOGGLE = (By.XPATH,
-        "//*[contains(normalize-space(),'notes all') or "
-        "contains(normalize-space(),'Notes all customer') or "
-        "contains(normalize-space(),'Show notes all')]"
-        "/following::button[@role='switch'][1]")
-
-    SHOW_NOTES_INVOICE_TOGGLE = (By.XPATH,
-        "//*[contains(normalize-space(),'notes invoice') or "
-        "contains(normalize-space(),'Notes invoice customer') or "
-        "contains(normalize-space(),'Show notes invoice')]"
-        "/following::button[@role='switch'][1]")
-
     # ── Load / frame ─────────────────────────────────────────────────────────
 
     def _click_main_settings_nav(self):
-        """Click the 'Main settings' sidebar nav item if present (non-blocking)."""
-        try:
-            navs = self.driver.find_elements(*self.MAIN_SETTINGS_NAV)
-            nav = next((n for n in navs if n.is_displayed()), None)
-            if nav:
-                self.driver.execute_script("arguments[0].click();", nav)
-        except Exception:
-            pass
+        """Click the 'Main settings' sidebar nav item to reveal the form fields."""
+        nav = self.wait.until(EC.element_to_be_clickable(self.MAIN_SETTINGS_NAV))
+        self.driver.execute_script("arguments[0].click();", nav)
 
     def _switch_to_form_frame(self, frame_locator):
         """Switch into the form iframe if one exists; stay on the main page if not."""
         self.driver.switch_to.default_content()
         try:
-            # Use the full wait timeout — a cold browser session can take >5s for the
-            # iframe to appear after navigation + login
-            WebDriverWait(self.driver, 20).until(
+            WebDriverWait(self.driver, 5).until(
                 EC.frame_to_be_available_and_switch_to_it(frame_locator)
             )
         except TimeoutException:
@@ -547,25 +464,13 @@ class AdminPOSFormPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
 
     def wait_for_edit_loaded(self):
-        # Guard: if staging session expired we land on /login — the edit iframe
-        # won't exist and POS_NAME_INPUT heuristics can accidentally match the
-        # login form, producing confusing downstream failures.
-        self.driver.switch_to.default_content()
-        if "/login" in (self.driver.current_url or ""):
-            raise TimeoutException(
-                "wait_for_edit_loaded: browser is on login page — "
-                "staging session may have expired"
-            )
         self._switch_to_form_frame(AdminPOSSettingsPage.POS_EDIT_FRAME)
         self._click_main_settings_nav()
         self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
         self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
-        try:
-            WebDriverWait(self.driver, 10).until(
-                lambda d: d.find_element(*self.POS_NAME_INPUT).get_attribute("value") != ""
-            )
-        except Exception:
-            pass
+        self.wait.until(
+            lambda d: d.find_element(*self.POS_NAME_INPUT).get_attribute("value") != ""
+        )
 
     def get_body_text(self):
         try:
@@ -594,9 +499,8 @@ class AdminPOSFormPage(BasePage):
 
     def select_site(self, site):
         self.select_react_dropdown_option(self.SITE_COMBOBOX, site)
-        # Lane dropdown is dynamically populated after site selection via an API
-        # call — give the server enough time to respond before reading lane options.
-        time.sleep(2.5)
+        # Lane dropdown is dynamically populated after site selection.
+        time.sleep(1.5)
 
     def select_lane(self, lane):
         self.select_react_dropdown_option(self.LANE_COMBOBOX, lane)
@@ -639,7 +543,7 @@ class AdminPOSFormPage(BasePage):
             return opts.length > 0 ? opts.map(function(el) { return el.textContent.trim(); }) : null;
         """
         try:
-            options = WebDriverWait(self.driver, 15).until(
+            options = WebDriverWait(self.driver, 6).until(
                 lambda d: d.execute_script(_OPT_JS)
             )
         except Exception:
@@ -793,10 +697,7 @@ class AdminPOSFormPage(BasePage):
             return
         self.driver.execute_script("arguments[0].click();", header)
         if header.get_attribute("aria-expanded") is not None:
-            try:
-                self.wait.until(lambda d: self.section_is_expanded(section_name))
-            except Exception:
-                pass
+            self.wait.until(lambda d: self.section_is_expanded(section_name))
         else:
             time.sleep(0.8)
 
@@ -809,10 +710,7 @@ class AdminPOSFormPage(BasePage):
             return
         self.driver.execute_script("arguments[0].click();", header)
         if header.get_attribute("aria-expanded") is not None:
-            try:
-                self.wait.until(lambda d: not self.section_is_expanded(section_name))
-            except Exception:
-                pass
+            self.wait.until(lambda d: not self.section_is_expanded(section_name))
         else:
             time.sleep(0.8)
 
@@ -822,37 +720,28 @@ class AdminPOSFormPage(BasePage):
         toggle = self.wait.until(EC.element_to_be_clickable(self.SEND_INVOICE_TOGGLE))
         if toggle.get_attribute("aria-checked") != "true":
             self.driver.execute_script("arguments[0].click();", toggle)
-            try:
-                self.wait.until(
-                    lambda d: d.find_element(*self.SEND_INVOICE_TOGGLE)
-                    .get_attribute("aria-checked") == "true"
-                )
-            except Exception:
-                pass
+            self.wait.until(
+                lambda d: d.find_element(*self.SEND_INVOICE_TOGGLE)
+                .get_attribute("aria-checked") == "true"
+            )
 
     def ensure_tunnel_operational_on(self):
         toggle = self.wait.until(EC.element_to_be_clickable(self.TUNNEL_OPERATIONAL_TOGGLE))
         if toggle.get_attribute("aria-checked") != "true":
             self.driver.execute_script("arguments[0].click();", toggle)
-            try:
-                self.wait.until(
-                    lambda d: d.find_element(*self.TUNNEL_OPERATIONAL_TOGGLE)
-                    .get_attribute("aria-checked") == "true"
-                )
-            except Exception:
-                pass
+            self.wait.until(
+                lambda d: d.find_element(*self.TUNNEL_OPERATIONAL_TOGGLE)
+                .get_attribute("aria-checked") == "true"
+            )
 
     def ensure_tunnel_operational_off(self):
         toggle = self.wait.until(EC.element_to_be_clickable(self.TUNNEL_OPERATIONAL_TOGGLE))
         if toggle.get_attribute("aria-checked") != "false":
             self.driver.execute_script("arguments[0].click();", toggle)
-            try:
-                self.wait.until(
-                    lambda d: d.find_element(*self.TUNNEL_OPERATIONAL_TOGGLE)
-                    .get_attribute("aria-checked") == "false"
-                )
-            except Exception:
-                pass
+            self.wait.until(
+                lambda d: d.find_element(*self.TUNNEL_OPERATIONAL_TOGGLE)
+                .get_attribute("aria-checked") == "false"
+            )
 
     def select_controller_id(self, controller):
         self.select_react_dropdown_option(self.CONTROLLER_ID_COMBOBOX, controller)
@@ -915,86 +804,9 @@ class AdminPOSFormPage(BasePage):
 
     # ── Service Settings tab ──────────────────────────────────────────────────
 
-    def hot_sale_is_on(self):
-        toggle = self.wait.until(EC.presence_of_element_located(self.HOT_SALE_TOGGLE))
-        return toggle.get_attribute("aria-checked") == "true"
-
-    def select_home_category(self, category):
-        self.select_react_dropdown_option(self.HOME_CATEGORY_COMBOBOX, category)
-
-    def get_home_category_options(self):
-        return self._get_dropdown_options(self.HOME_CATEGORY_COMBOBOX)
-
-    def home_category_is_valid(self):
-        try:
-            el = self.wait.until(EC.presence_of_element_located(self.HOME_CATEGORY_COMBOBOX))
-            return el.get_attribute("aria-invalid") != "true"
-        except Exception:
-            return True
-
-    def get_categories_list_count(self):
-        try:
-            rows = self.driver.find_elements(*self.CATEGORIES_LIST_ITEMS)
-            return len([r for r in rows if r.is_displayed()])
-        except Exception:
-            return 0
-
     def click_restore_default(self):
         btn = self.wait.until(EC.element_to_be_clickable(self.RESTORE_DEFAULT_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
-
-    # ── Flow/appearance settings ──────────────────────────────────────────────
-
-    def car_recognition_plate_is_selected(self):
-        try:
-            el = self.driver.find_element(*self.CAR_RECOGNITION_PLATE_RADIO)
-            return el.is_selected()
-        except Exception:
-            return False
-
-    def car_recognition_rfid_is_selected(self):
-        try:
-            el = self.driver.find_element(*self.CAR_RECOGNITION_RFID_RADIO)
-            return el.is_selected()
-        except Exception:
-            return False
-
-    def select_car_recognition_plate(self):
-        el = self.wait.until(EC.element_to_be_clickable(self.CAR_RECOGNITION_PLATE_RADIO))
-        self.driver.execute_script("arguments[0].click();", el)
-
-    def select_car_recognition_rfid(self):
-        el = self.wait.until(EC.element_to_be_clickable(self.CAR_RECOGNITION_RFID_RADIO))
-        self.driver.execute_script("arguments[0].click();", el)
-
-    def click_show_notes_all_toggle(self):
-        toggle = self.wait.until(EC.element_to_be_clickable(self.SHOW_NOTES_ALL_TOGGLE))
-        self.driver.execute_script("arguments[0].click();", toggle)
-        return toggle.get_attribute("aria-checked")
-
-    def click_show_notes_invoice_toggle(self):
-        toggle = self.wait.until(EC.element_to_be_clickable(self.SHOW_NOTES_INVOICE_TOGGLE))
-        self.driver.execute_script("arguments[0].click();", toggle)
-        return toggle.get_attribute("aria-checked")
-
-    def get_flow_section_toggle_states(self):
-        """Return {label_text: aria-checked} for all switches in the Flow/appearance section."""
-        try:
-            switches = self.driver.find_elements(By.XPATH, "//button[@role='switch']")
-            result = {}
-            for sw in switches:
-                try:
-                    label = self.driver.execute_script(
-                        "var el=arguments[0]; var p=el.closest('label,div'); "
-                        "return p ? p.textContent.trim().split('\\n')[0].trim() : '';", sw
-                    )
-                    if label:
-                        result[label] = sw.get_attribute("aria-checked")
-                except Exception:
-                    pass
-            return result
-        except Exception:
-            return {}
 
     def ensure_hot_sale_on(self):
         toggle = self.wait.until(EC.element_to_be_clickable(self.HOT_SALE_TOGGLE))
@@ -1013,11 +825,6 @@ class AdminPOSFormPage(BasePage):
         self.driver.execute_script("arguments[0].click();", btn)
         time.sleep(1.0)
 
-    def click_check_or_regenerate_code(self):
-        btn = self.wait.until(EC.element_to_be_clickable(self.CHECK_REGENERATE_CODE_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(1.0)
-
     def get_connection_code(self):
         try:
             el = WebDriverWait(self.driver, 8).until(
@@ -1029,7 +836,7 @@ class AdminPOSFormPage(BasePage):
 
     def close_connection_code_modal(self):
         try:
-            btn = WebDriverWait(self.driver, 8).until(
+            btn = WebDriverWait(self.driver, 4).until(
                 EC.element_to_be_clickable(self.GENERATE_CODE_CLOSE)
             )
             self.driver.execute_script("arguments[0].click();", btn)
@@ -1048,27 +855,9 @@ class AdminPOSFormPage(BasePage):
         self.select_site(site)
         self.select_lane(lane)
         code = ""
-        # Some forms show an initial "Generate connection code" button; probe it
-        # with a short timeout so we don't waste the full wait when it's absent.
         try:
-            btn = WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(self.GENERATE_CODE_BUTTON)
-            )
-            self.driver.execute_script("arguments[0].click();", btn)
-            time.sleep(1.0)
+            self.click_generate_connection_code()
             code = self.get_connection_code()
-            self.close_connection_code_modal()
-        except Exception:
-            pass
-        # Always click "Check or re-generate code" at the end — this button is
-        # present on every POS form (data-type='primary') and opens a popup with
-        # the connection code that must be closed before saving.
-        try:
-            btn = WebDriverWait(self.driver, 15).until(
-                EC.element_to_be_clickable(self.CHECK_REGENERATE_CODE_BUTTON)
-            )
-            self.driver.execute_script("arguments[0].click();", btn)
-            time.sleep(1.0)
             self.close_connection_code_modal()
         except Exception:
             pass

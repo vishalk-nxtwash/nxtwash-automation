@@ -1,6 +1,5 @@
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
@@ -191,8 +190,7 @@ class BankDropPage(BasePage):
         edit_button = row.find_element(
             By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        # JS click bypasses the staging-banner interception that blocks headless runs.
-        self.driver.execute_script("arguments[0].click();", edit_button)
+        edit_button.click()
         self.wait_for_edit_loaded()
 
     def get_name_value(self):
@@ -212,15 +210,23 @@ class BankDropPage(BasePage):
     def enter_order(self, order):
         """Enter Bank Drop order.
 
-        <input type="number"> ignores JS select() (no-op in Chrome) and CTRL+A
-        breaks on macOS (base_page note).  clear() fires real DOM events that
-        RHF tracks; send_keys then types the new value character-by-character.
+        React-controlled number inputs ignore select()+send_keys because
+        the DOM selection API is a no-op on <input type="number"> in Chrome,
+        so send_keys appends rather than replaces and never fires onChange.
+        Using the native property setter + InputEvent bypasses that gap and
+        updates React's internal state so the submitted value matches what we typed.
         """
-        element = self.wait.until(EC.element_to_be_clickable(self.ORDER_INPUT))
-        element.clear()
-        element.send_keys(str(order))
-        self.wait.until(
-            lambda d: d.find_element(*self.ORDER_INPUT).get_attribute("value") == str(order)
+        element = self.wait.until(EC.visibility_of_element_located(self.ORDER_INPUT))
+        self.driver.execute_script(
+            """
+            var el = arguments[0], val = arguments[1];
+            var setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            setter.call(el, val);
+            el.dispatchEvent(new InputEvent('input', {bubbles: true}));
+            el.dispatchEvent(new Event('change', {bubbles: true}));
+            """,
+            element, str(order),
         )
 
     def active_bank_drop_is_on(self):

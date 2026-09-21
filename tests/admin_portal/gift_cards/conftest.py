@@ -39,9 +39,6 @@ def open_gift_cards_page(browser):
 
 
 def create_gift_card_if_missing(browser, update_existing=False):
-    from selenium.common.exceptions import TimeoutException as _TE
-    from selenium.webdriver.support.ui import WebDriverWait as _WDW
-    from selenium.webdriver.support import expected_conditions as _EC
 
     page = open_gift_cards_page(browser)
 
@@ -60,37 +57,6 @@ def create_gift_card_if_missing(browser, update_existing=False):
         page.wait_for_gift_card_row(GIFT_CARD_NAME)
         return page
 
-    # gift_card_exists checks the active-only view. The card may be inactive
-    # (left that way by a previous test). Check with the active filter OFF
-    # before attempting creation to avoid a duplicate-name server rejection.
-    page.open_filter_panel()
-    page.set_active_gift_card_filter(False)
-    page.apply_filters()
-    page.search_gift_card(GIFT_CARD_NAME)
-    try:
-        _WDW(page.driver, 10).until(
-            _EC.visibility_of_element_located(
-                page.get_gift_card_row_locator(GIFT_CARD_NAME)
-            )
-        )
-        # Found as inactive — update_gift_card_settings calls
-        # fill_gift_card_form → enable_all_main_toggles →
-        # ensure_switch_on(ACTIVE_SERVICE_SWITCH), which reactivates it.
-        page.update_gift_card_settings(
-            GIFT_CARD_NAME,
-            GIFT_CARD_AMOUNT,
-            LANDING_PAGE_CODE,
-            ASSIGNMENT_LOCATIONS,
-        )
-        page = open_gift_cards_page(browser)
-        page.search_gift_card(GIFT_CARD_NAME)
-        page.wait_for_gift_card_row(GIFT_CARD_NAME)
-        return page
-    except _TE:
-        pass
-
-    # Truly absent — create.
-    page = open_gift_cards_page(browser)
     page.create_gift_card(
         GIFT_CARD_NAME,
         GIFT_CARD_AMOUNT,
@@ -169,12 +135,4 @@ def _reset_managed_gift_card(browser):
     return open_gift_cards_page(browser)
 
 
-def _ensure_managed_gift_card_exists(browser):
-    """Setup-only guard: return early if the managed gift card exists."""
-    page = open_gift_cards_page(browser)
-    if page.gift_card_exists(MANAGED_GIFT_CARD):
-        return page
-    return _reset_managed_gift_card(browser)
-
-
-managed_gift_card = managed_resource(_reset_managed_gift_card, ensure=_ensure_managed_gift_card_exists)
+managed_gift_card = managed_resource(_reset_managed_gift_card)

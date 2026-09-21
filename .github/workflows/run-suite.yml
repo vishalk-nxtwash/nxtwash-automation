@@ -67,6 +67,23 @@ jobs:
         run: |
           echo "=== Disk before cleanup ==="
           df -h /
+          echo "=== Memory before cleanup ==="
+          free -h || vm_stat | head -10
+          # Ensure swap exists (prevents OOM-kill on memory spikes from parallel Chrome).
+          # Creates a 4 GB swapfile if one isn't already active.
+          if ! swapon --show | grep -q '/swapfile'; then
+            if [ ! -f /swapfile ]; then
+              echo "Creating 4 GB swapfile..."
+              sudo fallocate -l 4G /swapfile 2>/dev/null || sudo dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
+              sudo chmod 600 /swapfile
+              sudo mkswap /swapfile
+            fi
+            sudo swapon /swapfile || true
+            echo "Swap enabled:"
+            swapon --show
+          else
+            echo "Swap already active."
+          fi
           # Kill any Chrome/chromedriver left over from a previous crashed run.
           # These hold open file handles that prevent /tmp from being reclaimed.
           pkill -f "chrome" || true

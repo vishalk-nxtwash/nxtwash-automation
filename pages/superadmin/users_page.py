@@ -66,6 +66,9 @@ class UsersPage(BasePage):
             )
         )
 
+    def apply_filters(self):
+        self.click(self.APPLY_FILTERS_BUTTON)
+
     def user_exists(self, email):
         """Return whether a user exists after filtering by email."""
         self.filter_by_email(email)
@@ -75,6 +78,89 @@ class UsersPage(BasePage):
             return True
         except TimeoutException:
             return False
+
+    def open_user_edit(self, email):
+        self.filter_by_email(email)
+        row = self.wait_for_user_row(email)
+        edit_btn = row.find_element(
+            By.XPATH, ".//button[normalize-space()='Edit']"
+        )
+        edit_btn.click()
+
+
+class EditUserPage(BasePage):
+
+    PAGE_TITLE = (By.XPATH, "//div[normalize-space()='User']")
+    FIRST_NAME_INPUT = (By.NAME, "firstName")
+    LAST_NAME_INPUT = (By.NAME, "lastName")
+    EMAIL_INPUT = (By.NAME, "emailId")
+    PHONE_INPUT = (By.NAME, "phoneNumber")
+    SAVE_CHANGES_BUTTON = (
+        By.XPATH,
+        "//button[normalize-space()='Save changes' or normalize-space()='Save']"
+    )
+    CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
+    CONFIRM_YES_BUTTON = (By.XPATH, "//button[normalize-space()='Yes']")
+    CONFIRM_NO_BUTTON = (By.XPATH, "//button[normalize-space()='No']")
+
+    def wait_for_loaded(self):
+        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+
+    def get_first_name(self):
+        return self.driver.find_element(*self.FIRST_NAME_INPUT).get_attribute("value")
+
+    def set_first_name(self, value):
+        el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
+        el.clear()
+        el.send_keys(value)
+
+    def get_last_name(self):
+        return self.driver.find_element(*self.LAST_NAME_INPUT).get_attribute("value")
+
+    def set_last_name(self, value):
+        el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
+        el.clear()
+        el.send_keys(value)
+
+    def get_email(self):
+        return self.driver.find_element(*self.EMAIL_INPUT).get_attribute("value")
+
+    def get_phone(self):
+        return self.driver.find_element(*self.PHONE_INPUT).get_attribute("value")
+
+    def set_phone(self, value):
+        el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
+        el.clear()
+        el.send_keys(value)
+
+    def click_save_changes(self):
+        self.click(self.SAVE_CHANGES_BUTTON)
+
+    def click_cancel(self):
+        self.click(self.CANCEL_BUTTON)
+
+    def confirm_yes_if_present(self, timeout=6):
+        short_wait = WebDriverWait(self.driver, timeout)
+        try:
+            short_wait.until(
+                EC.element_to_be_clickable(self.CONFIRM_YES_BUTTON)
+            ).click()
+            short_wait.until(
+                EC.invisibility_of_element_located(self.CONFIRM_YES_BUTTON)
+            )
+        except TimeoutException:
+            return
+
+    def confirm_no(self):
+        self.click(self.CONFIRM_NO_BUTTON)
+
+    def has_validation_error(self):
+        body = self.driver.find_element(By.TAG_NAME, "body").text.lower()
+        return any(kw in body for kw in ("required", "invalid", "error", "too small"))
+
+    def get_body_text(self):
+        return self.driver.find_element(By.TAG_NAME, "body").text
 
 
 class CreateUserPage(BasePage):
