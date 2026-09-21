@@ -49,7 +49,8 @@ jobs:
             timeout: 90
 
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
