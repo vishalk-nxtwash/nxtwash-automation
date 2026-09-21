@@ -59,6 +59,7 @@ def open_customers_page(browser):
     open_admin_path(browser, "/customers")
     page = CustomersPage(browser)
     page.wait_for_list_loaded()
+    page._reset_active_filter_if_present()
     return page
 
 
