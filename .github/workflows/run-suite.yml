@@ -32,6 +32,10 @@ on:
         description: "xdist workers: a number, auto, or 0 for serial"
         type: string
         default: "2"
+      reruns:
+        description: "Times to retry each failing test (0 = no retries)"
+        type: string
+        default: "0"
       timeout_minutes:
         description: "Job timeout in minutes"
         type: number
@@ -149,6 +153,7 @@ jobs:
           PARALLEL: ${{ inputs.parallel }}
           MARKER: ${{ inputs.marker }}
           TEST_PATH: ${{ inputs.test_path }}
+          RERUNS: ${{ inputs.reruns }}
         run: |
           # Parallelism: number of workers; "0" forces serial.
           xdist="-n ${PARALLEL}"
@@ -158,8 +163,12 @@ jobs:
           marker_arg=""
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
+          # Optional reruns; "0" or empty = no --reruns flag.
+          reruns_arg=""
+          if [ "${RERUNS:-0}" != "0" ]; then reruns_arg="--reruns ${RERUNS}"; fi
+
           rm -rf allure-results allure-report
-          pytest $marker_arg ${TEST_PATH} $xdist \
+          pytest $marker_arg ${TEST_PATH} $xdist $reruns_arg \
             --headless \
             --alluredir=allure-results \
             --html=report.html --self-contained-html \
