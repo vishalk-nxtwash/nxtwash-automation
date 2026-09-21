@@ -1,15 +1,17 @@
 name: Admin Suite (staging)
 
 # Full admin-portal suite against STAGING — one module per shard.
-# 30 modules run across 3 self-hosted runners in 5 sequential waves.
-# max-parallel: 3 fires all 3 runners simultaneously per wave; Wave N+1
-# starts only after every shard in Wave N has finished (pass or fail).
+# 30 modules across 5 waves, running ONE at a time (max-parallel: 1).
+# A single runner handles each module before the next one starts, keeping
+# only 2 Chrome instances active on the staging server at any moment.
+# Wave N+1 starts only after every shard in Wave N has finished (pass or fail).
 #
-# Single-module shards prevent memory pressure from accumulated Chrome
-# temp files during long multi-module runs and give per-module failure
-# visibility in the run summary.
+# Single-module + serial execution prevents:
+#   - staging server overload from concurrent browser sessions
+#   - runner OOM from accumulated Chrome temp files across modules
+#   - one module's teardown contention bleeding into another
 #
-# All shards: parallel="2" (2 xdist workers = 2 Chrome instances per runner).
+# All shards: parallel="2" (2 xdist workers per module).
 # Timeout defaults to 90 min; managed-fixture-heavy modules use 120 min.
 
 on:
@@ -27,7 +29,7 @@ jobs:
   wave1:
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         shard:
           # 78 tests — managed_package fixture; xdist_group serialises on one worker
@@ -81,7 +83,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         shard:
           # 57 tests — labor shift records; no managed fixture contention
@@ -135,7 +137,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         shard:
           # 66 tests — managed membership fixture; xdist_group serialises
@@ -189,7 +191,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         shard:
           # 59 tests — site/location management
@@ -243,7 +245,7 @@ jobs:
     if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         shard:
           # 26 tests — tunnel/wash-queue settings
