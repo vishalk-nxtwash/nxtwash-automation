@@ -102,7 +102,7 @@ def _reset_managed_package(browser):
     """Ensure PACKAGE_NAME exists and reset its mutable fields to baseline."""
     page = open_wash_packages_page(browser)
     if page.package_exists(PACKAGE_NAME):
-        page = open_wash_packages_page(browser)
+        # open_edit_package clears filters and searches internally — no re-nav needed.
         page.open_edit_package(PACKAGE_NAME)
         page.fill_package_form(
             PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
@@ -115,9 +115,8 @@ def _reset_managed_package(browser):
 
     # PACKAGE_NAME not found — check whether a prior interrupted run left it
     # renamed to UPDATED_PACKAGE_NAME; rename it back if so.
-    page = open_wash_packages_page(browser)
+    # Reuse the current page: package_exists will search for the new name.
     if page.package_exists(UPDATED_PACKAGE_NAME):
-        page = open_wash_packages_page(browser)
         page.open_edit_package(UPDATED_PACKAGE_NAME)
         page.fill_package_form(
             PACKAGE_NAME, POINTS_AWARDED, POINTS_REDEEMED,
