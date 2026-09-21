@@ -1,0 +1,58 @@
+name: Admin Suite — Wave 1 only
+
+# Run only Wave 1 modules manually — useful for verifying fixes before
+# triggering the full 5-wave suite.
+# Modules: wash-packages / wash-books / wash-extras / customers / login / employees
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: admin-suite-wave1
+  cancel-in-progress: false
+
+jobs:
+  wave1:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        shard:
+          - name: wash-packages
+            path: tests/admin_portal/wash_packages
+            parallel: "2"
+            timeout: 90
+
+          - name: wash-books
+            path: tests/admin_portal/wash_books
+            parallel: "2"
+            timeout: 90
+
+          - name: wash-extras
+            path: tests/admin_portal/wash_extras
+            parallel: "2"
+            timeout: 90
+
+          - name: customers
+            path: tests/admin_portal/customers
+            parallel: "2"
+            timeout: 120
+
+          - name: login
+            path: tests/admin_portal/login
+            parallel: "2"
+            timeout: 60
+
+          - name: employees
+            path: tests/admin_portal/employees
+            parallel: "2"
+            timeout: 90
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel }}
+      timeout_minutes: ${{ matrix.shard.timeout }}
