@@ -194,6 +194,8 @@ class MembershipsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Memberships list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(

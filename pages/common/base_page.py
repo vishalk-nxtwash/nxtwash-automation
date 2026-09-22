@@ -32,7 +32,7 @@ class BasePage:
         try:
             close_btn = self.driver.find_element(
                 By.CSS_SELECTOR,
-                "#dev-environment-unstable button.Toastify__close-button",
+                "#dev-environment-unstable button",
             )
             self.driver.execute_script("arguments[0].click();", close_btn)
             WebDriverWait(self.driver, 3).until(
