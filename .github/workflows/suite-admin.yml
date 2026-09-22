@@ -32,7 +32,7 @@ on:
     types: [staging-deploy-complete]
 
 concurrency:
-  group: admin-suite-staging
+  group: admin-suite-staging-${{ inputs.runner || 'self-hosted' }}
   cancel-in-progress: false
 
 # ──────────────────────────────────────────────────────────────────────────────
