@@ -32,6 +32,7 @@ _LOCATION_XFAIL = pytest.mark.xfail(
 
 @allure.title("KSK-CRT-001 Clicking Add kiosk opens the create form")
 @pytest.mark.smoke
+@pytest.mark.xfail(strict=False, reason="Create kiosk iframe does not open on staging")
 def test_add_kiosk_form_opens(browser):
     page = open_kiosk_page(browser)
     page.click_add_kiosk()

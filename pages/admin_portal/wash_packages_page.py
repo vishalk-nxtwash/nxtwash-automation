@@ -247,6 +247,19 @@ class WashPackagesPage(BasePage):
         except TimeoutException:
             return False
 
+    def _close_filter_panel_if_open(self):
+        """Close the filter panel if it is currently open."""
+        els = [e for e in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON) if e.is_displayed()]
+        if els:
+            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            try:
+                from selenium.webdriver.support.ui import WebDriverWait
+                WebDriverWait(self.driver, 3).until(
+                    EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+                )
+            except Exception:
+                pass
+
     def search_package(self, package_name):
         """Search package by service name.
 
@@ -256,6 +269,7 @@ class WashPackagesPage(BasePage):
         to append to the old React-state value instead of replacing it.
         JS click bypasses viewport-coordinate interception from outer-page overlays.
         """
+        self._close_filter_panel_if_open()
         element = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
@@ -271,10 +285,11 @@ class WashPackagesPage(BasePage):
 
     def clear_package_search(self):
         """Clear package search input and wait until the grid refreshes."""
+        self._close_filter_panel_if_open()
         element = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        element.click()
+        self.driver.execute_script("arguments[0].click();", element)
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
