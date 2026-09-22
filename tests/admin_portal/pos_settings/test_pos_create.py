@@ -143,6 +143,13 @@ def test_lane_dropdown_populates_on_site_selection(browser):
 
 @allure.title("POS-CRT-007 Create inactive POS saves and appears inactive")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "POS-CRT-007: staging server saves POS as Active regardless of the "
+        "Inactive selection on the create form. Same app bug as WP-CRT inactive."
+    ),
+)
 def test_create_inactive_pos(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)

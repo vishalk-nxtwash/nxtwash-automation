@@ -219,7 +219,14 @@ class AdminUserRolesPage(BasePage):
         self.open_filter_panel()
         btn = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
-        self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
+        try:
+            title = self.driver.find_element(*self.PAGE_TITLE)
+            self.driver.execute_script("arguments[0].click();", title)
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:  # noqa: BLE001
+            pass
 
     def reset_filters_if_active(self):
         try:

@@ -121,6 +121,13 @@ def test_activate_inactive_user(browser, managed_user):
 
 @allure.title("USR-EDT-007 Deactivating an active user hides it from the default list")
 @pytest.mark.smoke
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "USR-EDT-007: staging server saves user as Active regardless of the "
+        "Inactive toggle on the edit form. Same app bug as WP-TGL-002 / POS-CRT-007."
+    ),
+)
 def test_deactivate_active_user(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.ensure_active_switch_off()

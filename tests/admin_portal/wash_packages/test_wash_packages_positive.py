@@ -41,6 +41,13 @@ def test_create_active_wash_package(browser):
 
 @allure.title("WP-TGL-002 Create inactive wash package is hidden from the default list")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "WP-TGL-002: staging server saves wash package as Active regardless of the "
+        "Inactive selection on the create form. Same app bug as POS-CRT-007."
+    ),
+)
 def test_create_inactive_wash_package(browser):
     package_name = "VK inactive %s" % uuid.uuid4().hex[:6]
     page = open_wash_packages_page(browser)

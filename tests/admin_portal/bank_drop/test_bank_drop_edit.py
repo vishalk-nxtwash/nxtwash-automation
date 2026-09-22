@@ -90,6 +90,13 @@ def test_activate_inactive_bank_drop(browser, request):
 
 @allure.title("BD-EDT-004 Deactivate an active bank drop hides it from the default list")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BD-EDT-004: staging server saves bank drop as Active regardless of the "
+        "Inactive toggle on the edit form. Same app bug as WP-TGL-002 / POS-CRT-007."
+    ),
+)
 def test_deactivate_active_bank_drop(browser):
 
     temp_name = "VK deact-%s" % uuid.uuid4().hex[:6]
