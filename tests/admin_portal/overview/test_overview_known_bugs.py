@@ -8,11 +8,6 @@ pytestmark = [
     allure.story("Known Bugs"),
 ]
 
-_IFRAME_XFAIL = pytest.mark.xfail(
-    reason="Known product/environment gap: legacy Overview iframe is empty.",
-    strict=False,
-)
-
 
 @allure.title("OV-BUG-001 Labor % shows an extreme value instead of a valid percentage")
 @pytest.mark.regression
@@ -33,7 +28,6 @@ def test_overview_labor_percent_extreme_value_bug(overview_page):
     "OV-BUG-002 Labor % displays '--' or 0% when no revenue exists for the period"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_labor_percent_no_revenue_shows_placeholder(overview_page):
     """With zero revenue the Labor % denominator is zero.
 
@@ -48,7 +42,6 @@ def test_overview_labor_percent_no_revenue_shows_placeholder(overview_page):
     "OV-BUG-003 Usage Breakdown percentages sum to exactly 100 % or show a rounding note"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_usage_breakdown_percentages_sum_to_100(overview_page):
     """Usage Breakdown per-service rows should total 100 %.
 

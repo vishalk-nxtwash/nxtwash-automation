@@ -8,18 +8,12 @@ pytestmark = [
     allure.story("Cross-Card Consistency"),
 ]
 
-_IFRAME_XFAIL = pytest.mark.xfail(
-    reason="Blocked: legacy Overview iframe is empty; cross-card assertions require live data.",
-    strict=False,
-)
-
 
 @allure.title(
     "OV-CON-001 Cars Washed Total on the dashboard matches the "
     "Cars Washed Report Total Cars for the same filter"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_cars_washed_total_matches_report(overview_page):
     assert overview_page.dashboard_has_any_text(["Cars Washed", "Total Cars"])
 
@@ -29,7 +23,6 @@ def test_overview_cars_washed_total_matches_report(overview_page):
     "Revenue Report Total Revenue for the same filter"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_revenue_daily_matches_report(overview_page):
     assert overview_page.dashboard_has_any_text(["Revenue", "Total Revenue"])
 
@@ -39,7 +32,6 @@ def test_overview_revenue_daily_matches_report(overview_page):
     "to a Full Report and returning"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_filters_persist_navigating_to_report(overview_page):
     assert overview_page.dashboard_has_any_text(["Full Report", "Site", "Today"])
     assert not overview_page.has_broken_state_text()
@@ -50,7 +42,6 @@ def test_overview_filters_persist_navigating_to_report(overview_page):
     "return matching totals for the same site/date inputs"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_modal_and_inline_filters_return_matching_totals(overview_page):
     assert overview_page.dashboard_has_any_text(["Cars Washed", "Revenue"])
     assert not overview_page.has_broken_state_text()
@@ -61,7 +52,6 @@ def test_overview_modal_and_inline_filters_return_matching_totals(overview_page)
     "filter inputs as the Overview dashboard"
 )
 @pytest.mark.regression
-@_IFRAME_XFAIL
 def test_overview_both_report_pages_accept_same_filter_inputs(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Cars Washed Full Report", "Revenue Full Report", "Full Report"]

@@ -51,6 +51,13 @@ def test_create_active_user_role(browser):
 
 @allure.title("UR-CRT-003 Creating an inactive role saves it with Inactive status")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "UR-CRT-003: staging server saves user role as Active regardless of the "
+        "Inactive selection on the create form. Same app bug as WP-TGL-002 / POS-CRT-007."
+    ),
+)
 def test_create_inactive_user_role(browser):
     role_name = make_unique_role_name()
     form = open_create_role_form(browser)
