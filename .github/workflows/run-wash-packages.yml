@@ -17,7 +17,8 @@ on:
 jobs:
   wash-packages:
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: wash-packages
       environment: ${{ inputs.environment }}
