@@ -54,7 +54,7 @@ def test_login_field_labels_are_displayed(login_page):
 def test_login_footer_is_displayed(login_page):
 
     assert "NxtWash LLC" in login_page.get_footer_text()
-    assert "All right reserved" in login_page.get_footer_text()
+    assert "All rights reserved" in login_page.get_footer_text()
 
 
 def test_login_browser_title(login_page):
