@@ -23,6 +23,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Edit"),
+    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 
@@ -48,7 +49,6 @@ def test_edit_wash_package_name_persists(browser, managed_package):
 
 @allure.title("WP-EDT-002 Edit global price persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(reason="WP-EDT-002: _set_input_value JS setter doesn't reliably flush into RHF form state; save submits original value — needs blur event or ActionChains fix")
 def test_edit_wash_package_global_price_persists(managed_package):
     new_price = "45"
     page = managed_package
@@ -63,11 +63,6 @@ def test_edit_wash_package_global_price_persists(managed_package):
 
 @allure.title("WP-EDT-003 Edit global commission persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-003: JS native setter bypasses React Hook Form state for "
-           "commission field — value sets in DOM but RHF save payload carries original. "
-           "Fix: replace _set_input_value with js.select()+send_keys pattern."
-)
 def test_edit_wash_package_global_commission_persists(managed_package):
     new_commission = "12"
     page = managed_package
@@ -82,11 +77,6 @@ def test_edit_wash_package_global_commission_persists(managed_package):
 
 @allure.title("WP-EDT-004 Edit loyalty points persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-EDT-004: JS native setter bypasses React Hook Form state for "
-           "loyalty points fields — same root cause as WP-EDT-003. "
-           "Fix: replace _set_input_value with js.select()+send_keys pattern."
-)
 def test_edit_wash_package_loyalty_points_persist(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -159,11 +149,6 @@ def test_deactivate_wash_package(managed_package):
 
 @allure.title("WP-DIS-001 Applicable discount assigned to wash package persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-DIS-001: managed_package fixture times out in headless "
-           "CI (Inovua site-grid in reset path). Fix: remove site-assignment "
-           "from fixture reset; only reassign if site is missing."
-)
 def test_assign_applicable_discount_persists(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)
@@ -180,10 +165,6 @@ def test_assign_applicable_discount_persists(managed_package):
 
 @allure.title("WP-DIS-002 Assigning multiple discounts persists after save")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason="CI-SKIP WP-DIS-002: managed_package fixture times out in headless "
-           "CI. Fix: same as WP-DIS-001."
-)
 def test_assign_multiple_discounts_persist(managed_package):
     page = managed_package
     page.open_edit_package(PACKAGE_NAME)

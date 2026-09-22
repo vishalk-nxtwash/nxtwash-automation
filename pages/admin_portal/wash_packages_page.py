@@ -355,12 +355,18 @@ class WashPackagesPage(BasePage):
     def reset_filters(self):
         """Reset filters from the opened filter panel."""
         self.open_filter_panel()
-        button = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
+        button = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
+        # Wait for Apply filters (a simple button) rather than the React Select
+        # site input — the site input re-renders after Reset all and caused a
+        # socket-level deadlock in headless Chrome.
+        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def clear_active_filters(self):
         """Reset all filters and wait until the active-filter badge is gone."""
+        body = self.driver.find_element(By.TAG_NAME, "body").text
+        if "Filter by (" not in body:
+            return
         try:
             self.reset_filters()
             self.apply_filters()
@@ -415,7 +421,7 @@ class WashPackagesPage(BasePage):
     def open_edit_package(self, package_name):
         """Open edit package form."""
         self.wait_for_list_loaded()
-        self.clear_active_filters()
+        self.reset_filters_if_active()
         self.search_package(package_name)
         self.wait_for_package_row(package_name)
         # Atomic JS click — InovuaReactDataGrid uses <div> rows, not <tr>.
@@ -565,23 +571,17 @@ class WashPackagesPage(BasePage):
             )
 
     def _set_input_value(self, element, value):
-        """Set a React-controlled input value and dispatch change events."""
-        self.driver.execute_script(
-            """
-            const input = arguments[0];
-            const value = arguments[1];
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype,
-                'value'
-            ).set;
-            input.focus();
-            setter.call(input, value);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-            """,
-            element,
-            value
-        )
+        """Set a React-controlled input value via real keyboard events.
+
+        JS native setter + dispatchEvent bypasses React Hook Form's internal
+        state tracking — the save payload carries the original value even though
+        the DOM shows the new one.  click + js.select() + send_keys fires the
+        same events as a real user, so RHF marks the field dirty and includes
+        the new value in the save payload.  (Same pattern as search_package.)
+        """
+        element.click()
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(str(value))
 
     def set_global_price(self, price):
         """Set package global price."""
@@ -676,24 +676,19 @@ for (var i = 0; i < kids.length; i++) {
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(row_xpath))
 
     def _set_site_input(self, element, value):
-        """Set a React-controlled site-grid input via native setter + events."""
+        """Set a React-controlled site-grid input via real keyboard events.
+
+        scrollIntoView is still needed so the Inovua virtual-scroll row is
+        rendered before we attempt to click; the rest uses the same
+        click + js.select() + send_keys pattern as _set_input_value.
+        """
         self.driver.execute_script(
-            """
-            const input = arguments[0];
-            const value = arguments[1];
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value'
-            ).set;
-            input.scrollIntoView({block: 'center', inline: 'center'});
-            input.focus();
-            setter.call(input, value);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-            input.dispatchEvent(new Event('blur', { bubbles: true }));
-            """,
+            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
             element,
-            str(value),
         )
+        element.click()
+        self.driver.execute_script("arguments[0].select();", element)
+        element.send_keys(str(value))
 
     def assign_site_with_price_and_commission(
         self, site_name, price, commission, controller_code=None
