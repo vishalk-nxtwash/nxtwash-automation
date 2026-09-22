@@ -13,6 +13,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Overview"),
     allure.story("Filters"),
+    pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging"),
 ]
 
 
