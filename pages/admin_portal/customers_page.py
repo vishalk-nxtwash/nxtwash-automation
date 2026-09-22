@@ -1032,7 +1032,8 @@ class CustomersPage(BasePage):
 
     def open_add_car_form(self):
         self.click(self.ADD_CAR_BUTTON)
-        time.sleep(0.3)
+        # Give the form / iframe a moment to begin rendering before switching.
+        time.sleep(1.0)
         self._switch_to_car_form_frame()
         self.wait.until(EC.visibility_of_element_located(self.LICENSE_PLATE_INPUT))
 

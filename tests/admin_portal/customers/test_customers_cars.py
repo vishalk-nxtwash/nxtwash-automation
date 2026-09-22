@@ -15,7 +15,6 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Customers"),
     allure.story("Cars Settings"),
-    pytest.mark.xdist_group(name="managed_customer"),
 ]
 
 # NOTE: This file intentionally only verifies that Cars Settings fields and

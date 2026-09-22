@@ -50,11 +50,15 @@ __all__ = [
 # Shared helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
+# Set to True after _restore_customer_state runs at least once this session,
+# guaranteeing the phone number is written to the managed customer in the DB.
+_phone_ensured_this_session = False
+
+
 def open_customers_page(browser):
     open_admin_path(browser, "/customers")
     page = CustomersPage(browser)
     page.wait_for_list_loaded()
-    page._reset_active_filter_if_present()
     return page
 
 
@@ -149,7 +153,15 @@ def create_customer_if_missing(browser):
             if el.is_displayed()
         ]
         if rows_with_name:
-            # Active and correct name — clear the email filter and return.
+            # Active and correct name.
+            # On the first call this session, run restore once to guarantee the
+            # phone number is written to the DB (it may have been missing if the
+            # customer was created before the enter_phone fix was added).
+            global _phone_ensured_this_session
+            if not _phone_ensured_this_session:
+                _phone_ensured_this_session = True
+                _restore_customer_state(browser)
+            page = open_customers_page(browser)
             page._reset_active_filter_if_present()
             return page
         # Active but name is wrong — fall through to _restore_customer_state.
