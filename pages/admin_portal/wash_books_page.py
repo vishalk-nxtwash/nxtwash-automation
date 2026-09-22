@@ -276,7 +276,7 @@ class WashBooksPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(wash_book_name)
         self.wait.until(
@@ -339,7 +339,7 @@ class WashBooksPage(BasePage):
     def clear_wash_book_search(self):
         """Clear the wash book search field and wait for list to reset."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -1059,7 +1059,7 @@ class WashBooksPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.CWB_SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(str(wash_book_number))
         self.wait.until(

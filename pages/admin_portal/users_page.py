@@ -74,7 +74,8 @@ class AdminUsersPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
-        WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.LIST_FRAME))
+        self.dismiss_dev_toast()
+        self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=60)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
         self._wait_for_grid_idle()
@@ -97,7 +98,7 @@ class AdminUsersPage(BasePage):
 
     def search_user(self, phone):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
         self.wait.until(
@@ -107,7 +108,7 @@ class AdminUsersPage(BasePage):
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
@@ -212,7 +213,7 @@ class AdminUsersPage(BasePage):
     def _enter_filter_field(self, locator, value):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(value)
 
