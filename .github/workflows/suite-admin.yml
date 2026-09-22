@@ -17,7 +17,6 @@ concurrency:
 
 jobs:
   admin:
-    if: github.ref == 'refs/heads/staging'
     strategy:
       fail-fast: false
       matrix:
