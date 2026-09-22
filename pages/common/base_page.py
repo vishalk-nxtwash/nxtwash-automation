@@ -1,6 +1,11 @@
 import time
 
-from selenium.common.exceptions import ElementNotInteractableException, StaleElementReferenceException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    NoSuchElementException,
+    StaleElementReferenceException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,11 +19,36 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 45)
 
-    def click(self, locator):
+    # ── Staging toast dismissal ──────────────────────────────────────────────
 
-        self.wait.until(
-            EC.element_to_be_clickable(locator)
-        ).click()
+    def dismiss_dev_toast(self):
+        """Click the close button on the staging 'Dev environment is unstable' toast.
+
+        The toast sits at the top-right of every post-login page on staging and
+        intercepts clicks on buttons near y=112.  Uses JS click on the close
+        button to avoid a second interception.  Safe to call when the toast is
+        absent — silently no-ops in that case.
+        """
+        try:
+            close_btn = self.driver.find_element(
+                By.CSS_SELECTOR,
+                "#dev-environment-unstable button.Toastify__close-button",
+            )
+            self.driver.execute_script("arguments[0].click();", close_btn)
+            WebDriverWait(self.driver, 3).until(
+                EC.invisibility_of_element_located(
+                    (By.ID, "dev-environment-unstable")
+                )
+            )
+        except (NoSuchElementException, Exception):
+            pass
+
+    def click(self, locator):
+        try:
+            self.wait.until(EC.element_to_be_clickable(locator)).click()
+        except ElementClickInterceptedException:
+            self.dismiss_dev_toast()
+            self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def enter_text(self, locator, text):
 
