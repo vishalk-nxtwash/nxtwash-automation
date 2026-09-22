@@ -1,0 +1,79 @@
+name: Admin Suite — Wave 2 only
+
+# Run only Wave 2 modules manually — useful for verifying fixes before
+# triggering the full suite.
+# Modules: gift_cards / coupon_packages / discounts / login / users /
+#          user_roles / overview / transactions / cash_report / general_sales_report
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: admin-suite-wave2
+  cancel-in-progress: false
+
+jobs:
+  wave2:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        shard:
+          - name: gift-cards
+            path: tests/admin_portal/gift_cards
+            parallel: "2"
+            timeout: 90
+
+          - name: coupon-packages
+            path: tests/admin_portal/coupon_packages
+            parallel: "2"
+            timeout: 90
+
+          - name: discounts
+            path: tests/admin_portal/discounts
+            parallel: "2"
+            timeout: 120
+
+          - name: login
+            path: tests/admin_portal/login
+            parallel: "2"
+            timeout: 60
+
+          - name: users
+            path: tests/admin_portal/users
+            parallel: "2"
+            timeout: 90
+
+          - name: user-roles
+            path: tests/admin_portal/user_roles
+            parallel: "2"
+            timeout: 90
+
+          - name: overview
+            path: tests/admin_portal/overview
+            parallel: "2"
+            timeout: 60
+
+          - name: transactions
+            path: tests/admin_portal/transactions
+            parallel: "2"
+            timeout: 90
+
+          - name: cash-report
+            path: tests/admin_portal/cash_report
+            parallel: "2"
+            timeout: 60
+
+          - name: general-sales-report
+            path: tests/admin_portal/general_sales_report
+            parallel: "2"
+            timeout: 60
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel }}
+      timeout_minutes: ${{ matrix.shard.timeout }}
