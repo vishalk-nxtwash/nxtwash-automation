@@ -171,6 +171,8 @@ class WashBooksPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
@@ -1007,6 +1009,8 @@ class WashBooksPage(BasePage):
 
     def wait_for_cwb_list_loaded(self):
         """Wait until the Customer Wash Books listing is ready."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         long_wait = WebDriverWait(self.driver, 60)
         self.switch_to_frame_with_retry(self.CWB_LIST_FRAME)
         long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
