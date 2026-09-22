@@ -358,6 +358,7 @@ class WashBooksPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
         apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
         self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def reset_filters_if_active(self):
