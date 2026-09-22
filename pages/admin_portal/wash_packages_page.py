@@ -386,12 +386,18 @@ class WashPackagesPage(BasePage):
     def reset_filters(self):
         """Reset filters from the opened filter panel."""
         self.open_filter_panel()
-        button = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
+        button = self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
+        # Wait for Apply filters (a simple button) rather than the React Select
+        # site input — the site input re-renders after Reset all and caused a
+        # socket-level deadlock in headless Chrome.
+        self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
     def clear_active_filters(self):
         """Reset all filters and wait until the active-filter badge is gone."""
+        body = self.driver.find_element(By.TAG_NAME, "body").text
+        if "Filter by (" not in body:
+            return
         try:
             self.reset_filters()
             self.apply_filters()
@@ -446,7 +452,7 @@ class WashPackagesPage(BasePage):
     def open_edit_package(self, package_name):
         """Open edit package form."""
         self.wait_for_list_loaded()
-        self.clear_active_filters()
+        self.reset_filters_if_active()
         self.search_package(package_name)
         self.wait_for_package_row(package_name)
         # Atomic JS click — InovuaReactDataGrid uses <div> rows, not <tr>.
