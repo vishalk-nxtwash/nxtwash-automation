@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -90,6 +90,10 @@ class GiftCardsPage(BasePage):
         "//*[contains(@class,'InovuaReactDataGrid__row') "
         "and .//*[@data-props-id='giftCardName']]"
     )
+    GRID_LOAD_MASK = (
+        By.CSS_SELECTOR,
+        ".inovua-react-toolkit-load-mask__background-layer"
+    )
 
     GIFT_CARD_NAME_INPUT = (By.NAME, "giftCardName")
     GIFT_CARD_AMOUNT_INPUT = (By.NAME, "giftCardAmount")
@@ -143,6 +147,16 @@ class GiftCardsPage(BasePage):
                 (By.XPATH, "//*[normalize-space()='Gift card name']")
             )
         )
+        self.wait_for_grid_idle()
+
+    def wait_for_grid_idle(self):
+        """Wait until the Inovua load mask clears — grid DOM is stable after this."""
+        self.wait.until(
+            lambda driver: not any(
+                mask.is_displayed()
+                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
+            )
+        )
 
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
@@ -187,6 +201,7 @@ class GiftCardsPage(BasePage):
         self.wait.until(
             EC.element_to_be_clickable(self.ADD_CUSTOMER_GIFT_CARD_BUTTON)
         )
+        self.wait_for_grid_idle()
 
     def wait_for_customer_create_loaded(self):
         """Wait until the create customer gift card form is visible."""
@@ -363,14 +378,26 @@ class GiftCardsPage(BasePage):
         """Open edit gift card form."""
         self.wait_for_list_loaded()
         self.search_gift_card(gift_card_name)
-        row = self.wait_for_gift_card_row(gift_card_name)
-        edit_button = row.find_element(
-            By.XPATH,
-            ".//*[normalize-space()='Edit']/ancestor::a[1]"
+        self.wait_for_gift_card_row(gift_card_name)
+        # Atomic JS click: locate the Edit link entirely within a single script
+        # execution so no Python WebElement reference is held across an Inovua
+        # re-render (which replaces DOM nodes and makes saved refs frame-stale).
+        self.driver.execute_script(
+            "var name=arguments[0];"
+            "var cells=document.querySelectorAll('[data-props-id=\"giftCardName\"]');"
+            "for(var i=0;i<cells.length;i++){"
+            " var span=cells[i].querySelector('span');"
+            " if(span&&span.textContent.trim()===name){"
+            "  var row=cells[i].closest('.InovuaReactDataGrid__row');"
+            "  if(row){"
+            "   var a=Array.from(row.querySelectorAll('a'))"
+            "    .find(function(x){return x.textContent.trim()==='Edit';});"
+            "   if(a){a.click();return;}"
+            "  }"
+            " }"
+            "}",
+            gift_card_name
         )
-        # The inovua load-mask briefly covers the grid while data loads; JS
-        # click bypasses the overlay so we don't need a separate mask wait.
-        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def get_gift_card_name_value(self):
@@ -906,8 +933,10 @@ class GiftCardsPage(BasePage):
         )
 
     def apply_filters(self):
-        """Click Apply filters and wait for the grid to refresh.
+        """Click Apply filters, close the panel, and wait for the grid to refresh.
 
+        Apply Filters is type=submit — it submits the form but leaves the panel
+        open. Close it by toggling FILTER_BUTTON (same pattern as reset_all_filters).
         Waits for either the gift card or customer gift card add button so this
         method works from both the gift card list and the customer gift card list.
         """
@@ -915,6 +944,15 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON)
         )
         self.driver.execute_script("arguments[0].click();", button)
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            filter_btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+            self.driver.execute_script("arguments[0].click();", filter_btn)
+            self.wait.until(
+                lambda d: not any(
+                    el.is_displayed()
+                    for el in d.find_elements(*self.APPLY_FILTERS_BUTTON)
+                )
+            )
         self.wait.until(
             lambda driver: any(
                 el.is_displayed()
@@ -934,12 +972,20 @@ class GiftCardsPage(BasePage):
         Reset All may reload the legacy iframe, so we exit to default_content and
         re-enter via wait_for_list_loaded to avoid stale context.
         """
-        filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
-        filter_active = any(
-            "(" in (btn.text or "")
-            for btn in filter_buttons
-            if btn.is_displayed()
-        )
+        try:
+            filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
+            filter_active = any(
+                "(" in (btn.text or "")
+                for btn in filter_buttons
+                if btn.is_displayed()
+            )
+        except StaleElementReferenceException:
+            filter_buttons = self.driver.find_elements(*self.FILTER_BUTTON)
+            filter_active = any(
+                "(" in (btn.text or "")
+                for btn in filter_buttons
+                if btn.is_displayed()
+            )
         if not filter_active:
             return
 
