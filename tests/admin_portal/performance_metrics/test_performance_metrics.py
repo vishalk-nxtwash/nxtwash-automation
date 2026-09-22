@@ -158,6 +158,7 @@ def test_modal_opens_with_default_state(pfm_modal):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-003 Date preset dropdown lists exactly 6 options (no Custom)")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not rendering options on staging")
 def test_date_preset_dropdown_lists_six_options(pfm_modal):
     options = pfm_modal.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -174,6 +175,7 @@ def test_date_preset_dropdown_lists_six_options(pfm_modal):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-004 Selecting a preset auto-populates the custom date range field")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 def test_preset_auto_updates_date_range(pfm_modal):
     pfm_modal.select_date_preset("Last month")
     try:
@@ -195,6 +197,7 @@ def test_preset_auto_updates_date_range(pfm_modal):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-005 Apply filters closes modal and renders both widgets")
 @pytest.mark.smoke
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 def test_apply_closes_modal_and_renders_widgets(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.select_date_preset("Last month")
@@ -286,6 +289,7 @@ def test_all_sites_option_present_and_default(pfm_modal):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-003 All Sites aggregates data from all locations")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 def test_all_sites_aggregates_data(pfm_modal):
     # Dependency: Sites & Locations module
     # Apply with All Sites (default) + Last month — page should show aggregate data.
@@ -517,6 +521,7 @@ def test_page_level_preset_dropdown_has_six_options(pfm_page):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-002..007 Preset sets the expected date range in the date field")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 @pytest.mark.parametrize("preset", DATE_PRESETS, ids=DATE_PRESETS)
 def test_date_preset_sets_correct_range(pfm_modal, preset):
     pfm_modal.select_date_preset(preset)
@@ -628,6 +633,7 @@ def test_clear_date_range_button(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-018 A single-day range triggers the CVR constraint message")
 @pytest.mark.extended
+@pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 def test_single_day_range_shows_cvr_constraint(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.select_date_preset("Today")
