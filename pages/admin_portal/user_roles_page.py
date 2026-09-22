@@ -82,6 +82,7 @@ class AdminUserRolesPage(BasePage):
         self.wait.until(
             lambda d: "Please wait" not in d.find_element(By.TAG_NAME, "body").text
         )
+        self.reset_filters_if_active()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
