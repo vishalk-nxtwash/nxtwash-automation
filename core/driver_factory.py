@@ -4,17 +4,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Pinned path for the ChromeDriver binary that matches Chrome 151.0.7922.76.
-# WDM auto-detection fetches the closest cached minor build which doesn't
-# always match the installed Chrome, causing InvalidSessionIdException crashes.
-# CI can override with CHROMEDRIVER_PATH env var pointing to the system binary.
-_PINNED_CHROMEDRIVER = os.environ.get(
-    "CHROMEDRIVER_PATH",
-    os.path.expanduser(
-        "~/.wdm/drivers/chromedriver/mac-arm64/"
-        "151.0.7922.77/chromedriver-mac-arm64/chromedriver"
-    ),
-)
+# CI pre-download step writes the resolved driver path into CHROMEDRIVER_PATH
+# so all xdist workers reuse the same binary without individual WDM downloads.
+# On local Mac dev, leave CHROMEDRIVER_PATH unset — WDM will resolve it once
+# per process and cache the result in _driver_path.
+_PINNED_CHROMEDRIVER = os.environ.get("CHROMEDRIVER_PATH")
 
 
 class DriverFactory:
@@ -28,7 +22,7 @@ class DriverFactory:
     @classmethod
     def _chromedriver_path(cls):
         if cls._driver_path is None:
-            if os.path.isfile(_PINNED_CHROMEDRIVER):
+            if _PINNED_CHROMEDRIVER and os.path.isfile(_PINNED_CHROMEDRIVER):
                 cls._driver_path = _PINNED_CHROMEDRIVER
             else:
                 cls._driver_path = ChromeDriverManager().install()

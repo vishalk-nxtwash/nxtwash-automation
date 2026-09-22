@@ -71,6 +71,14 @@ jobs:
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
+          # pytest.ini writes allure results + screenshots + logs into reports/
+          # every run. This directory is never wiped by git checkout (gitignored)
+          # so it grows without bound across runs — primary cause of disk exhaustion.
+          rm -rf reports/ 2>/dev/null || true
+          # Also clean any leftover CI-path artifacts from a previously crashed run
+          # that didn't reach its own post-run cleanup step.
+          rm -rf allure-results/ allure-report/ screenshots/ logs/ \
+                 report.html results.xml 2>/dev/null || true
           # Purge pip wheel cache — all deps are pre-installed on this runner
           # so the cache only grows the disk between runs without being needed.
           python3.11 -m pip cache purge 2>/dev/null || true
@@ -94,9 +102,7 @@ jobs:
         run: python3.11 --version
 
       - name: Install dependencies
-        run: |
-          python3.11 -m pip install --upgrade pip
-          python3.11 -m pip install -r requirements.txt
+        run: python3.11 -m pip install -r requirements.txt --quiet
 
       # The credentials secret is the full .env contents for this environment.
       # ConfigManager.load_dotenv() picks these up automatically at runtime.
@@ -109,6 +115,8 @@ jobs:
 
       - name: Pre-download ChromeDriver
         run: |
+          # Log Chrome version so version-mismatch failures are immediately visible.
+          google-chrome --version 2>/dev/null || true
           # Download ChromeDriver once in the main process and export its path.
           # xdist workers inherit CHROMEDRIVER_PATH and skip the WDM network
           # check entirely — each worker was previously downloading independently.
@@ -192,8 +200,8 @@ jobs:
             allure-results/
             report.html
             results.xml
-            screenshots/
-            logs/
+            reports/screenshots/
+            reports/logs/
           if-no-files-found: ignore
 
       - name: Publish test summary
@@ -208,7 +216,9 @@ jobs:
         run: |
           # Delete large artifact dirs immediately after upload so they do not
           # accumulate on the self-hosted runner disk between runs.
-          rm -rf allure-results allure-report screenshots logs \
+          # reports/ is written by pytest.ini (--alluredir=reports/allure-results)
+          # and never removed by git checkout — must be deleted explicitly here.
+          rm -rf allure-results allure-report screenshots logs reports \
                  report.html results.xml \
                  2>/dev/null || true
           pkill -f "chrome" || true
