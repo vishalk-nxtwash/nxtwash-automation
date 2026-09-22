@@ -1,0 +1,133 @@
+name: Admin Suite (GitHub-hosted)
+
+# GitHub-hosted runner variant — all 12 shards run simultaneously in one flat
+# matrix with no wave dependencies.  GitHub-hosted runners have 7 GB RAM vs
+# EC2's 3.7 GB, so parallel: 2 per shard is safe (2 Chrome × ~900 MB = ~1.8 GB
+# peak, well within budget).  Expected wall-clock: ~25-35 min for the full suite.
+#
+# Use this workflow for development / PR validation.
+# Use suite-admin.yml (self-hosted) for the nightly production baseline.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: admin-suite-gha
+  cancel-in-progress: true
+
+jobs:
+  suite:
+    strategy:
+      fail-fast: false
+      max-parallel: 14
+      matrix:
+        shard:
+          # ── Wave-1 equivalent ──────────────────────────────────────────────
+          - name: wash-packages
+            path: tests/admin_portal/wash_packages
+            parallel: "2"
+            timeout: 60
+
+          - name: wash-books
+            path: tests/admin_portal/wash_books
+            parallel: "2"
+            timeout: 60
+
+          - name: wash-extras
+            path: tests/admin_portal/wash_extras
+            parallel: "2"
+            timeout: 60
+
+          - name: people-customers
+            path: tests/admin_portal/customers
+            parallel: "2"
+            timeout: 60
+
+          - name: people-hr
+            path: >-
+              tests/admin_portal/employees
+              tests/admin_portal/labor_shifts
+            parallel: "3"
+            timeout: 60
+
+          - name: revenue-metrics
+            path: >-
+              tests/admin_portal/revenue_overview
+              tests/admin_portal/performance_metrics
+            parallel: "2"
+            timeout: 60
+
+          # ── Wave-2 equivalent ──────────────────────────────────────────────
+          - name: promotions
+            path: >-
+              tests/admin_portal/gift_cards
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/discounts
+            parallel: "2"
+            timeout: 90
+
+          - name: auth-users
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/users
+              tests/admin_portal/overview
+            parallel: "2"
+            timeout: 60
+
+          - name: auth-roles
+            path: tests/admin_portal/user_roles
+            parallel: "2"
+            timeout: 90
+
+          - name: financial
+            path: >-
+              tests/admin_portal/transactions
+              tests/admin_portal/cash_report
+              tests/admin_portal/general_sales_report
+            parallel: "2"
+            timeout: 90
+
+          # ── Wave-3 equivalent ──────────────────────────────────────────────
+          - name: memberships-services
+            path: >-
+              tests/admin_portal/memberships
+              tests/admin_portal/custom_services
+              tests/admin_portal/service_categories
+              tests/admin_portal/bank_drop
+            parallel: "2"
+            timeout: 90
+
+          - name: sites-settings
+            path: >-
+              tests/admin_portal/sites
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+            parallel: "2"
+            timeout: 90
+
+          - name: pos-hardware
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/card_declines
+              tests/admin_portal/gas_pump_settings
+            parallel: "2"
+            timeout: 90
+
+          # ── Wave-4 equivalent ──────────────────────────────────────────────
+          - name: activity
+            path: >-
+              tests/admin_portal/wash_activity
+              tests/admin_portal/redemptions
+            parallel: "2"
+            timeout: 90
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: gha-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel }}
+      timeout_minutes: ${{ matrix.shard.timeout }}
+      runner: ubuntu-latest
