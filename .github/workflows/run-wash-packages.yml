@@ -1,0 +1,26 @@
+name: Run wash-packages (manual)
+
+# Targeted dispatch for the wash_packages module only.
+# Use this to validate fixes without running the full Admin Suite.
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (staging | production)"
+        type: choice
+        options:
+          - staging
+          - production
+        default: staging
+
+jobs:
+  wash-packages:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: wash-packages
+      environment: ${{ inputs.environment }}
+      test_path: tests/admin_portal/wash_packages
+      parallel: "2"
+      timeout_minutes: 180
