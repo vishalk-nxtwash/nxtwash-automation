@@ -77,7 +77,7 @@ class AdminEmployeesPage(BasePage):
 
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
         self.wait.until(
@@ -89,7 +89,7 @@ class AdminEmployeesPage(BasePage):
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""

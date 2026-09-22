@@ -100,11 +100,10 @@ jobs:
               tests/admin_portal/user_roles
           # ── People & HR ───────────────────────────────────────────────────
           # 164 tests — users + employees
-          # TODO: re-enable after fixing users toast interception + employees stale filter
-          # - name: people
-          #   path: >-
-          #     tests/admin_portal/users
-          #     tests/admin_portal/employees
+          - name: people
+            path: >-
+              tests/admin_portal/users
+              tests/admin_portal/employees
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
