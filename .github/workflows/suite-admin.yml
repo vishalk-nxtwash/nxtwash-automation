@@ -22,6 +22,10 @@ on:
         description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Default: all.'
         required: false
         default: 'all'
+      runner:
+        description: 'Runner — "self-hosted" (EC2) or "ubuntu-latest" (GitHub-hosted)'
+        required: false
+        default: 'self-hosted'
   schedule:
     - cron: "0 3 * * 0"
   repository_dispatch:
@@ -79,6 +83,7 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ matrix.shard.parallel || '1' }}
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+      runner: ${{ inputs.runner || 'self-hosted' }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 2  (191 + ~120 + ~150 + 260 = ~721 tests)
@@ -126,6 +131,7 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ matrix.shard.parallel || '1' }}
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+      runner: ${{ inputs.runner || 'self-hosted' }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 3  (190 + 212 + 206 = 608 tests)
@@ -167,6 +173,7 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ matrix.shard.parallel || '1' }}
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+      runner: ${{ inputs.runner || 'self-hosted' }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # WAVE 4  (267 tests)
@@ -193,3 +200,4 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ matrix.shard.parallel || '1' }}
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+      runner: ${{ inputs.runner || 'self-hosted' }}

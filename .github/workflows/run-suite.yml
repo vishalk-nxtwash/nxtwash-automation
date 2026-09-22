@@ -40,6 +40,10 @@ on:
         description: "Job timeout in minutes"
         type: number
         default: 90
+      runner:
+        description: "Runner label — 'self-hosted' (EC2) or 'ubuntu-latest' (GitHub-hosted)"
+        type: string
+        default: "self-hosted"
     secrets:
       dotenv:
         description: "Full .env contents (KEY=value lines) for the target environment"
@@ -47,7 +51,7 @@ on:
 
 jobs:
   run:
-    runs-on: self-hosted
+    runs-on: ${{ inputs.runner }}
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
