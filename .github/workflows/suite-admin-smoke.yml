@@ -1,0 +1,102 @@
+name: Admin Smoke (staging)
+
+# Fast sanity check — runs only @smoke marked tests across all modules.
+# Smoke tests = login flows, positive paths, and *_smoke files.
+# Expected wall-clock: ~5-10 min (all shards parallel, far fewer tests per shard).
+#
+# Triggers:
+#   - Every push to main or staging (catches regressions early)
+#   - Manual dispatch (run anytime between full suite runs)
+
+on:
+  push:
+    branches: [main, staging]
+  workflow_dispatch:
+
+concurrency:
+  group: admin-smoke-staging
+  cancel-in-progress: true   # New push cancels previous in-flight smoke run
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      max-parallel: 13
+      matrix:
+        shard:
+          - name: reports-overview
+            path: >-
+              tests/admin_portal/overview
+              tests/admin_portal/performance_metrics
+
+          - name: reports-revenue
+            path: >-
+              tests/admin_portal/revenue_overview
+              tests/admin_portal/general_sales_report
+
+          - name: reports-financial
+            path: >-
+              tests/admin_portal/cash_report
+              tests/admin_portal/card_declines
+              tests/admin_portal/transactions
+
+          - name: reports-ops
+            path: >-
+              tests/admin_portal/labor_shifts
+              tests/admin_portal/redemptions
+              tests/admin_portal/wash_activity
+
+          - name: auth-core
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/sites
+              tests/admin_portal/service_categories
+
+          - name: wash-packages
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_extras
+
+          - name: wash-catalog
+            path: >-
+              tests/admin_portal/wash_books
+              tests/admin_portal/coupon_packages
+
+          - name: services
+            path: >-
+              tests/admin_portal/custom_services
+              tests/admin_portal/gift_cards
+              tests/admin_portal/bank_drop
+
+          - name: promotions
+            path: >-
+              tests/admin_portal/discounts
+              tests/admin_portal/memberships
+
+          - name: customers
+            path: tests/admin_portal/customers
+
+          - name: settings-hw
+            path: >-
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+
+          - name: settings-pos
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/user_roles
+
+          - name: people
+            path: >-
+              tests/admin_portal/users
+              tests/admin_portal/employees
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: smoke-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      marker: smoke
+      parallel: "2"
+      timeout_minutes: 30
