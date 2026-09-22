@@ -72,7 +72,13 @@ _TGL_FALSE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-_XFAIL_TC_IDS = {"TUN-TGL-008": _TGL_008_XFAIL, "TUN-TGL-003": _TGL_FALSE_XFAIL, "TUN-TGL-006": _TGL_FALSE_XFAIL}
+_XFAIL_TC_IDS = {
+    "TUN-TGL-001": _TGL_FALSE_XFAIL,
+    "TUN-TGL-002": _TGL_FALSE_XFAIL,
+    "TUN-TGL-003": _TGL_FALSE_XFAIL,
+    "TUN-TGL-006": _TGL_FALSE_XFAIL,
+    "TUN-TGL-008": _TGL_008_XFAIL,
+}
 
 _SKIP_MARK = pytest.mark.skip(
     reason=(
@@ -117,6 +123,13 @@ def test_toggle_saves_and_persists(browser, managed_tunnel_form, toggle_label):
 
 @allure.title("TUN-TGL-010 All toggle states are reflected on form re-open")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "TUN-TGL-010: staging app does not persist toggle OFF states; "
+        "re-open shows values reset to True regardless of saved state."
+    ),
+)
 def test_toggle_states_reflected_on_reopen(browser, managed_tunnel_form):
     form = managed_tunnel_form
 

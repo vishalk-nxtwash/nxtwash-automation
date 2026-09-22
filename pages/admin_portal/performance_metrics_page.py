@@ -397,7 +397,8 @@ class PerformanceMetricsPage(BasePage):
         """
         ctrl_locator = (By.XPATH,
             "//div[contains(@class,'nxt-select__control') "
-            "and not(contains(@class,'nxt-multi-select'))]")
+            "and not(contains(@class,'nxt-multi-select')) "
+            "and not(contains(@class,'--is-disabled'))]")
         ctrl = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(ctrl_locator)
         )

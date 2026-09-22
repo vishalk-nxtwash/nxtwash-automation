@@ -576,6 +576,14 @@ class MembershipsPage(BasePage):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
         self.click(self.RESET_ALL_BUTTON)
+        try:
+            title = self.driver.find_element(*self.PAGE_TITLE)
+            self.driver.execute_script("arguments[0].click();", title)
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:  # noqa: BLE001
+            pass
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""

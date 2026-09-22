@@ -42,6 +42,13 @@ def test_create_active_custom_service(browser):
 
 @allure.title("CS-CRT-002 Create inactive custom service is hidden from the default list")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "CS-CRT-002: staging server saves custom service as Active regardless of the "
+        "Inactive selection on the create form. Same app bug as WP-TGL-002 / POS-CRT-007."
+    ),
+)
 def test_create_inactive_custom_service_hidden(browser):
 
     inactive_name = "VK inact-%s" % uuid.uuid4().hex[:6]

@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
@@ -370,7 +371,6 @@ class ServiceCategoriesPage(BasePage):
     def open_filter_panel(self):
         """Open the filter panel and wait for it to render."""
         import time
-        from selenium.webdriver.support.ui import WebDriverWait
         self.wait_for_list_loaded()
         btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
@@ -439,6 +439,14 @@ class ServiceCategoriesPage(BasePage):
         reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if reset_btns:
             self.driver.execute_script("arguments[0].click();", reset_btns[0])
+        try:
+            title = self.driver.find_element(*self.PAGE_TITLE)
+            self.driver.execute_script("arguments[0].click();", title)
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
+            )
+        except Exception:  # noqa: BLE001
+            pass
 
     # ------------------------------------------------------------------ switch
 
