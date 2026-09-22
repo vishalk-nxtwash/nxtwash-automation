@@ -8,11 +8,16 @@ name: Admin Suite (staging)
 
 on:
   workflow_dispatch:
+    inputs:
+      runner:
+        description: 'Runner — "ubuntu-latest" (GitHub-hosted, ~30 min) or "self-hosted" (EC2)'
+        required: false
+        default: "ubuntu-latest"
 
-# One admin staging run at a time (its shards run in parallel within the run);
-# a second run queues rather than racing on shared staging data.
+# Separate concurrency slots per runner so GitHub-hosted and EC2 runs
+# never block each other.
 concurrency:
-  group: admin-suite-staging
+  group: admin-suite-${{ inputs.runner || 'ubuntu-latest' }}
   cancel-in-progress: false
 
 jobs:
@@ -105,3 +110,4 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
       timeout_minutes: 90
+      runner: ${{ inputs.runner || 'ubuntu-latest' }}

@@ -1,12 +1,13 @@
 name: Run Suite (reusable)
 
 # Reusable test engine — the single place that knows HOW to run the suite.
-# Profile workflows (suite-admin / suite-superadmin / suite-prod-smoke) call this
-# with WHAT to run. Do not add triggers here other than workflow_call.
+# Supports both GitHub-hosted (ubuntu-latest) and EC2 self-hosted runners.
 #
-# Callers must pass `secrets: inherit` so the job can read these repo secrets:
-#   ADMIN_PORTAL_USERNAME / ADMIN_PORTAL_PASSWORD
-#   SUPERADMIN_USERNAME / SUPERADMIN_PASSWORD  (optional — only required for superadmin tests)
+# GitHub-hosted: uses setup-python / setup-chrome / setup-java actions.
+#   Secrets: ADMIN_PORTAL_USERNAME, ADMIN_PORTAL_PASSWORD (individual repo secrets)
+#
+# EC2 self-hosted: Chrome, Python 3.11, Java pre-installed on the runner.
+#   Secrets: STAGING (full .env file as a single secret)
 
 on:
   workflow_call:
@@ -35,31 +36,55 @@ on:
         description: "Job timeout in minutes"
         type: number
         default: 90
+      runner:
+        description: "'ubuntu-latest' (GitHub-hosted) or 'self-hosted' (EC2)"
+        type: string
+        default: "ubuntu-latest"
     secrets:
       ADMIN_PORTAL_USERNAME:
-        description: "Admin portal login username"
-        required: true
+        description: "Admin portal username (GitHub-hosted)"
+        required: false
       ADMIN_PORTAL_PASSWORD:
-        description: "Admin portal login password"
-        required: true
+        description: "Admin portal password (GitHub-hosted)"
+        required: false
       SUPERADMIN_USERNAME:
-        description: "Superadmin login username"
         required: false
       SUPERADMIN_PASSWORD:
-        description: "Superadmin login password"
+        required: false
+      STAGING:
+        description: "Full .env contents (KEY=value lines) — EC2/self-hosted"
         required: false
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
     timeout-minutes: ${{ inputs.timeout_minutes }}
 
     steps:
       - uses: actions/checkout@v4
 
-      # Hard safety gate: PRODUCTION must never run mutating suites. Only the
-      # read-only `prod_smoke` marker is allowed (other tests create data that
-      # cannot be deleted).
+      # ── EC2 pre-run cleanup ──────────────────────────────────────────────────
+      # Kill leftover Chrome processes and purge accumulated reports/ directory.
+      # reports/ is gitignored so git checkout never removes it — it grows
+      # across runs and fills the runner disk without this step.
+      - name: Pre-run cleanup (EC2)
+        if: inputs.runner == 'self-hosted'
+        run: |
+          echo "=== Disk before cleanup ===" && df -h /
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
+                 /tmp/chrome_* /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
+                 ~/.config/google-chrome/Crash\ Reports \
+                 ~/.config/google-chrome/Crashpad \
+                 2>/dev/null || true
+          rm -rf reports/ allure-results/ allure-report/ \
+                 report.html results.xml 2>/dev/null || true
+          python3.11 -m pip cache purge 2>/dev/null || true
+          echo "=== Disk after cleanup ===" && df -h /
+
+      # Hard safety gate: PRODUCTION must never run mutating suites.
       - name: Safety gate (production is read-only)
         if: inputs.environment == 'production'
         env:
@@ -70,42 +95,75 @@ jobs:
             exit 1
           fi
 
+      # ── GitHub-hosted setup (skipped on EC2 — already installed) ────────────
       - name: Set up Python
+        if: inputs.runner != 'self-hosted'
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
           cache: "pip"
 
       - name: Set up Chrome
+        if: inputs.runner != 'self-hosted'
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
 
-      # Java is required by the Allure CLI used to render the HTML report.
       - name: Set up Java
+        if: inputs.runner != 'self-hosted'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
 
+      # ── EC2: log Chrome version for driver-mismatch diagnostics ─────────────
+      - name: Chrome version (EC2)
+        if: inputs.runner == 'self-hosted'
+        run: google-chrome --version 2>/dev/null || true
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if command -v python3.11 >/dev/null 2>&1; then
+            python3.11 -m pip install -r requirements.txt --quiet
+          else
+            python -m pip install -r requirements.txt --quiet
+          fi
 
-      - name: Write .env from secrets
+      # ── EC2: pre-download ChromeDriver once so xdist workers reuse it ───────
+      - name: Pre-download ChromeDriver (EC2)
+        if: inputs.runner == 'self-hosted'
+        run: |
+          python3.11 - <<'PYEOF'
+          import os
+          from webdriver_manager.chrome import ChromeDriverManager
+          path = ChromeDriverManager().install()
+          print(f"ChromeDriver: {path}")
+          env_file = os.environ.get("GITHUB_ENV", "")
+          if env_file:
+              with open(env_file, "a") as f:
+                  f.write(f"CHROMEDRIVER_PATH={path}\n")
+          PYEOF
+
+      # Write .env — EC2 uses the combined STAGING secret; GitHub-hosted uses
+      # individual repo secrets.
+      - name: Write .env
         env:
+          STAGING_ENV: ${{ secrets.STAGING }}
           ADMIN_PORTAL_USERNAME: ${{ secrets.ADMIN_PORTAL_USERNAME }}
           ADMIN_PORTAL_PASSWORD: ${{ secrets.ADMIN_PORTAL_PASSWORD }}
           SUPERADMIN_USERNAME: ${{ secrets.SUPERADMIN_USERNAME }}
           SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
         run: |
-          {
-            printf 'ADMIN_PORTAL_USERNAME=%s\n' "$ADMIN_PORTAL_USERNAME"
-            printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$ADMIN_PORTAL_PASSWORD"
-            [ -n "$SUPERADMIN_USERNAME" ] && printf 'SUPERADMIN_USERNAME=%s\n' "$SUPERADMIN_USERNAME"
-            [ -n "$SUPERADMIN_PASSWORD" ] && printf 'SUPERADMIN_PASSWORD=%s\n' "$SUPERADMIN_PASSWORD"
-          } > .env
+          if [ -n "$STAGING_ENV" ]; then
+            printf '%s\n' "$STAGING_ENV" > .env
+          else
+            {
+              printf 'ADMIN_PORTAL_USERNAME=%s\n' "$ADMIN_PORTAL_USERNAME"
+              printf 'ADMIN_PORTAL_PASSWORD=%s\n' "$ADMIN_PORTAL_PASSWORD"
+              [ -n "$SUPERADMIN_USERNAME" ] && printf 'SUPERADMIN_USERNAME=%s\n' "$SUPERADMIN_USERNAME"
+              [ -n "$SUPERADMIN_PASSWORD" ] && printf 'SUPERADMIN_PASSWORD=%s\n' "$SUPERADMIN_PASSWORD"
+            } > .env
+          fi
           echo "Wrote .env ($(grep -c '=' .env) key=value lines)."
 
       - name: Run tests (headless)
@@ -116,11 +174,9 @@ jobs:
           MARKER: ${{ inputs.marker }}
           TEST_PATH: ${{ inputs.test_path }}
         run: |
-          # Parallelism: number of workers; "0" forces serial.
           xdist="-n ${PARALLEL}"
           if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
 
-          # Optional marker filter; blank = no -m.
           marker_arg=""
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
@@ -131,12 +187,10 @@ jobs:
             --html=reports/report.html --self-contained-html \
             --junitxml=reports/results.xml
 
-      # Render the raw allure-results into a browsable HTML report. Runs even
-      # when tests fail so a report is always produced.
       - name: Generate Allure report
         if: always()
         run: |
-          npm install -g allure-commandline --silent
+          command -v allure >/dev/null 2>&1 || npm install -g allure-commandline --silent
           allure generate reports/allure-results --clean -o reports/allure-report
 
       - name: Upload test artifacts
@@ -159,3 +213,17 @@ jobs:
         with:
           paths: reports/results.xml
         continue-on-error: true
+
+      # ── EC2 post-run cleanup ─────────────────────────────────────────────────
+      - name: Post-run cleanup (EC2)
+        if: always() && inputs.runner == 'self-hosted'
+        run: |
+          rm -rf reports/ allure-results/ allure-report/ \
+                 report.html results.xml 2>/dev/null || true
+          pkill -f "chrome" || true
+          pkill -f "chromedriver" || true
+          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
+                 /tmp/chrome_* /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
+                 /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
+                 2>/dev/null || true
+          df -h /
