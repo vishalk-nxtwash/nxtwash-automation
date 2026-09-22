@@ -483,8 +483,10 @@ class MembershipsPage(BasePage):
         self.apply_filters()
 
     def open_filter_panel(self):
-        """Open the Memberships filter panel."""
+        """Open the Memberships filter panel (idempotent)."""
         self.wait_for_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         self.click(self.FILTER_BUTTON)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
@@ -553,10 +555,9 @@ class MembershipsPage(BasePage):
             return False
 
     def clear_active_filters(self):
-        """Reset and apply filters if any are currently active."""
+        """Reset all filters if any are currently active."""
         if self.has_active_filters():
             self.reset_filters()
-            self.apply_filters()
 
     def apply_filters(self):
         """Apply the configured filters and wait for the grid to refresh."""
@@ -567,9 +568,8 @@ class MembershipsPage(BasePage):
         )
         sentinel = sentinel_rows[0] if sentinel_rows else None
         self.click(self.APPLY_FILTERS_BUTTON)
-        self.wait.until(
-            EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
-        )
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
         self.wait_for_list_loaded()
         if sentinel is not None:
             try:
