@@ -348,17 +348,9 @@ class WashPackagesPage(BasePage):
         self.open_filter_panel()
         button = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
-        self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
-        # Click the page title to dismiss the filter panel — it closes on any
-        # outside click but does not auto-close after Reset All.
-        try:
-            title = self.driver.find_element(*self.PAGE_TITLE)
-            self.driver.execute_script("arguments[0].click();", title)
-            WebDriverWait(self.driver, 5).until(
-                EC.invisibility_of_element_located(self.FILTER_SITE_INPUT)
-            )
-        except Exception:  # noqa: BLE001
-            pass
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def reset_filters_if_active(self):
         """Reset filter panel state if any filter is currently active.

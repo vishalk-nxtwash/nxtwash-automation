@@ -439,14 +439,9 @@ class ServiceCategoriesPage(BasePage):
         reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if reset_btns:
             self.driver.execute_script("arguments[0].click();", reset_btns[0])
-        try:
-            title = self.driver.find_element(*self.PAGE_TITLE)
-            self.driver.execute_script("arguments[0].click();", title)
-            WebDriverWait(self.driver, 5).until(
-                EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
-            )
-        except Exception:  # noqa: BLE001
-            pass
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     # ------------------------------------------------------------------ switch
 
