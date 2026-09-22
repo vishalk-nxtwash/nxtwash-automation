@@ -104,6 +104,8 @@ class WashPackagesPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Packages list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_PACKAGE_BUTTON))
@@ -252,11 +254,12 @@ class WashPackagesPage(BasePage):
         then send_keys to type the new value.  element.clear() does not fire
         React's synthetic onChange on macOS Chrome, causing the next send_keys
         to append to the old React-state value instead of replacing it.
+        JS click bypasses viewport-coordinate interception from outer-page overlays.
         """
         element = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        element.click()
+        self.driver.execute_script("arguments[0].click();", element)
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(package_name)
         self.wait.until(
