@@ -34,11 +34,11 @@ _SECTION_CASES = [
     ("Reports",           "UR-PRM-023"),
 ]
 
-_SECTION_XFAIL = pytest.mark.xfail(
-    strict=False,
+_SECTION_XFAIL = pytest.mark.skip(
     reason=(
-        "Section permission locators use a JS ancestor-walk that requires DOM verification. "
-        "Remove xfail once each section structure is confirmed in DevTools."
+        "CI-SKIP UR-PRM-008..023: Section permission locators use a speculative JS "
+        "ancestor-walk that has not been verified against the live DOM. Re-enable once "
+        "expand_permission_section() locators are confirmed in DevTools for each section."
     ),
 )
 
