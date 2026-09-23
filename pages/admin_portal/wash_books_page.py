@@ -393,8 +393,11 @@ class WashBooksPage(BasePage):
         self.search_wash_book(wash_book_name)
         self.wait_for_wash_book_row(wash_book_name)
         # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        # InovuaReactDataGrid renders rows as <div class="InovuaReactDataGrid__row …">
+        # not <tr>, so query by CSS class rather than tag name.
         _CLICK_EDIT_JS = (
-            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "var name=arguments[0];"
+            "var rows=document.querySelectorAll('.InovuaReactDataGrid__row');"
             "for(var i=0;i<rows.length;i++){"
             " if(rows[i].textContent.indexOf(name)!==-1){"
             "  var a=Array.from(rows[i].querySelectorAll('a'))"
@@ -1256,3 +1259,12 @@ class WashBooksPage(BasePage):
         button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+
+    def reset_cwb_filters(self):
+        """Reset all filters on the Customer Wash Books list."""
+        self.open_cwb_filter_panel()
+        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))

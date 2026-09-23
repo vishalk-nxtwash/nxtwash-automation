@@ -239,11 +239,13 @@ class GiftCardsPage(BasePage):
 
     def search_gift_card(self, gift_card_name):
         """Search gift card by name."""
-        element = self.wait.until(
-            EC.element_to_be_clickable(self.SEARCH_INPUT)
+        self.driver.execute_script(
+            "arguments[0].click();",
+            self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         )
-        # JS click bypasses any filter-panel backdrop overlay still dismissing.
-        self.driver.execute_script("arguments[0].click();", element)
+        # Re-acquire after JS click: newer ChromeDriver rejects send_keys while
+        # a backdrop is still in its dismiss transition, even after click() fires.
+        element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(gift_card_name)
         self.wait.until(

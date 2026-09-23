@@ -217,8 +217,7 @@ class AdminUserRolesPage(BasePage):
 
     def reset_filters(self):
         self.open_filter_panel()
-        btn = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
         apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
         self.driver.execute_script("arguments[0].click();", apply_btn)
         self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
