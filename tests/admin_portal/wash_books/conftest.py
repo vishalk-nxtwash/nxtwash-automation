@@ -122,11 +122,18 @@ def create_customer_wash_book_if_missing(
     if page.cwb_exists(wash_book_number):
         return page
 
-    page.create_customer_wash_book(
-        WASH_BOOK_NAME,
-        wash_book_number,
-        CWB_NUMBER_OF_WASHES
-    )
+    try:
+        page.create_customer_wash_book(
+            WASH_BOOK_NAME,
+            wash_book_number,
+            CWB_NUMBER_OF_WASHES
+        )
+    except TimeoutException:
+        # create_customer_wash_book ends with wait_for_cwb_list_loaded(); if the
+        # save fails (duplicate number) the browser stays on /new and that wait
+        # times out.  Navigate back to the list so the caller can search cleanly.
+        page = open_customer_wash_books_page(browser)
+
     page.search_cwb(wash_book_number)
     page.wait_for_cwb_row(wash_book_number)
 
