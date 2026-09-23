@@ -215,6 +215,11 @@ class CouponPackagesPage(BasePage):
             EC.visibility_of_element_located(self.COUPON_PACKAGE_NAME_INPUT)
         )
         self._set_input_value(element, coupon_package_name)
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and coupon_package_name.startswith(v)
+            )(driver.find_element(*self.COUPON_PACKAGE_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def get_coupon_package_name_value(self):
         """Return the current coupon package name."""
@@ -290,6 +295,11 @@ class CouponPackagesPage(BasePage):
             EC.visibility_of_element_located(self.EXPIRATION_DAYS_INPUT)
         )
         self._set_input_value(element, str(days))
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.EXPIRATION_DAYS_INPUT
+            ).get_attribute("value") == str(days)
+        )
 
     def get_expiration_days_value(self):
         """Return the current expiration days value."""
