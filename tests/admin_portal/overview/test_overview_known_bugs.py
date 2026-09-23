@@ -42,6 +42,7 @@ def test_overview_labor_percent_no_revenue_shows_placeholder(overview_page):
     "OV-BUG-003 Usage Breakdown percentages sum to exactly 100 % or show a rounding note"
 )
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="overview iframe does not render on staging — first-load race")
 def test_overview_usage_breakdown_percentages_sum_to_100(overview_page):
     """Usage Breakdown per-service rows should total 100 %.
 

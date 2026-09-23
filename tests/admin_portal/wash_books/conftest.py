@@ -90,6 +90,9 @@ def create_wash_book_if_missing(browser, wash_book_name=WASH_BOOK_NAME):
     except TimeoutException:
         return open_wash_books_page(browser)
 
+    # Fresh navigation resets any filter state left by the create flow before
+    # searching for the newly created row.
+    wash_books_page = open_wash_books_page(browser)
     wash_books_page.search_wash_book(wash_book_name)
     wash_books_page.wait_for_wash_book_row(wash_book_name)
 

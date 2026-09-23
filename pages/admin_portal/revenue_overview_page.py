@@ -613,6 +613,17 @@ class RevenueOverviewPage(BasePage):
         return self.get_tab_count("Retail Revenue")
 
     def assert_membership_count_invariant(self):
+        # Poll up to 10 s for the aggregate tab to catch up after a site/date change.
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda d: (
+                    self.get_tab_count("New Sales")
+                    + self.get_tab_count("Recharges")
+                    + self.get_tab_count("Resignups")
+                ) == self.membership_tab_count()
+            )
+        except TimeoutException:
+            pass
         ns = self.get_tab_count("New Sales")
         rc = self.get_tab_count("Recharges")
         ru = self.get_tab_count("Resignups")
