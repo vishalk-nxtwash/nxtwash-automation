@@ -18,22 +18,14 @@ concurrency:
 
 jobs:
   admin:
-    if: github.ref == 'refs/heads/staging'
     strategy:
       fail-fast: false
       matrix:
         shard:
-          # ── Reports ───────────────────────────────────────────────────────
-          - name: reports-financial
-            path: >-
-              tests/admin_portal/cash_report
-              tests/admin_portal/card_declines
-              tests/admin_portal/transactions
+          # ── Promotions ────────────────────────────────────────────────────
+          - name: promotions
+            path: tests/admin_portal/discounts
           # ── Wash Catalog ──────────────────────────────────────────────────
-          - name: wash-packages
-            path: >-
-              tests/admin_portal/wash_packages
-              tests/admin_portal/wash_extras
           - name: wash-catalog
             path: >-
               tests/admin_portal/wash_books
