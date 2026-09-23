@@ -184,7 +184,8 @@ class AdminEmployeesPage(BasePage):
     def open_filter_panel(self):
         if self.filter_panel_is_open():
             return
-        self.click(self.FILTER_BUTTON)
+        btn = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def filter_by_status(self, status):
