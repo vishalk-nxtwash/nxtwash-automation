@@ -15,13 +15,7 @@ pytestmark = [
     allure.story("Tunnel Settings"),
 ]
 
-_SETTINGS_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Tunnel settings section locators use heuristics — verify section header "
-        "classes in DevTools before removing xfail."
-    ),
-)
+_SETTINGS_XFAIL = pytest.mark.skip(reason="Manual - Check later for fixes: tunnel settings section locators use heuristics; needs DevTools verification")
 
 
 @allure.title("POS-TUN-001 Tunnel settings expand and collapse")

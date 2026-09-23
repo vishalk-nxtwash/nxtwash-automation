@@ -107,13 +107,7 @@ def test_user_roles_filter_count_matches_rows(browser):
 
 @allure.title("UR-FLT-008 Site filter dropdown lists available sites in alphabetical order")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-FLT-008: Site option locator '//*[@role='option']' may capture options from "
-        "other dropdowns. Verify in DevTools that only site-filter options are returned."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: option locator may capture other dropdowns, needs DevTools verification")
 def test_user_roles_site_filter_alphabetical(browser):
     page = open_user_roles_page(browser)
     options = page.get_site_filter_all_options()

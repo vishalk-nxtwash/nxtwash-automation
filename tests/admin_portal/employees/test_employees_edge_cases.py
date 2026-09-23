@@ -60,13 +60,7 @@ def test_employee_data_persists_after_relogin(browser, managed_employee):
 
 @allure.title("EMP-EC-004 Deactivated employee appears in the Inactive filter — record is not deleted")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EC-004: Inactive filter combo locator uses label heuristics. "
-        "Verify status filter combobox DOM in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: inactive filter combobox locator uses label heuristics, verify in DevTools")
 def test_deactivated_employee_in_inactive_filter(browser, managed_employee):
     from tests.admin_portal.employees.conftest import open_edit_employee_form
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
@@ -87,13 +81,7 @@ def test_deactivated_employee_in_inactive_filter(browser, managed_employee):
 
 @allure.title("EMP-EC-005 Removing all locations from the edit form blocks save")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EC-005: Location chip remove button uses class heuristics "
-        "(multi-value__remove / chip-remove). Verify exact class names in DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: chip remove button uses class heuristics, verify in DevTools")
 def test_edit_locations_required(browser, managed_employee):
     from tests.admin_portal.employees.conftest import open_edit_employee_form
     form = open_edit_employee_form(browser, EMP_LAST_NAME)

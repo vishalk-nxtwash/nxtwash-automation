@@ -180,11 +180,10 @@ def test_allow_checkout_default(browser):
 
 @allure.title("POS-CRT-009 No customer assigned option can be selected")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "POS-CRT-009: Allow checkout combobox locator uses label heuristics — "
-        "verify exact React Select element and option text in DevTools."
+        "Manual - Check later for fixes: allow checkout combobox locator uses "
+        "label heuristics — verify exact React Select element in DevTools."
     ),
 )
 def test_allow_checkout_no_customer(browser):

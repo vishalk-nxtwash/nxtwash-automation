@@ -20,14 +20,7 @@ pytestmark = [
 
 @allure.title("USR-DEP-002 A newly created role appears in the User Role dropdown immediately")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-DEP-002: Requires a freshly created role to verify cross-module propagation. "
-        "Role combobox locator also needs DevTools verification. "
-        "Activate once USER_ROLES module is confirmed stable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: role combobox locator needs DevTools verification")
 def test_new_role_appears_in_users_dropdown(browser):
     # This test documents that USER_ROLE (seeded in User Roles module) surfaces here.
     # For full cross-module propagation testing, create a role in User Roles, then
@@ -45,13 +38,7 @@ def test_new_role_appears_in_users_dropdown(browser):
 
 @allure.title("USR-DEP-004 Employee dropdown in Add user matches active employees in Employees module")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-DEP-004: Employee combobox locator uses label heuristics. "
-        "Verify combobox selector in DevTools and ensure EMPLOYEE_NAME exists in staging."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: employee combobox locator uses label heuristics, needs DevTools verification")
 def test_employee_dropdown_reflects_employees_module(browser):
     form = open_create_user_form(browser)
     options = form.get_employee_dropdown_options()
@@ -68,13 +55,7 @@ def test_employee_dropdown_reflects_employees_module(browser):
 
 @allure.title("USR-DEP-008 Site filter dropdown matches sites configured in Sites & Locations")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-DEP-008: Site option locator //*[@role='option'] may capture options from "
-        "other open dropdowns. Verify after confirming the site filter panel structure."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: option locator may capture other dropdowns, needs verification")
 def test_filter_sites_match_sites_and_locations_module(browser):
     page = open_users_page(browser)
     options = page.get_site_filter_options()

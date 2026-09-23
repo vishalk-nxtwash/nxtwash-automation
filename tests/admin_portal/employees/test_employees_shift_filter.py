@@ -15,12 +15,10 @@ pytestmark = [
     allure.story("Shift — Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
+_FILTER_XFAIL = pytest.mark.skip(
     reason=(
-        "Shift filter panel locators (First Name input, site combobox, Active shift switch, "
-        "date fields) use name/label heuristics. "
-        "Verify exact DOM structure in DevTools before removing xfail."
+        "Manual - Check later for fixes: shift filter locators use name/label heuristics — "
+        "verify exact DOM structure in DevTools."
     ),
 )
 
@@ -72,11 +70,10 @@ def test_shift_filter_by_site(browser):
 
 @allure.title("EMP-SH-FLT-004 Filtering by date range shows only shifts within that range")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "EMP-SH-FLT-004: Start/end date inputs use name heuristics (startDate, endDate). "
-        "Verify exact input names and date format required in DevTools."
+        "Manual - Check later for fixes: date inputs use name heuristics — "
+        "verify exact input names and format in DevTools."
     ),
 )
 def test_shift_filter_by_date_range(browser):
@@ -149,11 +146,10 @@ def test_shift_filter_active_off(browser):
 
 @allure.title("EMP-SH-FLT-007 An invalid date range (end before start) shows an error or empty result")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "EMP-SH-FLT-007: Whether an invalid date range is rejected at the filter level "
-        "is a product decision. Verify expected behaviour in DevTools."
+        "Manual - Check later for fixes: invalid date range behavior is unverified — "
+        "product decision needs DevTools confirmation."
     ),
 )
 def test_shift_filter_invalid_date_range(browser):

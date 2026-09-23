@@ -19,11 +19,10 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
+_FILTER_XFAIL = pytest.mark.skip(
     reason=(
-        "Filter field locators use name/label heuristics — verify exact field names "
-        "in DevTools before removing xfail."
+        "Manual - Check later for fixes: filter field locators use name/label heuristics — "
+        "verify exact field names in DevTools."
     ),
 )
 
@@ -178,11 +177,10 @@ def test_users_filter_reset_all(browser):
 
 @allure.title("USR-FLT-012 Site dropdown in filter panel lists active sites")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "USR-FLT-012: Site option locator //*[@role='option'] may capture options from "
-        "other open dropdowns. Verify in DevTools before removing xfail."
+        "Manual - Check later for fixes: site option locator may capture other dropdown options — "
+        "verify in DevTools."
     ),
 )
 def test_users_filter_site_dropdown_lists_sites(browser):

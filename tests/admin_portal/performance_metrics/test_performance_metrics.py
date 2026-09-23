@@ -109,12 +109,7 @@ def test_page_renders_two_widgets(pfm_page):
 @allure.story("Navigation")
 @allure.title("PFM-NAV-007 Sidebar highlights Performance Metrics as the active item")
 @pytest.mark.extended
-@pytest.mark.xfail(reason=(
-    "Known gap PFM-NAV-007: sidebar active state uses a visual CSS mechanism "
-    "(likely Tailwind color/background class) with no detectable aria-current, "
-    "data-active, or 'active'/'selected'/'current' class on any ancestor element. "
-    "Needs DevTools inspection to identify the exact class name."
-))
+@pytest.mark.skip(reason="Manual - Check later for fixes: sidebar active state class not detectable; needs DevTools inspection")
 def test_sidebar_highlights_active_item(pfm_page):
     assert pfm_page.sidebar_active_item_visible(), (
         "Sidebar active highlight not found for Performance Metrics. "

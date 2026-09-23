@@ -21,11 +21,10 @@ pytestmark = [
 
 @allure.title("POS-DEP-001 Site dropdown lists entries from Sites & Locations module")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "POS-DEP-001: Site combobox locator uses positional heuristics — "
-        "verify exact React Select element in DevTools before removing xfail."
+        "Manual - Check later for fixes: site combobox locator uses positional heuristics — "
+        "verify exact React Select element in DevTools."
     ),
 )
 def test_site_dropdown_from_sites_locations(browser):

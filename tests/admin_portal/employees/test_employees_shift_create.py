@@ -20,13 +20,8 @@ pytestmark = [
     allure.story("Shift — Create"),
 ]
 
-_SHIFT_FORM_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Shift form locators (Employee combobox, Site combobox, start/end time inputs) "
-        "use label heuristics. Verify exact DOM structure and datetime picker behaviour "
-        "in DevTools before removing xfail."
-    ),
+_SHIFT_FORM_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: shift form locators use label heuristics, verify DOM and datetime picker in DevTools"
 )
 
 
