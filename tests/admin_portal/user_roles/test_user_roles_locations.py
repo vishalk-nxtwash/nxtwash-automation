@@ -19,11 +19,11 @@ pytestmark = [
 
 @allure.title("UR-LOC-001 Assigning a single location persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "UR-LOC-001: Location checkbox locator uses a generic ancestor walk — "
-        "verify actual DOM structure in DevTools and tune _location_checkbox() if needed."
+        "CI-SKIP UR-LOC-001: Location checkbox locator uses a speculative ancestor walk "
+        "that has not been verified against the live DOM. Re-enable once "
+        "_location_checkbox() is confirmed in DevTools."
     ),
 )
 def test_assign_single_location_persists(browser, managed_role):
@@ -38,11 +38,10 @@ def test_assign_single_location_persists(browser, managed_role):
 
 @allure.title("UR-LOC-002 Assigning multiple locations all persist after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "UR-LOC-002: Depends on at least two sites being visible in the location list. "
-        "Requires DOM verification of checkbox locator."
+        "CI-SKIP UR-LOC-002: Location checkbox locator has not been verified against the "
+        "live DOM. Re-enable once _location_checkbox() locator is confirmed in DevTools."
     ),
 )
 def test_assign_multiple_locations_persist(browser, managed_role):
@@ -66,11 +65,10 @@ def test_assign_multiple_locations_persist(browser, managed_role):
 
 @allure.title("UR-LOC-004 Location list in the form includes all configured sites")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "UR-LOC-004: get_location_names() uses a broad ancestor-walk that may return "
-        "non-site labels. Verify checkbox label DOM structure in DevTools before removing xfail."
+        "CI-SKIP UR-LOC-004: get_location_names() uses a broad ancestor-walk that has not "
+        "been verified against the live DOM. Re-enable once locator is confirmed in DevTools."
     ),
 )
 def test_location_list_includes_configured_sites(browser, managed_role):
@@ -86,11 +84,10 @@ def test_location_list_includes_configured_sites(browser, managed_role):
 
 @allure.title("UR-LOC-003 Removing an assigned location persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "UR-LOC-003: Requires location to be assigned first. "
-        "Depends on DOM verification of checkbox locator."
+        "CI-SKIP UR-LOC-003: Location checkbox locator has not been verified against the "
+        "live DOM. Re-enable once _location_checkbox() locator is confirmed in DevTools."
     ),
 )
 def test_remove_location_persists(browser, managed_role):
