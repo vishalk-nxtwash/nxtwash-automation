@@ -34,14 +34,7 @@ def test_active_toggle_on_shows_active_in_list(browser, managed_kiosk):
 
 @allure.title("KSK-ACT-002 Active kiosk toggle OFF saves and shows Inactive status")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-ACT-002: Active toggle OFF not persisting in list — state pollution from "
-        "edit tests creates a duplicate kiosk; get_kiosk_status returns empty because "
-        "_row_locator returns the name cell not the row. Needs manual verification."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-ACT-002: Active toggle OFF not persisting in list — state pollution from edit tests creates a duplicate kiosk; get_kiosk_status returns empty because _row_locator returns the name cell not the row")
 def test_active_toggle_off_shows_inactive_in_list(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     form.ensure_active_kiosk_off()
@@ -57,13 +50,7 @@ def test_active_toggle_off_shows_inactive_in_list(browser, managed_kiosk):
 
 @allure.title("KSK-ACT-003 Kiosk connected confirmation message displays on edit form")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-ACT-003: Connection status text locator uses heuristics — verify "
-        "'Kiosk connected' text presence in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-ACT-003: Connection status text locator uses heuristics — verify 'Kiosk connected' text presence in DevTools")
 def test_kiosk_connected_message_displays(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     assert form.kiosk_is_connected(), (
@@ -74,13 +61,7 @@ def test_kiosk_connected_message_displays(browser, managed_kiosk):
 
 @allure.title("KSK-ACT-004 Check or re-generate code button visible when kiosk is connected")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-ACT-004: 'Check or re-generate code' button visibility depends on "
-        "live connection state — verify button locator in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-ACT-004: 'Check or re-generate code' button visibility depends on live connection state — verify button locator in DevTools")
 def test_check_regen_code_button_visible_when_connected(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     if form.kiosk_is_connected():

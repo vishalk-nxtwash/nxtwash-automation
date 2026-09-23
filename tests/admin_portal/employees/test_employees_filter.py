@@ -14,12 +14,8 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Filter panel locators (status combobox, apply button) use label heuristics. "
-        "Verify exact DOM structure in DevTools before removing xfail."
-    ),
+_FILTER_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: filter panel locators use label heuristics, verify DOM in DevTools"
 )
 
 

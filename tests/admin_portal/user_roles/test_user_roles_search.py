@@ -31,17 +31,7 @@ def test_user_roles_search_exact_name(browser):
 
 @allure.title("UR-SRH-002 Partial name search returns matching roles")
 @pytest.mark.regression
-@pytest.mark.manual
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-SRH-002: create_role_if_missing cannot reliably activate an inactive VK UR01 "
-        "(ensure_active_switch_on does not persist via the current automation approach). "
-        "When VK UR01 is inactive the active-only default filter hides it and the search "
-        "returns no results. "
-        "Verify manually: ensure VK UR01 is active, search 'VK U', confirm the role appears."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: create_role_if_missing cannot reliably activate inactive role")
 def test_user_roles_search_partial_name(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)

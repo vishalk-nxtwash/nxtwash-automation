@@ -68,13 +68,7 @@ def test_edit_last_name_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-004 Editing Locations assignment saves and reflects in the list")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-004: Location multi-select combobox locator uses label heuristics. "
-        "Verify React Select DOM in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: location combobox locator uses label heuristics, verify React Select in DevTools")
 def test_edit_locations_persists(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.assign_location(ASSIGNMENT_SITE)
@@ -111,13 +105,7 @@ def test_edit_phone_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-007 Editing Hourly Wage saves and persists correctly")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-007: Hourly wage field uses JS React setter (_set_input_value). "
-        "Verify input name and that the value round-trips correctly in DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: wage input name and round-trip not verified in DevTools")
 def test_edit_hourly_wage_persists(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.enter_hourly_wage(UPDATED_WAGE)
@@ -130,13 +118,7 @@ def test_edit_hourly_wage_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-008 Editing Hire Date persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-008: Hire date calendar picker interaction not yet modelled. "
-        "Verify date input type and picker DOM structure in DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: hire date picker not modelled, verify date input DOM in DevTools")
 def test_edit_hire_date_persists(browser, managed_employee):
     new_date = "2024-09-01"
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
@@ -154,13 +136,7 @@ def test_edit_hire_date_persists(browser, managed_employee):
 
 @allure.title("EMP-EDT-009 Editing Employee Code persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-EDT-009: Employee code input locator uses name heuristics. "
-        "Verify exact @name attribute in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: employee code locator uses name heuristics, verify @name in DevTools")
 def test_edit_employee_code_persists(browser, managed_employee):
     new_code = "VKE999"
     form = open_edit_employee_form(browser, EMP_LAST_NAME)

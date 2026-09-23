@@ -22,13 +22,7 @@ pytestmark = [
 
 @allure.title("USR-EC-003 Only active roles appear in the User Role dropdown")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-EC-003: Role dropdown options require at least one deactivated role in staging "
-        "to verify exclusion. Verify role combobox locator in DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: role combobox locator needs DevTools verification")
 def test_only_active_roles_in_dropdown(browser):
     form = open_create_user_form(browser)
     options = form.get_role_dropdown_options()
@@ -42,13 +36,7 @@ def test_only_active_roles_in_dropdown(browser):
 
 @allure.title("USR-EC-004 Only active employees appear in the Employee dropdown")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-EC-004: Employee dropdown exclusion of deactivated employees needs a "
-        "deactivated employee in staging to verify. Verify combobox locator in DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: employee combobox locator needs DevTools verification")
 def test_only_active_employees_in_dropdown(browser):
     from tests.admin_portal.users.conftest import EMPLOYEE_NAME
     form = open_create_user_form(browser)

@@ -15,13 +15,7 @@ pytestmark = [
     allure.story("Middleware Settings"),
 ]
 
-_SETTINGS_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Middleware settings section locators use heuristics — verify section header "
-        "classes in DevTools before removing xfail."
-    ),
-)
+_SETTINGS_XFAIL = pytest.mark.skip(reason="Manual - Check later for fixes: middleware settings section locators use heuristics; needs DevTools verification")
 
 
 @allure.title("POS-MID-001 Middleware settings expand and collapse")

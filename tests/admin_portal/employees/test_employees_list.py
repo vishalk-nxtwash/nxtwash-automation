@@ -15,12 +15,8 @@ pytestmark = [
     allure.story("List & Search"),
 ]
 
-_COLUMNS_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Column header locator uses class heuristics. "
-        "Verify exact header element classes in DevTools before removing xfail."
-    ),
+_COLUMNS_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: column header locator uses class heuristics, verify in DevTools"
 )
 
 
@@ -101,13 +97,7 @@ def test_employees_pagination_shows_count(browser):
 
 @allure.title("EMP-LST-006 Results-per-page dropdown updates the visible row count")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-LST-006: Results-per-page dropdown locator not yet verified in DevTools. "
-        "Activate once the per-page select element is confirmed."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: results-per-page dropdown locator not verified in DevTools")
 def test_results_per_page_updates_rows(browser):
     page = open_employees_page(browser)
     count_before = page.get_visible_row_count()

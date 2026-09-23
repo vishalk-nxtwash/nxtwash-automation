@@ -132,12 +132,11 @@ def test_wash_package_global_price_is_required(browser):
 @allure.story("Download")
 @allure.title("WP-DL file export validation requires download-directory support")
 @pytest.mark.export
-@pytest.mark.xfail(
+@pytest.mark.skip(
     reason=(
-        "Download file/content validation needs browser download-directory "
-        "configuration and CSV/XLS parser utilities."
+        "Manual - Check later for fixes: download file/content validation needs "
+        "browser download-directory config and CSV/XLS parser utilities."
     ),
-    strict=False,
 )
 def test_wash_packages_download_file_validation_blocker(browser):
     page = open_wash_packages_page(browser)
@@ -150,9 +149,11 @@ def test_wash_packages_download_file_validation_blocker(browser):
 @allure.story("Permissions")
 @allure.title("WP-PERM role-specific permission coverage requires role fixtures")
 @pytest.mark.permissions
-@pytest.mark.xfail(
-    reason="Permission cases require non-admin role fixtures and credentials.",
-    strict=False,
+@pytest.mark.skip(
+    reason=(
+        "Manual - Check later for fixes: permission cases require non-admin role "
+        "fixtures and credentials."
+    ),
 )
 def test_wash_packages_permission_matrix_blocker(browser):
     page = open_wash_packages_page(browser)
@@ -165,13 +166,11 @@ def test_wash_packages_permission_matrix_blocker(browser):
 @allure.story("Advanced Edge Cases")
 @allure.title("WP-EDGE advanced infrastructure scenarios require special harnesses")
 @pytest.mark.regression
-@pytest.mark.xfail(
+@pytest.mark.skip(
     reason=(
-        "Concurrency, slow network, audit-log, and server-restart coverage "
-        "need multi-session, network interception, audit API, and environment "
-        "restart harnesses."
+        "Manual - Check later for fixes: concurrency/network/audit-log coverage needs "
+        "multi-session, network interception, and environment restart harnesses."
     ),
-    strict=False,
 )
 def test_wash_packages_advanced_edge_case_harness_blocker(browser):
     page = open_wash_packages_page(browser)

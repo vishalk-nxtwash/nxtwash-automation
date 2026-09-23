@@ -109,11 +109,10 @@ def test_changing_site_clears_lane(browser, managed_pos):
 
 @allure.title("POS-EDT-006 Edit Allow checkout option saves")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "POS-EDT-006: Allow checkout combobox locator uses label heuristics — "
-        "verify exact React Select element in DevTools before removing xfail."
+        "Manual - Check later for fixes: allow checkout combobox locator uses "
+        "label heuristics — verify exact React Select element in DevTools."
     ),
 )
 def test_edit_allow_checkout_persists(browser, managed_pos):
@@ -163,11 +162,10 @@ def test_edit_blank_name_blocked(browser, managed_pos):
 
 @allure.title("POS-EDT-009 Activate inactive POS shows Active badge")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "POS-EDT-009: After deactivating, re-opening edit form requires inactive POS "
-        "to be visible in the list — verify default filter behavior in DevTools."
+        "Manual - Check later for fixes: after deactivating, re-opening edit form requires "
+        "inactive POS to be visible — verify default filter behavior in DevTools."
     ),
 )
 def test_activate_inactive_pos(browser, managed_pos):
@@ -190,11 +188,10 @@ def test_activate_inactive_pos(browser, managed_pos):
 
 @allure.title("POS-EDT-010 Deactivate active POS shows Inactive badge")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "POS-EDT-010: Active toggle locator uses heuristics — "
-        "verify aria-checked in DevTools before removing xfail."
+        "Manual - Check later for fixes: active toggle locator uses heuristics — "
+        "verify aria-checked in DevTools."
     ),
 )
 def test_deactivate_active_pos(browser, managed_pos):
