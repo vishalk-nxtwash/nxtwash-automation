@@ -483,6 +483,11 @@ class ServiceCategoriesPage(BasePage):
             EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
         )
         self._set_input_value(element, category_name)
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and category_name.startswith(v)
+            )(driver.find_element(*self.CATEGORY_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def get_category_name_value(self):
         """Return current category name input value."""
