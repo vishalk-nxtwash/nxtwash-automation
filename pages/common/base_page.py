@@ -51,13 +51,23 @@ class BasePage:
             self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def enter_text(self, locator, text):
-
-        element = self.wait.until(
-            EC.visibility_of_element_located(locator)
-        )
-
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(text)
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        if element.tag_name.lower() == "textarea":
+            self.driver.execute_script(
+                "arguments[0].value=arguments[1];"
+                "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
+                "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
+                element, text
+            )
+        else:
+            self.driver.execute_script(
+                "var s=Object.getOwnPropertyDescriptor("
+                "window.HTMLInputElement.prototype,'value').set;"
+                "s.call(arguments[0],arguments[1]);"
+                "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
+                "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
+                element, text
+            )
 
     def get_text(self, locator):
 
