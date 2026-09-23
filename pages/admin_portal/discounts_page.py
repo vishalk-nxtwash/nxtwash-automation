@@ -387,6 +387,11 @@ class DiscountsPage(BasePage):
             EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
         )
         self._set_input_value(element, discount_name)
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.DISCOUNT_NAME_INPUT
+            ).get_attribute("value") == discount_name
+        )
 
     def get_discount_name_value(self):
         """Return the current discount name input value."""

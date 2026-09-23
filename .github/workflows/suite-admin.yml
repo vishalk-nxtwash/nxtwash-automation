@@ -40,17 +40,20 @@ jobs:
           # 70 tests — general_sales_report (split from reports-revenue)
           - name: reports-sales
             path: tests/admin_portal/general_sales_report
-          # 151 tests — cash_report + card_declines + transactions
+          # 85 tests — cash_report + card_declines
           - name: reports-financial
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
-              tests/admin_portal/transactions
-          # 117 tests — labor_shifts + redemptions (split from reports-ops)
+          # 58 tests — transactions (split from reports-financial)
+          - name: reports-transactions
+            path: tests/admin_portal/transactions
+          # 57 tests — labor_shifts (split from reports-labor-shifts)
           - name: reports-labor-shifts
-            path: >-
-              tests/admin_portal/labor_shifts
-              tests/admin_portal/redemptions
+            path: tests/admin_portal/labor_shifts
+          # 60 tests — redemptions (split from reports-labor-shifts)
+          - name: reports-redemptions
+            path: tests/admin_portal/redemptions
           # 120 tests — wash_activity (split from reports-ops; largest ops module)
           - name: reports-wash-activity
             path: tests/admin_portal/wash_activity
