@@ -341,8 +341,28 @@ class AdminUserRoleFormPage(BasePage):
             self.driver.switch_to.default_content()
             return self.driver.find_element(By.TAG_NAME, "body").text
 
+    def _set_input_value(self, element, value):
+        """Set a React-controlled input value with focus() so onChange fires."""
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            ).set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            value,
+        )
+
     def enter_role_name(self, name):
-        self.enter_text(self.ROLE_NAME_INPUT, name)
+        element = self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
+        self._set_input_value(element, name)
 
     def clear_role_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
@@ -355,17 +375,7 @@ class AdminUserRoleFormPage(BasePage):
 
     def enter_priority(self, value):
         el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
-        # React controlled numeric input: JS setter + input event required to update state
-        self.driver.execute_script("""
-            var input = arguments[0];
-            var val = arguments[1];
-            var setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value'
-            ).set;
-            setter.call(input, val);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-        """, el, str(value))
+        self._set_input_value(el, str(value))
 
     def type_priority_raw(self, value):
         """Type into the priority field via real keystrokes — use for invalid-input tests."""

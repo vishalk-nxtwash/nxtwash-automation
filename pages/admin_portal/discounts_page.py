@@ -383,7 +383,10 @@ class DiscountsPage(BasePage):
 
     def enter_discount_name(self, discount_name):
         """Enter discount name."""
-        self.enter_text(self.DISCOUNT_NAME_INPUT, discount_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
+        )
+        self._set_input_value(element, discount_name)
 
     def get_discount_name_value(self):
         """Return the current discount name input value."""
