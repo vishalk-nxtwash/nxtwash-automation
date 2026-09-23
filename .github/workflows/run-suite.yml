@@ -70,7 +70,8 @@ jobs:
       - name: Pre-run cleanup (EC2)
         if: inputs.runner == 'self-hosted'
         run: |
-          echo "=== Disk before cleanup ===" && df -h /
+          echo "=== Memory before cleanup ===" && free -h
+          echo "=== Disk before cleanup ===" && df -h / /tmp
           pkill -f "chrome" || true
           pkill -f "chromedriver" || true
           rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
@@ -78,11 +79,39 @@ jobs:
                  /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
                  ~/.config/google-chrome/Crash\ Reports \
                  ~/.config/google-chrome/Crashpad \
+                 ~/.wdm \
                  2>/dev/null || true
           rm -rf reports/ allure-results/ allure-report/ \
                  report.html results.xml 2>/dev/null || true
           python3.11 -m pip cache purge 2>/dev/null || true
-          echo "=== Disk after cleanup ===" && df -h /
+          echo "=== Memory after cleanup ===" && free -h
+          echo "=== Disk after cleanup ===" && df -h / /tmp
+
+      # ── EC2 pre-flight resource guard ────────────────────────────────────────
+      # /tmp on these boxes is tmpfs (RAM-backed, not disk) — Chrome's
+      # --disable-dev-shm-usage writes shared memory there instead of /dev/shm,
+      # so /tmp exhaustion and RAM exhaustion are the same failure. Fail fast
+      # here, before Chrome/pytest start, instead of dying mid-suite.
+      - name: Disk & memory guard (EC2)
+        if: inputs.runner == 'self-hosted'
+        run: |
+          avail_root_kb=$(df -Pk / | awk 'NR==2 {print $4}')
+          avail_tmp_kb=$(df -Pk /tmp | awk 'NR==2 {print $4}')
+          avail_mem_kb=$(awk '/MemAvailable/ {print $2}' /proc/meminfo)
+
+          min_root_kb=$((2*1024*1024))   # 2G
+          min_tmp_kb=$((300*1024))       # 300M
+          min_mem_kb=$((500*1024))       # 500M
+
+          fail=0
+          [ "$avail_root_kb" -lt "$min_root_kb" ] && { echo "::error::Root disk low: $((avail_root_kb/1024))MB avail (need 2048MB)"; fail=1; }
+          [ "$avail_tmp_kb" -lt "$min_tmp_kb" ] && { echo "::error::/tmp (tmpfs/RAM) low: $((avail_tmp_kb/1024))MB avail (need 300MB)"; fail=1; }
+          [ "$avail_mem_kb" -lt "$min_mem_kb" ] && { echo "::error::Available memory low: $((avail_mem_kb/1024))MB avail (need 500MB)"; fail=1; }
+
+          if [ "$fail" -eq 1 ]; then
+            echo "::error::EC2 runner resources too low to safely start this shard — aborting before Chrome/pytest start."
+            exit 1
+          fi
 
       # Hard safety gate: PRODUCTION must never run mutating suites.
       - name: Safety gate (production is read-only)
@@ -225,5 +254,8 @@ jobs:
           rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
                  /tmp/chrome_* /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
                  /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
+                 ~/.config/google-chrome/Crash\ Reports \
+                 ~/.config/google-chrome/Crashpad \
                  2>/dev/null || true
-          df -h /
+          free -h
+          df -h / /tmp

@@ -27,6 +27,10 @@ jobs:
   superadmin:
     strategy:
       fail-fast: false
+      # Only 3 EC2 self-hosted runners exist — cap concurrency to match so
+      # GitHub doesn't try to dispatch all shards at once and queue the rest.
+      # GitHub-hosted has no such limit, so leave it effectively uncapped.
+      max-parallel: ${{ inputs.runner == 'self-hosted' && 3 || 10 }}
       matrix:
         shard:
           # ── Auth ──────────────────────────────────────────────────────────────
