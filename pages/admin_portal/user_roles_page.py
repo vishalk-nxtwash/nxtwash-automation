@@ -363,6 +363,11 @@ class AdminUserRoleFormPage(BasePage):
     def enter_role_name(self, name):
         element = self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
         self._set_input_value(element, name)
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and name.startswith(v)
+            )(driver.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def clear_role_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
@@ -376,6 +381,11 @@ class AdminUserRoleFormPage(BasePage):
     def enter_priority(self, value):
         el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
         self._set_input_value(el, str(value))
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.PRIORITY_INPUT
+            ).get_attribute("value") == str(value)
+        )
 
     def type_priority_raw(self, value):
         """Type into the priority field via real keystrokes — use for invalid-input tests."""
