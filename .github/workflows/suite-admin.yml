@@ -48,9 +48,10 @@ jobs:
           # 58 tests — transactions (split from reports-financial)
           - name: reports-transactions
             path: tests/admin_portal/transactions
-          # 57 tests — labor_shifts (split from reports-labor-shifts)
+          # 57 tests — labor_shifts; I/O-bound so 3 workers fit 2-vCPU runner
           - name: reports-labor-shifts
             path: tests/admin_portal/labor_shifts
+            parallel: "3"
           # 60 tests — redemptions (split from reports-labor-shifts)
           - name: reports-redemptions
             path: tests/admin_portal/redemptions
@@ -58,12 +59,14 @@ jobs:
           - name: reports-wash-activity
             path: tests/admin_portal/wash_activity
           # ── Auth & Core ───────────────────────────────────────────────────
-          # 130 tests — login + sites + service_categories
+          # ~68 tests — login + sites (service_categories split out)
           - name: auth-core
             path: >-
               tests/admin_portal/login
               tests/admin_portal/sites
-              tests/admin_portal/service_categories
+          # ~23 tests — service_categories (split from auth-core)
+          - name: auth-service-categories
+            path: tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
           # 157 tests — wash_packages + wash_extras
           - name: wash-packages
@@ -117,6 +120,6 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: "2"
+      parallel: ${{ matrix.shard.parallel || '2' }}
       timeout_minutes: 90
       runner: ${{ inputs.runner || 'ubuntu-latest' }}
