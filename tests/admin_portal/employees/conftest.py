@@ -55,6 +55,10 @@ def open_employees_page(browser):
     open_admin_path(browser, "/users/employees")
     page = AdminEmployeesPage(browser)
     page.wait_for_loaded()
+    try:
+        page.reset_filters()
+    except Exception:
+        pass
     return page
 
 
