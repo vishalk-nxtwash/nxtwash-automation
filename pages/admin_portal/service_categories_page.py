@@ -482,7 +482,10 @@ class ServiceCategoriesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
         )
-        self._set_input_value(element, category_name)
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(category_name)
+        # Accept truncated values (app may enforce maxlength).
         self.wait.until(
             lambda driver: (
                 lambda v: bool(v) and category_name.startswith(v)
