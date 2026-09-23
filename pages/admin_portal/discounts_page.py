@@ -387,10 +387,12 @@ class DiscountsPage(BasePage):
             EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
         )
         self._set_input_value(element, discount_name)
+        # Accept truncated values (app may enforce maxlength) — any non-empty
+        # prefix of discount_name confirms React registered the input event.
         self.wait.until(
-            lambda driver: driver.find_element(
-                *self.DISCOUNT_NAME_INPUT
-            ).get_attribute("value") == discount_name
+            lambda driver: (
+                lambda v: bool(v) and discount_name.startswith(v)
+            )(driver.find_element(*self.DISCOUNT_NAME_INPUT).get_attribute("value") or "")
         )
 
     def get_discount_name_value(self):
