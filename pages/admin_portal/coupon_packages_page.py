@@ -211,7 +211,10 @@ class CouponPackagesPage(BasePage):
 
     def enter_coupon_package_name(self, coupon_package_name):
         """Enter coupon package name."""
-        self.enter_text(self.COUPON_PACKAGE_NAME_INPUT, coupon_package_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.COUPON_PACKAGE_NAME_INPUT)
+        )
+        self._set_input_value(element, coupon_package_name)
 
     def get_coupon_package_name_value(self):
         """Return the current coupon package name."""
