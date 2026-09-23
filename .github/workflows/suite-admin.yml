@@ -34,25 +34,28 @@ jobs:
             path: >-
               tests/admin_portal/overview
               tests/admin_portal/performance_metrics
-          # 164 tests — revenue_overview + general_sales_report
+          # 188 tests — revenue_overview (split from reports-revenue; largest report module)
           - name: reports-revenue
-            path: >-
-              tests/admin_portal/revenue_overview
-              tests/admin_portal/general_sales_report
+            path: tests/admin_portal/revenue_overview
+          # 70 tests — general_sales_report (split from reports-revenue)
+          - name: reports-sales
+            path: tests/admin_portal/general_sales_report
           # 151 tests — cash_report + card_declines + transactions
           - name: reports-financial
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
               tests/admin_portal/transactions
-          # 177 tests — labor_shifts + redemptions + wash_activity
-          - name: reports-ops
+          # 117 tests — labor_shifts + redemptions (split from reports-ops)
+          - name: reports-labor-shifts
             path: >-
               tests/admin_portal/labor_shifts
               tests/admin_portal/redemptions
-              tests/admin_portal/wash_activity
-          # ── Auth & Core (run early; downstream modules depend on this data) ─
-          # 131 tests — login + sites + service_categories
+          # 120 tests — wash_activity (split from reports-ops; largest ops module)
+          - name: reports-wash-activity
+            path: tests/admin_portal/wash_activity
+          # ── Auth & Core ───────────────────────────────────────────────────
+          # 130 tests — login + sites + service_categories
           - name: auth-core
             path: >-
               tests/admin_portal/login
@@ -82,7 +85,7 @@ jobs:
             path: >-
               tests/admin_portal/discounts
           # ── Customers ─────────────────────────────────────────────────────
-          # 97 tests — isolated; complex customer-facing flows
+          # 93 tests — isolated; complex customer-facing flows
           - name: customers
             path: tests/admin_portal/customers
           # ── Hardware Settings ─────────────────────────────────────────────
@@ -91,12 +94,14 @@ jobs:
             path: >-
               tests/admin_portal/kiosk_settings
               tests/admin_portal/tunnel_settings
-          # ── POS & Access Control ──────────────────────────────────────────
-          # 126 tests — pos_settings + user_roles
-          - name: settings-pos
-            path: >-
-              tests/admin_portal/pos_settings
-              tests/admin_portal/user_roles
+          # ── POS Settings ──────────────────────────────────────────────────
+          # 68 tests — pos_settings (split from settings-pos)
+          - name: pos-settings
+            path: tests/admin_portal/pos_settings
+          # ── Access Control ────────────────────────────────────────────────
+          # 58 tests — user_roles (split from settings-pos)
+          - name: user-roles
+            path: tests/admin_portal/user_roles
           # ── People & HR ───────────────────────────────────────────────────
           # people (users + employees) commented out — filter panel JS click fix pending verification
           # - name: people
