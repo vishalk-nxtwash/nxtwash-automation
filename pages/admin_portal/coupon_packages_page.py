@@ -214,7 +214,10 @@ class CouponPackagesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.COUPON_PACKAGE_NAME_INPUT)
         )
-        self._set_input_value(element, coupon_package_name)
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(coupon_package_name)
+        # Accept truncated values (app may enforce maxlength).
         self.wait.until(
             lambda driver: (
                 lambda v: bool(v) and coupon_package_name.startswith(v)
@@ -294,7 +297,9 @@ class CouponPackagesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.EXPIRATION_DAYS_INPUT)
         )
-        self._set_input_value(element, str(days))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(str(days))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.EXPIRATION_DAYS_INPUT

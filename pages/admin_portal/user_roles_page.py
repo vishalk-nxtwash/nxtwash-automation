@@ -362,7 +362,9 @@ class AdminUserRoleFormPage(BasePage):
 
     def enter_role_name(self, name):
         element = self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
-        self._set_input_value(element, name)
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(name)
         self.wait.until(
             lambda driver: (
                 lambda v: bool(v) and name.startswith(v)
@@ -380,7 +382,9 @@ class AdminUserRoleFormPage(BasePage):
 
     def enter_priority(self, value):
         el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
-        self._set_input_value(el, str(value))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(str(value))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.PRIORITY_INPUT
