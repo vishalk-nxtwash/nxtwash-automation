@@ -104,6 +104,8 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         FIRST_LOCATION_PRICE,
         FIRST_LOCATION_COMMISSION
     )
+    # Fresh navigation clears the inactive-filter chip left by _show_inactive_memberships().
+    memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
     memberships_page.wait_for_membership_row(membership_name)
 
@@ -167,6 +169,8 @@ def create_recurring_membership_if_missing(
         FIRST_LOCATION_PRICE,
         FIRST_LOCATION_COMMISSION
     )
+    # Fresh navigation clears the inactive-filter chip left by _show_inactive_memberships().
+    memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
     memberships_page.wait_for_membership_row(membership_name)
 

@@ -242,7 +242,8 @@ class GiftCardsPage(BasePage):
         element = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        element.click()
+        # JS click bypasses any filter-panel backdrop overlay still dismissing.
+        self.driver.execute_script("arguments[0].click();", element)
         element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(gift_card_name)
         self.wait.until(
