@@ -1,34 +1,63 @@
 name: Superadmin Suite (staging)
 
-# Superadmin-only suite (tests/superadmin) against STAGING.
-# Locked to staging: these tests create companies/users and must never run on
-# production. Trigger: manual dispatch only (workflow_dispatch).
+# Superadmin tests sharded across parallel runners — one runner per module.
+# Tests create companies / users / roles and must never run on production.
+# Each GitHub runner has only 2 vCPUs, so -n 2 is the per-runner ceiling.
+# Trigger: manual dispatch only (workflow_dispatch).
 
 on:
   workflow_dispatch:
     inputs:
-      parallel:
-        description: "xdist workers: a number, auto, or 0 for serial"
+      runner:
+        description: '"ubuntu-latest" (GitHub-hosted, ~20 min) or "self-hosted" (EC2)'
         required: false
-        default: "2"
-      reruns:
-        description: "Flaky-test reruns per test"
+        default: "ubuntu-latest"
+      parallel:
+        description: "xdist workers per shard: a number, auto, or 0 for serial"
         required: false
         default: "2"
 
+# Separate concurrency slots per runner so GitHub-hosted and EC2 runs
+# never block each other.
 concurrency:
-  group: superadmin-suite-staging
+  group: superadmin-suite-${{ inputs.runner || 'ubuntu-latest' }}
   cancel-in-progress: false
 
 jobs:
   superadmin:
-    if: github.ref == 'refs/heads/staging'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          # ── Auth ──────────────────────────────────────────────────────────────
+          # login smoke — runs first; downstream modules depend on valid creds
+          - name: auth
+            path: >-
+              tests/superadmin/test_login.py
+              tests/superadmin/test_login_debug.py
+          # ── Companies ─────────────────────────────────────────────────────────
+          # company CRUD + top-level create-user and create-user-role flows
+          - name: companies
+            path: >-
+              tests/superadmin/test_companies.py
+              tests/superadmin/test_create_company.py
+              tests/superadmin/test_edit_company.py
+              tests/superadmin/test_create_user.py
+              tests/superadmin/test_create_user_role.py
+          # ── Users ─────────────────────────────────────────────────────────────
+          # list / access / create / edit / filter / export
+          - name: users
+            path: tests/superadmin/users
+          # ── User Roles ────────────────────────────────────────────────────────
+          # list / access / create / edit / filter / export / permissions
+          - name: user-roles
+            path: tests/superadmin/user_roles
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
-      label: superadmin-staging
+      label: superadmin-${{ matrix.shard.name }}
       environment: staging
-      test_path: tests/superadmin
+      test_path: ${{ matrix.shard.path }}
       parallel: ${{ github.event.inputs.parallel || '2' }}
-      reruns: ${{ github.event.inputs.reruns || '2' }}
       timeout_minutes: 60
+      runner: ${{ inputs.runner || 'ubuntu-latest' }}
