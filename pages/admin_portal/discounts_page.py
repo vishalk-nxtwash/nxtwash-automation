@@ -386,9 +386,10 @@ class DiscountsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
         )
-        self._set_input_value(element, discount_name)
-        # Accept truncated values (app may enforce maxlength) — any non-empty
-        # prefix of discount_name confirms React registered the input event.
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(discount_name)
+        # Accept truncated values (app may enforce maxlength).
         self.wait.until(
             lambda driver: (
                 lambda v: bool(v) and discount_name.startswith(v)
@@ -485,7 +486,9 @@ class DiscountsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.DISCOUNT_AMOUNT_INPUT)
         )
-        self._set_input_value(element, str(amount))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(str(amount))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.DISCOUNT_AMOUNT_INPUT
