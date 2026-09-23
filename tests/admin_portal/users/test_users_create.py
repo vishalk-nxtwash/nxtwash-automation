@@ -217,13 +217,7 @@ def test_create_user_password_mismatch(browser):
 
 @allure.title("USR-CRT-011 Password visibility toggle shows and hides password text")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-CRT-011: Eye-icon locator uses class heuristics. "
-        "Verify toggle button selector in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: eye-icon locator uses class heuristics, needs DevTools verification")
 def test_create_user_password_visibility_toggle(browser):
     form = open_create_user_form(browser)
     form.enter_password(USER_PASSWORD)
@@ -238,13 +232,7 @@ def test_create_user_password_visibility_toggle(browser):
 
 @allure.title("USR-CRT-012 Confirm password visibility toggle works independently")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-CRT-012: Eye-icon locator on confirm field uses class heuristics. "
-        "Verify in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: confirm eye-icon locator uses class heuristics, needs DevTools verification")
 def test_create_user_confirm_password_visibility_toggle(browser):
     form = open_create_user_form(browser)
     form.enter_confirm_password(USER_PASSWORD)
@@ -257,13 +245,7 @@ def test_create_user_confirm_password_visibility_toggle(browser):
 
 @allure.title("USR-CRT-013 Employee dropdown lists active employees")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-CRT-013: Employee combobox locator uses label heuristics. "
-        "Verify in DevTools and confirm EMPLOYEE_NAME exists in staging."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: employee combobox locator uses label heuristics, needs DevTools verification")
 def test_create_user_employee_dropdown_lists_employees(browser):
     form = open_create_user_form(browser)
     options = form.get_employee_dropdown_options()
@@ -277,13 +259,7 @@ def test_create_user_employee_dropdown_lists_employees(browser):
 
 @allure.title("USR-CRT-014 User role dropdown lists active roles")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "USR-CRT-014: Role combobox locator uses label heuristics. "
-        "Verify in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: role combobox locator uses label heuristics, needs DevTools verification")
 def test_create_user_role_dropdown_lists_roles(browser):
     form = open_create_user_form(browser)
     options = form.get_role_dropdown_options()

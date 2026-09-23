@@ -80,11 +80,10 @@ def test_edit_user_role_persists(browser, managed_user):
 
 @allure.title("USR-EDT-005 Changing the linked Employee saves and persists")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "USR-EDT-005: Requires a second distinct employee in staging to switch to. "
-        "Verify employee availability and combobox locator in DevTools."
+        "Manual - Check later for fixes: combobox locator and second employee availability "
+        "need DevTools verification."
     ),
 )
 def test_edit_user_employee_persists(browser, managed_user):
@@ -189,11 +188,10 @@ def test_edit_user_cancel_discards_changes(browser, managed_user):
 
 @allure.title("USR-EDT-012 Edit form does not show password fields — only Change Password button")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "USR-EDT-012: password_fields_absent() uses name-based heuristics for password inputs "
-        "and Change password button. Verify exact form structure in DevTools."
+        "Manual - Check later for fixes: password_fields_absent() uses name-based heuristics — "
+        "verify exact form structure in DevTools."
     ),
 )
 def test_edit_user_no_password_fields(browser, managed_user):

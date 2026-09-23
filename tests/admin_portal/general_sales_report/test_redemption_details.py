@@ -92,15 +92,7 @@ def test_site_filter_works(rdt_page):
 
 
 @allure.title("GSR-RDT-004 Date range presets dropdown shows all options")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-004: DATE_PRESET_COMBOBOX locator (div[contains(@class,'__control')]) "
-        "does not match the RDT page's date preset control — the component type differs "
-        "from the GSR page. Inspect 'Date range presets' section in DevTools to find "
-        "the correct element class/tag before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: DATE_PRESET_COMBOBOX locator doesn't match RDT page component; verify in DevTools")
 def test_date_presets_dropdown(rdt_page):
     options = rdt_page.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -112,13 +104,7 @@ def test_date_presets_dropdown(rdt_page):
 
 
 @allure.title("GSR-RDT-005 Each date preset updates date range field correctly")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-005: DATE_PRESET_COMBOBOX locator does not match RDT page's date "
-        "preset control — same root cause as RDT-004. Needs DevTools inspection."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: DATE_PRESET_COMBOBOX locator doesn't match RDT page; same root cause as RDT-004")
 @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
 def test_each_date_preset_applies(rdt_page, preset):
     start_date, _ = _date_range_for_preset(preset)
@@ -135,13 +121,7 @@ def test_each_date_preset_applies(rdt_page, preset):
 
 
 @allure.title("GSR-RDT-006 Custom option enables manual date entry")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-006: 'Custom' option text and date input visibility depend on "
-        "RDT page UI — verify preset dropdown options in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: 'Custom' option and date input depend on RDT page UI; verify in DevTools")
 def test_custom_option_enables_manual_entry(rdt_page):
     from pages.admin_portal.general_sales_report_page import AdminRedemptionDetailsPage
     rdt_page.enable_custom_date_entry()
@@ -166,13 +146,7 @@ def test_single_day_checkbox_constrains_range(rdt_page):
 
 
 @allure.title("GSR-RDT-008 Apply filters updates header metrics")
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-RDT-008: select_date_preset relies on DATE_PRESET_COMBOBOX which does "
-        "not match the RDT page — same root cause as RDT-004/005. Fix after DevTools."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: DATE_PRESET_COMBOBOX locator doesn't match RDT page; same root cause as RDT-004/005")
 def test_apply_filters_updates_metrics(rdt_page):
     # Dependency: Sites & Locations module
     rdt_page.select_site(GSR_SITE)

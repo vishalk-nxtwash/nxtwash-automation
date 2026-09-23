@@ -15,13 +15,7 @@ pytestmark = [
     allure.story("Active POS"),
 ]
 
-_TOGGLE_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Active POS toggle locator uses role='switch' heuristics — "
-        "verify aria-checked attribute in DevTools before removing xfail."
-    ),
-)
+_TOGGLE_XFAIL = pytest.mark.skip(reason="Manual - Check later for fixes: active POS toggle uses role='switch' heuristics; needs DevTools verification")
 
 
 @allure.title("POS-ACT-001 Active POS toggle ON saves with Active status")

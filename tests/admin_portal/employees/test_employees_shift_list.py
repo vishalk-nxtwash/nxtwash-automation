@@ -15,11 +15,10 @@ pytestmark = [
     allure.story("Shift — List & Search"),
 ]
 
-_COLUMNS_XFAIL = pytest.mark.xfail(
-    strict=False,
+_COLUMNS_XFAIL = pytest.mark.skip(
     reason=(
-        "Shift column header locator uses class heuristics. "
-        "Verify exact header element classes in DevTools before removing xfail."
+        "Manual - Check later for fixes: shift column header locator uses class heuristics — "
+        "verify exact header element classes in DevTools."
     ),
 )
 

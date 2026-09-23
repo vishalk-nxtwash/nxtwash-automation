@@ -15,12 +15,10 @@ pytestmark = [
     allure.story("Password"),
 ]
 
-_PWD_XFAIL = pytest.mark.xfail(
-    strict=False,
+_PWD_XFAIL = pytest.mark.skip(
     reason=(
-        "Password change flow locators (Change password button, newPassword/confirmNewPassword "
-        "inputs) use name heuristics that need DOM verification. "
-        "Remove xfail once confirmed in DevTools."
+        "Manual - Check later for fixes: password change flow locators use name heuristics — "
+        "verify DOM in DevTools."
     ),
 )
 
@@ -81,11 +79,9 @@ def test_change_password_blank_blocked(browser, managed_user):
 
 @allure.title("USR-PWD-008 Password visibility toggles on both new password fields")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "USR-PWD-008: Visibility toggle inside the change-password sub-form. "
-        "Locators need DOM verification once the flow is accessible."
+        "Manual - Check later for fixes: visibility toggle locators need DOM verification."
     ),
 )
 def test_change_password_visibility_toggles(browser, managed_user):

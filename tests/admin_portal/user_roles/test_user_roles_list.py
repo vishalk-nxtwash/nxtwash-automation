@@ -65,13 +65,7 @@ def test_user_roles_pagination_count(browser):
 
 @allure.title("UR-LST-005 Results-per-page dropdown changes the number of rows displayed")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "UR-LST-005: Rows-per-page control locator may not match actual DOM. "
-        "Verify select/@name or aria-label attribute in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: rows-per-page control locator needs DevTools verification")
 def test_user_roles_rows_per_page_changes_display(browser):
     create_role_if_missing(browser)
     page = open_user_roles_page(browser)

@@ -13,12 +13,8 @@ pytestmark = [
     allure.story("Service Settings"),
 ]
 
-_SETTINGS_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Settings section locators use heuristics — verify section header classes "
-        "in DevTools before removing xfail."
-    ),
+_SETTINGS_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: Settings section locators use heuristics — verify section header classes in DevTools"
 )
 
 

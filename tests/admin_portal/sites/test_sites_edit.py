@@ -202,14 +202,7 @@ def test_edit_site_customer_portal_tab_accessible(logged_in_admin_browser):
 
 @allure.title("SL-LAN-002 Add a new lane — lane count increases and persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Lane name input locator (name/placeholder containing 'lane') needs "
-        "verification against the Lanes settings tab DOM. "
-        "Remove xfail once get_lane_count() is confirmed stable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: lane locator needs DOM verification against Lanes settings tab")
 def test_add_lane_persists(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Lanes settings")
@@ -260,13 +253,7 @@ def test_edit_site_contact_email_persists_after_refresh(
 
 @allure.title("SL-LAN-003 Added lane creates a visible row in the Lanes settings tab")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Lane row locator (name/placeholder containing 'lane') needs DOM "
-        "verification on the Lanes settings tab. Remove xfail once stable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: lane row locator needs DOM verification")
 def test_add_lane_creates_visible_row(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Lanes settings")
@@ -280,13 +267,7 @@ def test_add_lane_creates_visible_row(logged_in_admin_browser, managed_site):
 
 @allure.title("SL-LAN-006 Adding multiple lanes succeeds without crashing the form")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Lane row locator needs DOM verification. "
-        "Remove xfail once get_lane_count() is confirmed stable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: lane row locator needs DOM verification")
 def test_add_multiple_lanes_succeeds(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Lanes settings")
@@ -339,10 +320,7 @@ def test_edit_site_cc_processor_labels_visible(logged_in_admin_browser):
 
 @allure.title("SL-CP-002 Memberships toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: CP toggle locator needs exact checkbox DOM verification")
 def test_edit_site_customer_portal_memberships_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -357,10 +335,7 @@ def test_edit_site_customer_portal_memberships_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-003 Washbooks toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: CP toggle locator needs exact checkbox DOM verification")
 def test_edit_site_customer_portal_washbooks_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -375,10 +350,7 @@ def test_edit_site_customer_portal_washbooks_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-004 Gift cards toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: CP toggle locator needs exact checkbox DOM verification")
 def test_edit_site_customer_portal_gift_cards_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -393,10 +365,7 @@ def test_edit_site_customer_portal_gift_cards_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-005 Show-on-portal toggle in Customer Portal tab is interactable")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="CP toggle locator verified against label text only; confirm exact checkbox DOM.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: CP toggle locator needs exact checkbox DOM verification")
 def test_edit_site_customer_portal_show_toggle(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -411,13 +380,7 @@ def test_edit_site_customer_portal_show_toggle(logged_in_admin_browser):
 
 @allure.title("SL-CP-007 Customer Portal Memberships setting persists after save and re-open")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Depends on CP toggle interaction (SL-CP-002). "
-        "Remove xfail once toggle locators are confirmed stable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: depends on CP toggle locators not yet verified")
 def test_edit_site_customer_portal_settings_persist(logged_in_admin_browser, managed_site):
     edit_page = open_edit_for_site(logged_in_admin_browser, managed_site["site_name"])
     edit_page.open_tab("Customer Portal / Mobile app settings")

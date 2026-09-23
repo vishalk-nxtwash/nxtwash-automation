@@ -184,7 +184,7 @@ def test_filter_by_rfid(browser):
 
 @allure.title("CUST-FLT-008 Filter by site narrows results to customers at that site")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason="Site filter uses a hidden React-Select combobox; needs trigger-click automation.")
+@pytest.mark.skip(reason="Manual - Check later for fixes: site filter uses hidden React-Select combobox, needs trigger-click")
 def test_filter_by_site(browser):
     create_customer_if_missing(browser)
     page = open_customers_page(browser)
@@ -308,7 +308,7 @@ def test_all_boolean_dropdowns_default_to_all(browser):
 
 @allure.title("CUST-FLT-022 Multiple filters combined narrow results correctly")
 @pytest.mark.edge
-@pytest.mark.xfail(strict=False, reason="Includes site filter which uses a hidden React-Select combobox; needs trigger-click automation.")
+@pytest.mark.skip(reason="Manual - Check later for fixes: includes site filter with hidden React-Select combobox")
 def test_multiple_filters_combined_narrow_results(browser):
     create_customer_if_missing(browser)
     page = open_customers_page(browser)

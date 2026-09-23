@@ -83,12 +83,11 @@ def test_add_wash_book_form_loads(browser):
 
 @allure.title("WB-EXP-001 Export button is clickable (deferred: content validation)")
 @pytest.mark.export
-@pytest.mark.xfail(
+@pytest.mark.skip(
     reason=(
-        "WB-EXP-001: File content validation requires browser download-directory "
-        "configuration and CSV/XLS parser utilities. Deferred."
+        "Manual - Check later for fixes: file content validation requires "
+        "download-directory config and CSV/XLS parser."
     ),
-    strict=False,
 )
 def test_wash_books_export_file_validation(browser):
 

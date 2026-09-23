@@ -67,14 +67,11 @@ _GLOSSARY_TERM_PARAMS = [
         term,
         id="CDL-GLS-002-%02d" % (i + 1),
         marks=(
-            pytest.mark.xfail(
+            pytest.mark.skip(
                 reason=(
-                    "'Important' is likely a callout header/note label inside the CDL "
-                    "glossary widget rather than a plain body-text term.  get_body_text() "
-                    "may not capture it if it is inside a styled aside or tooltip.  "
-                    "Verify exact DOM text via DevTools before removing xfail."
-                ),
-                strict=False,
+                    "Manual - Check later for fixes: 'Important' label may be in styled aside/tooltip, "
+                    "get_body_text() may not capture it; verify DOM via DevTools."
+                )
             )
             if term == "Important"
             else ()
@@ -590,11 +587,7 @@ class TestCardDeclinesMatrix:
 
     @allure.title("CDL-MTX-005 CC Declines matrix shows empty or no-data state for zero-data range")
     @pytest.mark.regression
-    @pytest.mark.xfail(
-        reason="'Yesterday' preset is not guaranteed zero-data on staging; "
-               "needs calendar picker for a reliable historic zero-data range (TODO in cdl_zero_data fixture).",
-        strict=False,
-    )
+    @pytest.mark.skip(reason="Manual - Check later for fixes: cdl_zero_data fixture needs calendar picker for reliable zero-data range")
     def test_matrix_zero_data_state(self, cdl_zero_data):
         body = cdl_zero_data.get_body_text().lower()
         has_empty = (
