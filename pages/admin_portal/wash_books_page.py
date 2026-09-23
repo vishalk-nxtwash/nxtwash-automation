@@ -1254,8 +1254,10 @@ class WashBooksPage(BasePage):
         self.wait_for_cwb_list_loaded()
 
     def open_cwb_filter_panel(self):
-        """Open the filter panel while on the CWB list page."""
+        """Open the filter panel while on the CWB list page (idempotent)."""
         self.wait_for_cwb_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
