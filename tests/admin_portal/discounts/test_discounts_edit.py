@@ -44,12 +44,6 @@ def test_edit_discount_reapplies_expected_settings(browser):
 
 @allure.title("DS-UPD-001 Change discount name persists")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual — headless: wait_for_list_loaded times out after the rename save "
-        "when run in headless mode. Passes reliably in non-headless mode."
-    )
-)
 def test_edit_discount_name_persists(managed_discount):
 
     page = managed_discount
