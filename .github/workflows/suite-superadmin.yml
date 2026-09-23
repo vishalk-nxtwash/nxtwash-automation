@@ -40,11 +40,6 @@ jobs:
           - name: companies
             path: >-
               tests/superadmin/companies
-              tests/superadmin/test_companies.py
-              tests/superadmin/test_create_company.py
-              tests/superadmin/test_edit_company.py
-              tests/superadmin/test_create_user.py
-              tests/superadmin/test_create_user_role.py
           # ── Users ─────────────────────────────────────────────────────────────
           # list / access / create / edit / filter / export
           - name: users
