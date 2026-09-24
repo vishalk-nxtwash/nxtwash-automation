@@ -4,16 +4,23 @@ name: Admin Suite — Retry Failed Shards (staging)
 # Use this after pushing a fix to verify the broken modules without re-running
 # the shards that were already green (reports, auth-core, customers).
 #
-# Shards targeted as of 2026-08-04 fixes:
-#   reports-financial — TRN_DEFAULT_PRESET "Today" + trn_page uses Last month
-#   wash-packages     — assignment_site VK AL11 + presence_of_element_located
-#   wash-catalog      — wait_for_wash_book_row presence fix + base_page 45s timeout
+# Shards targeted as of 2026-09-24 EC2 canary run (run 35941049606):
+#   wash-catalog — CP-EDT-002 test_edit_coupon_package_discount timed out
+#   services     — GC-EDT-001 test_edit_gift_card_name timed out;
+#                  BD-EDT-002 test_edit_bank_drop_order_persists stale read
+#   Both passed cleanly on the same commit via GitHub-hosted — suspected
+#   EC2 resource-contention timing, re-running here to confirm/reproduce.
 
 on:
   workflow_dispatch:
+    inputs:
+      runner:
+        description: '"ubuntu-latest" (GitHub-hosted) or "self-hosted" (EC2)'
+        required: false
+        default: "ubuntu-latest"
 
 concurrency:
-  group: admin-retry-staging
+  group: admin-retry-${{ inputs.runner || 'ubuntu-latest' }}
   cancel-in-progress: false
 
 jobs:
@@ -22,14 +29,17 @@ jobs:
       fail-fast: false
       matrix:
         shard:
-          # ── Promotions ────────────────────────────────────────────────────
-          - name: promotions
-            path: tests/admin_portal/discounts
           # ── Wash Catalog ──────────────────────────────────────────────────
           - name: wash-catalog
             path: >-
               tests/admin_portal/wash_books
               tests/admin_portal/coupon_packages
+          # ── Services & Finance ────────────────────────────────────────────
+          - name: services
+            path: >-
+              tests/admin_portal/custom_services
+              tests/admin_portal/gift_cards
+              tests/admin_portal/bank_drop
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
@@ -38,3 +48,4 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       parallel: "2"
       timeout_minutes: 90
+      runner: ${{ inputs.runner || 'ubuntu-latest' }}
