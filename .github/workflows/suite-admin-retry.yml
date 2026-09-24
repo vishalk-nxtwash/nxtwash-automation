@@ -4,12 +4,12 @@ name: Admin Suite — Retry Failed Shards (staging)
 # Use this after pushing a fix to verify the broken modules without re-running
 # the shards that were already green (reports, auth-core, customers).
 #
-# Shards targeted as of 2026-09-24 EC2 canary run (run 35941049606):
-#   wash-catalog — CP-EDT-002 test_edit_coupon_package_discount timed out
-#   services     — GC-EDT-001 test_edit_gift_card_name timed out;
-#                  BD-EDT-002 test_edit_bank_drop_order_persists stale read
-#   Both passed cleanly on the same commit via GitHub-hosted — suspected
-#   EC2 resource-contention timing, re-running here to confirm/reproduce.
+# Shards targeted as of 2026-09-24 EC2 retry run (run 36010026138):
+#   wash_books, custom_services, gift_cards, bank_drop all now pass.
+#   coupon_packages alone remains unstable — a different test failed each
+#   run (CP-EDT-002, then CP-SRH-004), both via the same
+#   click-save -> wait_for_list_loaded() timing path in
+#   coupon_packages_page.py. Narrowed to just this module to isolate it.
 
 on:
   workflow_dispatch:
@@ -30,16 +30,8 @@ jobs:
       matrix:
         shard:
           # ── Wash Catalog ──────────────────────────────────────────────────
-          - name: wash-catalog
-            path: >-
-              tests/admin_portal/wash_books
-              tests/admin_portal/coupon_packages
-          # ── Services & Finance ────────────────────────────────────────────
-          - name: services
-            path: >-
-              tests/admin_portal/custom_services
-              tests/admin_portal/gift_cards
-              tests/admin_portal/bank_drop
+          - name: coupon-packages
+            path: tests/admin_portal/coupon_packages
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
