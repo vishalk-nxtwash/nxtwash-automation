@@ -14,18 +14,22 @@ name: Admin Suite (staging)
 # timeout: 180 default — largest shards (~280 tests × 30s serial) need ~140 min.
 
 on:
-  push:
-    branches: [staging]
+  # TEMPORARILY DISABLED (2026-09-24): push/schedule/repository_dispatch
+  # commented out while EC2 self-hosted runner work is in progress on
+  # ci/ec2-runner-setup, so this doesn't compete for admin-staging-01/02/03.
+  # Re-enable by uncommenting once that work is done.
+  # push:
+  #   branches: [staging]
   workflow_dispatch:
     inputs:
       waves:
         description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Default: all.'
         required: false
         default: 'all'
-  schedule:
-    - cron: "0 3 * * 0"
-  repository_dispatch:
-    types: [staging-deploy-complete]
+  # schedule:
+  #   - cron: "0 3 * * 0"
+  # repository_dispatch:
+  #   types: [staging-deploy-complete]
 
 concurrency:
   group: admin-suite-staging

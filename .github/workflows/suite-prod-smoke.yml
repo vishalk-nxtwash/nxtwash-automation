@@ -6,16 +6,20 @@ name: Prod Smoke
 # and daily at 06:00 UTC.
 
 on:
-  push:
-    branches: [production]
+  # TEMPORARILY DISABLED (2026-09-24): push/schedule commented out to keep
+  # CI quiet while EC2 self-hosted runner work is in progress on
+  # ci/ec2-runner-setup (this job runs on ubuntu-latest, not self-hosted).
+  # Re-enable by uncommenting once that work is done.
+  # push:
+  #   branches: [production]
   workflow_dispatch:
     inputs:
       parallel:
         description: "xdist workers: a number, auto, or 0 for serial"
         required: false
         default: "2"
-  schedule:
-    - cron: "0 6 * * *"
+  # schedule:
+  #   - cron: "0 6 * * *"
 
 concurrency:
   group: prod-smoke
