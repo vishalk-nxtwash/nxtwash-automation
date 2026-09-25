@@ -1,0 +1,62 @@
+name: Superadmin Suite — AWS runner
+
+# Runs the full superadmin test suite on the AWS EC2 self-hosted runner.
+# Use this for faster runs (larger instance) or when you need to test against
+# the VPC-internal staging environment that GitHub runners can't reach.
+#
+# Pre-requisites on the runner:
+#   - Python 3.11, Google Chrome, ChromeDriver, Java 17 installed
+#   - GitHub Actions runner registered with label: self-hosted
+#   - STAGING secret (full .env file contents) set in repo/environment secrets
+#
+# Sharded: 4 jobs in parallel (one per module). EC2 runners typically have
+# more vCPUs — raise the `parallel` input to speed up further.
+#
+# Trigger: manual dispatch only.
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers per shard (raise to use extra EC2 vCPUs, e.g. 4)"
+        required: false
+        default: "4"
+
+concurrency:
+  group: superadmin-aws-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  superadmin:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          # ── Auth ──────────────────────────────────────────────────────────────
+          - name: auth
+            path: >-
+              tests/superadmin/test_login.py
+              tests/superadmin/test_login_debug.py
+          # ── Companies ─────────────────────────────────────────────────────────
+          - name: companies
+            path: >-
+              tests/superadmin/test_companies.py
+              tests/superadmin/test_create_company.py
+              tests/superadmin/test_edit_company.py
+              tests/superadmin/test_create_user.py
+              tests/superadmin/test_create_user_role.py
+          # ── Users ─────────────────────────────────────────────────────────────
+          - name: users
+            path: tests/superadmin/users
+          # ── User Roles ────────────────────────────────────────────────────────
+          - name: user-roles
+            path: tests/superadmin/user_roles
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: sa-aws-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ github.event.inputs.parallel || '4' }}
+      timeout_minutes: 45
+      runner: self-hosted

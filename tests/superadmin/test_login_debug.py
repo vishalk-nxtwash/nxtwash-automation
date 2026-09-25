@@ -1,3 +1,4 @@
+import pytest
 from selenium.webdriver.common.by import By
 import time
 
@@ -5,6 +6,10 @@ from core.driver_factory import DriverFactory
 from core.config_manager import ConfigManager
 
 
+@pytest.mark.skip(
+    reason="test_login_debug: Interactive debug test using input() — "
+           "not suitable for automated or headless execution."
+)
 def test_login_debug():
 
     config = ConfigManager()
