@@ -48,36 +48,36 @@ def test_export_modal_has_xlsx_and_csv_options(companies_page):
         f"Expected CSV in export formats, got: {formats}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EXP-005: Default export format detection depends on whether "
-           "the selector is a native <select> or React Select — DOM inspection required.",
-)
 def test_export_default_format_is_xlsx(companies_page):
     """SA-CMP-EXP-005 — Default export format is XLSX."""
+    # Confirmed from DOM: hidden <input name="exportWay"> holds the selected value
     companies_page.click_export_icon()
     default = companies_page.get_default_export_format()
     assert default and ("xlsx" in default.lower() or "excel" in default.lower()), \
         f"Default export format should be XLSX, got: {default!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EXP-006: Column toggle checkbox locator inside the modal "
-           "not confirmed — needs DOM inspection.",
-)
 def test_export_modal_default_column_toggles(companies_page):
-    """SA-CMP-EXP-006 — Export modal shows column toggles, with expected defaults ON."""
+    """SA-CMP-EXP-006 — Export modal shows column toggles, with expected defaults ON/OFF."""
+    # Confirmed from DOM: name attributes on the hidden checkbox inputs
     companies_page.click_export_icon()
     states = companies_page.get_export_column_states()
     assert states, "Export modal should contain at least one column toggle"
+
+    # These 7 columns should be checked by default
     expected_on = [
-        "companyName", "email", "phoneNumber",
-        "companyCountry", "companyState", "companyCity", "address",
+        "companyName", "emailId", "phone",
+        "companyCountry", "companyState", "companyCity", "companyAddress",
     ]
     for col in expected_on:
         if col in states:
             assert states[col], f"Column '{col}' should be ON by default"
+
+    # These 3 columns should be unchecked by default
+    expected_off = ["createdDateTime", "isActive", "totalRecord"]
+    for col in expected_off:
+        if col in states:
+            assert not states[col], f"Column '{col}' should be OFF by default"
 
 
 @pytest.mark.skip(
