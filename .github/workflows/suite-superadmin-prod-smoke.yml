@@ -1,4 +1,5 @@
 name: Superadmin Prod Smoke
+run-name: "Superadmin Prod Smoke — ${{ github.event.inputs.runner || 'ubuntu-latest' }}"
 
 # Read-only smoke checks (-m prod_smoke) against the live superadmin app.
 #
@@ -18,6 +19,10 @@ name: Superadmin Prod Smoke
 on:
   workflow_dispatch:
     inputs:
+      runner:
+        description: '"ubuntu-latest" (GitHub-hosted) or "self-hosted" (EC2)'
+        required: false
+        default: "ubuntu-latest"
       parallel:
         description: "xdist workers: a number, auto, or 0 for serial"
         required: false
@@ -32,9 +37,10 @@ jobs:
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
-      label: superadmin-prod-smoke
+      label: superadmin-prod-smoke-${{ github.event.inputs.runner || 'ubuntu-latest' }}
       environment: production
       test_path: tests/prod_smoke/superadmin
       marker: prod_smoke
       parallel: ${{ github.event.inputs.parallel || '2' }}
       timeout_minutes: 20
+      runner: ${{ github.event.inputs.runner || 'ubuntu-latest' }}

@@ -109,7 +109,6 @@ def test_create_sales_path_happy_path(create_sales_path_page, sales_path_page):
         f"New sales path for '{SALES_PATH_COMPANY}' should appear in the list"
 
 
-@pytest.mark.smoke
 def test_new_sales_path_appears_in_list(sales_path_page):
     """SA-SLP-CRT-009 — New sales path appears in the list after create."""
     sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)

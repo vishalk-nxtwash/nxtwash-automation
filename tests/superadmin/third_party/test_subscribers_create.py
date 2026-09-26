@@ -76,7 +76,6 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
-@pytest.mark.smoke
 def test_new_subscriber_appears_in_list(subscribers_page):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
     assert subscribers_page.row_exists(SUBSCRIBER_NAME), \

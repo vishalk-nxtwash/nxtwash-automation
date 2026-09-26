@@ -1,4 +1,5 @@
 name: Superadmin Smoke (staging)
+run-name: "Superadmin Smoke (staging) — ${{ github.event.inputs.runner || 'ubuntu-latest' }} — ${{ github.event_name }}"
 
 # Fast sanity check — runs only @smoke marked tests across the superadmin
 # module (login, companies, users, user roles, third party). These are the
@@ -37,7 +38,7 @@ jobs:
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
-      label: superadmin-smoke
+      label: superadmin-smoke-${{ github.event.inputs.runner || 'ubuntu-latest' }}
       environment: staging
       test_path: tests/superadmin
       marker: smoke
