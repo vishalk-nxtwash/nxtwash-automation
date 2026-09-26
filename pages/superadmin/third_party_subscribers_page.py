@@ -198,24 +198,10 @@ class EditSubscriberPage(CreateSubscriberPage):
         return el.get_attribute("value") or ""
 
     def set_name(self, value):
-        el = self.wait.until(EC.element_to_be_clickable(self.NAME_INPUT))
-        self.driver.execute_script(
-            "arguments[0].value='';"
-            "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
-            el
-        )
-        if value:
-            el.send_keys(value)
+        self.enter_text(self.NAME_INPUT, value)
 
     def set_abbreviation(self, value):
-        el = self.wait.until(EC.element_to_be_clickable(self.ABBREVIATION_INPUT))
-        self.driver.execute_script(
-            "arguments[0].value='';"
-            "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
-            el
-        )
-        if value:
-            el.send_keys(value)
+        self.enter_text(self.ABBREVIATION_INPUT, value)
 
     def click_name_clear(self):
         els = self.driver.find_elements(*self.NAME_CLEAR_BUTTON)

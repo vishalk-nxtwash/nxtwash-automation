@@ -77,10 +77,34 @@ class CompaniesPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        self._reset_filter_state()
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(self.EXPORT_ICON_BUTTON)
             )
+        except Exception:
+            pass
+
+    def _reset_filter_state(self):
+        """Close any open filter panel left by a prior test on this worker."""
+        try:
+            if not self.filter_panel_is_open():
+                return
+            reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
+            if reset_els and reset_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", reset_els[0])
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//tbody"))
+                )
+            close_els = self.driver.find_elements(*self.FILTER_CLOSE_BUTTON)
+            if close_els and close_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", close_els[0])
+                try:
+                    WebDriverWait(self.driver, 3).until(
+                        EC.invisibility_of_element_located(self.COMPANY_NAME_FILTER)
+                    )
+                except TimeoutException:
+                    pass
         except Exception:
             pass
 
@@ -241,7 +265,7 @@ class CompaniesPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center'});", login_to_button
         )
-        login_to_button.click()
+        self.driver.execute_script("arguments[0].click();", login_to_button)
         self.wait.until(EC.visibility_of_element_located(self.LOGIN_DIALOG))
 
     def get_login_dialog_options(self):

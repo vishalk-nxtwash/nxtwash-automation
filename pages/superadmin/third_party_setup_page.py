@@ -284,6 +284,8 @@ class CreateSetupPage(BasePage):
         return els[0] if els else None
 
     def get_all_event_states(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        import time; time.sleep(0.4)
         states = {}
         for name in EVENT_TYPE_NAMES:
             cb = self.get_event_checkbox(name)
