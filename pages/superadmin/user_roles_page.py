@@ -66,6 +66,7 @@ class UserRolesPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
+        self._reset_filter_state()
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located(self.EXPORT_ICON_BUTTON)
@@ -73,14 +74,41 @@ class UserRolesPage(BasePage):
         except Exception:
             pass
 
+    def _reset_filter_state(self):
+        """Close any open filter panel left by a prior test on this worker."""
+        close_btn = (By.XPATH, "//button[.//svg[contains(@class,'lucide-x')]]")
+        try:
+            if not self.filter_panel_is_open():
+                return
+            reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
+            if reset_els and reset_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", reset_els[0])
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//tbody"))
+                )
+            close_els = self.driver.find_elements(*close_btn)
+            if close_els and close_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", close_els[0])
+                try:
+                    WebDriverWait(self.driver, 3).until(
+                        EC.invisibility_of_element_located(self.SEARCH_INPUTS)
+                    )
+                except TimeoutException:
+                    pass
+        except Exception:
+            pass
+
     def click_add_role(self):
         self.click(self.ADD_ROLE_BUTTON)
 
     def open_filters(self):
-        self.click(self.FILTER_BUTTON)
-        self.wait.until(EC.presence_of_element_located(self.SEARCH_INPUTS))
+        if not self.filter_panel_is_open():
+            self.click(self.FILTER_BUTTON)
+            self.wait.until(EC.presence_of_element_located(self.SEARCH_INPUTS))
 
     def open_filters_if_available(self):
+        if self.filter_panel_is_open():
+            return True
         try:
             self.click(self.FILTER_BUTTON)
         except TimeoutException:
@@ -445,6 +473,12 @@ class CreateUserRolePage(BasePage):
             except StaleElementReferenceException:
                 return
         self._permission_groups_expanded = True
+        try:
+            WebDriverWait(self.driver, 5).until(
+                lambda d: len(d.find_elements(*self.PERMISSION_CHECKBOXES)) > 1
+            )
+        except TimeoutException:
+            pass
 
     def get_permission_checkboxes(self):
         self.expand_permission_groups()
@@ -741,13 +775,7 @@ class EditUserRolePage(CreateUserRolePage):
         return el.get_attribute("value") or ""
 
     def set_role_name(self, name):
-        el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
-        self.driver.execute_script(
-            "arguments[0].value = ''; "
-            "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
-            el
-        )
-        el.send_keys(name)
+        self.enter_text(self.ROLE_NAME_INPUT, name)
 
     def click_save_changes(self):
         self.click(self.SAVE_CHANGES_BUTTON)

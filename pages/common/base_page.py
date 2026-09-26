@@ -44,11 +44,17 @@ class BasePage:
             pass
 
     def click(self, locator):
-        try:
-            self.wait.until(EC.element_to_be_clickable(locator)).click()
-        except ElementClickInterceptedException:
-            self.dismiss_dev_toast()
-            self.wait.until(EC.element_to_be_clickable(locator)).click()
+        for attempt in range(3):
+            try:
+                self.wait.until(EC.element_to_be_clickable(locator)).click()
+                return
+            except ElementClickInterceptedException:
+                self.dismiss_dev_toast()
+            except StaleElementReferenceException:
+                if attempt == 2:
+                    raise
+                time.sleep(0.3)
+        self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def enter_text(self, locator, text):
         element = self.wait.until(EC.visibility_of_element_located(locator))
