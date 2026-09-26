@@ -144,6 +144,8 @@ def test_cancel_discards_edit_changes(browser, edit_company_page):
 
     original_name = edit_company_page.get_company_name()
 
+    # Make a transient change so the app shows the unsaved-changes confirmation
+    edit_company_page.set_terms_condition(" ")
     edit_company_page.click_cancel()
     edit_company_page.confirm_yes()
     edit_company_page.wait_for_confirmation_closed()
