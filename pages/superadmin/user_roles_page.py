@@ -251,7 +251,7 @@ class UserRolesPage(BasePage):
     # ── Export ────────────────────────────────────────────────────────────────
 
     EXPORT_ICON_BUTTON = (
-        By.XPATH, "//button[.//svg[contains(@class,'lucide-download')]]"
+        By.XPATH, "//button[.//*[contains(@class,'lucide-download')]]"
     )
     # Export popup has no role="dialog" — anchored on title text
     EXPORT_MODAL = (
@@ -267,8 +267,7 @@ class UserRolesPage(BasePage):
     )
 
     def click_export_icon(self):
-        self.wait.until(EC.element_to_be_clickable(self.EXPORT_ICON_BUTTON))
-        btn = self.driver.find_element(*self.EXPORT_ICON_BUTTON)
+        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
 
     def export_modal_is_visible(self):

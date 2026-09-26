@@ -48,7 +48,7 @@ class CompaniesPage(BasePage):
     # Export — popup has NO role="dialog"; anchored on form id instead
     EXPORT_ICON_BUTTON = (
         By.XPATH,
-        "//button[.//svg[contains(@class,'lucide-download')]]"
+        "//button[.//*[contains(@class,'lucide-download')]]"
     )
     # Outermost popup container (rounded-xl wrapper that holds the form)
     EXPORT_MODAL = (
@@ -333,7 +333,8 @@ class CompaniesPage(BasePage):
     # ── Export ────────────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        self.click(self.EXPORT_ICON_BUTTON)
+        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
 
     def export_modal_is_visible(self):
         # Export popup has no role="dialog" — check form presence instead
