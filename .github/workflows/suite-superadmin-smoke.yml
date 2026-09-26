@@ -30,8 +30,12 @@ on:
         default: "2"
 
 concurrency:
-  group: superadmin-smoke-staging
-  cancel-in-progress: true   # New push cancels previous in-flight smoke run
+  # Per-runner group — a GitHub-hosted dispatch and an EC2 dispatch must not
+  # cancel each other. Without this, firing one right after the other (or a
+  # push landing in between) cancels whichever was still queued/running,
+  # even though they're not actually sharing the same runner.
+  group: superadmin-smoke-staging-${{ github.event.inputs.runner || 'ubuntu-latest' }}
+  cancel-in-progress: true   # New push/dispatch on the SAME runner cancels the previous one
 
 jobs:
   smoke:

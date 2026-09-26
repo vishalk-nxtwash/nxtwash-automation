@@ -29,7 +29,9 @@ on:
         default: "2"
 
 concurrency:
-  group: superadmin-prod-smoke
+  # Per-runner group so a GitHub-hosted and an EC2 dispatch can run
+  # independently instead of queuing behind each other.
+  group: superadmin-prod-smoke-${{ github.event.inputs.runner || 'ubuntu-latest' }}
   cancel-in-progress: false
 
 jobs:
