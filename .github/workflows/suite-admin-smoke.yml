@@ -97,6 +97,7 @@ jobs:
             path: >-
               tests/admin_portal/pos_settings
               tests/admin_portal/user_roles
+              tests/admin_portal/gas_pump_settings
 
           # employees commented out — filter panel JS click fix pending verification
           - name: people
