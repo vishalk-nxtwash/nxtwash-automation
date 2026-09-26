@@ -47,6 +47,9 @@ jobs:
           # ── User Roles ────────────────────────────────────────────────────────
           - name: user-roles
             path: tests/superadmin/user_roles
+          # ── Third Party ───────────────────────────────────────────────────────
+          - name: third-party
+            path: tests/superadmin/third_party
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
