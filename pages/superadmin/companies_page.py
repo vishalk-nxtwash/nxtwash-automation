@@ -86,10 +86,14 @@ class CompaniesPage(BasePage):
             pass
 
     def _reset_filter_state(self):
-        """Close any open filter panel left by a prior test on this worker."""
+        """Reset any applied filters regardless of whether the panel is open."""
         try:
+            # Open panel if closed — a closed panel may still have active filters
             if not self.filter_panel_is_open():
-                return
+                self.driver.find_element(*self.FILTER_BUTTON).click()
+                WebDriverWait(self.driver, 5).until(
+                    EC.visibility_of_element_located(self.COMPANY_NAME_FILTER)
+                )
             reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
             if reset_els and reset_els[0].is_displayed():
                 self.driver.execute_script("arguments[0].click();", reset_els[0])

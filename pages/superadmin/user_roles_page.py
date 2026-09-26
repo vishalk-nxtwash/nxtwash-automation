@@ -75,11 +75,14 @@ class UserRolesPage(BasePage):
             pass
 
     def _reset_filter_state(self):
-        """Close any open filter panel left by a prior test on this worker."""
+        """Reset any applied filters regardless of whether the panel is open."""
         close_btn = (By.XPATH, "//button[.//svg[contains(@class,'lucide-x')]]")
         try:
             if not self.filter_panel_is_open():
-                return
+                self.driver.find_element(*self.FILTER_BUTTON).click()
+                WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(self.SEARCH_INPUTS)
+                )
             reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
             if reset_els and reset_els[0].is_displayed():
                 self.driver.execute_script("arguments[0].click();", reset_els[0])
