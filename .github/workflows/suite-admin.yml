@@ -108,6 +108,9 @@ jobs:
           # 68 tests — pos_settings (split from settings-pos)
           - name: pos-settings
             path: tests/admin_portal/pos_settings
+          # 37 tests — gas_pump_settings (was missing from this workflow entirely)
+          - name: gas-pump-settings
+            path: tests/admin_portal/gas_pump_settings
           # ── Access Control ────────────────────────────────────────────────
           # 58 tests — user_roles (split from settings-pos)
           - name: user-roles

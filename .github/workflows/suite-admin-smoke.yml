@@ -99,6 +99,7 @@ jobs:
             path: >-
               tests/admin_portal/pos_settings
               tests/admin_portal/user_roles
+              tests/admin_portal/gas_pump_settings
 
           # people shard commented out for EC2 smoke test — employees
           # (filter panel JS click fix pending) drags this shard ~17 min vs
