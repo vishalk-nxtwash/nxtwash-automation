@@ -66,6 +66,12 @@ class UserRolesPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(self.EXPORT_ICON_BUTTON)
+            )
+        except Exception:
+            pass
 
     def click_add_role(self):
         self.click(self.ADD_ROLE_BUTTON)
@@ -219,18 +225,28 @@ class UserRolesPage(BasePage):
     EXPORT_ICON_BUTTON = (
         By.XPATH, "//button[.//svg[contains(@class,'lucide-download')]]"
     )
+    # Export popup has no role="dialog" — anchored on title text
+    EXPORT_MODAL = (
+        By.XPATH,
+        "//div[contains(normalize-space(),'Export User Roles')]"
+        "/ancestor::div[contains(@class,'rounded-xl')][1]"
+    )
     EXPORT_COLUMN_TOGGLES = (
-        By.XPATH, "//div[@role='dialog']//label//input[@type='checkbox']"
+        By.XPATH,
+        "//div[contains(normalize-space(),'Export User Roles')]"
+        "/ancestor::div[contains(@class,'rounded-xl')]"
+        "//label//input[@type='checkbox']"
     )
 
     def click_export_icon(self):
+        self.wait.until(EC.element_to_be_clickable(self.EXPORT_ICON_BUTTON))
         btn = self.driver.find_element(*self.EXPORT_ICON_BUTTON)
         self.driver.execute_script("arguments[0].click();", btn)
 
     def export_modal_is_visible(self):
         try:
             WebDriverWait(self.driver, 5).until(
-                EC.visibility_of_element_located((By.XPATH, "//div[@role='dialog']"))
+                EC.visibility_of_element_located(self.EXPORT_MODAL)
             )
             return True
         except TimeoutException:
@@ -240,7 +256,9 @@ class UserRolesPage(BasePage):
         try:
             el = self.driver.find_element(
                 By.XPATH,
-                "//div[@role='dialog']//div[contains(@class,'singleValue')]"
+                "//div[contains(normalize-space(),'Export User Roles')]"
+                "/ancestor::div[contains(@class,'rounded-xl')]"
+                "//div[contains(@class,'singleValue')]"
             )
             return el.text.strip()
         except Exception:
@@ -250,7 +268,9 @@ class UserRolesPage(BasePage):
         try:
             indicator = self.driver.find_element(
                 By.XPATH,
-                "//div[@role='dialog']//div[contains(@class,'indicatorContainer')]"
+                "//div[contains(normalize-space(),'Export User Roles')]"
+                "/ancestor::div[contains(@class,'rounded-xl')]"
+                "//div[contains(@class,'indicatorContainer')]"
             )
             self.driver.execute_script("arguments[0].click();", indicator)
         except Exception:
@@ -274,14 +294,19 @@ class UserRolesPage(BasePage):
     def export_confirm_button_is_disabled(self):
         els = self.driver.find_elements(
             By.XPATH,
-            "//div[@role='dialog']//button[normalize-space()='Export']"
+            "//div[contains(normalize-space(),'Export User Roles')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//button[@type='submit' or normalize-space()='Export']"
         )
         return bool(els) and els[0].get_attribute("disabled") is not None
 
     def cancel_export(self):
-        self.click(
-            (By.XPATH, "//div[@role='dialog']//button[normalize-space()='Cancel']")
-        )
+        self.click((
+            By.XPATH,
+            "//div[contains(normalize-space(),'Export User Roles')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//button[normalize-space()='Cancel']"
+        ))
 
 
 class CreateUserRolePage(BasePage):

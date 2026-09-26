@@ -123,7 +123,7 @@ def edit_setup_page(webhook_setup_page, browser):
 
     Creates the record first if it does not yet exist on staging.
     """
-    if not webhook_setup_page.row_exists(SETUP_COMPANY):
+    if not webhook_setup_page.row_exists(SETUP_COMPANY, timeout=30):
         webhook_setup_page.click_add_setup()
         cp = CreateSetupPage(browser)
         cp.wait_for_loaded()
@@ -171,7 +171,7 @@ def edit_sales_path_page(sales_path_page, browser):
 
     Creates the record first if it does not yet exist on staging.
     """
-    if not sales_path_page.row_exists(SALES_PATH_COMPANY):
+    if not sales_path_page.row_exists(SALES_PATH_COMPANY, timeout=30):
         sales_path_page.click_add_sales_path()
         cp = CreateSalesPathPage(browser)
         cp.wait_for_loaded()

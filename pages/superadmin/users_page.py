@@ -33,24 +33,33 @@ class UsersPage(BasePage):
         By.XPATH,
         "//button[.//svg[contains(@class,'lucide-download')]]"
     )
+    # Export popup has no role="dialog" — anchored on title text
     EXPORT_MODAL = (
         By.XPATH,
-        "//div[@role='dialog'] | //div[contains(@class,'modal') and contains(.,'Export')]"
+        "//div[contains(normalize-space(),'Export Users')]"
+        "/ancestor::div[contains(@class,'rounded-xl')][1]"
     )
     EXPORT_MODAL_TITLE = (
         By.XPATH,
-        "//div[@role='dialog']//*[contains(.,'Export Users')] | "
-        "//div[contains(@class,'modal')]//*[contains(.,'Export Users')]"
+        "//div[normalize-space()='Export Users']"
     )
     # Hidden checkboxes (opacity-0) inside labels in the export modal; is_selected() works
     EXPORT_COLUMN_TOGGLES = (
         By.XPATH,
-        "//div[@role='dialog']//label//input[@type='checkbox']"
+        "//div[contains(normalize-space(),'Export Users')]"
+        "/ancestor::div[contains(@class,'rounded-xl')]"
+        "//label//input[@type='checkbox']"
     )
 
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(self.EXPORT_ICON_BUTTON)
+            )
+        except Exception:
+            pass
 
     def click_add_user(self):
         self.click(self.ADD_USER_BUTTON)
@@ -130,7 +139,10 @@ class UsersPage(BasePage):
         edit_btn = row.find_element(
             By.XPATH, ".//button[normalize-space()='Edit']"
         )
-        edit_btn.click()
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});", edit_btn
+        )
+        self.driver.execute_script("arguments[0].click();", edit_btn)
 
     def get_column_headers(self):
         headers = self.driver.find_elements(
@@ -216,27 +228,25 @@ class UsersPage(BasePage):
         self.click(self.EXPORT_ICON_BUTTON)
 
     def export_modal_is_visible(self):
-        els = self.driver.find_elements(*self.EXPORT_MODAL)
+        els = self.driver.find_elements(*self.EXPORT_MODAL_TITLE)
         return bool(els) and els[0].is_displayed()
 
     def get_export_format_options(self):
         # React Select inside the export modal — click to open, read role='option' items
         control_loc = (
             By.XPATH,
-            "//div[@role='dialog']//div[contains(@class,'singleValue')]"
+            "//div[contains(normalize-space(),'Export Users')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//div[contains(@class,'singleValue')]"
         )
         controls = self.driver.find_elements(*control_loc)
         if controls:
             try:
                 controls[0].click()
                 WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, "//div[@role='dialog']//*[@role='option']")
-                    )
+                    EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
                 )
-                opts = self.driver.find_elements(
-                    By.XPATH, "//div[@role='dialog']//*[@role='option']"
-                )
+                opts = self.driver.find_elements(By.XPATH, "//*[@role='option']")
                 result = [o.text.strip() for o in opts if o.text.strip()]
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 return result
@@ -245,9 +255,11 @@ class UsersPage(BasePage):
         return []
 
     def get_default_export_format(self):
-        # React Select singleValue div shows the current selection
         els = self.driver.find_elements(
-            By.XPATH, "//div[@role='dialog']//div[contains(@class,'singleValue')]"
+            By.XPATH,
+            "//div[contains(normalize-space(),'Export Users')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//div[contains(@class,'singleValue')]"
         )
         if els:
             return els[0].text.strip()
@@ -263,30 +275,26 @@ class UsersPage(BasePage):
         return states
 
     def export_confirm_button_is_disabled(self):
-        # Defensive — export confirm button locator needs DOM confirmation
-        locators = [
-            (By.XPATH,
-             "//div[@role='dialog']//button[contains(.,'Export') "
-             "and not(contains(.,'Cancel'))]"),
-            (By.XPATH,
-             "//div[@role='dialog']//button[contains(@class,'primary') or "
-             "contains(@class,'confirm')]"),
-        ]
-        for loc in locators:
-            els = self.driver.find_elements(*loc)
-            if els:
-                btn = els[0]
-                return (
-                    btn.get_attribute("disabled") is not None
-                    or btn.get_attribute("aria-disabled") == "true"
-                )
+        els = self.driver.find_elements(
+            By.XPATH,
+            "//div[contains(normalize-space(),'Export Users')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//button[@type='submit' or normalize-space()='Export']"
+        )
+        if els:
+            btn = els[0]
+            return (
+                btn.get_attribute("disabled") is not None
+                or btn.get_attribute("aria-disabled") == "true"
+            )
         return False
 
     def cancel_export(self):
         self.click((
             By.XPATH,
-            "//div[@role='dialog']//button[normalize-space()='Cancel'] | "
-            "//div[contains(@class,'modal')]//button[normalize-space()='Cancel']"
+            "//div[contains(normalize-space(),'Export Users')]"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//button[normalize-space()='Cancel']"
         ))
 
 

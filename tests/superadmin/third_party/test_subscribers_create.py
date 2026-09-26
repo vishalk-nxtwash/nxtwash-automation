@@ -20,11 +20,6 @@ def test_add_subscriber_button_opens_create_form(create_subscriber_page):
         "URL should contain /third-party/subscribers"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-002: Basic Settings section label and exact form field "
-           "names (name, abbreviation) not confirmed via DOM inspection.",
-)
 def test_create_form_shows_basic_settings(create_subscriber_page):
     """SA-SUB-CRT-002 — Create form shows Basic Settings section with expected fields."""
     from selenium.webdriver.common.by import By
@@ -54,11 +49,6 @@ def test_required_fields_show_asterisk(create_subscriber_page):
     assert asterisks, "Required field markers (*) should be visible on the create form"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-004: 'Active Subscriber' toggle locator (hidden checkbox "
-           "following label) not confirmed via DOM inspection.",
-)
 def test_active_subscriber_toggle_defaults_on(create_subscriber_page):
     """SA-SUB-CRT-004 — 'Active Subscriber' toggle defaults to ON."""
     state = create_subscriber_page.get_active_toggle_state()
@@ -90,20 +80,12 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-006: Depends on CRT-005 running first in the same session.",
-)
 def test_new_subscriber_appears_in_list(subscribers_page):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
     assert subscribers_page.row_exists(SUBSCRIBER_NAME), \
         f"'{SUBSCRIBER_NAME}' should be visible in the subscribers list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-007: Toggle interaction (Active ON) not confirmed via DOM.",
-)
 def test_create_with_active_on(create_subscriber_page, subscribers_page):
     """SA-SUB-CRT-007 — Create with Active Subscriber ON saves an active subscriber."""
     from selenium.webdriver.support import expected_conditions as EC
@@ -120,11 +102,6 @@ def test_create_with_active_on(create_subscriber_page, subscribers_page):
         "Active subscriber should appear in the list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-008: Toggle interaction (Active OFF) not confirmed via DOM; "
-           "also need to confirm whether inactive subscribers appear in the default list.",
-)
 def test_create_with_active_off(create_subscriber_page):
     """SA-SUB-CRT-008 — Create with Active Subscriber OFF saves as inactive."""
     create_subscriber_page.enter_name(SUBSCRIBER_NAME + " Inactive")
@@ -162,11 +139,6 @@ def test_save_without_abbreviation_shows_validation(create_subscriber_page):
         "Saving without an abbreviation should be blocked with a validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-011: Duplicate Subscriber Name behaviour not confirmed — "
-           "server may reject or allow. Existing names: Tether, Optsopt.",
-)
 def test_duplicate_subscriber_name_behaviour(create_subscriber_page):
     """SA-SUB-CRT-011 — Duplicate Subscriber Name — document behaviour."""
     from selenium.webdriver.common.by import By
@@ -189,11 +161,6 @@ def test_duplicate_subscriber_name_behaviour(create_subscriber_page):
             "Duplicate name should be rejected with a clear error message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-012: Duplicate Abbreviation behaviour not confirmed. "
-           "Existing abbreviations: TE, OP.",
-)
 def test_duplicate_abbreviation_behaviour(create_subscriber_page):
     """SA-SUB-CRT-012 — Duplicate Abbreviation — document behaviour."""
     from selenium.webdriver.common.by import By
@@ -277,11 +244,6 @@ def test_leading_trailing_whitespace_handling(create_subscriber_page):
         assert "save new" in body
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-016: Special character / emoji handling not confirmed — "
-           "server may sanitise, reject, or accept.",
-)
 def test_special_characters_handled_gracefully(create_subscriber_page):
     """SA-SUB-CRT-016 — Special characters / emoji handled gracefully."""
     from selenium.webdriver.common.by import By

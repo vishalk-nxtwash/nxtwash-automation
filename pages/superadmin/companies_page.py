@@ -77,6 +77,12 @@ class CompaniesPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(self.EXPORT_ICON_BUTTON)
+            )
+        except Exception:
+            pass
 
     def get_page_title(self):
         return self.get_text(self.PAGE_TITLE)
@@ -152,7 +158,7 @@ class CompaniesPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center'});", edit_button
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
 
     def get_row_actions(self, company_name):
         """Return text labels of all buttons in the row for company_name."""

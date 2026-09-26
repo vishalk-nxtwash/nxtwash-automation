@@ -21,11 +21,6 @@ def test_add_sales_path_button_opens_create_form(create_sales_path_page):
     assert "Save new" in body, "Create form should show 'Save new' button"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-002: Company React Select control placeholder 'selectCompany' "
-           "not confirmed via DOM inspection for the Sales Path form.",
-)
 def test_create_form_shows_company_dropdown(create_sales_path_page):
     """SA-SLP-CRT-002 — Create form shows a Company dropdown (required field)."""
     cmp_els = create_sales_path_page.driver.find_elements(
@@ -58,10 +53,6 @@ def test_company_dropdown_lists_companies(create_sales_path_page):
         f"'{SALES_PATH_COMPANY}' should appear in Company dropdown, got: {names}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-004: 'Is Enabled' toggle locator not confirmed via DOM.",
-)
 def test_is_enabled_toggle_defaults_on(create_sales_path_page):
     """SA-SLP-CRT-004 — 'Is Enabled' toggle defaults to ON."""
     state = create_sales_path_page.get_toggle_state(create_sales_path_page.IS_ENABLED_TOGGLE)
@@ -69,10 +60,6 @@ def test_is_enabled_toggle_defaults_on(create_sales_path_page):
         f"'Is Enabled' toggle should be ON by default, got: {state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-005: 'Active Sales Path' toggle locator not confirmed via DOM.",
-)
 def test_active_toggle_defaults_on(create_sales_path_page):
     """SA-SLP-CRT-005 — 'Active Sales Path' toggle defaults to ON."""
     state = create_sales_path_page.get_toggle_state(create_sales_path_page.ACTIVE_TOGGLE)
@@ -126,21 +113,12 @@ def test_create_sales_path_happy_path(create_sales_path_page, sales_path_page):
         f"New sales path for '{SALES_PATH_COMPANY}' should appear in the list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-009: Depends on CRT-008 running first in the same session.",
-)
 def test_new_sales_path_appears_in_list(sales_path_page):
     """SA-SLP-CRT-009 — New sales path appears in the list after create."""
     assert sales_path_page.row_exists(SALES_PATH_COMPANY), \
         f"'{SALES_PATH_COMPANY}' sales path should be visible in the list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-010: 'Is Enabled' toggle locator unconfirmed; also requires "
-           "confirming how disabled paths appear in the list.",
-)
 def test_create_with_is_enabled_off(create_sales_path_page):
     """SA-SLP-CRT-010 — Create with 'Is Enabled' OFF saves a disabled sales path."""
     create_sales_path_page.set_is_enabled(False)
@@ -159,11 +137,6 @@ def test_create_with_active_off(create_sales_path_page):
     assert state is False, "'Active Sales Path' toggle should be OFF before saving"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-012: Duplicate Company sales path behaviour not confirmed — "
-           "server may reject or allow multiple sales paths per company.",
-)
 def test_duplicate_company_sales_path_behaviour(create_sales_path_page):
     """SA-SLP-CRT-012 — Duplicate Company — document whether server rejects it."""
     create_sales_path_page.select_company(SALES_PATH_COMPANY)

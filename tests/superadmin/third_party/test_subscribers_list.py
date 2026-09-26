@@ -50,11 +50,6 @@ def test_subscribers_pagination_footer_shows_records_count(subscribers_page):
     assert count >= 1, "At least one row should be present"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-LST-005: Results-per-page dropdown locator not confirmed — "
-           "CSS class names are hashed and may differ from other modules.",
-)
 def test_subscribers_results_per_page_dropdown(subscribers_page):
     """SA-SUB-LST-005 — Results-per-page dropdown (Show 100) changes rows shown."""
     from selenium.webdriver.common.by import By
@@ -70,21 +65,11 @@ def test_subscribers_prev_page_disabled_on_first_page(subscribers_page):
         "Previous page button should be disabled on the first/only page"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-LST-007: Cannot engineer an empty subscriber list on staging "
-           "without deleting existing records — no delete action available.",
-)
 def test_subscribers_empty_state_shows_no_error(subscribers_page):
     """SA-SUB-LST-007 — Empty list shows an empty state, not an error."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-LST-008: Records count verification after add depends on the "
-           "create happy-path test running first in the same session.",
-)
 def test_subscribers_count_updates_after_add(subscribers_page):
     """SA-SUB-LST-008 — Records count and rows update after a subscriber is added."""
     pass

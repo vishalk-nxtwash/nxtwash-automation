@@ -66,11 +66,6 @@ def test_edit_subscriber_name_persists(edit_subscriber_page, subscribers_page):
     )
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-EDT-004: Abbreviation field 'name' attribute not confirmed — "
-           "JS set approach requires the correct attribute to be present.",
-)
 def test_edit_abbreviation_persists(edit_subscriber_page, subscribers_page):
     """SA-SUB-EDT-004 — Editing the Abbreviation and saving persists."""
     from selenium.webdriver.support import expected_conditions as EC
@@ -99,11 +94,6 @@ def test_edit_abbreviation_persists(edit_subscriber_page, subscribers_page):
     )
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-EDT-005: Inline clear (X) button locator for Name and Abbreviation "
-           "fields not confirmed via DOM inspection.",
-)
 def test_clearing_required_field_blocks_save(edit_subscriber_page):
     """SA-SUB-EDT-005 — Clearing a required field via the X and saving is blocked."""
     from selenium.webdriver.common.by import By
@@ -141,11 +131,6 @@ def test_deactivate_and_reactivate_subscriber(edit_subscriber_page):
     edit_subscriber_page.driver.find_element(By.TAG_NAME, "body")  # ensure page loaded
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-EDT-007: Impact of deactivating a subscriber that is actively "
-           "referenced by a Webhook Setup is not documented — behaviour unknown.",
-)
 def test_deactivating_in_use_subscriber_impact(edit_subscriber_page):
     """SA-SUB-EDT-007 — Deactivating an in-use subscriber — document the impact."""
     pass
