@@ -135,9 +135,14 @@ def edit_setup_page(webhook_setup_page, browser):
         cp.select_company(SETUP_COMPANY)
         cp.enter_url(SETUP_URL)
         cp.enter_key(SETUP_KEY)
+        # Server requires at least one event type — select the first
+        from pages.superadmin.third_party_setup_page import EVENT_TYPE_NAMES
+        cp.set_event(EVENT_TYPE_NAMES[0], True)
         cp.click_save_new()
+        cp.confirm_yes_if_present(timeout=5)
+        # Wait for any navigation away from /create
         WebDriverWait(browser, 30).until(
-            EC.url_contains("/third-party/setup")
+            lambda d: "/create" not in d.current_url
         )
         webhook_setup_page.wait_for_loaded()
         webhook_setup_page.filter_by_company_name(SETUP_COMPANY)

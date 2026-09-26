@@ -202,15 +202,18 @@ class WebhookSetupPage(BasePage):
 
 class CreateSetupPage(BasePage):
 
-    # Placeholder 'selectSubscriber' confirmed from spec
+    # React Select renders placeholder as a div child, not a @placeholder attr.
+    # Use @role='combobox' (set on the internal search input by React Select).
+    # Subscriber is the first dropdown on this form; company is the second.
     SUBSCRIBER_CONTROL = (
         By.XPATH,
+        "(//*[@role='combobox'])[1] | "
         "//*[@placeholder='selectSubscriber'] | "
         "//*[contains(@placeholder,'Subscriber')]/ancestor::div[contains(@class,'control')][1]"
     )
-    # Master Company React Select
     COMPANY_CONTROL = (
         By.XPATH,
+        "(//*[@role='combobox'])[2] | "
         "//*[@placeholder='selectCompany'] | "
         "//*[contains(@placeholder,'Company')]/ancestor::div[contains(@class,'control')][1] | "
         "//input[@name='masterCompanyId']/preceding-sibling::div[1]"
