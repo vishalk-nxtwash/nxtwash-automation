@@ -32,7 +32,7 @@ class UsersPage(BasePage):
     # lucide-download SVG is the export icon — no aria-label on the button
     EXPORT_ICON_BUTTON = (
         By.XPATH,
-        "//button[.//svg[contains(@class,'lucide-download')]]"
+        "//button[.//*[contains(@class,'lucide-download')]]"
     )
     # Export popup has no role="dialog" — anchored on title text
     EXPORT_MODAL = (
@@ -251,7 +251,8 @@ class UsersPage(BasePage):
     # ── Export methods ────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        self.click(self.EXPORT_ICON_BUTTON)
+        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
 
     def export_modal_is_visible(self):
         els = self.driver.find_elements(*self.EXPORT_MODAL_TITLE)
