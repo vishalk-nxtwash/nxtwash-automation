@@ -109,6 +109,9 @@ class WebhookSetupPage(BasePage):
         self.open_filters()
         self.enter_text(self.COMPANY_NAME_FILTER, name)
         self.apply_filters()
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//tbody"))
+        )
 
     def get_third_party_name_options(self):
         """Return list of subscriber names in the Third Party Name dropdown."""
@@ -273,19 +276,26 @@ class CreateSetupPage(BasePage):
         self.set_toggle(self.ACTIVE_TOGGLE, "Active Webhook Setup", state)
 
     def get_event_checkbox(self, event_name):
-        loc = (
-            By.XPATH,
-            "//*[normalize-space()='%s']"
-            "/following-sibling::label//input[@type='checkbox'] | "
-            "//*[normalize-space()='%s']/..//input[@type='checkbox']"
-            % (event_name, event_name)
-        )
-        els = self.driver.find_elements(*loc)
-        return els[0] if els else None
+        # Try progressively broader ancestor traversals until a match is found
+        for ancestor in (
+            "/following-sibling::label//input[@type='checkbox']",
+            "/..//input[@type='checkbox']",
+            "/../..//input[@type='checkbox']",
+            "/../../..//input[@type='checkbox']",
+        ):
+            els = self.driver.find_elements(
+                By.XPATH,
+                "//*[normalize-space()='%s']%s" % (event_name, ancestor)
+            )
+            if els:
+                return els[0]
+        return None
 
     def get_all_event_states(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        import time; time.sleep(0.4)
+        WebDriverWait(self.driver, 5).until(
+            lambda d: d.execute_script("return document.readyState") == "complete"
+        )
         states = {}
         for name in EVENT_TYPE_NAMES:
             cb = self.get_event_checkbox(name)

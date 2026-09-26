@@ -123,7 +123,11 @@ def edit_setup_page(webhook_setup_page, browser):
 
     Creates the record first if it does not yet exist on staging.
     """
-    if not webhook_setup_page.row_exists(SETUP_COMPANY, timeout=30):
+    # Filter first — row_exists on an unfiltered paginated list misses page-2+ records
+    webhook_setup_page.filter_by_company_name(SETUP_COMPANY)
+
+    if not webhook_setup_page.row_exists(SETUP_COMPANY, timeout=10):
+        webhook_setup_page.wait_for_loaded()
         webhook_setup_page.click_add_setup()
         cp = CreateSetupPage(browser)
         cp.wait_for_loaded()
@@ -136,8 +140,8 @@ def edit_setup_page(webhook_setup_page, browser):
             EC.url_contains("/third-party/setup")
         )
         webhook_setup_page.wait_for_loaded()
+        webhook_setup_page.filter_by_company_name(SETUP_COMPANY)
 
-    webhook_setup_page.filter_by_company_name(SETUP_COMPANY)
     webhook_setup_page.open_edit(SETUP_COMPANY)
     page = EditSetupPage(browser)
     page.wait_for_loaded()
