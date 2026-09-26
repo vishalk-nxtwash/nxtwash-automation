@@ -4,6 +4,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -777,7 +778,13 @@ class EditUserRolePage(CreateUserRolePage):
         return el.get_attribute("value") or ""
 
     def set_role_name(self, name):
-        self.enter_text(self.ROLE_NAME_INPUT, name)
+        el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a")
+        el.send_keys(name)
+        WebDriverWait(self.driver, 5).until(
+            lambda d: name in (d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def click_save_changes(self):
         self.click(self.SAVE_CHANGES_BUTTON)
