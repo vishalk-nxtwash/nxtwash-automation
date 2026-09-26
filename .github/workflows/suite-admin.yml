@@ -1,127 +1,199 @@
 name: Admin Suite (staging)
 
-# Full admin-portal suite against STAGING, SHARDED across parallel runners.
-# Each GitHub runner has only 2 vCPUs, so `-n 2` is the per-runner ceiling.
-# Splitting across parallel runners (one per shard) brings wall-clock down to
-# ~the slowest shard.
-# Trigger: manual dispatch only (workflow_dispatch).
+# Full admin-portal suite against STAGING, sharded across 4 sequential waves.
+# Within each wave up to 3 shards run in parallel (3 self-hosted runners available:
+# admin-staging-01/02/03).  Wave-1 has 4 shards — the 4th queues and starts as soon
+# as the fastest of the first 3 finishes (people-hr ~90 min → queue clears before
+# wash-services 220 min deadline).
+# Waves 2-4 use if: !cancelled() — they proceed even when a prior wave has test
+# failures so you see the full picture in one run; they only skip on a manual cancel.
+#
+# parallel: 1 across the board — one Chrome per runner at a time.
+# Peak RAM per runner: ~1.3 GB (well within 3.7 GB).
+# parallel: 2 caused OOM kills after ~25 min (2 Chrome × ~900 MB = ~2.8 GB peak).
+# timeout: 180 default — largest shards (~280 tests × 30s serial) need ~140 min.
 
 on:
-  schedule:
-    - cron: "0 0 * * *"   # midnight UTC every day
+  # TEMPORARILY DISABLED (2026-09-24): push/schedule/repository_dispatch
+  # commented out while EC2 self-hosted runner work is in progress on
+  # ci/ec2-runner-setup, so this doesn't compete for admin-staging-01/02/03.
+  # Re-enable by uncommenting once that work is done.
+  # push:
+  #   branches: [staging]
   workflow_dispatch:
     inputs:
-      runner:
-        description: 'Runner — "ubuntu-latest" (GitHub-hosted, ~30 min) or "self-hosted" (EC2)'
+      waves:
+        description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Default: all.'
         required: false
-        default: "ubuntu-latest"
+        default: 'all'
+  # schedule:
+  #   - cron: "0 3 * * 0"
+  # repository_dispatch:
+  #   types: [staging-deploy-complete]
 
-# Separate concurrency slots per runner so GitHub-hosted and EC2 runs
-# never block each other.
 concurrency:
-  group: admin-suite-${{ inputs.runner || 'ubuntu-latest' }}
+  group: admin-suite-staging
   cancel-in-progress: false
 
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 1  (243 + 95 + 186 + 286 = 810 tests)
+# ──────────────────────────────────────────────────────────────────────────────
 jobs:
-  admin:
+  wave-1:
+    if: inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         shard:
-          # ── Reports (read-only, fully parallel-safe) ──────────────────────
-          # 139 tests — overview + performance_metrics
-          - name: reports-overview
-            path: >-
-              tests/admin_portal/overview
-              tests/admin_portal/performance_metrics
-          # 188 tests — revenue_overview (split from reports-revenue; largest report module)
-          - name: reports-revenue
-            path: tests/admin_portal/revenue_overview
-          # 70 tests — general_sales_report (split from reports-revenue)
-          - name: reports-sales
-            path: tests/admin_portal/general_sales_report
-          # 85 tests — cash_report + card_declines
-          - name: reports-financial
-            path: >-
-              tests/admin_portal/cash_report
-              tests/admin_portal/card_declines
-          # 58 tests — transactions (split from reports-financial)
-          - name: reports-transactions
-            path: tests/admin_portal/transactions
-          # 57 tests — labor_shifts; I/O-bound so 3 workers fit 2-vCPU runner
-          - name: reports-labor-shifts
-            path: tests/admin_portal/labor_shifts
-            parallel: "3"
-          # 60 tests — redemptions (split from reports-labor-shifts)
-          - name: reports-redemptions
-            path: tests/admin_portal/redemptions
-          # 120 tests — wash_activity (split from reports-ops; largest ops module)
-          - name: reports-wash-activity
-            path: tests/admin_portal/wash_activity
-          # ── Auth & Core ───────────────────────────────────────────────────
-          # ~68 tests — login + sites (service_categories split out)
-          - name: auth-core
-            path: >-
-              tests/admin_portal/login
-              tests/admin_portal/sites
-          # ~23 tests — service_categories (split from auth-core)
-          - name: auth-service-categories
-            path: tests/admin_portal/service_categories
-          # ── Wash Catalog ──────────────────────────────────────────────────
-          # 157 tests — wash_packages + wash_extras
-          - name: wash-packages
+          - name: wash-services
             path: >-
               tests/admin_portal/wash_packages
-              tests/admin_portal/wash_extras
-          # 127 tests — wash_books + coupon_packages
-          - name: wash-catalog
-            path: >-
               tests/admin_portal/wash_books
-              tests/admin_portal/coupon_packages
-          # ── Services & Finance ────────────────────────────────────────────
-          # 122 tests — custom_services + gift_cards + bank_drop
-          - name: services
-            path: >-
-              tests/admin_portal/custom_services
-              tests/admin_portal/gift_cards
-              tests/admin_portal/bank_drop
-          # ── Promotions & Loyalty ──────────────────────────────────────────
-          - name: promotions
-            path: >-
-              tests/admin_portal/discounts
-              tests/admin_portal/memberships
-          # ── Customers ─────────────────────────────────────────────────────
-          # 93 tests — isolated; complex customer-facing flows
-          - name: customers
+              tests/admin_portal/wash_extras
+            timeout: 220
+
+          # 95 tests — customers only (managed fixture, slow index lag)
+          # Separated from HR so the managed-customer serialisation group does not
+          # block 186 independent employee/labor_shift tests.
+          - name: people-customers
             path: tests/admin_portal/customers
-          # ── Hardware Settings ─────────────────────────────────────────────
-          # 117 tests — kiosk_settings + tunnel_settings
-          - name: settings-hw
+            parallel: "2"
+            timeout: 120
+
+          # 186 tests — employees + labor_shifts (no managed record contention)
+          - name: people-hr
             path: >-
-              tests/admin_portal/kiosk_settings
-              tests/admin_portal/tunnel_settings
-          # ── POS Settings ──────────────────────────────────────────────────
-          # 68 tests — pos_settings (split from settings-pos)
-          - name: pos-settings
-            path: tests/admin_portal/pos_settings
-          # 37 tests — gas_pump_settings (was missing from this workflow entirely)
-          - name: gas-pump-settings
-            path: tests/admin_portal/gas_pump_settings
-          # ── Access Control ────────────────────────────────────────────────
-          # 58 tests — user_roles (split from settings-pos)
-          - name: user-roles
-            path: tests/admin_portal/user_roles
-          # ── People & HR ───────────────────────────────────────────────────
-          - name: people
-            path: >-
-              tests/admin_portal/users
               tests/admin_portal/employees
+              tests/admin_portal/labor_shifts
+            parallel: "3"
+            timeout: 90
+
+          - name: revenue-metrics
+            path: >-
+              tests/admin_portal/revenue_overview
+              tests/admin_portal/performance_metrics
+
     uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: 90
-      runner: ${{ inputs.runner || 'ubuntu-latest' }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 2  (191 + ~120 + ~150 + 260 = ~721 tests)
+# auth-users split: user_roles has 80+ tests with ~75s permission matrix tests
+# each; mixing them with login/users/overview caused the 180-min timeout.
+# auth-roles runs alone so its 150-min budget is not shared with faster tests.
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-2:
+    needs: wave-1
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2'))
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard:
+          - name: promotions
+            path: >-
+              tests/admin_portal/gift_cards
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/discounts
+
+          - name: auth-users
+            path: >-
+              tests/admin_portal/login
+              tests/admin_portal/users
+              tests/admin_portal/overview
+            timeout: 90
+
+          - name: auth-roles
+            path: tests/admin_portal/user_roles
+            timeout: 180
+
+          - name: financial
+            path: >-
+              tests/admin_portal/transactions
+              tests/admin_portal/cash_report
+              tests/admin_portal/general_sales_report
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 3  (190 + 212 + 206 = 608 tests)
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-3:
+    needs: wave-2
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '3'))
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          - name: memberships-services
+            path: >-
+              tests/admin_portal/memberships
+              tests/admin_portal/custom_services
+              tests/admin_portal/service_categories
+              tests/admin_portal/bank_drop
+            timeout: 180
+
+          - name: sites-settings
+            path: >-
+              tests/admin_portal/sites
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+
+          - name: pos-hardware
+            path: >-
+              tests/admin_portal/pos_settings
+              tests/admin_portal/card_declines
+              tests/admin_portal/gas_pump_settings
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WAVE 4  (267 tests)
+# ──────────────────────────────────────────────────────────────────────────────
+  wave-4:
+    needs: wave-3
+    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '4'))
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard:
+          - name: activity
+            path: >-
+              tests/admin_portal/wash_activity
+              tests/admin_portal/redemptions
+
+    uses: ./.github/workflows/run-suite.yml
+    secrets:
+      dotenv: ${{ secrets.STAGING }}
+    with:
+      label: admin-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ matrix.shard.parallel || '1' }}
+      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
