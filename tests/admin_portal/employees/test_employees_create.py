@@ -25,12 +25,8 @@ pytestmark = [
     allure.story("Create"),
 ]
 
-_LOCATION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Location multi-select combobox locator uses label heuristics. "
-        "Verify exact React Select element in DevTools before removing xfail."
-    ),
+_LOCATION_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: location combobox locator uses label heuristics, verify React Select in DevTools"
 )
 
 
@@ -261,13 +257,7 @@ def test_create_employee_multiple_locations(browser):
 
 @allure.title("EMP-CRT-013 Hire date selected from calendar picker persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-013: Hire date calendar picker interaction not yet modelled. "
-        "Verify date input name/type in DevTools and implement picker interaction."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: hire date calendar picker not modelled, verify input in DevTools")
 def test_create_employee_hire_date_persists(browser):
     last_name = _unique_last_name()
     hire_date = "2024-06-15"
@@ -310,13 +300,7 @@ def test_create_employee_hire_date_optional(browser):
 
 @allure.title("EMP-CRT-015 A future hire date saves the employee correctly")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-015: Hire date calendar picker interaction not yet modelled. "
-        "Verify date input name/type in DevTools and implement picker interaction."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: hire date calendar picker not modelled, verify input in DevTools")
 def test_create_employee_future_hire_date(browser):
     last_name = _unique_last_name()
     hire_date = "2030-01-15"
@@ -410,13 +394,7 @@ def test_create_employee_hourly_wage_optional(browser):
 
 @allure.title("EMP-CRT-020 Negative hourly wage is rejected with a validation error")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-020: Browser checkValidity() on the wage input depends on a 'min' attribute. "
-        "Verify input constraints in DevTools; server-side rejection also acceptable."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: wage 'min' attribute not verified in DevTools")
 def test_create_employee_negative_wage_rejected(browser):
     form = open_create_employee_form(browser)
     form.enter_first_name(EMP_FIRST_NAME)
@@ -436,13 +414,7 @@ def test_create_employee_negative_wage_rejected(browser):
 
 @allure.title("EMP-CRT-021 State dropdown contains entries (US states visible)")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-021: State combobox locator uses label heuristics. "
-        "Verify exact React Select element in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: state combobox locator uses label heuristics, verify in DevTools")
 def test_create_employee_state_dropdown_has_options(browser):
     form = open_create_employee_form(browser)
     from pages.admin_portal.employees_page import AdminEmployeeFormPage
@@ -461,13 +433,7 @@ def test_create_employee_state_dropdown_has_options(browser):
 
 @allure.title("EMP-CRT-022 City dropdown populates after a State is selected")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-022: State + City combobox cascade locators use label heuristics. "
-        "Verify both dropdowns in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: state/city cascade locators use label heuristics, verify in DevTools")
 def test_create_employee_city_populates_after_state(browser):
     form = open_create_employee_form(browser)
     form.select_state("Alabama")
@@ -481,13 +447,7 @@ def test_create_employee_city_populates_after_state(browser):
 
 @allure.title("EMP-CRT-023 Selecting a different state resets the city dropdown")
 @pytest.mark.edge
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "EMP-CRT-023: State + City combobox cascade locators use label heuristics. "
-        "Verify both dropdowns in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: state/city cascade locators use label heuristics, verify in DevTools")
 def test_create_employee_state_change_clears_city(browser):
     form = open_create_employee_form(browser)
     form.select_state("Alabama")

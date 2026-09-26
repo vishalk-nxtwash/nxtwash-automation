@@ -1,6 +1,11 @@
 import time
 
-from selenium.common.exceptions import ElementNotInteractableException, StaleElementReferenceException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    NoSuchElementException,
+    StaleElementReferenceException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,20 +19,61 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 45)
 
-    def click(self, locator):
+    # ── Staging toast dismissal ──────────────────────────────────────────────
 
-        self.wait.until(
-            EC.element_to_be_clickable(locator)
-        ).click()
+    def dismiss_dev_toast(self):
+        """Click the close button on the staging 'Dev environment is unstable' toast.
+
+        The toast sits at the top-right of every post-login page on staging and
+        intercepts clicks on buttons near y=112.  Uses JS click on the close
+        button to avoid a second interception.  Safe to call when the toast is
+        absent — silently no-ops in that case.
+        """
+        try:
+            close_btn = self.driver.find_element(
+                By.CSS_SELECTOR,
+                "#dev-environment-unstable button",
+            )
+            self.driver.execute_script("arguments[0].click();", close_btn)
+            WebDriverWait(self.driver, 3).until(
+                EC.invisibility_of_element_located(
+                    (By.ID, "dev-environment-unstable")
+                )
+            )
+        except (NoSuchElementException, Exception):
+            pass
+
+    def click(self, locator):
+        for attempt in range(3):
+            try:
+                self.wait.until(EC.element_to_be_clickable(locator)).click()
+                return
+            except ElementClickInterceptedException:
+                self.dismiss_dev_toast()
+            except StaleElementReferenceException:
+                if attempt == 2:
+                    raise
+                time.sleep(0.3)
+        self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def enter_text(self, locator, text):
-
-        element = self.wait.until(
-            EC.visibility_of_element_located(locator)
-        )
-
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
-        element.send_keys(text)
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        if element.tag_name.lower() == "textarea":
+            self.driver.execute_script(
+                "arguments[0].value=arguments[1];"
+                "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
+                "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
+                element, text
+            )
+        else:
+            self.driver.execute_script(
+                "var s=Object.getOwnPropertyDescriptor("
+                "window.HTMLInputElement.prototype,'value').set;"
+                "s.call(arguments[0],arguments[1]);"
+                "arguments[0].dispatchEvent(new Event('input',{bubbles:true}));"
+                "arguments[0].dispatchEvent(new Event('change',{bubbles:true}));",
+                element, text
+            )
 
     def get_text(self, locator):
 

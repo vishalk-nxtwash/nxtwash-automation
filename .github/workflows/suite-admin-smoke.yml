@@ -4,6 +4,13 @@ name: Admin Smoke (staging)
 # Smoke tests = login flows, positive paths, and *_smoke files.
 # Expected wall-clock: ~5-10 min (all shards parallel, far fewer tests per shard).
 #
+# Shards are sized by smoke-test COUNT, not just module grouping — the old
+# reports-ops (labor_shifts+redemptions+wash_activity, 93 tests) and
+# reports-financial (cash_report+card_declines+transactions, 78 tests) shards
+# were the long pole, taking 12-17 min while everything else finished in
+# 2-6 min, so the whole run's wall-clock was bounded by those two alone.
+# Split into per-module shards below to bring the bottleneck down.
+#
 # Triggers:
 #   - Every push to main or staging (catches regressions early)
 #   - Manual dispatch (run anytime between full suite runs)
@@ -21,7 +28,7 @@ jobs:
   smoke:
     strategy:
       fail-fast: false
-      max-parallel: 13
+      max-parallel: 20
       matrix:
         shard:
           - name: reports-overview
@@ -34,17 +41,27 @@ jobs:
               tests/admin_portal/revenue_overview
               tests/admin_portal/general_sales_report
 
-          - name: reports-financial
-            path: >-
-              tests/admin_portal/cash_report
-              tests/admin_portal/card_declines
-              tests/admin_portal/transactions
+          - name: reports-cash
+            path: tests/admin_portal/cash_report
 
-          - name: reports-ops
-            path: >-
-              tests/admin_portal/labor_shifts
-              tests/admin_portal/redemptions
-              tests/admin_portal/wash_activity
+          - name: reports-card-declines
+            path: tests/admin_portal/card_declines
+
+          - name: reports-transactions
+            path: tests/admin_portal/transactions
+
+          # parallel: 3 — already validated for this module in suite-admin.yml
+          # ("I/O-bound so 3 workers fit 2-vCPU runner"); this shard was the
+          # new bottleneck after the reports-ops split (~14 min vs 2-6 min).
+          - name: reports-labor-shifts
+            path: tests/admin_portal/labor_shifts
+            parallel: "3"
+
+          - name: reports-redemptions
+            path: tests/admin_portal/redemptions
+
+          - name: reports-wash-activity
+            path: tests/admin_portal/wash_activity
 
           - name: auth-core
             path: >-
@@ -85,6 +102,7 @@ jobs:
             path: >-
               tests/admin_portal/pos_settings
               tests/admin_portal/user_roles
+              tests/admin_portal/gas_pump_settings
 
           - name: people
             path: >-
@@ -98,5 +116,5 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       marker: smoke
-      parallel: "2"
+      parallel: ${{ matrix.shard.parallel || '2' }}
       timeout_minutes: 30

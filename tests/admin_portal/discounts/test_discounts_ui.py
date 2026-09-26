@@ -44,6 +44,7 @@ def test_discounts_grid_columns_are_visible(browser):
 
     assert "Discount name" in body_text
     assert "Status" in body_text
+    assert "Edit" in body_text
 
 
 @allure.title("DS-UI-003 Add discount form loads")

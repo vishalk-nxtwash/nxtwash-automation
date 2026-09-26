@@ -194,6 +194,8 @@ class MembershipsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Memberships list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(
@@ -474,9 +476,12 @@ class MembershipsPage(BasePage):
         self.apply_filters()
 
     def open_filter_panel(self):
-        """Open the Memberships filter panel."""
+        """Open the Memberships filter panel (idempotent)."""
         self.wait_for_list_loaded()
-        self.click(self.FILTER_BUTTON)
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
+        btn = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.FILTER_SITE_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
 
@@ -544,10 +549,11 @@ class MembershipsPage(BasePage):
             return False
 
     def clear_active_filters(self):
-        """Reset all filters unconditionally to guarantee clean state."""
+        """Reset all filters to guarantee clean state."""
+        if not self.has_active_filters():
+            return
         try:
             self.reset_filters()
-            self.apply_filters()
         except Exception:
             pass
 
@@ -560,9 +566,8 @@ class MembershipsPage(BasePage):
         )
         sentinel = sentinel_rows[0] if sentinel_rows else None
         self.click(self.APPLY_FILTERS_BUTTON)
-        self.wait.until(
-            EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
-        )
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
         self.wait_for_list_loaded()
         if sentinel is not None:
             try:
@@ -573,7 +578,12 @@ class MembershipsPage(BasePage):
     def reset_filters(self):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
-        self.click(self.RESET_ALL_BUTTON)
+        reset_btn = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
+        self.driver.execute_script("arguments[0].click();", reset_btn)
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def download_button_is_clickable(self):
         """Return whether the download button can be clicked."""

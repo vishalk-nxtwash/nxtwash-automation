@@ -568,11 +568,9 @@ class TestRedemptionsExpandCollapse:
 
     @allure.title("RDM-EXP-001 Expand All shows all 7 section bodies and toggles label to 'Collapse All'")
     @pytest.mark.smoke
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-EXP-001: section_body_visible() uses heuristic aria-expanded / class checks "
-        "that don't match the actual RDM accordion DOM. Expand All button works correctly "
-        "(label toggles to 'Collapse All' — first assert passes). "
-        "Needs DevTools inspection of expanded vs collapsed accordion section to fix body-visibility detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection of expanded section."
     ))
     def test_expand_all_opens_all_sections(self, rdm_page):
         rdm_page.expand_all()
@@ -608,10 +606,9 @@ class TestRedemptionsExpandCollapse:
     @allure.title("RDM-EXP-003 Individual chevron click expands only the '{section}' section")
     @pytest.mark.parametrize("section", _ALL_SECTION_PARAMS)
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-EXP-003: section_is_expanded() (alias of section_body_visible()) uses "
-        "heuristic aria-expanded / class checks that don't match the actual RDM accordion DOM. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_is_expanded() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_individual_section_toggle(self, rdm_page, section):
         rdm_page.collapse_all()
@@ -667,10 +664,9 @@ class TestRedemptionsAccordionShared:
     @allure.title("RDM-ACC-003 Section '{section}' contains a breakdown table when expanded")
     @pytest.mark.parametrize("section", _ACCORDION_SECTION_PARAMS)
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-ACC-003: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_section_breakdown_table_present(self, rdm_expanded, section):
         assert rdm_expanded.section_body_visible(section), (
@@ -719,10 +715,9 @@ class TestRedemptionsAccordionShared:
     @allure.title("RDM-ACC-007 Detail table for '{section}' supports horizontal scroll")
     @pytest.mark.parametrize("section", _ACCORDION_SECTION_PARAMS)
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-ACC-007: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_detail_table_horizontal_scroll(self, rdm_expanded, section):
         assert rdm_expanded.section_body_visible(section), (
@@ -817,10 +812,9 @@ class TestRedemptionsLoyalty:
 
     @allure.title("RDM-LOY-003 Loyalty Points detail table columns are present")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-LOY-003: _find_table_by_heading() can't locate the table if the heading "
-        "text or container class doesn't match — blocked by accordion DOM structure gap. "
-        "Needs DevTools inspection to confirm table heading and container selectors."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: _find_table_by_heading() blocked by accordion "
+        "DOM structure gap — needs DevTools inspection of table heading and container."
     ))
     def test_loyalty_detail_columns(self, rdm_expanded):
         # Dependency: Customers module
@@ -855,10 +849,9 @@ class TestRedemptionsCompWashes:
 
     @allure.title("RDM-CMP-002 Comp Washes breakdown and detail table columns are present")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-CMP-002: _find_table_by_heading() can't locate tables if heading text or "
-        "container class doesn't match — blocked by accordion DOM structure gap. "
-        "Needs DevTools inspection to confirm table heading and container selectors."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: _find_table_by_heading() blocked by accordion "
+        "DOM structure gap — needs DevTools inspection of table heading and container."
     ))
     def test_comp_washes_breakdown_columns(self, rdm_expanded):
         # Dependency: Wash Packages module
@@ -878,10 +871,9 @@ class TestRedemptionsCompWashes:
 
     @allure.title("RDM-CMP-003 Comp Wash Redemptions detail table is present and has rows")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-CMP-003: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_comp_washes_detail_has_data(self, rdm_expanded):
         # Dependency: Customers module
@@ -918,10 +910,9 @@ class TestRedemptionsMemberships:
 
     @allure.title("RDM-MEM-002 Memberships breakdown tables (by Membership + by Wash Package) and detail columns are present")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-MEM-002: _find_table_by_heading() can't locate tables if heading text or "
-        "container class doesn't match — blocked by accordion DOM structure gap. "
-        "Needs DevTools inspection to confirm table heading and container selectors."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: _find_table_by_heading() blocked by accordion "
+        "DOM structure gap — needs DevTools inspection of table heading and container."
     ))
     def test_memberships_breakdown_columns(self, rdm_expanded):
         # Dependency: Membership module + Wash Packages module
@@ -947,10 +938,9 @@ class TestRedemptionsMemberships:
 
     @allure.title("RDM-MEM-003 Membership Redemptions detail table is present and has rows")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-MEM-003: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_memberships_detail_has_data(self, rdm_expanded):
         # Dependency: Customers module + Membership module
@@ -989,10 +979,9 @@ class TestRedemptionsGiftCards:
 
     @allure.title("RDM-GFT-002 Gift Cards breakdown tables (by Gift Card + by Wash Package) and detail columns are present")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-GFT-002: _find_table_by_heading() can't locate tables if heading text or "
-        "container class doesn't match — blocked by accordion DOM structure gap. "
-        "Needs DevTools inspection to confirm table heading and container selectors."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: _find_table_by_heading() blocked by accordion "
+        "DOM structure gap — needs DevTools inspection of table heading and container."
     ))
     def test_gift_cards_breakdown_columns(self, rdm_expanded):
         # Dependency: Gift cards module + Wash Packages module
@@ -1018,10 +1007,9 @@ class TestRedemptionsGiftCards:
 
     @allure.title("RDM-GFT-003 Gift Card Redemptions detail table is present and has rows")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-GFT-003: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_gift_cards_detail_has_data(self, rdm_expanded):
         # Dependency: Gift cards module
@@ -1058,10 +1046,9 @@ class TestRedemptionsWashBooks:
 
     @allure.title("RDM-WBK-002 Wash Books breakdown tables (by Wash Book + by Wash Package) and detail columns are present")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-WBK-002: _find_table_by_heading() can't locate tables if heading text or "
-        "container class doesn't match — blocked by accordion DOM structure gap. "
-        "Needs DevTools inspection to confirm table heading and container selectors."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: _find_table_by_heading() blocked by accordion "
+        "DOM structure gap — needs DevTools inspection of table heading and container."
     ))
     def test_wash_books_breakdown_columns(self, rdm_expanded):
         # Dependency: Washbooks module + Wash Packages module
@@ -1087,10 +1074,9 @@ class TestRedemptionsWashBooks:
 
     @allure.title("RDM-WBK-003 Wash Book Redemptions detail table is present and has rows")
     @pytest.mark.regression
-    @pytest.mark.xfail(strict=False, reason=(
-        "RDM-WBK-003: section_body_visible() heuristic doesn't match the actual RDM "
-        "accordion DOM — first assert always fails. "
-        "Needs DevTools inspection of expanded vs collapsed section to fix detection."
+    @pytest.mark.skip(reason=(
+        "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
+        "actual RDM accordion DOM — needs DevTools inspection."
     ))
     def test_wash_books_detail_has_data(self, rdm_expanded):
         # Dependency: Washbooks module

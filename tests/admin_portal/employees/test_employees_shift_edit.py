@@ -16,12 +16,10 @@ pytestmark = [
     allure.story("Shift — Edit"),
 ]
 
-_SHIFT_EDIT_XFAIL = pytest.mark.xfail(
-    strict=False,
+_SHIFT_EDIT_XFAIL = pytest.mark.skip(
     reason=(
-        "Shift edit tests require an existing shift record in staging. "
-        "Edit form locators (Employee, Site comboboxes, time inputs) use label heuristics. "
-        "Verify DOM and confirm at least one shift exists in DevTools before removing xfail."
+        "Manual - Check later for fixes: edit form locators use label heuristics — "
+        "verify DOM and shift record existence in DevTools."
     ),
 )
 

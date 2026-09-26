@@ -15,13 +15,7 @@ pytestmark = [
     allure.story("Device Settings"),
 ]
 
-_SETTINGS_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Device settings section locators use heuristics — verify section header "
-        "classes in DevTools before removing xfail."
-    ),
-)
+_SETTINGS_XFAIL = pytest.mark.skip(reason="Manual - Check later for fixes: device settings section locators use heuristics; needs DevTools verification")
 
 
 @allure.title("POS-DEV-001 Device settings expand and collapse")

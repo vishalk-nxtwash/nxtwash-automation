@@ -103,6 +103,8 @@ class WashExtrasPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Extras list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EXTRA_BUTTON))
@@ -164,11 +166,14 @@ class WashExtrasPage(BasePage):
             return False
 
     def search_extra(self, extra_name):
-        """Search wash extra by service name."""
+        """Search wash extra by service name.
+
+        JS click bypasses viewport-coordinate interception from outer-page overlays.
+        """
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(extra_name)
         self.wait.until(

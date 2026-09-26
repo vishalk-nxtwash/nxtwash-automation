@@ -72,6 +72,7 @@ class AdminPOSSettingsPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.POS_LIST_FRAME))
         try:
             WebDriverWait(self.driver, 10).until(

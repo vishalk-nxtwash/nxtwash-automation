@@ -2,6 +2,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
 
@@ -85,6 +86,8 @@ class ServiceCategoriesPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Service Categories list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_CATEGORY_BUTTON))
@@ -368,7 +371,6 @@ class ServiceCategoriesPage(BasePage):
     def open_filter_panel(self):
         """Open the filter panel and wait for it to render."""
         import time
-        from selenium.webdriver.support.ui import WebDriverWait
         self.wait_for_list_loaded()
         btn = WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", btn)
@@ -437,6 +439,10 @@ class ServiceCategoriesPage(BasePage):
         reset_btns = self.driver.find_elements(*self.RESET_ALL_BUTTON)
         if reset_btns:
             self.driver.execute_script("arguments[0].click();", reset_btns[0])
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     # ------------------------------------------------------------------ switch
 
@@ -476,7 +482,15 @@ class ServiceCategoriesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
         )
-        self._set_input_value(element, category_name)
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(category_name)
+        # Accept truncated values (app may enforce maxlength).
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and category_name.startswith(v)
+            )(driver.find_element(*self.CATEGORY_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def get_category_name_value(self):
         """Return current category name input value."""

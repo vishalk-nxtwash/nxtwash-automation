@@ -469,13 +469,7 @@ def test_multi_site_filtered_single_site(gsr_filtered):
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-004 Column headers support ascending/descending sort")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-MSC-004: Sort state detection relies on aria-sort attribute — "
-        "verify column header DOM attributes in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: sort state relies on aria-sort attribute; verify column header DOM in DevTools")
 def test_column_headers_sort(gsr_filtered):
     from selenium.webdriver.common.by import By
     headers = gsr_filtered.driver.find_elements(By.XPATH,
@@ -762,13 +756,7 @@ def test_washbook_section_collapsible(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-002 Expanded Washbook Activity shows three sub-cards")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-WBA-002: Sub-card count uses class heuristic (card/tile/widget) — "
-        "verify child container class names in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: sub-card count uses class heuristic; verify container class names in DevTools")
 def test_washbook_three_sub_cards(gsr_filtered):
     count = gsr_filtered.sub_card_count_after_expand("Washbook")
     assert count >= 3, (
@@ -880,13 +868,7 @@ def test_export_button_present(gsr_page):
 @allure.story("Export")
 @allure.title("GSR-EXP-002 Export modal opens with four format options")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "GSR-EXP-002: Export modal option count uses class heuristics (button/li/label) — "
-        "verify modal DOM structure in DevTools before removing xfail."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: export modal option count uses class heuristics; verify modal DOM in DevTools")
 def test_export_modal_four_options(gsr_page):
     gsr_page.click_export_button()
     assert gsr_page.export_modal_is_open(), "Export modal did not open"

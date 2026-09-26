@@ -85,6 +85,8 @@ class CouponPackagesPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Coupon Packages list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(
@@ -209,7 +211,18 @@ class CouponPackagesPage(BasePage):
 
     def enter_coupon_package_name(self, coupon_package_name):
         """Enter coupon package name."""
-        self.enter_text(self.COUPON_PACKAGE_NAME_INPUT, coupon_package_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.COUPON_PACKAGE_NAME_INPUT)
+        )
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(coupon_package_name)
+        # Accept truncated values (app may enforce maxlength).
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and coupon_package_name.startswith(v)
+            )(driver.find_element(*self.COUPON_PACKAGE_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def get_coupon_package_name_value(self):
         """Return the current coupon package name."""
@@ -284,7 +297,14 @@ class CouponPackagesPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.EXPIRATION_DAYS_INPUT)
         )
-        self._set_input_value(element, str(days))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(str(days))
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.EXPIRATION_DAYS_INPUT
+            ).get_attribute("value") == str(days)
+        )
 
     def get_expiration_days_value(self):
         """Return the current expiration days value."""

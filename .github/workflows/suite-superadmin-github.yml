@@ -1,0 +1,61 @@
+name: Superadmin Suite — GitHub runner
+
+# Runs the full superadmin test suite on GitHub-hosted ubuntu-latest runners.
+# Use this when you don't have an AWS self-hosted runner available or just
+# want a clean ephemeral environment.
+#
+# Sharded: 4 jobs in parallel (one per module). Each job gets 2 xdist workers
+# (GitHub runners have 2 vCPUs).
+#
+# Trigger: manual dispatch only.
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers per shard (2 = max for GitHub runner vCPUs)"
+        required: false
+        default: "2"
+
+concurrency:
+  group: superadmin-github-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  superadmin:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          # ── Auth ──────────────────────────────────────────────────────────────
+          - name: auth
+            path: >-
+              tests/superadmin/test_login.py
+              tests/superadmin/test_login_debug.py
+          # ── Companies ─────────────────────────────────────────────────────────
+          - name: companies
+            path: >-
+              tests/superadmin/companies
+              tests/superadmin/test_companies.py
+              tests/superadmin/test_create_company.py
+              tests/superadmin/test_edit_company.py
+              tests/superadmin/test_create_user.py
+              tests/superadmin/test_create_user_role.py
+          # ── Users ─────────────────────────────────────────────────────────────
+          - name: users
+            path: tests/superadmin/users
+          # ── User Roles ────────────────────────────────────────────────────────
+          - name: user-roles
+            path: tests/superadmin/user_roles
+          # ── Third Party ───────────────────────────────────────────────────────
+          - name: third-party
+            path: tests/superadmin/third_party
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: sa-github-${{ matrix.shard.name }}
+      environment: staging
+      test_path: ${{ matrix.shard.path }}
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      timeout_minutes: 60
+      runner: ubuntu-latest

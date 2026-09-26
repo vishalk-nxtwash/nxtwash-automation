@@ -18,6 +18,8 @@ class EditCompanyPage(BasePage):
     CONFIRM_NO_BUTTON = (By.XPATH, "//button[normalize-space()='No']")
 
     COMPANY_NAME_INPUT = (By.NAME, "companyName")
+    EMAIL_INPUT = (By.NAME, "email")          # field name unconfirmed
+    PHONE_INPUT = (By.NAME, "phoneNumber")    # field name unconfirmed
     TERMS_CONDITION_TEXTAREA = (By.NAME, "termsCondition")
     PRIVACY_POLICY_TEXTAREA = (By.NAME, "privacyPolicyText")
 
@@ -83,6 +85,34 @@ class EditCompanyPage(BasePage):
         self.wait.until(
             EC.invisibility_of_element_located(self.CONFIRM_YES_BUTTON)
         )
+
+    def get_email(self):
+        try:
+            el = self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
+            return el.get_attribute("value") or ""
+        except Exception:
+            return ""
+
+    def get_phone(self):
+        try:
+            el = self.wait.until(EC.visibility_of_element_located(self.PHONE_INPUT))
+            return el.get_attribute("value") or ""
+        except Exception:
+            return ""
+
+    def get_privacy_policy(self):
+        return self.wait.until(
+            EC.visibility_of_element_located(self.PRIVACY_POLICY_TEXTAREA)
+        ).get_attribute("value")
+
+    def set_privacy_policy(self, text):
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.PRIVACY_POLICY_TEXTAREA)
+        )
+        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(Keys.BACKSPACE)
+        if text:
+            element.send_keys(text)
 
     def wait_for_terms_condition(self, terms_condition):
         """Wait until the terms and conditions field has the expected value."""

@@ -396,8 +396,8 @@ class PerformanceMetricsPage(BasePage):
         dispatch) was not consistently recognised by the React event system.
         """
         ctrl_locator = (By.XPATH,
-            "//div[contains(@class,'nxt-select__control') "
-            "and not(contains(@class,'nxt-multi-select'))]")
+            "(//input[contains(@class,'nxt-select__input') and @role='combobox']"
+            "/ancestor::div[contains(@class,'nxt-select__control')])[1]")
         ctrl = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(ctrl_locator)
         )

@@ -123,6 +123,8 @@ class DiscountsPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Discounts list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
@@ -339,6 +341,10 @@ class DiscountsPage(BasePage):
         """Open the filter panel and reset all filters back to defaults."""
         self.open_filter_panel()
         self.click(self.RESET_ALL_BUTTON)
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def reset_filters_if_active(self):
         try:
@@ -377,7 +383,18 @@ class DiscountsPage(BasePage):
 
     def enter_discount_name(self, discount_name):
         """Enter discount name."""
-        self.enter_text(self.DISCOUNT_NAME_INPUT, discount_name)
+        element = self.wait.until(
+            EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
+        )
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(discount_name)
+        # Accept truncated values (app may enforce maxlength).
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and discount_name.startswith(v)
+            )(driver.find_element(*self.DISCOUNT_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def get_discount_name_value(self):
         """Return the current discount name input value."""
@@ -469,7 +486,9 @@ class DiscountsPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.DISCOUNT_AMOUNT_INPUT)
         )
-        self._set_input_value(element, str(amount))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(str(amount))
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.DISCOUNT_AMOUNT_INPUT

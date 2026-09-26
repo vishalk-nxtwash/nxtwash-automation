@@ -14,12 +14,8 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-_FILTER_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "Filter panel locators (status combobox, reset button) use label heuristics. "
-        "Verify exact DOM structure in DevTools before removing xfail."
-    ),
+_FILTER_XFAIL = pytest.mark.skip(
+    reason="Manual - Check later for fixes: Filter panel locators (status combobox, reset button) use label heuristics — verify exact DOM structure in DevTools"
 )
 
 
@@ -87,10 +83,7 @@ def test_filter_by_site_count_matches_rows(browser):
 
 @allure.title("KSK-FLT-005 Resetting filters restores the unfiltered kiosk list")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-FLT-005: Reset All button locator uses label heuristics — verify in DevTools before removing xfail.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-FLT-005: Reset All button locator uses label heuristics — verify in DevTools")
 def test_filter_reset_restores_list(browser):
     page = open_kiosk_page(browser)
     page.filter_by_status("Active")

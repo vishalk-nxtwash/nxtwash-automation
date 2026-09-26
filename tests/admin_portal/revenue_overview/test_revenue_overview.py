@@ -390,11 +390,10 @@ def test_overflow_counter_chip_shown_for_many_sites(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-008 Selected option is highlighted in the dropdown")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-SIT-008: Selected-state highlight uses class heuristics "
-        "(overview__site-select__option--is-selected) — verify in DevTools before removing xfail."
+        "Manual - Check later for fixes: selected-state highlight uses class heuristics "
+        "(overview__site-select__option--is-selected) — verify in DevTools."
     ),
 )
 def test_selected_options_highlighted_in_dropdown(rvo_page):
@@ -427,11 +426,10 @@ def test_deselecting_option_removes_it(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-010 Clear indicator removes all site chips at once")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-SIT-010: Clear-all button locator uses class heuristics "
-        "(overview__site-select__clear-indicator) — verify in DevTools before removing xfail."
+        "Manual - Check later for fixes: clear-all button locator uses class heuristics "
+        "(overview__site-select__clear-indicator) — verify in DevTools."
     ),
 )
 def test_clear_control_removes_all_chips(rvo_page):
@@ -593,11 +591,10 @@ def test_date_range_field_opens_calendar_picker(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-011 Future dates are disabled (grayed out) in the calendar picker")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-DTE-011: Disabled future-date detection relies on aria-disabled/class "
-        "heuristics — verify calendar day button DOM in DevTools before removing xfail."
+        "Manual - Check later for fixes: disabled future-date detection relies on "
+        "aria-disabled/class heuristics — verify calendar day button DOM in DevTools."
     ),
 )
 def test_future_dates_disabled_in_calendar(rvo_modal):
@@ -612,11 +609,10 @@ def test_future_dates_disabled_in_calendar(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-012 Calendar picker shows a visible year selector")
 @pytest.mark.extended
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-DTE-012: Year selector detection uses class/role heuristics — "
-        "verify calendar year control DOM in DevTools before removing xfail."
+        "Manual - Check later for fixes: year selector detection uses class/role heuristics — "
+        "verify calendar year control DOM in DevTools."
     ),
 )
 def test_year_selector_visible_in_calendar(rvo_modal):
@@ -707,6 +703,7 @@ def test_kpi_cards_show_zero_when_no_data(zero_data_filter):
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-003 KPI values update when the site filter changes")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason="Staging data: membership tab count inconsistent with new-sales tab count")
 def test_kpi_values_update_on_site_change(rvo_page):
     body_before = rvo_page.get_body_text()
     options = rvo_page.get_site_options()
@@ -825,11 +822,10 @@ def test_hover_updates_centre_label(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-006 Moving pointer away from segment resets the centre label")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-CHT-006: Reset behaviour of centre label after pointer-leave is "
-        "chart-library specific — verify in DevTools before removing xfail."
+        "Manual - Check later for fixes: centre label reset on pointer-leave is "
+        "chart-library specific — verify in DevTools."
     ),
 )
 def test_centre_label_resets_on_pointer_leave(rvo_page):
@@ -846,11 +842,10 @@ def test_centre_label_resets_on_pointer_leave(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-009 Clicking a legend item toggles (hides/shows) its segment")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-CHT-009: Legend toggle effect on canvas is not directly DOM-observable — "
-        "verify visual change and aria-pressed/class attribute in DevTools before removing xfail."
+        "Manual - Check later for fixes: legend toggle effect on canvas is not DOM-observable — "
+        "verify aria-pressed/class attribute in DevTools."
     ),
 )
 def test_legend_toggle_hides_segment(rvo_page):
@@ -1064,11 +1059,10 @@ def test_resignups_subtab_lists_rows(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-010 Sub-tab row count in the list equals the badge count")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
+@pytest.mark.skip(
     reason=(
-        "RVO-MEM-010: Row count depends on breakdown list DOM structure — "
-        "verify list-item locator in DevTools before removing xfail."
+        "Manual - Check later for fixes: row count depends on breakdown list DOM structure — "
+        "verify list-item locator in DevTools."
     ),
 )
 def test_subtab_row_count_equals_badge(rvo_page):

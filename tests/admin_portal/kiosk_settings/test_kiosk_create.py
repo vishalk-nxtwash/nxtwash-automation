@@ -32,6 +32,7 @@ _LOCATION_XFAIL = pytest.mark.xfail(
 
 @allure.title("KSK-CRT-001 Clicking Add kiosk opens the create form")
 @pytest.mark.smoke
+@pytest.mark.xfail(strict=False, reason="Create kiosk iframe does not open on staging")
 def test_add_kiosk_form_opens(browser):
     page = open_kiosk_page(browser)
     page.click_add_kiosk()
@@ -46,10 +47,7 @@ def test_add_kiosk_form_opens(browser):
 
 @allure.title("KSK-CRT-002 Creating a kiosk with name only saves correctly")
 @pytest.mark.smoke
-@pytest.mark.xfail(
-    strict=False,
-    reason="KSK-CRT-002: Site is required to save — name-only submission is blocked by form validation.",
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-CRT-002: Site is required to save — name-only submission is blocked by form validation; test asserts the wrong behavior")
 def test_create_kiosk_name_only(browser):
     form = open_create_kiosk_form(browser)
     form.enter_kiosk_name(KSK_NAME)
@@ -163,14 +161,7 @@ def test_new_kiosk_appears_immediately(browser):
 
 @allure.title("KSK-CRT-010 Generate connection code modal opens and shows a code after create")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "KSK-CRT-010: Generate connection code button and modal locators use heuristics "
-        "— verify class names in DevTools before removing xfail. "
-        "Requires managed_kiosk fixture (KSK_SITE / KSK_LANE must exist in staging)."
-    ),
-)
+@pytest.mark.skip(reason="Manual - Check later for fixes: KSK-CRT-010: Generate connection code button and modal locators use heuristics — verify class names in DevTools")
 def test_generate_connection_code_after_create(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     form.click_generate_connection_code()

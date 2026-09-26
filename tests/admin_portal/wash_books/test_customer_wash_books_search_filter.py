@@ -76,6 +76,6 @@ def test_cwb_filter_reset_all_restores_list(browser):
     page.apply_filters()
 
     page.open_cwb_filter_panel()
-    page.reset_filters()
+    page.reset_cwb_filters()
 
     assert page_has_no_broken_state(page)

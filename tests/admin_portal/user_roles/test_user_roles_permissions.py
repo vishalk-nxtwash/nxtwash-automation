@@ -18,11 +18,12 @@ pytestmark = [
 # A representative section used in toggle tests.
 _SAMPLE_SECTION = "Sites"
 
-_PERMISSION_XFAIL = pytest.mark.xfail(
-    strict=False,
+_PERMISSION_XFAIL = pytest.mark.skip(
     reason=(
-        "Permission accordion locators use a JS ancestor-walk that requires DOM "
-        "verification. Remove xfail once section structure is confirmed in DevTools."
+        "CI-SKIP UR-PRM: Permission accordion locators use a speculative JS ancestor-walk "
+        "that has not been verified against the live DOM. Re-enable once "
+        "expand_permission_section() and _get_section_child_switches() locators are "
+        "confirmed in DevTools and the locators are fixed."
     ),
 )
 

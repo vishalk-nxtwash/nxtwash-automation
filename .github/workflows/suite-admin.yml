@@ -34,30 +34,39 @@ jobs:
             path: >-
               tests/admin_portal/overview
               tests/admin_portal/performance_metrics
-          # 164 tests — revenue_overview + general_sales_report
+          # 188 tests — revenue_overview (split from reports-revenue; largest report module)
           - name: reports-revenue
-            path: >-
-              tests/admin_portal/revenue_overview
-              tests/admin_portal/general_sales_report
-          # 151 tests — cash_report + card_declines + transactions
+            path: tests/admin_portal/revenue_overview
+          # 70 tests — general_sales_report (split from reports-revenue)
+          - name: reports-sales
+            path: tests/admin_portal/general_sales_report
+          # 85 tests — cash_report + card_declines
           - name: reports-financial
             path: >-
               tests/admin_portal/cash_report
               tests/admin_portal/card_declines
-              tests/admin_portal/transactions
-          # 177 tests — labor_shifts + redemptions + wash_activity
-          - name: reports-ops
-            path: >-
-              tests/admin_portal/labor_shifts
-              tests/admin_portal/redemptions
-              tests/admin_portal/wash_activity
-          # ── Auth & Core (run early; downstream modules depend on this data) ─
-          # 131 tests — login + sites + service_categories
+          # 58 tests — transactions (split from reports-financial)
+          - name: reports-transactions
+            path: tests/admin_portal/transactions
+          # 57 tests — labor_shifts; I/O-bound so 3 workers fit 2-vCPU runner
+          - name: reports-labor-shifts
+            path: tests/admin_portal/labor_shifts
+            parallel: "3"
+          # 60 tests — redemptions (split from reports-labor-shifts)
+          - name: reports-redemptions
+            path: tests/admin_portal/redemptions
+          # 120 tests — wash_activity (split from reports-ops; largest ops module)
+          - name: reports-wash-activity
+            path: tests/admin_portal/wash_activity
+          # ── Auth & Core ───────────────────────────────────────────────────
+          # ~68 tests — login + sites (service_categories split out)
           - name: auth-core
             path: >-
               tests/admin_portal/login
               tests/admin_portal/sites
-              tests/admin_portal/service_categories
+          # ~23 tests — service_categories (split from auth-core)
+          - name: auth-service-categories
+            path: tests/admin_portal/service_categories
           # ── Wash Catalog ──────────────────────────────────────────────────
           # 157 tests — wash_packages + wash_extras
           - name: wash-packages
@@ -77,13 +86,12 @@ jobs:
               tests/admin_portal/gift_cards
               tests/admin_portal/bank_drop
           # ── Promotions & Loyalty ──────────────────────────────────────────
-          # 139 tests — discounts + memberships
           - name: promotions
             path: >-
               tests/admin_portal/discounts
               tests/admin_portal/memberships
           # ── Customers ─────────────────────────────────────────────────────
-          # 97 tests — isolated; complex customer-facing flows
+          # 93 tests — isolated; complex customer-facing flows
           - name: customers
             path: tests/admin_portal/customers
           # ── Hardware Settings ─────────────────────────────────────────────
@@ -92,14 +100,18 @@ jobs:
             path: >-
               tests/admin_portal/kiosk_settings
               tests/admin_portal/tunnel_settings
-          # ── POS & Access Control ──────────────────────────────────────────
-          # 126 tests — pos_settings + user_roles
-          - name: settings-pos
-            path: >-
-              tests/admin_portal/pos_settings
-              tests/admin_portal/user_roles
+          # ── POS Settings ──────────────────────────────────────────────────
+          # 68 tests — pos_settings (split from settings-pos)
+          - name: pos-settings
+            path: tests/admin_portal/pos_settings
+          # 37 tests — gas_pump_settings (was missing from this workflow entirely)
+          - name: gas-pump-settings
+            path: tests/admin_portal/gas_pump_settings
+          # ── Access Control ────────────────────────────────────────────────
+          # 58 tests — user_roles (split from settings-pos)
+          - name: user-roles
+            path: tests/admin_portal/user_roles
           # ── People & HR ───────────────────────────────────────────────────
-          # 164 tests — users + employees
           - name: people
             path: >-
               tests/admin_portal/users
@@ -110,6 +122,6 @@ jobs:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: "2"
+      parallel: ${{ matrix.shard.parallel || '2' }}
       timeout_minutes: 90
       runner: ${{ inputs.runner || 'ubuntu-latest' }}

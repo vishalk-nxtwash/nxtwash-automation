@@ -68,6 +68,7 @@ class AdminKioskSettingsPage(BasePage):
 
     def wait_for_loaded(self):
         self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))

@@ -171,6 +171,8 @@ class WashBooksPage(BasePage):
 
     def wait_for_list_loaded(self):
         """Wait until the Wash Books list is visible."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_WASH_BOOK_BUTTON))
@@ -274,7 +276,7 @@ class WashBooksPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(wash_book_name)
         self.wait.until(
@@ -337,7 +339,7 @@ class WashBooksPage(BasePage):
     def clear_wash_book_search(self):
         """Clear the wash book search field and wait for list to reset."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -354,6 +356,10 @@ class WashBooksPage(BasePage):
         """Open the filter panel (if closed) and click Reset all."""
         self.open_filter_panel()
         self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def reset_filters_if_active(self):
         try:
@@ -387,8 +393,11 @@ class WashBooksPage(BasePage):
         self.search_wash_book(wash_book_name)
         self.wait_for_wash_book_row(wash_book_name)
         # Atomic JS click so a grid re-render between find and click cannot stale the ref.
+        # InovuaReactDataGrid renders rows as <div class="InovuaReactDataGrid__row …">
+        # not <tr>, so query by CSS class rather than tag name.
         _CLICK_EDIT_JS = (
-            "var name=arguments[0]; var rows=document.querySelectorAll('tr');"
+            "var name=arguments[0];"
+            "var rows=document.querySelectorAll('.InovuaReactDataGrid__row');"
             "for(var i=0;i<rows.length;i++){"
             " if(rows[i].textContent.indexOf(name)!==-1){"
             "  var a=Array.from(rows[i].querySelectorAll('a'))"
@@ -1007,6 +1016,8 @@ class WashBooksPage(BasePage):
 
     def wait_for_cwb_list_loaded(self):
         """Wait until the Customer Wash Books listing is ready."""
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         long_wait = WebDriverWait(self.driver, 60)
         self.switch_to_frame_with_retry(self.CWB_LIST_FRAME)
         long_wait.until(EC.visibility_of_element_located(self.CWB_PAGE_TITLE))
@@ -1051,7 +1062,7 @@ class WashBooksPage(BasePage):
         search_input = self.wait.until(
             EC.element_to_be_clickable(self.CWB_SEARCH_INPUT)
         )
-        search_input.click()
+        self.driver.execute_script("arguments[0].click();", search_input)
         search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(str(wash_book_number))
         self.wait.until(
@@ -1243,8 +1254,19 @@ class WashBooksPage(BasePage):
         self.wait_for_cwb_list_loaded()
 
     def open_cwb_filter_panel(self):
-        """Open the filter panel while on the CWB list page."""
+        """Open the filter panel while on the CWB list page (idempotent)."""
         self.wait_for_cwb_list_loaded()
+        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+            return
         button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
         self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+
+    def reset_cwb_filters(self):
+        """Reset all filters on the Customer Wash Books list."""
+        self.open_cwb_filter_panel()
+        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))

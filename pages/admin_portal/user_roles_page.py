@@ -73,6 +73,8 @@ class AdminUserRolesPage(BasePage):
     )
 
     def wait_for_loaded(self):
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.visibility_of_element_located(self.ADD_ROLE_BUTTON))
@@ -80,6 +82,7 @@ class AdminUserRolesPage(BasePage):
         self.wait.until(
             lambda d: "Please wait" not in d.find_element(By.TAG_NAME, "body").text
         )
+        self.reset_filters_if_active()
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -214,9 +217,11 @@ class AdminUserRolesPage(BasePage):
 
     def reset_filters(self):
         self.open_filter_panel()
-        btn = self.wait.until(EC.presence_of_element_located(self.RESET_ALL_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
-        self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
+        self.wait.until(EC.element_to_be_clickable(self.RESET_ALL_BUTTON)).click()
+        apply_btn = self.wait.until(EC.element_to_be_clickable(self.APPLY_FILTERS_BUTTON))
+        self.driver.execute_script("arguments[0].click();", apply_btn)
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        self.wait.until(EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def reset_filters_if_active(self):
         try:
@@ -336,8 +341,35 @@ class AdminUserRoleFormPage(BasePage):
             self.driver.switch_to.default_content()
             return self.driver.find_element(By.TAG_NAME, "body").text
 
+    def _set_input_value(self, element, value):
+        """Set a React-controlled input value with focus() so onChange fires."""
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value'
+            ).set;
+            input.focus();
+            setter.call(input, value);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            element,
+            value,
+        )
+
     def enter_role_name(self, name):
-        self.enter_text(self.ROLE_NAME_INPUT, name)
+        element = self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(name)
+        self.wait.until(
+            lambda driver: (
+                lambda v: bool(v) and name.startswith(v)
+            )(driver.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "")
+        )
 
     def clear_role_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
@@ -350,17 +382,14 @@ class AdminUserRoleFormPage(BasePage):
 
     def enter_priority(self, value):
         el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
-        # React controlled numeric input: JS setter + input event required to update state
-        self.driver.execute_script("""
-            var input = arguments[0];
-            var val = arguments[1];
-            var setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value'
-            ).set;
-            setter.call(input, val);
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-        """, el, str(value))
+        el.click()
+        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(str(value))
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.PRIORITY_INPUT
+            ).get_attribute("value") == str(value)
+        )
 
     def type_priority_raw(self, value):
         """Type into the priority field via real keystrokes — use for invalid-input tests."""

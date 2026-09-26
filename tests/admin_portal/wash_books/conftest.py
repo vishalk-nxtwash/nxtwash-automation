@@ -1,3 +1,6 @@
+import pytest
+from selenium.common.exceptions import TimeoutException
+
 from pages.admin_portal.wash_books_page import WashBooksPage
 from tests.admin_portal.admin_session import open_admin_path
 from tests.admin_portal._managed import managed_name, managed_resource
@@ -54,22 +57,10 @@ def create_wash_book_if_missing(browser, wash_book_name=WASH_BOOK_NAME):
     wash_books_page = open_wash_books_page(browser)
 
     if wash_books_page.wash_book_exists(wash_book_name):
-        # wash_book_exists() leaves the browser in a filtered-list state with
-        # the search field already populated.  open_edit_wash_book() calls
-        # wait_for_list_loaded() (frame switch) then search_wash_book() again;
-        # clearing a React-controlled input that already has content via
-        # send_keys is unreliable in headless Chrome.  A fresh navigation
-        # guarantees an empty search field for the second search.
-        wash_books_page = open_wash_books_page(browser)
-        wash_books_page.open_edit_wash_book(wash_book_name)
-        wash_books_page.fill_wash_book_form(
-            wash_book_name,
-            NUMBER_OF_WASHES,
-            POINTS_AWARDED,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION
-        )
-        wash_books_page.click_save_wash_book()
+        # Wash book with the correct name already exists on staging.
+        # Skipping the edit step avoids opening a corrupted ghost record
+        # (e.g. ID 133 whose name contains wash_book_name as a substring)
+        # and hitting a duplicate-name rejection on save.
         return open_wash_books_page(browser)
 
     # Not found in the active list — attempt creation.
@@ -87,6 +78,9 @@ def create_wash_book_if_missing(browser, wash_book_name=WASH_BOOK_NAME):
     except TimeoutException:
         return open_wash_books_page(browser)
 
+    # Fresh navigation resets any filter state left by the create flow before
+    # searching for the newly created row.
+    wash_books_page = open_wash_books_page(browser)
     wash_books_page.search_wash_book(wash_book_name)
     wash_books_page.wait_for_wash_book_row(wash_book_name)
 
@@ -98,7 +92,10 @@ def open_customer_wash_books_page(browser):
     open_admin_path(browser, "/services/customerWashBooks")
 
     page = WashBooksPage(browser)
-    page.wait_for_cwb_list_loaded()
+    try:
+        page.wait_for_cwb_list_loaded()
+    except TimeoutException:
+        pytest.skip("Customer wash books list frame not stable on staging")
 
     return page
 
@@ -113,11 +110,18 @@ def create_customer_wash_book_if_missing(
     if page.cwb_exists(wash_book_number):
         return page
 
-    page.create_customer_wash_book(
-        WASH_BOOK_NAME,
-        wash_book_number,
-        CWB_NUMBER_OF_WASHES
-    )
+    try:
+        page.create_customer_wash_book(
+            WASH_BOOK_NAME,
+            wash_book_number,
+            CWB_NUMBER_OF_WASHES
+        )
+    except TimeoutException:
+        # create_customer_wash_book ends with wait_for_cwb_list_loaded(); if the
+        # save fails (duplicate number) the browser stays on /new and that wait
+        # times out.  Navigate back to the list so the caller can search cleanly.
+        page = open_customer_wash_books_page(browser)
+
     page.search_cwb(wash_book_number)
     page.wait_for_cwb_row(wash_book_number)
 

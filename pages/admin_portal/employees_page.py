@@ -66,6 +66,8 @@ class AdminEmployeesPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.EMP_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
@@ -75,7 +77,7 @@ class AdminEmployeesPage(BasePage):
 
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(last_name)
         self.wait.until(
@@ -87,7 +89,7 @@ class AdminEmployeesPage(BasePage):
 
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        el.click()
+        self.driver.execute_script("arguments[0].click();", el)
         el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
@@ -182,7 +184,8 @@ class AdminEmployeesPage(BasePage):
     def open_filter_panel(self):
         if self.filter_panel_is_open():
             return
-        self.click(self.FILTER_BUTTON)
+        btn = self.wait.until(EC.presence_of_element_located(self.FILTER_BUTTON))
+        self.driver.execute_script("arguments[0].click();", btn)
         self.wait.until(EC.visibility_of_element_located(self.APPLY_FILTERS_BUTTON))
 
     def filter_by_status(self, status):
@@ -594,6 +597,8 @@ class AdminEmployeeShiftPage(BasePage):
         "//*[contains(@class,'load-mask') and not(contains(@style,'display: none'))]")
 
     def wait_for_loaded(self):
+        self.driver.switch_to.default_content()
+        self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.SHIFT_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
