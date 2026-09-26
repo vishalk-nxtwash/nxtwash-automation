@@ -10,6 +10,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_users_list_page_loads(users_page):
     """SA-USR-LST-001 — Users list page loads with the 'Users' title visible."""
     title = users_page.get_text(users_page.PAGE_TITLE)
@@ -87,6 +88,7 @@ def test_direct_url_loads_users_list(browser):
         f"Expected /users URL, got: {browser.current_url}"
 
 
+@pytest.mark.smoke
 def test_primary_test_user_appears_in_list(users_page):
     """SA-USR-LST-010 — Primary test user (vksauser4) is visible after email filter."""
     users_page.filter_by_email(PRIMARY_USER["email"])

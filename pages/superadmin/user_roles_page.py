@@ -779,9 +779,13 @@ class EditUserRolePage(CreateUserRolePage):
 
     def set_role_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
-        el.click()
-        el.send_keys(Keys.CONTROL + "a")
-        el.send_keys(name)
+        self.driver.execute_script(
+            "arguments[0].value = ''; "
+            "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
+            el
+        )
+        if name:
+            el.send_keys(name)
         WebDriverWait(self.driver, 5).until(
             lambda d: name in (d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "")
         )

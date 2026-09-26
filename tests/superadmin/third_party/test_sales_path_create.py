@@ -12,6 +12,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_add_sales_path_button_opens_create_form(create_sales_path_page):
     """SA-SLP-CRT-001 — '+ Add Sales Path' opens the create form."""
     url = create_sales_path_page.driver.current_url
@@ -96,12 +97,7 @@ def test_save_without_company_shows_validation(create_sales_path_page):
         "Saving without a Company should be blocked or show a validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-008: Happy-path create modifies staging. The edit_sales_path_page "
-           "fixture already manages 'vkautomationcompanytest' idempotently — "
-           "running this test directly may produce a duplicate.",
-)
+@pytest.mark.seed
 def test_create_sales_path_happy_path(create_sales_path_page, sales_path_page):
     """SA-SLP-CRT-008 — Create with valid Company → saves and returns to list."""
     create_sales_path_page.select_company(SALES_PATH_COMPANY)
@@ -113,8 +109,10 @@ def test_create_sales_path_happy_path(create_sales_path_page, sales_path_page):
         f"New sales path for '{SALES_PATH_COMPANY}' should appear in the list"
 
 
+@pytest.mark.smoke
 def test_new_sales_path_appears_in_list(sales_path_page):
     """SA-SLP-CRT-009 — New sales path appears in the list after create."""
+    sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)
     assert sales_path_page.row_exists(SALES_PATH_COMPANY), \
         f"'{SALES_PATH_COMPANY}' sales path should be visible in the list"
 

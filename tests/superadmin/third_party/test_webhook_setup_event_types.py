@@ -69,11 +69,7 @@ def test_toggle_single_event_on(create_setup_page):
         f"'{event}' checkbox should be ON after toggling"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-006: Saving with all event types selected depends on "
-           "confirmed event locators + all other required-field locators.",
-)
+@pytest.mark.seed
 def test_save_with_all_events_selected(create_setup_page, webhook_setup_page):
     """SA-SET-EVT-006 — Saving a setup with all event types ON succeeds."""
     from selenium.webdriver.support import expected_conditions as EC
@@ -99,11 +95,7 @@ def test_save_with_all_events_selected(create_setup_page, webhook_setup_page):
     )
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-007: No event type selected — need to confirm the server "
-           "allows saving a setup with zero event types checked.",
-)
+@pytest.mark.seed
 def test_saving_with_no_events_selected_is_allowed(create_setup_page):
     """SA-SET-EVT-007 — Saving a setup with NO event types selected is allowed."""
     from selenium.webdriver.support import expected_conditions as EC

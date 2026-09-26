@@ -74,9 +74,13 @@ class UsersPage(BasePage):
             reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
             if reset_els and reset_els[0].is_displayed():
                 self.driver.execute_script("arguments[0].click();", reset_els[0])
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, "//tbody"))
-                )
+                # Wait for actual rows — tbody is always present even while loading
+                try:
+                    WebDriverWait(self.driver, 15).until(
+                        lambda d: bool(d.find_elements(By.XPATH, "//tbody/tr[td]"))
+                    )
+                except TimeoutException:
+                    pass  # genuine empty table is valid
             close_els = self.driver.find_elements(*self.FILTER_CLOSE_BUTTON)
             if close_els and close_els[0].is_displayed():
                 self.driver.execute_script("arguments[0].click();", close_els[0])
@@ -102,7 +106,19 @@ class UsersPage(BasePage):
         return bool(els) and els[0].is_displayed()
 
     def apply_filters(self):
+        # Capture a row reference before clicking — stale detection tells us
+        # when React replaced the table with filter results.
+        rows_before = self.driver.find_elements(By.XPATH, "//tbody/tr")
+        old_row = rows_before[0] if rows_before else None
         self.click(self.APPLY_FILTERS_BUTTON)
+        if old_row:
+            try:
+                WebDriverWait(self.driver, 12).until(EC.staleness_of(old_row))
+            except TimeoutException:
+                pass
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//tbody"))
+        )
 
     def reset_filters(self):
         self.click(self.RESET_FILTERS_BUTTON)
@@ -118,22 +134,22 @@ class UsersPage(BasePage):
     def filter_by_email(self, email):
         self.open_filters()
         self.enter_text(self.EMAIL_FILTER, email)
-        self.click(self.APPLY_FILTERS_BUTTON)
+        self.apply_filters()
 
     def filter_by_first_name(self, name):
         self.open_filters()
         self.enter_text(self.FIRST_NAME_FILTER, name)
-        self.click(self.APPLY_FILTERS_BUTTON)
+        self.apply_filters()
 
     def filter_by_last_name(self, name):
         self.open_filters()
         self.enter_text(self.LAST_NAME_FILTER, name)
-        self.click(self.APPLY_FILTERS_BUTTON)
+        self.apply_filters()
 
     def filter_by_phone(self, phone):
         self.open_filters()
         self.enter_text(self.PHONE_FILTER, phone)
-        self.click(self.APPLY_FILTERS_BUTTON)
+        self.apply_filters()
 
     def get_filter_value(self, locator):
         el = self.driver.find_element(*locator)
@@ -164,10 +180,14 @@ class UsersPage(BasePage):
 
     def open_user_edit(self, email):
         self.filter_by_email(email)
-        row = self.wait_for_user_row(email)
-        edit_btn = row.find_element(
-            By.XPATH, ".//button[normalize-space()='Edit']"
+        # Locate the Edit button directly — avoids StaleElement from a cached row reference
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Edit']][1]"
+            "//button[normalize-space()='Edit']" % email
         )
+        edit_btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center'});", edit_btn
         )

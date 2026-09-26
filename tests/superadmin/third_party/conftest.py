@@ -178,21 +178,83 @@ def create_sales_path_page(sales_path_page, browser):
 def edit_sales_path_page(sales_path_page, browser):
     """Navigate to the Edit form for the automation test sales path.
 
-    Creates the record first if it does not yet exist on staging.
+    Handles three cases:
+      1. Record exists and is enabled  → open it directly.
+      2. Record exists but is disabled → re-enable it, then open.
+      3. Record does not exist         → create it, then open.
     """
-    if not sales_path_page.row_exists(SALES_PATH_COMPANY, timeout=30):
-        sales_path_page.click_add_sales_path()
-        cp = CreateSalesPathPage(browser)
-        cp.wait_for_loaded()
-        cp.select_company(SALES_PATH_COMPANY)
-        cp.click_save_new()
-        WebDriverWait(browser, 30).until(
-            EC.url_contains("/sales-path")
-        )
-        sales_path_page.wait_for_loaded()
+    from selenium.webdriver.common.by import By as _By
 
+    def _filter_all_states():
+        """Open filter with both enabled/active toggles OFF so all records show."""
+        sales_path_page.open_filters()
+        for toggle_loc, label_xp in [
+            (sales_path_page.ENABLED_TOGGLE,
+             "//div[normalize-space()='Enabled Sales Path']/following-sibling::label[1]"),
+            (sales_path_page.ACTIVE_TOGGLE,
+             "//div[normalize-space()='Active Sales Path']/following-sibling::label[1]"),
+        ]:
+            els = browser.find_elements(*toggle_loc)
+            if els and els[0].is_selected():
+                lbls = browser.find_elements(_By.XPATH, label_xp)
+                if lbls:
+                    browser.execute_script("arguments[0].click();", lbls[0])
+        sales_path_page.enter_text(sales_path_page.COMPANY_NAME_FILTER, SALES_PATH_COMPANY)
+        sales_path_page.apply_filters()
+
+    def _re_enable_and_return():
+        """Enable isEnabled on the currently-open edit page, save, and return the page."""
+        ep = EditSalesPathPage(browser)
+        ep.wait_for_loaded()
+        is_en_els = browser.find_elements(_By.NAME, "isEnabled")
+        if is_en_els and not is_en_els[0].is_selected():
+            browser.execute_script("""
+                var inp = arguments[0], id = inp.id;
+                var lbl = id ? document.querySelector('label[for="' + id + '"]') : null;
+                if (!lbl) lbl = inp.closest('label');
+                if (!lbl) lbl = inp.parentElement;
+                if (lbl) lbl.click(); else inp.click();
+            """, is_en_els[0])
+            ep.click_save_changes()
+            ep.confirm_yes_if_present(timeout=5)
+            WebDriverWait(browser, 20).until(
+                lambda d: "/sales-path" in d.current_url and "/create" not in d.current_url
+                and browser.find_elements(_By.XPATH, "//*[normalize-space()='Sales Path List']")
+            )
+            sales_path_page.wait_for_loaded()
+            sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)
+            sales_path_page.open_edit(SALES_PATH_COMPANY)
+            ep = EditSalesPathPage(browser)
+            ep.wait_for_loaded()
+        return ep
+
+    # ── 1. Standard filter (enabled + active ON) ─────────────────────────────
     sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)
+    if sales_path_page.row_exists(SALES_PATH_COMPANY, timeout=8):
+        sales_path_page.open_edit(SALES_PATH_COMPANY)
+        return EditSalesPathPage(browser)
+
+    # ── 2. Record disabled — find it with toggles OFF ─────────────────────────
+    sales_path_page.wait_for_loaded()
+    _filter_all_states()
+    if sales_path_page.row_exists(SALES_PATH_COMPANY, timeout=8):
+        sales_path_page.open_edit(SALES_PATH_COMPANY)
+        return _re_enable_and_return()
+
+    # ── 3. Record doesn't exist — create it ──────────────────────────────────
+    sales_path_page.wait_for_loaded()
+    sales_path_page.click_add_sales_path()
+    cp = CreateSalesPathPage(browser)
+    cp.wait_for_loaded()
+    cp.select_company(SALES_PATH_COMPANY)
+    cp.click_save_new()
+    cp.confirm_yes_if_present(timeout=5)
+    try:
+        WebDriverWait(browser, 15).until(lambda d: "/create" not in d.current_url)
+    except Exception:
+        # Creation blocked (possibly existing disabled record) — go back to list
+        browser.get("https://superadmin.nxtwash.com/sales-path")
+        sales_path_page.wait_for_loaded()
+    _filter_all_states()
     sales_path_page.open_edit(SALES_PATH_COMPANY)
-    page = EditSalesPathPage(browser)
-    page.wait_for_loaded()
-    return page
+    return _re_enable_and_return()

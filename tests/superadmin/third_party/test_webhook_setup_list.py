@@ -8,6 +8,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_webhook_setup_page_loads(webhook_setup_page):
     """SA-SET-LST-001 — Webhook Setup list loads with all setups visible."""
     els = webhook_setup_page.driver.find_elements(*webhook_setup_page.PAGE_TITLE)

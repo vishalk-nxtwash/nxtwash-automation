@@ -17,6 +17,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_add_setup_button_opens_create_form(create_setup_page):
     """SA-SET-CRT-001 — '+ Add Webhook Setup' opens the create form."""
     url = create_setup_page.driver.current_url
@@ -198,12 +199,7 @@ def test_save_without_key_shows_validation(create_setup_page):
     ), "Saving without a Key should be blocked"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-015: Happy-path create modifies staging data. "
-           "Idempotent guard in the edit_setup_page fixture already manages the "
-           "test record — running this test directly risks duplicate entries.",
-)
+@pytest.mark.seed
 def test_create_setup_happy_path(create_setup_page, webhook_setup_page):
     """SA-SET-CRT-015 — Create with all required fields → saves and returns to list."""
     from selenium.webdriver.common.by import By

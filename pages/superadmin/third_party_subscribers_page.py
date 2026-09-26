@@ -77,12 +77,17 @@ class SubscribersPage(BasePage):
             return False
 
     def open_edit(self, name):
-        row = self.wait_for_row(name)
-        btn = row.find_element(By.XPATH, ".//button[normalize-space()='Edit']")
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Edit']][1]"
+            "//button[normalize-space()='Edit']" % name
+        )
+        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", btn
         )
-        btn.click()
+        self.driver.execute_script("arguments[0].click();", btn)
 
     def get_row_actions(self, name):
         row = self.wait_for_row(name)

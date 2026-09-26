@@ -192,8 +192,13 @@ class WebhookSetupPage(BasePage):
             return False
 
     def open_edit(self, company_name):
-        row = self.wait_for_row(company_name)
-        btn = row.find_element(By.XPATH, ".//button[normalize-space()='Edit']")
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Edit']][1]"
+            "//button[normalize-space()='Edit']" % company_name
+        )
+        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", btn
         )

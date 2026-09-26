@@ -1,6 +1,9 @@
+import pytest
+
 from pages.superadmin.login_page import LoginPage
 
 
+@pytest.mark.smoke
 def test_superadmin_login(browser):
 
     login_page = LoginPage(browser)

@@ -12,6 +12,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_companies_list_page_loads(companies_page):
     """SA-CMP-LST-001 — Companies list page loads with the 'Companies' title visible."""
     title = companies_page.get_page_title()

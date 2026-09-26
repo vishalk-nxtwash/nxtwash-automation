@@ -58,6 +58,7 @@ def test_edit_form_active_toggle_reflects_saved_state(edit_role_page):
         f"Active User Role toggle should reflect 'active' for '{TEST_ROLE_NAME}', got: {state}"
 
 
+@pytest.mark.smoke
 def test_edit_role_name_persists_after_save(browser, edit_role_page):
     """SA-UR-EDT-004 — Editing the Role Name → Save changes persists on the list and
     after reload."""

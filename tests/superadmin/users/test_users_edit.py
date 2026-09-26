@@ -10,6 +10,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_edit_button_opens_edit_form(browser, edit_user_page):
     """SA-USR-EDT-001 — Edit button opens the edit form at /users/{id}."""
     assert "/users/" in browser.current_url, \

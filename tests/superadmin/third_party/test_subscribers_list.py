@@ -10,6 +10,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_subscribers_page_loads(subscribers_page):
     """SA-SUB-LST-001 — Webhook Subscribers list loads with all subscribers visible."""
     title = subscribers_page.driver.find_elements(

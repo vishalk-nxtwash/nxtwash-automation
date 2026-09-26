@@ -8,6 +8,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_sales_path_page_loads(sales_path_page):
     """SA-SLP-LST-001 — Sales Path list loads with title 'Sales Path List'."""
     from selenium.webdriver.common.by import By

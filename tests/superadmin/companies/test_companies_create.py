@@ -14,6 +14,7 @@ _CREATE_URL = "https://superadmin.nxtwash.com/companies/create"
 _COMPANIES_URL = "https://superadmin.nxtwash.com/companies"
 
 
+@pytest.mark.smoke
 def test_add_company_button_opens_create_form(companies_page, browser):
     """SA-CMP-CRT-001 — '+ Add Company' opens the Create form at /companies/create."""
     companies_page.click_add_company()

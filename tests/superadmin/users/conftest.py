@@ -54,10 +54,10 @@ TEST_USERS = [
 # first_name/last_name/phone MUST match the actual values in staging for
 # edit-form prefill tests to pass. Update these if they differ.
 PRIMARY_USER = {
-    "first_name": "VK",
-    "last_name": "AutoTest1",
+    "first_name": "VkAuto",
+    "last_name": "Test1",
     "email": "vkautotest1@yopmail.com",
-    "phone": "9900000010",
+    "phone": "9988776655",
     "password": "Vk@auto2025!",
     "role": "User",
 }

@@ -75,6 +75,7 @@ def test_active_user_role_toggle_defaults_to_on(create_role_page):
         f"Active User Role toggle should default to ON on create form, got: {state}"
 
 
+@pytest.mark.smoke
 def test_create_role_with_valid_name_saves_and_navigates(create_role_page, browser):
     """SA-UR-CRT-005 — Creating a role with a valid name → 'Save new' saves and returns
     to the list (or shows duplicate message if role already exists)."""

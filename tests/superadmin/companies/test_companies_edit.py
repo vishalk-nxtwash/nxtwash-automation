@@ -12,6 +12,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_edit_button_opens_edit_form(browser, edit_company_page):
     """SA-CMP-EDT-001 — 'Edit' opens the Edit form at /companies/{id} with data pre-filled."""
     assert "/companies/" in browser.current_url, \

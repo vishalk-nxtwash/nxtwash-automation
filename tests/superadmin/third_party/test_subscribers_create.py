@@ -10,6 +10,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_add_subscriber_button_opens_create_form(create_subscriber_page):
     """SA-SUB-CRT-001 — '+ Add Webhook Subscriber' opens the create form."""
     from selenium.webdriver.common.by import By
@@ -56,12 +57,7 @@ def test_active_subscriber_toggle_defaults_on(create_subscriber_page):
         f"'Active Subscriber' toggle should be ON by default, got: {state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-005/006: Happy-path create modifies staging data. "
-           "The conftest manages 'VK Auto Test Sub' idempotently — running this "
-           "test directly may produce a duplicate-name error on subsequent runs.",
-)
+@pytest.mark.seed
 def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
     """SA-SUB-CRT-005 — Create with valid name + abbreviation → saves and returns to list."""
     from selenium.webdriver.common.by import By
@@ -80,17 +76,14 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
+@pytest.mark.smoke
 def test_new_subscriber_appears_in_list(subscribers_page):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
     assert subscribers_page.row_exists(SUBSCRIBER_NAME), \
         f"'{SUBSCRIBER_NAME}' should be visible in the subscribers list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-CRT-007: Subscriber may land on page 2 of the list (pagination) "
-           "after creation — row_exists checks only the current visible page.",
-)
+@pytest.mark.seed
 def test_create_with_active_on(create_subscriber_page, subscribers_page):
     """SA-SUB-CRT-007 — Create with Active Subscriber ON saves an active subscriber."""
     from selenium.webdriver.support import expected_conditions as EC

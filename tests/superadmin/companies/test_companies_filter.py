@@ -27,6 +27,7 @@ def test_filter_panel_shows_company_name_field(companies_page):
         "Company name filter field should be visible in the filter panel"
 
 
+@pytest.mark.smoke
 def test_filter_by_exact_company_name_returns_match(companies_page):
     """SA-CMP-FLT-003 — Filter by exact company name returns the matching company."""
     companies_page.filter_by_company_name(COMPANY_NAME)

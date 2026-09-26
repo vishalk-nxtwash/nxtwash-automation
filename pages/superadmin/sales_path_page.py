@@ -39,6 +39,17 @@ class SalesPathPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
         self._reset_filter_state()
+        # Wait for table data to arrive — count text changes from loading state ("out of 0")
+        _count_loc = (By.XPATH, "//*[contains(text(),'out of') and contains(text(),'records')]")
+        try:
+            WebDriverWait(self.driver, 10).until(
+                lambda d: bool(
+                    d.find_elements(*_count_loc)
+                    and "out of 0 records" not in d.find_elements(*_count_loc)[0].text
+                )
+            )
+        except TimeoutException:
+            pass  # genuinely empty list is valid
 
     def _reset_filter_state(self):
         """Clear any sticky filter left over from a previous test on this worker."""
@@ -84,7 +95,21 @@ class SalesPathPage(BasePage):
             self.wait.until(EC.visibility_of_element_located(self.COMPANY_NAME_FILTER))
 
     def apply_filters(self):
+        count_loc = (By.XPATH, "//*[contains(text(),'out of') and contains(text(),'records')]")
+        els = self.driver.find_elements(*count_loc)
+        old_count = els[0].text.strip() if els else None
         self.click(self.APPLY_FILTERS_BUTTON)
+        def _count_changed(d):
+            new_els = d.find_elements(*count_loc)
+            new_count = new_els[0].text.strip() if new_els else None
+            return new_count is not None and new_count != old_count
+        try:
+            WebDriverWait(self.driver, 12).until(_count_changed)
+        except TimeoutException:
+            pass
+        WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, "//tbody"))
+        )
 
     def reset_filters(self):
         self.click(self.RESET_FILTERS_BUTTON)
@@ -152,8 +177,13 @@ class SalesPathPage(BasePage):
             return False
 
     def open_edit(self, company_name):
-        row = self.wait_for_row(company_name)
-        btn = row.find_element(By.XPATH, ".//button[normalize-space()='Edit']")
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Edit']][1]"
+            "//button[normalize-space()='Edit']" % company_name
+        )
+        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", btn
         )
@@ -165,23 +195,14 @@ class CreateSalesPathPage(BasePage):
     # Master Company React Select — only required field
     COMPANY_CONTROL = (
         By.XPATH,
+        "(//*[@role='combobox'])[1] | "
         "//*[@placeholder='selectCompany'] | "
         "//*[contains(@placeholder,'Company')]/ancestor::div[contains(@class,'control')][1] | "
         "//input[@name='masterCompanyId']/preceding-sibling::div[1]"
     )
-    # Toggles — same hidden-checkbox pattern; label text confirmed from spec
-    IS_ENABLED_TOGGLE = (
-        By.XPATH,
-        "//div[normalize-space()='Is Enabled']"
-        "/following-sibling::label//input[@type='checkbox'] | "
-        "//div[normalize-space()='Is Enabled']/..//input[@type='checkbox']"
-    )
-    ACTIVE_TOGGLE = (
-        By.XPATH,
-        "//div[normalize-space()='Active Sales Path']"
-        "/following-sibling::label//input[@type='checkbox'] | "
-        "//div[normalize-space()='Active Sales Path']/..//input[@type='checkbox']"
-    )
+    # Form toggle inputs — name attributes confirmed from DOM inspection
+    IS_ENABLED_TOGGLE = (By.NAME, "isEnabled")
+    ACTIVE_TOGGLE = (By.NAME, "isActive")
 
     SAVE_NEW_BUTTON = (By.XPATH, "//button[normalize-space()='Save new']")
     CANCEL_BUTTON = (By.XPATH, "//button[normalize-space()='Cancel']")
@@ -202,13 +223,15 @@ class CreateSalesPathPage(BasePage):
         current = self.get_toggle_state(locator)
         if current is None or current == state:
             return
-        label_loc = (
-            By.XPATH,
-            "//div[normalize-space()='%s']/following-sibling::label[1]" % label_text
-        )
-        els = self.driver.find_elements(*label_loc)
-        if els:
-            self.driver.execute_script("arguments[0].click();", els[0])
+        inp = self.driver.find_element(*locator)
+        # Click via label[for=id] → closest label → parentElement (React hidden-checkbox pattern)
+        self.driver.execute_script("""
+            var inp = arguments[0], id = inp.id;
+            var lbl = id ? document.querySelector('label[for="' + id + '"]') : null;
+            if (!lbl) lbl = inp.closest('label');
+            if (!lbl) lbl = inp.parentElement;
+            if (lbl) lbl.click(); else inp.click();
+        """, inp)
 
     def set_is_enabled(self, state):
         self.set_toggle(self.IS_ENABLED_TOGGLE, "Is Enabled", state)

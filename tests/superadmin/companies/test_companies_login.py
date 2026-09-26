@@ -20,6 +20,7 @@ _EXPECTED_APP_OPTIONS = [
 ]
 
 
+@pytest.mark.smoke
 def test_login_to_opens_app_selection_modal(companies_page):
     """SA-CMP-LGN-001 — 'Login to' opens the 'Select app to login' modal."""
     companies_page.filter_by_company_name(COMPANY_NAME)

@@ -12,6 +12,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_edit_opens_form_at_correct_url(edit_sales_path_page):
     """SA-SLP-EDT-001 — Edit button opens the edit form at /sales-path/{id}."""
     url = edit_sales_path_page.driver.current_url

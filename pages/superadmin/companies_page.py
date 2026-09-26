@@ -264,8 +264,13 @@ class CompaniesPage(BasePage):
             raise AssertionError(
                 "Company '%s' was not found in the Companies list." % company_name
             )
-        row = self.wait_for_company_row(company_name)
-        login_to_button = row.find_element(*self.LOGIN_TO_BUTTON)
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Login to']][1]"
+            "//button[normalize-space()='Login to']" % company_name
+        )
+        login_to_button = self.wait.until(EC.element_to_be_clickable(btn_loc))
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center'});", login_to_button
         )

@@ -15,6 +15,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_edit_opens_form_at_correct_url(subscribers_page, browser):
     """SA-SUB-EDT-001 — Edit button opens the edit form at /third-party/subscribers/{id}."""
     subscribers_page.open_edit(REF_SUBSCRIBER_NAME)

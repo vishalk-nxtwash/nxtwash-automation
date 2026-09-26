@@ -10,6 +10,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_user_roles_list_page_loads(user_roles_page):
     """SA-UR-LST-001 — User Roles list page loads with the 'User Roles' title visible."""
     title = user_roles_page.get_text(user_roles_page.PAGE_TITLE)
@@ -101,6 +102,7 @@ def test_pagination_controls_disabled_on_single_page(user_roles_page):
         "Previous page button should be disabled when on page 1"
 
 
+@pytest.mark.smoke
 def test_predefined_roles_appear_in_list(user_roles_page):
     """SA-UR-LST-008 — Predefined roles (e.g. Company Owner) appear in the list."""
     user_roles_page.filter_by_role_name(PREDEFINED_ROLE_NAME)
