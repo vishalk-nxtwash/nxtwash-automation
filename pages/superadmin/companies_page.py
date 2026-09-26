@@ -275,10 +275,12 @@ class CompaniesPage(BasePage):
     def get_login_dialog_options(self):
         """Return button labels visible inside the Login To dialog."""
         self.wait.until(EC.visibility_of_element_located(self.LOGIN_DIALOG))
-        buttons = self.driver.find_elements(
-            By.XPATH, "//div[@role='dialog']//button"
+        # JS read is atomic — avoids StaleElementReferenceException on React re-render
+        return self.driver.execute_script(
+            "return Array.from("
+            "  document.querySelectorAll('[role=\"dialog\"] button')"
+            ").map(b => b.textContent.trim()).filter(t => t);"
         )
-        return [btn.text.strip() for btn in buttons if btn.text.strip()]
 
     def dismiss_login_dialog(self):
         """Close the Login To dialog via the Close button."""
