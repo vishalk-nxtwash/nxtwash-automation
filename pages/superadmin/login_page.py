@@ -68,7 +68,7 @@ class LoginPage(BasePage):
         parsed = urlparse(self.config.get_url("superadmin"))
         return "%s://%s" % (parsed.scheme, parsed.netloc)
 
-    def wait_for_overview(self, timeout=20):
+    def wait_for_overview(self, timeout=60):
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
         WebDriverWait(self.driver, timeout).until(

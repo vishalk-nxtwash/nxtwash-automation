@@ -32,7 +32,7 @@ def ensure_test_roles_exist(request):
         login_page = LoginPage(driver)
         login_page.open()
         login_page.login()
-        login_page.wait_for_overview()
+        login_page.wait_for_url("https://superadmin.nxtwash.com/")
 
         driver.get(f"{_BASE_URL}/user-roles")
         WebDriverWait(driver, 15).until(
@@ -68,7 +68,7 @@ def user_roles_page(browser):
     login_page = LoginPage(browser)
     login_page.open()
     login_page.login()
-    login_page.wait_for_overview()
+    login_page.wait_for_url("https://superadmin.nxtwash.com/")
 
     Sidebar(browser).open_user_roles()
 

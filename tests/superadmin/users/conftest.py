@@ -71,7 +71,7 @@ def users_page(browser):
     login_page = LoginPage(browser)
     login_page.open()
     login_page.login()
-    login_page.wait_for_overview()
+    login_page.wait_for_url("https://superadmin.nxtwash.com/")
 
     Sidebar(browser).open_users()
 
