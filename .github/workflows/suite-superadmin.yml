@@ -53,6 +53,10 @@ jobs:
           # list / access / create / edit / filter / export / permissions
           - name: user-roles
             path: tests/superadmin/user_roles
+          # ── Third Party ───────────────────────────────────────────────────────
+          # webhook subscribers / webhook setup / sales path
+          - name: third-party
+            path: tests/superadmin/third_party
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
