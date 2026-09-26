@@ -10,11 +10,6 @@ pytestmark = [
 ]
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-001: 'Event Types' section label not confirmed; depends on "
-           "the section heading text being exactly 'Event Types' in the DOM.",
-)
 def test_event_types_section_is_visible(create_setup_page):
     """SA-SET-EVT-001 — 'Event Types' section is visible on the create form."""
     from selenium.webdriver.common.by import By
@@ -39,11 +34,6 @@ def test_all_ten_event_type_names_visible(create_setup_page):
         f"These event types should be visible on the form but are missing: {missing}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-003: Event checkbox locator (following-sibling label pattern) "
-           "not confirmed via DOM inspection.",
-)
 def test_each_event_type_has_a_checkbox(create_setup_page):
     """SA-SET-EVT-003 — Each event type has a toggle/checkbox control."""
     states = create_setup_page.get_all_event_states()
@@ -52,11 +42,6 @@ def test_each_event_type_has_a_checkbox(create_setup_page):
         f"Could not find checkboxes for these event types: {missing}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-004: Depends on EVT-003 — checkbox locator must resolve "
-           "before checking default state.",
-)
 def test_all_event_checkboxes_default_off(create_setup_page):
     """SA-SET-EVT-004 — All event type checkboxes default to OFF on a new record."""
     states = create_setup_page.get_all_event_states()

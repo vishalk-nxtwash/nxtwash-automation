@@ -85,10 +85,6 @@ def test_company_dropdown_lists_companies(create_setup_page):
         f"'{SETUP_COMPANY}' should appear in Company dropdown, got: {names}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-005: URL input name='thirdPartyUrl' not confirmed via DOM.",
-)
 def test_url_field_is_present(create_setup_page):
     """SA-SET-CRT-005 — Webhook URL text field is present on the create form."""
     from selenium.webdriver.common.by import By
@@ -96,10 +92,6 @@ def test_url_field_is_present(create_setup_page):
     assert els and els[0].is_displayed(), "Webhook URL input should be visible"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-006: Key input name='thirdPartyKey' not confirmed via DOM.",
-)
 def test_key_field_is_present(create_setup_page):
     """SA-SET-CRT-006 — Webhook Key text field is present on the create form."""
     from selenium.webdriver.common.by import By
@@ -107,10 +99,6 @@ def test_key_field_is_present(create_setup_page):
     assert els and els[0].is_displayed(), "Webhook Key input should be visible"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-007: 'Is Enabled' toggle locator not confirmed via DOM.",
-)
 def test_is_enabled_toggle_defaults_on(create_setup_page):
     """SA-SET-CRT-007 — 'Is Enabled' toggle defaults to ON."""
     state = create_setup_page.get_toggle_state(create_setup_page.IS_ENABLED_TOGGLE)
@@ -118,10 +106,6 @@ def test_is_enabled_toggle_defaults_on(create_setup_page):
         f"'Is Enabled' toggle should be ON by default, got: {state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-008: 'Active Webhook Setup' toggle locator not confirmed via DOM.",
-)
 def test_active_toggle_defaults_on(create_setup_page):
     """SA-SET-CRT-008 — 'Active Webhook Setup' toggle defaults to ON."""
     state = create_setup_page.get_toggle_state(create_setup_page.ACTIVE_TOGGLE)
@@ -143,10 +127,6 @@ def test_all_ten_event_type_checkboxes_present(create_setup_page):
         f"Expected 10 event checkboxes, found {len(present)}: {present}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-010: Depends on CRT-009 — event checkbox locators unconfirmed.",
-)
 def test_all_event_type_checkboxes_default_off(create_setup_page):
     """SA-SET-CRT-010 — All event type checkboxes default to OFF."""
     states = create_setup_page.get_all_event_states()
@@ -261,11 +241,6 @@ def test_cancel_discards_create_form(create_setup_page, webhook_setup_page):
         "After cancel, should return to Webhook Setup list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-018: 'Is Enabled' toggle locator not confirmed; also "
-           "requires verifying that inactive setups do not appear by default.",
-)
 def test_create_with_is_enabled_off(create_setup_page):
     """SA-SET-CRT-018 — Create with 'Is Enabled' OFF saves an inactive setup."""
     create_setup_page.set_is_enabled(False)

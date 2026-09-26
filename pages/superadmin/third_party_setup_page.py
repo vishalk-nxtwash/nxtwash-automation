@@ -47,6 +47,36 @@ class WebhookSetupPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
+        self._reset_filter_state()
+
+    def _reset_filter_state(self):
+        """Clear any sticky filter left over from a previous test on this worker."""
+        try:
+            if not self.filter_panel_is_open():
+                btn_els = self.driver.find_elements(*self.FILTER_BUTTON)
+                if not btn_els:
+                    return
+                self.driver.execute_script("arguments[0].click();", btn_els[0])
+                WebDriverWait(self.driver, 5).until(
+                    EC.visibility_of_element_located(self.COMPANY_NAME_FILTER)
+                )
+            reset_els = self.driver.find_elements(*self.RESET_FILTERS_BUTTON)
+            if reset_els and reset_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", reset_els[0])
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//tbody"))
+                )
+            close_els = self.driver.find_elements(*self.FILTER_CLOSE_BUTTON)
+            if close_els and close_els[0].is_displayed():
+                self.driver.execute_script("arguments[0].click();", close_els[0])
+                try:
+                    WebDriverWait(self.driver, 3).until(
+                        EC.invisibility_of_element_located(self.COMPANY_NAME_FILTER)
+                    )
+                except TimeoutException:
+                    pass
+        except Exception:
+            pass
 
     def click_add_setup(self):
         self.click(self.ADD_BUTTON)
@@ -164,7 +194,7 @@ class WebhookSetupPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", btn
         )
-        btn.click()
+        self.driver.execute_script("arguments[0].click();", btn)
 
 
 class CreateSetupPage(BasePage):

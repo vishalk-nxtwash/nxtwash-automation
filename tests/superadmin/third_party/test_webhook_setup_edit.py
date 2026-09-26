@@ -12,11 +12,9 @@ pytestmark = [
 ]
 
 
-def test_edit_opens_form_at_correct_url(webhook_setup_page, browser):
+def test_edit_opens_form_at_correct_url(edit_setup_page):
     """SA-SET-EDT-001 — Edit button opens the edit form at /third-party/setup/{id}."""
-    webhook_setup_page.filter_by_company_name(SETUP_COMPANY)
-    webhook_setup_page.open_edit(SETUP_COMPANY)
-    url = browser.current_url
+    url = edit_setup_page.driver.current_url
     assert "/third-party/setup/" in url and "/create" not in url, \
         f"Edit URL should be /third-party/setup/{{id}}, got: {url}"
 

@@ -17,12 +17,6 @@ def test_filter_button_opens_filter_panel(sales_path_page):
         "Filter panel should be visible after clicking 'Filter by'"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-002: Company name field name attribute, 'Enabled Sales Path' "
-           "toggle locator, and 'Active Sales Path' toggle locator not confirmed "
-           "via DOM inspection.",
-)
 def test_filter_panel_shows_expected_controls(sales_path_page):
     """SA-SLP-FLT-002 — Filter panel shows Company field, Enabled toggle, Active toggle."""
     sales_path_page.open_filters()
@@ -55,11 +49,6 @@ def test_filter_by_partial_company_name(sales_path_page):
         f"Partial company name filter '{partial}' should return at least one result"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-005: 'Enabled Sales Path' toggle locator not confirmed; "
-           "also need at least one enabled sales path to verify the filter.",
-)
 def test_enabled_toggle_on_shows_enabled_only(sales_path_page):
     """SA-SLP-FLT-005 — 'Enabled Sales Path' toggle ON shows only enabled paths."""
     sales_path_page.open_filters()
@@ -72,20 +61,11 @@ def test_enabled_toggle_on_shows_enabled_only(sales_path_page):
     assert count >= 1, "Enabled filter should return at least one sales path"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-006: 'Enabled Sales Path' toggle OFF behaviour not confirmed; "
-           "unclear whether toggling OFF means 'show all' or 'show disabled only'.",
-)
 def test_enabled_toggle_off_shows_all(sales_path_page):
     """SA-SLP-FLT-006 — 'Enabled Sales Path' toggle OFF shows all paths."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-007: 'Active Sales Path' toggle locator not confirmed via DOM.",
-)
 def test_active_toggle_on_shows_active_only(sales_path_page):
     """SA-SLP-FLT-007 — 'Active Sales Path' toggle ON shows only active paths."""
     sales_path_page.open_filters()
@@ -96,22 +76,11 @@ def test_active_toggle_on_shows_active_only(sales_path_page):
     assert count >= 1, "Active filter should return at least one sales path"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-008: Active toggle OFF behaviour not confirmed; also requires "
-           "at least one inactive path to demonstrate a difference.",
-)
 def test_active_toggle_off_shows_all(sales_path_page):
     """SA-SLP-FLT-008 — 'Active Sales Path' toggle OFF shows all paths."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-FLT-009: Combined filter depends on confirmed locators for "
-           "Company name input (FLT-003), Enabled toggle (FLT-005), "
-           "and Active toggle (FLT-007).",
-)
 def test_combined_company_enabled_active_filter(sales_path_page):
     """SA-SLP-FLT-009 — Company + Enabled + Active filter returns the correct subset."""
     pass

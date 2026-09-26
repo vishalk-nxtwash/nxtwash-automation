@@ -12,11 +12,9 @@ pytestmark = [
 ]
 
 
-def test_edit_opens_form_at_correct_url(sales_path_page, browser):
+def test_edit_opens_form_at_correct_url(edit_sales_path_page):
     """SA-SLP-EDT-001 — Edit button opens the edit form at /sales-path/{id}."""
-    sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)
-    sales_path_page.open_edit(SALES_PATH_COMPANY)
-    url = browser.current_url
+    url = edit_sales_path_page.driver.current_url
     assert "/sales-path/" in url and "/create" not in url, \
         f"Edit URL should be /sales-path/{{id}}, got: {url}"
 

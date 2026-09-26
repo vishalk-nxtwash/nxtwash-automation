@@ -40,11 +40,6 @@ def test_webhook_setup_pagination_footer(webhook_setup_page):
     assert count >= 1, "At least one row should be present"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-LST-004: Results-per-page selector locator not confirmed — "
-           "CSS class names are hashed.",
-)
 def test_webhook_setup_results_per_page_dropdown(webhook_setup_page):
     """SA-SET-LST-004 — Results-per-page dropdown changes rows shown."""
     from selenium.webdriver.common.by import By
@@ -54,11 +49,6 @@ def test_webhook_setup_results_per_page_dropdown(webhook_setup_page):
     assert controls, "Results-per-page React Select control should be present"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-LST-005: With 95 records all on one page (Show 100), "
-           "multi-page navigation cannot be tested without changing page size.",
-)
 def test_webhook_setup_pagination_controls(webhook_setup_page):
     """SA-SET-LST-005 — Pagination controls work correctly."""
     assert webhook_setup_page.prev_page_button_is_disabled(), \
@@ -76,21 +66,11 @@ def test_webhook_setup_multiple_companies_same_subscriber(webhook_setup_page):
         "Optsopt subscriber should appear in multiple rows (confirmed in staging)"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-LST-007: An empty/filtered-to-none state cannot be reliably "
-           "engineered for Webhook Setup without a filter that returns no results.",
-)
 def test_webhook_setup_empty_state(webhook_setup_page):
     """SA-SET-LST-007 — Empty / filtered-to-none list shows an empty state."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-LST-008: Count-after-add depends on the create happy-path "
-           "test running first in the same session.",
-)
 def test_webhook_setup_count_updates_after_add(webhook_setup_page):
     """SA-SET-LST-008 — Records count and rows update after an add or edit."""
     pass
