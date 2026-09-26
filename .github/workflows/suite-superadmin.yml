@@ -36,9 +36,10 @@ jobs:
               tests/superadmin/test_login.py
               tests/superadmin/test_login_debug.py
           # ── Companies ─────────────────────────────────────────────────────────
-          # company CRUD + top-level create-user and create-user-role flows
+          # structured companies module + legacy top-level files
           - name: companies
             path: >-
+              tests/superadmin/companies
               tests/superadmin/test_companies.py
               tests/superadmin/test_create_company.py
               tests/superadmin/test_edit_company.py
