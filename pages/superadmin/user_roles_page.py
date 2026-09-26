@@ -66,7 +66,6 @@ class UserRolesPage(BasePage):
     def wait_for_loaded(self):
         self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
         self.wait.until(EC.element_to_be_clickable(self.ADD_ROLE_BUTTON))
-        self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
 
     def click_add_role(self):
         self.click(self.ADD_ROLE_BUTTON)
