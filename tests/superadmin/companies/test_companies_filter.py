@@ -58,44 +58,28 @@ def test_no_match_filter_shows_empty_state(companies_page):
         "No-match filter should show an empty state, not an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-006: Clear (X) icon locator inside the Company name filter field "
-           "not confirmed — needs DOM inspection.",
+@pytest.mark.skip(
+    reason="SA-CMP-FLT-006: The Company name filter is a plain <input type='text'> "
+           "with no built-in clear (X) button — confirmed from DOM inspection. "
+           "Clearing must be done by selecting all and deleting."
 )
 def test_clear_x_icon_empties_company_name_input(companies_page):
-    """SA-CMP-FLT-006 — The clear X icon in the Company name field empties the input."""
-    companies_page.open_filters()
-    companies_page.enter_text(companies_page.COMPANY_NAME_FILTER, COMPANY_NAME)
-
-    clear_btn = (
-        By.XPATH,
-        "//input[@name='companyName']/..//button | "
-        "//input[@name='companyName']/following-sibling::button | "
-        "//input[@name='companyName']/following::button[1]"
-    )
-    btn = companies_page.driver.find_elements(*clear_btn)
-    assert btn, "A clear (X) button should be present next to the company name input"
-    btn[0].click()
-
-    value = companies_page.get_filter_value(companies_page.COMPANY_NAME_FILTER)
-    assert value == "", \
-        f"Company name filter should be empty after clicking clear, got: {value!r}"
+    """SA-CMP-FLT-006 — N/A: no clear X button exists on the company name filter field."""
+    pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-007: 'Active company' toggle field name (isActive) not confirmed — "
-           "locator needs DOM inspection to verify.",
-)
 def test_active_company_toggle_on_shows_active_only(companies_page):
     """SA-CMP-FLT-007 — 'Active company' toggle ON shows only active companies."""
+    # Toggle is checked by default — reset first to get a clean baseline,
+    # then re-open the filter and apply with the toggle ON.
     companies_page.open_filters()
-    companies_page.click(companies_page.ACTIVE_COMPANY_TOGGLE)
+    companies_page.reset_filters()
+    companies_page.open_filters()
+    # Toggle is already ON by default after reset; just apply
     companies_page.apply_filters()
     count = companies_page.get_visible_row_count()
     assert count >= 1, \
-        "Active company toggle ON should return at least one active company"
+        "Active company filter should return at least one active company"
 
 
 @pytest.mark.xfail(
@@ -119,17 +103,16 @@ def test_active_toggle_off_shows_all_companies(companies_page):
         "Showing all companies should return >= the active-only count"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-009: Active company toggle locator (isActive) not confirmed — "
-           "combined filter test depends on FLT-007 locator.",
-)
 def test_combined_name_and_active_filter(companies_page):
     """SA-CMP-FLT-009 — Company name + Active company together return the correct subset."""
+    # The 'Active company' toggle is ON by default — filter by name with toggle ON
     companies_page.open_filters()
     companies_page.enter_text(companies_page.COMPANY_NAME_FILTER, COMPANY_NAME)
-    companies_page.click(companies_page.ACTIVE_COMPANY_TOGGLE)
+    # Toggle is already ON; no need to click it
     companies_page.apply_filters()
+    count = companies_page.get_visible_row_count()
+    assert count >= 1, \
+        f"Combined name + active filter should find '{COMPANY_NAME}'"
     body = companies_page.driver.find_element(By.TAG_NAME, "body").text.lower()
     assert "error" not in body, \
         "Combined filter should return results without error"
@@ -165,11 +148,6 @@ def test_reset_filters_restores_full_list(companies_page):
         f"After reset, expected {initial_count} rows, got {restored_count}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-012: Close (X) button locator inside the filter panel "
-           "not confirmed — needs DOM inspection.",
-)
 def test_close_filter_panel_without_applying(companies_page):
     """SA-CMP-FLT-012 — Close (X) dismisses the panel without applying pending changes."""
     initial_count = companies_page.get_visible_row_count()

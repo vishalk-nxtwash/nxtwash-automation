@@ -16,14 +16,24 @@ class CompaniesPage(BasePage):
     # Filter controls
     FILTER_BUTTON = (By.XPATH, "//button[contains(.,'Filter by')]")
     COMPANY_NAME_FILTER = (By.NAME, "companyName")
-    ACTIVE_COMPANY_TOGGLE = (By.NAME, "isActive")  # unconfirmed field name
+    # Hidden checkbox inside the filter form — name confirmed from DOM
+    ACTIVE_COMPANY_TOGGLE = (
+        By.XPATH,
+        "//form[@id='companies-filter-form']//input[@name='isActive']"
+    )
     APPLY_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Apply filters']")
     RESET_FILTERS_BUTTON = (By.XPATH, "//button[normalize-space()='Reset filters']")
+    # Filter popup close button — aria-label confirmed from DOM
+    FILTER_CLOSE_BUTTON = (
+        By.XPATH,
+        "//div[@aria-labelledby='popup-title']//button[@aria-label='Close popup']"
+    )
 
     # Row-level action buttons (relative to a row element)
     LOGIN_TO_BUTTON = (By.XPATH, ".//button[normalize-space()='Login to']")
 
-    # Login / App launcher dialog
+    # Login / App launcher dialog (filter popup also uses role="dialog" but has
+    # aria-labelledby="popup-title"; login dialog is a different instance)
     LOGIN_DIALOG = (By.XPATH, "//div[@role='dialog']")
     ADMIN_PORTAL_BUTTON = (
         By.XPATH,
@@ -35,25 +45,32 @@ class CompaniesPage(BasePage):
     )
     AP_OVERVIEW_TEXT = (By.XPATH, "//*[normalize-space()='Overview']")
 
-    # Export
+    # Export — popup has NO role="dialog"; anchored on form id instead
     EXPORT_ICON_BUTTON = (
         By.XPATH,
         "//button[.//svg[contains(@class,'lucide-download')]]"
     )
+    # Outermost popup container (rounded-xl wrapper that holds the form)
     EXPORT_MODAL = (
         By.XPATH,
-        "//div[@role='dialog'] | "
-        "//div[contains(@class,'modal') and contains(.,'Export')]"
+        "//form[@id='companies-export-form']"
+        "/ancestor::div[contains(@class,'rounded-xl')][1]"
     )
     EXPORT_MODAL_TITLE = (
         By.XPATH,
-        "//div[@role='dialog']//*[contains(.,'Export Companies')] | "
-        "//div[contains(@class,'modal')]//*[contains(.,'Export Companies')]"
+        "//form[@id='companies-export-form']"
+        "/ancestor::div[contains(@class,'rounded-xl')]"
+        "//div[normalize-space()='Export Companies']"
     )
+    # Column toggle checkboxes (opacity-0 hidden inputs inside <label> in the form)
     EXPORT_COLUMN_TOGGLES = (
         By.XPATH,
-        "//div[@role='dialog']//label//input[@type='checkbox']"
+        "//form[@id='companies-export-form']//label//input[@type='checkbox']"
     )
+    # Hidden input that holds the selected export format value
+    EXPORT_FORMAT_HIDDEN = (By.XPATH, "//input[@name='exportWay']")
+    # Submit button associated with the export form
+    EXPORT_SUBMIT_BUTTON = (By.XPATH, "//button[@form='companies-export-form']")
 
     # ── Page load ─────────────────────────────────────────────────────────────
 
@@ -88,10 +105,10 @@ class CompaniesPage(BasePage):
         self.wait.until(EC.presence_of_element_located((By.XPATH, "//tbody")))
 
     def close_filter_panel(self):
-        close_btn = (By.XPATH, "//button[.//svg[contains(@class,'lucide-x')]]")
-        els = self.driver.find_elements(*close_btn)
+        els = self.driver.find_elements(*self.FILTER_CLOSE_BUTTON)
         if els:
             self.driver.execute_script("arguments[0].click();", els[0])
+        self.wait.until(EC.invisibility_of_element_located(self.COMPANY_NAME_FILTER))
 
     def get_filter_value(self, locator):
         el = self.driver.find_element(*locator)
@@ -289,26 +306,28 @@ class CompaniesPage(BasePage):
         self.click(self.EXPORT_ICON_BUTTON)
 
     def export_modal_is_visible(self):
-        els = self.driver.find_elements(*self.EXPORT_MODAL)
+        # Export popup has no role="dialog" — check form presence instead
+        els = self.driver.find_elements(By.ID, "companies-export-form")
         return bool(els) and els[0].is_displayed()
 
     def get_export_format_options(self):
-        control_loc = (
+        # React Select combobox is inside the export form
+        combobox_loc = (
             By.XPATH,
-            "//div[@role='dialog']//div[contains(@class,'singleValue')]"
+            "//form[@id='companies-export-form']//*[@role='combobox']"
         )
-        controls = self.driver.find_elements(*control_loc)
-        if controls:
+        combos = self.driver.find_elements(*combobox_loc)
+        if combos:
             try:
-                controls[0].click()
+                # Click the parent control to open the dropdown
+                control = combos[0].find_element(
+                    By.XPATH, "ancestor::div[contains(@class,'css-') and contains(@class,'-control')][1]"
+                )
+                self.driver.execute_script("arguments[0].click();", control)
                 WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, "//div[@role='dialog']//*[@role='option']")
-                    )
+                    EC.presence_of_element_located((By.XPATH, "//*[@role='option']"))
                 )
-                opts = self.driver.find_elements(
-                    By.XPATH, "//div[@role='dialog']//*[@role='option']"
-                )
+                opts = self.driver.find_elements(By.XPATH, "//*[@role='option']")
                 result = [o.text.strip() for o in opts if o.text.strip()]
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 return result
@@ -317,10 +336,9 @@ class CompaniesPage(BasePage):
         return []
 
     def get_default_export_format(self):
-        els = self.driver.find_elements(
-            By.XPATH, "//div[@role='dialog']//div[contains(@class,'singleValue')]"
-        )
-        return els[0].text.strip() if els else None
+        # Read the hidden input that holds the selected format value
+        els = self.driver.find_elements(*self.EXPORT_FORMAT_HIDDEN)
+        return els[0].get_attribute("value") if els else None
 
     def get_export_column_states(self):
         toggles = self.driver.find_elements(*self.EXPORT_COLUMN_TOGGLES)
@@ -331,27 +349,20 @@ class CompaniesPage(BasePage):
         return states
 
     def export_confirm_button_is_disabled(self):
-        locators = [
-            (By.XPATH,
-             "//div[@role='dialog']//button[contains(.,'Export') "
-             "and not(contains(.,'Cancel'))]"),
-            (By.XPATH,
-             "//div[@role='dialog']//button[contains(@class,'primary') or "
-             "contains(@class,'confirm')]"),
-        ]
-        for loc in locators:
-            els = self.driver.find_elements(*loc)
-            if els:
-                btn = els[0]
-                return (
-                    btn.get_attribute("disabled") is not None
-                    or btn.get_attribute("aria-disabled") == "true"
-                )
+        els = self.driver.find_elements(*self.EXPORT_SUBMIT_BUTTON)
+        if els:
+            btn = els[0]
+            return (
+                btn.get_attribute("disabled") is not None
+                or btn.get_attribute("aria-disabled") == "true"
+            )
         return False
 
     def cancel_export(self):
+        # Cancel button sits alongside the Export submit button in the popup footer
         self.click((
             By.XPATH,
-            "//div[@role='dialog']//button[normalize-space()='Cancel'] | "
-            "//div[contains(@class,'modal')]//button[normalize-space()='Cancel']"
+            "//form[@id='companies-export-form']"
+            "/ancestor::div[contains(@class,'rounded-xl')]"
+            "//button[normalize-space()='Cancel']"
         ))
