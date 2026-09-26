@@ -50,8 +50,12 @@ jobs:
           - name: reports-transactions
             path: tests/admin_portal/transactions
 
+          # parallel: 3 — already validated for this module in suite-admin.yml
+          # ("I/O-bound so 3 workers fit 2-vCPU runner"); this shard was the
+          # new bottleneck after the reports-ops split (~14 min vs 2-6 min).
           - name: reports-labor-shifts
             path: tests/admin_portal/labor_shifts
+            parallel: "3"
 
           - name: reports-redemptions
             path: tests/admin_portal/redemptions
@@ -81,9 +85,10 @@ jobs:
               tests/admin_portal/gift_cards
               tests/admin_portal/bank_drop
 
-          # memberships commented out — filter panel JS click fix pending verification
           - name: promotions
-            path: tests/admin_portal/discounts
+            path: >-
+              tests/admin_portal/discounts
+              tests/admin_portal/memberships
 
           - name: customers
             path: tests/admin_portal/customers
@@ -99,9 +104,10 @@ jobs:
               tests/admin_portal/user_roles
               tests/admin_portal/gas_pump_settings
 
-          # employees commented out — filter panel JS click fix pending verification
           - name: people
-            path: tests/admin_portal/users
+            path: >-
+              tests/admin_portal/users
+              tests/admin_portal/employees
 
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
@@ -110,5 +116,5 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       marker: smoke
-      parallel: "2"
+      parallel: ${{ matrix.shard.parallel || '2' }}
       timeout_minutes: 30
