@@ -27,7 +27,6 @@ def test_redemptions_page_loads_and_modal_opens(browser):
 @pytest.mark.prod_smoke
 def test_redemptions_filter_modal_has_site_and_date_controls(browser):
     page = open_rdm_page(browser)
-    body = page.get_body_text()
 
     assert page.driver.find_element(*page.SITE_MULTISELECT).is_displayed(), (
         "Site multiselect not visible in filter modal"

@@ -24,6 +24,10 @@ def test_gift_cards_page_loads(browser):
     assert "Gift card name" in body_text
     assert "Gift card amount" in body_text
     assert "Status" in body_text
+    assert page.search_input_is_visible(), "Search input not visible"
+    assert page.filter_button_is_clickable(), "Filter button not clickable"
+    assert page.download_button_is_clickable(), "Download button not clickable"
+    assert page.add_gift_card_button_is_clickable(), "Add gift card button not clickable"
     assert page_has_no_broken_state(page)
 
 
