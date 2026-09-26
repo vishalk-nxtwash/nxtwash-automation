@@ -1,0 +1,40 @@
+name: Superadmin Prod Smoke
+
+# Read-only smoke checks (-m prod_smoke) against the live superadmin app.
+#
+# NOTE: config/staging.yaml and config/production.yaml both point superadmin
+# at the same host (https://superadmin.nxtwash.com) — there is no separate
+# "production" deployment of superadmin itself. This suite is still run with
+# --env production (environment: production below) because the safety gate
+# in run-suite.yml only allows the prod_smoke marker against that environment,
+# and because it is the correct guard rail for a suite that touches the one
+# live app managing real company data: every test here is read-only (login,
+# list-loads, column/pagination checks, opening-then-dismissing the
+# "Login to" dialog) — no creates, edits, deletes, or app launches.
+#
+# Manual dispatch only until this has a few clean runs — flip to
+# workflow_dispatch + schedule once proven stable, mirroring suite-prod-smoke.yml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+
+concurrency:
+  group: superadmin-prod-smoke
+  cancel-in-progress: false
+
+jobs:
+  prod-smoke:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: superadmin-prod-smoke
+      environment: production
+      test_path: tests/prod_smoke/superadmin
+      marker: prod_smoke
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      timeout_minutes: 20

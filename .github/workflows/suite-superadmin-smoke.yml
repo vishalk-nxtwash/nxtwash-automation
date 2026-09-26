@@ -1,0 +1,46 @@
+name: Superadmin Smoke (staging)
+
+# Fast sanity check — runs only @smoke marked tests across the superadmin
+# module (login, companies, users, user roles, third party). These are the
+# core-path/happy-path tests: page loads, form-open navigation, and the
+# handful of create/edit flows that operate on the dedicated automation
+# fixtures (e.g. 'vkautomationcompanytest') and are safe to repeat on every
+# push. Validation/edge/xfail/seed cases are excluded — those stay in the
+# full suite-superadmin.yml (manual dispatch only).
+#
+# Expected wall-clock: ~5 min (~25 tests, single shard).
+#
+# Triggers:
+#   - Every push to main or development (catches regressions early)
+#   - Manual dispatch (run anytime between full suite runs)
+
+on:
+  push:
+    branches: [main, development]
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: '"ubuntu-latest" (GitHub-hosted) or "self-hosted" (EC2) — ignored on push, always ubuntu-latest there'
+        required: false
+        default: "ubuntu-latest"
+      parallel:
+        description: "xdist workers: a number, auto, or 0 for serial"
+        required: false
+        default: "2"
+
+concurrency:
+  group: superadmin-smoke-staging
+  cancel-in-progress: true   # New push cancels previous in-flight smoke run
+
+jobs:
+  smoke:
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: superadmin-smoke
+      environment: staging
+      test_path: tests/superadmin
+      marker: smoke
+      parallel: ${{ github.event.inputs.parallel || '2' }}
+      timeout_minutes: 20
+      runner: ${{ github.event.inputs.runner || 'ubuntu-latest' }}
