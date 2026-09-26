@@ -17,7 +17,7 @@ name: Admin Smoke (staging)
 
 on:
   push:
-    branches: [main, staging]
+    branches: [main, staging, development]
   workflow_dispatch:
 
 concurrency:
