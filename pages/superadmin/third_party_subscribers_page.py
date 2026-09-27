@@ -121,9 +121,8 @@ class SubscribersPage(BasePage):
         self.js_click_fresh(btn_loc)
 
     def get_row_actions(self, name):
-        row = self.wait_for_row(name)
-        btns = row.find_elements(By.XPATH, ".//button")
-        return [b.text.strip() for b in btns if b.text.strip()]
+        self.wait_for_row(name)
+        return self.stable_texts(self.get_row_locator(name)[1] + "//button")
 
 
 class CreateSubscriberPage(BasePage):

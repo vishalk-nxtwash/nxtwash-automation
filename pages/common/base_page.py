@@ -74,6 +74,39 @@ class BasePage:
 
         return self.wait.until(_visible)
 
+    _XPATH_TEXTS_JS = """
+        const result = document.evaluate(arguments[0], document, null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+        const texts = [];
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const t = (result.snapshotItem(i).innerText || "").trim();
+            if (t) texts.push(t);
+        }
+        return texts;
+    """
+
+    def stable_texts(self, xpath, timeout=10):
+        """Texts of all elements matching ``xpath``, read in one script call.
+
+        Reading ``.text`` element-by-element goes stale when a table re-renders
+        mid-read (e.g. right after a filter). A single JS snapshot can't go
+        stale; waiting for two identical, non-empty reads skips the loading
+        render.
+        """
+        last = {"texts": None}
+
+        def _settled(d):
+            texts = d.execute_script(self._XPATH_TEXTS_JS, xpath)
+            same = bool(texts) and texts == last["texts"]
+            last["texts"] = texts
+            return same
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except Exception:  # noqa: BLE001 — return the latest snapshot
+            pass
+        return last["texts"] or []
+
     def js_click_fresh(self, locator, attempts=3):
         """Re-locate and JS-click an element, retrying on staleness.
 

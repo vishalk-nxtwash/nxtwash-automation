@@ -213,9 +213,8 @@ class CompaniesPage(BasePage):
 
     def get_row_actions(self, company_name):
         """Return text labels of all buttons in the row for company_name."""
-        row = self.wait_for_company_row(company_name)
-        buttons = row.find_elements(By.XPATH, ".//button")
-        return [btn.text.strip() for btn in buttons if btn.text.strip()]
+        self.wait_for_company_row(company_name)
+        return self.stable_texts(self.get_company_row_locator(company_name)[1] + "//button")
 
     # ── Table / Pagination ────────────────────────────────────────────────────
 
