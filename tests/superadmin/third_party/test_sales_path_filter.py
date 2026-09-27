@@ -32,6 +32,7 @@ def test_filter_panel_shows_expected_controls(sales_path_page):
     assert active_els, "'Active Sales Path' toggle should be in the filter panel"
 
 
+@pytest.mark.smoke
 def test_filter_by_exact_company_name(sales_path_page):
     """SA-SLP-FLT-003 — Filter by exact Company name returns the matching sales path."""
     from selenium.webdriver.common.by import By

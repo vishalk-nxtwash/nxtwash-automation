@@ -41,6 +41,7 @@ def test_filter_panel_shows_required_controls(user_roles_page):
     assert reset_btns, "Filter panel should have a 'Reset filters' button"
 
 
+@pytest.mark.smoke
 def test_filter_by_exact_role_name_returns_match(user_roles_page):
     """SA-UR-FLT-003 — Filter by exact Role Name returns the matching role."""
     user_roles_page.filter_by_role_name(TEST_ROLE_NAME)

@@ -1,5 +1,6 @@
 import re
 import warnings
+from pathlib import Path
 
 import pytest
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,6 +16,29 @@ TEST_ROLE_NAME = "VK Auto Test Role"
 PREDEFINED_ROLE_NAME = "Company Owner"
 
 _BASE_URL = "https://superadmin.nxtwash.com"
+
+
+def pytest_collection_modifyitems(config, items):
+    """Keep every test that mutates or reads the shared test role on ONE xdist
+    worker (requires --dist loadgroup).
+
+    Several edit/permission tests save changes to TEST_ROLE_NAME (rename,
+    permissions, active toggle) while list/filter/create tests look it up by
+    name — run concurrently they race. Membership is derived, not hand-tagged,
+    so new tests are covered automatically: any test using ``edit_role_page``
+    or referencing ``TEST_ROLE_NAME`` in its body joins the group.
+    """
+    import inspect
+    here = str(Path(__file__).parent)
+    for item in items:
+        if not str(item.fspath).startswith(here):
+            continue
+        try:
+            source = inspect.getsource(item.function)
+        except (OSError, TypeError, AttributeError):
+            source = ""
+        if "edit_role_page" in getattr(item, "fixturenames", ()) or "TEST_ROLE_NAME" in source:
+            item.add_marker(pytest.mark.xdist_group("sa_test_role"))
 
 
 # Names the edit test gives the role ("<name> Edited <6 hex>"). If a run dies

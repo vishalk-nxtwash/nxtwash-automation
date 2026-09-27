@@ -34,6 +34,7 @@ def test_companies_table_has_required_columns(companies_page):
             f"Expected a column containing '{col}' in headers: {headers}"
 
 
+@pytest.mark.smoke
 def test_company_row_shows_login_to_and_edit_actions(companies_page):
     """SA-CMP-LST-003 — Each row shows 'Login to' and 'Edit' action buttons."""
     companies_page.filter_by_company_name(COMPANY_NAME)

@@ -47,6 +47,7 @@ def test_edit_form_prefills_saved_data(edit_subscriber_page):
         f"Abbreviation should be pre-filled with '{SUBSCRIBER_ABBR}', got: '{abbr}'"
 
 
+@pytest.mark.smoke
 def test_edit_subscriber_name_persists(edit_subscriber_page, managed_subscriber_id):
     """SA-SUB-EDT-003 — Editing the Subscriber Name and saving persists on the list."""
     updated_name = "%s Edited %s" % (SUBSCRIBER_NAME, uuid.uuid4().hex[:6])
