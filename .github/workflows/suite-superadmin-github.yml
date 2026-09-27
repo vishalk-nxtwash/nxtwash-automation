@@ -16,6 +16,10 @@ on:
         description: "xdist workers per shard (2 = max for GitHub runner vCPUs)"
         required: false
         default: "2"
+      test_path:
+        description: "Optional: run only these test path(s)/node id(s) as one job (blank = full sharded suite)"
+        required: false
+        default: ""
 
 # ONE queue shared by every superadmin workflow that touches staging (full
 # suite on either runner, smoke). They all mutate the same managed records, so
@@ -27,6 +31,7 @@ concurrency:
 
 jobs:
   superadmin:
+    if: ${{ !inputs.test_path }}
     strategy:
       fail-fast: false
       matrix:
@@ -55,5 +60,18 @@ jobs:
       environment: staging
       test_path: ${{ matrix.shard.path }}
       parallel: ${{ github.event.inputs.parallel || '2' }}
+      timeout_minutes: 60
+      runner: ubuntu-latest
+
+  # Fast iteration: one job running just the requested test(s).
+  targeted:
+    if: ${{ inputs.test_path }}
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: sa-github-targeted
+      environment: staging
+      test_path: ${{ inputs.test_path }}
+      parallel: "0"
       timeout_minutes: 60
       runner: ubuntu-latest

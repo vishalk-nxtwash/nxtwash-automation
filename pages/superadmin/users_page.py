@@ -205,20 +205,37 @@ class UsersPage(BasePage):
             return len(rows)
         return len(self.driver.find_elements(By.XPATH, "//tbody/tr"))
 
+    # Reads every row's cell texts in ONE script call — a snapshot that can't
+    # go stale — and waits for two identical consecutive reads, because the
+    # table re-renders (loading → results) after a filter is applied.
+    _ROW_TEXTS_JS = """
+        return Array.from(document.querySelectorAll('tbody tr'))
+            .filter(tr => tr.querySelector('td'))
+            .map(tr => Array.from(tr.querySelectorAll('td')).map(td => td.innerText.trim()));
+    """
+
+    def _stable_row_texts(self, timeout=10):
+        last = {"rows": None}
+
+        def _settled(d):
+            rows = d.execute_script(self._ROW_TEXTS_JS)
+            same = rows == last["rows"]
+            last["rows"] = rows
+            return same
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except TimeoutException:
+            pass  # still changing — return the latest snapshot
+        return last["rows"] or []
+
     def get_visible_user_emails(self):
-        cells = self.driver.find_elements(
-            By.XPATH, "//tbody/tr/td[contains(.,'@')]"
-        )
-        return [c.text.strip() for c in cells if "@" in c.text]
+        return [
+            cell for row in self._stable_row_texts() for cell in row if "@" in cell
+        ]
 
     def get_visible_user_first_names(self):
-        rows = self.driver.find_elements(By.XPATH, "//tbody/tr[td]")
-        names = []
-        for row in rows:
-            cells = row.find_elements(By.XPATH, ".//td")
-            if cells:
-                names.append(cells[0].text.strip())
-        return names
+        return [row[0] for row in self._stable_row_texts() if row]
 
     def pagination_controls_present(self):
         locators = [
