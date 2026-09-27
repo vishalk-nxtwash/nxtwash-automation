@@ -830,6 +830,48 @@ class CustomersPage(BasePage):
     def click_save_customer(self):
         self.click(self.SAVE_CUSTOMER_BUTTON)
 
+    def ensure_boolean_fields_defined(self, names=("exemptTax",)):
+        """Give legacy customers an explicit value for newer boolean fields.
+
+        Customers created before 'Exempt tax' existed have exemptTax undefined;
+        the edit form's schema requires a boolean, so Save is rejected silently
+        (console: onValidationError exemptTax "expected boolean, received
+        undefined") and no request is sent. Toggling the checkbox on and back
+        off sets it to its displayed value (false) without changing the record.
+        Product bug: such customers cannot be edited in the UI at all.
+        """
+        for name in names:
+            self.driver.execute_script(
+                "const el = document.querySelector('input[name=\"' + arguments[0] + '\"]');"
+                "if (el) { el.click(); el.click(); }",
+                name,
+            )
+
+    def save_edit_and_return_to_list(self, timeout=20):
+        """Save the edit form, confirm the save landed, then show the list.
+
+        The legacy edit form no longer redirects to the list after Save (same
+        change memberships_page documents), so waiting for the list after a
+        plain click timed out. Wait for the Success toast first — navigating
+        away before the save lands would silently drop the edit — then open
+        the list directly if the app stayed on the form.
+        """
+        self.ensure_boolean_fields_defined()
+        self.click_save_customer()
+        success = (By.XPATH, "//*[contains(normalize-space(),'Success')]")
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                lambda d: d.find_elements(*success) or d.find_elements(*self.ADD_CUSTOMER_BUTTON)
+            )
+        except TimeoutException:
+            pass  # list wait below reports the failure
+        if not self.driver.find_elements(*self.ADD_CUSTOMER_BUTTON):
+            self.driver.switch_to.default_content()
+            current = self.driver.current_url or ""
+            base = current.split("/customers")[0] if "/customers" in current else current.rstrip("/")
+            self.driver.get(base + "/customers")
+        self.wait_for_list_loaded()
+
     def click_cancel(self):
         self.click(self.CANCEL_BUTTON)
         # The form shows "Are you sure you want to cancel?" when data was entered.

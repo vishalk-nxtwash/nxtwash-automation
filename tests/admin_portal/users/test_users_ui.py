@@ -39,8 +39,8 @@ def test_users_grid_columns_are_visible(browser):
     page = open_users_page(browser)
     body = page.get_body_text()
 
-    assert "Email address" in body, "Column 'Email address' not found"
-    assert "First name" in body, "Column 'First name' not found"
-    assert "Status" in body, "Column 'Status' not found"
-    assert "Edit" in body, "Column 'Edit' not found"
+    # Current grid (re-verified 2026-09-27): the Status column was removed
+    # from the product; Last name / Employee code / Role were added.
+    for column in ("Email address", "First name", "Last name", "Employee code", "Role", "Edit"):
+        assert column in body, f"Column '{column}' not found"
     assert page_has_no_broken_state(page)
