@@ -1,7 +1,8 @@
 import allure
 import pytest
 
-from tests.superadmin.third_party.conftest import SUBSCRIBER_ABBR, SUBSCRIBER_NAME
+from pages.superadmin.third_party_subscribers_page import SubscribersPage
+from tests.superadmin.third_party.conftest import _BASE_URL, SUBSCRIBER_ABBR, SUBSCRIBER_NAME
 
 pytestmark = [
     allure.epic("Superadmin"),
@@ -76,8 +77,12 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
-def test_new_subscriber_appears_in_list(subscribers_page):
+@pytest.mark.xdist_group("sa_managed_subscriber")
+def test_new_subscriber_appears_in_list(managed_subscriber_id, browser):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
+    browser.get(_BASE_URL + "/third-party/subscribers")
+    subscribers_page = SubscribersPage(browser)
+    subscribers_page.wait_for_loaded()
     assert subscribers_page.row_exists(SUBSCRIBER_NAME), \
         f"'{SUBSCRIBER_NAME}' should be visible in the subscribers list"
 

@@ -56,6 +56,26 @@ class BasePage:
                 time.sleep(0.3)
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
+    def js_click_fresh(self, locator, attempts=3):
+        """Re-locate and JS-click an element, retrying on staleness.
+
+        List rows re-render when table data arrives or refreshes, so a row or
+        button reference found a moment earlier can go stale before the click.
+        Locating inside the retry loop always acts on the current node.
+        """
+        for attempt in range(attempts):
+            try:
+                element = self.wait.until(EC.element_to_be_clickable(locator))
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", element
+                )
+                self.driver.execute_script("arguments[0].click();", element)
+                return
+            except StaleElementReferenceException:
+                if attempt == attempts - 1:
+                    raise
+                time.sleep(0.5)
+
     def enter_text(self, locator, text):
         element = self.wait.until(EC.visibility_of_element_located(locator))
         if element.tag_name.lower() == "textarea":

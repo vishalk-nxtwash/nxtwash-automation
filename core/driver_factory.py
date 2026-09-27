@@ -1,9 +1,16 @@
+import copy
 import os
+import shutil
 import socket
+import tempfile
+import time
 
 from selenium import webdriver
+from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
+from core.network_capture import chrome_logging_capabilities
 
 # Set a 60-second default socket timeout so ChromeDriver HTTP requests don't
 # block indefinitely when Chrome freezes.  Without this, a frozen Chrome
@@ -67,10 +74,39 @@ class DriverFactory:
             # Keep the browser open after script execution (local debugging).
             options.add_experimental_option("detach", True)
 
-        driver = webdriver.Chrome(
-            service=Service(cls._chromedriver_path()),
-            options=options
-        )
+        chrome_logging_capabilities(options)
+
+        # Explicit profile dir under tempfile.gettempdir() (honours TMPDIR on
+        # every OS; Chrome's own default ignores it on macOS). CI points TMPDIR
+        # at a per-job directory so cleanup can target this job's browsers
+        # only, on hosts shared by several runners.
+        # Chrome occasionally fails to launch under load ("session not
+        # created: chrome not reachable") — retry once with a fresh profile.
+        for attempt in range(2):
+            profile_dir = tempfile.mkdtemp(prefix="nxtwash-chrome-")
+            launch_options = copy.deepcopy(options)
+            launch_options.add_argument("--user-data-dir=%s" % profile_dir)
+            try:
+                driver = webdriver.Chrome(
+                    service=Service(cls._chromedriver_path()),
+                    options=launch_options
+                )
+                break
+            except SessionNotCreatedException:
+                shutil.rmtree(profile_dir, ignore_errors=True)
+                if attempt == 1:
+                    raise
+                time.sleep(2)
+
+        original_quit = driver.quit
+
+        def _quit_and_remove_profile():
+            try:
+                original_quit()
+            finally:
+                shutil.rmtree(profile_dir, ignore_errors=True)
+
+        driver.quit = _quit_and_remove_profile
 
         if not headless:
             driver.maximize_window()

@@ -39,7 +39,7 @@ concurrency:
   # too: cancel-in-progress could kill a run after it renames a role but
   # before its `finally:` block resets it, leaving staging permanently dirty.
   # A queued-but-superseded run is slower; a killed-mid-mutation run is worse.
-  group: superadmin-smoke-staging
+  group: superadmin-staging
   cancel-in-progress: false
 
 jobs:

@@ -1,3 +1,4 @@
+import re
 import warnings
 
 import pytest
@@ -14,6 +15,23 @@ TEST_ROLE_NAME = "VK Auto Test Role"
 PREDEFINED_ROLE_NAME = "Company Owner"
 
 _BASE_URL = "https://superadmin.nxtwash.com"
+
+
+# Names the edit test gives the role ("<name> Edited <6 hex>"). If a run dies
+# before its teardown restore, the role keeps that name; recover it by id here,
+# otherwise the name-based upsert below would POST a duplicate role.
+_EDITED_TEST_ROLE = re.compile(r"^%s Edited [0-9a-f]{6}$" % re.escape(TEST_ROLE_NAME))
+
+
+def _recover_renamed_test_role(api):
+    roles = api._role_api_call("GET") or []
+    if any(r["roleName"] == TEST_ROLE_NAME for r in roles):
+        return
+    leftovers = [r for r in roles if _EDITED_TEST_ROLE.match(r["roleName"])]
+    if leftovers:
+        snapshot = api.get_role_by_id_with_api(leftovers[0]["superAdminUserRoleId"])
+        snapshot["roleName"] = TEST_ROLE_NAME
+        api.restore_role_with_api(snapshot)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -40,6 +58,7 @@ def ensure_test_roles_exist(request):
         )
 
         api = CreateUserRolePage(driver)
+        _recover_renamed_test_role(api)
         api.upsert_role_with_api(TEST_ROLE_NAME, is_active=True, include_create_company=True)
 
     except Exception as exc:

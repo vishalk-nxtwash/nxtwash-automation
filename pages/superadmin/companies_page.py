@@ -84,6 +84,35 @@ class CompaniesPage(BasePage):
             )
         except Exception:
             pass
+        self.wait_for_rows_settled()
+
+    def wait_for_rows_settled(self, timeout=15):
+        """Wait until the table shows its data, not the loading placeholder.
+
+        The header renders before the rows; a count taken too early sees a
+        single placeholder row. Settled = the visible row count matches the
+        "out of N records" total (capped at the page size) and is stable
+        across two polls.
+        """
+        last = {"n": -1}
+
+        def _settled(d):
+            n = self.get_visible_row_count()
+            counts = d.find_elements(
+                By.XPATH, "//*[contains(text(),'out of') and contains(text(),'records')]"
+            )
+            total = None
+            if counts:
+                digits = [int(t) for t in counts[0].text.replace(",", "").split() if t.isdigit()]
+                total = digits[-1] if digits else None
+            ready = total is not None and total > 0 and (n == total or n >= 10) and n == last["n"]
+            last["n"] = n
+            return ready
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except TimeoutException:
+            pass  # empty or unexpected layout — callers assert on real counts
 
     def _reset_filter_state(self):
         """Reset any applied filters regardless of whether the panel is open."""
@@ -179,14 +208,8 @@ class CompaniesPage(BasePage):
         )
 
     def open_company_edit(self, company_name):
-        row = self.wait_for_company_row(company_name)
-        edit_button = row.find_element(
-            By.XPATH, ".//button[normalize-space()='Edit']"
-        )
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center'});", edit_button
-        )
-        self.driver.execute_script("arguments[0].click();", edit_button)
+        row_by, row_xpath = self.get_company_row_locator(company_name)
+        self.js_click_fresh((row_by, row_xpath + "//button[normalize-space()='Edit']"))
 
     def get_row_actions(self, company_name):
         """Return text labels of all buttons in the row for company_name."""

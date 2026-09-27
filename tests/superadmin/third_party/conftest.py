@@ -1,4 +1,7 @@
+import warnings
+
 import pytest
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -72,27 +75,92 @@ def create_subscriber_page(subscribers_page, browser):
     return page
 
 
-@pytest.fixture
-def edit_subscriber_page(subscribers_page, browser):
-    """Navigate to the Edit form for the automation test subscriber.
+# Managed subscriber (reset-to-baseline, rename-reset variant — see
+# tests/admin_portal/_managed.py). Subscribers cannot be deleted, so the edit
+# tests share ONE record, identified by id, and reset it before and after each
+# test. Names produced by the edit tests ("<base> Edited ...") are recognised
+# as this record so an aborted run self-heals instead of orphaning it.
+_SUBSCRIBER_BASELINE = {"thirdPartyName": SUBSCRIBER_NAME, "abbreviation": SUBSCRIBER_ABBR, "isActive": True}
 
-    Creates the record first if it does not yet exist on staging.
-    """
-    if not subscribers_page.row_exists(SUBSCRIBER_NAME):
-        subscribers_page.click_add_subscriber()
+
+def _is_managed_subscriber(name):
+    return name == SUBSCRIBER_NAME or name.startswith(SUBSCRIBER_NAME + " Edited")
+
+
+def _wait_for_subscriber_api(page, subscriber_id, expected, timeout=20):
+    """Block until the backend record matches ``expected``; return last seen."""
+    seen = {}
+
+    def _matches(_driver):
+        seen.update(page.get_by_id_with_api(subscriber_id))
+        return all(seen.get(k) == v for k, v in expected.items())
+
+    try:
+        WebDriverWait(page.driver, timeout, poll_frequency=1).until(_matches)
+    except TimeoutException:
+        pass
+    return {k: seen.get(k) for k in expected}
+
+
+def reset_managed_subscriber(browser):
+    """Ensure the managed subscriber exists at baseline; return its id."""
+    page = SubscribersPage(browser)
+    matches = [s for s in page.list_with_api() if _is_managed_subscriber(s["thirdPartyName"])]
+    # Prefer the record holding the canonical name (renaming another record to
+    # it would 499 on uniqueness), then the newest.
+    matches.sort(key=lambda s: (s["thirdPartyName"] != SUBSCRIBER_NAME, -s["thirdPartyId"]))
+
+    if not matches:
+        browser.get(_BASE_URL + "/third-party/subscribers/create")
         cp = CreateSubscriberPage(browser)
         cp.wait_for_loaded()
         cp.enter_name(SUBSCRIBER_NAME)
         cp.enter_abbreviation(SUBSCRIBER_ABBR)
         cp.click_save_new()
-        WebDriverWait(browser, 30).until(
-            EC.url_contains("/third-party/subscribers")
+        cp.confirm_yes_if_present()
+        WebDriverWait(browser, 20, poll_frequency=1).until(
+            lambda d: any(s["thirdPartyName"] == SUBSCRIBER_NAME for s in page.list_with_api())
         )
-        subscribers_page.wait_for_loaded()
+        matches = [s for s in page.list_with_api() if s["thirdPartyName"] == SUBSCRIBER_NAME]
 
-    subscribers_page.open_edit(SUBSCRIBER_NAME)
+    subscriber_id = matches[0]["thirdPartyId"]
+    record = page.get_by_id_with_api(subscriber_id)
+    if any(record.get(k) != v for k, v in _SUBSCRIBER_BASELINE.items()):
+        browser.get("%s/third-party/subscribers/%s" % (_BASE_URL, subscriber_id))
+        ep = EditSubscriberPage(browser)
+        ep.wait_for_loaded()
+        WebDriverWait(browser, 15).until(lambda d: ep.get_name() != "")
+        ep.set_name(SUBSCRIBER_NAME)
+        ep.set_abbreviation(SUBSCRIBER_ABBR)
+        ep.set_active_toggle(True)
+        ep.click_save_changes()
+        ep.confirm_yes_if_present()
+        seen = _wait_for_subscriber_api(page, subscriber_id, _SUBSCRIBER_BASELINE)
+        assert seen == _SUBSCRIBER_BASELINE, \
+            "Could not reset managed subscriber %s to baseline: %s" % (subscriber_id, seen)
+    return subscriber_id
+
+
+@pytest.fixture
+def managed_subscriber_id(browser):
+    """Id of the managed subscriber, at baseline before and after the test."""
+    _login_and_wait(browser)
+    subscriber_id = reset_managed_subscriber(browser)
+    try:
+        yield subscriber_id
+    finally:
+        try:
+            reset_managed_subscriber(browser)
+        except Exception as exc:  # noqa: BLE001
+            warnings.warn("Managed subscriber teardown reset failed: %s" % exc)
+
+
+@pytest.fixture
+def edit_subscriber_page(managed_subscriber_id, browser):
+    """Open the Edit form of the managed subscriber directly by id."""
+    browser.get("%s/third-party/subscribers/%s" % (_BASE_URL, managed_subscriber_id))
     page = EditSubscriberPage(browser)
-    page.wait_for_loaded()
+    page.wait_for_loaded(expected_name=SUBSCRIBER_NAME)
     return page
 
 
@@ -232,7 +300,11 @@ def edit_sales_path_page(sales_path_page, browser):
     sales_path_page.filter_by_company_name(SALES_PATH_COMPANY)
     if sales_path_page.row_exists(SALES_PATH_COMPANY, timeout=8):
         sales_path_page.open_edit(SALES_PATH_COMPANY)
-        return EditSalesPathPage(browser)
+        # open_edit is a JS click — wait for the SPA to reach the edit route
+        # before handing the page over, or tests read the list URL.
+        ep = EditSalesPathPage(browser)
+        ep.wait_for_loaded()
+        return ep
 
     # ── 2. Record disabled — find it with toggles OFF ─────────────────────────
     sales_path_page.wait_for_loaded()

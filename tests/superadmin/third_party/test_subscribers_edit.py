@@ -1,17 +1,25 @@
+import uuid
+
 import allure
 import pytest
 
+from pages.superadmin.third_party_subscribers_page import SubscribersPage
 from tests.superadmin.third_party.conftest import (
+    _BASE_URL,
     REF_SUBSCRIBER_ABBR,
     REF_SUBSCRIBER_NAME,
     SUBSCRIBER_ABBR,
     SUBSCRIBER_NAME,
+    _wait_for_subscriber_api,
 )
 
 pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Webhook Subscribers — Edit"),
+    # All edit tests mutate the one managed subscriber — keep them on one
+    # xdist worker so they never race each other (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_managed_subscriber"),
 ]
 
 
@@ -39,60 +47,40 @@ def test_edit_form_prefills_saved_data(edit_subscriber_page):
         f"Abbreviation should be pre-filled with '{SUBSCRIBER_ABBR}', got: '{abbr}'"
 
 
-def test_edit_subscriber_name_persists(edit_subscriber_page, subscribers_page):
+def test_edit_subscriber_name_persists(edit_subscriber_page, managed_subscriber_id):
     """SA-SUB-EDT-003 — Editing the Subscriber Name and saving persists on the list."""
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.webdriver.support.ui import WebDriverWait
-
-    updated_name = SUBSCRIBER_NAME + " Edited"
+    updated_name = "%s Edited %s" % (SUBSCRIBER_NAME, uuid.uuid4().hex[:6])
     edit_subscriber_page.set_name(updated_name)
     edit_subscriber_page.click_save_changes()
     edit_subscriber_page.confirm_yes_if_present()
 
-    WebDriverWait(edit_subscriber_page.driver, 30).until(
-        EC.url_contains("/third-party/subscribers")
+    list_page = SubscribersPage(edit_subscriber_page.driver)
+    persisted = _wait_for_subscriber_api(
+        list_page, managed_subscriber_id, {"thirdPartyName": updated_name}
     )
-    # Restore original name
-    subscribers_page.wait_for_loaded()
-    subscribers_page.open_edit(updated_name)
-    from pages.superadmin.third_party_subscribers_page import EditSubscriberPage
-    restore_page = EditSubscriberPage(edit_subscriber_page.driver)
-    restore_page.wait_for_loaded()
-    restore_page.set_name(SUBSCRIBER_NAME)
-    restore_page.click_save_changes()
-    restore_page.confirm_yes_if_present()
-    WebDriverWait(edit_subscriber_page.driver, 30).until(
-        EC.url_contains("/third-party/subscribers")
-    )
+    assert persisted["thirdPartyName"] == updated_name, \
+        f"Name did not persist: backend has {persisted['thirdPartyName']!r}"
+
+    list_page.driver.get(_BASE_URL + "/third-party/subscribers")
+    list_page.wait_for_loaded()
+    assert list_page.row_exists(updated_name), \
+        f"'{updated_name}' should be visible in the subscribers list after save"
+    # Managed fixture teardown restores the baseline name.
 
 
-def test_edit_abbreviation_persists(edit_subscriber_page, subscribers_page):
+def test_edit_abbreviation_persists(edit_subscriber_page, managed_subscriber_id):
     """SA-SUB-EDT-004 — Editing the Abbreviation and saving persists."""
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.webdriver.support.ui import WebDriverWait
-
-    original = edit_subscriber_page.get_abbreviation()
     updated = "VE"
     edit_subscriber_page.set_abbreviation(updated)
     edit_subscriber_page.click_save_changes()
     edit_subscriber_page.confirm_yes_if_present()
 
-    WebDriverWait(edit_subscriber_page.driver, 30).until(
-        EC.url_contains("/third-party/subscribers")
+    persisted = _wait_for_subscriber_api(
+        SubscribersPage(edit_subscriber_page.driver), managed_subscriber_id,
+        {"abbreviation": updated},
     )
-    # Restore
-    subscribers_page.wait_for_loaded()
-    subscribers_page.open_edit(SUBSCRIBER_NAME)
-    from pages.superadmin.third_party_subscribers_page import EditSubscriberPage
-    restore_page = EditSubscriberPage(edit_subscriber_page.driver)
-    restore_page.wait_for_loaded()
-    restore_page.set_abbreviation(original or SUBSCRIBER_ABBR)
-    restore_page.click_save_changes()
-    restore_page.confirm_yes_if_present()
-    WebDriverWait(edit_subscriber_page.driver, 30).until(
-        EC.url_contains("/third-party/subscribers")
-    )
+    assert persisted["abbreviation"] == updated, \
+        f"Abbreviation did not persist: backend has {persisted['abbreviation']!r}"
 
 
 def test_clearing_required_field_blocks_save(edit_subscriber_page):
@@ -137,24 +125,21 @@ def test_deactivating_in_use_subscriber_impact(edit_subscriber_page):
     pass
 
 
-def test_cancel_on_edit_discards_changes(edit_subscriber_page, subscribers_page):
+def test_cancel_on_edit_discards_changes(edit_subscriber_page, managed_subscriber_id):
     """SA-SUB-EDT-008 — Cancel on Edit discards changes — subscriber is unchanged."""
     from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.support.ui import WebDriverWait
 
-    original_name = edit_subscriber_page.get_name()
     edit_subscriber_page.set_name("VK Should Not Persist")
     edit_subscriber_page.click_cancel()
     edit_subscriber_page.confirm_yes_if_present()
 
     WebDriverWait(edit_subscriber_page.driver, 20).until(
-        EC.url_contains("/third-party/subscribers")
+        lambda d: d.current_url.rstrip("/").endswith("/third-party/subscribers")
     )
-    subscribers_page.wait_for_loaded()
-    assert subscribers_page.row_exists(original_name), \
-        f"Original subscriber name '{original_name}' should still exist after cancel"
-    assert not subscribers_page.row_exists("VK Should Not Persist", timeout=5), \
-        "Changed name should NOT have been saved after cancel"
+    record = SubscribersPage(edit_subscriber_page.driver).get_by_id_with_api(managed_subscriber_id)
+    assert record.get("thirdPartyName") == SUBSCRIBER_NAME, \
+        f"Cancel should discard changes, but backend name is {record.get('thirdPartyName')!r}"
 
 
 @pytest.mark.skip(

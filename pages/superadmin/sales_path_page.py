@@ -183,11 +183,7 @@ class SalesPathPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Edit']][1]"
             "//button[normalize-space()='Edit']" % company_name
         )
-        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});", btn
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
+        self.js_click_fresh(btn_loc)
 
 
 class CreateSalesPathPage(BasePage):

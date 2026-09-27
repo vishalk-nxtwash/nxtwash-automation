@@ -1,8 +1,11 @@
+import json
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
 
 
@@ -17,6 +20,38 @@ class SubscribersPage(BasePage):
 
     def click_add_subscriber(self):
         self.click(self.ADD_BUTTON)
+
+    # ── Read-only API helpers (backend truth for managed-record resets) ──────
+
+    def _get_third_party_api(self, query=""):
+        result = self.driver.execute_async_script(
+            """
+            const [base, query] = arguments;
+            const done = arguments[arguments.length - 1];
+            const auth = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).authSessionReducer);
+            const url = base + "/api/ThirdParty/GetThirdParty?" + query
+                + (query ? "&" : "") + "key=" + encodeURIComponent(auth.key);
+            fetch(url, {headers: {accept: "application/json", authorization: "Bearer " + auth.accessToken}})
+                .then(async (r) => done({status: r.status, body: await r.text()}))
+                .catch((e) => done({error: String(e)}));
+            """,
+            ConfigManager().get_url("api").rstrip("/"), query,
+        )
+        if result.get("error") or result.get("status") != 200:
+            raise AssertionError("GetThirdParty failed: %s" % result)
+        return json.loads(result["body"]).get("data")
+
+    def list_with_api(self, include_inactive=True):
+        """All subscribers. The endpoint returns only active records unless
+        asked for inactive ones explicitly, so merge both by default — a
+        uniqueness clash with a hidden inactive record is otherwise invisible."""
+        records = list(self._get_third_party_api() or [])
+        if include_inactive:
+            records += self._get_third_party_api("isActive=false") or []
+        return records
+
+    def get_by_id_with_api(self, subscriber_id):
+        return self._get_third_party_api("id=%s" % subscriber_id) or {}
 
     def get_column_headers(self):
         headers = self.driver.find_elements(
@@ -83,11 +118,7 @@ class SubscribersPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Edit']][1]"
             "//button[normalize-space()='Edit']" % name
         )
-        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});", btn
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
+        self.js_click_fresh(btn_loc)
 
     def get_row_actions(self, name):
         row = self.wait_for_row(name)

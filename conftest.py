@@ -242,6 +242,20 @@ def _capture_failure(item, driver):
 
     _attach_screenshot(driver, "failure-%s" % _safe_name(item.nodeid))
 
+    # Backend errors the UI swallows (e.g. 499 "already exists" on save) are
+    # the most common root cause and are invisible in the page — log them.
+    from core.network_capture import failed_api_calls, format_failures
+    api_failures = failed_api_calls(driver)
+    if api_failures:
+        api_text = format_failures(api_failures)
+        LOG.error("Failed API calls during test:\n%s", api_text)
+        if allure is not None:
+            allure.attach(
+                api_text,
+                name="failed_api_calls",
+                attachment_type=allure.attachment_type.TEXT,
+            )
+
     # Capture visible text from the active frame — error messages in this app
     # appear inside iframes, so page_source (outer shell) is nearly empty.
     try:
@@ -292,15 +306,19 @@ def pytest_runtest_makereport(item, call):
         # runner — we just skip our screenshot/capture step for that one.
         return
 
-    if report.when != "call":
+    if report.when not in ("setup", "call"):
         return
 
-    driver = item.funcargs.get("browser")
+    driver = item.funcargs.get("browser") or getattr(item, "_browser_driver", None)
     if driver is None:
         return
 
     if report.failed:
+        # Setup failures (fixture navigation/seeding) are captured too — most
+        # data-state problems surface there, not in the test body.
         _capture_failure(item, driver)
+    elif report.when != "call":
+        return
     elif item.get_closest_marker("visual"):
         # Record the final on-screen state for visual spec validation.
         _attach_screenshot(driver, "final-state")
