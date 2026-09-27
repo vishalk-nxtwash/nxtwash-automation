@@ -11,18 +11,15 @@ name: Admin Smoke (staging)
 # 2-6 min, so the whole run's wall-clock was bounded by those two alone.
 # Split into per-module shards below to bring the bottleneck down.
 #
-# Triggers:
-#   - Every push to main or staging (catches regressions early)
-#   - Manual dispatch (run anytime between full suite runs)
+# Trigger: manual dispatch only. All suites are run on demand — no automatic
+# runs on push to any branch (team decision 2026-09-27).
 
 on:
-  push:
-    branches: [main, staging, development]
   workflow_dispatch:
 
 concurrency:
   group: admin-smoke-staging
-  cancel-in-progress: true   # New push cancels previous in-flight smoke run
+  cancel-in-progress: true   # A newer dispatch cancels the previous in-flight smoke run
 
 jobs:
   smoke:

@@ -174,12 +174,21 @@ failed test.
 
 ## Continuous Integration
 
-A GitHub Actions workflow is provided at `.github/workflows/tests.yml`. It:
+All workflows are **manual only** (`workflow_dispatch`) — nothing runs
+automatically on push or PR to any branch. Trigger them from the Actions tab or
+with `gh workflow run <file> --ref <branch>`:
 
-- runs on push / PR and via manual dispatch (choose marker + environment),
-- installs Chrome and dependencies, runs tests **headless** with reruns,
-- uploads Allure results, `report.html`, `results.xml`, screenshots, and logs
-  as build artifacts.
+| Workflow | Runs |
+|---|---|
+| `suite-admin.yml`, `suite-admin-wave2.yml`, `suite-admin-retry.yml` | Admin Portal full suite (sharded) / wave 2 / retry failed shards |
+| `suite-admin-smoke.yml` | Admin Portal smoke (`-m smoke`) |
+| `suite-superadmin-github.yml`, `suite-superadmin-aws.yml` | Superadmin full suite on GitHub-hosted / EC2 runners (optional `test_path` to run specific tests) |
+| `suite-superadmin-smoke.yml` | Superadmin smoke (choose `ubuntu-latest` or `self-hosted`) |
+| `suite-prod-smoke.yml`, `suite-superadmin-prod-smoke.yml` | Read-only production smoke |
+
+Every workflow calls the reusable `run-suite.yml`, which installs Chrome and
+dependencies, runs tests **headless**, and uploads Allure results,
+`report.html`, `results.xml`, screenshots, and logs as build artifacts.
 
 Add credentials as repository secrets: `SUPERADMIN_USERNAME`,
 `SUPERADMIN_PASSWORD`, `ADMIN_PORTAL_USERNAME`, `ADMIN_PORTAL_PASSWORD`.

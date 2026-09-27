@@ -11,17 +11,14 @@ run-name: "Superadmin Smoke (staging) — ${{ github.event.inputs.runner || 'ubu
 #
 # Expected wall-clock: ~5 min (~25 tests, single shard).
 #
-# Triggers:
-#   - Every push to main or development (catches regressions early)
-#   - Manual dispatch (run anytime between full suite runs)
+# Trigger: manual dispatch only. All suites are run on demand — no automatic
+# runs on push to any branch (team decision 2026-09-27).
 
 on:
-  push:
-    branches: [main, development]
   workflow_dispatch:
     inputs:
       runner:
-        description: '"ubuntu-latest" (GitHub-hosted) or "self-hosted" (EC2) — ignored on push, always ubuntu-latest there'
+        description: '"ubuntu-latest" (GitHub-hosted) or "self-hosted" (EC2)'
         required: false
         default: "ubuntu-latest"
       parallel:
