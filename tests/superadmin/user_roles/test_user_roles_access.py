@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 
 pytestmark = [
@@ -27,27 +28,25 @@ def test_user_without_roles_permission_cannot_reach_user_roles(browser):
     browser.delete_all_cookies()
     browser.get(_ROLES_URL)
 
-    WebDriverWait(browser, 10).until(
-        lambda d: "login" in d.current_url.lower() or d.current_url == _ROLES_URL
-    )
+    try:
+        WebDriverWait(browser, 10).until(lambda d: "login" in d.current_url.lower())
+    except TimeoutException:
+        pass  # asserted below with the landed URL
     assert "login" in browser.current_url.lower(), \
         f"Unauthenticated access to /user-roles should redirect to /login, " \
         f"got: {browser.current_url}"
 
 
-@pytest.mark.skip(
-    reason="SA-UR-ACC-002: Staging app has no server-side auth guard — "
-           "unauthenticated requests to /user-roles/create are served without redirect."
-)
 def test_unauthenticated_create_redirects_to_login(browser):
     """SA-UR-ACC-002 — Direct navigation to /user-roles/create while unauthenticated
     redirects to the login page."""
     browser.delete_all_cookies()
     browser.get(_CREATE_URL)
 
-    WebDriverWait(browser, 10).until(
-        lambda d: "login" in d.current_url.lower() or d.current_url == _CREATE_URL
-    )
+    try:
+        WebDriverWait(browser, 10).until(lambda d: "login" in d.current_url.lower())
+    except TimeoutException:
+        pass  # asserted below with the landed URL
     assert "login" in browser.current_url.lower(), \
         f"Unauthenticated access to /user-roles/create should redirect to /login, " \
         f"got: {browser.current_url}"

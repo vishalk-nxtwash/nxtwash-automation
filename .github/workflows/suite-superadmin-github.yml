@@ -41,6 +41,7 @@ jobs:
             path: >-
               tests/superadmin/test_login.py
               tests/superadmin/test_login_debug.py
+              tests/superadmin/auth
           # ── Companies ─────────────────────────────────────────────────────────
           - name: companies
             path: tests/superadmin/companies
