@@ -17,10 +17,12 @@ on:
         required: false
         default: "2"
 
-# Separate concurrency slots per runner so GitHub-hosted and EC2 runs
-# never block each other.
+# ONE queue shared by every superadmin workflow that touches staging (full
+# suite on either runner, smoke). They all mutate the same managed records, so
+# two runs at once corrupt each other's snapshots/resets. Runs queue, never
+# cancel (a killed run would skip its teardown resets).
 concurrency:
-  group: superadmin-suite-${{ inputs.runner || 'ubuntu-latest' }}
+  group: superadmin-staging
   cancel-in-progress: false
 
 jobs:

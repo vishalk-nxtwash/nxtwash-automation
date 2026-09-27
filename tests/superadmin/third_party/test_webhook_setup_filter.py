@@ -7,6 +7,9 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Webhook Setup — Filter"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_webhook_setup"),
 ]
 
 
@@ -69,6 +72,7 @@ def test_third_party_name_dropdown_lists_subscribers(webhook_setup_page):
         f"Tether or Optsopt should be in the subscriber filter options, got: {options}"
 
 
+@pytest.mark.smoke
 def test_filter_by_third_party_name(webhook_setup_page):
     """SA-SET-FLT-006 — Filter by Third Party Name returns matching setups."""
     from selenium.webdriver.common.by import By

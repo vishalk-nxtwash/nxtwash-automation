@@ -18,6 +18,7 @@ def test_export_icon_is_visible(users_page):
     assert icons, "Export icon button should be present on the Users list page"
 
 
+@pytest.mark.smoke
 def test_export_icon_opens_modal(users_page):
     """SA-USR-EXP-002 — Clicking the export icon opens the Export modal."""
     users_page.click_export_icon()
@@ -116,7 +117,7 @@ def test_cancel_button_closes_export_modal(users_page):
     """SA-USR-EXP-010 — Cancel button closes the Export modal."""
     users_page.click_export_icon()
     users_page.cancel_export()
-    assert not users_page.export_modal_is_visible(), \
+    assert users_page.export_modal_is_closed(), \
         "Export modal should be dismissed after clicking Cancel"
 
 
@@ -127,7 +128,7 @@ def test_esc_key_closes_export_modal(users_page):
     users_page.wait.until(
         EC.invisibility_of_element_located(users_page.EXPORT_MODAL)
     )
-    assert not users_page.export_modal_is_visible(), \
+    assert users_page.export_modal_is_closed(), \
         "Export modal should be dismissed by pressing ESC"
 
 
@@ -152,5 +153,5 @@ def test_clicking_outside_modal_closes_it(users_page):
     users_page.wait.until(
         EC.invisibility_of_element_located(users_page.EXPORT_MODAL)
     )
-    assert not users_page.export_modal_is_visible(), \
+    assert users_page.export_modal_is_closed(), \
         "Export modal should close when clicking outside it"

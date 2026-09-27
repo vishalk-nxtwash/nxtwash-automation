@@ -36,7 +36,7 @@ class SalesPathPage(BasePage):
     )
 
     def wait_for_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait_for_any_visible(self.PAGE_TITLE)
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
         self._reset_filter_state()
         # Wait for table data to arrive — count text changes from loading state ("out of 0")
@@ -183,11 +183,7 @@ class SalesPathPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Edit']][1]"
             "//button[normalize-space()='Edit']" % company_name
         )
-        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});", btn
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
+        self.js_click_fresh(btn_loc)
 
 
 class CreateSalesPathPage(BasePage):

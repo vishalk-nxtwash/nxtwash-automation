@@ -1,3 +1,6 @@
+import uuid
+import warnings
+
 import allure
 import pytest
 
@@ -62,8 +65,11 @@ def test_edit_form_active_toggle_reflects_saved_state(edit_role_page):
 def test_edit_role_name_persists_after_save(browser, edit_role_page):
     """SA-UR-EDT-004 — Editing the Role Name → Save changes persists on the list and
     after reload."""
-    original_name = edit_role_page.get_role_name()
-    edited_name = original_name + " Edited"
+    role_id = browser.current_url.rstrip("/").split("/")[-1]
+    snapshot = edit_role_page.get_role_by_id_with_api(role_id)
+    # Unique per run so a leftover from an aborted run can never collide
+    # (the backend rejects duplicate role names with 499).
+    edited_name = "%s Edited %s" % (snapshot["roleName"], uuid.uuid4().hex[:6])
     edit_url = browser.current_url
 
     try:
@@ -71,20 +77,25 @@ def test_edit_role_name_persists_after_save(browser, edit_role_page):
         edit_role_page.click_save_changes()
         edit_role_page.confirm_yes_if_present()
 
-        # Reload the edit page and verify name persisted
+        # The PUT fires asynchronously after "Yes"; navigating straight away
+        # cancels it. Wait for the backend to report the new name first.
+        persisted = edit_role_page.wait_for_role_name_with_api(role_id, edited_name)
+        assert persisted == edited_name, \
+            f"Save did not persist: backend role name is {persisted!r}, expected {edited_name!r}"
+
         browser.get(edit_url)
         reloaded = EditUserRolePage(browser)
         reloaded.wait_for_loaded()
-        assert edited_name.lower() in reloaded.get_role_name().lower(), \
-            f"Role name should be '{edited_name}' after save and reload, " \
-            f"got: {reloaded.get_role_name()!r}"
+        assert reloaded.get_role_name() == edited_name, \
+            f"Role name should be '{edited_name}' after reload, got: {reloaded.get_role_name()!r}"
 
     finally:
+        # Restore by id from the snapshot — never by name (see
+        # CreateUserRolePage id-based helpers for why).
         try:
-            api = CreateUserRolePage(browser)
-            api.upsert_role_with_api(original_name, is_active=True)
-        except Exception:
-            pass
+            EditUserRolePage(browser).restore_role_with_api(snapshot)
+        except Exception as exc:  # noqa: BLE001
+            warnings.warn(f"Could not restore role {role_id}: {exc}")
 
 
 @pytest.mark.xfail(

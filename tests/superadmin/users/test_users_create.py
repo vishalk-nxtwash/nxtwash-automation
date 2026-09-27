@@ -93,6 +93,7 @@ def test_save_with_empty_last_name_rejected(create_user_page):
         "Empty last name should be rejected with a validation message"
 
 
+@pytest.mark.smoke
 def test_save_with_empty_email_rejected(create_user_page):
     """SA-USR-CRT-007 — Submitting with empty email shows a validation message."""
     create_user_page.enter_first_name("ValidFirst")

@@ -48,6 +48,7 @@ def test_filter_by_exact_last_name(users_page):
         f"Expected '{PRIMARY_USER['last_name']}' in filtered results"
 
 
+@pytest.mark.smoke
 def test_filter_by_exact_email(users_page):
     """SA-USR-FLT-005 — Filtering by exact email returns the correct user."""
     users_page.filter_by_email(PRIMARY_USER["email"])

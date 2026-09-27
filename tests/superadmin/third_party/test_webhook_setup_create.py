@@ -14,6 +14,9 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Webhook Setup — Create"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_webhook_setup"),
 ]
 
 
@@ -138,6 +141,7 @@ def test_all_event_type_checkboxes_default_off(create_setup_page):
         f"All event checkboxes should default to OFF, found ON: {on_keys}"
 
 
+@pytest.mark.smoke
 def test_save_without_any_fields_shows_validation(create_setup_page):
     """SA-SET-CRT-011 — Clicking 'Save new' with nothing filled is blocked."""
     create_setup_page.click_save_new()

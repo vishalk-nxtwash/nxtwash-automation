@@ -240,17 +240,21 @@ class UserRolesPage(BasePage):
         return False
 
     def open_role(self, role_name):
-        row = self.wait_for_role_row(role_name)
-        action_locator = (
-            By.XPATH,
-            ".//button[normalize-space()='Edit' or contains(.,'Edit')]"
-            "|.//a[contains(@href,'user-roles')]"
-        )
-        actions = row.find_elements(*action_locator)
-        if actions:
-            actions[0].click()
-            return
-        row.click()
+        for attempt in range(3):
+            try:
+                row = self.wait_for_role_row(role_name)
+                action_locator = (
+                    By.XPATH,
+                    ".//button[normalize-space()='Edit' or contains(.,'Edit')]"
+                    "|.//a[contains(@href,'user-roles')]"
+                )
+                actions = row.find_elements(*action_locator)
+                (actions[0] if actions else row).click()
+                return
+            except StaleElementReferenceException:
+                # Row re-rendered between lookup and click — find it again.
+                if attempt == 2:
+                    raise
 
     # ── Export ────────────────────────────────────────────────────────────────
 
@@ -410,8 +414,22 @@ class CreateUserRolePage(BasePage):
     def _api_script(self, body):
         return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
+    # Menu groups come from the API after the form shell renders. "Sites" is
+    # only shown in the permissions tree (not the sidebar), so it marks the
+    # tree as populated.
+    PERMISSION_TREE_READY = (
+        By.XPATH, "//*[normalize-space()='User Role Permissions']"
+        "/following::*[normalize-space()='Sites']"
+    )
+
     def wait_for_loaded(self):
         self.wait.until(EC.presence_of_element_located(self.ROLE_NAME_INPUT))
+        try:
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located(self.PERMISSION_TREE_READY)
+            )
+        except TimeoutException:
+            pass  # callers assert on the tree contents with clear messages
 
     def enter_role_name(self, role_name):
         self.enter_text(self.ROLE_NAME_INPUT, role_name)
@@ -759,6 +777,69 @@ class CreateUserRolePage(BasePage):
         return result["body"]
 
 
+    # ── Id-based API helpers ─────────────────────────────────────────────────
+    # Name-based upserts are unsafe for edit tests: once a role is renamed,
+    # upserting the original name POSTs a *new* role and orphans the renamed
+    # one, which then blocks every later rename with 499 "already exists".
+    # Snapshot and restore by id instead.
+
+    def _role_api_call(self, method, query="", payload=None):
+        result = self.driver.execute_async_script(
+            self._api_script("""
+            const [method, query, payload] = arguments;
+            const done = arguments[arguments.length - 1];
+            const root = JSON.parse(localStorage.getItem("persist:root"));
+            const auth = JSON.parse(root.authSessionReducer);
+            let url = API_BASE + "/api/SuperAdminUserRole";
+            if (method === "GET") {
+                url += "?" + query + (query ? "&" : "") + "key=" + encodeURIComponent(auth.key);
+            }
+            fetch(url, {
+                method,
+                headers: {
+                    accept: "application/json",
+                    "content-type": "application/json",
+                    authorization: "Bearer " + auth.accessToken
+                },
+                body: payload ? JSON.stringify(Object.assign({key: auth.key}, payload)) : undefined
+            })
+                .then(async (response) => ({status: response.status, body: await response.text()}))
+                .then(done)
+                .catch((error) => done({error: String(error)}));
+            """),
+            method, query, payload,
+        )
+        if result.get("error"):
+            raise AssertionError(result["error"])
+        if result.get("status") != 200:
+            raise AssertionError(result)
+        return json.loads(result["body"]).get("data")
+
+    def get_role_by_id_with_api(self, role_id):
+        return self._role_api_call("GET", "id=%s" % role_id)
+
+    def restore_role_with_api(self, snapshot):
+        """PUT a role snapshot (from get_role_by_id_with_api) back verbatim."""
+        return self._role_api_call("PUT", payload=snapshot)
+
+    def wait_for_role_name_with_api(self, role_id, expected_name, timeout=15):
+        """Poll the backend until the role's saved name matches, or time out.
+
+        Returns the last seen name so callers can report what was persisted.
+        """
+        seen = {"name": None}
+
+        def _persisted(_driver):
+            seen["name"] = (self.get_role_by_id_with_api(role_id) or {}).get("roleName")
+            return seen["name"] == expected_name
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=1).until(_persisted)
+        except TimeoutException:
+            pass
+        return seen["name"]
+
+
 class EditUserRolePage(CreateUserRolePage):
 
     SAVE_CHANGES_BUTTON = (
@@ -779,15 +860,21 @@ class EditUserRolePage(CreateUserRolePage):
 
     def set_role_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
+        # Assigning .value directly bypasses React's value tracker, so React
+        # keeps the old state and send_keys appends to it. Use the native
+        # setter so React registers the clear.
         self.driver.execute_script(
-            "arguments[0].value = ''; "
+            "const setter = Object.getOwnPropertyDescriptor("
+            "window.HTMLInputElement.prototype, 'value').set;"
+            "setter.call(arguments[0], '');"
             "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
             el
         )
         if name:
             el.send_keys(name)
+        # Exact match — a substring check let "<old><new>" pass as success.
         WebDriverWait(self.driver, 5).until(
-            lambda d: name in (d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "")
+            lambda d: (d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") or "") == name
         )
 
     def click_save_changes(self):

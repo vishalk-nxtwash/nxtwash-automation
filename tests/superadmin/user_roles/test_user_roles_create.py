@@ -12,12 +12,6 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("User Roles"),
     allure.story("Create"),
-    pytest.mark.xfail(
-        strict=False,
-        reason="VK Auto Test Role is pre-created via conftest API upsert with all "
-               "permissions enabled. Create flow tests are marked xfail to avoid "
-               "adding new roles to staging.",
-    ),
 ]
 
 
@@ -76,6 +70,12 @@ def test_active_user_role_toggle_defaults_to_on(create_role_page):
         f"Active User Role toggle should default to ON on create form, got: {state}"
 
 
+@pytest.mark.xfail(
+    strict=False,
+    reason="VK Auto Test Role is pre-created via conftest API upsert, so creating it "
+           "again is rejected as a duplicate; kept xfail to avoid adding new roles "
+           "to staging.",
+)
 def test_create_role_with_valid_name_saves_and_navigates(create_role_page, browser):
     """SA-UR-CRT-005 — Creating a role with a valid name → 'Save new' saves and returns
     to the list (or shows duplicate message if role already exists)."""
@@ -138,6 +138,7 @@ def test_create_with_active_toggle_off_saves_inactive_role(create_role_page, bro
         "Saving with Active OFF should navigate away or show duplicate message"
 
 
+@pytest.mark.smoke
 def test_save_without_role_name_is_blocked(create_role_page):
     """SA-UR-CRT-009 — Save without a Role Name is blocked with a validation error."""
     create_role_page.click_save_new()

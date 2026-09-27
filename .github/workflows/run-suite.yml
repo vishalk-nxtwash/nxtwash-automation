@@ -71,14 +71,20 @@ jobs:
         if: inputs.runner == 'self-hosted'
         run: |
           echo "=== Disk before cleanup ===" && df -h /
-          pkill -f "chrome" || true
-          pkill -f "chromedriver" || true
-          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
-                 /tmp/chrome_* /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
-                 ~/.config/google-chrome/Crash\ Reports \
-                 ~/.config/google-chrome/Crashpad \
-                 2>/dev/null || true
+          # Several runners share this host. Never pkill Chrome host-wide or
+          # purge live /tmp profiles — that kills the OTHER runners' browsers
+          # mid-test (RemoteDisconnected / MaxRetryError at job boundaries).
+          # Each job runs Chrome under its own TMPDIR (see Run tests), so only
+          # that directory's processes and files are ours to clean.
+          CHROME_TMP="${RUNNER_TEMP}/chrome-tmp"
+          pkill -f -- "${CHROME_TMP}" || true
+          rm -rf "${CHROME_TMP}" && mkdir -p "${CHROME_TMP}"
+          # Legacy /tmp leftovers from before per-job TMPDIR: only stale ones.
+          find /tmp -maxdepth 1 \( -name '.com.google.Chrome*' -o -name 'com.google.Chrome.*' \
+                 -o -name 'chrome_*' -o -name '.org.chromium.*' -o -name 'org.chromium.Chromium.*' \
+                 -o -name 'scoped_dir*' -o -name '.chromium*' -o -name 'pytest-of-*' \) \
+                 -mmin +360 -exec rm -rf {} + 2>/dev/null || true
+          rm -rf ~/.config/google-chrome/Crash\ Reports ~/.config/google-chrome/Crashpad 2>/dev/null || true
           rm -rf reports/ allure-results/ allure-report/ \
                  report.html results.xml 2>/dev/null || true
           python3.11 -m pip cache purge 2>/dev/null || true
@@ -174,6 +180,11 @@ jobs:
           MARKER: ${{ inputs.marker }}
           TEST_PATH: ${{ inputs.test_path }}
         run: |
+          # Per-job TMPDIR: Chrome profiles (--user-data-dir) and pytest
+          # basetemp land here, so cleanup can target this job alone.
+          export TMPDIR="${RUNNER_TEMP}/chrome-tmp"
+          mkdir -p "${TMPDIR}"
+
           xdist="-n ${PARALLEL}"
           if [ "${PARALLEL}" = "0" ]; then xdist=""; fi
 
@@ -220,10 +231,7 @@ jobs:
         run: |
           rm -rf reports/ allure-results/ allure-report/ \
                  report.html results.xml 2>/dev/null || true
-          pkill -f "chrome" || true
-          pkill -f "chromedriver" || true
-          rm -rf /tmp/.com.google.Chrome* /tmp/com.google.Chrome.* \
-                 /tmp/chrome_* /tmp/.org.chromium.* /tmp/org.chromium.Chromium.* \
-                 /tmp/scoped_dir* /tmp/.chromium* /tmp/pytest-of-* \
-                 2>/dev/null || true
+          # Scoped to this job's TMPDIR only — see Pre-run cleanup.
+          pkill -f -- "${RUNNER_TEMP}/chrome-tmp" || true
+          rm -rf "${RUNNER_TEMP}/chrome-tmp" 2>/dev/null || true
           df -h /

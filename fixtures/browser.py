@@ -65,6 +65,10 @@ def browser(request):
     )
     driver.set_page_load_timeout(60)
 
+    # Expose the driver to the failure hook even when the test only requests
+    # a page fixture that depends on `browser` (item.funcargs misses those).
+    request.node._browser_driver = driver
+
     yield driver
 
     # Navigate away before quitting so Chrome doesn't hang on a download

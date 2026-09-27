@@ -56,6 +56,77 @@ class BasePage:
                 time.sleep(0.3)
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
+    def wait_for_any_visible(self, locator):
+        """Wait until ANY element matching ``locator`` is displayed.
+
+        EC.visibility_of_element_located only checks the first match; text
+        locators like a page title also match hidden sidebar entries that come
+        first in the DOM, so that check can time out on a fully loaded page.
+        """
+        def _visible(d):
+            for element in d.find_elements(*locator):
+                try:
+                    if element.is_displayed():
+                        return element
+                except StaleElementReferenceException:
+                    continue
+            return False
+
+        return self.wait.until(_visible)
+
+    _XPATH_TEXTS_JS = """
+        const result = document.evaluate(arguments[0], document, null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+        const texts = [];
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const t = (result.snapshotItem(i).innerText || "").trim();
+            if (t) texts.push(t);
+        }
+        return texts;
+    """
+
+    def stable_texts(self, xpath, timeout=10):
+        """Texts of all elements matching ``xpath``, read in one script call.
+
+        Reading ``.text`` element-by-element goes stale when a table re-renders
+        mid-read (e.g. right after a filter). A single JS snapshot can't go
+        stale; waiting for two identical, non-empty reads skips the loading
+        render.
+        """
+        last = {"texts": None}
+
+        def _settled(d):
+            texts = d.execute_script(self._XPATH_TEXTS_JS, xpath)
+            same = bool(texts) and texts == last["texts"]
+            last["texts"] = texts
+            return same
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except Exception:  # noqa: BLE001 — return the latest snapshot
+            pass
+        return last["texts"] or []
+
+    def js_click_fresh(self, locator, attempts=3):
+        """Re-locate and JS-click an element, retrying on staleness.
+
+        List rows re-render when table data arrives or refreshes, so a row or
+        button reference found a moment earlier can go stale before the click.
+        Locating inside the retry loop always acts on the current node.
+        """
+        for attempt in range(attempts):
+            try:
+                element = self.wait.until(EC.element_to_be_clickable(locator))
+                self.driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", element
+                )
+                self.driver.execute_script("arguments[0].click();", element)
+                return
+            except StaleElementReferenceException:
+                if attempt == attempts - 1:
+                    raise
+                time.sleep(0.5)
+
     def enter_text(self, locator, text):
         element = self.wait.until(EC.visibility_of_element_located(locator))
         if element.tag_name.lower() == "textarea":

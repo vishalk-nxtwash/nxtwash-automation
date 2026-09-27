@@ -18,6 +18,7 @@ def test_export_icon_is_visible(companies_page):
     assert icons, "Export icon button should be present on the Companies list page"
 
 
+@pytest.mark.smoke
 def test_export_icon_opens_modal(companies_page):
     """SA-CMP-EXP-002 — Clicking the export icon opens the Export modal."""
     companies_page.click_export_icon()
@@ -146,5 +147,5 @@ def test_cancel_closes_export_modal(companies_page):
     """SA-CMP-EXP-012 — Cancel button closes the Export modal without downloading."""
     companies_page.click_export_icon()
     companies_page.cancel_export()
-    assert not companies_page.export_modal_is_visible(), \
+    assert companies_page.export_modal_is_closed(), \
         "Export modal should be dismissed after clicking Cancel"

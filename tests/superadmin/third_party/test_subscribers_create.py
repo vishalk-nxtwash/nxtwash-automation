@@ -1,12 +1,16 @@
 import allure
 import pytest
 
-from tests.superadmin.third_party.conftest import SUBSCRIBER_ABBR, SUBSCRIBER_NAME
+from pages.superadmin.third_party_subscribers_page import SubscribersPage
+from tests.superadmin.third_party.conftest import _BASE_URL, SUBSCRIBER_ABBR, SUBSCRIBER_NAME
 
 pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Webhook Subscribers — Create"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_managed_subscriber"),
 ]
 
 
@@ -76,8 +80,11 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
-def test_new_subscriber_appears_in_list(subscribers_page):
+def test_new_subscriber_appears_in_list(managed_subscriber_id, browser):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
+    browser.get(_BASE_URL + "/third-party/subscribers")
+    subscribers_page = SubscribersPage(browser)
+    subscribers_page.wait_for_loaded()
     assert subscribers_page.row_exists(SUBSCRIBER_NAME), \
         f"'{SUBSCRIBER_NAME}' should be visible in the subscribers list"
 
@@ -108,6 +115,7 @@ def test_create_with_active_off(create_subscriber_page):
     assert state is False, "Toggle should be OFF before saving"
 
 
+@pytest.mark.smoke
 def test_save_without_name_shows_validation(create_subscriber_page):
     """SA-SUB-CRT-009 — Save without Subscriber Name is blocked with a validation error."""
     from selenium.webdriver.common.by import By

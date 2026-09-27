@@ -7,6 +7,9 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Sales Path — Filter"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_sales_path"),
 ]
 
 
@@ -29,6 +32,7 @@ def test_filter_panel_shows_expected_controls(sales_path_page):
     assert active_els, "'Active Sales Path' toggle should be in the filter panel"
 
 
+@pytest.mark.smoke
 def test_filter_by_exact_company_name(sales_path_page):
     """SA-SLP-FLT-003 — Filter by exact Company name returns the matching sales path."""
     from selenium.webdriver.common.by import By

@@ -205,20 +205,37 @@ class UsersPage(BasePage):
             return len(rows)
         return len(self.driver.find_elements(By.XPATH, "//tbody/tr"))
 
+    # Reads every row's cell texts in ONE script call — a snapshot that can't
+    # go stale — and waits for two identical consecutive reads, because the
+    # table re-renders (loading → results) after a filter is applied.
+    _ROW_TEXTS_JS = """
+        return Array.from(document.querySelectorAll('tbody tr'))
+            .filter(tr => tr.querySelector('td'))
+            .map(tr => Array.from(tr.querySelectorAll('td')).map(td => td.innerText.trim()));
+    """
+
+    def _stable_row_texts(self, timeout=10):
+        last = {"rows": None}
+
+        def _settled(d):
+            rows = d.execute_script(self._ROW_TEXTS_JS)
+            same = rows == last["rows"]
+            last["rows"] = rows
+            return same
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except TimeoutException:
+            pass  # still changing — return the latest snapshot
+        return last["rows"] or []
+
     def get_visible_user_emails(self):
-        cells = self.driver.find_elements(
-            By.XPATH, "//tbody/tr/td[contains(.,'@')]"
-        )
-        return [c.text.strip() for c in cells if "@" in c.text]
+        return [
+            cell for row in self._stable_row_texts() for cell in row if "@" in cell
+        ]
 
     def get_visible_user_first_names(self):
-        rows = self.driver.find_elements(By.XPATH, "//tbody/tr[td]")
-        names = []
-        for row in rows:
-            cells = row.find_elements(By.XPATH, ".//td")
-            if cells:
-                names.append(cells[0].text.strip())
-        return names
+        return [row[0] for row in self._stable_row_texts() if row]
 
     def pagination_controls_present(self):
         locators = [
@@ -274,12 +291,41 @@ class UsersPage(BasePage):
     # ── Export methods ────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        # Wait for the modal and retry a swallowed click once — see
+        # CompaniesPage.click_export_icon (slow EC2 runners).
+        for attempt in range(2):
+            self.js_click_fresh(self.EXPORT_ICON_BUTTON)
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    lambda d: self.export_modal_is_visible(timeout=0)
+                )
+                return
+            except TimeoutException:
+                if attempt == 1:
+                    return
 
-    def export_modal_is_visible(self):
-        els = self.driver.find_elements(*self.EXPORT_MODAL_TITLE)
-        return bool(els) and els[0].is_displayed()
+    def export_modal_is_closed(self, timeout=10):
+        """True once the export modal is gone (waits out the close animation)."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located(self.EXPORT_MODAL_TITLE)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def export_modal_is_visible(self, timeout=10):
+        def _shown(d):
+            els = d.find_elements(*self.EXPORT_MODAL_TITLE)
+            return bool(els) and els[0].is_displayed()
+
+        if timeout == 0:
+            return _shown(self.driver)
+        try:
+            WebDriverWait(self.driver, timeout).until(_shown)
+            return True
+        except TimeoutException:
+            return False
 
     def get_export_format_options(self):
         # React Select inside the export modal — click to open, read role='option' items

@@ -84,6 +84,35 @@ class CompaniesPage(BasePage):
             )
         except Exception:
             pass
+        self.wait_for_rows_settled()
+
+    def wait_for_rows_settled(self, timeout=15):
+        """Wait until the table shows its data, not the loading placeholder.
+
+        The header renders before the rows; a count taken too early sees a
+        single placeholder row. Settled = the visible row count matches the
+        "out of N records" total (capped at the page size) and is stable
+        across two polls.
+        """
+        last = {"n": -1}
+
+        def _settled(d):
+            n = self.get_visible_row_count()
+            counts = d.find_elements(
+                By.XPATH, "//*[contains(text(),'out of') and contains(text(),'records')]"
+            )
+            total = None
+            if counts:
+                digits = [int(t) for t in counts[0].text.replace(",", "").split() if t.isdigit()]
+                total = digits[-1] if digits else None
+            ready = total is not None and total > 0 and (n == total or n >= 10) and n == last["n"]
+            last["n"] = n
+            return ready
+
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.5).until(_settled)
+        except TimeoutException:
+            pass  # empty or unexpected layout — callers assert on real counts
 
     def _reset_filter_state(self):
         """Reset any applied filters regardless of whether the panel is open."""
@@ -179,20 +208,13 @@ class CompaniesPage(BasePage):
         )
 
     def open_company_edit(self, company_name):
-        row = self.wait_for_company_row(company_name)
-        edit_button = row.find_element(
-            By.XPATH, ".//button[normalize-space()='Edit']"
-        )
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center'});", edit_button
-        )
-        self.driver.execute_script("arguments[0].click();", edit_button)
+        row_by, row_xpath = self.get_company_row_locator(company_name)
+        self.js_click_fresh((row_by, row_xpath + "//button[normalize-space()='Edit']"))
 
     def get_row_actions(self, company_name):
         """Return text labels of all buttons in the row for company_name."""
-        row = self.wait_for_company_row(company_name)
-        buttons = row.find_elements(By.XPATH, ".//button")
-        return [btn.text.strip() for btn in buttons if btn.text.strip()]
+        self.wait_for_company_row(company_name)
+        return self.stable_texts(self.get_company_row_locator(company_name)[1] + "//button")
 
     # ── Table / Pagination ────────────────────────────────────────────────────
 
@@ -270,11 +292,7 @@ class CompaniesPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Login to']][1]"
             "//button[normalize-space()='Login to']" % company_name
         )
-        login_to_button = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center'});", login_to_button
-        )
-        self.driver.execute_script("arguments[0].click();", login_to_button)
+        self.js_click_fresh(btn_loc)
         self.wait.until(EC.visibility_of_element_located(self.LOGIN_DIALOG))
 
     def get_login_dialog_options(self):
@@ -344,13 +362,43 @@ class CompaniesPage(BasePage):
     # ── Export ────────────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        # Wait for the modal itself — every export reader runs right after this,
+        # and on a slow runner the modal opens well after the click (EC2 CI).
+        # A click landing before the table settles can be swallowed: retry once.
+        for attempt in range(2):
+            self.js_click_fresh(self.EXPORT_ICON_BUTTON)
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    lambda d: self.export_modal_is_visible(timeout=0)
+                )
+                return
+            except TimeoutException:
+                if attempt == 1:
+                    return  # callers assert on modal visibility with a clear message
 
-    def export_modal_is_visible(self):
+    def export_modal_is_closed(self, timeout=10):
+        """True once the export modal is gone (waits out the close animation)."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located((By.ID, "companies-export-form"))
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def export_modal_is_visible(self, timeout=10):
         # Export popup has no role="dialog" — check form presence instead
-        els = self.driver.find_elements(By.ID, "companies-export-form")
-        return bool(els) and els[0].is_displayed()
+        def _shown(d):
+            els = d.find_elements(By.ID, "companies-export-form")
+            return bool(els) and els[0].is_displayed()
+
+        if timeout == 0:
+            return _shown(self.driver)
+        try:
+            WebDriverWait(self.driver, timeout).until(_shown)
+            return True
+        except TimeoutException:
+            return False
 
     def get_export_format_options(self):
         # React Select combobox is inside the export form

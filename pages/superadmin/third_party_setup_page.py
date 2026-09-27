@@ -45,7 +45,7 @@ class WebhookSetupPage(BasePage):
     )
 
     def wait_for_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait_for_any_visible(self.PAGE_TITLE)
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
         self._reset_filter_state()
 
@@ -198,11 +198,7 @@ class WebhookSetupPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Edit']][1]"
             "//button[normalize-space()='Edit']" % company_name
         )
-        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});", btn
-        )
-        self.driver.execute_script("arguments[0].click();", btn)
+        self.js_click_fresh(btn_loc)
 
 
 class CreateSetupPage(BasePage):
@@ -301,9 +297,14 @@ class CreateSetupPage(BasePage):
 
     def get_all_event_states(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        WebDriverWait(self.driver, 5).until(
-            lambda d: d.execute_script("return document.readyState") == "complete"
-        )
+        # Event types arrive from an API after the form renders; readyState is
+        # already "complete" by then, so wait for the checkboxes themselves.
+        try:
+            WebDriverWait(self.driver, 15).until(
+                lambda d: any(self.get_event_checkbox(n) for n in EVENT_TYPE_NAMES)
+            )
+        except TimeoutException:
+            pass  # callers assert on the (empty) result with a clear message
         states = {}
         for name in EVENT_TYPE_NAMES:
             cb = self.get_event_checkbox(name)
