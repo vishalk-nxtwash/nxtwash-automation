@@ -17,9 +17,12 @@ name: Admin Smoke (staging)
 on:
   workflow_dispatch:
 
+# Shares the admin-staging queue with suite-admin.yml: both mutate the same
+# managed staging records, so they must never run at the same time. Queue,
+# never cancel — a killed run would skip its teardown resets.
 concurrency:
-  group: admin-smoke-staging
-  cancel-in-progress: true   # A newer dispatch cancels the previous in-flight smoke run
+  group: admin-staging
+  cancel-in-progress: false
 
 jobs:
   smoke:
