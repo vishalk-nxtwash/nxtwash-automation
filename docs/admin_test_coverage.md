@@ -35,8 +35,8 @@ not included (its run was cancelled; see pending).
 gh workflow run suite-admin.yml --ref <branch> \
   -f test_path="tests/admin_portal/cash_report tests/admin_portal/card_declines"
 
-# Full suite on CI (4 waves) / smoke
-gh workflow run suite-admin.yml --ref <branch>
+# Full suite on CI / smoke
+gh workflow run suite-admin.yml --ref <branch>   # full: one parallel job per module
 gh workflow run suite-admin-smoke.yml --ref <branch>
 
 # Locally
@@ -71,7 +71,6 @@ activate/validation (click fixed; re-confirm after the save-race fix).
 | **91 🟡 xfail-but-passing** | Pass today but cannot fail CI (35 in overview) | Confirm across 2+ runs, remove the xfail |
 | **141 locator rewrites** | Label/section heuristics no longer match the DOM (settings sections, permission accordions) | Rewrite per module |
 | **Legacy Overview iframe** (22) | Loads empty on staging | Product/env question |
-| **Full-suite waves** | `suite-admin.yml` full mode runs 4 sequential waves (max 3–4 shards each) — sized for the 3 EC2 runners' RAM; on GitHub-hosted runners this only slows the full run | Replace waves with one flat matrix of all modules (small `max-parallel` cap to protect staging); keep waves only if EC2 is used for admin again |
 | **Network hook blind spot** | Cross-origin legacy iframes run out of process; their API calls are not in the page's performance log | Attach CDP to iframe targets (auto-attach) |
 
 ### Product bugs found (see `docs/bug_reports.md`)
