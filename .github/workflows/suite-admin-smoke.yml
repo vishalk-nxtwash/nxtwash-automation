@@ -4,18 +4,15 @@ name: Admin Smoke (staging)
 # Smoke tests = login flows, positive paths, and *_smoke files.
 # Expected wall-clock: ~5-10 min (all shards parallel, far fewer tests per shard).
 #
-# Triggers:
-#   - Every push to main or staging (catches regressions early)
-#   - Manual dispatch (run anytime between full suite runs)
+# Trigger: manual dispatch only. All suites are run on demand — no automatic
+# runs on push to any branch (team decision 2026-09-27).
 
 on:
-  push:
-    branches: [main, staging]
   workflow_dispatch:
 
 concurrency:
   group: admin-smoke-staging
-  cancel-in-progress: true   # New push cancels previous in-flight smoke run
+  cancel-in-progress: true   # A newer dispatch cancels the previous in-flight smoke run
 
 jobs:
   smoke:

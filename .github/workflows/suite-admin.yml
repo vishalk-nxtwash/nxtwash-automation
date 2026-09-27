@@ -7,8 +7,6 @@ name: Admin Suite (staging)
 # Trigger: manual dispatch only (workflow_dispatch).
 
 on:
-  schedule:
-    - cron: "0 0 * * *"   # midnight UTC every day
   workflow_dispatch:
     inputs:
       runner:
