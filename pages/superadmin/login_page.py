@@ -48,20 +48,40 @@ class LoginPage(BasePage):
         # Get Overview page title text.
         return self.get_text(self.OVERVIEW_TITLE)
 
-    def login(self):
+    def login(self, attempts=3):
+        """Log in with the configured superadmin account.
 
-        print("Entering email...")
-        self.enter_email(
-        self.config.get_username("superadmin")
-    )
+        A submit that lands before the React form is ready leaves the browser
+        sitting on /login with no error (seen on CI). Confirm the redirect and
+        retry from a fresh /login instead of letting the caller time out.
+        """
+        from selenium.common.exceptions import TimeoutException
+        from selenium.webdriver.support.ui import WebDriverWait
 
-        print("Entering password...")
-        self.enter_password(
-        self.config.get_password("superadmin")
-    )
+        for attempt in range(attempts):
+            print("Entering email...")
+            self.enter_email(
+            self.config.get_username("superadmin")
+        )
 
-        print("Clicking login button...")
-        self.click_login()
+            print("Entering password...")
+            self.enter_password(
+            self.config.get_password("superadmin")
+        )
+
+            print("Clicking login button...")
+            self.click_login()
+
+            try:
+                WebDriverWait(self.driver, 20).until(
+                    lambda d: "/login" not in d.current_url
+                )
+                return
+            except TimeoutException:
+                if attempt == attempts - 1:
+                    return  # caller's own wait reports the failure
+                print("Still on /login after submit — retrying login...")
+                self.open()
 
     def base_url(self):
         """SuperAdmin origin (scheme + host) for the active environment."""
