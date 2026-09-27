@@ -268,6 +268,9 @@ below.
 - **Backend purge**: with no product delete, deactivated/managed records persist.
   A backend cleanup API/DB-purge (platform-team dependency) would unlock true
   create-fresh-per-run isolation and reaping of `AUTOTEST` data.
+- **Admin Portal coverage (2026-09-27)**: covered vs pending tests for the
+  full and smoke suites, known failures and product bugs, in
+  [`docs/admin_test_coverage.md`](docs/admin_test_coverage.md).
 - **Superadmin coverage (frozen 2026-09-27)**: covered vs pending tests for the
   full and smoke suites, with the next action per gap, are tracked in
   [`docs/superadmin_test_coverage.md`](docs/superadmin_test_coverage.md).
