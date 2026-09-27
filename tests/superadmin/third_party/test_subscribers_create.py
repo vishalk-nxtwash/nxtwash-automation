@@ -8,6 +8,9 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Webhook Subscribers — Create"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_managed_subscriber"),
 ]
 
 
@@ -77,7 +80,6 @@ def test_create_subscriber_happy_path(create_subscriber_page, subscribers_page):
         f"New subscriber '{SUBSCRIBER_NAME}' should appear in the list after creation"
 
 
-@pytest.mark.xdist_group("sa_managed_subscriber")
 def test_new_subscriber_appears_in_list(managed_subscriber_id, browser):
     """SA-SUB-CRT-006 — New subscriber appears in the list and records count increments."""
     browser.get(_BASE_URL + "/third-party/subscribers")

@@ -15,7 +15,7 @@ class SubscribersPage(BasePage):
     ADD_BUTTON = (By.XPATH, "//button[contains(.,'Add Webhook Subscriber')]")
 
     def wait_for_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
+        self.wait_for_any_visible(self.PAGE_TITLE)
         self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
 
     def click_add_subscriber(self):

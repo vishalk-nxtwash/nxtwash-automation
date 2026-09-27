@@ -293,11 +293,7 @@ class CompaniesPage(BasePage):
             "/ancestor::*[.//button[normalize-space()='Login to']][1]"
             "//button[normalize-space()='Login to']" % company_name
         )
-        login_to_button = self.wait.until(EC.element_to_be_clickable(btn_loc))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center'});", login_to_button
-        )
-        self.driver.execute_script("arguments[0].click();", login_to_button)
+        self.js_click_fresh(btn_loc)
         self.wait.until(EC.visibility_of_element_located(self.LOGIN_DIALOG))
 
     def get_login_dialog_options(self):

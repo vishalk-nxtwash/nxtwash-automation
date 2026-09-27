@@ -7,6 +7,9 @@ pytestmark = [
     allure.epic("Superadmin"),
     allure.feature("Third Party"),
     allure.story("Sales Path — Filter"),
+    # Tests in this feature share one staging record — run them on one
+    # xdist worker so they never race (requires --dist loadgroup).
+    pytest.mark.xdist_group("sa_sales_path"),
 ]
 
 

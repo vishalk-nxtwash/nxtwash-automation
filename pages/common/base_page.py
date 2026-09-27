@@ -56,6 +56,24 @@ class BasePage:
                 time.sleep(0.3)
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
+    def wait_for_any_visible(self, locator):
+        """Wait until ANY element matching ``locator`` is displayed.
+
+        EC.visibility_of_element_located only checks the first match; text
+        locators like a page title also match hidden sidebar entries that come
+        first in the DOM, so that check can time out on a fully loaded page.
+        """
+        def _visible(d):
+            for element in d.find_elements(*locator):
+                try:
+                    if element.is_displayed():
+                        return element
+                except StaleElementReferenceException:
+                    continue
+            return False
+
+        return self.wait.until(_visible)
+
     def js_click_fresh(self, locator, attempts=3):
         """Re-locate and JS-click an element, retrying on staleness.
 
