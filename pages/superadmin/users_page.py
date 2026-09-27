@@ -291,12 +291,41 @@ class UsersPage(BasePage):
     # ── Export methods ────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        # Wait for the modal and retry a swallowed click once — see
+        # CompaniesPage.click_export_icon (slow EC2 runners).
+        for attempt in range(2):
+            self.js_click_fresh(self.EXPORT_ICON_BUTTON)
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    lambda d: self.export_modal_is_visible(timeout=0)
+                )
+                return
+            except TimeoutException:
+                if attempt == 1:
+                    return
 
-    def export_modal_is_visible(self):
-        els = self.driver.find_elements(*self.EXPORT_MODAL_TITLE)
-        return bool(els) and els[0].is_displayed()
+    def export_modal_is_closed(self, timeout=10):
+        """True once the export modal is gone (waits out the close animation)."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located(self.EXPORT_MODAL_TITLE)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def export_modal_is_visible(self, timeout=10):
+        def _shown(d):
+            els = d.find_elements(*self.EXPORT_MODAL_TITLE)
+            return bool(els) and els[0].is_displayed()
+
+        if timeout == 0:
+            return _shown(self.driver)
+        try:
+            WebDriverWait(self.driver, timeout).until(_shown)
+            return True
+        except TimeoutException:
+            return False
 
     def get_export_format_options(self):
         # React Select inside the export modal — click to open, read role='option' items

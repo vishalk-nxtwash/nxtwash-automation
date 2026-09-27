@@ -362,13 +362,43 @@ class CompaniesPage(BasePage):
     # ── Export ────────────────────────────────────────────────────────────────
 
     def click_export_icon(self):
-        btn = self.wait.until(EC.presence_of_element_located(self.EXPORT_ICON_BUTTON))
-        self.driver.execute_script("arguments[0].click();", btn)
+        # Wait for the modal itself — every export reader runs right after this,
+        # and on a slow runner the modal opens well after the click (EC2 CI).
+        # A click landing before the table settles can be swallowed: retry once.
+        for attempt in range(2):
+            self.js_click_fresh(self.EXPORT_ICON_BUTTON)
+            try:
+                WebDriverWait(self.driver, 15).until(
+                    lambda d: self.export_modal_is_visible(timeout=0)
+                )
+                return
+            except TimeoutException:
+                if attempt == 1:
+                    return  # callers assert on modal visibility with a clear message
 
-    def export_modal_is_visible(self):
+    def export_modal_is_closed(self, timeout=10):
+        """True once the export modal is gone (waits out the close animation)."""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located((By.ID, "companies-export-form"))
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def export_modal_is_visible(self, timeout=10):
         # Export popup has no role="dialog" — check form presence instead
-        els = self.driver.find_elements(By.ID, "companies-export-form")
-        return bool(els) and els[0].is_displayed()
+        def _shown(d):
+            els = d.find_elements(By.ID, "companies-export-form")
+            return bool(els) and els[0].is_displayed()
+
+        if timeout == 0:
+            return _shown(self.driver)
+        try:
+            WebDriverWait(self.driver, timeout).until(_shown)
+            return True
+        except TimeoutException:
+            return False
 
     def get_export_format_options(self):
         # React Select combobox is inside the export form
