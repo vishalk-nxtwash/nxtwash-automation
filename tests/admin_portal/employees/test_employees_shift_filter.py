@@ -24,7 +24,6 @@ _FILTER_XFAIL = pytest.mark.skip(
 
 
 @allure.title("EMP-SH-FLT-001 Shift filter panel opens with the expected controls")
-@pytest.mark.smoke
 def test_shift_filter_panel_opens_with_controls(browser):
     page = open_shift_page(browser)
     page.open_filter_panel()

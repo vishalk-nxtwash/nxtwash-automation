@@ -20,8 +20,8 @@ pytestmark = [
 ]
 
 
-@allure.title("BD-CRT-001 Create active bank drop appears in list with Active status and correct order")
 @pytest.mark.smoke
+@allure.title("BD-CRT-001 Create active bank drop appears in list with Active status and correct order")
 def test_create_active_bank_drop(browser):
 
     page = create_bank_drop_if_missing(browser)

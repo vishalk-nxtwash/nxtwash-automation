@@ -15,8 +15,8 @@ pytestmark = [
 ]
 
 
-@allure.title("BD-LST-001 Bank drop page loads with primary controls")
 @pytest.mark.smoke
+@allure.title("BD-LST-001 Bank drop page loads with primary controls")
 def test_bank_drop_page_loads_with_primary_controls(browser):
 
     page = open_bank_drop_page(browser)
@@ -57,7 +57,6 @@ def test_bank_drop_pagination_controls_visible(browser):
 
 
 @allure.title("BD-UI Add bank drop form shows name, order, active toggle, save and cancel")
-@pytest.mark.smoke
 def test_add_bank_drop_form_loads(browser):
 
     page = open_bank_drop_page(browser)

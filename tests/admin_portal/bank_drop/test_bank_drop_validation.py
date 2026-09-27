@@ -14,8 +14,8 @@ pytestmark = [
 ]
 
 
-@allure.title("BD-VAL-001 Blank bank drop name is blocked on save")
 @pytest.mark.smoke
+@allure.title("BD-VAL-001 Blank bank drop name is blocked on save")
 @pytest.mark.validation
 def test_blank_name_is_blocked(browser):
 
@@ -30,7 +30,6 @@ def test_blank_name_is_blocked(browser):
 
 
 @allure.title("BD-VAL-002 Blank order is blocked on save")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_blank_order_is_blocked(browser):
 

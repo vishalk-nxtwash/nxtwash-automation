@@ -101,7 +101,6 @@ def test_child_toggle_independent(browser, managed_role):
 
 
 @allure.title("UR-PRM-006 Permission toggle state persists after save and reopening the form")
-@pytest.mark.smoke
 @_PERMISSION_XFAIL
 def test_permissions_persist_after_save(browser, managed_role):
     form = open_edit_role_form(browser, ROLE_NAME)

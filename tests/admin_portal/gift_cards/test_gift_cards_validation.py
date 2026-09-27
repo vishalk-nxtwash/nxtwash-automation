@@ -15,7 +15,6 @@ pytestmark = [
 
 
 @allure.title("GC-VAL-001 Blank gift card name is blocked on save")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_create_gift_card_requires_name(browser):
 
@@ -28,7 +27,6 @@ def test_create_gift_card_requires_name(browser):
 
 
 @allure.title("GC-VAL-002 Blank gift card amount is blocked on save")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_create_gift_card_requires_amount(browser):
 
@@ -78,7 +76,6 @@ def test_non_numeric_gift_card_amount_rejected(browser):
 
 
 @allure.title("CGC-VAL-001 Saving without selecting a gift card template is blocked")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_create_customer_gift_card_requires_gift_card_selection(browser):
 
@@ -93,7 +90,6 @@ def test_create_customer_gift_card_requires_gift_card_selection(browser):
 
 
 @allure.title("CGC-VAL-002 Blank customer gift card number is blocked on save")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_create_customer_gift_card_requires_number(browser):
 
@@ -106,7 +102,6 @@ def test_create_customer_gift_card_requires_number(browser):
 
 
 @allure.title("CGC-VAL-003 Blank customer gift card amount is blocked on save")
-@pytest.mark.smoke
 @pytest.mark.validation
 def test_create_customer_gift_card_requires_amount(browser):
 

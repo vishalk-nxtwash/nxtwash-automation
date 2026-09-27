@@ -28,7 +28,6 @@ pytestmark = [
 
 
 @allure.title("CS-CRT-001 Create active custom service appears in list with Active status")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="CI-SKIP CS-CRT-001: wait_for_list_loaded LIST_FRAME switch times out in headless CI. Fix: use window.location.origin for fallback navigation; increase frame wait to 120s.")
 def test_create_active_custom_service(browser):
 
@@ -66,6 +65,7 @@ def test_create_inactive_custom_service_hidden(browser):
     assert page_has_no_broken_state(page)
 
 
+@pytest.mark.smoke
 @allure.title("CS-CRT-003 Cancel out of create form discards data and returns to list")
 @pytest.mark.regression
 def test_cancel_out_of_create_form(browser):
@@ -259,6 +259,7 @@ def test_create_service_with_applicable_discount(browser):
     assert page_has_no_broken_state(page)
 
 
+@pytest.mark.smoke
 @allure.title("CS-CRT-013 State sales % and City sales % columns are read-only per site")
 @pytest.mark.regression
 def test_state_city_sales_tax_columns_are_read_only(browser):

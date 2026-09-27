@@ -14,6 +14,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 @allure.title("SC-RG-003 Filter by active shows only active records")
 @pytest.mark.regression
 def test_filter_active_categories_shows_active(browser):

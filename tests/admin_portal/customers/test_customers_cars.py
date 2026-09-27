@@ -39,8 +39,8 @@ def _open_managed_customer_edit(browser):
 
 # ── Tab access ────────────────────────────────────────────────────────────────
 
-@allure.title("CUST-CAR-001 Cars settings tab is enabled on an existing customer")
 @pytest.mark.smoke
+@allure.title("CUST-CAR-001 Cars settings tab is enabled on an existing customer")
 def test_cars_settings_tab_accessible_on_existing_customer(browser):
     page = _open_managed_customer_edit(browser)
 
@@ -48,8 +48,8 @@ def test_cars_settings_tab_accessible_on_existing_customer(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("CUST-CAR-001b Cars settings tab opens and shows Add car control")
 @pytest.mark.smoke
+@allure.title("CUST-CAR-001b Cars settings tab opens and shows Add car control")
 def test_cars_settings_tab_shows_add_car_button(browser):
     page = _open_managed_customer_edit(browser)
     page.open_cars_settings_tab()
@@ -111,7 +111,6 @@ def test_add_car_form_shows_save_and_cancel_controls(browser):
 # ── Validation field presence ─────────────────────────────────────────────────
 
 @allure.title("CUST-CAR-VAL-001 License Plate field is present and marked required")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual - Check later for fixes: depends on tab locator, xfail until CUST-CAR-001 passes")
 def test_license_plate_field_is_present_and_required(browser):
     page = _open_managed_customer_edit(browser)
@@ -124,7 +123,6 @@ def test_license_plate_field_is_present_and_required(browser):
 
 
 @allure.title("CUST-CAR-VAL-002 RFID field is present and marked required")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual - Check later for fixes: depends on tab locator, xfail until CUST-CAR-001 passes")
 def test_rfid_field_is_present_and_required(browser):
     page = _open_managed_customer_edit(browser)

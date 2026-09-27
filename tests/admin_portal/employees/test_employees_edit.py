@@ -27,8 +27,8 @@ pytestmark = [
 ]
 
 
-@allure.title("EMP-EDT-001 Edit button opens the form pre-populated at the correct URL")
 @pytest.mark.smoke
+@allure.title("EMP-EDT-001 Edit button opens the form pre-populated at the correct URL")
 def test_edit_form_opens_prepopulated(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
 
@@ -149,7 +149,6 @@ def test_edit_employee_code_persists(browser, managed_employee):
 
 
 @allure.title("EMP-EDT-010 Activating an inactive employee saves it as Active")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason="Manual: after deactivation the employee disappears from the default "
     "(Active-only) list view, so the automation cannot re-open the edit form "
@@ -174,8 +173,8 @@ def test_activate_inactive_employee(browser, managed_employee):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("EMP-EDT-011 Deactivating an active employee saves it as Inactive")
 @pytest.mark.smoke
+@allure.title("EMP-EDT-011 Deactivating an active employee saves it as Inactive")
 def test_deactivate_active_employee(browser, managed_employee):
     form = open_edit_employee_form(browser, EMP_LAST_NAME)
     form.ensure_active_switch_off()

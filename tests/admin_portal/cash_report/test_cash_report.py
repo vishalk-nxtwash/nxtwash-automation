@@ -73,8 +73,8 @@ _DATE_PRESET_PARAMS = [
 @allure.story("Navigation")
 class TestNavigation:
 
-    @allure.title("CSH-NAV-001 Cash Report page loads at /reports/detailed/cash_report")
     @pytest.mark.smoke
+    @allure.title("CSH-NAV-001 Cash Report page loads at /reports/detailed/cash_report")
     def test_page_loads_at_correct_url(self, csh_modal):
         url = csh_modal.get_current_url()
         assert "cash_report" in url.lower() or "cash-report" in url.lower(), (
@@ -83,7 +83,6 @@ class TestNavigation:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-NAV-002 Filter modal auto-opens on page load without user action")
-    @pytest.mark.smoke
     def test_filter_modal_auto_opens(self, csh_modal):
         assert csh_modal.modal_is_open(), (
             "Filter modal (Apply filters button) not visible on page load"
@@ -91,7 +90,6 @@ class TestNavigation:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
-    @pytest.mark.smoke
     def test_modal_contains_all_controls(self, csh_modal):
         from pages.admin_portal.cash_report_page import CashReportPage
         d = csh_modal.driver
@@ -156,7 +154,6 @@ class TestFilterModal:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-FMD-003 Modal opens with no default site selected")
-    @pytest.mark.smoke
     def test_modal_opens_with_no_default_site(self, csh_modal):
         chips = csh_modal.get_site_chips()
         assert chips == [], (
@@ -175,8 +172,8 @@ class TestFilterModal:
         )
         assert page_has_no_broken_state(csh_modal)
 
-    @allure.title("CSH-FMD-005 Apply filters closes modal and renders the metrics screen")
     @pytest.mark.smoke
+    @allure.title("CSH-FMD-005 Apply filters closes modal and renders the metrics screen")
     def test_apply_filters_closes_modal_and_renders_metrics(self, csh_modal):
         csh_modal.select_site(CSH_SITE)
         csh_modal.select_date_preset("Last month")
@@ -229,7 +226,6 @@ class TestSiteFilter:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-SIT-002 Selecting a site creates a chip in the control")
-    @pytest.mark.smoke
     def test_selecting_site_creates_chip(self, csh_modal):
         csh_modal.select_site(CSH_SITE)
         chips = csh_modal.get_site_chips()
@@ -239,7 +235,6 @@ class TestSiteFilter:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-SIT-003 Test site (VK Test carwash 2) is present in the dropdown")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="staging data / intermittent — deferred")
     def test_test_site_in_dropdown(self, csh_modal):
         options = csh_modal.get_site_options()
@@ -341,7 +336,6 @@ class TestSingleDayMode(SingleDaySyncMixin):
 class TestTabNavigation:
 
     @allure.title("CSH-TAB-001 Three tabs visible after apply: Analytics, Kiosk, POS")
-    @pytest.mark.smoke
     def test_three_tabs_visible(self, csh_page):
         tabs = csh_page.get_visible_tabs()
         tabs_lower = [t.lower() for t in tabs]
@@ -366,7 +360,6 @@ class TestTabNavigation:
         assert page_has_no_broken_state(csh_page)
 
     @allure.title("CSH-TAB-003 Clicking Kiosk tab switches to Kiosk content")
-    @pytest.mark.smoke
     def test_kiosk_tab_click(self, csh_page):
         csh_page.click_tab(TAB_KIOSK)
         body = csh_page.get_body_text().lower()
@@ -378,7 +371,6 @@ class TestTabNavigation:
         assert page_has_no_broken_state(csh_page)
 
     @allure.title("CSH-TAB-004 Clicking POS tab switches to POS content")
-    @pytest.mark.smoke
     def test_pos_tab_click(self, csh_page):
         csh_page.click_tab(TAB_POS)
         body = csh_page.get_body_text().lower()
@@ -411,8 +403,8 @@ class TestTabNavigation:
 @allure.story("Export")
 class TestExport:
 
-    @allure.title("CSH-EXP-001 Export XLSX button is visible on the metrics screen")
     @pytest.mark.smoke
+    @allure.title("CSH-EXP-001 Export XLSX button is visible on the metrics screen")
     def test_export_xlsx_button_visible(self, csh_page):
         assert csh_page.export_button_visible(), (
             "Export XLSX button not visible on the Cash Report metrics screen"
@@ -436,8 +428,8 @@ class TestExport:
 @allure.story("Analytics Tab")
 class TestAnalyticsTab:
 
-    @allure.title("CSH-ANA-001 Analytics tab renders summary metric cards or KPIs")
     @pytest.mark.smoke
+    @allure.title("CSH-ANA-001 Analytics tab renders summary metric cards or KPIs")
     def test_analytics_tab_shows_metrics(self, csh_analytics):
         body = csh_analytics.get_body_text()
         # Cash / currency indicators or KPI labels expected on the Analytics tab
@@ -487,7 +479,6 @@ class TestAnalyticsTab:
 class TestKioskTab:
 
     @allure.title("CSH-KSK-001 Kiosk Balance Summary section is visible on Kiosk tab")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="Manual check required — actual Kiosk Balance Summary heading unconfirmed via DevTools")
     def test_kiosk_balance_summary_visible(self, csh_kiosk):
         assert csh_kiosk.table_section_visible(TABLE_KIOSK_BALANCE_SUMMARY), (
@@ -541,7 +532,6 @@ class TestKioskTab:
         assert page_has_no_broken_state(csh_kiosk)
 
     @allure.title("CSH-KSK-005 Kiosk Denomination section is visible on Kiosk tab")
-    @pytest.mark.smoke
     def test_kiosk_denomination_visible(self, csh_kiosk):
         assert csh_kiosk.table_section_visible(TABLE_KIOSK_DENOMINATION), (
             "Section '%s' not visible on Kiosk tab" % TABLE_KIOSK_DENOMINATION
@@ -578,7 +568,6 @@ class TestKioskTab:
         assert page_has_no_broken_state(csh_kiosk)
 
     @allure.title("CSH-KSK-008 Kiosk Transactions section is visible on Kiosk tab")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="Manual check required — actual Kiosk Transactions heading unconfirmed via DevTools")
     def test_kiosk_transactions_visible(self, csh_kiosk):
         assert csh_kiosk.table_section_visible(TABLE_KIOSK_TRANSACTIONS), (
@@ -647,7 +636,6 @@ class TestKioskTab:
 class TestPOSTab:
 
     @allure.title("CSH-POS-001 POS Balance Summary section is visible on POS tab")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="Manual check required — actual POS Balance Summary heading unconfirmed via DevTools")
     def test_pos_balance_summary_visible(self, csh_pos):
         assert csh_pos.table_section_visible(TABLE_POS_BALANCE_SUMMARY), (
@@ -685,7 +673,6 @@ class TestPOSTab:
         assert page_has_no_broken_state(csh_pos)
 
     @allure.title("CSH-POS-004 POS Bank Drop section is visible on POS tab")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="Manual check required — actual POS Bank Drop heading unconfirmed via DevTools")
     def test_pos_bank_drop_visible(self, csh_pos):
         assert csh_pos.table_section_visible(TABLE_POS_BANK_DROP), (
@@ -706,7 +693,6 @@ class TestPOSTab:
         assert page_has_no_broken_state(csh_pos)
 
     @allure.title("CSH-POS-006 POS Transactions section is visible on POS tab")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="Manual check required — actual POS Transactions heading unconfirmed via DevTools")
     def test_pos_transactions_visible(self, csh_pos):
         assert csh_pos.table_section_visible(TABLE_POS_TRANSACTIONS), (

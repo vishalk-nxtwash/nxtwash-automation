@@ -20,8 +20,8 @@ pytestmark = [
 ]
 
 
-@allure.title("UR-CRT-001 Clicking Add user role opens the create form at the correct URL")
 @pytest.mark.smoke
+@allure.title("UR-CRT-001 Clicking Add user role opens the create form at the correct URL")
 def test_user_roles_add_form_opens(browser):
     page = open_user_roles_page(browser)
     page.click_add_role()
@@ -34,7 +34,6 @@ def test_user_roles_add_form_opens(browser):
 
 
 @allure.title("UR-CRT-002 Creating an active role saves it and it appears in the list")
-@pytest.mark.smoke
 def test_create_active_user_role(browser):
     role_name = make_unique_role_name()
     form = open_create_role_form(browser)
@@ -75,7 +74,6 @@ def test_create_inactive_user_role(browser):
 
 
 @allure.title("UR-CRT-004 Submitting the create form without a name blocks save")
-@pytest.mark.smoke
 @pytest.mark.regression
 def test_create_role_name_required(browser):
     form = open_create_role_form(browser)

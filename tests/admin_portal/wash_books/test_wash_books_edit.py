@@ -136,8 +136,8 @@ def test_edit_wash_book_global_commission_persists(browser):
     page.wait_for_list_loaded()
 
 
-@allure.title("WB-EDT-007 Activating an inactive wash book updates its status to Active")
 @pytest.mark.smoke
+@allure.title("WB-EDT-007 Activating an inactive wash book updates its status to Active")
 def test_activate_wash_book(browser):
 
     page = create_wash_book_if_missing(browser)
@@ -154,7 +154,6 @@ def test_activate_wash_book(browser):
 
 
 @allure.title("WB-EDT-008 Deactivating an active wash book marks it Inactive without deletion")
-@pytest.mark.smoke
 def test_deactivate_wash_book(browser):
 
     page = create_wash_book_if_missing(browser)

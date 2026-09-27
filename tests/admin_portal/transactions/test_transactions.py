@@ -105,26 +105,23 @@ _SALE_TYPE_PARAMS = [pytest.param(s, id=f"TRN-TXN-006-{s}") for s in SALE_TYPES]
 @allure.story("Navigation")
 class TestTransactionsNav:
 
-    @allure.title("TRN-NAV-001 Page loads at /transactions/report")
     @pytest.mark.smoke
+    @allure.title("TRN-NAV-001 Page loads at /transactions/report")
     def test_page_loads_at_expected_url(self, trn_page):
         assert "/transactions/report" in trn_page.driver.current_url
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-002 Page title is 'Transactions Report'")
-    @pytest.mark.smoke
     def test_page_title_visible(self, trn_page):
         assert trn_page.page_title_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-003 Export icon is visible in the header")
-    @pytest.mark.smoke
     def test_export_icon_visible(self, trn_page):
         assert trn_page.export_icon_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-004 'Filter by' button is visible")
-    @pytest.mark.smoke
     def test_filter_by_button_visible(self, trn_page):
         assert trn_page.filter_by_button_is_visible()
         assert page_has_no_broken_state(trn_page)
@@ -138,7 +135,6 @@ class TestTransactionsNav:
 class TestTransactionsTable:
 
     @allure.title("TRN-TBL-001 Column present in table header: {col}")
-    @pytest.mark.smoke
     @pytest.mark.parametrize("col", _COLUMN_PARAMS)
     def test_column_header_present(self, col, trn_page):
         headers = trn_page.get_table_headers()
@@ -146,7 +142,6 @@ class TestTransactionsTable:
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-TBL-002 Table has at least one data row")
-    @pytest.mark.smoke
     @pytest.mark.xfail(
         strict=False,
         reason="TRN-TBL-002: 'Last month' preset returns 0 rows on staging — "
@@ -196,7 +191,6 @@ class TestTransactionsTable:
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-TBL-010 Default date preset is 'Today' on fresh page load")
-    @pytest.mark.smoke
     def test_default_date_preset_is_today(self, browser):
         # Must use fresh navigation — trn_page applies a filter before the test runs.
         open_admin_path(browser, "/transactions/report")
@@ -254,15 +248,14 @@ class TestTransactionsRowInteraction:
 @allure.story("Export")
 class TestTransactionsExport:
 
-    @allure.title("TRN-EXP-001 Export icon opens the export modal")
     @pytest.mark.smoke
+    @allure.title("TRN-EXP-001 Export icon opens the export modal")
     def test_export_modal_opens(self, trn_page):
         trn_page.open_export_modal()
         assert trn_page.export_modal_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-EXP-002a Format selector defaults to XLSX")
-    @pytest.mark.smoke
     def test_export_format_selector(self, trn_page):
         trn_page.open_export_modal()
         formats = trn_page.get_export_format_labels()
@@ -319,7 +312,6 @@ class TestTransactionsExport:
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-EXP-010 Export button is present in the export modal")
-    @pytest.mark.smoke
     def test_export_button_present(self, trn_page):
         trn_page.open_export_modal()
         assert trn_page.export_button_is_visible()
@@ -333,15 +325,14 @@ class TestTransactionsExport:
 @allure.story("Filter Panel")
 class TestTransactionsFilterPanel:
 
-    @allure.title("TRN-FLT-001 'Filter by' button opens the filter panel")
     @pytest.mark.smoke
+    @allure.title("TRN-FLT-001 'Filter by' button opens the filter panel")
     def test_filter_panel_opens(self, trn_page):
         trn_page.open_filter_panel()
         assert trn_page.filter_panel_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-FLT-002 Filter panel contains Quick Filters row and FILTERS tab strip")
-    @pytest.mark.smoke
     def test_filter_panel_structure(self, trn_filter_panel):
         quick_labels = trn_filter_panel.get_quick_filter_labels()
         tab_labels   = trn_filter_panel.get_filter_tab_labels()
@@ -488,7 +479,6 @@ class TestTransactionsQuickFilters:
 class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-001 Date & Location tab opens without error")
-    @pytest.mark.smoke
     def test_date_location_tab_opens(self, trn_date_location):
         assert page_has_no_broken_state(trn_date_location)
 
@@ -589,7 +579,6 @@ class TestTransactionsDateLocation:
 class TestTransactionsTransactionFilter:
 
     @allure.title("TRN-TXN-001 Transaction tab opens without error")
-    @pytest.mark.smoke
     def test_transaction_tab_opens(self, trn_transaction_filter):
         assert page_has_no_broken_state(trn_transaction_filter)
 
@@ -674,7 +663,6 @@ class TestTransactionsTransactionFilter:
 class TestTransactionsPaymentFilter:
 
     @allure.title("TRN-PAY-001 Payment tab opens without error")
-    @pytest.mark.smoke
     def test_payment_tab_opens(self, trn_payment_filter):
         assert page_has_no_broken_state(trn_payment_filter)
 
@@ -736,8 +724,8 @@ class TestTransactionsPaymentFilter:
 @allure.story("Detail Page")
 class TestTransactionsDetailPage:
 
-    @allure.title("TRN-DTL-001 Detail page loads for invoice 10276")
     @pytest.mark.smoke
+    @allure.title("TRN-DTL-001 Detail page loads for invoice 10276")
     def test_detail_page_loads(self, trn_detail_page):
         assert "transactions_log" in trn_detail_page.driver.current_url or \
                TRN_DETAIL_INTERNAL_ID in trn_detail_page.driver.current_url, (
@@ -746,7 +734,6 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-002 'Transaction details' panel is visible")
-    @pytest.mark.smoke
     def test_transaction_details_panel_visible(self, trn_detail_page):
         headings = trn_detail_page.get_detail_panel_headings()
         assert any("transaction" in h.lower() for h in headings), (
@@ -755,7 +742,6 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-003 'Car details' section is visible")
-    @pytest.mark.smoke
     def test_car_details_panel_visible(self, trn_detail_page):
         body = trn_detail_page.get_detail_page_text()
         assert "Car details" in body or "car details" in body.lower(), (
@@ -764,7 +750,6 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-004 'Customer' section is visible")
-    @pytest.mark.smoke
     def test_customer_panel_visible(self, trn_detail_page):
         body = trn_detail_page.get_detail_page_text()
         assert "Customer" in body, (

@@ -13,8 +13,8 @@ pytestmark = [
 ]
 
 
-@allure.title("WE-NAM-002 Blank service name is blocked on save — validation message shown")
 @pytest.mark.smoke
+@allure.title("WE-NAM-002 Blank service name is blocked on save — validation message shown")
 def test_wash_extra_required_service_name_validation(browser):
 
     page = open_wash_extras_page(browser)
@@ -26,7 +26,6 @@ def test_wash_extra_required_service_name_validation(browser):
 
 
 @allure.title("WE-PRI-002 Blank global price is blocked on save — validation message shown")
-@pytest.mark.smoke
 def test_wash_extra_blank_global_price_is_blocked(browser):
 
     page = open_wash_extras_page(browser)

@@ -24,7 +24,6 @@ _PWD_XFAIL = pytest.mark.skip(
 
 
 @allure.title("USR-PWD-001 Change password button on the edit form opens the password flow")
-@pytest.mark.smoke
 def test_change_password_button_opens_flow(browser, managed_user):
     form = open_edit_user_form(browser, USER_EMAIL)
     form.click_change_password_button()

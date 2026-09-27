@@ -17,11 +17,11 @@ from tests.admin_portal.memberships.conftest import open_memberships_page
 LOG = logging.getLogger(__name__)
 
 
+@pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("Validation")
 @allure.title("MB-NAM-002 Verify Membership Name is mandatory")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.validation
 def test_membership_required_name_validation(browser):

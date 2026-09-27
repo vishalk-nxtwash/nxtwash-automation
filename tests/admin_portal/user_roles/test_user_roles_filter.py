@@ -18,8 +18,8 @@ pytestmark = [
 ]
 
 
-@allure.title("UR-FLT-001 Filter panel opens and shows site dropdown and active toggle")
 @pytest.mark.smoke
+@allure.title("UR-FLT-001 Filter panel opens and shows site dropdown and active toggle")
 def test_user_roles_filter_panel_opens(browser):
     page = open_user_roles_page(browser)
 

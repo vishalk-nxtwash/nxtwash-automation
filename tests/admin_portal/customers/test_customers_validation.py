@@ -20,7 +20,6 @@ pytestmark = [
 
 
 @allure.title("CUST-VAL-001 Blank first name is blocked on save")
-@pytest.mark.smoke
 def test_blank_first_name_blocked_on_save(browser):
     page = open_customers_page(browser)
     page.open_create_customer()
@@ -34,7 +33,6 @@ def test_blank_first_name_blocked_on_save(browser):
 
 
 @allure.title("CUST-VAL-002 Blank last name is blocked on save")
-@pytest.mark.smoke
 def test_blank_last_name_blocked_on_save(browser):
     page = open_customers_page(browser)
     page.open_create_customer()
@@ -48,7 +46,6 @@ def test_blank_last_name_blocked_on_save(browser):
 
 
 @allure.title("CUST-VAL-003 Blank site assignment is blocked on save")
-@pytest.mark.smoke
 def test_blank_site_assignment_blocked_on_save(browser):
     page = open_customers_page(browser)
     page.open_create_customer()
@@ -121,7 +118,6 @@ def test_negative_loyalty_points_documents_behaviour(browser):
 
 
 @allure.title("CUST-VAL Submitting a completely blank form stays on the create page")
-@pytest.mark.smoke
 def test_blank_form_stays_on_create_page(browser):
     page = open_customers_page(browser)
     page.open_create_customer()

@@ -115,8 +115,8 @@ def test_edit_wash_extra_discount_configuration_persists(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WE-EDT-007 Activating an inactive wash extra updates its status to Active")
 @pytest.mark.smoke
+@allure.title("WE-EDT-007 Activating an inactive wash extra updates its status to Active")
 def test_activate_wash_extra(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -133,7 +133,6 @@ def test_activate_wash_extra(browser):
 
 
 @allure.title("WE-EDT-008 Deactivating an active wash extra marks it Inactive without deletion")
-@pytest.mark.smoke
 def test_deactivate_wash_extra(browser):
 
     page = create_wash_extra_if_missing(browser)

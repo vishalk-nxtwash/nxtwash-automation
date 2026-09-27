@@ -26,7 +26,6 @@ _SHIFT_FORM_XFAIL = pytest.mark.skip(
 
 
 @allure.title("EMP-SH-CRT-001 Clicking '+ Add new employee shift' opens the shift create form")
-@pytest.mark.smoke
 def test_add_shift_form_opens(browser):
     page = open_shift_page(browser)
     page.click_add_shift()
@@ -39,7 +38,6 @@ def test_add_shift_form_opens(browser):
 
 
 @allure.title("EMP-SH-CRT-002 Creating an active shift with all required fields saves correctly")
-@pytest.mark.smoke
 @_SHIFT_FORM_XFAIL
 def test_create_active_shift(browser, managed_employee):
     form = open_create_shift_form(browser)
@@ -75,7 +73,6 @@ def test_create_inactive_shift(browser, managed_employee):
 
 
 @allure.title("EMP-SH-CRT-004 Saving without Employee selected is blocked with a validation error")
-@pytest.mark.smoke
 @_SHIFT_FORM_XFAIL
 def test_create_shift_employee_required(browser):
     form = open_create_shift_form(browser)
@@ -95,7 +92,6 @@ def test_create_shift_employee_required(browser):
 
 
 @allure.title("EMP-SH-CRT-005 Saving without Site/Location is blocked with a validation error")
-@pytest.mark.smoke
 @_SHIFT_FORM_XFAIL
 def test_create_shift_site_required(browser, managed_employee):
     form = open_create_shift_form(browser)
@@ -116,7 +112,6 @@ def test_create_shift_site_required(browser, managed_employee):
 
 
 @allure.title("EMP-SH-CRT-006 Saving without Start/End time is blocked with a validation error")
-@pytest.mark.smoke
 @_SHIFT_FORM_XFAIL
 def test_create_shift_time_required(browser, managed_employee):
     form = open_create_shift_form(browser)

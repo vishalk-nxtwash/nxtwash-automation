@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("UR-LST-001 User roles list page loads with all primary controls visible")
 @pytest.mark.smoke
+@allure.title("UR-LST-001 User roles list page loads with all primary controls visible")
 def test_user_roles_list_page_loads(browser):
     page = open_user_roles_page(browser)
     body = page.get_body_text()
@@ -39,8 +39,8 @@ def test_user_roles_list_required_columns(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("UR-LST-003 Default system roles are present in the list")
 @pytest.mark.smoke
+@allure.title("UR-LST-003 Default system roles are present in the list")
 def test_user_roles_default_roles_present(browser):
     page = open_user_roles_page(browser)
 

@@ -34,8 +34,8 @@ _SITE_LANE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-@allure.title("POS-CRT-001 Add new POS button opens form on Main settings tab")
 @pytest.mark.smoke
+@allure.title("POS-CRT-001 Add new POS button opens form on Main settings tab")
 def test_add_pos_button_opens_form(browser):
     page = open_pos_page(browser)
     page.click_add_pos()
@@ -45,7 +45,6 @@ def test_add_pos_button_opens_form(browser):
 
 
 @allure.title("POS-CRT-002 Create active POS with required fields saves correctly")
-@pytest.mark.smoke
 @_SITE_LANE_XFAIL
 def test_create_active_pos_saves(browser):
     # Dependency: Sites & Locations module
@@ -76,7 +75,6 @@ def test_create_active_pos_saves(browser):
 
 
 @allure.title("POS-CRT-003 Save without POS name blocked with error")
-@pytest.mark.smoke
 def test_create_pos_name_required(browser):
     form = open_create_pos_form(browser)
     form.click_save()
@@ -92,7 +90,6 @@ def test_create_pos_name_required(browser):
 
 
 @allure.title("POS-CRT-004 Save without site blocked with error")
-@pytest.mark.smoke
 def test_create_pos_site_required(browser):
     form = open_create_pos_form(browser)
     form.enter_pos_name(POS_NAME)
@@ -109,7 +106,6 @@ def test_create_pos_site_required(browser):
 
 
 @allure.title("POS-CRT-005 Save without lane blocked with error")
-@pytest.mark.smoke
 def test_create_pos_lane_required(browser):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)

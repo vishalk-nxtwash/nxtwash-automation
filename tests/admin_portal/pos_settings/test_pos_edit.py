@@ -29,8 +29,8 @@ _SITE_LANE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-@allure.title("POS-EDT-001 Edit button opens form pre-populated on Main tab")
 @pytest.mark.smoke
+@allure.title("POS-EDT-001 Edit button opens form pre-populated on Main tab")
 def test_edit_form_opens_prepopulated(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     body = form.get_body_text()
@@ -161,7 +161,6 @@ def test_edit_blank_name_blocked(browser, managed_pos):
 
 
 @allure.title("POS-EDT-009 Activate inactive POS shows Active badge")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason=(
         "Manual - Check later for fixes: after deactivating, re-opening edit form requires "
@@ -187,7 +186,6 @@ def test_activate_inactive_pos(browser, managed_pos):
 
 
 @allure.title("POS-EDT-010 Deactivate active POS shows Inactive badge")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason=(
         "Manual - Check later for fixes: active toggle locator uses heuristics — "

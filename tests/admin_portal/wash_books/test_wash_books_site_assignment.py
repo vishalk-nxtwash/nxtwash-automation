@@ -85,7 +85,6 @@ def test_location_price_override_persists(browser):
 
 
 @allure.title("WB-SIT-004 Saving a wash book with no site assigned is handled gracefully")
-@pytest.mark.smoke
 def test_save_wash_book_with_no_site_assigned(browser):
 
     page = open_wash_books_page(browser)

@@ -57,8 +57,8 @@ def test_edit_bank_drop_order_persists(managed_bank_drop):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("BD-EDT-003 Activate an inactive bank drop updates its status to Active")
 @pytest.mark.smoke
+@allure.title("BD-EDT-003 Activate an inactive bank drop updates its status to Active")
 def test_activate_inactive_bank_drop(browser, request):
 
     inactive_name = "VK act-%s" % uuid.uuid4().hex[:6]

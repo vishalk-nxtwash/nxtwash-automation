@@ -67,7 +67,6 @@ def test_assign_all_sites_via_header_checkbox(browser):
 
 
 @allure.title("WE-SIT-004 Saving a wash extra with no site assigned is handled gracefully")
-@pytest.mark.smoke
 def test_save_wash_extra_with_no_site_assigned(browser):
 
     page = open_wash_extras_page(browser)

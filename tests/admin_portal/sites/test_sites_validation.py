@@ -15,7 +15,6 @@ pytestmark = [
 
 
 @allure.title("SL-VAL-001 Blank required fields block save and page stays on create form")
-@pytest.mark.smoke
 def test_create_site_validation_blocks_empty_required_fields(
     logged_in_admin_browser
 ):

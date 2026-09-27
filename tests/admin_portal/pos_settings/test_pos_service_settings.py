@@ -18,8 +18,8 @@ pytestmark = [
 # The single scripted verification is POS-SVC-001 (tab switch) and
 # POS-SVC-012 (restore default settings).
 
-@allure.title("POS-SVC-001 Service settings tab switches view")
 @pytest.mark.smoke
+@allure.title("POS-SVC-001 Service settings tab switches view")
 def test_service_tab_switches_view(browser, managed_pos):
     # Dependency: Services module
     form = open_edit_pos_form(browser)

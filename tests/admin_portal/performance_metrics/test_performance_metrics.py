@@ -44,9 +44,9 @@ from tests.admin_portal.performance_metrics.conftest import (
 # NAV
 # ═══════════════════════════════════════════════════════════════════════════════
 
+@pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("PFM-NAV-001 Page loads at /performance-metrics")
-@pytest.mark.smoke
 def test_page_loads_at_correct_url(browser):
     from tests.admin_portal.admin_session import open_admin_path
     open_admin_path(browser, "/performance-metrics")
@@ -57,7 +57,6 @@ def test_page_loads_at_correct_url(browser):
 
 @allure.story("Navigation")
 @allure.title("PFM-NAV-002 Filter modal auto-opens on page load without user action")
-@pytest.mark.smoke
 def test_filter_modal_auto_opens(pfm_modal):
     assert pfm_modal.modal_is_open(), (
         "Filter modal did not auto-open on /performance-metrics load"
@@ -67,7 +66,6 @@ def test_filter_modal_auto_opens(pfm_modal):
 
 @allure.story("Navigation")
 @allure.title("PFM-NAV-003 Filter modal contains four controls: site, preset, date range, Apply")
-@pytest.mark.smoke
 def test_filter_modal_contains_four_controls(pfm_modal):
     body = pfm_modal.get_body_text()
     # Four controls: Sites/Locations multiselect, date preset dropdown,
@@ -97,9 +95,9 @@ def test_metrics_shell_renders_behind_modal(pfm_modal):
     assert page_has_no_broken_state(pfm_modal)
 
 
+@pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("PFM-NAV-006 Page renders two widgets: Conversion Rate and Membership History")
-@pytest.mark.smoke
 def test_page_renders_two_widgets(pfm_page):
     assert pfm_page.cvr_widget_visible(), "Conversion Rate widget not visible"
     assert pfm_page.mht_widget_visible(), "Membership History widget not visible"
@@ -136,7 +134,6 @@ def test_sites_dropdown_lists_all_active_sites(pfm_modal):
 
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-002 Modal opens with default state: All Sites, Today preset")
-@pytest.mark.smoke
 def test_modal_opens_with_default_state(pfm_modal):
     body = pfm_modal.get_body_text()
     preset = pfm_modal.get_current_preset_label()
@@ -191,7 +188,6 @@ def test_preset_auto_updates_date_range(pfm_modal):
 
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-005 Apply filters closes modal and renders both widgets")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 def test_apply_closes_modal_and_renders_widgets(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
@@ -268,7 +264,6 @@ def test_sites_dropdown_uses_checkboxes(pfm_modal):
 
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-002 All Sites option is present and selected by default")
-@pytest.mark.smoke
 def test_all_sites_option_present_and_default(pfm_modal):
     # Dependency: Sites & Locations module
     body = pfm_modal.get_body_text()
@@ -311,9 +306,9 @@ def test_all_sites_aggregates_data(pfm_modal):
     assert page_has_no_broken_state(pfm_modal)
 
 
+@pytest.mark.smoke
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-004 Selecting a single site scopes both CVR and MHT widgets")
-@pytest.mark.smoke
 def test_single_site_scopes_both_widgets(pfm_page):
     # Dependency: Sites & Locations module
     assert pfm_page.cvr_widget_visible(), "CVR widget not visible after single-site filter"
@@ -705,7 +700,6 @@ def test_preset_change_in_page_bar_auto_applies(pfm_page):
 
 @allure.story("Conversion Rate")
 @allure.title("PFM-CVR-001 Conversion Rate line chart renders for a date range ≥ 7 days")
-@pytest.mark.smoke
 def test_conversion_rate_chart_renders(pfm_page):
     # pfm_page uses Last month (30 days) — chart must render
     assert pfm_page.cvr_chart_visible(), (
@@ -792,9 +786,9 @@ def test_cvr_rerenders_on_filter_change(pfm_page):
 # MHT
 # ═══════════════════════════════════════════════════════════════════════════════
 
+@pytest.mark.smoke
 @allure.story("Membership History")
 @allure.title("PFM-MHT-001 Membership History table renders with at least one data row")
-@pytest.mark.smoke
 def test_membership_history_table_renders(pfm_page):
     assert pfm_page.mht_table_visible(), "MHT table not visible after filter apply"
     row_count = pfm_page.mht_get_row_count()
@@ -992,7 +986,6 @@ def test_mht_updates_on_filter_change(pfm_page):
 
 @allure.story("Column Settings")
 @allure.title("PFM-CST-001 Clicking the settings gear icon opens the Column Settings modal")
-@pytest.mark.smoke
 def test_settings_icon_opens_modal(pfm_page):
     pfm_page.cst_open_settings()
     assert pfm_page.cst_settings_open(), (
@@ -1043,7 +1036,6 @@ class TestColumnSettings:
 
     @allure.story("Column Settings")
     @allure.title("PFM-CST-004 Toggling a column OFF removes it from the MHT header row")
-    @pytest.mark.smoke
     def test_toggle_off_removes_column(self):
         # All columns are already OFF via the autouse fixture.
         # Verify a non-Date column is absent from the table.

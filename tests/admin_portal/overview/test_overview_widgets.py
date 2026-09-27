@@ -11,7 +11,6 @@ pytestmark = [
 
 
 @allure.title("OV-LST-002 All dashboard card widgets render in the default state")
-@pytest.mark.smoke
 def test_overview_all_dashboard_cards_render(overview_page):
     assert overview_page.dashboard_has_all_texts(overview_page.DASHBOARD_WIDGET_LABELS)
     assert not overview_page.has_broken_state_text()
@@ -44,7 +43,6 @@ def test_overview_cars_washed_hourly_chart_renders(overview_page):
 
 
 @allure.title("OV-CW-004 Cars Washed Full Report link navigates to the detail report")
-@pytest.mark.smoke
 def test_overview_cars_washed_full_report_link(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Cars Washed Full Report", "Full Report", "Full report"]
@@ -73,7 +71,6 @@ def test_overview_revenue_memberships_toggle(overview_page):
 
 
 @allure.title("OV-RV-004 Revenue Full Report link navigates to the detail report")
-@pytest.mark.smoke
 def test_overview_revenue_full_report_link(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Revenue Full Report", "Full Report", "Full report"]
@@ -126,7 +123,6 @@ def test_overview_awt_breakdown_bar_renders(overview_page):
 
 
 @allure.title("OV-MB-001 Active membership count matches the Memberships module total")
-@pytest.mark.smoke
 def test_overview_memberships_active_count(overview_page):
     assert overview_page.dashboard_text_contains("Membership")
 
@@ -180,7 +176,6 @@ def test_overview_employees_shift_status(overview_page):
 
 
 @allure.title("OV-EMP-003 Employee Full Report link navigates to the Labor/Employees report")
-@pytest.mark.smoke
 def test_overview_employees_full_report_link(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Employee Full Report", "Full Report", "Employees"]
@@ -223,7 +218,6 @@ def test_overview_labor_per_car_and_per_hour(overview_page):
 
 
 @allure.title("OV-LAB-003 Labor Full Report link navigates to the detailed Labor report")
-@pytest.mark.smoke
 def test_overview_labor_full_report_link(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Labor Full Report", "Full Report", "Labor"]

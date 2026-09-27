@@ -115,7 +115,6 @@ _DATE_PRESET_PARAMS = [
 
 @allure.story("Navigation")
 @allure.title("RVO-NAV-001 Revenue Overview page loads at /reports/detailed/revenue")
-@pytest.mark.smoke
 def test_page_loads_at_correct_url(rvo_modal):
     assert "revenue" in rvo_modal.get_current_url().lower(), (
         "URL does not contain 'revenue': %s" % rvo_modal.get_current_url()
@@ -125,7 +124,6 @@ def test_page_loads_at_correct_url(rvo_modal):
 
 @allure.story("Navigation")
 @allure.title("RVO-NAV-002 Filter modal auto-opens on page load without user action")
-@pytest.mark.smoke
 def test_filter_modal_auto_opens(rvo_modal):
     assert rvo_modal.modal_is_open(), (
         "Filter modal (Apply filters button) not visible on page load"
@@ -135,7 +133,6 @@ def test_filter_modal_auto_opens(rvo_modal):
 
 @allure.story("Navigation")
 @allure.title("RVO-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
-@pytest.mark.smoke
 def test_modal_contains_all_controls(rvo_modal):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     driver = rvo_modal.driver
@@ -218,7 +215,6 @@ def test_date_preset_dropdown_lists_seven_options(rvo_modal):
 
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-003 Modal opens with default state (no site selected, no date)")
-@pytest.mark.smoke
 def test_modal_opens_with_default_state(rvo_modal):
     # On fresh load neither site nor date should be pre-filled.
     chips = rvo_modal.get_site_chips()
@@ -260,7 +256,6 @@ def test_single_day_checkbox_switches_to_single_date(rvo_modal):
 
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-006 Apply filters closes modal and renders Revenue Metrics screen")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason="ElementNotInteractableException in select_site; timing race during modal open on staging.")
 def test_apply_filters_closes_modal_and_renders_metrics(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
@@ -328,7 +323,6 @@ def test_page_level_sites_dropdown_lists_all_sites(rvo_page):
 
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-003 Selecting single site scopes all KPI cards, chart, and tabs")
-@pytest.mark.smoke
 def test_selecting_single_site_scopes_all_sections(rvo_page):
     # Dependency: Sites & Locations module
     body = rvo_page.get_body_text()
@@ -680,7 +674,6 @@ def test_month_boundary_date_range(rvo_modal):
 
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-001 Five KPI cards render on the metrics screen")
-@pytest.mark.smoke
 def test_five_kpi_cards_render(rvo_page):
     assert rvo_page.kpi_cards_present(), (
         "Not all five KPI cards visible. Body excerpt: %s"
@@ -753,7 +746,6 @@ def test_kpi_values_currency_format(rvo_page):
 
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-001 Revenue distribution chart renders when data exists")
-@pytest.mark.smoke
 def test_chart_renders_when_data_exists(rvo_page):
     assert rvo_page.chart_is_visible(), (
         "Revenue distribution chart not visible on metrics screen"
@@ -944,7 +936,6 @@ def test_chart_rerenders_on_filter_change(rvo_page):
 
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-001 Membership Revenue tab is displayed with a count badge")
-@pytest.mark.smoke
 def test_membership_tab_displayed_with_count(rvo_page):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     els = rvo_page.driver.find_elements(*RevenueOverviewPage.MEMBERSHIP_TAB)
@@ -970,7 +961,6 @@ def test_membership_tab_selected_by_default(rvo_page):
 
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-003 Membership Revenue tab shows three sub-tabs")
-@pytest.mark.smoke
 def test_membership_tab_shows_three_subtabs(rvo_page):
     rvo_page.click_membership_tab()
     body = rvo_page.get_body_text()
@@ -1113,7 +1103,6 @@ def test_membership_plan_names_match_module(rvo_page):
 
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-001 Retail Revenue tab is displayed with a count badge")
-@pytest.mark.smoke
 def test_retail_tab_displayed_with_count(rvo_page):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     els = rvo_page.driver.find_elements(*RevenueOverviewPage.RETAIL_TAB)
@@ -1127,7 +1116,6 @@ def test_retail_tab_displayed_with_count(rvo_page):
 
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-002 Retail Revenue tab shows two sub-tabs: Wash Package and Wash Extra")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason=(
     "RVO-RET-002: Retail section uses a flat product list ('Wash Prepaid');"
     " 'Wash Package'/'Wash Extra' subtabs not present on current page"
@@ -1414,7 +1402,6 @@ def test_tooltip_content_is_static(rvo_page):
 
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-001 Zero-transaction site renders all sections cleanly")
-@pytest.mark.smoke
 def test_zero_transaction_site_renders_cleanly(zero_data_filter):
     assert page_has_no_broken_state(zero_data_filter), (
         "Broken state on Revenue Overview with zero-transaction filter"
@@ -1497,7 +1484,6 @@ def test_direct_url_opens_filter_modal(browser):
 
 @allure.story("Dependencies")
 @allure.title("RVO-DEP-001 Overview dashboard Revenue card 'Full report' navigates to /revenue")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason=(
     "RVO-DEP-001: Overview page content is inside an iframe;"
     " 'Full report' link not findable from outer frame context"

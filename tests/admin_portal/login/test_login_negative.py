@@ -1,3 +1,4 @@
+import pytest
 import allure
 
 
@@ -20,6 +21,7 @@ def test_login_invalid_email_valid_password_does_not_authenticate(login_page, lo
     assert "Overview" not in login_page.get_body_text()
 
 
+@pytest.mark.smoke
 def test_login_valid_email_invalid_password_does_not_authenticate(login_page, login_credentials):
 
     valid_username, _ = login_credentials

@@ -11,11 +11,11 @@ from tests.admin_portal.memberships.conftest import page_has_no_broken_state
 LOG = logging.getLogger(__name__)
 
 
+@pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("UI")
 @allure.title("MB-LST-001 Memberships page primary controls")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.sanity
 @pytest.mark.prod_smoke

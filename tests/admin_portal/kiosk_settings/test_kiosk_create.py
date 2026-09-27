@@ -31,7 +31,6 @@ _LOCATION_XFAIL = pytest.mark.xfail(
 
 
 @allure.title("KSK-CRT-001 Clicking Add kiosk opens the create form")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason="Create kiosk iframe does not open on staging")
 def test_add_kiosk_form_opens(browser):
     page = open_kiosk_page(browser)
@@ -46,7 +45,6 @@ def test_add_kiosk_form_opens(browser):
 
 
 @allure.title("KSK-CRT-002 Creating a kiosk with name only saves correctly")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual - Check later for fixes: KSK-CRT-002: Site is required to save — name-only submission is blocked by form validation; test asserts the wrong behavior")
 def test_create_kiosk_name_only(browser):
     form = open_create_kiosk_form(browser)
@@ -60,8 +58,8 @@ def test_create_kiosk_name_only(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("KSK-CRT-003 Submitting without a name is blocked with a validation error")
 @pytest.mark.smoke
+@allure.title("KSK-CRT-003 Submitting without a name is blocked with a validation error")
 def test_create_kiosk_name_required(browser):
     form = open_create_kiosk_form(browser)
     form.click_save()

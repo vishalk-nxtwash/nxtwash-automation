@@ -82,8 +82,8 @@ def test_edit_form_prepopulates_existing_values(browser, managed_customer):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
 @pytest.mark.smoke
+@allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
 def test_activate_inactive_customer(browser, managed_customer):
     page = managed_customer
     _open_edit_for_managed_customer(page)

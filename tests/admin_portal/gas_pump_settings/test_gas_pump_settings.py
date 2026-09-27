@@ -54,8 +54,8 @@ _SITE_XFAIL = pytest.mark.xfail(
 @allure.story("Create")
 class TestGasPumpCreate:
 
-    @allure.title("GPS-CRT-001 Add gas pump button navigates to create form")
     @pytest.mark.smoke
+    @allure.title("GPS-CRT-001 Add gas pump button navigates to create form")
     def test_add_pump_button_opens_form(self, browser):
         page = open_gas_pump_list(browser)
         page.click_add_pump()
@@ -68,7 +68,6 @@ class TestGasPumpCreate:
         assert page_has_no_broken_state(page)
 
     @allure.title("GPS-CRT-002 Create gas pump with all required fields saves and appears in list")
-    @pytest.mark.smoke
     def test_create_gas_pump_full_flow(self, browser):
         # Dependency: Sites & Locations + Wash Books modules
         form = open_create_gas_pump_form(browser)
@@ -221,7 +220,6 @@ class TestGasPumpCreate:
 class TestGasPumpValidation:
 
     @allure.title("GPS-CRT-003..010 Required field validation blocks save when field is blank")
-    @pytest.mark.smoke
     @pytest.mark.parametrize("field", [
         pytest.param("name",          id="GPS-CRT-003"),
         pytest.param("site",          id="GPS-CRT-004"),
@@ -232,6 +230,7 @@ class TestGasPumpValidation:
         pytest.param("fetch_interval", id="GPS-CRT-009"),
         pytest.param("code_length",   id="GPS-CRT-010"),
     ])
+    @pytest.mark.smoke
     def test_required_field_validation(self, browser, field):
         from selenium.webdriver.common.keys import Keys as _Keys
 

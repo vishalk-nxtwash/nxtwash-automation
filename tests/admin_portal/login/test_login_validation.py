@@ -11,6 +11,7 @@ pytestmark = [
 _PLACEHOLDER_EMAIL = "admin@nxtwash.com"
 
 
+@pytest.mark.smoke
 def test_login_validation_both_fields_empty(login_page):
 
     login_page.click_login()

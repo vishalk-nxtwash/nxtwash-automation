@@ -16,7 +16,6 @@ pytestmark = [
 
 
 @allure.title("CWB-CRT-001 Valid customer wash book creates and appears in the listing")
-@pytest.mark.smoke
 def test_create_customer_wash_book(browser):
 
     page = create_customer_wash_book_if_missing(browser)

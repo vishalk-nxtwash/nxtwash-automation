@@ -1,15 +1,8 @@
 name: Admin Smoke (staging)
 
-# Fast sanity check — runs only @smoke marked tests across all modules.
-# Smoke tests = login flows, positive paths, and *_smoke files.
-# Expected wall-clock: ~5-10 min (all shards parallel, far fewer tests per shard).
-#
-# Shards are sized by smoke-test COUNT, not just module grouping — the old
-# reports-ops (labor_shifts+redemptions+wash_activity, 93 tests) and
-# reports-financial (cash_report+card_declines+transactions, 78 tests) shards
-# were the long pole, taking 12-17 min while everything else finished in
-# 2-6 min, so the whole run's wall-clock was bounded by those two alone.
-# Split into per-module shards below to bring the bottleneck down.
+# Fast sanity check — runs only explicitly @pytest.mark.smoke tests: a curated
+# ~150-test core (4-6 per module: page loads, key data, filter, create/edit,
+# validation, save, export). Expected wall-clock: ~5 min (7 parallel shards).
 #
 # Trigger: manual dispatch only. All suites are run on demand — no automatic
 # runs on push to any branch (team decision 2026-09-27).
@@ -30,84 +23,59 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
+        # ~150 curated smoke tests (explicit @pytest.mark.smoke, ~4-6 core
+        # checks per module), balanced into 7 shards of ~15-30 tests.
         shard:
-          - name: reports-overview
-            path: >-
-              tests/admin_portal/overview
-              tests/admin_portal/performance_metrics
-
-          - name: reports-revenue
+          - name: reports-1
             path: >-
               tests/admin_portal/revenue_overview
+              tests/admin_portal/performance_metrics
               tests/admin_portal/general_sales_report
+              tests/admin_portal/overview
+              tests/admin_portal/transactions
 
-          - name: reports-cash
-            path: tests/admin_portal/cash_report
-
-          - name: reports-card-declines
-            path: tests/admin_portal/card_declines
-
-          - name: reports-transactions
-            path: tests/admin_portal/transactions
-
-          # parallel: 3 — already validated for this module in suite-admin.yml
-          # ("I/O-bound so 3 workers fit 2-vCPU runner"); this shard was the
-          # new bottleneck after the reports-ops split (~14 min vs 2-6 min).
-          - name: reports-labor-shifts
-            path: tests/admin_portal/labor_shifts
-            parallel: "3"
-
-          - name: reports-redemptions
-            path: tests/admin_portal/redemptions
-
-          - name: reports-wash-activity
-            path: tests/admin_portal/wash_activity
-
-          - name: auth-core
+          - name: reports-2
             path: >-
+              tests/admin_portal/card_declines
+              tests/admin_portal/cash_report
+              tests/admin_portal/labor_shifts
+
+          - name: reports-3-login
+            path: >-
+              tests/admin_portal/wash_activity
+              tests/admin_portal/redemptions
               tests/admin_portal/login
-              tests/admin_portal/sites
-              tests/admin_portal/service_categories
-
-          - name: wash-packages
-            path: >-
-              tests/admin_portal/wash_packages
-              tests/admin_portal/wash_extras
-
-          - name: wash-catalog
-            path: >-
-              tests/admin_portal/wash_books
-              tests/admin_portal/coupon_packages
-
-          - name: services
-            path: >-
-              tests/admin_portal/custom_services
-              tests/admin_portal/gift_cards
-              tests/admin_portal/bank_drop
-
-          - name: promotions
-            path: >-
-              tests/admin_portal/discounts
-              tests/admin_portal/memberships
-
-          - name: customers
-            path: tests/admin_portal/customers
-
-          - name: settings-hw
-            path: >-
-              tests/admin_portal/kiosk_settings
-              tests/admin_portal/tunnel_settings
-
-          - name: settings-pos
-            path: >-
-              tests/admin_portal/pos_settings
-              tests/admin_portal/user_roles
-              tests/admin_portal/gas_pump_settings
 
           - name: people
             path: >-
               tests/admin_portal/users
+              tests/admin_portal/user_roles
               tests/admin_portal/employees
+              tests/admin_portal/customers
+
+          - name: catalog-1
+            path: >-
+              tests/admin_portal/wash_packages
+              tests/admin_portal/wash_extras
+              tests/admin_portal/wash_books
+              tests/admin_portal/coupon_packages
+              tests/admin_portal/bank_drop
+
+          - name: catalog-2
+            path: >-
+              tests/admin_portal/custom_services
+              tests/admin_portal/gift_cards
+              tests/admin_portal/discounts
+              tests/admin_portal/memberships
+              tests/admin_portal/service_categories
+
+          - name: settings
+            path: >-
+              tests/admin_portal/sites
+              tests/admin_portal/kiosk_settings
+              tests/admin_portal/tunnel_settings
+              tests/admin_portal/pos_settings
+              tests/admin_portal/gas_pump_settings
 
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
@@ -117,4 +85,4 @@ jobs:
       test_path: ${{ matrix.shard.path }}
       marker: smoke
       parallel: ${{ matrix.shard.parallel || '2' }}
-      timeout_minutes: 30
+      timeout_minutes: 20

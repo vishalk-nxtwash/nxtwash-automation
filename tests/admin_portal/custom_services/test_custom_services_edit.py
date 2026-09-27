@@ -85,7 +85,6 @@ def test_edit_site_price_override_persists(managed_service):
 
 
 @allure.title("CS-EDT-004 Activate an inactive service updates its status to Active")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual: React switch aria-checked updates DOM but isActive not reflected in save payload. Needs app-level investigation.")
 def test_activate_inactive_service(browser):
 

@@ -30,7 +30,6 @@ _LOCATION_XFAIL = pytest.mark.xfail(
 
 
 @allure.title("KSK-EDT-001 Edit form opens pre-populated with kiosk name")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual - Check later for fixes: KSK-EDT-001: Assertion checks body text for kiosk name but <input> values do not appear in Selenium body text — change assertion to get_attribute('value')")
 def test_edit_form_opens_prepopulated(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)

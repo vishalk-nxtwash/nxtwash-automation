@@ -23,8 +23,8 @@ pytestmark = [
 ]
 
 
-@allure.title("GC-CRT-001 Create gift card with name and amount appears in list as Active")
 @pytest.mark.smoke
+@allure.title("GC-CRT-001 Create gift card with name and amount appears in list as Active")
 def test_create_gift_card_with_required_settings(browser):
 
     page = create_gift_card_if_missing(browser, update_existing=True)
@@ -56,6 +56,7 @@ def test_create_inactive_gift_card(browser):
     assert inactive_name not in page.get_body_text()
 
 
+@pytest.mark.smoke
 @allure.title("GC-PER-001 Created gift card data persists after page reload")
 @pytest.mark.regression
 def test_created_gift_card_settings_persist(browser):
@@ -77,7 +78,6 @@ def test_created_gift_card_settings_persist(browser):
 
 
 @allure.title("GC-DEP-002 Active gift card appears in Customer gift cards select dropdown")
-@pytest.mark.smoke
 def test_gift_card_appears_in_customer_gift_card_dropdown(browser):
 
     create_gift_card_if_missing(browser)
@@ -90,7 +90,6 @@ def test_gift_card_appears_in_customer_gift_card_dropdown(browser):
 
 
 @allure.title("CGC-CRT-001 Create customer gift card with required fields succeeds")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="CI-SKIP CGC-CRT-001: wait_for_customer_list_loaded times out in headless CI. Fix: same as CS-CRT-001 — use window.location.origin fallback; increase frame wait.")
 def test_create_customer_gift_card_from_template(browser):
 
@@ -109,6 +108,7 @@ def test_create_customer_gift_card_from_template(browser):
     assert CUSTOMER_GIFT_CARD_AMOUNT in VISIBLE_CUSTOMER_GIFT_CARD_AMOUNT
 
 
+@pytest.mark.smoke
 @allure.title("CGC-PER-001 Created customer gift card data persists after page reload")
 @pytest.mark.regression
 def test_customer_gift_card_persists_after_page_reload(browser):
@@ -124,7 +124,6 @@ def test_customer_gift_card_persists_after_page_reload(browser):
 
 
 @allure.title("CGC-DEP-001 Customer gift card is linked to the correct gift card template")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="CI-SKIP CGC-DEP-001: same root cause as CGC-CRT-001 — wait_for_customer_list_loaded times out in headless CI.")
 def test_customer_gift_card_linked_to_correct_template(browser):
 

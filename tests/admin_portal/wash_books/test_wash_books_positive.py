@@ -22,7 +22,6 @@ pytestmark = [
 
 
 @allure.title("WB-NAM-001 / WB-TGL-001 Create active wash book — name and status in listing")
-@pytest.mark.smoke
 def test_create_wash_book(browser):
 
     wash_books_page = create_wash_book_if_missing(browser)
@@ -70,6 +69,7 @@ def test_create_inactive_wash_book(browser):
     assert page_has_no_broken_state(page)
 
 
+@pytest.mark.smoke
 @allure.title("WB-PRI-004 Decimal global price (e.g. 19.99) is accepted and saves correctly")
 @pytest.mark.extended
 def test_wash_book_decimal_price_accepted(browser):

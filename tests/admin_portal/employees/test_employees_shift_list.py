@@ -24,7 +24,6 @@ _COLUMNS_XFAIL = pytest.mark.skip(
 
 
 @allure.title("EMP-SH-LST-001 Employee shift tab loads and the Add shift button is visible")
-@pytest.mark.smoke
 def test_shift_tab_loads(browser):
     page = open_shift_page(browser)
 
@@ -53,8 +52,8 @@ def test_shift_list_displays_correct_columns(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("EMP-SH-LST-003 Empty state message shows when no shift records exist")
 @pytest.mark.smoke
+@allure.title("EMP-SH-LST-003 Empty state message shows when no shift records exist")
 def test_shift_empty_state_when_no_records(browser):
     page = open_shift_page(browser)
     page.search_shift(NONEXISTENT_LAST_NAME)

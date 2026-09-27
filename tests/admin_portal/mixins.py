@@ -34,7 +34,6 @@ class SingleDaySyncMixin:
             ]
         )
 
-    @pytest.mark.smoke
     def test_modal_single_day_checkbox_visible(self, sdm_modal):
         allure.dynamic.title(
             "%s-001 Single day checkbox is visible inside the filter modal"

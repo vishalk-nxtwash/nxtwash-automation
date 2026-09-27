@@ -12,8 +12,8 @@ pytestmark = [
 ]
 
 
-@allure.title("WE-LST-001 Wash extras page loads with all primary controls")
 @pytest.mark.smoke
+@allure.title("WE-LST-001 Wash extras page loads with all primary controls")
 def test_wash_extras_page_loads_with_primary_controls(browser):
 
     page = open_wash_extras_page(browser)
@@ -51,7 +51,6 @@ def test_wash_extras_filter_panel_shows_controls(browser):
 
 
 @allure.title("Add wash extra form loads with required fields and default active switch")
-@pytest.mark.smoke
 def test_add_wash_extra_form_loads(browser):
 
     page = open_wash_extras_page(browser)

@@ -12,6 +12,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 @allure.title("SC-NG-001 Category name is mandatory")
 @pytest.mark.validation
 def test_service_category_required_name_validation(browser):

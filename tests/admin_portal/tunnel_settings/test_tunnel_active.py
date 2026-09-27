@@ -23,7 +23,6 @@ _ACTIVE_TOGGLE = "Active tunnel configuration"
 # ---------------------------------------------------------------------------
 
 @allure.title("TUN-ACT Active configuration toggle drives list status badge")
-@pytest.mark.smoke
 @pytest.mark.parametrize("active,expected_status", [
     pytest.param(True, "Active", id="TUN-ACT-001"),
     pytest.param(False, "Inactive", id="TUN-ACT-002",
@@ -37,6 +36,7 @@ _ACTIVE_TOGGLE = "Active tunnel configuration"
         )
     ),
 ])
+@pytest.mark.smoke
 def test_active_configuration_toggle_saves(browser, managed_tunnel, active, expected_status):
     form = open_edit_tunnel_form(browser, TUNNEL_NAME)
     form.set_toggle(_ACTIVE_TOGGLE, active)

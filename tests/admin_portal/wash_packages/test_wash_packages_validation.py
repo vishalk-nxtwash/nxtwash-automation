@@ -15,8 +15,8 @@ pytestmark = [
 ]
 
 
-@allure.title("WP-VAL Blank required form stays on the create page")
 @pytest.mark.smoke
+@allure.title("WP-VAL Blank required form stays on the create page")
 def test_wash_package_blank_required_form_stays_on_form(browser):
     page = open_wash_packages_page(browser)
     page.open_create_package()

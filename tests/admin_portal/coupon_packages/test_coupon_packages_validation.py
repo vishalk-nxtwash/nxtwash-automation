@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CP-NAM-002 Blank name is blocked on save and shows validation message")
 @pytest.mark.smoke
+@allure.title("CP-NAM-002 Blank name is blocked on save and shows validation message")
 def test_coupon_package_blank_name_is_blocked(browser):
 
     page = open_coupon_packages_page(browser)
@@ -43,8 +43,8 @@ def test_coupon_package_whitespace_name_is_rejected(browser):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("CP-DIS-002 Blank discount selection is blocked on save")
 @pytest.mark.smoke
+@allure.title("CP-DIS-002 Blank discount selection is blocked on save")
 def test_coupon_package_blank_discount_is_blocked(browser):
 
     page = open_coupon_packages_page(browser)

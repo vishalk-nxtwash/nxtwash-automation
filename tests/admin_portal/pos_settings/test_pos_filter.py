@@ -14,8 +14,8 @@ pytestmark = [
     allure.story("Filter"),
 ]
 
-@allure.title("POS-FLT-001 Filter panel opens with site dropdown and active toggle")
 @pytest.mark.smoke
+@allure.title("POS-FLT-001 Filter panel opens with site dropdown and active toggle")
 def test_filter_panel_opens(browser):
     page = open_pos_page(browser)
     page.open_filter_panel()
