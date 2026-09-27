@@ -30,12 +30,17 @@ on:
         default: "2"
 
 concurrency:
-  # Per-runner group — a GitHub-hosted dispatch and an EC2 dispatch must not
-  # cancel each other. Without this, firing one right after the other (or a
-  # push landing in between) cancels whichever was still queued/running,
-  # even though they're not actually sharing the same runner.
-  group: superadmin-smoke-staging-${{ github.event.inputs.runner || 'ubuntu-latest' }}
-  cancel-in-progress: true   # New push/dispatch on the SAME runner cancels the previous one
+  # ONE shared group across every trigger and runner — this suite mutates
+  # persistent staging fixtures (e.g. 'VK Auto Test Role'), so a GitHub-hosted
+  # run and an EC2 run must never execute at the same time: two sessions
+  # editing/reloading the same row concurrently produces false failures
+  # (confirmed 2026-09-26 — both runners failed identically on the same role
+  # row when dispatched seconds apart). Queuing (not cancelling) is essential
+  # too: cancel-in-progress could kill a run after it renames a role but
+  # before its `finally:` block resets it, leaving staging permanently dirty.
+  # A queued-but-superseded run is slower; a killed-mid-mutation run is worse.
+  group: superadmin-smoke-staging
+  cancel-in-progress: false
 
 jobs:
   smoke:
