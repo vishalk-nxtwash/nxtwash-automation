@@ -5,7 +5,6 @@ import pytest
 
 from tests.admin_portal.wash_packages.conftest import (
     ASSIGNMENT_SITE,
-    BARCODE_VALUE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     PACKAGE_NAME,
@@ -27,12 +26,17 @@ pytestmark = [
 @pytest.mark.regression
 def test_wash_package_barcode_persists(managed_package):
     page = managed_package
+    # Unique per run: barcodes must be unique across services, and packages
+    # cannot be deleted — a fixed value (VK-BAR-001) was permanently taken by
+    # packages that test_duplicate_barcode_behaviour created on earlier runs
+    # (save rejected: 499 "Barcode already associated with another service").
+    barcode = "VK-BAR-%s" % uuid.uuid4().hex[:6].upper()
     page.open_edit_package(PACKAGE_NAME)
-    page.enter_barcode(BARCODE_VALUE)
+    page.enter_barcode(barcode)
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_barcode_value() == BARCODE_VALUE
+    assert page.get_barcode_value() == barcode
     assert page_has_no_broken_state(page)
 
 
@@ -45,6 +49,9 @@ def test_wash_package_barcode_persists(managed_package):
 def test_duplicate_barcode_behaviour(browser):
     package_a = "VK bar-a %s" % uuid.uuid4().hex[:6]
     package_b = "VK bar-b %s" % uuid.uuid4().hex[:6]
+    # Own barcode per run — never the shared BARCODE_VALUE, which this test
+    # used to claim permanently for package_a (packages cannot be deleted).
+    dup_barcode = "VK-DUP-%s" % uuid.uuid4().hex[:6].upper()
 
     page = open_wash_packages_page(browser)
     page.open_create_package()
@@ -56,7 +63,7 @@ def test_duplicate_barcode_behaviour(browser):
         GLOBAL_COMMISSION,
         ASSIGNMENT_SITE,
     )
-    page.enter_barcode(BARCODE_VALUE)
+    page.enter_barcode(dup_barcode)
     page.click_save_package()
     page = open_wash_packages_page(browser)
 
@@ -69,7 +76,7 @@ def test_duplicate_barcode_behaviour(browser):
         GLOBAL_COMMISSION,
         ASSIGNMENT_SITE,
     )
-    page.enter_barcode(BARCODE_VALUE)
+    page.enter_barcode(dup_barcode)
     page.click_save_package()
 
     assert page_has_no_broken_state(page)

@@ -302,12 +302,61 @@ class BasePage:
     _DUPLICATE_KEYWORDS = (
         "already exists", "duplicate", "already in use",
         "name is taken", "must be unique", "already been taken",
-        "already used", "conflict",
+        "already used", "conflict", "already associated",
     )
     _SERVER_ERROR_KEYWORDS = (
         "something went wrong", "internal server error",
         "failed to fetch", "unauthorized", "application error",
+        # Legacy forms report save failures as "An error occured while ..."
+        # (sic) with the API payload inline.
+        "error occured", "error occurred",
     )
+
+    def wait_for_legacy_save(self, timeout=20):
+        """After clicking Save inside a legacy iframe form, wait for the outcome.
+
+        A successful legacy save redirects by itself within ~1 s: the top URL
+        and the iframe leave ``/edit/<id>`` or ``/new``. That redirect is the
+        reliable "saved" signal. (Waiting for the Save button to disable and
+        re-enable does not work: the button vanishes with the old frame, the
+        lookup keeps failing, and WebDriverWait silently polls to its 45 s
+        timeout before navigating away blind.)
+
+        Returns ("saved", None) or ("error", text). Raises TimeoutError if the
+        page neither redirects nor shows an error — the save did not land, so
+        callers must not navigate away as if it had.
+        """
+        import time as _time
+        frame_href = None
+        try:
+            if self.driver.execute_script("return window.self !== window.top;"):
+                frame_href = self.driver.execute_script("return window.location.href;")
+        except Exception:  # noqa: BLE001
+            pass
+        deadline = _time.time() + timeout
+        last_text = ""
+        while _time.time() < deadline:
+            _time.sleep(0.5)
+            self.driver.switch_to.default_content()
+            top = self.driver.current_url or ""
+            if "/edit/" not in top and not top.rstrip("/").endswith("/new"):
+                return "saved", None
+            if frame_href:
+                try:
+                    self._reenter_frame(frame_href)
+                except Exception:  # noqa: BLE001
+                    continue
+            error = self.get_visible_error()
+            if error:
+                return "error", error
+            try:
+                last_text = self.driver.find_element(By.TAG_NAME, "body").text[:400]
+            except Exception:  # noqa: BLE001
+                pass
+        raise TimeoutError(
+            "Save did not complete within %ss — still on %s. Page text: %s"
+            % (timeout, self.driver.current_url, last_text)
+        )
 
     def get_visible_error(self):
         """Return the first visible error text from the current frame body, or None.

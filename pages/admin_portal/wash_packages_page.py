@@ -812,33 +812,25 @@ for (var i = 0; i < kids.length; i++) {
         self.click(self.SAVE_PACKAGE_BUTTON)
 
     def save_and_return_to_list(self):
-        """Save wash package and navigate explicitly to the list.
+        """Save the wash package, confirm the save landed, then show the list.
 
-        Staging does not always auto-redirect after save; this method forces
-        navigation so callers don't have to depend on the SPA redirect.
+        Waits for the app's own post-save redirect (see
+        BasePage.wait_for_legacy_save) instead of navigating away on a timer —
+        navigating before the save landed silently dropped edits (price /
+        barcode / name "did not persist" failures).
         """
-        import time as _t
+        self.driver.execute_script("window.confirm = () => true;")
         self.click(self.SAVE_PACKAGE_BUTTON)
-        try:
-            self.wait.until(
-                lambda driver: not driver.find_element(
-                    *self.SAVE_PACKAGE_BUTTON
-                ).is_enabled()
-            )
-            self.wait.until(EC.element_to_be_clickable(self.SAVE_PACKAGE_BUTTON))
-        except Exception:
-            _t.sleep(5)
-        save_error = self.get_visible_error()
+        outcome, error = self.wait_for_legacy_save()
+        if outcome == "error":
+            raise RuntimeError("Wash package save error: %s" % error)
         self.driver.switch_to.default_content()
         origin = self.driver.execute_script("return window.location.origin")
-        target = origin + "/services/washPackages"
         try:
-            self.driver.get(target)
+            self.driver.get(origin + "/services/washPackages")
         except TimeoutException:
-            self.driver.get(target)
+            self.driver.get(origin + "/services/washPackages")
         self.wait_for_list_loaded()
-        if save_error:
-            raise RuntimeError("Wash package save error: %s" % save_error)
 
     def ensure_active_switch_off(self):
         """Turn active switch off if needed."""
