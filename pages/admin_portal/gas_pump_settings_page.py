@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 _log = logging.getLogger("nxtwash")
 
@@ -356,7 +357,7 @@ class GasPumpSettingsFormPage(BasePage):
         """Enter value into a text/numeric input with React-safe event dispatch."""
         el = self.wait.until(EC.visibility_of_element_located(locator))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(value))
         self.driver.execute_script("""
             var el = arguments[0];
@@ -627,7 +628,7 @@ class GasPumpSettingsFormPage(BasePage):
         for attempt in range(3):
             try:
                 ActionChains(self.driver).click(inner).perform()
-                inner.send_keys(Keys.COMMAND, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
                 inner.send_keys(wash_book)
                 break
@@ -690,7 +691,7 @@ class GasPumpSettingsFormPage(BasePage):
         el = rows[row_index].find_element(By.XPATH,
             ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
         el.click()
-        el.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];

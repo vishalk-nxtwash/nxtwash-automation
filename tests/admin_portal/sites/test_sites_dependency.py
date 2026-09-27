@@ -21,14 +21,12 @@ pytestmark = [
 
 
 @allure.title("SL-DEP-001 Active site appears in Services module site dropdowns")
-@pytest.mark.smoke
 @pytest.mark.skip(reason=_CROSS_MODULE_SKIP)
 def test_active_site_in_services_dropdowns(logged_in_admin_browser):
     pass
 
 
 @allure.title("SL-DEP-002 Active site appears in Customers assign-to site dropdown")
-@pytest.mark.smoke
 @pytest.mark.skip(reason=_CROSS_MODULE_SKIP)
 def test_active_site_in_customers_assign_dropdown(logged_in_admin_browser):
     pass

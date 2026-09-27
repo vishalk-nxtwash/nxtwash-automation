@@ -13,8 +13,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CWB-LST-001 Customer wash books tab loads with all primary controls")
 @pytest.mark.smoke
+@allure.title("CWB-LST-001 Customer wash books tab loads with all primary controls")
 def test_customer_wash_books_tab_loads_with_controls(browser):
 
     page = open_customer_wash_books_page(browser)

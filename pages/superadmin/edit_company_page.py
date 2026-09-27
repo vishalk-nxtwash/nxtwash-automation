@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class EditCompanyPage(BasePage):
@@ -60,7 +61,7 @@ class EditCompanyPage(BasePage):
                 self.TERMS_CONDITION_TEXTAREA
             )
         )
-        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(SELECT_ALL_KEY, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(terms_condition)
 
@@ -109,7 +110,7 @@ class EditCompanyPage(BasePage):
         element = self.wait.until(
             EC.visibility_of_element_located(self.PRIVACY_POLICY_TEXTAREA)
         )
-        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(SELECT_ALL_KEY, "a")
         element.send_keys(Keys.BACKSPACE)
         if text:
             element.send_keys(text)

@@ -101,8 +101,8 @@ def test_nonmatching_search_returns_empty_state(browser):
 
 # ── Filter ────────────────────────────────────────────────────────────────────
 
-@allure.title("CUST-FLT-001 Filter panel opens with all required fields visible")
 @pytest.mark.smoke
+@allure.title("CUST-FLT-001 Filter panel opens with all required fields visible")
 def test_filter_panel_opens_with_all_fields_visible(browser):
     page = open_customers_page(browser)
 

@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class RevenueOverviewPage(BasePage):
@@ -262,7 +263,7 @@ class RevenueOverviewPage(BasePage):
         # start with a clean input.
         try:
             if inner:
-                inner.send_keys(Keys.CONTROL, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
         except Exception:
             pass

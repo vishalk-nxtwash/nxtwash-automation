@@ -19,8 +19,8 @@ _FILTER_XFAIL = pytest.mark.skip(
 )
 
 
-@allure.title("EMP-FLT-001 Clicking 'Filter by' opens the filter panel with status controls")
 @pytest.mark.smoke
+@allure.title("EMP-FLT-001 Clicking 'Filter by' opens the filter panel with status controls")
 def test_filter_panel_opens(browser):
     page = open_employees_page(browser)
     page.open_filter_panel()

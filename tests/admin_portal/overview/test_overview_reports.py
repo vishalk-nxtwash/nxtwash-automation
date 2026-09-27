@@ -13,7 +13,6 @@ pytestmark = [
 
 
 @allure.title("OV-RPT-CW-001 Cars Washed detail report loads with a modal filter panel")
-@pytest.mark.smoke
 @pytest.mark.xfail(strict=False, reason="overview iframe does not render on staging — first-load race")
 def test_overview_cars_washed_report_loads(overview_page):
     assert overview_page.dashboard_has_any_text(
@@ -80,8 +79,8 @@ def test_overview_cars_washed_report_rounding_rule(overview_page):
 # ── Revenue detail report ─────────────────────────────────────────────────────
 
 
-@allure.title("OV-RPT-RV-001 Revenue detail report loads with an inline filter panel")
 @pytest.mark.smoke
+@allure.title("OV-RPT-RV-001 Revenue detail report loads with an inline filter panel")
 def test_overview_revenue_report_loads(overview_page):
     assert overview_page.dashboard_has_any_text(
         ["Revenue Full Report", "Full Report", "Revenue"]
@@ -102,7 +101,6 @@ def test_overview_revenue_report_summary_cards_update(overview_page):
 @allure.title(
     "OV-RPT-RV-003 Revenue distribution donut chart updates when categories are clicked"
 )
-@pytest.mark.smoke
 def test_overview_revenue_report_donut_updates_on_click(overview_page):
     assert overview_page.dashboard_has_any_text(["Revenue", "Membership", "Retail"])
 

@@ -15,7 +15,6 @@ pytestmark = [
 
 
 @allure.title("CUST-LST-001 Customers page loads with all primary controls")
-@pytest.mark.smoke
 def test_customers_page_loads_with_primary_controls(browser):
     page = open_customers_page(browser)
     body = page.get_body_text()
@@ -47,7 +46,6 @@ def test_pagination_and_results_per_page_visible(browser):
 
 
 @allure.title("CUST-UI Add new customer form shows required fields, save and cancel controls")
-@pytest.mark.smoke
 def test_add_customer_form_loads_with_required_controls(browser):
     page = open_customers_page(browser)
     page.open_create_customer()

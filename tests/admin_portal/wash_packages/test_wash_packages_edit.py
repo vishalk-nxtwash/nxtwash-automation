@@ -23,7 +23,6 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Wash Packages"),
     allure.story("Edit"),
-    pytest.mark.xdist_group(name="managed_package"),
 ]
 
 
@@ -102,8 +101,8 @@ def test_edit_wash_package_assigned_sites(managed_package):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("WP-EDT-008 Activate an inactive wash package updates its status to Active")
 @pytest.mark.smoke
+@allure.title("WP-EDT-008 Activate an inactive wash package updates its status to Active")
 @pytest.mark.regression
 @pytest.mark.timeout(480)
 def test_activate_wash_package(managed_package):
@@ -124,7 +123,6 @@ def test_activate_wash_package(managed_package):
 
 
 @allure.title("WP-EDT-009 Deactivate an active wash package hides it from the default list")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.timeout(480)
 def test_deactivate_wash_package(managed_package):

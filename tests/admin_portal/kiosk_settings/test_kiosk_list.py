@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("KSK-LST-001 Kiosk Settings page loads with primary controls visible")
 @pytest.mark.smoke
+@allure.title("KSK-LST-001 Kiosk Settings page loads with primary controls visible")
 def test_kiosk_page_loads(browser):
     page = open_kiosk_page(browser)
     body = page.get_body_text()

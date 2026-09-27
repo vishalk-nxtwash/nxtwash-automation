@@ -36,8 +36,7 @@ def test_edit_customer_name_persists(browser, managed_customer):
     page = managed_customer
     _open_edit_for_managed_customer(page)
     page.enter_last_name(UPDATED_LAST)
-    page.click_save_customer()
-    page.wait_for_list_loaded()
+    page.save_edit_and_return_to_list()
 
     # Verify new name appears, then restore.
     page.open_filter_panel()
@@ -48,8 +47,7 @@ def test_edit_customer_name_persists(browser, managed_customer):
     # Restore original name.
     page.open_edit_customer_from_row(UPDATED_LAST)
     page.enter_last_name(CUSTOMER_LAST)
-    page.click_save_customer()
-    page.wait_for_list_loaded()
+    page.save_edit_and_return_to_list()
 
 
 @allure.title("CUST-EDT-002 Edit assigned site persists after save")
@@ -59,8 +57,7 @@ def test_edit_assigned_site_persists(browser, managed_customer):
     _open_edit_for_managed_customer(page)
     # Re-select the same site to confirm edit flow works without breaking.
     page.select_site(CUSTOMER_SITE)
-    page.click_save_customer()
-    page.wait_for_list_loaded()
+    page.save_edit_and_return_to_list()
 
     page.open_filter_panel()
     page.filter_by_last_name(CUSTOMER_LAST)
@@ -82,8 +79,8 @@ def test_edit_form_prepopulates_existing_values(browser, managed_customer):
     assert page_has_no_broken_state(page)
 
 
-@allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
 @pytest.mark.smoke
+@allure.title("CUST-EDT-004 Activate an inactive customer updates its status to Active")
 def test_activate_inactive_customer(browser, managed_customer):
     page = managed_customer
     _open_edit_for_managed_customer(page)
@@ -133,8 +130,7 @@ def test_toggle_allow_invoicing_persists(browser, managed_customer):
 
     initial_state = page.allow_invoicing_is_on()
     page.toggle_allow_invoicing()
-    page.click_save_customer()
-    page.wait_for_list_loaded()
+    page.save_edit_and_return_to_list()
 
     _open_edit_for_managed_customer(page)
     assert page.allow_invoicing_is_on() != initial_state
@@ -174,8 +170,7 @@ def test_edit_then_refresh_changes_persist(browser, managed_customer):
     page = managed_customer
     _open_edit_for_managed_customer(page)
     page.enter_last_name(UPDATED_LAST)
-    page.click_save_customer()
-    page.wait_for_list_loaded()
+    page.save_edit_and_return_to_list()
 
     # Full reload to verify server-side persistence.
     page = open_customers_page(browser)

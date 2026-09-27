@@ -180,7 +180,7 @@ with `gh workflow run <file> --ref <branch>`:
 
 | Workflow | Runs |
 |---|---|
-| `suite-admin.yml`, `suite-admin-wave2.yml`, `suite-admin-retry.yml` | Admin Portal full suite (sharded) / wave 2 / retry failed shards |
+| `suite-admin.yml` | Admin Portal full suite in waves, or targeted: `-f test_path="<path> <path>"` runs each path as a parallel job |
 | `suite-admin-smoke.yml` | Admin Portal smoke (`-m smoke`) |
 | `suite-superadmin-github.yml`, `suite-superadmin-aws.yml` | Superadmin full suite on GitHub-hosted / EC2 runners (optional `test_path` to run specific tests) |
 | `suite-superadmin-smoke.yml` | Superadmin smoke (choose `ubuntu-latest` or `self-hosted`) |
@@ -268,6 +268,9 @@ below.
 - **Backend purge**: with no product delete, deactivated/managed records persist.
   A backend cleanup API/DB-purge (platform-team dependency) would unlock true
   create-fresh-per-run isolation and reaping of `AUTOTEST` data.
+- **Admin Portal coverage (2026-09-27)**: covered vs pending tests for the
+  full and smoke suites, known failures and product bugs, in
+  [`docs/admin_test_coverage.md`](docs/admin_test_coverage.md).
 - **Superadmin coverage (frozen 2026-09-27)**: covered vs pending tests for the
   full and smoke suites, with the next action per gap, are tracked in
   [`docs/superadmin_test_coverage.md`](docs/superadmin_test_coverage.md).

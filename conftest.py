@@ -171,9 +171,9 @@ def pytest_collection_modifyitems(config, items):
         if "/tests/superadmin/" in path:
             item.add_marker(pytest.mark.superadmin)
 
-        # Smoke = login flows, positive paths, and *_smoke files.
-        if "/login/" in path or "_positive" in path or "_smoke" in path:
-            item.add_marker(pytest.mark.smoke)
+        # Smoke is opt-in via explicit @pytest.mark.smoke only (curated core
+        # checks per module). The old path rule (/login/, *_positive, *_smoke)
+        # marked whole files and bloated admin smoke to 500+ tests.
 
         # Quarantine known-failing tests (kept green via xfail until fixed).
         if any(fragment in nodeid for fragment in _QUARANTINE_TIMING):

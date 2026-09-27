@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("POS-LST-001 POS Settings page loads showing the POS list")
 @pytest.mark.smoke
+@allure.title("POS-LST-001 POS Settings page loads showing the POS list")
 def test_pos_page_loads(browser):
     page = open_pos_page(browser)
     body = page.get_body_text()

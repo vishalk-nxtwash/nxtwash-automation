@@ -102,6 +102,13 @@ def open_admin_path(browser, path, attempts=NAVIGATION_ATTEMPTS):
         browser.get(base_url + path)
 
         if not _bounced_to_login(browser):
+            # The staging "Dev environment is unstable" toast covers header
+            # buttons; hide it for the whole page session up front.
+            try:
+                from pages.common.base_page import BasePage
+                browser.execute_script(BasePage.HIDE_DEV_TOAST_CSS_JS)
+            except Exception:  # noqa: BLE001 — cosmetic safeguard only
+                pass
             return
 
         # Bounced: force a fresh login on the next iteration (we are on /login).

@@ -25,11 +25,11 @@ LOG = logging.getLogger(__name__)
 pytestmark = pytest.mark.timeout(900)
 
 
+@pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-TYP-002 / MB-TGL-001 Verify creation of active Prepaid membership")
-@pytest.mark.smoke
 def test_create_prepaid_membership(browser):
 
     LOG.info("Creating/verifying prepaid membership: %s", MEMBERSHIP_NAME)
@@ -47,7 +47,6 @@ def test_create_prepaid_membership(browser):
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-TYP-001 Verify creation of Recurring membership")
-@pytest.mark.smoke
 def test_create_recurring_membership(browser):
 
     LOG.info(
@@ -82,6 +81,7 @@ def test_create_recurring_membership(browser):
     assert memberships_page.location_is_assigned_by_index(0)
 
 
+@pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
@@ -148,6 +148,7 @@ def test_create_inactive_membership(browser):
     assert membership_name not in memberships_page.get_body_text()
 
 
+@pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
 @allure.story("CRUD")
@@ -171,7 +172,6 @@ def test_cancel_create_membership_discards_unsaved_changes(browser):
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-EDT-009 Activate membership updates Status in list")
-@pytest.mark.smoke
 @pytest.mark.regression
 def test_activate_membership(managed_membership):
 
@@ -195,7 +195,6 @@ def test_activate_membership(managed_membership):
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-EDT-010 Deactivate membership hides it from the default list")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.xfail(
     strict=False,

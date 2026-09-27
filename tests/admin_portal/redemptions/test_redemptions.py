@@ -111,8 +111,8 @@ _FILTER_REFRESH_PARAMS = [
 @allure.story("Navigation")
 class TestRedemptionsNav:
 
-    @allure.title("RDM-NAV-001 Redemptions page loads at /reports/detailed/redemption_details")
     @pytest.mark.smoke
+    @allure.title("RDM-NAV-001 Redemptions page loads at /reports/detailed/redemption_details")
     def test_page_loads_at_correct_url(self, rdm_modal):
         url = rdm_modal.get_current_url()
         assert (
@@ -122,8 +122,8 @@ class TestRedemptionsNav:
         ), "URL does not contain expected redemption_details path: %s" % url
         assert page_has_no_broken_state(rdm_modal)
 
-    @allure.title("RDM-NAV-002 Filter modal auto-opens on page load without user action")
     @pytest.mark.smoke
+    @allure.title("RDM-NAV-002 Filter modal auto-opens on page load without user action")
     def test_filter_modal_auto_opens(self, rdm_modal):
         assert rdm_modal.modal_is_open(), (
             "Filter modal (Apply filters button) not visible on page load"
@@ -131,7 +131,6 @@ class TestRedemptionsNav:
         assert page_has_no_broken_state(rdm_modal)
 
     @allure.title("RDM-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
-    @pytest.mark.smoke
     def test_modal_contains_all_controls(self, rdm_modal):
         d = rdm_modal.driver
         site_els   = d.find_elements(*RedemptionsPage.SITE_MULTISELECT)
@@ -147,7 +146,6 @@ class TestRedemptionsNav:
         assert page_has_no_broken_state(rdm_modal)
 
     @allure.title("RDM-FMD-003 Filter modal opens with no sites pre-selected (empty default)")
-    @pytest.mark.smoke
     def test_modal_opens_with_no_default_site(self, rdm_modal):
         assert rdm_modal.no_default_site_selected(), (
             "Expected empty site filter on fresh page load; got chips: %s"
@@ -156,7 +154,6 @@ class TestRedemptionsNav:
         assert page_has_no_broken_state(rdm_modal)
 
     @allure.title("RDM-FMD-005 Selecting a site and preset then applying closes the modal")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="staging data / intermittent — deferred")
     def test_apply_filters_closes_modal(self, rdm_modal):
         rdm_modal.select_site(RDM_SITE)
@@ -214,7 +211,6 @@ class TestRedemptionsSiteFilter:
         assert page_has_no_broken_state(rdm_modal)
 
     @allure.title("RDM-SIT-001 Site filter has no default pre-selection on page load")
-    @pytest.mark.smoke
     def test_no_default_site_selected(self, rdm_modal):
         # Dependency: Sites & Locations module
         chips = rdm_modal.get_site_chips()
@@ -224,7 +220,6 @@ class TestRedemptionsSiteFilter:
         assert page_has_no_broken_state(rdm_modal)
 
     @allure.title("RDM-SIT-003 Selecting a site creates a chip in the site control")
-    @pytest.mark.smoke
     def test_selecting_site_creates_chip(self, rdm_modal):
         rdm_modal.select_site(RDM_SITE)
         chips = rdm_modal.get_site_chips()
@@ -309,7 +304,6 @@ class TestRedemptionsSiteFilter:
         assert page_has_no_broken_state(rdm_page)
 
     @allure.title("RDM-SIT-013 RDM_SITE is present and selectable in the site dropdown")
-    @pytest.mark.smoke
     def test_rdm_site_present_in_dropdown(self, rdm_modal):
         # Dependency: Sites & Locations module
         options = rdm_modal.get_site_options()
@@ -532,16 +526,16 @@ class TestRedemptionsDateFilter:
 @allure.story("Summary Cards")
 class TestRedemptionsSummaryCards:
 
-    @allure.title("RDM-SUM-001 Total Redemptions summary card is visible on the metrics screen")
     @pytest.mark.smoke
+    @allure.title("RDM-SUM-001 Total Redemptions summary card is visible on the metrics screen")
     def test_total_redemptions_card_visible(self, rdm_page):
         assert rdm_page.summary_card_visible("Total Redemptions"), (
             "Total Redemptions summary card not visible after applying filters"
         )
         assert page_has_no_broken_state(rdm_page)
 
-    @allure.title("RDM-SUM-002 All 3 page-level summary cards are visible")
     @pytest.mark.smoke
+    @allure.title("RDM-SUM-002 All 3 page-level summary cards are visible")
     def test_all_summary_cards_visible(self, rdm_page):
         missing = [lbl for lbl in SUMMARY_CARDS if not rdm_page.summary_card_visible(lbl)]
         assert not missing, (
@@ -567,7 +561,6 @@ class TestRedemptionsSummaryCards:
 class TestRedemptionsExpandCollapse:
 
     @allure.title("RDM-EXP-001 Expand All shows all 7 section bodies and toggles label to 'Collapse All'")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason=(
         "Manual - Check later for fixes: section_body_visible() heuristic doesn't match "
         "actual RDM accordion DOM — needs DevTools inspection of expanded section."
@@ -644,7 +637,6 @@ class TestRedemptionsAccordionShared:
 
     @allure.title("RDM-ACC-001 Section '{section}' header is visible on the metrics screen")
     @pytest.mark.parametrize("section", _ACCORDION_SECTION_PARAMS)
-    @pytest.mark.smoke
     def test_section_header_visible(self, rdm_page, section):
         assert rdm_page.section_visible(section), (
             "Section header '%s' not visible on the metrics screen" % section
@@ -653,7 +645,6 @@ class TestRedemptionsAccordionShared:
 
     @allure.title("RDM-ACC-002 Section '{section}' header contains the section name label")
     @pytest.mark.parametrize("section", _ACCORDION_SECTION_PARAMS)
-    @pytest.mark.smoke
     def test_section_name_in_header(self, rdm_page, section):
         body = rdm_page.get_body_text()
         assert section in body, (
@@ -771,7 +762,6 @@ class TestRedemptionsAccordionShared:
 class TestRedemptionsLoyalty:
 
     @allure.title("RDM-LOY-001 Loyalty Points section shows correct summary cards")
-    @pytest.mark.smoke
     def test_loyalty_summary_cards(self, rdm_expanded):
         missing = rdm_expanded.missing_section_summary_cards(
             "Loyalty points", LOYALTY_SUMMARY_CARDS
@@ -837,7 +827,6 @@ class TestRedemptionsLoyalty:
 class TestRedemptionsCompWashes:
 
     @allure.title("RDM-CMP-001 Comp Washes section shows correct summary cards")
-    @pytest.mark.smoke
     def test_comp_washes_summary_cards(self, rdm_expanded):
         missing = rdm_expanded.missing_section_summary_cards(
             "Comp Washes", SECTION_SUMMARY_CARDS["Comp Washes"]
@@ -898,7 +887,6 @@ class TestRedemptionsCompWashes:
 class TestRedemptionsMemberships:
 
     @allure.title("RDM-MEM-001 Memberships section shows correct summary cards")
-    @pytest.mark.smoke
     def test_memberships_summary_cards(self, rdm_expanded):
         missing = rdm_expanded.missing_section_summary_cards(
             "Memberships", SECTION_SUMMARY_CARDS["Memberships"]
@@ -965,7 +953,6 @@ class TestRedemptionsMemberships:
 class TestRedemptionsGiftCards:
 
     @allure.title("RDM-GFT-001 Gift Cards section shows correct summary cards (uses 'Total amount')")
-    @pytest.mark.smoke
     def test_gift_cards_summary_cards(self, rdm_expanded):
         # Gift cards uses "Total amount" not "Total Net Amount" — confirmed from spec.
         missing = rdm_expanded.missing_section_summary_cards(
@@ -1034,7 +1021,6 @@ class TestRedemptionsGiftCards:
 class TestRedemptionsWashBooks:
 
     @allure.title("RDM-WBK-001 Wash Books section shows correct summary cards")
-    @pytest.mark.smoke
     def test_wash_books_summary_cards(self, rdm_expanded):
         missing = rdm_expanded.missing_section_summary_cards(
             "Wash books", SECTION_SUMMARY_CARDS["Wash books"]

@@ -98,9 +98,9 @@ _EXPECTED_DATE_PRESETS = DATE_PRESETS  # reuse shared constant
 # NAV
 # ═══════════════════════════════════════════════════════════════════════════════
 
+@pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("GSR-NAV-001 General Sales Report page loads at /general-sales-report")
-@pytest.mark.smoke
 def test_gsr_page_loads(gsr_page):
     assert "general-sales-report" in gsr_page.get_current_url().lower()
     assert page_has_no_broken_state(gsr_page)
@@ -108,7 +108,6 @@ def test_gsr_page_loads(gsr_page):
 
 @allure.story("Navigation")
 @allure.title("GSR-NAV-002 Page loads with default filter state: All Sites and Today's date")
-@pytest.mark.smoke
 def test_default_filter_state(gsr_page):
     body = gsr_page.get_body_text()
     assert (
@@ -120,9 +119,9 @@ def test_default_filter_state(gsr_page):
     assert page_has_no_broken_state(gsr_page)
 
 
+@pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("GSR-NAV-003 All report sections present on page load")
-@pytest.mark.smoke
 def test_all_report_sections_present(gsr_page):
     body = gsr_page.get_body_text()
     missing = [kw for kw in _EXPECTED_SECTIONS if kw.lower() not in body.lower()]
@@ -149,7 +148,6 @@ def test_site_dropdown_lists_sites(gsr_page):
 
 @allure.story("Filters")
 @allure.title("GSR-FLT-002 Selecting single site filters all report sections")
-@pytest.mark.smoke
 def test_single_site_filter(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -279,9 +277,9 @@ def test_custom_range_clears_preset(gsr_page):
     assert page_has_no_broken_state(gsr_page)
 
 
+@pytest.mark.smoke
 @allure.story("Filters")
 @allure.title("GSR-FLT-016 'Apply filters' refreshes all report sections")
-@pytest.mark.smoke
 def test_apply_filters_refreshes_data(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -309,9 +307,9 @@ def test_reapply_same_filter_identical(gsr_filtered):
 # REV
 # ═══════════════════════════════════════════════════════════════════════════════
 
+@pytest.mark.smoke
 @allure.story("Revenue")
 @allure.title("GSR-REV-001 Four revenue cards displayed correctly")
-@pytest.mark.smoke
 def test_four_revenue_cards_displayed(gsr_page):
     body = gsr_page.get_body_text()
     expected_cards = [
@@ -430,7 +428,6 @@ def test_redemptions_update_on_filter_change(gsr_filtered):
 
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-001 Multi-Site Comparison table visible with twelve columns")
-@pytest.mark.smoke
 def test_multi_site_comparison_visible(gsr_page):
     body = gsr_page.get_body_text()
     assert (
@@ -885,7 +882,6 @@ def test_export_modal_four_options(gsr_page):
 
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-001 Zero-transaction site renders all sections cleanly")
-@pytest.mark.smoke
 def test_zero_transaction_renders_cleanly(zero_data_filter):
     assert page_has_no_broken_state(zero_data_filter), (
         "Broken state detected on GSR page with zero-transaction filter"

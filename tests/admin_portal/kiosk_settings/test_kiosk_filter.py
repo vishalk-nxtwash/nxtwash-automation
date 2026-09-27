@@ -19,8 +19,8 @@ _FILTER_XFAIL = pytest.mark.skip(
 )
 
 
-@allure.title("KSK-FLT-001 Clicking Filter by opens the filter panel with expected controls")
 @pytest.mark.smoke
+@allure.title("KSK-FLT-001 Clicking Filter by opens the filter panel with expected controls")
 def test_filter_panel_opens(browser):
     page = open_kiosk_page(browser)
     page.open_filter_panel()

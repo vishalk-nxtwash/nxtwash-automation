@@ -110,8 +110,8 @@ _WIDGET_REFRESH_PARAMS = [
 @allure.story("Navigation")
 class TestWashActivityNav:
 
-    @allure.title("WAC-NAV-001 Wash Activity page loads at /reports/detailed/cars_washed")
     @pytest.mark.smoke
+    @allure.title("WAC-NAV-001 Wash Activity page loads at /reports/detailed/cars_washed")
     def test_page_loads_at_correct_url(self, wac_modal):
         url = wac_modal.get_current_url()
         assert "cars_washed" in url.lower() or "wash" in url.lower(), (
@@ -120,7 +120,6 @@ class TestWashActivityNav:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-NAV-002 Blocking filter modal auto-opens on page load")
-    @pytest.mark.smoke
     def test_filter_modal_auto_opens(self, wac_modal):
         assert wac_modal.modal_is_open(), (
             "Blocking filter modal (Apply filters button) not visible on page load"
@@ -131,7 +130,6 @@ class TestWashActivityNav:
         "WAC-NAV-003 Modal contains site, date preset, date range, "
         "single-day checkbox and Apply button"
     )
-    @pytest.mark.smoke
     def test_modal_contains_all_controls(self, wac_modal):
         d = wac_modal.driver
         site_els   = d.find_elements(*WashActivityPage.SITE_MULTISELECT)
@@ -159,7 +157,6 @@ class TestWashActivityNav:
         assert page_has_no_broken_state(wac_page)
 
     @allure.title("WAC-FMD-005 Applying filters closes the blocking modal")
-    @pytest.mark.smoke
     @pytest.mark.skip(reason="staging data / intermittent — deferred")
     def test_apply_filters_closes_modal(self, wac_modal):
         wac_modal.select_site(WAC_SITE)
@@ -224,7 +221,6 @@ class TestWashActivitySiteFilter:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-FMD-003 Site filter is in empty default state on fresh page load")
-    @pytest.mark.smoke
     def test_site_filter_empty_by_default(self, wac_modal):
         chips = wac_modal.get_site_chips()
         assert chips == [], (
@@ -233,7 +229,6 @@ class TestWashActivitySiteFilter:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-SIT-003 Selecting a site creates a chip in the site control")
-    @pytest.mark.smoke
     def test_selecting_site_creates_chip(self, wac_modal):
         # Dependency: Sites & Locations module
         wac_modal.select_site(WAC_SITE)
@@ -373,7 +368,6 @@ class TestWashActivitySiteFilter:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-SIT-013 WAC_SITE is present and selectable in the site dropdown")
-    @pytest.mark.smoke
     @pytest.mark.xfail(strict=False, reason="Site dropdown intermittently returns empty; timing race during modal open on staging.")
     def test_wac_site_present_in_dropdown(self, wac_modal):
         # Dependency: Sites & Locations module
@@ -593,9 +587,9 @@ class TestWashActivityDateFilter:
 @allure.story("KPI Cards")
 class TestWashActivityKPI:
 
+    @pytest.mark.smoke
     @allure.title("WAC-KPI-001 KPI card '{label}' is visible with a non-empty label")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
-    @pytest.mark.smoke
     def test_kpi_card_visible(self, wac_page, label):
         assert wac_page.kpi_card_visible(label), (
             "KPI card '%s' not found on the Wash Activity metrics screen. "
@@ -716,8 +710,8 @@ class TestWashActivityKPI:
 @allure.story("Hourly Distribution Chart")
 class TestWashActivityChart:
 
-    @allure.title("WAC-CHT-001 Hourly Distribution chart section is visible")
     @pytest.mark.smoke
+    @allure.title("WAC-CHT-001 Hourly Distribution chart section is visible")
     def test_chart_section_visible(self, wac_page):
         assert wac_page.chart_section_visible(), (
             "Hourly Distribution chart section not visible on the Wash Activity screen. "
@@ -825,7 +819,6 @@ class TestWashActivityChart:
 class TestWashActivityTabs:
 
     @allure.title("WAC-TAB-001 Usage Breakdown section is visible on the metrics screen")
-    @pytest.mark.smoke
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException in usage_breakdown_visible() intermittently on staging.")
     def test_usage_breakdown_section_visible(self, wac_page):
         assert wac_page.usage_breakdown_visible(), (
@@ -1035,7 +1028,6 @@ class TestWashActivityExport:
         "WAC-EXP-001 'Export XLSX' button is visible in the filter bar "
         "(no modal — direct download)"
     )
-    @pytest.mark.smoke
     @pytest.mark.xfail(strict=False, reason="TimeoutException: export button not found within wait on slow staging.")
     def test_export_xlsx_button_visible(self, wac_page):
         assert wac_page.export_xlsx_button_visible(), (

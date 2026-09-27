@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class CardDeclinesPage(BasePage):
@@ -224,10 +225,10 @@ class CardDeclinesPage(BasePage):
         inner = self._get_site_inner_input()
         if clear_first:
             try:
-                inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+                inner.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
             except StaleElementReferenceException:
                 inner = self._get_site_inner_input()
-                inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+                inner.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         try:
             inner.send_keys(site_name)
         except StaleElementReferenceException:

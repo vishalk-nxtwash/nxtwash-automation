@@ -27,8 +27,8 @@ _FILTER_XFAIL = pytest.mark.skip(
 )
 
 
-@allure.title("USR-FLT-001 Filter panel opens with all expected controls")
 @pytest.mark.smoke
+@allure.title("USR-FLT-001 Filter panel opens with all expected controls")
 def test_users_filter_panel_opens(browser):
     page = open_users_page(browser)
 

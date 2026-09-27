@@ -42,8 +42,8 @@ def _unique_phone():
     return "90%08d" % (abs(hash(uuid.uuid4())) % 100000000)
 
 
-@allure.title("EMP-CRT-001 Clicking '+ Add employee' opens the create form at the correct URL")
 @pytest.mark.smoke
+@allure.title("EMP-CRT-001 Clicking '+ Add employee' opens the create form at the correct URL")
 def test_add_employee_form_opens(browser):
     page = open_employees_page(browser)
     page.click_add_employee()
@@ -53,7 +53,6 @@ def test_add_employee_form_opens(browser):
 
 
 @allure.title("EMP-CRT-002 Creating an active employee with all required fields saves correctly")
-@pytest.mark.smoke
 @_LOCATION_XFAIL
 def test_create_active_employee(browser):
     last_name = _unique_last_name()
@@ -95,7 +94,6 @@ def test_create_inactive_employee(browser):
 
 
 @allure.title("EMP-CRT-004 Saving without First Name is blocked with a validation error")
-@pytest.mark.smoke
 def test_create_employee_first_name_required(browser):
     form = open_create_employee_form(browser)
     form.enter_last_name(_unique_last_name())
@@ -113,7 +111,6 @@ def test_create_employee_first_name_required(browser):
 
 
 @allure.title("EMP-CRT-005 Saving without Last Name is blocked with a validation error")
-@pytest.mark.smoke
 def test_create_employee_last_name_required(browser):
     form = open_create_employee_form(browser)
     form.enter_first_name(EMP_FIRST_NAME)
@@ -131,7 +128,6 @@ def test_create_employee_last_name_required(browser):
 
 
 @allure.title("EMP-CRT-006 Saving without Locations is blocked — Locations is required")
-@pytest.mark.smoke
 @_LOCATION_XFAIL
 def test_create_employee_locations_required(browser):
     form = open_create_employee_form(browser)
@@ -152,7 +148,6 @@ def test_create_employee_locations_required(browser):
 
 
 @allure.title("EMP-CRT-007 Saving without Email is blocked with a validation error")
-@pytest.mark.smoke
 def test_create_employee_email_required(browser):
     form = open_create_employee_form(browser)
     form.enter_first_name(EMP_FIRST_NAME)

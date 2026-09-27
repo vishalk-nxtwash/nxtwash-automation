@@ -18,8 +18,8 @@ pytestmark = [
 _TOGGLE_XFAIL = pytest.mark.skip(reason="Manual - Check later for fixes: active POS toggle uses role='switch' heuristics; needs DevTools verification")
 
 
-@allure.title("POS-ACT-001 Active POS toggle ON saves with Active status")
 @pytest.mark.smoke
+@allure.title("POS-ACT-001 Active POS toggle ON saves with Active status")
 def test_active_pos_toggle_on_saves(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     form.ensure_active_pos_on()
@@ -35,7 +35,6 @@ def test_active_pos_toggle_on_saves(browser, managed_pos):
 
 
 @allure.title("POS-ACT-002 Active POS toggle OFF saves with Inactive status")
-@pytest.mark.smoke
 @_TOGGLE_XFAIL
 def test_active_pos_toggle_off_saves(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)

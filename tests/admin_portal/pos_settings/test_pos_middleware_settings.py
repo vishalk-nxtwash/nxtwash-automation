@@ -7,6 +7,7 @@ from tests.admin_portal.pos_settings.conftest import (
     open_edit_pos_form,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -42,7 +43,7 @@ def test_middleware_ip_required(browser, managed_pos_form):
     el = form.wait.until(
         lambda d: d.find_element(*form.MIDDLEWARE_IP_INPUT)
     )
-    el.send_keys(Keys.COMMAND + "a")
+    el.send_keys(SELECT_ALL_KEY + "a")
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

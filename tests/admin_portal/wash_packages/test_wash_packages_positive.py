@@ -24,7 +24,6 @@ pytestmark = [
 
 
 @allure.title("WP-TGL-001 Create active wash package appears in list with Active status")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason="CI-SKIP WP-TGL-001: Staging data contamination — package exists at "
            "wrong price ($45 vs $14) from prior failed teardown. Fix: fix "

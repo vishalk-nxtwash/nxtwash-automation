@@ -1,3 +1,4 @@
+import pytest
 import allure
 
 
@@ -8,6 +9,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 def test_direct_protected_url_without_login_redirects_to_login(browser, login_page):
 
     browser.delete_all_cookies()

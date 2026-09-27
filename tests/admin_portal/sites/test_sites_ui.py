@@ -15,8 +15,8 @@ pytestmark = [
 ]
 
 
-@allure.title("SL-LST-001 Sites/Locations page loads with all primary controls")
 @pytest.mark.smoke
+@allure.title("SL-LST-001 Sites/Locations page loads with all primary controls")
 def test_sites_locations_page_ui_elements(logged_in_admin_browser):
     sites_page = open_sites_page(logged_in_admin_browser)
 
@@ -27,8 +27,8 @@ def test_sites_locations_page_ui_elements(logged_in_admin_browser):
     assert page_has_no_broken_state(sites_page)
 
 
-@allure.title("SL-FLT-001 Filter panel opens with site name field and active toggle")
 @pytest.mark.smoke
+@allure.title("SL-FLT-001 Filter panel opens with site name field and active toggle")
 def test_sites_filter_panel_ui_elements(logged_in_admin_browser):
     sites_page = open_sites_page(logged_in_admin_browser)
     sites_page.open_filters()

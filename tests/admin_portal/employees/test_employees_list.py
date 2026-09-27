@@ -20,8 +20,8 @@ _COLUMNS_XFAIL = pytest.mark.skip(
 )
 
 
-@allure.title("EMP-LST-001 Employees page loads with the Employees tab active by default")
 @pytest.mark.smoke
+@allure.title("EMP-LST-001 Employees page loads with the Employees tab active by default")
 def test_employees_page_loads(browser):
     page = open_employees_page(browser)
 

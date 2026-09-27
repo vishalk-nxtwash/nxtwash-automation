@@ -108,7 +108,6 @@ def test_edit_site_tax_settings_persist(logged_in_admin_browser, managed_site):
 
 
 @allure.title("SL-EDT-004 Activate an inactive site — toggle off then on within one edit session")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.xfail(reason="Intermittent TimeoutException opening edit form; verify manually.", strict=False)
 def test_activate_site_shows_in_list(logged_in_admin_browser, managed_site):
@@ -125,7 +124,6 @@ def test_activate_site_shows_in_list(logged_in_admin_browser, managed_site):
 
 
 @allure.title("SL-EDT-005 Deactivate an active site hides it from the default list")
-@pytest.mark.smoke
 @pytest.mark.regression
 @pytest.mark.xfail(reason="Intermittent TimeoutException opening edit form; verify manually.", strict=False)
 def test_deactivate_site_hides_from_list(logged_in_admin_browser, managed_site):
@@ -153,8 +151,8 @@ def test_cancel_edit_does_not_save(logged_in_admin_browser, managed_site):
     assert page_has_no_broken_state(sites_page)
 
 
-@allure.title("SL-LAN-001 Lanes settings tab is accessible on the edit form")
 @pytest.mark.smoke
+@allure.title("SL-LAN-001 Lanes settings tab is accessible on the edit form")
 def test_edit_site_lanes_settings_tab_accessible(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -165,8 +163,8 @@ def test_edit_site_lanes_settings_tab_accessible(logged_in_admin_browser):
     assert page_has_no_broken_state(edit_page)
 
 
-@allure.title("SL-CC-001 Credit card settings tab is accessible on the edit form")
 @pytest.mark.smoke
+@allure.title("SL-CC-001 Credit card settings tab is accessible on the edit form")
 def test_edit_site_credit_card_tab_accessible(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])
@@ -184,7 +182,6 @@ def test_edit_site_credit_card_tab_accessible(logged_in_admin_browser):
 
 
 @allure.title("SL-CP-001 Customer Portal settings tab is accessible on the edit form")
-@pytest.mark.smoke
 def test_edit_site_customer_portal_tab_accessible(logged_in_admin_browser):
     site_data = create_site_if_missing(logged_in_admin_browser)
     edit_page = open_edit_for_site(logged_in_admin_browser, site_data["site_name"])

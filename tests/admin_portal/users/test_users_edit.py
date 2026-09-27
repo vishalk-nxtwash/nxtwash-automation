@@ -23,8 +23,8 @@ pytestmark = [
 ]
 
 
-@allure.title("USR-EDT-001 Edit button opens the edit form at the correct URL")
 @pytest.mark.smoke
+@allure.title("USR-EDT-001 Edit button opens the edit form at the correct URL")
 def test_users_edit_form_opens(browser, managed_user):
     page = open_users_page(browser)
     page.search_user_by_email(USER_EMAIL)
@@ -98,7 +98,6 @@ def test_edit_user_employee_persists(browser, managed_user):
 
 
 @allure.title("USR-EDT-006 Activating an inactive user updates its status to Active")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual — USR-EDT-006: Activate/deactivate toggle flow verified manually in staging.")
 def test_activate_inactive_user(browser, managed_user):
     # Deactivate first
@@ -119,7 +118,6 @@ def test_activate_inactive_user(browser, managed_user):
 
 
 @allure.title("USR-EDT-007 Deactivating an active user hides it from the default list")
-@pytest.mark.smoke
 @pytest.mark.xfail(
     strict=False,
     reason=(

@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class WashBooksPage(BasePage):
@@ -277,7 +278,7 @@ class WashBooksPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(wash_book_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -340,7 +341,7 @@ class WashBooksPage(BasePage):
         """Clear the wash book search field and wait for list to reset."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -755,7 +756,7 @@ class WashBooksPage(BasePage):
             "arguments[0].focus();",
             element
         )
-        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(SELECT_ALL_KEY, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(value))
         self.driver.execute_script(
@@ -1063,7 +1064,7 @@ class WashBooksPage(BasePage):
             EC.element_to_be_clickable(self.CWB_SEARCH_INPUT)
         )
         self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(str(wash_book_number))
         self.wait.until(
             lambda driver: driver.find_element(

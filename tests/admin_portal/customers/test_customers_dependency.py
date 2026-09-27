@@ -23,7 +23,6 @@ pytestmark = [
 
 
 @allure.title("CUST-DEP-001 Customer appears in the Customer Gift Cards select-customer dropdown")
-@pytest.mark.smoke
 @pytest.mark.skip(reason=_GIFT_CARDS_SKIP)
 def test_customer_appears_in_gift_cards_dropdown(browser):
     pass

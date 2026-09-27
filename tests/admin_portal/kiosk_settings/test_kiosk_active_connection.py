@@ -17,7 +17,6 @@ pytestmark = [
 
 
 @allure.title("KSK-ACT-001 Active kiosk toggle ON saves and shows Active status in list")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="CI-SKIP KSK-ACT-001: managed_kiosk fixture fails in headless CI — kiosk create flow times out. Fix: same as WP-FRM-001.")
 def test_active_toggle_on_shows_active_in_list(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
@@ -33,7 +32,6 @@ def test_active_toggle_on_shows_active_in_list(browser, managed_kiosk):
 
 
 @allure.title("KSK-ACT-002 Active kiosk toggle OFF saves and shows Inactive status")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual - Check later for fixes: KSK-ACT-002: Active toggle OFF not persisting in list — state pollution from edit tests creates a duplicate kiosk; get_kiosk_status returns empty because _row_locator returns the name cell not the row")
 def test_active_toggle_off_shows_inactive_in_list(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)

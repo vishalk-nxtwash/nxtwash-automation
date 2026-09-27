@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class RedemptionsPage(BasePage):
@@ -215,7 +216,7 @@ class RedemptionsPage(BasePage):
         time.sleep(0.3)
         inner = self._get_site_inner_input()
         if clear_first:
-            inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+            inner.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         inner.send_keys(site_name)
         time.sleep(0.3)
         option = WebDriverWait(self.driver, 20).until(
@@ -354,7 +355,7 @@ class RedemptionsPage(BasePage):
         """
         combined = "%s - %s" % (start, end)
         el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(combined)
         el.send_keys(Keys.TAB)
 

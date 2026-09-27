@@ -9,6 +9,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 @pytest.mark.prod_smoke
 def test_login_with_valid_credentials(browser, login_page):
 
@@ -29,6 +30,7 @@ def test_login_using_enter_key(login_page, login_credentials):
     assert login_page.get_overview_text() == "Overview"
 
 
+@pytest.mark.smoke
 @pytest.mark.prod_smoke
 def test_session_persists_after_refresh(browser, login_page):
 
@@ -40,6 +42,7 @@ def test_session_persists_after_refresh(browser, login_page):
     assert login_page.get_overview_text() == "Overview"
 
 
+@pytest.mark.smoke
 def test_authenticated_user_cannot_access_login_page(browser, login_page):
 
     login_page.login()

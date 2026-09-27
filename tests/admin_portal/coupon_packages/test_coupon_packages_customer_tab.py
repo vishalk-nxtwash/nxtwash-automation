@@ -12,8 +12,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CCP-LST-001 Customer coupon packages tab loads without errors")
 @pytest.mark.smoke
+@allure.title("CCP-LST-001 Customer coupon packages tab loads without errors")
 def test_customer_coupon_packages_tab_loads(browser):
 
     page = open_coupon_packages_page(browser)

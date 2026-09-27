@@ -15,7 +15,6 @@ pytestmark = [
 
 
 @allure.title("WB-LST-001 Wash books page loads with primary controls")
-@pytest.mark.smoke
 def test_wash_books_page_loads_with_primary_controls(browser):
 
     page = open_wash_books_page(browser)
@@ -54,7 +53,6 @@ def test_wash_books_grid_columns_are_visible(browser):
 
 
 @allure.title("WB-LST-003 Customer wash books tab and its listing are accessible")
-@pytest.mark.smoke
 def test_customer_wash_books_tab_is_accessible(browser):
 
     # Verify tab label is present inside the WB list iframe
@@ -68,7 +66,6 @@ def test_customer_wash_books_tab_is_accessible(browser):
 
 
 @allure.title("Add wash book form loads with required fields")
-@pytest.mark.smoke
 def test_add_wash_book_form_loads(browser):
 
     page = open_wash_books_page(browser)

@@ -1,7 +1,6 @@
 """Superadmin login / session flows.
 
-Lives in auth/ (not login/): the root conftest auto-marks every test under a
-"/login/" path as smoke, and only a chosen subset should be smoke here.
+Smoke tests here are marked explicitly with @pytest.mark.smoke.
 
 Not covered on purpose: a wrong password for the real superadmin account. Every
 suite shares that one account, and repeated failed attempts could trigger a

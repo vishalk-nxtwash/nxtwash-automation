@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CWB-VAL-001 Saving without selecting a wash book template is blocked")
 @pytest.mark.smoke
+@allure.title("CWB-VAL-001 Saving without selecting a wash book template is blocked")
 def test_create_cwb_blank_wash_book_selection_blocked(browser):
 
     page = open_customer_wash_books_page(browser)
@@ -37,7 +37,6 @@ def test_create_cwb_blank_wash_book_selection_blocked(browser):
 
 
 @allure.title("CWB-VAL-002 Saving with a blank wash book number is blocked")
-@pytest.mark.smoke
 def test_create_cwb_blank_wash_book_number_blocked(browser):
 
     page = open_customer_wash_books_page(browser)
@@ -50,7 +49,6 @@ def test_create_cwb_blank_wash_book_number_blocked(browser):
 
 
 @allure.title("CWB-VAL-003 Saving with a blank number of washes is blocked")
-@pytest.mark.smoke
 def test_create_cwb_blank_number_of_washes_blocked(browser):
 
     page = open_customer_wash_books_page(browser)

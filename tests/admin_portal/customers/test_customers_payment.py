@@ -38,7 +38,6 @@ def _open_managed_customer_edit(browser):
 # ── Tab access ────────────────────────────────────────────────────────────────
 
 @allure.title("CUST-PAY-001 Payment settings tab is enabled on an existing customer")
-@pytest.mark.smoke
 def test_payment_settings_tab_accessible_on_existing_customer(browser):
     page = _open_managed_customer_edit(browser)
 

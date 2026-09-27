@@ -86,7 +86,6 @@ def test_edit_coupon_package_giveaway_services(browser):
 
 
 @allure.title("CP-EDT-005 Activate an inactive coupon package updates status to Active")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual: activation of an inactive package does not persist via automation - needs investigation of legacy iframe form submit behaviour")
 def test_activate_inactive_coupon_package(browser):
 
@@ -103,7 +102,6 @@ def test_activate_inactive_coupon_package(browser):
 
 
 @allure.title("CP-EDT-006 Deactivate an active coupon package updates status")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="manual check: FILTER_BUTTON locator exact text match fails when active filter shows 'Filter by (1)' — fix contains() across all page objects")
 def test_deactivate_active_coupon_package(browser):
 

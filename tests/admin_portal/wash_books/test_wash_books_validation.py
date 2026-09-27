@@ -14,8 +14,8 @@ pytestmark = [
 ]
 
 
-@allure.title("WB-NAM-002 Blank wash book name is blocked on save — validation message shown")
 @pytest.mark.smoke
+@allure.title("WB-NAM-002 Blank wash book name is blocked on save — validation message shown")
 def test_wash_book_required_name_validation(browser):
 
     wash_books_page = open_wash_books_page(browser)
@@ -27,7 +27,6 @@ def test_wash_book_required_name_validation(browser):
 
 
 @allure.title("WB-NAM-006 Submitting a blank form keeps the user on the Add form")
-@pytest.mark.smoke
 def test_wash_book_blank_required_form_stays_on_form(browser):
 
     wash_books_page = open_wash_books_page(browser)
@@ -39,7 +38,6 @@ def test_wash_book_blank_required_form_stays_on_form(browser):
 
 
 @allure.title("WB-PRI-002 Blank global price is blocked on save — validation message shown")
-@pytest.mark.smoke
 def test_wash_book_blank_global_price_is_blocked(browser):
 
     page = open_wash_books_page(browser)

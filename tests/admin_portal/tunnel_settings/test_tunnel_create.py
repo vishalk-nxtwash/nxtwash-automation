@@ -17,6 +17,7 @@ from tests.admin_portal.tunnel_settings.conftest import (
     open_tunnel_list,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -35,8 +36,8 @@ _SESSION_XFAIL = pytest.mark.xfail(
 )
 
 
-@allure.title("TUN-CRT-001 Add new tunnel button navigates to create form")
 @pytest.mark.smoke
+@allure.title("TUN-CRT-001 Add new tunnel button navigates to create form")
 def test_add_tunnel_button_opens_form(browser):
     page = open_tunnel_list(browser)
     page.click_add_tunnel()
@@ -60,7 +61,6 @@ def test_required_fields_marked_with_asterisk(browser):
 
 
 @allure.title("TUN-CRT-003 Creating tunnel with all fields saves and appears in list")
-@pytest.mark.smoke
 def test_create_tunnel_full_save(browser):
     # Dependency: Sites & Locations module
     form = open_create_tunnel_form(browser)
@@ -203,12 +203,12 @@ def test_create_tunnel_required_fields_only(browser):
 # ---------------------------------------------------------------------------
 
 @allure.title("TUN-VAL Required field validation blocks save when field is blank")
-@pytest.mark.smoke
 @pytest.mark.parametrize("field", [
     pytest.param("name", id="TUN-VAL-001"),
     pytest.param("site", id="TUN-VAL-002"),
     pytest.param("controller_ip", id="TUN-VAL-003"),
 ])
+@pytest.mark.smoke
 def test_required_field_validation(browser, field):
     form = open_create_tunnel_form(browser)
 
@@ -240,7 +240,7 @@ def test_required_field_validation(browser, field):
         # Controller IP intentionally omitted; clear any pre-filled value
         try:
             el = form.wait.until(lambda d: d.find_element(*form.CONTROLLER_IP_INPUT))
-            el.send_keys(Keys.COMMAND + "a")
+            el.send_keys(SELECT_ALL_KEY + "a")
             el.send_keys(Keys.BACKSPACE)
         except Exception:
             pass

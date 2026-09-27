@@ -22,8 +22,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CUST-CRT-001 Create customer with required fields only appears in the list")
 @pytest.mark.smoke
+@allure.title("CUST-CRT-001 Create customer with required fields only appears in the list")
 def test_create_customer_with_required_fields_only(browser):
     last = "TCrt1-%s" % uuid.uuid4().hex[:6]
     page = open_customers_page(browser)
@@ -105,6 +105,7 @@ def test_state_dropdown_populates_cities_on_selection(browser):
     assert page_has_no_broken_state(page)
 
 
+@pytest.mark.smoke
 @allure.title("CUST-CRT-006 City dropdown has no options when no state is selected")
 @pytest.mark.edge
 def test_city_dropdown_empty_without_state(browser):
@@ -143,7 +144,6 @@ def test_create_inactive_customer(browser):
 
 
 @allure.title("CUST-CRT-008 Cars settings and Payment settings tabs are disabled for a new customer")
-@pytest.mark.smoke
 def test_cars_and_payment_tabs_disabled_for_new_customer(browser):
     page = open_customers_page(browser)
     page.open_create_customer()

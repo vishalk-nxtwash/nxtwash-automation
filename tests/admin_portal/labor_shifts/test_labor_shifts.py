@@ -113,8 +113,8 @@ _PAGINATION_TABLE_PARAMS = [
 @allure.story("Navigation")
 class TestLaborShiftsNav:
 
-    @allure.title("LAB-NAV-001 Labor & Shifts page loads at /reports/detailed/employee_labor")
     @pytest.mark.smoke
+    @allure.title("LAB-NAV-001 Labor & Shifts page loads at /reports/detailed/employee_labor")
     def test_page_loads_at_correct_url(self, lab_modal):
         url = lab_modal.get_current_url()
         assert (
@@ -125,7 +125,6 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-NAV-002 Blocking filter modal auto-opens on page load")
-    @pytest.mark.smoke
     def test_filter_modal_auto_opens(self, lab_modal):
         assert lab_modal.modal_is_open(), (
             "Blocking filter modal (Apply filters button) not visible on page load"
@@ -136,7 +135,6 @@ class TestLaborShiftsNav:
         "LAB-NAV-003 Modal contains site multiselect, date preset, "
         "date range, single-day checkbox, and Apply filters button"
     )
-    @pytest.mark.smoke
     def test_modal_contains_all_controls(self, lab_modal):
         d = lab_modal.driver
         site_els   = d.find_elements(*LaborShiftsPage.SITE_MULTISELECT)
@@ -152,7 +150,6 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-FMD-002 Site filter is in empty default state on fresh page load")
-    @pytest.mark.smoke
     def test_modal_opens_with_no_site_default(self, lab_modal):
         chips = lab_modal.get_site_chips()
         assert chips == [], (
@@ -161,8 +158,8 @@ class TestLaborShiftsNav:
         )
         assert page_has_no_broken_state(lab_modal)
 
-    @allure.title("LAB-FMD-006 Applying filters closes the blocking modal")
     @pytest.mark.smoke
+    @allure.title("LAB-FMD-006 Applying filters closes the blocking modal")
     def test_apply_filters_closes_modal(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.select_date_preset(LAB_DATE_PRESET)
@@ -189,7 +186,6 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_page)
 
     @allure.title("LAB-NAV-006 Employee summary card and Commission Details block are visible")
-    @pytest.mark.smoke
     def test_employee_summary_and_commission_visible(self, lab_page):
         assert lab_page.employee_summary_visible(), (
             "Employees summary card (Total/Active/Inactive + hours) not visible"
@@ -264,7 +260,6 @@ class TestLaborShiftsSiteFilter:
     @allure.title(
         "LAB-FMD-001 / LAB-SIT-001 Sites dropdown lists active sites including LAB_SITE"
     )
-    @pytest.mark.smoke
     def test_sites_dropdown_lists_active_sites(self, lab_modal):
         # Dependency: Sites & Locations module
         options = lab_modal.get_site_options()
@@ -498,7 +493,6 @@ class TestLaborShiftsSiteFilter:
 class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-FMD-003 Date preset dropdown lists all 7 expected options")
-    @pytest.mark.smoke
     @pytest.mark.skip(
         reason=(
             "Manual - Check later for fixes: date preset dropdown CSS class not confirmed — "
@@ -706,9 +700,9 @@ class TestLaborShiftsDateFilter:
 @allure.story("KPI Metrics")
 class TestLaborShiftsKPI:
 
+    @pytest.mark.smoke
     @allure.title("LAB-KPI-001 KPI widget '{label}' is visible on the metrics screen")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
-    @pytest.mark.smoke
     def test_kpi_card_visible(self, lab_page, label):
         assert lab_page.kpi_card_visible(label), (
             "KPI widget '%s' not found on the Labor & Shifts metrics screen. "
@@ -881,7 +875,6 @@ class TestLaborShiftsEmployeeTable:
 
     @allure.title("LAB-EMP-001 Employee table column '{col}' is present in the table header")
     @pytest.mark.parametrize("col", _EMP_COLUMN_PARAMS)
-    @pytest.mark.smoke
     def test_employee_table_column_present(self, lab_page, col):
         body = lab_page.get_body_text()
         assert col in body, (
@@ -989,8 +982,8 @@ class TestLaborShiftsEmployeeTable:
 @allure.story("Commission Cards")
 class TestLaborShiftsCommissionCards:
 
-    @allure.title("LAB-CSM-001 All four commission cards are visible on the metrics screen")
     @pytest.mark.smoke
+    @allure.title("LAB-CSM-001 All four commission cards are visible on the metrics screen")
     def test_four_commission_cards_visible(self, lab_page):
         for label in COMMISSION_CARDS:
             assert lab_page.commission_card_visible(label), (
@@ -1078,7 +1071,6 @@ class TestLaborShiftsCommissionTransactions:
         "LAB-CTX-001 Commission Transactions column '{col}' is present in the table header"
     )
     @pytest.mark.parametrize("col", _CTX_COLUMN_PARAMS)
-    @pytest.mark.smoke
     def test_ctx_table_column_present(self, lab_page, col):
         body = lab_page.get_body_text()
         assert col in body, (

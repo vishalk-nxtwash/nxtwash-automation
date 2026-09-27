@@ -16,8 +16,8 @@ pytestmark = [
 ]
 
 
-@allure.title("CS-LST-001 Custom services page loads with primary controls visible")
 @pytest.mark.smoke
+@allure.title("CS-LST-001 Custom services page loads with primary controls visible")
 def test_custom_services_page_loads_with_primary_controls(browser):
 
     page = open_custom_services_page(browser)

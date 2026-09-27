@@ -1,38 +1,39 @@
 name: Admin Suite (staging)
 
-# Full admin-portal suite against STAGING, sharded across 4 sequential waves.
-# Within each wave up to 3 shards run in parallel (3 self-hosted runners available:
-# admin-staging-01/02/03).  Wave-1 has 4 shards — the 4th queues and starts as soon
-# as the fastest of the first 3 finishes (people-hr ~90 min → queue clears before
-# wash-services 220 min deadline).
-# Waves 2-4 use if: !cancelled() — they proceed even when a prior wave has test
-# failures so you see the full picture in one run; they only skip on a manual cancel.
+# Full admin-portal suite against STAGING on GitHub-hosted runners.
 #
-# parallel: 1 across the board — one Chrome per runner at a time.
-# Peak RAM per runner: ~1.3 GB (well within 3.7 GB).
-# parallel: 2 caused OOM kills after ~25 min (2 Chrome × ~900 MB = ~2.8 GB peak).
-# timeout: 180 default — largest shards (~280 tests × 30s serial) need ~140 min.
+# Two modes (manual dispatch only):
+#   * Full suite — 4 waves of module shards (waves input selects which).
+#   * Targeted  — test_path set: each listed path/node id runs as its own
+#     parallel job. Use this to iterate on one module or one failing test
+#     without running the whole suite.
+#
+# parallel: 2 xdist workers per job by default (GitHub-hosted runners have
+# 2 vCPUs / 7 GB; the old parallel: 1 limit was for 3.7 GB EC2 runners).
 
 on:
-  # TEMPORARILY DISABLED (2026-09-24): push/schedule/repository_dispatch
-  # commented out while EC2 self-hosted runner work is in progress on
-  # ci/ec2-runner-setup, so this doesn't compete for admin-staging-01/02/03.
-  # Re-enable by uncommenting once that work is done.
-  # push:
-  #   branches: [staging]
+  # Manual dispatch only — no automatic runs on push/schedule (team decision
+  # 2026-09-27).
   workflow_dispatch:
     inputs:
       waves:
-        description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Default: all.'
+        description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Ignored when test_path is set.'
         required: false
         default: 'all'
-  # schedule:
-  #   - cron: "0 3 * * 0"
-  # repository_dispatch:
-  #   types: [staging-deploy-complete]
+      test_path:
+        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite by waves).'
+        required: false
+        default: ''
+      parallel:
+        description: 'xdist workers per job (GitHub-hosted runners: 2)'
+        required: false
+        default: '2'
 
+# ONE queue shared by every admin workflow that touches staging (full suite and
+# smoke): they mutate the same managed records. Runs queue, never cancel — a
+# killed run would skip its teardown resets and leave staging dirty.
 concurrency:
-  group: admin-suite-staging
+  group: admin-staging
   cancel-in-progress: false
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -40,7 +41,7 @@ concurrency:
 # ──────────────────────────────────────────────────────────────────────────────
 jobs:
   wave-1:
-    if: inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')
+    if: ${{ !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')) }}
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -75,13 +76,13 @@ jobs:
               tests/admin_portal/performance_metrics
 
     uses: ./.github/workflows/run-suite.yml
-    secrets:
-      dotenv: ${{ secrets.STAGING }}
+    secrets: inherit
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '1' }}
+      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
+      runner: ubuntu-latest
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -92,7 +93,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-2:
     needs: wave-1
-    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2'))
+    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2')) }}
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -122,13 +123,13 @@ jobs:
               tests/admin_portal/general_sales_report
 
     uses: ./.github/workflows/run-suite.yml
-    secrets:
-      dotenv: ${{ secrets.STAGING }}
+    secrets: inherit
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '1' }}
+      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
+      runner: ubuntu-latest
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -136,7 +137,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-3:
     needs: wave-2
-    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '3'))
+    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '3')) }}
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -163,13 +164,13 @@ jobs:
               tests/admin_portal/gas_pump_settings
 
     uses: ./.github/workflows/run-suite.yml
-    secrets:
-      dotenv: ${{ secrets.STAGING }}
+    secrets: inherit
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '1' }}
+      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
+      runner: ubuntu-latest
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -177,7 +178,7 @@ jobs:
 # ──────────────────────────────────────────────────────────────────────────────
   wave-4:
     needs: wave-3
-    if: always() && !cancelled() && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '4'))
+    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '4')) }}
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -189,11 +190,50 @@ jobs:
               tests/admin_portal/redemptions
 
     uses: ./.github/workflows/run-suite.yml
-    secrets:
-      dotenv: ${{ secrets.STAGING }}
+    secrets: inherit
     with:
       label: admin-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || '1' }}
+      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
+      runner: ubuntu-latest
       timeout_minutes: ${{ matrix.shard.timeout || 180 }}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TARGETED  — fast iteration: every entry of test_path is its own parallel job.
+#   gh workflow run suite-admin.yml --ref <branch> \
+#     -f test_path="tests/admin_portal/cash_report tests/admin_portal/card_declines"
+# ──────────────────────────────────────────────────────────────────────────────
+  plan:
+    if: ${{ inputs.test_path }}
+    runs-on: ubuntu-latest
+    outputs:
+      targets: ${{ steps.split.outputs.targets }}
+    steps:
+      - id: split
+        env:
+          TEST_PATH: ${{ inputs.test_path }}
+        run: |
+          # One matrix entry per path; label = artifact-safe version of the path.
+          targets=$(printf '%s\n' $TEST_PATH | python3 -c '
+          import json, re, sys
+          paths = [p for p in sys.stdin.read().split() if p]
+          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80]} for p in paths]))')
+          echo "targets=$targets" >> "$GITHUB_OUTPUT"
+          echo "$targets"
+
+  targeted:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJSON(needs.plan.outputs.targets) }}
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-t-${{ matrix.target.label }}
+      environment: staging
+      test_path: ${{ matrix.target.path }}
+      parallel: ${{ inputs.parallel || '2' }}
+      timeout_minutes: 90
+      runner: ubuntu-latest

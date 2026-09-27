@@ -15,8 +15,8 @@ pytestmark = [
 ]
 
 
-@allure.title("USR-LST-001 Users list page loads with all primary controls visible")
 @pytest.mark.smoke
+@allure.title("USR-LST-001 Users list page loads with all primary controls visible")
 def test_users_list_page_loads(browser):
     page = open_users_page(browser)
 

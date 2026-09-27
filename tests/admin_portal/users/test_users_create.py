@@ -32,8 +32,8 @@ def _unique_phone():
     return "90%010d" % (abs(hash(uuid.uuid4())) % 100000000)
 
 
-@allure.title("USR-CRT-001 Clicking Add user opens the create form at the correct URL")
 @pytest.mark.smoke
+@allure.title("USR-CRT-001 Clicking Add user opens the create form at the correct URL")
 def test_users_add_form_opens(browser):
     page = open_users_page(browser)
     page.click_add_user()
@@ -43,7 +43,6 @@ def test_users_add_form_opens(browser):
 
 
 @allure.title("USR-CRT-002 Creating an active user with all required fields saves correctly")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="Manual — USR-CRT-002: Create active user flow verified manually in staging.")
 def test_create_active_user(browser):
     email = _unique_email()
@@ -81,7 +80,6 @@ def test_create_inactive_user(browser):
 
 
 @allure.title("USR-CRT-004 Submitting form without Employee is blocked with validation")
-@pytest.mark.smoke
 def test_create_user_employee_required(browser):
     form = open_create_user_form(browser)
     form.enter_password(USER_PASSWORD)
@@ -101,7 +99,6 @@ def test_create_user_employee_required(browser):
 
 
 @allure.title("USR-CRT-005 Submitting form without Password is blocked with validation")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_password_required(browser):
     form = open_create_user_form(browser)
@@ -138,7 +135,6 @@ def test_create_user_confirm_password_required(browser):
 
 
 @allure.title("USR-CRT-007 Submitting form without Email is blocked with validation")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_email_required(browser):
     form = open_create_user_form(browser)
@@ -172,7 +168,6 @@ def test_create_user_phone_required(browser):
 
 
 @allure.title("USR-CRT-009 Submitting form without User Role is blocked")
-@pytest.mark.smoke
 @pytest.mark.skip(reason="staging data: employee 'test user 3' not seeded — deferred")
 def test_create_user_role_required(browser):
     form = open_create_user_form(browser)

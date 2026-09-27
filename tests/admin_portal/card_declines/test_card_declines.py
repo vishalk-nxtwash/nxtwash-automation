@@ -108,8 +108,8 @@ _WIDGET_REFRESH_PARAMS = [
 @allure.story("Navigation")
 class TestCardDeclinesNav:
 
-    @allure.title("CDL-NAV-001 Card Declines page loads at /reports/detailed/cc_declines")
     @pytest.mark.smoke
+    @allure.title("CDL-NAV-001 Card Declines page loads at /reports/detailed/cc_declines")
     def test_page_loads_at_correct_url(self, cdl_modal):
         url = cdl_modal.get_current_url()
         assert (
@@ -121,7 +121,6 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-NAV-002 Filter header is visible on page load without user action")
-    @pytest.mark.smoke
     def test_filter_modal_auto_opens(self, cdl_modal):
         # CDL uses a persistent inline filter header, not a blocking modal dialog.
         assert cdl_modal.modal_is_open(), (
@@ -130,7 +129,6 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
-    @pytest.mark.smoke
     def test_modal_contains_all_controls(self, cdl_modal):
         d = cdl_modal.driver
         site_els   = d.find_elements(*CardDeclinesPage.SITE_MULTISELECT)
@@ -144,7 +142,6 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-FMD-003 Site filter is in empty default state on fresh page load")
-    @pytest.mark.smoke
     def test_modal_opens_with_all_sites_default(self, cdl_modal):
         # DOM confirmed: CDL opens with placeholder "Select site to filter..." — no
         # sites are pre-selected.  (test_selecting_site_creates_chip passes with
@@ -155,8 +152,8 @@ class TestCardDeclinesNav:
         )
         assert page_has_no_broken_state(cdl_modal)
 
-    @allure.title("CDL-FMD-005 Selecting a preset and applying renders the metrics screen")
     @pytest.mark.smoke
+    @allure.title("CDL-FMD-005 Selecting a preset and applying renders the metrics screen")
     def test_apply_filters_closes_modal(self, cdl_modal):
         # CDL uses an inline filter header — there is no blocking modal to close.
         # Verify that selecting a preset and applying produces visible content.
@@ -216,7 +213,6 @@ class TestCardDeclinesSiteFilter:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-SIT-001 No sites are pre-selected by default on page load")
-    @pytest.mark.smoke
     def test_all_sites_is_default(self, cdl_modal):
         # DOM confirmed: CDL opens with placeholder "Select site to filter..." and
         # no chips — the site filter is empty by default, same as Cash Report.
@@ -227,7 +223,6 @@ class TestCardDeclinesSiteFilter:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-SIT-003 Selecting a site creates a chip in the site control")
-    @pytest.mark.smoke
     def test_selecting_site_creates_chip(self, cdl_modal):
         cdl_modal.clear_sites()
         cdl_modal.select_site(CDL_SITE)
@@ -350,7 +345,6 @@ class TestCardDeclinesSiteFilter:
         )
 
     @allure.title("CDL-SIT-013 CDL_SITE is present and selectable in the site dropdown")
-    @pytest.mark.smoke
     def test_cdl_site_present_in_dropdown(self, cdl_modal):
         # get_site_options() returns only initially visible rows in a virtualized dropdown
         # and may not include CDL_SITE.  Verify presence by selecting it — if the site
@@ -454,7 +448,6 @@ class TestCardDeclinesDateFilter:
 class TestCardDeclinesGlossary:
 
     @allure.title("CDL-GLS-001 Glossary section is visible on the Card Declines page")
-    @pytest.mark.smoke
     def test_glossary_section_visible(self, cdl_page):
         assert cdl_page.glossary_section_visible(), (
             "Glossary section not visible on the Card Declines metrics screen"
@@ -495,9 +488,9 @@ class TestCardDeclinesGlossary:
 @allure.story("KPI Cards")
 class TestCardDeclinesKPI:
 
+    @pytest.mark.smoke
     @allure.title("CDL-KPI-001 KPI card '{label}' is visible with a non-empty label")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
-    @pytest.mark.smoke
     def test_kpi_card_visible(self, cdl_page, label):
         assert cdl_page.kpi_card_visible(label), (
             "KPI card '%s' not found on the Card Declines metrics screen.  "
@@ -540,7 +533,6 @@ class TestCardDeclinesKPI:
 class TestCardDeclinesMatrix:
 
     @allure.title("CDL-MTX-001 CC Declines matrix table section is visible")
-    @pytest.mark.smoke
     def test_matrix_section_visible(self, cdl_page):
         assert cdl_page.matrix_section_visible(), (
             "CC Declines matrix table not visible on the metrics screen.  "
@@ -611,7 +603,6 @@ class TestCardDeclinesMatrix:
 class TestCardDeclinesBestWorst:
 
     @allure.title("CDL-BWS-001 Best and Worst Sites section is visible on the metrics screen")
-    @pytest.mark.smoke
     def test_bws_section_visible(self, cdl_page):
         assert cdl_page.bws_section_visible(), (
             "Best & Worst Sites section not visible on the Card Declines metrics screen.  "
@@ -664,7 +655,6 @@ class TestCardDeclinesBestWorst:
 class TestCardDeclinesDailySummary:
 
     @allure.title("CDL-TDS-001 Daily Declines Summary section is visible on the metrics screen")
-    @pytest.mark.smoke
     def test_daily_summary_section_visible(self, cdl_page):
         assert cdl_page.daily_summary_section_visible(), (
             "Daily Declines Summary section not visible on the metrics screen.  "
@@ -696,8 +686,8 @@ class TestCardDeclinesDailySummary:
 @allure.story("Heatmap")
 class TestCardDeclinesHeatmap:
 
-    @allure.title("CDL-HMP-001 Heatmap section is visible on the Card Declines metrics screen")
     @pytest.mark.smoke
+    @allure.title("CDL-HMP-001 Heatmap section is visible on the Card Declines metrics screen")
     def test_heatmap_section_visible(self, cdl_page):
         assert cdl_page.heatmap_section_visible(), (
             "Heatmap section not visible on the Card Declines metrics screen.  "
@@ -715,7 +705,6 @@ class TestCardDeclinesHeatmap:
 class TestCardDeclinesReasonDist:
 
     @allure.title("CDL-DRD-001 Reason Distribution section is visible on the metrics screen")
-    @pytest.mark.smoke
     def test_reason_dist_section_visible(self, cdl_page):
         assert cdl_page.reason_dist_section_visible(), (
             "Reason Distribution section not visible on the Card Declines metrics screen.  "

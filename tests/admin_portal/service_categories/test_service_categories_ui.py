@@ -16,6 +16,7 @@ pytestmark = [
 ]
 
 
+@pytest.mark.smoke
 @allure.title("SC-UI-001 List shell, controls, grid, and pagination")
 @pytest.mark.sanity
 @pytest.mark.prod_smoke
@@ -36,6 +37,7 @@ def test_service_categories_list_shell_controls_and_grid(browser):
     assert page_has_no_broken_state(page)
 
 
+@pytest.mark.smoke
 @allure.title("SC-UI-002 Add service category form controls")
 @pytest.mark.sanity
 def test_add_service_category_form_controls(browser):

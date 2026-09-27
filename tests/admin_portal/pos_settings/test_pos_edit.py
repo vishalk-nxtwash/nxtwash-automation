@@ -13,6 +13,7 @@ from tests.admin_portal.pos_settings.conftest import (
     open_pos_page,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -29,8 +30,8 @@ _SITE_LANE_XFAIL = pytest.mark.xfail(
     ),
 )
 
-@allure.title("POS-EDT-001 Edit button opens form pre-populated on Main tab")
 @pytest.mark.smoke
+@allure.title("POS-EDT-001 Edit button opens form pre-populated on Main tab")
 def test_edit_form_opens_prepopulated(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     body = form.get_body_text()
@@ -147,7 +148,7 @@ def test_edit_payment_methods_persists(browser, managed_pos):
 def test_edit_blank_name_blocked(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.POS_NAME_INPUT))
-    el.send_keys(Keys.COMMAND + "a")
+    el.send_keys(SELECT_ALL_KEY + "a")
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 
@@ -161,7 +162,6 @@ def test_edit_blank_name_blocked(browser, managed_pos):
 
 
 @allure.title("POS-EDT-009 Activate inactive POS shows Active badge")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason=(
         "Manual - Check later for fixes: after deactivating, re-opening edit form requires "
@@ -187,7 +187,6 @@ def test_activate_inactive_pos(browser, managed_pos):
 
 
 @allure.title("POS-EDT-010 Deactivate active POS shows Inactive badge")
-@pytest.mark.smoke
 @pytest.mark.skip(
     reason=(
         "Manual - Check later for fixes: active toggle locator uses heuristics — "
