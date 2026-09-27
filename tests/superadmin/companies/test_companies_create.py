@@ -77,6 +77,7 @@ def test_new_company_appears_in_list_and_count_increments(companies_page):
     pass
 
 
+@pytest.mark.smoke
 def test_save_empty_form_shows_validation(create_company_page):
     """SA-CMP-CRT-007 to CRT-018 — Submitting the empty form is blocked with validation."""
     create_company_page.click_save_new()

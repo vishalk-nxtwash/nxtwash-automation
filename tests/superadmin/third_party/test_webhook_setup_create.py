@@ -141,6 +141,7 @@ def test_all_event_type_checkboxes_default_off(create_setup_page):
         f"All event checkboxes should default to OFF, found ON: {on_keys}"
 
 
+@pytest.mark.smoke
 def test_save_without_any_fields_shows_validation(create_setup_page):
     """SA-SET-CRT-011 — Clicking 'Save new' with nothing filled is blocked."""
     create_setup_page.click_save_new()

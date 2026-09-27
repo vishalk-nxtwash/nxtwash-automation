@@ -138,6 +138,7 @@ def test_create_with_active_toggle_off_saves_inactive_role(create_role_page, bro
         "Saving with Active OFF should navigate away or show duplicate message"
 
 
+@pytest.mark.smoke
 def test_save_without_role_name_is_blocked(create_role_page):
     """SA-UR-CRT-009 — Save without a Role Name is blocked with a validation error."""
     create_role_page.click_save_new()

@@ -90,6 +90,7 @@ def test_is_enabled_and_active_toggles_are_independent(create_sales_path_page):
         "'Active Sales Path' should remain ON when only Is Enabled is toggled"
 
 
+@pytest.mark.smoke
 def test_save_without_company_shows_validation(create_sales_path_page):
     """SA-SLP-CRT-007 — Clicking 'Save new' without selecting a Company is blocked."""
     create_sales_path_page.click_save_new()

@@ -18,6 +18,7 @@ def test_export_icon_is_visible(users_page):
     assert icons, "Export icon button should be present on the Users list page"
 
 
+@pytest.mark.smoke
 def test_export_icon_opens_modal(users_page):
     """SA-USR-EXP-002 — Clicking the export icon opens the Export modal."""
     users_page.click_export_icon()

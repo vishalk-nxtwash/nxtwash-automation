@@ -115,6 +115,7 @@ def test_create_with_active_off(create_subscriber_page):
     assert state is False, "Toggle should be OFF before saving"
 
 
+@pytest.mark.smoke
 def test_save_without_name_shows_validation(create_subscriber_page):
     """SA-SUB-CRT-009 — Save without Subscriber Name is blocked with a validation error."""
     from selenium.webdriver.common.by import By
