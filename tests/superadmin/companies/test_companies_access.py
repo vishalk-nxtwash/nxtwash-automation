@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 
 pytestmark = [
@@ -24,19 +25,15 @@ def test_non_superadmin_cannot_reach_companies(browser):
     pass
 
 
-@pytest.mark.skip(
-    reason="SA-CMP-ACC-002: Staging app has no server-side auth guard — "
-           "unauthenticated requests to /companies/create are served without redirect. "
-           "Same behaviour as SA-USR-ACC-001 and SA-USR-ACC-002."
-)
 def test_unauthenticated_create_redirects_to_login(browser):
     """SA-CMP-ACC-002 — Unauthenticated access to /companies/create redirects to login."""
     browser.delete_all_cookies()
     browser.get(_CREATE_URL)
 
-    WebDriverWait(browser, 10).until(
-        lambda d: "login" in d.current_url.lower() or d.current_url == _CREATE_URL
-    )
+    try:
+        WebDriverWait(browser, 10).until(lambda d: "login" in d.current_url.lower())
+    except TimeoutException:
+        pass  # asserted below with the landed URL
     assert "login" in browser.current_url.lower(), \
         f"Unauthenticated /companies/create should redirect to /login, " \
         f"got: {browser.current_url}"
