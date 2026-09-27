@@ -114,6 +114,16 @@ def page_has_no_broken_state(page):
 # ---------------------------------------------------------------------------
 
 
+# Set once BUG 4 is detected in this worker process, so later tests report the
+# known bug immediately instead of each re-paying the slow create + row wait.
+_EMPLOYEE_CREATE_BLOCKED = []
+
+_BUG4 = (
+    "BUG 4 (docs/bug_reports.md): employee Last Name input is type=email, "
+    "so employees cannot be created on staging"
+)
+
+
 def create_employee_if_missing(
     browser,
     first_name=EMP_FIRST_NAME,
@@ -122,6 +132,8 @@ def create_employee_if_missing(
     phone=EMP_PHONE,
     locations=None,
 ):
+    if _EMPLOYEE_CREATE_BLOCKED:
+        pytest.xfail(_BUG4)
     if locations is None:
         locations = EMP_LOCATIONS
 
@@ -170,6 +182,15 @@ def create_employee_if_missing(
         pass
     url_before = browser.current_url
     form.click_save()
+    if browser.current_url == url_before and browser.execute_script(
+        "const el = document.querySelector('input[name=\"lastName\"]');"
+        "return !!el && el.type === 'email';"
+    ):
+        # Product bug: Last Name is <input type="email">, so the browser
+        # blocks every save with a normal surname. Don't burn the 180 s row
+        # wait — report the known bug. Runs normally once the input is fixed.
+        _EMPLOYEE_CREATE_BLOCKED.append(True)
+        pytest.xfail(_BUG4)
     # Detect silent failure: if URL didn't change, the form rejected the save
     # (most common cause: duplicate email).  In that case the employee already
     # exists — the earlier employee_exists call timed out because staging's

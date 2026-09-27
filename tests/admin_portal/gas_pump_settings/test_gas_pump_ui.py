@@ -33,7 +33,9 @@ def test_gas_pump_settings_grid_columns_are_visible(browser):
     page = open_gas_pump_list(browser)
     body = page.get_body_text()
 
-    assert "Gas pump name" in body, "Column 'Gas pump name' not found"
+    # Header renamed "Gas pump name" -> "Name" in the product (2026-09-27).
+    assert "Name" in body, "Column 'Name' not found"
+    assert "Site" in body, "Column 'Site' not found"
     assert "Status" in body, "Column 'Status' not found"
     assert "Edit" in body, "Column 'Edit' not found"
     assert page_has_no_broken_state(page)

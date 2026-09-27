@@ -7,6 +7,7 @@ from tests.admin_portal.pos_settings.conftest import (
     open_edit_pos_form,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -107,7 +108,7 @@ def test_tunnel_controller_ip_required(browser, managed_pos_form):
         lambda d: d.find_element(*form.TUNNEL_CONTROLLER_IP_INPUT)
     )
     from selenium.webdriver.common.keys import Keys
-    el.send_keys(Keys.COMMAND + "a")
+    el.send_keys(SELECT_ALL_KEY + "a")
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

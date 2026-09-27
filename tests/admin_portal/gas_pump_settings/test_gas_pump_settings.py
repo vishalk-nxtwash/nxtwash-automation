@@ -22,6 +22,7 @@ from tests.admin_portal.gas_pump_settings.conftest import (
     open_gas_pump_list,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -269,7 +270,7 @@ class TestGasPumpValidation:
             # Serial port intentionally omitted — clear any pre-filled default
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.SERIAL_PORT_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass
@@ -291,7 +292,7 @@ class TestGasPumpValidation:
                 pass
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.SERIAL_NUMBER_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass
@@ -314,7 +315,7 @@ class TestGasPumpValidation:
                 pass
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.BAUD_RATE_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass
@@ -338,7 +339,7 @@ class TestGasPumpValidation:
                 pass
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.LINK_TIMEOUT_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass
@@ -363,7 +364,7 @@ class TestGasPumpValidation:
                 pass
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.FETCH_INTERVAL_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass
@@ -390,7 +391,7 @@ class TestGasPumpValidation:
                 pass
             try:
                 el = form.wait.until(lambda d: d.find_element(*form.CODE_LENGTH_INPUT))
-                el.send_keys(_Keys.COMMAND + "a")
+                el.send_keys(SELECT_ALL_KEY + "a")
                 el.send_keys(_Keys.BACKSPACE)
             except Exception:
                 pass

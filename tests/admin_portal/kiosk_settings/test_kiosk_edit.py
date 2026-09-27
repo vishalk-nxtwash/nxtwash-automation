@@ -12,6 +12,7 @@ from tests.admin_portal.kiosk_settings.conftest import (
     open_kiosk_page,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -97,7 +98,7 @@ def test_edit_kiosk_lane_persists(browser, managed_kiosk):
 def test_edit_clear_name_blocked(browser, managed_kiosk):
     form = open_edit_kiosk_form(browser, KSK_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.KIOSK_NAME_INPUT))
-    el.send_keys(Keys.COMMAND + "a")
+    el.send_keys(SELECT_ALL_KEY + "a")
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

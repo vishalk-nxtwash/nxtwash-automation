@@ -56,8 +56,21 @@ class BasePage:
         finally:
             self._reenter_frame(frame_href)
 
+    HIDE_DEV_TOAST_CSS_JS = (
+        "if (!document.getElementById('nxtwash-hide-dev-toast')) {"
+        " const s = document.createElement('style');"
+        " s.id = 'nxtwash-hide-dev-toast';"
+        " s.textContent = '#dev-environment-unstable{display:none!important;"
+        "pointer-events:none!important}';"
+        " (document.head || document.documentElement).appendChild(s); }"
+    )
+
     def _dismiss_dev_toast_here(self):
         toast_id = "dev-environment-unstable"
+        # Persistent: keeps the toast hidden for this document's lifetime
+        # (SPA navigations included), covering direct element.click() calls
+        # that bypass BasePage.click's dismiss-and-retry.
+        self.driver.execute_script(self.HIDE_DEV_TOAST_CSS_JS)
         if not self.driver.find_elements(By.ID, toast_id):
             return
         self.driver.execute_script(

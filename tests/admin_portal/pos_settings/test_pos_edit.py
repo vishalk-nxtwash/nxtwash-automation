@@ -13,6 +13,7 @@ from tests.admin_portal.pos_settings.conftest import (
     open_pos_page,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -147,7 +148,7 @@ def test_edit_payment_methods_persists(browser, managed_pos):
 def test_edit_blank_name_blocked(browser, managed_pos):
     form = open_edit_pos_form(browser, POS_NAME)
     el = form.wait.until(EC.element_to_be_clickable(form.POS_NAME_INPUT))
-    el.send_keys(Keys.COMMAND + "a")
+    el.send_keys(SELECT_ALL_KEY + "a")
     el.send_keys(Keys.BACKSPACE)
     form.click_save()
 

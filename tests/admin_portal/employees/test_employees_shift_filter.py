@@ -7,6 +7,7 @@ from tests.admin_portal.employees.conftest import (
     open_shift_page,
     page_has_no_broken_state,
 )
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 pytestmark = [
@@ -85,13 +86,13 @@ def test_shift_filter_by_date_range(browser):
 
     start_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_START_DATE))
     start_el.click()
-    start_el.send_keys(Keys.COMMAND + "a")
+    start_el.send_keys(SELECT_ALL_KEY + "a")
     start_el.send_keys(Keys.BACKSPACE)
     start_el.send_keys("2025-01-01")
 
     end_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_END_DATE))
     end_el.click()
-    end_el.send_keys(Keys.COMMAND + "a")
+    end_el.send_keys(SELECT_ALL_KEY + "a")
     end_el.send_keys(Keys.BACKSPACE)
     end_el.send_keys("2025-01-31")
 
@@ -161,13 +162,13 @@ def test_shift_filter_invalid_date_range(browser):
 
     start_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_START_DATE))
     start_el.click()
-    start_el.send_keys(Keys.COMMAND + "a")
+    start_el.send_keys(SELECT_ALL_KEY + "a")
     start_el.send_keys(Keys.BACKSPACE)
     start_el.send_keys("2025-12-31")
 
     end_el = page.wait.until(EC.element_to_be_clickable(AdminEmployeeShiftPage.FILTER_END_DATE))
     end_el.click()
-    end_el.send_keys(Keys.COMMAND + "a")
+    end_el.send_keys(SELECT_ALL_KEY + "a")
     end_el.send_keys(Keys.BACKSPACE)
     end_el.send_keys("2025-01-01")   # end before start
 

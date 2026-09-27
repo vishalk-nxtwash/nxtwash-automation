@@ -628,7 +628,7 @@ class GasPumpSettingsFormPage(BasePage):
         for attempt in range(3):
             try:
                 ActionChains(self.driver).click(inner).perform()
-                inner.send_keys(Keys.COMMAND, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
                 inner.send_keys(wash_book)
                 break
@@ -691,7 +691,7 @@ class GasPumpSettingsFormPage(BasePage):
         el = rows[row_index].find_element(By.XPATH,
             ".//input[@placeholder='Gas pump ID code' or contains(@name,'gasPumpIdCode')]")
         el.click()
-        el.send_keys(Keys.COMMAND + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(code))
         self.driver.execute_script("""
             var el = arguments[0];
