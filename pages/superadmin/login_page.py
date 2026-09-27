@@ -32,11 +32,25 @@ class LoginPage(BasePage):
         self.config = ConfigManager()
 
     def open(self):
+        """Open the SuperAdmin login page.
 
-        # Open SuperAdmin login page.
-        self.driver.get(
-            self.config.get_url("superadmin")
-        )
+        On a shared EC2 host, several shards start ~12 Chrome instances at
+        once and the first navigation of a fresh browser can exceed the page
+        load timeout ("Timed out receiving message from renderer"). Stop the
+        stalled load and retry once instead of failing the test.
+        """
+        from selenium.common.exceptions import TimeoutException
+
+        url = self.config.get_url("superadmin")
+        try:
+            self.driver.get(url)
+        except TimeoutException:
+            print("Login page load timed out — retrying once...")
+            try:
+                self.driver.execute_script("window.stop();")
+            except Exception:  # noqa: BLE001 — renderer may still be busy
+                pass
+            self.driver.get(url)
 
     def enter_email(self, email):
 
