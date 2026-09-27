@@ -1221,32 +1221,34 @@ class MembershipsPage(BasePage):
         except ValueError:
             return current_value == str(value)
 
-    def fill_all_empty_location_inputs(self, value="0"):
-        """Set every visible, empty per-location price/commission input.
+    def fill_all_empty_location_inputs(self, value="0", max_passes=3):
+        """Type ``value`` into every visible, empty per-location price/commission.
 
-        Each staging site adds a required price + commission row to the form,
-        and sites accumulate over time (sites tests create new ones). Filling
-        only get_location_rows() left later rows empty, so the browser's HTML5
-        validation silently blocked Save ("Please fill in this field").
+        Each staging site adds a required price + commission row, and sites
+        accumulate over time. unassign_locations_after_first() empties the
+        unassigned rows but the app still marks them required, so the browser's
+        HTML5 validation silently blocked Save ("Please fill in this field").
+
+        Uses real key presses: setting values via JS made React's handlers run
+        on stale state and wipe other rows (17 filled -> 33 empty).
         """
-        filled = self.driver.execute_script(
-            """
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value').set;
-            let n = 0;
-            document.querySelectorAll('input[name="price"], input[name="commission"]').forEach(el => {
-                if (el.offsetParent && !el.disabled && el.value === '') {
-                    setter.call(el, arguments[0]);
-                    el.dispatchEvent(new Event('input', {bubbles: true}));
-                    el.dispatchEvent(new Event('change', {bubbles: true}));
-                    n++;
-                }
-            });
-            return n;
-            """,
-            value,
+        import time
+        find_empty = (
+            "return Array.from(document.querySelectorAll("
+            "'input[name=\"price\"], input[name=\"commission\"]'))"
+            ".filter(e => e.offsetParent && !e.disabled && e.value === '');"
         )
-        return filled
+        for _ in range(max_passes):
+            empties = self.driver.execute_script(find_empty)
+            if not empties:
+                return True
+            for element in empties:
+                try:
+                    element.send_keys(value)
+                except Exception:  # noqa: BLE001 — re-queried next pass
+                    pass
+            time.sleep(0.5)
+        return not self.driver.execute_script(find_empty)
 
     def fill_required_unassigned_location_values(self):
         """Fill required grid inputs for unassigned locations without assigning."""
