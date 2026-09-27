@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 _log = logging.getLogger("nxtwash")
 
@@ -356,7 +357,7 @@ class GasPumpSettingsFormPage(BasePage):
         """Enter value into a text/numeric input with React-safe event dispatch."""
         el = self.wait.until(EC.visibility_of_element_located(locator))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(value))
         self.driver.execute_script("""
             var el = arguments[0];

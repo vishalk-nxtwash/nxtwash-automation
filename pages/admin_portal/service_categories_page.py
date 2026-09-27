@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class ServiceCategoriesPage(BasePage):
@@ -341,7 +342,7 @@ class ServiceCategoriesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(SELECT_ALL_KEY, "a")
         search_input.send_keys(Keys.BACKSPACE)
         search_input.send_keys(category_name)
         self.wait.until(
@@ -357,7 +358,7 @@ class ServiceCategoriesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL, "a")
+        search_input.send_keys(SELECT_ALL_KEY, "a")
         search_input.send_keys(Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -483,7 +484,7 @@ class ServiceCategoriesPage(BasePage):
             EC.visibility_of_element_located(self.CATEGORY_NAME_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(category_name)
         # Accept truncated values (app may enforce maxlength).
         self.wait.until(

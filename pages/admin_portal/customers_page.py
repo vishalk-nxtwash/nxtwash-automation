@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class CustomersPage(BasePage):
@@ -396,7 +397,7 @@ class CustomersPage(BasePage):
     def _react_clear_and_type(self, locator, value):
         el = self.wait.until(EC.element_to_be_clickable(locator))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(value)
         self.wait.until(
             lambda d: d.find_element(*locator).get_attribute("value") == value
@@ -412,7 +413,7 @@ class CustomersPage(BasePage):
         # so we can't use _react_clear_and_type which waits for exact value match.
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_SEARCH))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
         time.sleep(0.4)
         self._wait_for_grid_idle()
@@ -420,7 +421,7 @@ class CustomersPage(BasePage):
     def clear_license_plate_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.LICENSE_PLATE_SEARCH))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.LICENSE_PLATE_SEARCH).get_attribute("value") == ""
         )
@@ -550,7 +551,7 @@ class CustomersPage(BasePage):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(value)
 
     def filter_by_first_name(self, name):
@@ -639,7 +640,7 @@ class CustomersPage(BasePage):
                 el = self.driver.find_element(*locator)
                 if el.is_displayed() and el.get_attribute("value"):
                     el.click()
-                    el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+                    el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
             except Exception:  # noqa: BLE001
                 pass
         self._wait_for_grid_idle()
@@ -656,13 +657,13 @@ class CustomersPage(BasePage):
     def enter_first_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
 
     def enter_last_name(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.LAST_NAME_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
 
     def enter_email(self, email):

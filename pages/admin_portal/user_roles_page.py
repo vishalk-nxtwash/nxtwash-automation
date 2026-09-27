@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class AdminUserRolesPage(BasePage):
@@ -90,7 +91,7 @@ class AdminUserRolesPage(BasePage):
     def search_role(self, role_name):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(role_name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == role_name
@@ -99,7 +100,7 @@ class AdminUserRolesPage(BasePage):
     def clear_search(self):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -363,7 +364,7 @@ class AdminUserRoleFormPage(BasePage):
     def enter_role_name(self, name):
         element = self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(name)
         self.wait.until(
             lambda driver: (
@@ -373,7 +374,7 @@ class AdminUserRoleFormPage(BasePage):
 
     def clear_role_name(self):
         el = self.wait.until(EC.element_to_be_clickable(self.ROLE_NAME_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_role_name_value(self):
         return self.wait.until(
@@ -383,7 +384,7 @@ class AdminUserRoleFormPage(BasePage):
     def enter_priority(self, value):
         el = self.wait.until(EC.visibility_of_element_located(self.PRIORITY_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(str(value))
         self.wait.until(
             lambda driver: driver.find_element(

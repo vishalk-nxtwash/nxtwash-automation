@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class DiscountsPage(BasePage):
@@ -203,7 +204,7 @@ class DiscountsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(discount_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -218,7 +219,7 @@ class DiscountsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -387,7 +388,7 @@ class DiscountsPage(BasePage):
             EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(discount_name)
         # Accept truncated values (app may enforce maxlength).
         self.wait.until(
@@ -487,7 +488,7 @@ class DiscountsPage(BasePage):
             EC.visibility_of_element_located(self.DISCOUNT_AMOUNT_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(str(amount))
         self.wait.until(
             lambda driver: driver.find_element(
@@ -516,7 +517,7 @@ class DiscountsPage(BasePage):
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block:'center'});", discount_input
         )
-        discount_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        discount_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         discount_input.send_keys(str(value))
         self.wait.until(
             lambda driver: rows[row_index].find_element(

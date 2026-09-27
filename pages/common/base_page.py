@@ -1,3 +1,4 @@
+import sys
 import time
 
 from selenium.common.exceptions import (
@@ -11,6 +12,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# Select-all modifier: Cmd on macOS, Ctrl elsewhere. Hard-coded Keys.CONTROL
+# silently fails to select on macOS, so local runs diverged from Linux CI.
+SELECT_ALL_KEY = Keys.COMMAND if sys.platform == "darwin" else Keys.CONTROL
+
 
 class BasePage:
 
@@ -22,26 +27,70 @@ class BasePage:
     # ── Staging toast dismissal ──────────────────────────────────────────────
 
     def dismiss_dev_toast(self):
-        """Click the close button on the staging 'Dev environment is unstable' toast.
+        """Get the staging 'Dev environment is unstable' toast out of the way.
 
         The toast sits at the top-right of every post-login page on staging and
-        intercepts clicks on buttons near y=112.  Uses JS click on the close
-        button to avoid a second interception.  Safe to call when the toast is
-        absent — silently no-ops in that case.
+        intercepts clicks on header buttons (~y=112). Two traps:
+
+        * It is a close-on-click Toastify toast, usually WITHOUT a close button,
+          so looking only for "#dev-environment-unstable button" did nothing.
+        * It lives in the TOP document, while many admin pages are driven from
+          inside a cross-origin legacy iframe — from there the toast is neither
+          findable nor reachable via JS. Step out, dismiss, and step back into
+          the same iframe (matched by its src).
+
+        Safe to call when the toast is absent.
         """
         try:
-            close_btn = self.driver.find_element(
-                By.CSS_SELECTOR,
-                "#dev-environment-unstable button",
-            )
-            self.driver.execute_script("arguments[0].click();", close_btn)
+            in_frame = self.driver.execute_script("return window.self !== window.top;")
+        except Exception:  # noqa: BLE001
+            in_frame = False
+        if not in_frame:
+            self._dismiss_dev_toast_here()
+            return
+
+        frame_href = self.driver.execute_script("return window.location.href;")
+        self.driver.switch_to.default_content()
+        try:
+            self._dismiss_dev_toast_here()
+        finally:
+            self._reenter_frame(frame_href)
+
+    def _dismiss_dev_toast_here(self):
+        toast_id = "dev-environment-unstable"
+        if not self.driver.find_elements(By.ID, toast_id):
+            return
+        self.driver.execute_script(
+            "const t = document.getElementById(arguments[0]);"
+            "if (!t) return;"
+            "const btn = t.querySelector('button');"
+            "(btn || t).click();",
+            toast_id,
+        )
+        try:
             WebDriverWait(self.driver, 3).until(
-                EC.invisibility_of_element_located(
-                    (By.ID, "dev-environment-unstable")
-                )
+                EC.invisibility_of_element_located((By.ID, toast_id))
             )
-        except (NoSuchElementException, Exception):
-            pass
+        except Exception:  # noqa: BLE001 — fall back to hiding it outright
+            self.driver.execute_script(
+                "const t = document.getElementById(arguments[0]);"
+                "if (t) { t.style.display = 'none'; t.style.pointerEvents = 'none'; }",
+                toast_id,
+            )
+
+    def _reenter_frame(self, frame_href):
+        """Switch back into the top-level iframe whose src matches frame_href."""
+        frames = self.driver.find_elements(By.TAG_NAME, "iframe")
+        def _norm(url):
+            return (url or "").split("#")[0].rstrip("/")
+        target = next((f for f in frames if _norm(f.get_attribute("src")) == _norm(frame_href)), None)
+        if target is None:  # SPA navigation inside the frame changed its URL
+            origin = "/".join(_norm(frame_href).split("/")[:3])
+            target = next((f for f in frames if _norm(f.get_attribute("src")).startswith(origin)), None)
+        if target is None and frames:
+            target = frames[0]
+        if target is not None:
+            self.driver.switch_to.frame(target)
 
     def click(self, locator):
         for attempt in range(3):
@@ -214,7 +263,7 @@ class BasePage:
         for _attempt in range(3):
             try:
                 if clear_first:
-                    inner_input.send_keys(Keys.CONTROL, "a")
+                    inner_input.send_keys(SELECT_ALL_KEY, "a")
                     inner_input.send_keys(Keys.BACKSPACE)
                 inner_input.send_keys(option_text)
                 break

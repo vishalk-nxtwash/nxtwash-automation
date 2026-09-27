@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class CashReportPage(BasePage):
@@ -168,7 +169,7 @@ class CashReportPage(BasePage):
                 inputs = combo.find_elements(By.XPATH, ".//input")
             if inputs:
                 inner = inputs[0]
-                inner.send_keys(Keys.CONTROL, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
                 inner.send_keys("VK")  # trigger async option load; all sites in this env start with VK
                 time.sleep(1.5)

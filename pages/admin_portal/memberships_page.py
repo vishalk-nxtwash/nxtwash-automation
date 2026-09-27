@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class MembershipsPage(BasePage):
@@ -387,7 +388,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(membership_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
@@ -415,7 +416,7 @@ class MembershipsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT
@@ -751,7 +752,7 @@ class MembershipsPage(BasePage):
             "arguments[0].scrollIntoView({ block: 'center' }); arguments[0].focus();",
             element
         )
-        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(SELECT_ALL_KEY, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(barcode))
         self.driver.execute_script(
@@ -1182,7 +1183,7 @@ class MembershipsPage(BasePage):
             "arguments[0].focus();",
             element
         )
-        element.send_keys(Keys.CONTROL, "a")
+        element.send_keys(SELECT_ALL_KEY, "a")
         element.send_keys(Keys.BACKSPACE)
         element.send_keys(str(value))
         self.driver.execute_script(
@@ -1219,6 +1220,33 @@ class MembershipsPage(BasePage):
             return current_number == expected_number
         except ValueError:
             return current_value == str(value)
+
+    def fill_all_empty_location_inputs(self, value="0"):
+        """Set every visible, empty per-location price/commission input.
+
+        Each staging site adds a required price + commission row to the form,
+        and sites accumulate over time (sites tests create new ones). Filling
+        only get_location_rows() left later rows empty, so the browser's HTML5
+        validation silently blocked Save ("Please fill in this field").
+        """
+        filled = self.driver.execute_script(
+            """
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            let n = 0;
+            document.querySelectorAll('input[name="price"], input[name="commission"]').forEach(el => {
+                if (el.offsetParent && !el.disabled && el.value === '') {
+                    setter.call(el, arguments[0]);
+                    el.dispatchEvent(new Event('input', {bubbles: true}));
+                    el.dispatchEvent(new Event('change', {bubbles: true}));
+                    n++;
+                }
+            });
+            return n;
+            """,
+            value,
+        )
+        return filled
 
     def fill_required_unassigned_location_values(self):
         """Fill required grid inputs for unassigned locations without assigning."""
@@ -1517,6 +1545,9 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
+        # Last: any location row still empty would block Save via HTML5 validation.
+        self.fill_all_empty_location_inputs()
+
 
     def fill_recurring_membership_form(
         self,
@@ -1546,6 +1577,9 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
+        # Last: any location row still empty would block Save via HTML5 validation.
+        self.fill_all_empty_location_inputs()
+
 
     def create_membership(
         self,

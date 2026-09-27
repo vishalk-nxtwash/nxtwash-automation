@@ -22,6 +22,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class PerformanceMetricsPage(BasePage):
@@ -272,7 +273,7 @@ class PerformanceMetricsPage(BasePage):
             ActionChains(self.driver).move_to_element(inner).click(inner).perform()
             time.sleep(0.4)
             if clear_first:
-                inner.send_keys(Keys.CONTROL, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
             inner.send_keys(site_name)
         else:
@@ -326,7 +327,7 @@ class PerformanceMetricsPage(BasePage):
         options = [e.text.strip() for e in els if e.is_displayed() and e.text.strip()]
         try:
             if inner:
-                inner.send_keys(Keys.CONTROL, "a")
+                inner.send_keys(SELECT_ALL_KEY, "a")
                 inner.send_keys(Keys.BACKSPACE)
         except Exception:
             pass

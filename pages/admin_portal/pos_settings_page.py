@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class AdminPOSSettingsPage(BasePage):
@@ -113,7 +114,7 @@ class AdminPOSSettingsPage(BasePage):
     def search_pos(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(name)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == name
@@ -124,7 +125,7 @@ class AdminPOSSettingsPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -486,7 +487,7 @@ class AdminPOSFormPage(BasePage):
         el = self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
         el.click()
         from selenium.webdriver.common.keys import Keys as _Keys
-        el.send_keys(_Keys.CONTROL + "a" + _Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + _Keys.BACKSPACE)
         el.send_keys(name)
         # Fire React synthetic events so React state sees the new value
         self.driver.execute_script("""

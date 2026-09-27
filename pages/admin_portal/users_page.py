@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class AdminUsersPage(BasePage):
@@ -99,7 +100,7 @@ class AdminUsersPage(BasePage):
     def search_user(self, phone):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         self.driver.execute_script("arguments[0].click();", el)
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == phone
@@ -109,7 +110,7 @@ class AdminUsersPage(BasePage):
     def clear_search(self):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         self.driver.execute_script("arguments[0].click();", el)
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda d: d.find_element(*self.SEARCH_INPUT).get_attribute("value") == ""
         )
@@ -214,7 +215,7 @@ class AdminUsersPage(BasePage):
         self.open_filter_panel()
         el = self.wait.until(EC.element_to_be_clickable(locator))
         self.driver.execute_script("arguments[0].click();", el)
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(value)
 
     def filter_by_first_name(self, name):
@@ -403,12 +404,12 @@ class AdminUserFormPage(BasePage):
     def enter_email(self, email):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(email)
 
     def clear_email(self):
         el = self.wait.until(EC.element_to_be_clickable(self.EMAIL_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_email_value(self):
         return self.wait.until(
@@ -418,12 +419,12 @@ class AdminUserFormPage(BasePage):
     def enter_phone(self, phone):
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
         el.click()
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         el.send_keys(phone)
 
     def clear_phone(self):
         el = self.wait.until(EC.element_to_be_clickable(self.PHONE_INPUT))
-        el.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
 
     def get_phone_value(self):
         raw = self.wait.until(

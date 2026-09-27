@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class WashExtrasPage(BasePage):
@@ -174,7 +175,7 @@ class WashExtrasPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         self.driver.execute_script("arguments[0].click();", search_input)
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(extra_name)
         self.wait.until(
             lambda driver: self.driver.find_element(
@@ -519,7 +520,7 @@ class WashExtrasPage(BasePage):
             "arguments[0].focus();",
             price_input
         )
-        price_input.send_keys(Keys.CONTROL, "a")
+        price_input.send_keys(SELECT_ALL_KEY, "a")
         price_input.send_keys(Keys.BACKSPACE)
         price_input.send_keys(str(price))
         self.driver.execute_script(
@@ -633,7 +634,7 @@ class WashExtrasPage(BasePage):
         """Clear the wash extra search field."""
         search_input = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: self.driver.find_element(
                 *self.SEARCH_INPUT

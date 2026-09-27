@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class GiftCardsPage(BasePage):
@@ -246,7 +247,7 @@ class GiftCardsPage(BasePage):
         # Re-acquire after JS click: newer ChromeDriver rejects send_keys while
         # a backdrop is still in its dismiss transition, even after click() fires.
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(gift_card_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -260,7 +261,7 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -273,7 +274,7 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.CUSTOMER_SEARCH_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(gift_card_number)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -440,7 +441,7 @@ class GiftCardsPage(BasePage):
             EC.visibility_of_element_located(self.GIFT_CARD_AMOUNT_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(str(amount))
 
     def enter_landing_page_code(self, landing_page_code):

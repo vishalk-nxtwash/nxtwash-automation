@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class CouponPackagesPage(BasePage):
@@ -171,7 +172,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         search_input.send_keys(coupon_package_name)
         self.wait.until(
             lambda driver: driver.find_element(
@@ -215,7 +216,7 @@ class CouponPackagesPage(BasePage):
             EC.visibility_of_element_located(self.COUPON_PACKAGE_NAME_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(coupon_package_name)
         # Accept truncated values (app may enforce maxlength).
         self.wait.until(
@@ -298,7 +299,7 @@ class CouponPackagesPage(BasePage):
             EC.visibility_of_element_located(self.EXPIRATION_DAYS_INPUT)
         )
         element.click()
-        element.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        element.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         element.send_keys(str(days))
         self.wait.until(
             lambda driver: driver.find_element(
@@ -319,7 +320,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.SEARCH_INPUT)
         )
         search_input.click()
-        search_input.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        search_input.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         self.wait.until(
             lambda driver: driver.find_element(
                 *self.SEARCH_INPUT
@@ -460,7 +461,7 @@ class CouponPackagesPage(BasePage):
             EC.element_to_be_clickable(self.EXPIRATION_DAYS_INPUT)
         )
         expiry.click()
-        expiry.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+        expiry.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         expiry.send_keys("30")
         self.ensure_active_switch_on()
         self.click_save_coupon_package()

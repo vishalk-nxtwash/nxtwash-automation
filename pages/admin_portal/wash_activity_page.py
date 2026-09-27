@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class WashActivityPage(BasePage):
@@ -319,7 +320,7 @@ class WashActivityPage(BasePage):
         # Re-fetch after click — React may re-render the input on focus
         inner = self._get_site_input()
         if clear_first:
-            inner.send_keys(Keys.CONTROL + "a" + Keys.NULL + Keys.BACKSPACE)
+            inner.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
         inner.send_keys(site_name)
         time.sleep(0.4)
         option = WebDriverWait(self.driver, 20).until(

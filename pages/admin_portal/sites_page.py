@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
+from pages.common.base_page import SELECT_ALL_KEY
 
 
 class SitesPage(BasePage):
@@ -676,7 +677,7 @@ class CreateSitePage(BasePage):
             ]
 
             if input_elements:
-                input_elements[0].send_keys(Keys.CONTROL, "a")
+                input_elements[0].send_keys(SELECT_ALL_KEY, "a")
                 input_elements[0].send_keys(Keys.BACKSPACE)
                 input_elements[0].send_keys(option_text)
             else:
@@ -700,7 +701,7 @@ class CreateSitePage(BasePage):
                 if element.is_displayed() and element.is_enabled()
             ]
             if input_elements:
-                input_elements[0].send_keys(Keys.CONTROL, "a")
+                input_elements[0].send_keys(SELECT_ALL_KEY, "a")
                 input_elements[0].send_keys(Keys.BACKSPACE)
                 input_elements[0].send_keys(fallback)
             else:
