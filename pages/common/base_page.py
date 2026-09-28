@@ -420,17 +420,37 @@ class BasePage:
         calling `reopen` (a zero-arg callable, typically "reopen the edit form")
         between attempts to force a fresh fetch rather than re-reading a DOM
         value that will never change on its own.
+
+        reopen/value_getter are allowed to raise (e.g. a frame not stabilizing
+        under load) without ending the retry loop early — under contention
+        (many parallel jobs hitting staging at once) that's just another kind
+        of transient lag. A raise consumes one attempt like a value mismatch
+        does; only the last attempt's exception propagates.
         """
-        value = value_getter()
+        from selenium.common.exceptions import WebDriverException
+        value = None
+        last_exc = None
         for attempt in range(attempts):
-            if value == expected:
-                return value
+            try:
+                if value is None:
+                    value = value_getter()
+                if value == expected:
+                    return value
+            except WebDriverException as exc:
+                last_exc = exc
+                value = None
             if attempt == attempts - 1:
                 break
             time.sleep(per_try)
-            if reopen:
-                reopen()
-            value = value_getter()
+            try:
+                if reopen:
+                    reopen()
+                value = value_getter()
+            except WebDriverException as exc:
+                last_exc = exc
+                value = None
+        if value is None and last_exc is not None:
+            raise last_exc
         return value
 
     def pagination_controls_present(self, context_el=None):
