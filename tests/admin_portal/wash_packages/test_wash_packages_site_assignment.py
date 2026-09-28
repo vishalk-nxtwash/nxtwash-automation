@@ -76,18 +76,19 @@ def test_global_price_reflected_at_site(managed_package):
 
 @allure.title("WP-PRC-002 Location price override for a specific site persists after save")
 @pytest.mark.regression
-def test_location_price_override_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_location_price_override_persists(isolated_package):
+    # Isolated record — see test_wash_packages_edit.py's module note.
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, SITE_OVERRIDE_PRICE, GLOBAL_COMMISSION
     )
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     assert page.wait_for_persisted_value(
         lambda: page.get_site_price_value(ASSIGNMENT_SITE), SITE_OVERRIDE_PRICE,
-        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+        reopen=lambda: page.open_edit_package(name),
     ) == SITE_OVERRIDE_PRICE
     assert page_has_no_broken_state(page)
 
@@ -127,18 +128,19 @@ def test_location_price_override_lower_than_global_persists(managed_package):
 
 @allure.title("WP-PRC-005 Location commission override for a specific site persists after save")
 @pytest.mark.regression
-def test_location_commission_override_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_location_commission_override_persists(isolated_package):
+    # Isolated record — see test_wash_packages_edit.py's module note.
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, SITE_OVERRIDE_COMMISSION
     )
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     assert page.wait_for_persisted_value(
         lambda: page.get_site_commission_value(ASSIGNMENT_SITE), SITE_OVERRIDE_COMMISSION,
-        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+        reopen=lambda: page.open_edit_package(name),
     ) == SITE_OVERRIDE_COMMISSION
     assert page_has_no_broken_state(page)
 

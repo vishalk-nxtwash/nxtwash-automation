@@ -7,7 +7,6 @@ from tests.admin_portal.wash_packages.conftest import (
     ASSIGNMENT_SITE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
-    PACKAGE_NAME,
     POINTS_AWARDED,
     POINTS_REDEEMED,
     open_wash_packages_page,
@@ -24,21 +23,22 @@ pytestmark = [
 
 @allure.title("WP-BAR-001 Wash package with a barcode saves and barcode persists")
 @pytest.mark.regression
-def test_wash_package_barcode_persists(managed_package):
-    page = managed_package
+def test_wash_package_barcode_persists(isolated_package):
+    # Isolated record — see test_wash_packages_edit.py's module note.
+    page, name = isolated_package
     # Unique per run: barcodes must be unique across services, and packages
     # cannot be deleted — a fixed value (VK-BAR-001) was permanently taken by
     # packages that test_duplicate_barcode_behaviour created on earlier runs
     # (save rejected: 499 "Barcode already associated with another service").
     barcode = "VK-BAR-%s" % uuid.uuid4().hex[:6].upper()
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.enter_barcode(barcode)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     assert page.wait_for_persisted_value(
         page.get_barcode_value, barcode,
-        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+        reopen=lambda: page.open_edit_package(name),
     ) == barcode
     assert page_has_no_broken_state(page)
 
