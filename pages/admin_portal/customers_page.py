@@ -189,6 +189,7 @@ class CustomersPage(BasePage):
         By.XPATH,
         "//button[contains(normalize-space(),'Add new car')"
         " or contains(normalize-space(),'Save car')"
+        " or contains(normalize-space(),'Save new')"
         " or contains(normalize-space(),'Update car')]",
     )
     ASSIGN_MEMBERSHIP_BUTTON = (
