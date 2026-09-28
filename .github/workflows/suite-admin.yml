@@ -3,7 +3,7 @@ name: Admin Suite (staging)
 # Full admin-portal suite against STAGING on GitHub-hosted runners.
 #
 # Two modes (manual dispatch only):
-#   * Full suite — 4 waves of module shards (waves input selects which).
+#   * Full suite — one job per admin module, all in parallel (max 12 at once).
 #   * Targeted  — test_path set: each listed path/node id runs as its own
 #     parallel job. Use this to iterate on one module or one failing test
 #     without running the whole suite.
@@ -16,12 +16,8 @@ on:
   # 2026-09-27).
   workflow_dispatch:
     inputs:
-      waves:
-        description: 'Waves to run — comma-separated (e.g. "1,2") or "all". Ignored when test_path is set.'
-        required: false
-        default: 'all'
       test_path:
-        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite by waves).'
+        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite, one job per module).'
         required: false
         default: ''
       parallel:
@@ -37,167 +33,58 @@ concurrency:
   cancel-in-progress: false
 
 # ──────────────────────────────────────────────────────────────────────────────
-# WAVE 1  (243 + 95 + 186 + 286 = 810 tests)
+# FULL SUITE — one job per module, all in parallel (capped).
+# Replaces the old 4 sequential "waves", which were sized for 3 EC2 runners'
+# RAM and only slowed the full run on GitHub-hosted runners.
+# max-parallel 12 → at most ~24 browsers hitting staging at once.
 # ──────────────────────────────────────────────────────────────────────────────
 jobs:
-  wave-1:
-    if: ${{ !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '1')) }}
+  full:
+    if: ${{ !inputs.test_path }}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 12
       matrix:
-        shard:
-          - name: wash-services
-            path: >-
-              tests/admin_portal/wash_packages
-              tests/admin_portal/wash_books
-              tests/admin_portal/wash_extras
-            timeout: 220
-
-          # 95 tests — customers only (managed fixture, slow index lag)
-          # Separated from HR so the managed-customer serialisation group does not
-          # block 186 independent employee/labor_shift tests.
-          - name: people-customers
-            path: tests/admin_portal/customers
-            parallel: "2"
-            timeout: 120
-
-          # 186 tests — employees + labor_shifts (no managed record contention)
-          - name: people-hr
-            path: >-
-              tests/admin_portal/employees
-              tests/admin_portal/labor_shifts
-            parallel: "3"
-            timeout: 90
-
-          - name: revenue-metrics
-            path: >-
-              tests/admin_portal/revenue_overview
-              tests/admin_portal/performance_metrics
-
+        module:
+          - bank_drop
+          - card_declines
+          - cash_report
+          - coupon_packages
+          - custom_services
+          - customers
+          - discounts
+          - employees
+          - gas_pump_settings
+          - general_sales_report
+          - gift_cards
+          - kiosk_settings
+          - labor_shifts
+          - login
+          - memberships
+          - overview
+          - performance_metrics
+          - pos_settings
+          - redemptions
+          - revenue_overview
+          - service_categories
+          - sites
+          - transactions
+          - tunnel_settings
+          - user_roles
+          - users
+          - wash_activity
+          - wash_books
+          - wash_extras
+          - wash_packages
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
-      label: admin-${{ matrix.shard.name }}
+      label: admin-${{ matrix.module }}
       environment: staging
-      test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
+      test_path: tests/admin_portal/${{ matrix.module }}
+      parallel: ${{ inputs.parallel || '2' }}
+      timeout_minutes: 90
       runner: ubuntu-latest
-      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
-
-# ──────────────────────────────────────────────────────────────────────────────
-# WAVE 2  (191 + ~120 + ~150 + 260 = ~721 tests)
-# auth-users split: user_roles has 80+ tests with ~75s permission matrix tests
-# each; mixing them with login/users/overview caused the 180-min timeout.
-# auth-roles runs alone so its 150-min budget is not shared with faster tests.
-# ──────────────────────────────────────────────────────────────────────────────
-  wave-2:
-    needs: wave-1
-    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '2')) }}
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        shard:
-          - name: promotions
-            path: >-
-              tests/admin_portal/gift_cards
-              tests/admin_portal/coupon_packages
-              tests/admin_portal/discounts
-
-          - name: auth-users
-            path: >-
-              tests/admin_portal/login
-              tests/admin_portal/users
-              tests/admin_portal/overview
-            timeout: 90
-
-          - name: auth-roles
-            path: tests/admin_portal/user_roles
-            timeout: 180
-
-          - name: financial
-            path: >-
-              tests/admin_portal/transactions
-              tests/admin_portal/cash_report
-              tests/admin_portal/general_sales_report
-
-    uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
-    with:
-      label: admin-${{ matrix.shard.name }}
-      environment: staging
-      test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
-      runner: ubuntu-latest
-      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
-
-# ──────────────────────────────────────────────────────────────────────────────
-# WAVE 3  (190 + 212 + 206 = 608 tests)
-# ──────────────────────────────────────────────────────────────────────────────
-  wave-3:
-    needs: wave-2
-    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '3')) }}
-    strategy:
-      fail-fast: false
-      max-parallel: 3
-      matrix:
-        shard:
-          - name: memberships-services
-            path: >-
-              tests/admin_portal/memberships
-              tests/admin_portal/custom_services
-              tests/admin_portal/service_categories
-              tests/admin_portal/bank_drop
-            timeout: 180
-
-          - name: sites-settings
-            path: >-
-              tests/admin_portal/sites
-              tests/admin_portal/kiosk_settings
-              tests/admin_portal/tunnel_settings
-
-          - name: pos-hardware
-            path: >-
-              tests/admin_portal/pos_settings
-              tests/admin_portal/card_declines
-              tests/admin_portal/gas_pump_settings
-
-    uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
-    with:
-      label: admin-${{ matrix.shard.name }}
-      environment: staging
-      test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
-      runner: ubuntu-latest
-      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
-
-# ──────────────────────────────────────────────────────────────────────────────
-# WAVE 4  (267 tests)
-# ──────────────────────────────────────────────────────────────────────────────
-  wave-4:
-    needs: wave-3
-    if: ${{ always() && !cancelled() && !inputs.test_path && (inputs.waves == 'all' || inputs.waves == '' || contains(inputs.waves, '4')) }}
-    strategy:
-      fail-fast: false
-      max-parallel: 3
-      matrix:
-        shard:
-          - name: activity
-            path: >-
-              tests/admin_portal/wash_activity
-              tests/admin_portal/redemptions
-
-    uses: ./.github/workflows/run-suite.yml
-    secrets: inherit
-    with:
-      label: admin-${{ matrix.shard.name }}
-      environment: staging
-      test_path: ${{ matrix.shard.path }}
-      parallel: ${{ matrix.shard.parallel || inputs.parallel || '2' }}
-      runner: ubuntu-latest
-      timeout_minutes: ${{ matrix.shard.timeout || 180 }}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # TARGETED  — fast iteration: every entry of test_path is its own parallel job.
