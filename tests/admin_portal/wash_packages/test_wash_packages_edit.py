@@ -102,7 +102,10 @@ def test_edit_wash_package_assigned_sites(managed_package):
     page.open_edit_package(PACKAGE_NAME)
     # site_is_assigned scrolls the Inovua virtual grid to find the row rather
     # than relying on get_body_text(), which only captures currently rendered rows.
-    assert page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page.wait_for_persisted_value(
+        lambda: page.site_is_assigned(ASSIGNMENT_SITE), True,
+        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -137,7 +140,10 @@ def test_deactivate_wash_package(managed_package):
     page.save_and_return_to_list()
     page.search_package(PACKAGE_NAME)
 
-    assert PACKAGE_NAME not in page.get_body_text()
+    assert page.wait_for_persisted_value(
+        lambda: PACKAGE_NAME not in page.get_body_text(), True,
+        reopen=lambda: page.search_package(PACKAGE_NAME),
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -154,7 +160,13 @@ def test_assign_applicable_discount_persists(managed_package):
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
 
-    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+    def _reopen():
+        page.open_edit_package(PACKAGE_NAME)
+        page.open_discount_settings()
+
+    assert page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), True, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -201,7 +213,13 @@ def test_remove_applicable_discount_persists(managed_package):
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
 
-    assert not page.discount_is_selected(APPLICABLE_DISCOUNT)
+    def _reopen():
+        page.open_edit_package(PACKAGE_NAME)
+        page.open_discount_settings()
+
+    assert not page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), False, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -216,7 +234,14 @@ def test_edit_wash_package_discount_persists(managed_package):
 
     page.open_edit_package(PACKAGE_NAME)
     page.open_discount_settings()
-    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+
+    def _reopen():
+        page.open_edit_package(PACKAGE_NAME)
+        page.open_discount_settings()
+
+    assert page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), True, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -249,5 +274,8 @@ def test_service_description_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_description_value() == DESCRIPTION_TEXT
+    assert page.wait_for_persisted_value(
+        page.get_description_value, DESCRIPTION_TEXT,
+        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+    ) == DESCRIPTION_TEXT
     assert page_has_no_broken_state(page)

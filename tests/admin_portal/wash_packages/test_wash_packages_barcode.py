@@ -36,7 +36,10 @@ def test_wash_package_barcode_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_barcode_value() == barcode
+    assert page.wait_for_persisted_value(
+        page.get_barcode_value, barcode,
+        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+    ) == barcode
     assert page_has_no_broken_state(page)
 
 

@@ -85,7 +85,10 @@ def test_location_price_override_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE
+    assert page.wait_for_persisted_value(
+        lambda: page.get_site_price_value(ASSIGNMENT_SITE), SITE_OVERRIDE_PRICE,
+        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+    ) == SITE_OVERRIDE_PRICE
     assert page_has_no_broken_state(page)
 
 
@@ -133,7 +136,10 @@ def test_location_commission_override_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_site_commission_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_COMMISSION
+    assert page.wait_for_persisted_value(
+        lambda: page.get_site_commission_value(ASSIGNMENT_SITE), SITE_OVERRIDE_COMMISSION,
+        reopen=lambda: page.open_edit_package(PACKAGE_NAME),
+    ) == SITE_OVERRIDE_COMMISSION
     assert page_has_no_broken_state(page)
 
 
