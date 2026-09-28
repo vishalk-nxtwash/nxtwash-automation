@@ -26,14 +26,6 @@ pytestmark = [
     allure.story("Create"),
 ]
 
-_SESSION_XFAIL = pytest.mark.xfail(
-    strict=False,
-    reason=(
-        "TUN-CRT-008 fails in full suite runs (47+ min) when the staging session "
-        "expires mid-run. Passes in isolation. Fix: increase session TTL or add "
-        "mid-suite re-auth. Not a product or locator defect."
-    ),
-)
 
 
 @pytest.mark.smoke
@@ -167,7 +159,6 @@ def test_three_sections_present_on_create_form(browser):
 
 @allure.title("TUN-CRT-008 Cancel discards form and returns to list without saving")
 @pytest.mark.regression
-@_SESSION_XFAIL
 def test_cancel_discards_form_returns_to_list(browser):
     form = open_create_tunnel_form(browser)
     form.enter_tunnel_name(NONEXISTENT_TUNNEL_NAME)

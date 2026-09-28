@@ -500,7 +500,6 @@ class TestCardDeclinesKPI:
 
     @allure.title("CDL-KPI-002 At least one KPI card has a non-zero value for the test dataset")
     @pytest.mark.regression
-    @pytest.mark.xfail(reason="No CC decline data on staging for last month; KPI values are zero.", strict=False)
     def test_kpi_values_non_zero(self, cdl_page):
         assert cdl_page.kpi_values_non_zero(), (
             "All KPI card values appear to be zero or absent for the primary dataset "
@@ -555,7 +554,6 @@ class TestCardDeclinesMatrix:
 
     @allure.title("CDL-MTX-003 CC Declines matrix has data rows for the test dataset")
     @pytest.mark.regression
-    @pytest.mark.xfail(reason="No CC decline data on staging for last month; matrix shows no rows.", strict=False)
     def test_matrix_has_data_rows(self, cdl_page):
         assert cdl_page.matrix_has_data_rows(), (
             "CC Declines matrix table has no visible data rows for the primary dataset "
@@ -631,14 +629,6 @@ class TestCardDeclinesBestWorst:
         % CDL_DEFECT_SITE
     )
     @pytest.mark.extended
-    @pytest.mark.xfail(
-        reason=(
-            "Known defect CDL-BWS-004: '%s' appears in the Best & Worst Sites widget "
-            "even when it is explicitly excluded from the site filter.  Flagged for "
-            "product investigation; xfail until fix is deployed." % CDL_DEFECT_SITE
-        ),
-        strict=False,
-    )
     def test_bws_excludes_defect_site(self, cdl_page):
         body = cdl_page.get_body_text()
         assert CDL_DEFECT_SITE not in body, (

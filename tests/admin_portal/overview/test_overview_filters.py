@@ -13,8 +13,7 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Overview"),
     allure.story("Filters"),
-    pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging"),
-]
+    ]
 
 
 # ── Site filter ───────────────────────────────────────────────────────────────
@@ -25,6 +24,7 @@ def test_overview_site_filter_dropdown_opens(overview_page):
     assert overview_page.dashboard_text_contains("Site")
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title(
     "OVERVIEW-FILTER-002/003/004 Selecting '%s' updates dashboard cards" % OVERVIEW_SITE
 )
@@ -34,6 +34,7 @@ def test_overview_site_filter_updates_dashboard(overview_page):
     assert overview_page.dashboard_has_any_text(["Cars Washed", "Revenue", OVERVIEW_SITE])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-FLT-005 Selected site is shown as a removable chip in the filter bar")
 @pytest.mark.regression
 def test_overview_selected_site_shows_as_chip(overview_page):
@@ -41,6 +42,7 @@ def test_overview_selected_site_shows_as_chip(overview_page):
     assert overview_page.dashboard_has_any_text(["×", "✕", "remove", "chip", OVERVIEW_SITE])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-FLT-006 Clearing all site chips reverts to all-sites aggregated view")
 @pytest.mark.regression
 def test_overview_clearing_sites_reverts_to_aggregated(overview_page):
@@ -50,6 +52,7 @@ def test_overview_clearing_sites_reverts_to_aggregated(overview_page):
 
 # ── Date preset filter ────────────────────────────────────────────────────────
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OVERVIEW-FILTER-005 through 011 Date preset options are available")
 @pytest.mark.regression
 def test_overview_date_preset_filters_are_available(overview_page):
@@ -64,6 +67,7 @@ def test_overview_date_preset_filters_are_available(overview_page):
     ])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title(
     "OVERVIEW-FILTER-008 Selecting '%s' preset updates all dashboard cards" % OVERVIEW_DATE_PRESET
 )
@@ -76,12 +80,14 @@ def test_overview_last_month_preset_updates_dashboard(overview_page):
 
 # ── Date range filter ─────────────────────────────────────────────────────────
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OVERVIEW-FILTER-012 through 015 Date range inputs are available under Custom")
 @pytest.mark.regression
 def test_overview_date_range_filters_are_available(overview_page):
     assert overview_page.dashboard_has_any_text(["Start", "End", "Date Range", "Custom"])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title(
     "OVERVIEW-FILTER-013 Custom date range %s → %s updates dashboard cards"
     % (OVERVIEW_DATE_FROM, OVERVIEW_DATE_TO)
@@ -96,6 +102,7 @@ def test_overview_custom_date_range_updates_dashboard(overview_page):
 
 # ── Single Day checkbox ───────────────────────────────────────────────────────
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OVERVIEW-FILTER-016/017 Single Day checkbox is available in the filter bar")
 @pytest.mark.regression
 def test_overview_single_day_checkbox_is_available(overview_page):
@@ -108,6 +115,7 @@ def test_overview_single_day_no_date_documents_behaviour(overview_page):
     assert not overview_page.has_broken_state_text()
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-FLT-016 Unchecking Single day checkbox reverts to date range mode")
 @pytest.mark.regression
 def test_overview_uncheck_single_day_reverts_to_range_mode(overview_page):

@@ -190,7 +190,6 @@ def test_sidebar_highlights_active_item(rvo_page):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-001 Sites dropdown lists all active sites")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason="Site dropdown intermittently returns empty on staging; timing race during modal open.")
 def test_sites_dropdown_lists_all_active_sites(rvo_modal):
     # Dependency: Sites & Locations module
     options = rvo_modal.get_site_options()
@@ -204,11 +203,6 @@ def test_sites_dropdown_lists_all_active_sites(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-002 Date preset dropdown lists all seven options including Custom")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="RVO-FMD-002: Date preset dropdown intermittently returns no options; "
-           "timing race during modal open on staging.",
-)
 def test_date_preset_dropdown_lists_seven_options(rvo_modal):
     options = rvo_modal.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -262,7 +256,6 @@ def test_single_day_checkbox_switches_to_single_date(rvo_modal):
 
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-006 Apply filters closes modal and renders Revenue Metrics screen")
-@pytest.mark.xfail(strict=False, reason="ElementNotInteractableException in select_site; timing race during modal open on staging.")
 def test_apply_filters_closes_modal_and_renders_metrics(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset("Last month")
@@ -312,11 +305,6 @@ def test_modal_does_not_reopen_from_page_level_bar(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-001 Page-level site dropdown lists all active sites")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="RVO-SIT-001: Page-level site dropdown returns only pre-selected site; "
-           "same timing race as modal site dropdown (options not fully populated when read).",
-)
 def test_page_level_sites_dropdown_lists_all_sites(rvo_page):
     # Dependency: Sites & Locations module
     options = rvo_page.get_site_options()
@@ -699,7 +687,6 @@ def test_kpi_cards_show_zero_when_no_data(zero_data_filter):
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-003 KPI values update when the site filter changes")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason="Staging data: membership tab count inconsistent with new-sales tab count")
 def test_kpi_values_update_on_site_change(rvo_page):
     body_before = rvo_page.get_body_text()
     options = rvo_page.get_site_options()
@@ -1139,7 +1126,6 @@ def test_retail_tab_shows_two_subtabs(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-003 Wash Package + Wash Extra == Retail Revenue tab count")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason="Retail count invariant fails when staging has uncategorized retail items not mapped to Wash Package or Wash Extra.")
 def test_retail_count_invariant(rvo_page):
     rvo_page.click_retail_tab()
     rvo_page.assert_retail_count_invariant()

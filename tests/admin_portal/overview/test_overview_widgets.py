@@ -6,10 +6,10 @@ pytestmark = [
     allure.epic("Admin Portal"),
     allure.feature("Overview"),
     allure.story("Widgets"),
-    pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging"),
-]
+    ]
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-LST-002 All dashboard card widgets render in the default state")
 def test_overview_all_dashboard_cards_render(overview_page):
     assert overview_page.dashboard_has_all_texts(overview_page.DASHBOARD_WIDGET_LABELS)
@@ -19,6 +19,7 @@ def test_overview_all_dashboard_cards_render(overview_page):
 # ── Cars Washed card ──────────────────────────────────────────────────────────
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-CW-001 Cars Washed totals update when site/date filters change")
 @pytest.mark.regression
 def test_overview_cars_washed_totals_update_with_filters(overview_page):
@@ -99,6 +100,7 @@ def test_overview_awt_tiles_are_clickable(overview_page):
     )
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-AWT-002 Average Wash Ticket info icon shows calculation formula tooltip")
 @pytest.mark.regression
 def test_overview_awt_info_tooltip_shows_formula(overview_page):
@@ -111,6 +113,7 @@ def test_overview_awt_formula_values_match_display(overview_page):
     assert overview_page.dashboard_has_any_text(["Average Wash Ticket", "Total"])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-AWT-004 Average Wash Ticket breakdown bar shows per-service contribution")
 @pytest.mark.regression
 def test_overview_awt_breakdown_bar_renders(overview_page):
@@ -144,6 +147,7 @@ def test_overview_memberships_recurring_prepaid_breakdown(overview_page):
     assert overview_page.dashboard_has_any_text(["Recurring", "Prepaid", "Active"])
 
 
+@pytest.mark.xfail(strict=False, reason="Legacy dashboard iframe loads empty on staging")
 @allure.title("OV-MB-004 Canceled Recurring and Canceled Total bars display correctly")
 @pytest.mark.regression
 def test_overview_memberships_canceled_bars_display(overview_page):
