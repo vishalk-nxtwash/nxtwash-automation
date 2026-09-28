@@ -1,0 +1,121 @@
+name: Admin Suite — AWS runner
+
+# Same as suite-admin.yml (Full / Targeted modes), but on the AWS EC2
+# self-hosted runner instead of GitHub-hosted ubuntu-latest. Use this for
+# faster runs (larger instance) or when testing against a VPC-internal
+# staging environment that GitHub runners can't reach.
+#
+# Pre-requisites on the runner:
+#   - Python 3.11, Google Chrome, ChromeDriver, Java 17 installed
+#   - GitHub Actions runner registered with label: self-hosted
+#   - STAGING secret (full .env file contents) set in repo/environment secrets
+#
+# Shares the SAME admin-staging concurrency group as suite-admin.yml — both
+# touch the same staging managed records, so a GitHub-hosted run and an AWS
+# run must never run at the same time (queue, don't cancel).
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_path:
+        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite, one job per module).'
+        required: false
+        default: ''
+      parallel:
+        description: 'xdist workers per job (EC2 runners typically have more vCPUs than GitHub-hosted — raise this to use them, e.g. 4)'
+        required: false
+        default: '4'
+
+concurrency:
+  group: admin-staging
+  cancel-in-progress: false
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FULL SUITE — one job per module, all in parallel (capped).
+# ──────────────────────────────────────────────────────────────────────────────
+jobs:
+  full:
+    if: ${{ !inputs.test_path }}
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        module:
+          - bank_drop
+          - card_declines
+          - cash_report
+          - coupon_packages
+          - custom_services
+          - customers
+          - discounts
+          - employees
+          - gas_pump_settings
+          - general_sales_report
+          - gift_cards
+          - kiosk_settings
+          - labor_shifts
+          - login
+          - memberships
+          - overview
+          - performance_metrics
+          - pos_settings
+          - redemptions
+          - revenue_overview
+          - service_categories
+          - sites
+          - transactions
+          - tunnel_settings
+          - user_roles
+          - users
+          - wash_activity
+          - wash_books
+          - wash_extras
+          - wash_packages
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-aws-${{ matrix.module }}
+      environment: staging
+      test_path: tests/admin_portal/${{ matrix.module }}
+      parallel: ${{ inputs.parallel || '4' }}
+      timeout_minutes: 90
+      runner: self-hosted
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TARGETED  — fast iteration: every entry of test_path is its own parallel job.
+#   gh workflow run suite-admin-aws.yml --ref <branch> \
+#     -f test_path="tests/admin_portal/cash_report tests/admin_portal/card_declines"
+# ──────────────────────────────────────────────────────────────────────────────
+  plan:
+    if: ${{ inputs.test_path }}
+    runs-on: ubuntu-latest
+    outputs:
+      targets: ${{ steps.split.outputs.targets }}
+    steps:
+      - id: split
+        env:
+          TEST_PATH: ${{ inputs.test_path }}
+        run: |
+          # One matrix entry per path; label = artifact-safe version of the path.
+          targets=$(printf '%s\n' $TEST_PATH | python3 -c '
+          import json, re, sys
+          paths = [p for p in sys.stdin.read().split() if p]
+          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80]} for p in paths]))')
+          echo "targets=$targets" >> "$GITHUB_OUTPUT"
+          echo "$targets"
+
+  targeted:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJSON(needs.plan.outputs.targets) }}
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-aws-t-${{ matrix.target.label }}
+      environment: staging
+      test_path: ${{ matrix.target.path }}
+      parallel: ${{ inputs.parallel || '4' }}
+      timeout_minutes: 90
+      runner: self-hosted
