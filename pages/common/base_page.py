@@ -406,6 +406,29 @@ class BasePage:
         from selenium.common.exceptions import TimeoutException as TE
         raise TE("Frame %s not stable after %ss" % (locator, timeout)) from last_exc
 
+    def wait_for_persisted_value(self, value_getter, expected, reopen=None, attempts=6, per_try=5):
+        """Poll a just-saved field until it reflects the persisted value.
+
+        Some staging endpoints have read-after-write lag: the per-record detail
+        fetch (or a list search) can briefly return pre-save data right after
+        Save returns. A single read immediately after reopening a record is not
+        trustworthy for a field that was just changed — poll instead, optionally
+        calling `reopen` (a zero-arg callable, typically "reopen the edit form")
+        between attempts to force a fresh fetch rather than re-reading a DOM
+        value that will never change on its own.
+        """
+        value = value_getter()
+        for attempt in range(attempts):
+            if value == expected:
+                return value
+            if attempt == attempts - 1:
+                break
+            time.sleep(per_try)
+            if reopen:
+                reopen()
+            value = value_getter()
+        return value
+
     def pagination_controls_present(self, context_el=None):
         """Return True if any pagination controls are visible.
 

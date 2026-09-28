@@ -52,7 +52,9 @@ def test_edit_wash_package_global_price_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.wait_for_persisted_value(PACKAGE_NAME, page.get_global_price_value, new_price) == new_price
+    assert page.wait_for_persisted_value(
+        page.get_global_price_value, new_price, reopen=lambda: page.open_edit_package(PACKAGE_NAME)
+    ) == new_price
     assert page_has_no_broken_state(page)
 
 
@@ -66,7 +68,9 @@ def test_edit_wash_package_global_commission_persists(managed_package):
     page.save_and_return_to_list()
 
     page.open_edit_package(PACKAGE_NAME)
-    assert page.get_global_commission_value() == new_commission
+    assert page.wait_for_persisted_value(
+        page.get_global_commission_value, new_commission, reopen=lambda: page.open_edit_package(PACKAGE_NAME)
+    ) == new_commission
     assert page_has_no_broken_state(page)
 
 
@@ -80,7 +84,7 @@ def test_edit_wash_package_loyalty_points_persist(managed_package):
 
     page.open_edit_package(PACKAGE_NAME)
     assert page.wait_for_persisted_value(
-        PACKAGE_NAME, page.get_points_awarded_value, UPDATED_POINTS_AWARDED
+        page.get_points_awarded_value, UPDATED_POINTS_AWARDED, reopen=lambda: page.open_edit_package(PACKAGE_NAME)
     ) == UPDATED_POINTS_AWARDED
     assert page.get_points_redeemed_value() == UPDATED_POINTS_REDEEMED
     assert page_has_no_broken_state(page)

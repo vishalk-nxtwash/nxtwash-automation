@@ -128,7 +128,11 @@ def test_edit_wash_book_global_commission_persists(browser):
     page.wait_for_list_loaded()
 
     page.open_edit_wash_book(WASH_BOOK_NAME)
-    assert page.get_global_commission_value() == new_commission
+    assert page.wait_for_persisted_value(
+        page.get_global_commission_value,
+        new_commission,
+        reopen=lambda: page.open_edit_wash_book(WASH_BOOK_NAME),
+    ) == new_commission
     assert page_has_no_broken_state(page)
 
     page.set_global_commission(GLOBAL_COMMISSION)
