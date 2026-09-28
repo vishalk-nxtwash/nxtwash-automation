@@ -410,7 +410,9 @@ class BasePage:
         from selenium.common.exceptions import TimeoutException as TE
         raise TE("Frame %s not stable after %ss" % (locator, timeout)) from last_exc
 
-    def wait_for_persisted_value(self, value_getter, expected, reopen=None, attempts=6, per_try=5):
+    def wait_for_persisted_value(
+        self, value_getter, expected, reopen=None, attempts=6, per_try=5, max_seconds=120
+    ):
         """Poll a just-saved field until it reflects the persisted value.
 
         Some staging endpoints have read-after-write lag: the per-record detail
@@ -426,8 +428,15 @@ class BasePage:
         (many parallel jobs hitting staging at once) that's just another kind
         of transient lag. A raise consumes one attempt like a value mismatch
         does; only the last attempt's exception propagates.
+
+        max_seconds bounds total wall-clock time, not just attempt count:
+        reopen() has its own internal timeout (e.g. switch_to_frame_with_retry's
+        90s), so `attempts` slow/failing reopens can otherwise take several
+        times pytest's own per-test timeout (420s) before this loop gives up.
+        Stop starting new attempts once the budget is spent instead.
         """
         from selenium.common.exceptions import WebDriverException
+        deadline = time.time() + max_seconds
         value = None
         last_exc = None
         for attempt in range(attempts):
@@ -439,7 +448,7 @@ class BasePage:
             except WebDriverException as exc:
                 last_exc = exc
                 value = None
-            if attempt == attempts - 1:
+            if attempt == attempts - 1 or time.time() >= deadline:
                 break
             time.sleep(per_try)
             try:
