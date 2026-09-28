@@ -50,11 +50,6 @@ def test_role_type_column_shows_correct_value_per_role(user_roles_page):
        f"got: {predefined_type!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-LST-004: Blank-named role row rendering — the list contains a role with "
-           "no name; Edit action presence on that row needs DOM verification.",
-)
 def test_blank_role_name_row_renders_without_breaking(user_roles_page):
     """SA-UR-LST-004 — A role with a blank name renders without breaking the row or its Edit action."""
     count = user_roles_page.get_visible_row_count()
@@ -110,11 +105,6 @@ def test_predefined_roles_appear_in_list(user_roles_page):
         f"Predefined role '{PREDEFINED_ROLE_NAME}' should appear in the User Roles list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-LST-009: Cannot create a reliably empty list state in staging "
-           "— requires deleting all roles which is destructive.",
-)
 def test_empty_list_shows_empty_state_not_error(user_roles_page):
     """SA-UR-LST-009 — Filtering to no results shows an empty state, not an error."""
     user_roles_page.open_filters()

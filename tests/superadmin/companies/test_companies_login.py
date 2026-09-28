@@ -51,11 +51,6 @@ def test_admin_portal_launches_in_company_context(companies_page):
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LGN-004: POS App sub-step (domain selection) — "
-           "dialog structure not confirmed via DOM inspection.",
-)
 def test_pos_app_shows_domain_selection_step(companies_page):
     """SA-CMP-LGN-004 — Selecting 'POS App' opens the domain selection step."""
     companies_page.filter_by_company_name(COMPANY_NAME)
@@ -96,11 +91,6 @@ def test_pos_staging_launches(companies_page):
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LGN-007: 'Back' button on domain step returns to app selection — "
-           "Back button locator in the POS domain step not confirmed.",
-)
 def test_back_on_domain_step_returns_to_app_selection(companies_page):
     """SA-CMP-LGN-007 — 'Back' on the domain step returns to the app-selection modal."""
     companies_page.filter_by_company_name(COMPANY_NAME)
@@ -147,22 +137,11 @@ def test_tunnel_nxtcrm_nxttrack_launch(companies_page):
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LGN-010: Context integrity check — verifying the launched app "
-           "opens the correct company requires reading the destination page, "
-           "which involves a new window and navigation away.",
-)
 def test_login_to_opens_correct_company_context(companies_page):
     """SA-CMP-LGN-010 — 'Login to' launches into the exact company whose row was clicked."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LGN-011: 'Login to' on a company with missing data — "
-           "company 'crewcarwashtest' existence not confirmed in staging.",
-)
 def test_login_to_partial_data_company(companies_page):
     """SA-CMP-LGN-011 — 'Login to' on a company with missing data documents the behaviour."""
     partial_company = "crewcarwashtest"

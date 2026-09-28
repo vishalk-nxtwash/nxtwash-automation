@@ -169,11 +169,6 @@ def test_close_filter_panel_without_applying(companies_page):
         "Closing the filter panel without applying should not change the list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-013: Case-insensitive filter — "
-           "server may perform case-sensitive matching; behaviour not confirmed.",
-)
 def test_name_filter_is_case_insensitive(companies_page):
     """SA-CMP-FLT-013 — Company name filter is case-insensitive."""
     companies_page.open_filters()
@@ -186,11 +181,6 @@ def test_name_filter_is_case_insensitive(companies_page):
         f"Case-insensitive filter should match '{COMPANY_NAME}' when searching upper-case"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-FLT-014: Filter persistence across navigation — "
-           "whether the server stores filter state after reload is not confirmed.",
-)
 def test_applied_filter_persists_until_reset(browser, companies_page):
     """SA-CMP-FLT-014 — An applied filter stays active after navigating away and back."""
     companies_page.filter_by_company_name(COMPANY_NAME)

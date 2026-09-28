@@ -31,11 +31,6 @@ def test_edit_form_prefills_role_name(edit_role_page):
         f"Edit form should pre-fill Role Name with '{TEST_ROLE_NAME}', got: {name!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EDT-002: Pre-filled permission toggles — toggle state detection "
-           "(is_selected / aria-checked) not confirmed for the edit form.",
-)
 def test_edit_form_prefills_permission_toggles(edit_role_page):
     """SA-UR-EDT-002 — Pre-filled permission toggles reflect the role's saved permissions."""
     edit_role_page.expand_permission_groups()
@@ -48,11 +43,6 @@ def test_edit_form_prefills_permission_toggles(edit_role_page):
         f"Edit form should pre-fill at least one enabled permission, got {on_count} on"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EDT-003: Active User Role toggle state on the edit form — "
-           "toggle locator not confirmed; aria-checked detection may vary.",
-)
 def test_edit_form_active_toggle_reflects_saved_state(edit_role_page):
     """SA-UR-EDT-003 — Active User Role toggle reflects the saved active state."""
     state = edit_role_page.get_active_toggle_state()
@@ -130,11 +120,6 @@ def test_toggling_permission_persists_after_save(browser, edit_role_page):
         f"got: {new_state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EDT-006: Role Name field inline clear (X) button locator "
-           "not confirmed — needs DOM inspection.",
-)
 def test_clearing_role_name_via_x_and_saving_is_blocked(edit_role_page):
     """SA-UR-EDT-006 — Clearing the Role Name (via the X clear icon) and saving is blocked."""
     edit_role_page.click_role_name_clear_button()
@@ -169,11 +154,6 @@ def test_predefined_role_edit_documents_behaviour(user_roles_page, browser):
         "Opening a predefined role edit form should not show an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EDT-008: Duplicate Role Name on edit — uniqueness rule on staging "
-           "not confirmed; same caveat as CRT-011.",
-)
 def test_duplicate_role_name_on_edit_is_rejected(edit_role_page, user_roles_page):
     """SA-UR-EDT-008 — Setting a duplicate Role Name on edit is rejected."""
     edit_role_page.set_role_name(PREDEFINED_ROLE_NAME)

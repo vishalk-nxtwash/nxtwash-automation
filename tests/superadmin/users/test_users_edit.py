@@ -55,11 +55,6 @@ def test_edit_form_prefills_phone(edit_user_page):
         "Phone field should be pre-filled in the edit form"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-EDT-007: Phone edit persistence — React-controlled input may "
-           "not update internal state via Selenium send_keys; save behaviour not confirmed.",
-)
 def test_edit_phone_persists_after_save(browser, edit_user_page, users_page):
     """SA-USR-EDT-007 — Editing the phone number saves and persists on reload."""
     from pages.superadmin.users_page import EditUserPage
@@ -89,11 +84,6 @@ def test_edit_phone_persists_after_save(browser, edit_user_page, users_page):
             pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-EDT-008: Clearing a required field and saving — "
-           "React-controlled inputs may not update state; save may succeed anyway.",
-)
 def test_clearing_required_field_rejected_on_save(edit_user_page):
     """SA-USR-EDT-008 — Clearing a required field and saving shows a validation error."""
     original_first = edit_user_page.get_first_name()

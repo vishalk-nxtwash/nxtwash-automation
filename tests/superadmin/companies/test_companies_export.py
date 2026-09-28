@@ -128,11 +128,6 @@ def test_all_columns_off_disables_export_or_shows_message(companies_page):
         "With no columns selected, Export button should be disabled or show a message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EXP-011: Export respects active filter — "
-           "filter + export interaction not confirmed; download tooling not available.",
-)
 def test_export_respects_active_filter(companies_page):
     """SA-CMP-EXP-011 — Export honours an active company name filter."""
     from tests.superadmin.companies.conftest import COMPANY_NAME

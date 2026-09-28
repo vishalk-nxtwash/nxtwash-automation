@@ -23,12 +23,6 @@ def test_edit_opens_form_at_correct_url(edit_sales_path_page):
         f"Edit URL should be /sales-path/{{id}}, got: {url}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-EDT-002: Pre-filled Company React Select value depends on "
-           "confirmed combobox locator — reading pre-filled value from React Select "
-           "is not straightforward without confirmed structure.",
-)
 def test_edit_form_prefills_company(edit_sales_path_page):
     """SA-SLP-EDT-002 — Edit form pre-fills the Company selector."""
     from selenium.webdriver.common.by import By

@@ -72,11 +72,6 @@ def test_filter_with_no_match_shows_empty_state(user_roles_page):
         "No-match filter should show an empty state, not an error message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-FLT-006: 'Active User Role' toggle locator inside the filter panel "
-           "not confirmed — needs DevTools inspection to verify the toggle element.",
-)
 def test_active_user_role_toggle_on_shows_only_active(user_roles_page):
     """SA-UR-FLT-006 — 'Active User Role' toggle ON shows only active roles."""
     user_roles_page.open_filters()
@@ -94,11 +89,6 @@ def test_active_user_role_toggle_on_shows_only_active(user_roles_page):
         f"Active filter ON should still show the active '{TEST_ROLE_NAME}' role"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-FLT-007: Active User Role toggle OFF requires confirming the inactive "
-           "role appears — toggle locator and inactive role visibility not confirmed.",
-)
 def test_active_user_role_toggle_off_shows_all_roles(user_roles_page):
     """SA-UR-FLT-007 — Active User Role toggle OFF shows all roles including inactive."""
     user_roles_page.open_filters()
@@ -153,11 +143,6 @@ def test_reset_filters_clears_input_and_restores_full_list(user_roles_page):
         f"After reset, expected {full_count} rows, got {restored_count}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-FLT-010: Close (X) button locator inside the filter panel "
-           "not confirmed — needs DOM inspection.",
-)
 def test_close_x_dismisses_panel_without_applying(user_roles_page):
     """SA-UR-FLT-010 — Close (X) dismisses the filter panel without applying changes."""
     initial_count = user_roles_page.get_visible_row_count()
@@ -171,11 +156,6 @@ def test_close_x_dismisses_panel_without_applying(user_roles_page):
         "Closing the filter panel without applying should not change the list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-FLT-011: Case-insensitive filter — server may perform case-sensitive "
-           "matching on staging; behaviour not confirmed.",
-)
 def test_role_name_filter_is_case_insensitive(user_roles_page):
     """SA-UR-FLT-011 — Role Name filter is case-insensitive."""
     user_roles_page.filter_by_role_name(TEST_ROLE_NAME.upper())

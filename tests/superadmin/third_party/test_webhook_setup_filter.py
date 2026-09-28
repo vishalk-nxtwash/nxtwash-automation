@@ -32,12 +32,6 @@ def test_filter_panel_shows_expected_controls(webhook_setup_page):
         "'Active Third Party Key' toggle should be present in the filter panel"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-FLT-003: SETUP_COMPANY webhook setup may not exist on staging "
-           "when this test runs (parallel worker race — edit_setup_page fixture "
-           "on another worker creates the record). Promote once a stable seed record exists.",
-)
 def test_filter_by_exact_company_name(webhook_setup_page):
     """SA-SET-FLT-003 — Filter by exact Company name returns the matching setup."""
     from selenium.webdriver.common.by import By
@@ -153,11 +147,6 @@ def test_reset_filters_restores_full_list(webhook_setup_page):
         f"After reset, expected {initial_count} rows, got {restored_count}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-FLT-013: App may live-filter as text is typed — closing the panel "
-           "without applying might not restore the full list if the filter was auto-applied.",
-)
 def test_close_filter_panel_without_applying(webhook_setup_page):
     """SA-SET-FLT-013 — Close (X) dismisses the panel without applying pending changes."""
     initial_count = webhook_setup_page.get_visible_row_count()

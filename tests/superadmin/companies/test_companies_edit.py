@@ -28,22 +28,12 @@ def test_edit_form_prefills_company_name(edit_company_page):
         f"Company name should be pre-filled with '{COMPANY_NAME}', got: {name!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-003: Location field names (country, state, city, address, zip, "
-           "timezone) on the edit form not confirmed via DOM inspection.",
-)
 def test_edit_form_prefills_location_fields(edit_company_page, browser):
     """SA-CMP-EDT-003 — Pre-filled Location fields match the company's stored data."""
     body = browser.find_element(By.TAG_NAME, "body").text
     assert body, "Edit form body should be non-empty"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-004: Field names for Database, Site name, Password on the "
-           "create form not confirmed — cannot verify absence on the edit form.",
-)
 def test_edit_form_does_not_show_database_or_site_name(edit_company_page, browser):
     """SA-CMP-EDT-004 — Edit form does not expose Database, Site name or Password."""
     from pages.superadmin.create_company_page import CreateCompanyPage
@@ -58,11 +48,6 @@ def test_edit_form_does_not_show_database_or_site_name(edit_company_page, browse
     assert not site_els, "Edit form should not show a 'Site name' field"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-005: Company name edit persistence — rich-text or React-controlled "
-           "input may not accept Selenium send_keys correctly; save behaviour not confirmed.",
-)
 def test_edit_company_name_persists(browser, edit_company_page):
     """SA-CMP-EDT-005 — Editing Company name → Save persists on the list and after reload."""
     pass
@@ -92,31 +77,16 @@ def test_edit_phone_is_prefilled(edit_company_page):
         "Phone field should be pre-filled in the edit form"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-008: Clearing a required field via the X clear icon — "
-           "inline clear icon locator not confirmed; save may proceed without blocking.",
-)
 def test_clearing_required_field_rejected_on_save(edit_company_page):
     """SA-CMP-EDT-008 — Clearing a required field (via X) and saving is blocked."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-009: Invalid email on edit form — "
-           "email field name not confirmed; entering invalid value via send_keys may not work.",
-)
 def test_invalid_email_on_edit_form_rejected(edit_company_page):
     """SA-CMP-EDT-009 — Invalid email format on the Edit form is rejected."""
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-010: Country/State/City cascade on edit — "
-           "React Select interaction and cascade behaviour not confirmed.",
-)
 def test_edit_country_state_city_cascade(edit_company_page):
     """SA-CMP-EDT-010 — Changing country/state/city cascades correctly and saves."""
     pass
@@ -177,11 +147,6 @@ def test_save_with_no_modifications_is_safe(edit_company_page):
         "Save with no modifications should not produce an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-015: Company with missing data (e.g. crewcarwashtest) — "
-           "existence of this company in staging not confirmed.",
-)
 def test_editing_partial_data_company_loads_without_error(browser, companies_page):
     """SA-CMP-EDT-015 — Editing a company with missing data loads without error."""
     from pages.superadmin.edit_company_page import EditCompanyPage
@@ -195,11 +160,6 @@ def test_editing_partial_data_company_loads_without_error(browser, companies_pag
         "Editing a company with partial data should not show an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-EDT-016: Non-existent company ID (404 vs redirect) — "
-           "app behaviour not confirmed.",
-)
 def test_nonexistent_company_id_shows_error_or_redirect(browser, companies_page):
     """SA-CMP-EDT-016 — Navigating to /companies/999999 shows a 404 or redirects."""
     browser.get("https://superadmin.nxtwash.com/companies/999999")

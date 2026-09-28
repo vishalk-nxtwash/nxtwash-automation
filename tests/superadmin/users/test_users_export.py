@@ -49,11 +49,6 @@ def test_export_modal_has_xlsx_and_csv_options(users_page):
         f"Expected CSV in export formats, got: {formats}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-EXP-005: Default export format detection depends on whether "
-           "the selector is a native <select> or React Select — needs DOM inspection.",
-)
 def test_export_default_format_is_xlsx(users_page):
     """SA-USR-EXP-005 — Default export format is XLSX."""
     users_page.click_export_icon()
@@ -62,11 +57,6 @@ def test_export_default_format_is_xlsx(users_page):
         f"Default export format should be XLSX, got: {default!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-EXP-006: Column toggle locator (@role='switch' or checkbox) "
-           "inside the modal not confirmed — needs DOM inspection.",
-)
 def test_export_modal_has_column_toggles(users_page):
     """SA-USR-EXP-006 — Export modal contains column selection toggles."""
     users_page.click_export_icon()

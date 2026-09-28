@@ -19,11 +19,6 @@ def test_companies_list_page_loads(companies_page):
     assert title == "Companies", f"Expected page title 'Companies', got: {title!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-002: Exact column header labels not confirmed via DOM inspection "
-           "— table may render headers differently from the spec.",
-)
 def test_companies_table_has_required_columns(companies_page):
     """SA-CMP-LST-002 — Table shows all seven expected column headers."""
     headers = companies_page.get_column_headers()
@@ -52,11 +47,6 @@ def test_pagination_records_count_visible(companies_page):
         f"Expected 'out of N records' pagination text, got: {records_text!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-005: Results-per-page selector structure (React Select vs "
-           "native <select>) not confirmed — DOM inspection required.",
-)
 def test_results_per_page_options(companies_page):
     """SA-CMP-LST-005 — Results-per-page selector offers standard page-size options."""
     options = companies_page.get_results_per_page_options()
@@ -65,22 +55,12 @@ def test_results_per_page_options(companies_page):
         f"Expected '10' among page-size options, got: {options}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-006: With a single page of results the Prev/Next buttons may "
-           "not exist at all — behaviour when disabled state differs per implementation.",
-)
 def test_previous_page_button_disabled_on_page_1(companies_page):
     """SA-CMP-LST-006 — Previous-page button is disabled when on page 1."""
     assert companies_page.prev_page_button_is_disabled(), \
         "Previous page button should be disabled when on the first page"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-007: Company name 'crewcarwashtest' (partial-data company) "
-           "has not been confirmed to exist in this staging environment.",
-)
 def test_partial_data_company_renders_without_error(companies_page):
     """SA-CMP-LST-007 — A company with missing optional fields renders without breaking the row."""
     partial_company = "crewcarwashtest"
@@ -93,11 +73,6 @@ def test_partial_data_company_renders_without_error(companies_page):
         "Page should not show an error when a company has partial data"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-008: Address-wrap is a visual/layout assertion — "
-           "not reliably verifiable via Selenium element properties.",
-)
 def test_long_address_wraps_within_cell(companies_page):
     """SA-CMP-LST-008 — Long company address wraps within its cell without overflow."""
     cells = companies_page.driver.find_elements(
@@ -124,11 +99,6 @@ def test_no_match_filter_shows_no_error(companies_page):
         "No-match filter should show an empty state, not an error message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-LST-010: Verifying count change after an edit requires modifying "
-           "data and checking before/after — fragile and dependent on a writable fixture.",
-)
 def test_records_count_updates_after_edit(companies_page):
     """SA-CMP-LST-010 — Records count and rows update without a manual reload after a change."""
     initial_text = companies_page.get_records_count_text()

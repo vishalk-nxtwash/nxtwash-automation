@@ -25,11 +25,6 @@ def test_export_icon_opens_modal(user_roles_page):
         "Export modal should appear after clicking the export icon"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EXP-002: Default export format detection depends on whether the "
-           "selector is a native <select> or React Select — needs DOM inspection.",
-)
 def test_export_default_format_is_xlsx(user_roles_page):
     """SA-UR-EXP-002 — 'Export as' defaults to XLSX."""
     user_roles_page.click_export_icon()
@@ -53,11 +48,6 @@ def test_export_format_dropdown_lists_xlsx_and_csv(user_roles_page):
         f"Expected CSV in export formats, got: {formats}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-EXP-004: Column toggle defaults (Role Name ON, Role Type ON, "
-           "Status OFF, etc.) depend on toggle locator (@role='switch') not confirmed.",
-)
 def test_export_default_column_toggles_are_correct(user_roles_page):
     """SA-UR-EXP-004 — Default column toggles: Role Name and Role Type ON; others OFF."""
     user_roles_page.click_export_icon()

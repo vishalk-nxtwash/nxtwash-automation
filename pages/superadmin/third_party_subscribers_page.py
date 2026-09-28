@@ -120,6 +120,49 @@ class SubscribersPage(BasePage):
         )
         self.js_click_fresh(btn_loc)
 
+    _NEXT_PAGE_BUTTON = (
+        By.XPATH,
+        "//button[.//svg[contains(@class,'lucide-chevron-right') "
+        "and not(contains(@class,'lucide-chevrons-right'))]]",
+    )
+
+    def row_exists_any_page(self, name):
+        """Check for a row across ALL pages (iterates via next-page button)."""
+        for _ in range(20):
+            if self.row_exists(name, timeout=5):
+                return True
+            btns = self.driver.find_elements(*self._NEXT_PAGE_BUTTON)
+            if not btns or btns[0].get_attribute("disabled") is not None:
+                return False
+            # Capture the current first-row text so we can detect a page change
+            old_rows = self.driver.find_elements(By.XPATH, "//tbody/tr")
+            first_text = old_rows[0].text if old_rows else ""
+            btns[0].click()
+            try:
+                WebDriverWait(self.driver, 10).until(
+                    lambda d: (
+                        not d.find_elements(By.XPATH, "//tbody/tr")
+                        or d.find_elements(By.XPATH, "//tbody/tr")[0].text != first_text
+                    )
+                )
+            except TimeoutException:
+                pass
+        return False
+
+    def open_edit_on_current_page(self, name):
+        """Open the Edit form for a named row assumed to be on the current page."""
+        btn_loc = (
+            By.XPATH,
+            "//*[normalize-space()='%s']"
+            "/ancestor::*[.//button[normalize-space()='Edit']][1]"
+            "//button[normalize-space()='Edit']" % name
+        )
+        btn = self.wait.until(EC.element_to_be_clickable(btn_loc))
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", btn
+        )
+        self.driver.execute_script("arguments[0].click();", btn)
+
     def get_row_actions(self, name):
         self.wait_for_row(name)
         return self.stable_texts(self.get_row_locator(name)[1] + "//button")

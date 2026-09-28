@@ -78,11 +78,6 @@ def test_non_matching_filter_shows_empty_state(users_page):
         "No-match filter should show an empty state, not an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-008: Parallel workers create/delete users concurrently — "
-           "row count comparison is inherently flaky under -n 2.",
-)
 def test_reset_filters_restores_full_list(users_page):
     """SA-USR-FLT-008 — Reset clears all filter inputs and restores the full user list."""
     # Baseline full count
@@ -121,11 +116,6 @@ def test_partial_first_name_filter(users_page):
         "Partial first name filter 'VK' should return at least one user"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-011: Partial email filter — server may enforce a minimum "
-           "term length or require an exact match; behaviour not confirmed.",
-)
 def test_partial_email_filter(users_page):
     """SA-USR-FLT-011 — Partial email (prefix) returns matching users."""
     users_page.filter_by_email("vksauser")
@@ -146,11 +136,6 @@ def test_combined_filters_narrow_results(users_page):
         "Combined first name + email filter should find the primary test user"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-013: Filter persistence across navigation — "
-           "whether the server stores filter state after reload is not confirmed.",
-)
 def test_applied_filter_persists_across_navigation(browser, users_page):
     """SA-USR-FLT-013 — An applied filter stays active after navigating away and back."""
     users_page.filter_by_email(PRIMARY_USER["email"])
@@ -164,11 +149,6 @@ def test_applied_filter_persists_across_navigation(browser, users_page):
         "No error should appear after navigating back to the users list"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-014: Clear input X button locator inside filter panel "
-           "not confirmed — needs DOM inspection.",
-)
 def test_clear_x_empties_filter_input(users_page):
     """SA-USR-FLT-014 — The X clear icon empties the email filter input."""
     users_page.open_filters()
@@ -189,11 +169,6 @@ def test_clear_x_empties_filter_input(users_page):
         f"Email filter should be empty after clicking the clear button, got: {value!r}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-015: Case-insensitive filter — server may perform "
-           "case-sensitive matching; behaviour not confirmed on staging.",
-)
 def test_email_filter_is_case_insensitive(users_page):
     """SA-USR-FLT-015 — Email filter is case-insensitive."""
     users_page.filter_by_email(PRIMARY_USER["email"].upper())
@@ -203,11 +178,6 @@ def test_email_filter_is_case_insensitive(users_page):
         f"when searching upper-case"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-USR-FLT-016: Filter panel Close button locator not confirmed — "
-           "needs DOM inspection with DevTools.",
-)
 def test_close_filter_panel_without_applying(users_page):
     """SA-USR-FLT-016 — Close button dismisses the filter panel without applying."""
     initial_count = users_page.get_visible_row_count()

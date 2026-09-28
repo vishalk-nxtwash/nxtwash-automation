@@ -848,11 +848,17 @@ class EditUserRolePage(CreateUserRolePage):
     )
 
     def wait_for_loaded(self):
+        from selenium.common.exceptions import StaleElementReferenceException
         self.wait.until(EC.presence_of_element_located(self.ROLE_NAME_INPUT))
         self.wait.until(lambda d: "/create" not in d.current_url)
-        self.wait.until(
-            lambda d: d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") not in (None, "")
-        )
+
+        def _name_is_filled(d):
+            try:
+                return d.find_element(*self.ROLE_NAME_INPUT).get_attribute("value") not in (None, "")
+            except StaleElementReferenceException:
+                return False
+
+        self.wait.until(_name_is_filled)
 
     def get_role_name(self):
         el = self.wait.until(EC.presence_of_element_located(self.ROLE_NAME_INPUT))

@@ -10,11 +10,6 @@ pytestmark = [
 ]
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-PUB-001: Default language dropdown locator not confirmed — "
-           "React Select structure needs DOM inspection.",
-)
 def test_default_language_defaults_to_english(edit_company_page, browser):
     """SA-CMP-PUB-001 — 'Default language' dropdown is required and defaults to English."""
     body = browser.find_element(By.TAG_NAME, "body").text
@@ -22,11 +17,6 @@ def test_default_language_defaults_to_english(edit_company_page, browser):
         "Default language should default to English"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-PUB-002: Changing default language and saving — "
-           "React Select dropdown locator not confirmed; save persistence not verified.",
-)
 def test_changing_default_language_persists(edit_company_page):
     """SA-CMP-PUB-002 — Changing the default language persists after save."""
     pass

@@ -15,11 +15,6 @@ _ROLES_URL = "https://superadmin.nxtwash.com/user-roles"
 _CREATE_URL = "https://superadmin.nxtwash.com/user-roles/create"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-ACC-001: Requires a separate user account that lacks the User Roles "
-           "view permission — not available in the current test setup.",
-)
 def test_user_without_roles_permission_cannot_reach_user_roles(browser):
     """SA-UR-ACC-001 — A non-Superadmin (or a role lacking the User Roles permission)
     cannot reach /user-roles via a direct URL."""

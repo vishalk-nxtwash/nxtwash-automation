@@ -30,12 +30,6 @@ def test_add_setup_button_opens_create_form(create_setup_page):
     assert "Save new" in body, "Create form should show 'Save new' button"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-002: Subscriber (placeholder='selectSubscriber') and "
-           "Company (placeholder='selectCompany') React Select controls not "
-           "confirmed via DOM inspection.",
-)
 def test_create_form_shows_subscriber_and_company_dropdowns(create_setup_page):
     """SA-SET-CRT-002 — Create form shows Subscriber and Company dropdowns."""
     from selenium.webdriver.common.by import By
@@ -117,11 +111,6 @@ def test_active_toggle_defaults_on(create_setup_page):
         f"'Active Webhook Setup' toggle should be ON by default, got: {state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-009: Event type checkbox locators not confirmed via DOM. "
-           "Depends on event name text matching the rendered labels exactly.",
-)
 def test_all_ten_event_type_checkboxes_present(create_setup_page):
     """SA-SET-CRT-009 — All 10 event type checkboxes are rendered on the create form."""
     from pages.superadmin.third_party_setup_page import EVENT_TYPE_NAMES
@@ -152,11 +141,6 @@ def test_save_without_any_fields_shows_validation(create_setup_page):
         "Saving with no fields filled should be blocked or show a validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-012: Requires filling Subscriber + URL + Key via unconfirmed "
-           "locators to isolate the missing-Company case.",
-)
 def test_save_without_company_shows_validation(create_setup_page):
     """SA-SET-CRT-012 — Save without Company is blocked with a validation error."""
     create_setup_page.select_subscriber(SETUP_SUBSCRIBER)
@@ -169,11 +153,6 @@ def test_save_without_company_shows_validation(create_setup_page):
     ), "Saving without a Company should be blocked"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-013: Requires confirmed URL input (name='thirdPartyUrl') "
-           "and other React Select locators to fill all other fields.",
-)
 def test_save_without_url_shows_validation(create_setup_page):
     """SA-SET-CRT-013 — Save without URL is blocked with a validation error."""
     create_setup_page.select_subscriber(SETUP_SUBSCRIBER)
@@ -186,11 +165,6 @@ def test_save_without_url_shows_validation(create_setup_page):
     ), "Saving without a URL should be blocked"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-014: Requires confirmed Key input (name='thirdPartyKey') "
-           "and other locators to fill all other fields.",
-)
 def test_save_without_key_shows_validation(create_setup_page):
     """SA-SET-CRT-014 — Save without Key is blocked with a validation error."""
     create_setup_page.select_subscriber(SETUP_SUBSCRIBER)
@@ -219,10 +193,6 @@ def test_create_setup_happy_path(create_setup_page, webhook_setup_page):
         f"New setup for '{SETUP_COMPANY}' should appear in the list after creation"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-CRT-016: Depends on CRT-015 running first in the same session.",
-)
 def test_new_setup_appears_in_list(webhook_setup_page):
     """SA-SET-CRT-016 — New setup appears in the list after create."""
     assert webhook_setup_page.row_exists(SETUP_COMPANY), \

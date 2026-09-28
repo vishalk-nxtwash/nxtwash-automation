@@ -95,10 +95,6 @@ def test_editing_url_persists(edit_setup_page, webhook_setup_page):
     )
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EDT-006: Requires confirmed Key input name + save interaction.",
-)
 def test_editing_key_persists(edit_setup_page, webhook_setup_page):
     """SA-SET-EDT-006 — Editing the Webhook Key and saving persists the change."""
     updated_key = SETUP_KEY + "_upd"
@@ -126,11 +122,6 @@ def test_editing_key_persists(edit_setup_page, webhook_setup_page):
     )
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EDT-007: Editing event type selections depends on confirmed "
-           "event checkbox locators (SA-SET-EVT-003).",
-)
 def test_editing_event_types_persists(edit_setup_page):
     """SA-SET-EDT-007 — Editing event type selections and saving persists the change."""
     from pages.superadmin.third_party_setup_page import EVENT_TYPE_NAMES

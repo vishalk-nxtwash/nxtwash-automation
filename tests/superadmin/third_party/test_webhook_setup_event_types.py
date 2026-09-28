@@ -23,11 +23,6 @@ def test_event_types_section_is_visible(create_setup_page):
     assert visible, "An 'Event Types' section should be visible on the create form"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-002: All 10 event type label texts not confirmed against the "
-           "DOM — exact casing / spacing may differ from the spec.",
-)
 def test_all_ten_event_type_names_visible(create_setup_page):
     """SA-SET-EVT-002 — All 10 event type names are rendered on the form."""
     from selenium.webdriver.common.by import By
@@ -37,11 +32,6 @@ def test_all_ten_event_type_names_visible(create_setup_page):
         f"These event types should be visible on the form but are missing: {missing}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-003: Event checkbox locators use ancestor-traversal XPath — "
-           "exact DOM structure for event type toggles not confirmed against live UI.",
-)
 def test_each_event_type_has_a_checkbox(create_setup_page):
     """SA-SET-EVT-003 — Each event type has a toggle/checkbox control."""
     states = create_setup_page.get_all_event_states()
@@ -130,11 +120,6 @@ def test_saving_with_no_events_selected_is_allowed(create_setup_page):
         "Server should either accept zero events or show a clear validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SET-EVT-008: Confirming event selection persists on the edit form "
-           "requires confirmed event checkbox locators + edit form pre-fill.",
-)
 def test_event_selection_persists_on_edit(edit_setup_page):
     """SA-SET-EVT-008 — Event type selection made at create time persists on the edit form."""
     states = edit_setup_page.get_all_event_states()

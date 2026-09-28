@@ -32,11 +32,6 @@ def test_permission_groups_are_present_on_create_form(create_role_page):
             f"Expected permission group '{group}' to be visible on the create form"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-PRM-002: Expand/collapse behaviour via chevron — the expand buttons "
-           "may toggle visibility differently; collapsed state not confirmed.",
-)
 def test_permission_groups_expand_and_collapse(create_role_page):
     """SA-UR-PRM-002 — Each permission group expands and collapses via its chevron."""
     expand_btns = create_role_page.driver.find_elements(
@@ -122,11 +117,6 @@ def test_enabling_permission_and_saving_persists(edit_role_page, browser):
         "At least one permission should remain enabled after save and reload"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-PRM-006: Each individual permission toggle independently — "
-           "toggle interaction via set_checkbox not confirmed on staging.",
-)
 def test_each_permission_toggle_can_be_set_independently(create_role_page):
     """SA-UR-PRM-006 — Each individual permission toggle can be turned on and off independently."""
     checkboxes = create_role_page.get_permission_checkboxes()
@@ -145,11 +135,6 @@ def test_each_permission_toggle_can_be_set_independently(create_role_page):
         "Second permission toggle should remain OFF"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-PRM-007: Whether enabling 'Create Role' auto-enables the parent "
-           "'User Roles' view permission — parent-child rule not confirmed on staging.",
-)
 def test_create_role_permission_relative_to_parent_user_roles(create_role_page):
     """SA-UR-PRM-007 — 'Create Role' behaviour relative to its parent 'User Roles' permission."""
     create_role_page.expand_permission_groups()
@@ -166,11 +151,6 @@ def test_create_role_permission_relative_to_parent_user_roles(create_role_page):
         "Enabling 'Create Role' should not cause an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-PRM-008: Whether enabling 'Create company' auto-enables the parent "
-           "'Companies' view permission — parent-child rule not confirmed on staging.",
-)
 def test_create_company_permission_relative_to_parent_companies(create_role_page):
     """SA-UR-PRM-008 — 'Create company' behaviour relative to its parent 'Companies' permission."""
     create_role_page.expand_permission_groups()
@@ -186,11 +166,6 @@ def test_create_company_permission_relative_to_parent_companies(create_role_page
         "Enabling 'Create company' should not cause an error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-PRM-009: Enabling all permissions and verifying they persist — "
-           "set_checkbox interaction with all toggles not confirmed.",
-)
 def test_enabling_all_permissions_persists(edit_role_page, browser):
     """SA-UR-PRM-009 — Enabling all permissions and saving persists the full set."""
     from pages.superadmin.user_roles_page import EditUserRolePage

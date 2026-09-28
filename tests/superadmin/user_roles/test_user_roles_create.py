@@ -28,11 +28,6 @@ def test_add_role_button_navigates_to_create_form(user_roles_page, browser):
         f"Expected /user-roles/create URL, got: {browser.current_url}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-002: 'User Role Settings' and 'User Role Permissions' section "
-           "header locators not confirmed — may render as different text on staging.",
-)
 def test_create_form_shows_settings_and_permissions_sections(create_role_page):
     """SA-UR-CRT-002 — Create form shows 'User Role Settings' and 'User Role Permissions' sections."""
     assert create_role_page.role_settings_section_visible(), \
@@ -41,11 +36,6 @@ def test_create_form_shows_settings_and_permissions_sections(create_role_page):
         "Create form should show a 'User Role Permissions' section"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-003: Required marker (red asterisk) locator next to 'Role Name' "
-           "not confirmed — depends on CSS class used for required indicators.",
-)
 def test_role_name_field_is_marked_required(create_role_page):
     """SA-UR-CRT-003 — Role Name is marked required with a red asterisk."""
     body = create_role_page.get_body_text()
@@ -58,11 +48,6 @@ def test_role_name_field_is_marked_required(create_role_page):
         "Role Name field should have a required marker"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-004: Active User Role toggle locator on the create form "
-           "not confirmed — needs DOM inspection to verify default ON state.",
-)
 def test_active_user_role_toggle_defaults_to_on(create_role_page):
     """SA-UR-CRT-004 — 'Active User Role' toggle defaults to ON on the create form."""
     state = create_role_page.get_active_toggle_state()
@@ -156,11 +141,6 @@ def test_save_without_role_name_is_blocked(create_role_page):
         "Submitting without a Role Name should block with a validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-010: Whitespace-only Role Name rejection — server may trim "
-           "and treat as empty, or may accept it; behaviour not confirmed on staging.",
-)
 def test_whitespace_only_role_name_is_rejected(create_role_page):
     """SA-UR-CRT-010 — Role Name containing only whitespace is rejected."""
     create_role_page.enter_role_name("     ")
@@ -193,11 +173,6 @@ def test_duplicate_role_name_shows_error(create_role_page):
         "Submitting a duplicate Role Name should show an error message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-012: Leading/trailing whitespace handling — whether the server "
-           "trims or rejects is not confirmed on staging.",
-)
 def test_role_name_with_whitespace_is_trimmed_or_rejected(create_role_page):
     """SA-UR-CRT-012 — Role Name with leading/trailing whitespace is trimmed or rejected.
     Checks field-level acceptance only (no submit) to avoid creating a whitespace-padded role."""
@@ -211,11 +186,6 @@ def test_role_name_with_whitespace_is_trimmed_or_rejected(create_role_page):
         "Entering a padded role name should not show an error at the field level"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-013: Maximum allowed Role Name length not documented — "
-           "behaviour at boundary not confirmed.",
-)
 def test_role_name_at_maximum_length_saves(create_role_page):
     """SA-UR-CRT-013 — Role Name at maximum allowed length saves without truncation or crash.
     Checks field-level acceptance only (no submit) to avoid creating a 255-char role in staging."""
@@ -228,11 +198,6 @@ def test_role_name_at_maximum_length_saves(create_role_page):
         "Entering a max-length role name should not cause a server error at input time"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-014: Special characters / emoji in Role Name — server sanitisation "
-           "or rejection behaviour not confirmed on staging.",
-)
 def test_special_characters_in_role_name_handled_gracefully(create_role_page):
     """SA-UR-CRT-014 — Special characters / emoji in Role Name are handled gracefully.
     Checks field-level acceptance only (no submit) to avoid persisting a role with
@@ -246,11 +211,6 @@ def test_special_characters_in_role_name_handled_gracefully(create_role_page):
         "Entering special characters in Role Name should not cause a server error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-UR-CRT-015: Saving a role with no permissions enabled — whether this is "
-           "allowed or blocked is not confirmed on staging.",
-)
 def test_create_role_with_no_permissions_documents_behaviour(create_role_page, browser):
     """SA-UR-CRT-015 — Creating a role with no permissions enabled — document behaviour."""
     create_role_page.enter_role_name(TEST_ROLE_NAME)

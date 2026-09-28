@@ -71,11 +71,6 @@ def test_active_toggle_defaults_on(create_sales_path_page):
         f"'Active Sales Path' toggle should be ON by default, got: {state}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-006: Verifying that 'Is Enabled' and 'Active' are independent "
-           "requires confirmed toggle locators for both fields.",
-)
 def test_is_enabled_and_active_toggles_are_independent(create_sales_path_page):
     """SA-SLP-CRT-006 — Is Enabled and Active Sales Path toggles are independent."""
     create_sales_path_page.set_is_enabled(False)
@@ -127,10 +122,6 @@ def test_create_with_is_enabled_off(create_sales_path_page):
     assert state is False, "'Is Enabled' toggle should be OFF before saving"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SLP-CRT-011: 'Active Sales Path' toggle locator unconfirmed.",
-)
 def test_create_with_active_off(create_sales_path_page):
     """SA-SLP-CRT-011 — Create with 'Active Sales Path' OFF saves as inactive."""
     create_sales_path_page.set_active(False)

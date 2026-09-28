@@ -32,11 +32,6 @@ def test_edit_opens_form_at_correct_url(subscribers_page, browser):
         f"Edit URL should be /third-party/subscribers/{{id}}, got: {url}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-SUB-EDT-002: Pre-filled field values depend on 'name' and 'abbreviation' "
-           "input name attributes being correct — unconfirmed via DOM inspection.",
-)
 def test_edit_form_prefills_saved_data(edit_subscriber_page):
     """SA-SUB-EDT-002 — Pre-filled fields reflect the saved record."""
     name = edit_subscriber_page.get_name()

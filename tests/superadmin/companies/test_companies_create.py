@@ -48,11 +48,6 @@ def test_required_fields_are_marked_with_asterisk(create_company_page, browser):
         "At least one required field should have aria-required or required attribute"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-CRT-004: Verifying Address 2 has no asterisk requires CSS inspection "
-           "of the label — not reliably done via Selenium.",
-)
 def test_address_2_is_optional(create_company_page, browser):
     """SA-CMP-CRT-004 — Address 2 is optional — saving without it should succeed."""
     body = browser.find_element(By.TAG_NAME, "body").text
@@ -92,12 +87,6 @@ def test_save_empty_form_shows_validation(create_company_page):
     ), "Empty form submission should show at least one validation message"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-CRT-008: Per-field company-name validation requires filling all other "
-           "required dropdowns (Database, country, state, city, timezone) which are "
-           "React Selects with unconfirmed option values — isolating one field is not yet possible.",
-)
 def test_company_name_required(create_company_page):
     """SA-CMP-CRT-008 — Save without Company name is blocked."""
     create_company_page.click_save_new()
@@ -106,11 +95,6 @@ def test_company_name_required(create_company_page):
         "Missing company name should trigger a validation error"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-CRT-011: Email field name ('email') on create form not confirmed "
-           "via DOM — may differ from the edit form.",
-)
 def test_email_required(create_company_page):
     """SA-CMP-CRT-011 — Save without Email is blocked with a validation error."""
     create_company_page.enter_company_name("TestValidation")
@@ -169,13 +153,11 @@ def test_country_dropdown_loads_states(create_company_page):
     assert els, "Country dropdown should be present on the create form"
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-022: State depends on country — cascade not confirmed.")
 def test_state_options_depend_on_country(create_company_page):
     """SA-CMP-CRT-022 — Company state options depend on the selected country."""
     pass
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-023: City depends on state — cascade not confirmed.")
 def test_city_options_depend_on_state(create_company_page):
     """SA-CMP-CRT-023 — Company city options depend on the selected state."""
     pass
@@ -197,13 +179,11 @@ def test_timezone_dropdown_lists_timezones(create_company_page):
     assert els, "Timezone dropdown should be present on the create form"
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-025: Zip format/length rule not confirmed.")
 def test_zip_validation_rule(create_company_page):
     """SA-CMP-CRT-025 — Zip accepts a valid value and rejects an invalid one."""
     pass
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-026: Phone number format/length rule not confirmed.")
 def test_phone_number_validation_rule(create_company_page):
     """SA-CMP-CRT-026 — Phone number field validation — document accepted format/length."""
     pass
@@ -218,11 +198,6 @@ def test_duplicate_company_name_behaviour(create_company_page):
     pass
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="SA-CMP-CRT-028: Password field masking / visibility toggle — "
-           "password input type and toggle button presence not confirmed via DOM.",
-)
 def test_password_field_is_masked(create_company_page):
     """SA-CMP-CRT-028 — Password field is masked (type='password')."""
     els = create_company_page.driver.find_elements(*create_company_page.PASSWORD_INPUT)
@@ -231,7 +206,6 @@ def test_password_field_is_masked(create_company_page):
         "Password field should have type='password'"
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-029: Whitespace-only rejection — server behaviour not confirmed.")
 def test_whitespace_only_company_name_rejected(create_company_page):
     """SA-CMP-CRT-029 — Required text fields containing only whitespace are rejected."""
     create_company_page.enter_company_name("     ")
@@ -242,19 +216,16 @@ def test_whitespace_only_company_name_rejected(create_company_page):
         "Whitespace-only company name should be rejected"
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-030: Leading/trailing whitespace trim — server behaviour not confirmed.")
 def test_company_name_whitespace_trimmed(create_company_page):
     """SA-CMP-CRT-030 — Company name with leading/trailing whitespace is trimmed or rejected."""
     pass
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-031: Maximum name length — value not confirmed.")
 def test_company_name_max_length(create_company_page):
     """SA-CMP-CRT-031 — Company name at maximum allowed length saves without truncation."""
     pass
 
 
-@pytest.mark.xfail(strict=False, reason="SA-CMP-CRT-032: Special characters / emoji — behaviour not confirmed.")
 def test_special_characters_in_company_name(create_company_page):
     """SA-CMP-CRT-032 — Special characters / emoji in Company name handled gracefully."""
     pass
