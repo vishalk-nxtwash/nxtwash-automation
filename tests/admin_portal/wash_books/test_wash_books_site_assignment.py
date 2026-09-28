@@ -3,6 +3,7 @@ import pytest
 
 from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
+    GLOBAL_PRICE,
     WASH_BOOK_NAME,
     create_wash_book_if_missing,
     open_wash_books_page,
@@ -26,14 +27,15 @@ pytestmark = [
     ),
     strict=False,
 )
-def test_assign_single_site_persists(isolated_wash_book):
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+def test_assign_single_site_persists(browser):
+
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.assign_location_by_index(0)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     assert page.location_is_assigned_by_index(0)
     assert page_has_no_broken_state(page)
 
@@ -63,21 +65,23 @@ def test_assign_multiple_sites_persists(browser):
 
 @allure.title("WB-SIT-003 Location price override persists after save")
 @pytest.mark.regression
-def test_location_price_override_persists(isolated_wash_book):
+def test_location_price_override_persists(browser):
+
     override_price = "45"
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.assign_location_by_index(0)
     page.set_location_price_and_commission_by_index(0, override_price, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
-    assert page.wait_for_persisted_value(
-        lambda: page.get_location_price_by_index(0), override_price,
-        reopen=lambda: page.open_edit_wash_book(name),
-    ) == override_price
+    page.open_edit_wash_book(WASH_BOOK_NAME)
+    assert page.get_location_price_by_index(0) == override_price
     assert page_has_no_broken_state(page)
+
+    page.set_location_price_and_commission_by_index(0, GLOBAL_PRICE, GLOBAL_COMMISSION)
+    page.click_save_wash_book()
+    page.wait_for_list_loaded()
 
 
 @allure.title("WB-SIT-004 Saving a wash book with no site assigned is handled gracefully")

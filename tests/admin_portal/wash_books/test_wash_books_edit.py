@@ -2,7 +2,13 @@ import allure
 import pytest
 
 from tests.admin_portal.wash_books.conftest import (
+    GLOBAL_COMMISSION,
+    GLOBAL_PRICE,
+    NUMBER_OF_WASHES,
     WASH_BOOK_DESCRIPTION,
+    WASH_BOOK_NAME,
+    create_wash_book_if_missing,
+    open_wash_books_page,
     page_has_no_broken_state,
 )
 
@@ -13,73 +19,79 @@ pytestmark = [
     allure.story("Edit"),
 ]
 
-# NOTE: every test below uses isolated_wash_book (a fresh, uniquely-named
-# record per test) instead of the shared WASH_BOOK_NAME. They used to
-# reset-edit-verify one shared record back-to-back with no xdist
-# serialization (create_wash_book_if_missing is a plain helper, not a
-# managed_* fixture) — a different test failed on almost every CI run.
-# isolated_wash_book removes the shared bottleneck; see wash_packages'
-# identical fix for the full rationale.
-
 
 @allure.title("WB-DSC-004 Editing the wash book description persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_description(isolated_wash_book):
-    page, name = isolated_wash_book
-    page.update_wash_book_description(name, WASH_BOOK_DESCRIPTION)
-    page.open_edit_wash_book(name)
+def test_edit_wash_book_description(browser):
 
-    assert page.get_wash_book_description_value() == WASH_BOOK_DESCRIPTION
+    wash_books_page = create_wash_book_if_missing(browser)
+    wash_books_page.update_wash_book_description(
+        WASH_BOOK_NAME,
+        WASH_BOOK_DESCRIPTION
+    )
+    wash_books_page.open_edit_wash_book(WASH_BOOK_NAME)
+
+    assert wash_books_page.get_wash_book_description_value() == WASH_BOOK_DESCRIPTION
 
 
 @allure.title("WB-EDT-001 Editing the wash book name persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_name_persists(isolated_wash_book):
-    page, name = isolated_wash_book
-    updated_name = name + " edited"
-    page.open_edit_wash_book(name)
+def test_edit_wash_book_name_persists(browser):
+
+    updated_name = WASH_BOOK_NAME + " edited"
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.enter_wash_book_name(updated_name)
     page.click_save_wash_book()
-    page.wait_for_list_loaded()
+    page = open_wash_books_page(browser)
     page.search_wash_book(updated_name)
 
     assert page.wait_for_wash_book_row(updated_name).is_displayed()
 
+    page.open_edit_wash_book(updated_name)
+    page.enter_wash_book_name(WASH_BOOK_NAME)
+    page.click_save_wash_book()
+    open_wash_books_page(browser)
+
 
 @allure.title("WB-EDT-002 Editing the global price persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_global_price_persists(isolated_wash_book):
+def test_edit_wash_book_global_price_persists(browser):
+
     new_price = "60"
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.set_global_price(new_price)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
-    assert page.wait_for_persisted_value(
-        page.get_global_price_value, new_price,
-        reopen=lambda: page.open_edit_wash_book(name),
-    ) == new_price
+    page.open_edit_wash_book(WASH_BOOK_NAME)
+    assert page.get_global_price_value() == new_price
     assert page_has_no_broken_state(page)
+
+    page.set_global_price(GLOBAL_PRICE)
+    page.click_save_wash_book()
+    page.wait_for_list_loaded()
 
 
 @allure.title("WB-EDT-003 Editing the number of washes persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_number_of_washes_persists(isolated_wash_book):
+def test_edit_wash_book_number_of_washes_persists(browser):
+
     new_washes = "20"
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.set_number_of_washes(new_washes)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
-    assert page.wait_for_persisted_value(
-        page.get_number_of_washes_value, new_washes,
-        reopen=lambda: page.open_edit_wash_book(name),
-    ) == new_washes
+    page.open_edit_wash_book(WASH_BOOK_NAME)
+    assert page.get_number_of_washes_value() == new_washes
     assert page_has_no_broken_state(page)
+
+    page.set_number_of_washes(NUMBER_OF_WASHES)
+    page.click_save_wash_book()
+    page.wait_for_list_loaded()
 
 
 @allure.title("WB-EDT-004 Editing site assignment persists after save")
@@ -89,15 +101,16 @@ def test_edit_wash_book_number_of_washes_persists(isolated_wash_book):
            "headless Chrome. Fix: decouple site-grid interaction from fixture "
            "reset; add StaleElementReferenceException retry in get_site_row."
 )
-def test_edit_wash_book_site_assignment_persists(isolated_wash_book):
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+def test_edit_wash_book_site_assignment_persists(browser):
+
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.assign_all_locations()
 
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
 
     assert page.location_is_assigned_by_index(0)
     assert page_has_no_broken_state(page)
@@ -105,43 +118,50 @@ def test_edit_wash_book_site_assignment_persists(isolated_wash_book):
 
 @allure.title("WB-EDT-006 Editing global commission persists after save")
 @pytest.mark.extended
-def test_edit_wash_book_global_commission_persists(isolated_wash_book):
+def test_edit_wash_book_global_commission_persists(browser):
+
     new_commission = "8"
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.set_global_commission(new_commission)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(name)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     assert page.wait_for_persisted_value(
         page.get_global_commission_value,
         new_commission,
-        reopen=lambda: page.open_edit_wash_book(name),
+        reopen=lambda: page.open_edit_wash_book(WASH_BOOK_NAME),
     ) == new_commission
     assert page_has_no_broken_state(page)
+
+    page.set_global_commission(GLOBAL_COMMISSION)
+    page.click_save_wash_book()
+    page.wait_for_list_loaded()
 
 
 @pytest.mark.smoke
 @allure.title("WB-EDT-007 Activating an inactive wash book updates its status to Active")
-def test_activate_wash_book(isolated_wash_book):
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+def test_activate_wash_book(browser):
+
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
     page.click_save_wash_book()
     page.wait_for_list_loaded()
-    page.search_wash_book(name)
+    page.search_wash_book(WASH_BOOK_NAME)
 
-    assert page.wait_for_wash_book_row(name).is_displayed()
-    assert page.get_wash_book_status(name) == "Active"
+    assert page.wait_for_wash_book_row(WASH_BOOK_NAME).is_displayed()
+    assert page.get_wash_book_status(WASH_BOOK_NAME) == "Active"
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WB-EDT-008 Deactivating an active wash book marks it Inactive without deletion")
-def test_deactivate_wash_book(isolated_wash_book):
-    page, name = isolated_wash_book
-    page.open_edit_wash_book(name)
+def test_deactivate_wash_book(browser):
+
+    page = create_wash_book_if_missing(browser)
+    page.open_edit_wash_book(WASH_BOOK_NAME)
 
     # Toggle off then immediately back on within the same edit session.
     # Inactive wash books are hidden from the default list view, so a
@@ -153,8 +173,8 @@ def test_deactivate_wash_book(isolated_wash_book):
     page.ensure_active_switch_on()
     page.click_save_wash_book()
     page.wait_for_list_loaded()
-    page.search_wash_book(name)
+    page.search_wash_book(WASH_BOOK_NAME)
 
-    assert page.wait_for_wash_book_row(name).is_displayed()
-    assert page.get_wash_book_status(name) == "Active"
+    assert page.wait_for_wash_book_row(WASH_BOOK_NAME).is_displayed()
+    assert page.get_wash_book_status(WASH_BOOK_NAME) == "Active"
     assert page_has_no_broken_state(page)
