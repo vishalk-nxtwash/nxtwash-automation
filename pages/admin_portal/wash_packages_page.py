@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -485,6 +487,26 @@ class WashPackagesPage(BasePage):
             lambda d: d.execute_script(_CLICK_EDIT_JS, package_name)
         )
         self.wait_for_edit_loaded()
+
+    def wait_for_persisted_value(self, package_name, value_getter, expected, attempts=6, per_try=5):
+        """Poll a just-saved edit-form field for its expected value.
+
+        The per-record detail fetch can lag behind a save the same way the
+        list search does (see wait_for_package_row) — right after Save, the
+        reopened edit form can briefly show the pre-save value. If it does,
+        wait a beat and reopen the edit form (forces a fresh fetch) rather
+        than trusting a single read.
+        """
+        value = value_getter()
+        for attempt in range(attempts):
+            if value == expected:
+                return value
+            if attempt == attempts - 1:
+                break
+            time.sleep(per_try)
+            self.open_edit_package(package_name)
+            value = value_getter()
+        return value
 
     def enter_service_name(self, service_name):
         """Enter package service name."""
