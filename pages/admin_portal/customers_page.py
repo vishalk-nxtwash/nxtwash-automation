@@ -796,11 +796,29 @@ class CustomersPage(BasePage):
             except TimeoutException:
                 pass
 
+        def _confirm_dialog():
+            # Toggling isActive shows "Are you sure you want to
+            # (de)activate this customer?" (role="dialog", not a native
+            # alert) — confirm it or the switch never actually flips and
+            # the dialog is left open, intercepting the next click (e.g.
+            # Save).
+            try:
+                yes = WebDriverWait(self.driver, 2).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, "//*[@role='dialog']//button[normalize-space()='Yes']")
+                    )
+                )
+                yes.click()
+                time.sleep(0.3)
+            except TimeoutException:
+                pass
+
         for attempt in range(3):
             if attempt > 0:
                 time.sleep(0.4 * attempt)  # 0.4 s, 0.8 s between retries
             _fire_click()
             _dismiss_alert()
+            _confirm_dialog()
             try:
                 WebDriverWait(self.driver, 3).until(_state_matches)
                 return
