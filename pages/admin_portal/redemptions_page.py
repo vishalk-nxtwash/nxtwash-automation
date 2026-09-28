@@ -96,8 +96,16 @@ class RedemptionsPage(BasePage):
                 return
             except TimeoutException:
                 pass
+        # Fallback: switch to first available iframe, excluding the Zendesk
+        # support-chat widget (data-product="web_widget", title contains
+        # "widget") — it's always present and would otherwise be picked
+        # first, leaving every later locator search against the wrong frame.
         try:
-            frames = self.driver.find_elements(By.TAG_NAME, "iframe")
+            frames = self.driver.find_elements(
+                By.XPATH,
+                "//iframe[not(@data-product='web_widget')"
+                " and not(contains(@title,'widget'))]",
+            )
             if frames:
                 self.driver.switch_to.frame(frames[0])
         except Exception:
