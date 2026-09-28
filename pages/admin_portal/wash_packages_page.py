@@ -250,7 +250,7 @@ class WashPackagesPage(BasePage):
             % package_name
         )
 
-    def wait_for_package_row(self, package_name, attempts=6, per_try=10):
+    def wait_for_package_row(self, package_name, attempts=9, per_try=10):
         """Wait until a package row is present (InovuaReactDataGrid uses CSS
         transforms; visibility check is unreliable).
 
@@ -258,6 +258,8 @@ class WashPackagesPage(BasePage):
         after a rename, searching the new name can return no rows for a few
         seconds. If the search box already holds this name, re-run the search
         between short waits instead of one long wait on a stale result.
+        Budget is 90s (was 60s) — back-to-back renames of the same shared
+        managed_package record (see WP-FRM-002) occasionally outlast 60s.
         """
         locator = self.get_package_row_locator(package_name)
         for attempt in range(attempts):
