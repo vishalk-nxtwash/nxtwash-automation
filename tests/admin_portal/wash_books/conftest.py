@@ -156,3 +156,29 @@ def _reset_managed_wash_book(browser):
 
 
 managed_wash_book = managed_resource(_reset_managed_wash_book)
+
+
+@pytest.fixture
+def isolated_wash_book(browser):
+    """Create a fresh, uniquely-named wash book for tests prone to compounding
+    read-after-write lag on the shared WASH_BOOK_NAME record.
+
+    8+ tests across this module reset-edit-verify WASH_BOOK_NAME back-to-back
+    via create_wash_book_if_missing — a plain helper, not a managed_* fixture,
+    so unlike managed_package/managed_wash_book they aren't even caught by
+    tests/admin_portal/conftest.py's auto xdist-group serialization. Each
+    test's read-after-write lag stacks onto the next (see the wash_packages
+    fix for the same pattern). Not cleaned up afterward — wash books aren't
+    deletable in this product (see managed-test-data-pattern), matching
+    wash_packages' isolated_package precedent.
+
+    Returns (page, wash_book_name).
+    """
+    import uuid
+    name = "VK isolated %s" % uuid.uuid4().hex[:6]
+    page = open_wash_books_page(browser)
+    page.create_wash_book(
+        name, NUMBER_OF_WASHES, POINTS_AWARDED, GLOBAL_PRICE, GLOBAL_COMMISSION,
+    )
+    page = open_wash_books_page(browser)
+    return page, name

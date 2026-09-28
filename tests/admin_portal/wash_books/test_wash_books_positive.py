@@ -7,8 +7,6 @@ from tests.admin_portal.wash_books.conftest import (
     NUMBER_OF_WASHES,
     POINTS_AWARDED,
     VISIBLE_PRICE,
-    WASH_BOOK_NAME,
-    create_wash_book_if_missing,
     open_wash_books_page,
     page_has_no_broken_state,
 )
@@ -22,27 +20,25 @@ pytestmark = [
 
 
 @allure.title("WB-NAM-001 / WB-TGL-001 Create active wash book — name and status in listing")
-def test_create_wash_book(browser):
-
-    wash_books_page = create_wash_book_if_missing(browser)
+def test_create_wash_book(isolated_wash_book):
+    wash_books_page, name = isolated_wash_book
     wash_books_page.wait_for_list_loaded()
-    wash_books_page.search_wash_book(WASH_BOOK_NAME)
+    wash_books_page.search_wash_book(name)
 
-    assert wash_books_page.wait_for_wash_book_row(WASH_BOOK_NAME).is_displayed()
-    assert wash_books_page.get_wash_book_washes(WASH_BOOK_NAME) == NUMBER_OF_WASHES
-    assert wash_books_page.get_wash_book_price(WASH_BOOK_NAME) == VISIBLE_PRICE
-    assert wash_books_page.get_wash_book_status(WASH_BOOK_NAME) == "Active"
+    assert wash_books_page.wait_for_wash_book_row(name).is_displayed()
+    assert wash_books_page.get_wash_book_washes(name) == NUMBER_OF_WASHES
+    assert wash_books_page.get_wash_book_price(name) == VISIBLE_PRICE
+    assert wash_books_page.get_wash_book_status(name) == "Active"
 
 
 @allure.title("WB-NAM-001 Saved settings persist when reopening the edit form")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Manual check: dirty staging data + substring match in open_edit_wash_book opens wrong record")
-def test_wash_book_settings_persist(browser):
+def test_wash_book_settings_persist(isolated_wash_book):
+    wash_books_page, name = isolated_wash_book
+    wash_books_page.open_edit_wash_book(name)
 
-    wash_books_page = create_wash_book_if_missing(browser)
-    wash_books_page.open_edit_wash_book(WASH_BOOK_NAME)
-
-    assert wash_books_page.get_wash_book_name_value() == WASH_BOOK_NAME
+    assert wash_books_page.get_wash_book_name_value() == name
     assert wash_books_page.get_number_of_washes_value() == NUMBER_OF_WASHES
     assert wash_books_page.get_points_awarded_value() == POINTS_AWARDED
     assert wash_books_page.active_switch_is_on()
