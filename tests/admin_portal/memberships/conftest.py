@@ -37,6 +37,10 @@ def page_has_no_broken_state(page):
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
 
 
+# Prefix of leftover per-run memberships that the fixture may adopt as the
+# managed record (see create_membership_if_missing).
+ADOPTABLE_PREFIX = "VK decimal"
+
 def open_memberships_page(browser):
 
     open_admin_path(browser, "/services/memberships")
@@ -96,6 +100,40 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
+
+    # Creating a membership is broken on staging (Save sends no request at all —
+    # BUG 7, docs/bug_reports.md) but EDITING works. Adopt a leftover
+    # uniquely-named test membership ("VK decimal ..." — created by earlier runs,
+    # never cleaned up) and rename it into the managed record via the edit form.
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(ADOPTABLE_PREFIX)
+    adoptable = [
+        line for line in memberships_page.get_body_text().split("\n")
+        if line.startswith(ADOPTABLE_PREFIX)
+    ]
+    if adoptable:
+        memberships_page = open_memberships_page(browser)
+        memberships_page.open_edit_membership(adoptable[0])
+        memberships_page.fill_membership_form(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+        memberships_page.save_and_return_to_list()
+        # Search lags behind a rename (the search index updates later), and a
+        # missed lookup here would make the next run adopt a second leftover.
+        # Confirm on the unfiltered list instead, retrying for up to ~60 s.
+        import time as _time
+        for _ in range(6):
+            memberships_page = open_memberships_page(browser)
+            if membership_name in memberships_page.get_body_text():
+                return memberships_page
+            _time.sleep(10)
+        raise AssertionError(
+            "Adopted membership '%s' not visible on the list after rename" % membership_name
+        )
 
     memberships_page.create_membership(
         membership_name,

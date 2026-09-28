@@ -92,5 +92,29 @@ silently blocks Save ("Please fill in this field"). Every new staging site adds
 another such row.
 
 **Automation:** `MembershipsPage.fill_all_empty_location_inputs()` types `0`
-into every empty row before saving (workaround; membership create still under
-investigation).
+into every empty row before saving. Even with every row filled, create still
+does nothing — see BUG 7.
+
+## BUG 7 — Memberships: "Save membership" on the Add form does nothing
+- **Found during:** admin suite stabilization (2026-09-28)
+- **Module:** Admin Portal → Services → Memberships → + Add new membership
+- **Severity:** High
+
+**Steps to reproduce**
+1. Services → Memberships → + Add new membership.
+2. Fill name, type (Prepaid), global price/commission, assign the first location,
+   fill every location price/commission (no HTML5 `:invalid` fields remain).
+3. Click **Save membership**.
+
+**Expected:** The membership is created and the app returns to the list.
+**Actual:** Nothing happens. No network request is sent (verified by wrapping
+`fetch`/`XMLHttpRequest` inside the iframe), no console error, no validation
+message on any tab, no error styling, and the record is never created.
+**Editing** an existing membership saves normally (redirects to the list).
+
+**Impact:** New memberships cannot be created through the UI on staging.
+
+**Automation:** The managed-membership fixture adopts a leftover
+`VK decimal …` membership and renames it via the edit form, so dependent tests
+run. `test_create_new_membership_saves` is an xfail canary that reports XPASS
+once create works.

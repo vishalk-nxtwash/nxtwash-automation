@@ -1462,51 +1462,26 @@ class MembershipsPage(BasePage):
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
 
     def save_and_return_to_list(self):
-        """Save the current membership form and return to the list page.
+        """Save the membership, confirm the save landed, then show the list.
 
-        Patches window.confirm so deactivation dialogs are auto-accepted.
-        The app no longer auto-redirects after save, so we force-navigate fresh.
-        Waits for the save button to go disabled then re-enabled so we know the
-        API call completed before we navigate away.
+        Waits for the app's own post-save redirect (BasePage.wait_for_legacy_save)
+        instead of a button-state wait + blind navigation, which hid silently
+        rejected saves. window.confirm is patched so deactivation dialogs are
+        auto-accepted.
         """
-        import time
         self.driver.execute_script("window.confirm = () => true;")
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
-        # Wait for button to go disabled (save in progress), then re-enabled
-        # (save done).  Fall back to a fixed 8-second sleep if the button
-        # never disables (i.e., the app doesn't reflect save state on it).
-        try:
-            self.wait.until(
-                lambda driver: not driver.find_element(
-                    *self.SAVE_MEMBERSHIP_BUTTON
-                ).is_enabled()
-            )
-            self.wait.until(
-                EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON)
-            )
-        except Exception:
-            time.sleep(8)
-        # Capture any visible error before navigating away — if save was rejected
-        # (duplicate name, validation) the error shows in the iframe body here.
-        save_error = self.get_visible_error()
-        # Switch to the top-level document first so current_url is the main
-        # page URL (the iframe URL can be null after a form submission).
+        outcome, error = self.wait_for_legacy_save()
+        if outcome == "error":
+            raise RuntimeError("Membership save error: %s" % error)
         self.driver.switch_to.default_content()
         current = self.driver.current_url or ""
-        if "/services/" in current:
-            base_url = current.split("/services/")[0]
-        else:
-            base_url = current.rstrip("/")
+        base_url = current.split("/services/")[0] if "/services/" in current else current.rstrip("/")
         try:
             self.driver.get(base_url + "/services/memberships")
         except TimeoutException:
-            pass  # page load timeout on slow staging; iframe content may still render
+            pass  # slow staging load; list wait below
         self.wait_for_list_loaded()
-        if save_error:
-            import logging
-            logging.getLogger("nxtwash").warning(
-                "Membership save completed with page error: %s", save_error
-            )
 
     def duplicate_membership_error_is_visible(self):
         """Return whether a duplicate membership error is visible."""

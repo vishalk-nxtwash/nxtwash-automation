@@ -84,6 +84,26 @@ def test_create_recurring_membership(browser):
 @pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
+@allure.title("MB-CRT-000 Creating a brand-new membership saves it (BUG 7 canary)")
+@pytest.mark.xfail(
+    strict=False,
+    reason="BUG 7 (docs/bug_reports.md): Save on the Add-membership form sends no "
+           "request at all on staging; editing works. Reports XPASS once fixed.",
+)
+def test_create_new_membership_saves(browser):
+    # Uses the adoptable prefix: if create works, the record joins the pool the
+    # managed fixture adopts from, instead of becoming dead clutter.
+    from tests.admin_portal.memberships.conftest import ADOPTABLE_PREFIX
+    name = "%s %s" % (ADOPTABLE_PREFIX, uuid.uuid4().hex[:6])
+    memberships_page = open_memberships_page(browser)
+    memberships_page.create_membership(
+        name, GLOBAL_PRICE, GLOBAL_COMMISSION, FIRST_LOCATION_PRICE, FIRST_LOCATION_COMMISSION
+    )
+    assert name in open_memberships_page(browser).get_body_text()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MEM-CRUD-003/004/005/011/012/013/015/016/018 Persistence")
 @pytest.mark.regression
