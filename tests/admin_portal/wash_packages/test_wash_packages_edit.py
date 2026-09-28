@@ -11,7 +11,6 @@ from tests.admin_portal.wash_packages.conftest import (
     SECOND_APPLICABLE_DISCOUNT,
     SITE_OVERRIDE_COMMISSION,
     SITE_OVERRIDE_PRICE,
-    UPDATED_PACKAGE_NAME,
     UPDATED_POINTS_AWARDED,
     UPDATED_POINTS_REDEEMED,
     open_wash_packages_page,
@@ -28,18 +27,17 @@ pytestmark = [
 
 @allure.title("WP-EDT-001 Edit wash package name persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_name_persists(browser, managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
-    page.enter_service_name(UPDATED_PACKAGE_NAME)
+def test_edit_wash_package_name_persists(browser, isolated_package):
+    # Isolated record (not the shared managed_package) — renaming it doesn't
+    # stack read-after-write lag onto the ~15 other tests sharing PACKAGE_NAME.
+    page, name = isolated_package
+    updated_name = name + " updated"
+    page.open_edit_package(name)
+    page.enter_service_name(updated_name)
     page.save_and_return_to_list()
-    page.search_package(UPDATED_PACKAGE_NAME)
+    page.search_package(updated_name)
 
-    assert page.wait_for_package_row(UPDATED_PACKAGE_NAME).is_displayed()
-
-    page.open_edit_package(UPDATED_PACKAGE_NAME)
-    page.enter_service_name(PACKAGE_NAME)
-    page.save_and_return_to_list()
+    assert page.wait_for_package_row(updated_name).is_displayed()
 
 
 @allure.title("WP-EDT-002 Edit global price persists after save")
@@ -60,16 +58,17 @@ def test_edit_wash_package_global_price_persists(managed_package):
 
 @allure.title("WP-EDT-003 Edit global commission persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_global_commission_persists(managed_package):
+def test_edit_wash_package_global_commission_persists(isolated_package):
+    # Isolated record — see WP-EDT-001's comment.
     new_commission = "12"
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.set_global_commission(new_commission)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     assert page.wait_for_persisted_value(
-        page.get_global_commission_value, new_commission, reopen=lambda: page.open_edit_package(PACKAGE_NAME)
+        page.get_global_commission_value, new_commission, reopen=lambda: page.open_edit_package(name)
     ) == new_commission
     assert page_has_no_broken_state(page)
 
@@ -161,9 +160,10 @@ def test_assign_applicable_discount_persists(managed_package):
 
 @allure.title("WP-DIS-002 Assigning multiple discounts persists after save")
 @pytest.mark.regression
-def test_assign_multiple_discounts_persist(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_assign_multiple_discounts_persist(isolated_package):
+    # Isolated record — see WP-EDT-001's comment.
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     try:
@@ -176,7 +176,7 @@ def test_assign_multiple_discounts_persist(managed_package):
 
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
 
     assert page.discount_is_selected(APPLICABLE_DISCOUNT)

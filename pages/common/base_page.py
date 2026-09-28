@@ -368,7 +368,11 @@ class BasePage:
             body = self.driver.find_element(By.TAG_NAME, "body").text.lower()
             for kw in self._DUPLICATE_KEYWORDS + self._SERVER_ERROR_KEYWORDS:
                 if kw in body:
-                    return body[:600]
+                    # Prefix the matched keyword — a large page (e.g. a data
+                    # grid) can contain one of these words incidentally, and
+                    # without this callers can't tell a real error banner
+                    # from a false-positive substring match.
+                    return "[matched keyword: %r] %s" % (kw, body[:600])
         except Exception:  # noqa: BLE001
             pass
         return None
