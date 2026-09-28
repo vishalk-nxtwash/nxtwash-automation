@@ -847,6 +847,20 @@ class CustomersPage(BasePage):
 
     def click_save_customer(self):
         self.click(self.SAVE_CUSTOMER_BUTTON)
+        # Saving after an isActive change re-shows the same "Are you sure...?"
+        # confirmation dialog (role="dialog") that _click_react_switch already
+        # handles for the switch click itself — Save needs its own confirm or
+        # the dialog is left open, intercepting whatever is clicked next.
+        try:
+            confirm = WebDriverWait(self.driver, 3).until(
+                EC.element_to_be_clickable((
+                    By.XPATH,
+                    "//*[@role='dialog']//button[normalize-space()='Yes']",
+                ))
+            )
+            confirm.click()
+        except TimeoutException:
+            pass
 
     def ensure_boolean_fields_defined(self, names=("exemptTax",)):
         """Give legacy customers an explicit value for newer boolean fields.
