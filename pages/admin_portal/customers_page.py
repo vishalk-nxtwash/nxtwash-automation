@@ -233,14 +233,25 @@ class CustomersPage(BasePage):
     # ─────────────────────────────────────────────────────────────────────────
 
     def _switch_to_car_form_frame(self):
-        """Switch into the iframe hosting the add/edit car form.
+        """Switch into the iframe hosting the add/edit car form, if any.
 
-        The add-car route (/customers/edit/{id}/cars/new/{id}) renders its
-        content inside a legacy iframe. Try known src patterns first, then
-        fall back to enumerating all iframes and switching to the first one
-        that has non-empty body text.
+        This route used to always render inside a legacy iframe. Staging now
+        renders it directly in the main document, so check default_content
+        for the real field first — that beats guessing at frames. Only fall
+        back to known legacy iframe src patterns if it's genuinely not there.
+        Never blindly switch to "the first iframe with non-empty text": that
+        grabs the Zendesk support-widget launcher iframe (it renders
+        "Support") instead of the real form, and every subsequent locator
+        search then times out against the wrong document.
         """
         self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located(self.LICENSE_PLATE_INPUT)
+            )
+            return
+        except TimeoutException:
+            pass
         for pattern in ("cars/new", "/customers/edit"):
             try:
                 WebDriverWait(self.driver, 15).until(
@@ -250,20 +261,6 @@ class CustomersPage(BasePage):
                 )
                 return
             except TimeoutException:
-                pass
-        try:
-            WebDriverWait(self.driver, 10).until(
-                lambda d: len(d.find_elements(By.TAG_NAME, "iframe")) > 0
-            )
-        except TimeoutException:
-            return
-        for frame in self.driver.find_elements(By.TAG_NAME, "iframe"):
-            try:
-                self.driver.switch_to.frame(frame)
-                if self.driver.find_element(By.TAG_NAME, "body").text.strip():
-                    return
-                self.driver.switch_to.default_content()
-            except Exception:  # noqa: BLE001
                 self.driver.switch_to.default_content()
 
     def _wait_for_success_toast_gone(self):
@@ -301,10 +298,28 @@ class CustomersPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
 
-    def wait_for_edit_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+    def wait_for_edit_loaded(self, _retries=2):
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+        except TimeoutException:
+            # Staging occasionally renders a client-side crash boundary
+            # ("Something went wrong" / "Try again") instead of the edit
+            # form. Click Try again once and retry rather than fail outright.
+            if _retries > 0 and self._recover_from_crash_boundary():
+                return self.wait_for_edit_loaded(_retries - 1)
+            raise
         self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
         self.wait.until(lambda d: self.get_first_name_value() != "")
+
+    def _recover_from_crash_boundary(self):
+        buttons = self.driver.find_elements(
+            By.XPATH, "//button[normalize-space()='Try again']"
+        )
+        if not buttons:
+            return False
+        self.driver.execute_script("arguments[0].click();", buttons[0])
+        time.sleep(1.0)
+        return True
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
