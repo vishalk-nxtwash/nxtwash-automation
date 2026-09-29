@@ -13,6 +13,17 @@ name: Admin Suite — AWS runner
 # Shares the SAME admin-staging concurrency group as suite-admin.yml — both
 # touch the same staging managed records, so a GitHub-hosted run and an AWS
 # run must never run at the same time (queue, don't cancel).
+#
+# Isolated-runner pilot (targeted mode only): the 3 registered "self-hosted"
+# agents share one EC2 host, so concurrent jobs compete for the same
+# CPU/RAM — this produced widespread ChromeDriver/renderer timeouts, xdist
+# worker crashes, and one confirmed "runner lost communication (starved for
+# CPU/Memory)" failure. `isolated_runner_modules` routes just those modules'
+# targeted job(s) to a separate, genuinely isolated runner (its own
+# instance/container, registered under `isolated_runner_label`) so we can
+# compare stability against the shared pool without touching the other
+# modules. Requires a runner registered with that label to actually pick the
+# job up — until then, the job just queues.
 
 on:
   workflow_dispatch:
@@ -25,6 +36,14 @@ on:
         description: 'xdist workers per job (EC2 runners typically have more vCPUs than GitHub-hosted — raise this to use them, e.g. 4)'
         required: false
         default: '4'
+      isolated_runner_modules:
+        description: 'Pilot: space-separated module names (targeted mode) to route to isolated_runner_label instead of the shared self-hosted pool'
+        required: false
+        default: 'login pos_settings'
+      isolated_runner_label:
+        description: 'Pilot: runner label for the isolated-runner pilot'
+        required: false
+        default: 'self-hosted-isolated'
 
 concurrency:
   group: admin-staging
@@ -95,12 +114,21 @@ jobs:
       - id: split
         env:
           TEST_PATH: ${{ inputs.test_path }}
+          ISOLATED_MODULES: ${{ inputs.isolated_runner_modules }}
+          ISOLATED_LABEL: ${{ inputs.isolated_runner_label }}
         run: |
           # One matrix entry per path; label = artifact-safe version of the path.
+          # runner = isolated_runner_label when the path's module is in the
+          # isolated-runner pilot list, else the shared self-hosted pool.
           targets=$(printf '%s\n' $TEST_PATH | python3 -c '
-          import json, re, sys
+          import json, os, re, sys
           paths = [p for p in sys.stdin.read().split() if p]
-          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80]} for p in paths]))')
+          isolated = set(os.environ.get("ISOLATED_MODULES", "").split())
+          isolated_label = os.environ.get("ISOLATED_LABEL") or "self-hosted-isolated"
+          def runner_for(p):
+              module = p.replace("tests/admin_portal/", "").split("/")[0]
+              return isolated_label if module in isolated else "self-hosted"
+          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80], "runner": runner_for(p)} for p in paths]))')
           echo "targets=$targets" >> "$GITHUB_OUTPUT"
           echo "$targets"
 
@@ -118,4 +146,4 @@ jobs:
       test_path: ${{ matrix.target.path }}
       parallel: ${{ inputs.parallel || '4' }}
       timeout_minutes: 90
-      runner: self-hosted
+      runner: ${{ matrix.target.runner }}
