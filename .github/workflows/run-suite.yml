@@ -68,7 +68,7 @@ jobs:
       # reports/ is gitignored so git checkout never removes it — it grows
       # across runs and fills the runner disk without this step.
       - name: Pre-run cleanup (EC2)
-        if: inputs.runner == 'self-hosted'
+        if: inputs.runner != 'ubuntu-latest'
         run: |
           echo "=== Disk before cleanup ===" && df -h /
           # Several runners share this host. Never pkill Chrome host-wide or
@@ -102,21 +102,24 @@ jobs:
           fi
 
       # ── GitHub-hosted setup (skipped on EC2 — already installed) ────────────
+      # Keyed off == 'ubuntu-latest' rather than != 'self-hosted': any
+      # self-hosted-family runner value (e.g. an isolated-runner pilot label)
+      # must also skip these, not just the literal string 'self-hosted'.
       - name: Set up Python
-        if: inputs.runner != 'self-hosted'
+        if: inputs.runner == 'ubuntu-latest'
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
           cache: "pip"
 
       - name: Set up Chrome
-        if: inputs.runner != 'self-hosted'
+        if: inputs.runner == 'ubuntu-latest'
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
 
       - name: Set up Java
-        if: inputs.runner != 'self-hosted'
+        if: inputs.runner == 'ubuntu-latest'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -124,7 +127,7 @@ jobs:
 
       # ── EC2: log Chrome version for driver-mismatch diagnostics ─────────────
       - name: Chrome version (EC2)
-        if: inputs.runner == 'self-hosted'
+        if: inputs.runner != 'ubuntu-latest'
         run: google-chrome --version 2>/dev/null || true
 
       - name: Install dependencies
@@ -137,7 +140,7 @@ jobs:
 
       # ── EC2: pre-download ChromeDriver once so xdist workers reuse it ───────
       - name: Pre-download ChromeDriver (EC2)
-        if: inputs.runner == 'self-hosted'
+        if: inputs.runner != 'ubuntu-latest'
         run: |
           python3.11 - <<'PYEOF'
           import os
@@ -227,7 +230,7 @@ jobs:
 
       # ── EC2 post-run cleanup ─────────────────────────────────────────────────
       - name: Post-run cleanup (EC2)
-        if: always() && inputs.runner == 'self-hosted'
+        if: always() && inputs.runner != 'ubuntu-latest'
         run: |
           rm -rf reports/ allure-results/ allure-report/ \
                  report.html results.xml 2>/dev/null || true
