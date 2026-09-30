@@ -368,7 +368,11 @@ class BasePage:
             body = self.driver.find_element(By.TAG_NAME, "body").text.lower()
             for kw in self._DUPLICATE_KEYWORDS + self._SERVER_ERROR_KEYWORDS:
                 if kw in body:
-                    return body[:600]
+                    # Prefix the matched keyword — a large page (e.g. a data
+                    # grid) can contain one of these words incidentally, and
+                    # without this callers can't tell a real error banner
+                    # from a false-positive substring match.
+                    return "[matched keyword: %r] %s" % (kw, body[:600])
         except Exception:  # noqa: BLE001
             pass
         return None
@@ -405,6 +409,58 @@ class BasePage:
                 time.sleep(1)
         from selenium.common.exceptions import TimeoutException as TE
         raise TE("Frame %s not stable after %ss" % (locator, timeout)) from last_exc
+
+    def wait_for_persisted_value(
+        self, value_getter, expected, reopen=None, attempts=6, per_try=5, max_seconds=120
+    ):
+        """Poll a just-saved field until it reflects the persisted value.
+
+        Some staging endpoints have read-after-write lag: the per-record detail
+        fetch (or a list search) can briefly return pre-save data right after
+        Save returns. A single read immediately after reopening a record is not
+        trustworthy for a field that was just changed — poll instead, optionally
+        calling `reopen` (a zero-arg callable, typically "reopen the edit form")
+        between attempts to force a fresh fetch rather than re-reading a DOM
+        value that will never change on its own.
+
+        reopen/value_getter are allowed to raise (e.g. a frame not stabilizing
+        under load) without ending the retry loop early — under contention
+        (many parallel jobs hitting staging at once) that's just another kind
+        of transient lag. A raise consumes one attempt like a value mismatch
+        does; only the last attempt's exception propagates.
+
+        max_seconds bounds total wall-clock time, not just attempt count:
+        reopen() has its own internal timeout (e.g. switch_to_frame_with_retry's
+        90s), so `attempts` slow/failing reopens can otherwise take several
+        times pytest's own per-test timeout (420s) before this loop gives up.
+        Stop starting new attempts once the budget is spent instead.
+        """
+        from selenium.common.exceptions import WebDriverException
+        deadline = time.time() + max_seconds
+        value = None
+        last_exc = None
+        for attempt in range(attempts):
+            try:
+                if value is None:
+                    value = value_getter()
+                if value == expected:
+                    return value
+            except WebDriverException as exc:
+                last_exc = exc
+                value = None
+            if attempt == attempts - 1 or time.time() >= deadline:
+                break
+            time.sleep(per_try)
+            try:
+                if reopen:
+                    reopen()
+                value = value_getter()
+            except WebDriverException as exc:
+                last_exc = exc
+                value = None
+        if value is None and last_exc is not None:
+            raise last_exc
+        return value
 
     def pagination_controls_present(self, context_el=None):
         """Return True if any pagination controls are visible.

@@ -268,13 +268,28 @@ class MembershipsPage(BasePage):
             % membership_name
         )
 
-    def wait_for_membership_row(self, membership_name):
-        """Wait until a membership row is visible."""
-        return WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located(
-                self.get_membership_row_locator(membership_name)
-            )
-        )
+    def wait_for_membership_row(self, membership_name, attempts=6, per_try=10):
+        """Wait until a membership row is present.
+
+        The list search is served by an index that lags behind saves: right
+        after a create, searching the new name can return no rows for a few
+        seconds. If the search box already holds this name, re-run the search
+        between short waits instead of one long wait on a stale result. Uses
+        presence (not visibility) — InovuaReactDataGrid uses CSS transforms,
+        which make the visibility check unreliable (same as wash_packages).
+        """
+        locator = self.get_membership_row_locator(membership_name)
+        for attempt in range(attempts):
+            try:
+                return WebDriverWait(self.driver, per_try).until(
+                    EC.presence_of_element_located(locator)
+                )
+            except TimeoutException:
+                if attempt == attempts - 1:
+                    raise
+                boxes = self.driver.find_elements(*self.SEARCH_INPUT)
+                if boxes and (boxes[0].get_attribute("value") or "") == membership_name:
+                    self.search_membership(membership_name)
 
     def wait_for_no_membership_row(self, membership_name):
         """Wait until a membership row is not visible."""
@@ -1465,30 +1480,35 @@ class MembershipsPage(BasePage):
         """Save the current membership form and return to the list page.
 
         Patches window.confirm so deactivation dialogs are auto-accepted.
-        The app no longer auto-redirects after save, so we force-navigate fresh.
-        Waits for the save button to go disabled then re-enabled so we know the
-        API call completed before we navigate away.
+        Waits for the app's own post-save redirect (BasePage.wait_for_legacy_save)
+        before treating the save as landed — same pattern already fixed
+        wash_packages/wash_books "silently dropped edits" failures, where
+        navigating away on a disable/re-enable timer raced the actual save API
+        call and the next read saw pre-save data. Falls back to the old
+        disable/re-enable + fixed-sleep heuristic if this module turns out not
+        to auto-redirect (kept only as a safety net, not the primary path).
         """
         import time
         self.driver.execute_script("window.confirm = () => true;")
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
-        # Wait for button to go disabled (save in progress), then re-enabled
-        # (save done).  Fall back to a fixed 8-second sleep if the button
-        # never disables (i.e., the app doesn't reflect save state on it).
         try:
-            self.wait.until(
-                lambda driver: not driver.find_element(
-                    *self.SAVE_MEMBERSHIP_BUTTON
-                ).is_enabled()
-            )
-            self.wait.until(
-                EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON)
-            )
-        except Exception:
-            time.sleep(8)
-        # Capture any visible error before navigating away — if save was rejected
-        # (duplicate name, validation) the error shows in the iframe body here.
-        save_error = self.get_visible_error()
+            outcome, error = self.wait_for_legacy_save()
+            save_error = error if outcome == "error" else None
+        except TimeoutError:
+            try:
+                self.wait.until(
+                    lambda driver: not driver.find_element(
+                        *self.SAVE_MEMBERSHIP_BUTTON
+                    ).is_enabled()
+                )
+                self.wait.until(
+                    EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON)
+                )
+            except Exception:
+                time.sleep(8)
+            # Capture any visible error before navigating away — if save was
+            # rejected (duplicate name, validation) the error shows here.
+            save_error = self.get_visible_error()
         # Switch to the top-level document first so current_url is the main
         # page URL (the iframe URL can be null after a form submission).
         self.driver.switch_to.default_content()
@@ -1524,7 +1544,8 @@ class MembershipsPage(BasePage):
         global_commission,
         first_location_price,
         first_location_commission,
-        prepaid_months="1"
+        prepaid_months="1",
+        redeem_as_service="VK detail wash"
     ):
         """Fill membership settings for a prepaid membership."""
         self.enter_membership_name(membership_name)
@@ -1547,8 +1568,13 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
-        # Last: any location row still empty would block Save via HTML5 validation.
+        # Any location row still empty would block Save via HTML5 validation.
         self.fill_all_empty_location_inputs()
+        # Last: the app now blocks Save entirely without a redemption location
+        # + redeem-as service ("Please select at least one redeem location").
+        # Configuring it here covers every caller (create, managed-reset,
+        # direct fill) instead of each call site remembering to do it.
+        self.configure_redemption_settings(0, redeem_as_service)
 
 
     def fill_recurring_membership_form(
@@ -1557,7 +1583,8 @@ class MembershipsPage(BasePage):
         global_price,
         global_commission,
         first_location_price,
-        first_location_commission
+        first_location_commission,
+        redeem_as_service="VK detail wash"
     ):
         """Fill membership settings for a recurring membership."""
         self.enter_membership_name(membership_name)
@@ -1579,8 +1606,11 @@ class MembershipsPage(BasePage):
             first_location_commission
         )
         self.unassign_locations_after_first()
-        # Last: any location row still empty would block Save via HTML5 validation.
+        # Any location row still empty would block Save via HTML5 validation.
         self.fill_all_empty_location_inputs()
+        # Last: the app now blocks Save entirely without a redemption location
+        # + redeem-as service ("Please select at least one redeem location").
+        self.configure_redemption_settings(0, redeem_as_service)
 
 
     def create_membership(

@@ -112,13 +112,47 @@ def page_has_no_broken_state(page):
 
 @pytest.fixture
 def managed_package(browser):
-    """Ensure PACKAGE_NAME exists at baseline before the test and restore after."""
+    """Ensure PACKAGE_NAME exists at baseline before the test and restore after.
+
+    A stray inactive duplicate named PACKAGE_NAME can be left behind by an
+    interrupted prior run — invisible to the active-only search package_exists
+    checks, but still enforced by the backend's uniqueness constraint, so a
+    rename-back can fail with "already exists" (a RuntimeError from
+    save_and_return_to_list, not a TimeoutException). Treat both the same
+    way: don't let a reset hiccup fail or mask a test that already passed.
+    """
     try:
         page = _reset_managed_package(browser)
-    except TimeoutException:
-        pytest.skip("Package setup timed out on staging (site assignment not responding)")
+    except (TimeoutException, RuntimeError):
+        pytest.skip("Package setup failed on staging (see managed_package fixture)")
     yield page
     try:
         _reset_managed_package(browser)
-    except TimeoutException:
+    except (TimeoutException, RuntimeError):
         pass
+
+
+@pytest.fixture
+def isolated_package(browser):
+    """Create a fresh, uniquely-named package for tests prone to compounding
+    read-after-write lag on the shared managed_package record.
+
+    ~15 tests in this file reset-edit-verify PACKAGE_NAME back-to-back in one
+    xdist group (see tests/admin_portal/conftest.py's managed_* grouping);
+    each one's read-after-write lag stacks onto the next. Tests that hit that
+    lag get their own record instead of joining the shared one. Not cleaned
+    up afterward — wash packages aren't deletable in this product (see
+    managed-test-data-pattern), matching test_save_wash_package_without_description's
+    existing precedent of leaving a uniquely-named record behind.
+
+    Returns (page, package_name).
+    """
+    import uuid
+    name = "VK isolated %s" % uuid.uuid4().hex[:6]
+    page = open_wash_packages_page(browser)
+    page.create_package(
+        name, POINTS_AWARDED, POINTS_REDEEMED,
+        GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE,
+    )
+    page = open_wash_packages_page(browser)
+    return page, name

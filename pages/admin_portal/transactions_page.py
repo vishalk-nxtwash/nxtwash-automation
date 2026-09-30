@@ -244,14 +244,24 @@ class TransactionsPage(BasePage):
             except TimeoutException:
                 self.driver.switch_to.default_content()
 
-        # Fallback — enumerate all iframes, switch to the first with content.
+        # Fallback — enumerate iframes, switch to the first with content.
+        # Excludes the Zendesk support-chat widget iframe (data-product=
+        # "web_widget", title contains "widget") — it always has non-empty
+        # body text ("Support"), so an unfiltered enumeration grabs it
+        # instead of the real content frame and every later locator search
+        # then times out against the wrong document.
+        non_widget_iframes = (
+            By.XPATH,
+            "//iframe[not(@data-product='web_widget')"
+            " and not(contains(@title,'widget'))]",
+        )
         try:
             WebDriverWait(self.driver, 8).until(
-                lambda d: len(d.find_elements(By.TAG_NAME, "iframe")) > 0
+                lambda d: len(d.find_elements(*non_widget_iframes)) > 0
             )
         except TimeoutException:
             return
-        for frame in self.driver.find_elements(By.TAG_NAME, "iframe"):
+        for frame in self.driver.find_elements(*non_widget_iframes):
             try:
                 self.driver.switch_to.frame(frame)
                 body_text = self.driver.find_element(By.TAG_NAME, "body").text.strip()

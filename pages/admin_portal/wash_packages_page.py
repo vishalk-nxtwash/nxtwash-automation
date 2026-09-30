@@ -250,13 +250,29 @@ class WashPackagesPage(BasePage):
             % package_name
         )
 
-    def wait_for_package_row(self, package_name):
-        """Wait until a package row is present (InovuaReactDataGrid uses CSS transforms; visibility check is unreliable)."""
-        return self.wait.until(
-            EC.presence_of_element_located(
-                self.get_package_row_locator(package_name)
-            )
-        )
+    def wait_for_package_row(self, package_name, attempts=9, per_try=10):
+        """Wait until a package row is present (InovuaReactDataGrid uses CSS
+        transforms; visibility check is unreliable).
+
+        The list search is served by an index that lags behind saves: right
+        after a rename, searching the new name can return no rows for a few
+        seconds. If the search box already holds this name, re-run the search
+        between short waits instead of one long wait on a stale result.
+        Budget is 90s (was 60s) — back-to-back renames of the same shared
+        managed_package record (see WP-FRM-002) occasionally outlast 60s.
+        """
+        locator = self.get_package_row_locator(package_name)
+        for attempt in range(attempts):
+            try:
+                return WebDriverWait(self.driver, per_try).until(
+                    EC.presence_of_element_located(locator)
+                )
+            except TimeoutException:
+                if attempt == attempts - 1:
+                    raise
+                boxes = self.driver.find_elements(*self.SEARCH_INPUT)
+                if boxes and (boxes[0].get_attribute("value") or "") == package_name:
+                    self.search_package(package_name)
 
     def package_exists(self, package_name):
         """Return whether the package exists in the list."""

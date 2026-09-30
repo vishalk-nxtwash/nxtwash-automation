@@ -249,6 +249,13 @@ def reset_managed_membership(browser):
     memberships_page.clear_applicable_discounts()
     memberships_page.open_membership_settings()
     memberships_page.set_barcode("")
+    # Explicitly restore points_awarded — do not rely on the server "always"
+    # reverting it to baseline. That assumption broke: the field was found
+    # persistently blank on staging even with no other job touching the
+    # record, because nothing here ever wrote a real value back to it once
+    # it went blank (memberships cannot be deleted, so a bad value sticks
+    # forever otherwise).
+    memberships_page.set_points_awarded(BASELINE_POINTS)
     memberships_page.save_and_return_to_list()
     # Clear any residual filters (e.g. inactive-only from _show_inactive_memberships)
     # so the next test sees a clean default list view.

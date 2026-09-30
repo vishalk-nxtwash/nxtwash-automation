@@ -283,7 +283,13 @@ def test_limit_membership_toggle_persists(managed_membership):
 
     try:
         page.open_edit_membership(MANAGED_MEMBERSHIP)
-        assert page.limit_membership_switch_is_on()
+        # Per-record fetch can lag behind the save (same class as barcode /
+        # customer-portal-toggle persistence) — poll instead of one read.
+        assert page.wait_for_persisted_value(
+            page.limit_membership_switch_is_on,
+            True,
+            reopen=lambda: page.open_edit_membership(MANAGED_MEMBERSHIP),
+        )
     finally:
         # Still on the edit form opened above; no need to re-open.
         page.ensure_switch_off(page.LIMIT_MEMBERSHIP_SWITCH)

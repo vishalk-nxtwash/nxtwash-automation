@@ -7,11 +7,7 @@ from tests.admin_portal.wash_packages.conftest import (
     DESCRIPTION_TEXT,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
-    PACKAGE_NAME,
     SECOND_APPLICABLE_DISCOUNT,
-    SITE_OVERRIDE_COMMISSION,
-    SITE_OVERRIDE_PRICE,
-    UPDATED_PACKAGE_NAME,
     UPDATED_POINTS_AWARDED,
     UPDATED_POINTS_REDEEMED,
     open_wash_packages_page,
@@ -25,79 +21,93 @@ pytestmark = [
     allure.story("Edit"),
 ]
 
+# NOTE: every test below uses isolated_package (a fresh, uniquely-named
+# record per test) instead of the shared managed_package/PACKAGE_NAME.
+# ~15 tests used to reset-edit-verify one shared record back-to-back on one
+# xdist worker (see tests/admin_portal/conftest.py's managed_* grouping);
+# each one's read-after-write lag stacked onto the next, so a different test
+# failed on almost every CI run. isolated_package removes the shared
+# bottleneck entirely rather than budgeting around it.
+
 
 @allure.title("WP-EDT-001 Edit wash package name persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_name_persists(browser, managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
-    page.enter_service_name(UPDATED_PACKAGE_NAME)
+def test_edit_wash_package_name_persists(browser, isolated_package):
+    page, name = isolated_package
+    updated_name = name + " updated"
+    page.open_edit_package(name)
+    page.enter_service_name(updated_name)
     page.save_and_return_to_list()
-    page.search_package(UPDATED_PACKAGE_NAME)
+    page.search_package(updated_name)
 
-    assert page.wait_for_package_row(UPDATED_PACKAGE_NAME).is_displayed()
-
-    page.open_edit_package(UPDATED_PACKAGE_NAME)
-    page.enter_service_name(PACKAGE_NAME)
-    page.save_and_return_to_list()
+    assert page.wait_for_package_row(updated_name).is_displayed()
 
 
 @allure.title("WP-EDT-002 Edit global price persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_global_price_persists(managed_package):
+def test_edit_wash_package_global_price_persists(isolated_package):
     new_price = "45"
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.set_global_price(new_price)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
-    assert page.get_global_price_value() == new_price
+    page.open_edit_package(name)
+    assert page.wait_for_persisted_value(
+        page.get_global_price_value, new_price, reopen=lambda: page.open_edit_package(name)
+    ) == new_price
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-EDT-003 Edit global commission persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_global_commission_persists(managed_package):
+def test_edit_wash_package_global_commission_persists(isolated_package):
     new_commission = "12"
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.set_global_commission(new_commission)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
-    assert page.get_global_commission_value() == new_commission
+    page.open_edit_package(name)
+    assert page.wait_for_persisted_value(
+        page.get_global_commission_value, new_commission, reopen=lambda: page.open_edit_package(name)
+    ) == new_commission
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-EDT-004 Edit loyalty points persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_loyalty_points_persist(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_edit_wash_package_loyalty_points_persist(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.set_loyalty_points(UPDATED_POINTS_AWARDED, UPDATED_POINTS_REDEEMED)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
-    assert page.get_points_awarded_value() == UPDATED_POINTS_AWARDED
+    page.open_edit_package(name)
+    assert page.wait_for_persisted_value(
+        page.get_points_awarded_value, UPDATED_POINTS_AWARDED, reopen=lambda: page.open_edit_package(name)
+    ) == UPDATED_POINTS_AWARDED
     assert page.get_points_redeemed_value() == UPDATED_POINTS_REDEEMED
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-EDT-005 Editing site assignment persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_assigned_sites(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_edit_wash_package_assigned_sites(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.assign_site_with_price_and_commission(
         ASSIGNMENT_SITE, GLOBAL_PRICE, GLOBAL_COMMISSION
     )
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     # site_is_assigned scrolls the Inovua virtual grid to find the row rather
     # than relying on get_body_text(), which only captures currently rendered rows.
-    assert page.site_is_assigned(ASSIGNMENT_SITE)
+    assert page.wait_for_persisted_value(
+        lambda: page.site_is_assigned(ASSIGNMENT_SITE), True,
+        reopen=lambda: page.open_edit_package(name),
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -105,9 +115,9 @@ def test_edit_wash_package_assigned_sites(managed_package):
 @allure.title("WP-EDT-008 Activate an inactive wash package updates its status to Active")
 @pytest.mark.regression
 @pytest.mark.timeout(480)
-def test_activate_wash_package(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_activate_wash_package(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
 
     # Toggle off then immediately back on within the same edit session.
     # Inactive packages are hidden from search results so a save-deactivate →
@@ -115,49 +125,58 @@ def test_activate_wash_package(managed_package):
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
     page.save_and_return_to_list()
-    page.search_package(PACKAGE_NAME)
+    page.search_package(name)
 
-    assert page.wait_for_package_row(PACKAGE_NAME).is_displayed()
-    assert page.get_package_status(PACKAGE_NAME) == "Active"
+    assert page.wait_for_package_row(name).is_displayed()
+    assert page.get_package_status(name) == "Active"
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-EDT-009 Deactivate an active wash package hides it from the default list")
 @pytest.mark.regression
 @pytest.mark.timeout(480)
-def test_deactivate_wash_package(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_deactivate_wash_package(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.ensure_active_switch_off()
     page.save_and_return_to_list()
-    page.search_package(PACKAGE_NAME)
+    page.search_package(name)
 
-    assert PACKAGE_NAME not in page.get_body_text()
+    assert page.wait_for_persisted_value(
+        lambda: name not in page.get_body_text(), True,
+        reopen=lambda: page.search_package(name),
+    )
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-DIS-001 Applicable discount assigned to wash package persists after save")
 @pytest.mark.regression
 @pytest.mark.timeout(480)
-def test_assign_applicable_discount_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_assign_applicable_discount_persists(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
 
-    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+    def _reopen():
+        page.open_edit_package(name)
+        page.open_discount_settings()
+
+    assert page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), True, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-DIS-002 Assigning multiple discounts persists after save")
 @pytest.mark.regression
-def test_assign_multiple_discounts_persist(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_assign_multiple_discounts_persist(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     try:
@@ -170,7 +189,7 @@ def test_assign_multiple_discounts_persist(managed_package):
 
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
 
     assert page.discount_is_selected(APPLICABLE_DISCOUNT)
@@ -180,37 +199,50 @@ def test_assign_multiple_discounts_persist(managed_package):
 
 @allure.title("WP-DIS-003 Removing an assigned discount persists after save")
 @pytest.mark.regression
-def test_remove_applicable_discount_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_remove_applicable_discount_persists(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.remove_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
 
-    assert not page.discount_is_selected(APPLICABLE_DISCOUNT)
+    def _reopen():
+        page.open_edit_package(name)
+        page.open_discount_settings()
+
+    assert not page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), False, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
 @allure.title("WP-EDT-007 Editing discount configuration persists after save")
 @pytest.mark.regression
-def test_edit_wash_package_discount_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_edit_wash_package_discount_persists(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
+    page.open_edit_package(name)
     page.open_discount_settings()
-    assert page.discount_is_selected(APPLICABLE_DISCOUNT)
+
+    def _reopen():
+        page.open_edit_package(name)
+        page.open_discount_settings()
+
+    assert page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), True, reopen=_reopen,
+    )
     assert page_has_no_broken_state(page)
 
 
@@ -236,12 +268,15 @@ def test_save_wash_package_without_description(browser):
 @allure.title("WP-DSC-001 Service description saves and persists after save")
 @pytest.mark.regression
 @pytest.mark.timeout(480)
-def test_service_description_persists(managed_package):
-    page = managed_package
-    page.open_edit_package(PACKAGE_NAME)
+def test_service_description_persists(isolated_package):
+    page, name = isolated_package
+    page.open_edit_package(name)
     page.enter_description(DESCRIPTION_TEXT)
     page.save_and_return_to_list()
 
-    page.open_edit_package(PACKAGE_NAME)
-    assert page.get_description_value() == DESCRIPTION_TEXT
+    page.open_edit_package(name)
+    assert page.wait_for_persisted_value(
+        page.get_description_value, DESCRIPTION_TEXT,
+        reopen=lambda: page.open_edit_package(name),
+    ) == DESCRIPTION_TEXT
     assert page_has_no_broken_state(page)
