@@ -825,7 +825,7 @@ class CustomersPage(BasePage):
                     )
                 )
                 yes.click()
-                time.sleep(0.3)
+                self._wait_for_dialog_gone()
             except TimeoutException:
                 pass
 
@@ -861,6 +861,15 @@ class CustomersPage(BasePage):
         switch = self.wait.until(EC.presence_of_element_located(self.ALLOW_INVOICING_SWITCH))
         self.driver.execute_script("arguments[0].click();", switch)
 
+    def _wait_for_dialog_gone(self, timeout=3):
+        # A fixed sleep after clicking 'Yes' races the exit animation; wait for real invisibility instead.
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.invisibility_of_element_located((By.XPATH, "//*[@role='dialog']"))
+            )
+        except TimeoutException:
+            pass
+
     def click_save_customer(self):
         self.click(self.SAVE_CUSTOMER_BUTTON)
         # Saving after an isActive change re-shows the same "Are you sure...?"
@@ -875,6 +884,7 @@ class CustomersPage(BasePage):
                 ))
             )
             confirm.click()
+            self._wait_for_dialog_gone()
         except TimeoutException:
             pass
 
@@ -932,6 +942,7 @@ class CustomersPage(BasePage):
                 ))
             )
             confirm.click()
+            self._wait_for_dialog_gone()
         except TimeoutException:
             pass
 
