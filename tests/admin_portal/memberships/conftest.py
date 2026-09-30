@@ -37,6 +37,10 @@ def page_has_no_broken_state(page):
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
 
 
+# Prefix of leftover per-run memberships that any create-flow helper below may
+# adopt in place of creating a fresh one (see _adopt_leftover_membership).
+ADOPTABLE_PREFIX = "VK decimal"
+
 def open_memberships_page(browser):
 
     open_admin_path(browser, "/services/memberships")
@@ -46,6 +50,50 @@ def open_memberships_page(browser):
     memberships_page.clear_active_filters()
 
     return memberships_page
+
+
+def _adopt_leftover_membership(browser, membership_name, fill_fn):
+    """Rename a leftover "VK decimal ..." membership into ``membership_name``.
+
+    Creating a membership is broken on staging (Save sends no request at all
+    — BUG 7, docs/bug_reports.md) but EDITING works, so every create-flow
+    helper in this file adopts a leftover uniquely-named test membership
+    (created by earlier runs, never cleaned up — product has no delete)
+    instead of calling create_membership()/create_recurring_membership().
+
+    ``fill_fn`` is one of MembershipsPage.fill_membership_form /
+    fill_recurring_membership_form, called as ``fill_fn(membership_name, ...)``
+    on the opened edit page to both rename and fill it.
+
+    Returns the list-page MembershipsPage on success, or None if no leftover
+    was found (caller falls back to the normal create call, in case BUG 7
+    ever gets fixed).
+    """
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(ADOPTABLE_PREFIX)
+    adoptable = [
+        line for line in memberships_page.get_body_text().split("\n")
+        if line.startswith(ADOPTABLE_PREFIX)
+    ]
+    if not adoptable:
+        return None
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_edit_membership(adoptable[0])
+    fill_fn(memberships_page, membership_name)
+    memberships_page.save_and_return_to_list()
+    # Search lags behind a rename (the search index updates later), and a
+    # missed lookup here would make the next run adopt a second leftover.
+    # Confirm on the unfiltered list instead, retrying for up to ~60 s.
+    import time as _time
+    for _ in range(6):
+        memberships_page = open_memberships_page(browser)
+        if membership_name in memberships_page.get_body_text():
+            return memberships_page
+        _time.sleep(10)
+    raise AssertionError(
+        "Adopted membership '%s' not visible on the list after rename" % membership_name
+    )
 
 
 def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
@@ -96,6 +144,19 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
         memberships_page.save_and_return_to_list()
         memberships_page.clear_active_filters()
         return memberships_page
+
+    def _fill(page, name):
+        page.fill_membership_form(
+            name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+
+    adopted = _adopt_leftover_membership(browser, membership_name, _fill)
+    if adopted is not None:
+        return adopted
 
     memberships_page.create_membership(
         membership_name,
@@ -162,6 +223,19 @@ def create_recurring_membership_if_missing(
         memberships_page.clear_active_filters()
         return memberships_page
 
+    def _fill_recurring(page, name):
+        page.fill_recurring_membership_form(
+            name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+
+    adopted = _adopt_leftover_membership(browser, membership_name, _fill_recurring)
+    if adopted is not None:
+        return adopted
+
     memberships_page.create_recurring_membership(
         membership_name,
         GLOBAL_PRICE,
@@ -216,6 +290,20 @@ def reset_managed_membership(browser):
             membership_found = False
 
     if not membership_found:
+        def _fill(page, name):
+            page.fill_membership_form(
+                name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION,
+            )
+
+        adopted = _adopt_leftover_membership(browser, MANAGED_MEMBERSHIP, _fill)
+        if adopted is not None:
+            # Adoption already renamed + filled it to baseline via _fill above.
+            return adopted
+
         memberships_page.create_membership(
             MANAGED_MEMBERSHIP,
             GLOBAL_PRICE,

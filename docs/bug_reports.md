@@ -92,5 +92,69 @@ silently blocks Save ("Please fill in this field"). Every new staging site adds
 another such row.
 
 **Automation:** `MembershipsPage.fill_all_empty_location_inputs()` types `0`
-into every empty row before saving (workaround; membership create still under
-investigation).
+into every empty row before saving. Even with every row filled, create still
+does nothing — see BUG 7.
+
+## BUG 7 — Memberships: "Save membership" on the Add form does nothing
+- **Found during:** admin suite stabilization (2026-09-28)
+- **Module:** Admin Portal → Services → Memberships → + Add new membership
+- **Severity:** High
+
+**Steps to reproduce**
+1. Services → Memberships → + Add new membership.
+2. Fill name, type (Prepaid), global price/commission, assign the first location,
+   fill every location price/commission (no HTML5 `:invalid` fields remain).
+3. Click **Save membership**.
+
+**Expected:** The membership is created and the app returns to the list.
+**Actual:** Nothing happens. No network request is sent (verified by wrapping
+`fetch`/`XMLHttpRequest` inside the iframe), no console error, no validation
+message on any tab, no error styling, and the record is never created.
+**Editing** an existing membership saves normally (redirects to the list).
+
+**Impact:** New memberships cannot be created through the UI on staging.
+
+**Automation:** The managed-membership fixture adopts a leftover
+`VK decimal …` membership and renames it via the edit form, so dependent tests
+run. `test_create_new_membership_saves` is an xfail canary that reports XPASS
+once create works.
+
+## BUG 8 — Memberships: location assignment checkbox changes are not saved
+- **Found during:** admin suite stabilization (2026-09-30)
+- **Module:** Admin Portal → Services → Memberships → Edit membership → Membership settings (location grid)
+- **Severity:** High
+
+**Steps to reproduce**
+1. Edit an existing membership.
+2. Check (or uncheck) a location's assignment checkbox — it visually toggles
+   (checked/unchecked state, correct CSS class) and stays toggled for as long
+   as the form is open.
+3. Click **Save membership**, then reopen the same membership.
+
+**Expected:** The location's assignment state matches what was set in step 2.
+**Actual:** The checkbox reverts to whatever it was *before* step 2 — the
+click's effect is never reflected in what gets saved, even though the widget's
+own visual/local state clearly updated (confirmed checked for the remainder of
+the session). Isolated by elimination: reproduces with the checkbox click
+alone (no price/commission field edited afterward), so it's not a field-order
+or debounce interaction. No native `<input>` exists under the checkbox —
+it's a custom `div`/`svg` widget with no DOM element to dispatch a native
+`change` event on — consistent with a gap between the widget's own state and
+whatever React Hook Form (or similar) actually serializes on Save. Affects
+both directions: newly *assigning* a location and *unassigning* a
+previously-assigned one are equally unreliable, which is also why several
+test-managed records have accumulated un-removable stale location
+assignments over repeated runs — the fixture's own cleanup step hits the
+same bug.
+
+**Impact:** Per-location price/commission overrides and location assignment
+cannot be changed reliably through the UI on staging. A membership's location
+assignments are effectively frozen at whatever they were when first created
+(before this regression, presumably).
+
+**Automation:** `MembershipsPage.unassign_locations_after_first()` is
+best-effort (catches failures per location, logs, continues) so one
+unreachable checkbox doesn't crash setup for unrelated tests. Tests that
+directly assert on location-assignment changes are xfailed — see
+`test_edit_managed_membership_assigns_multiple_locations`,
+`test_membership_only_first_location_is_assigned`.
