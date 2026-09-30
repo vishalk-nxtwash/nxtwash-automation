@@ -379,36 +379,33 @@ class RedemptionsPage(BasePage):
     def future_dates_disabled_in_calendar(self):
         """Return True if dates after today are non-clickable in the calendar.
 
-        # Correct: matches Revenue Overview. Differs from Performance Metrics
-        # (known defect PFM-DTE-010 where future dates are incorrectly enabled).
-        TODO: Tighten day-cell selector after DevTools inspection confirms
-        the calendar component class names used in RDM.
+        # Same widget as Revenue Overview (styled-components, no aria-label on
+        # day cells) — forward navigation is blocked via a disabled Next Month
+        # button, so that's the authoritative signal, not per-cell date math.
         """
+        import datetime
         self.open_date_range_calendar()
         time.sleep(0.5)
-        result = self.driver.execute_script("""
-            var today = new Date();
-            today.setHours(0, 0, 0, 0);
-            var dayCells = Array.from(document.querySelectorAll(
-                '[class*="day"],[class*="date-cell"],[class*="calendar-day"],' +
-                '[aria-label][role="button"],[aria-label][role="gridcell"]'
-            ));
-            var futureCells = dayCells.filter(function(el) {
-                var raw = el.getAttribute('aria-label') ||
-                          el.getAttribute('data-date') || '';
-                var d = new Date(raw);
-                return !isNaN(d.getTime()) && d > today;
-            });
-            if (futureCells.length === 0) return null;
-            return futureCells.some(function(el) {
-                return (
-                    el.classList.contains('disabled') ||
-                    el.getAttribute('aria-disabled') === 'true' ||
-                    el.hasAttribute('disabled') ||
-                    (el.className || '').toLowerCase().includes('disabled')
-                );
-            });
-        """)
+        result = None
+        next_buttons = self.driver.find_elements(
+            By.XPATH, "//button[normalize-space()='Next Month']"
+        )
+        if next_buttons and next_buttons[0].get_attribute("disabled") is not None:
+            result = True
+        else:
+            tomorrow_day = str(
+                (datetime.date.today() + datetime.timedelta(days=1)).day
+            )
+            day_buttons = self.driver.find_elements(
+                By.XPATH, "//button[contains(@class,'sc-gFqAkR')]"
+            )
+            for btn in day_buttons:
+                if btn.text.strip() == tomorrow_day:
+                    result = (
+                        btn.get_attribute("disabled") is not None
+                        or btn.get_attribute("aria-disabled") == "true"
+                    )
+                    break
         try:
             self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
         except Exception:
