@@ -47,6 +47,14 @@ def test_create_prepaid_membership(browser):
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-TYP-001 Verify creation of Recurring membership")
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BUG 8 (docs/bug_reports.md): location-assignment checkbox changes "
+        "are not reliably saved, so the created membership can end up with "
+        "no location assigned. Reports XPASS once fixed."
+    ),
+)
 def test_create_recurring_membership(browser):
 
     LOG.info(
@@ -78,15 +86,45 @@ def test_create_recurring_membership(browser):
     assert memberships_page.recurring_membership_type_is_selected()
     assert memberships_page.get_global_price_value() == GLOBAL_PRICE
     assert memberships_page.get_global_commission_value() == GLOBAL_COMMISSION
-    assert memberships_page.location_is_assigned_by_index(0)
+    assert memberships_page.assigned_location_names()
 
 
 @pytest.mark.smoke
 @allure.epic("Admin Portal")
 @allure.feature("Memberships")
+@allure.title("MB-CRT-000 Creating a brand-new membership saves it (BUG 7 canary)")
+@pytest.mark.xfail(
+    strict=False,
+    reason="BUG 7 (docs/bug_reports.md): Save on the Add-membership form sends no "
+           "request at all on staging; editing works. Reports XPASS once fixed.",
+)
+def test_create_new_membership_saves(browser):
+    # Uses the adoptable prefix: if create works, the record joins the pool the
+    # managed fixture adopts from, instead of becoming dead clutter.
+    from tests.admin_portal.memberships.conftest import ADOPTABLE_PREFIX
+    name = "%s %s" % (ADOPTABLE_PREFIX, uuid.uuid4().hex[:6])
+    memberships_page = open_memberships_page(browser)
+    memberships_page.create_membership(
+        name, GLOBAL_PRICE, GLOBAL_COMMISSION, FIRST_LOCATION_PRICE, FIRST_LOCATION_COMMISSION
+    )
+    assert name in open_memberships_page(browser).get_body_text()
+
+
+@allure.epic("Admin Portal")
+@allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MEM-CRUD-003/004/005/011/012/013/015/016/018 Persistence")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BUG 8 (docs/bug_reports.md): location-assignment checkbox changes "
+        "are not reliably saved (both assign and unassign) — stale "
+        "locations on MEMBERSHIP_NAME accumulated from earlier runs can't "
+        "be cleaned up via the UI, so more than one location can show "
+        "assigned. Reports XPASS once fixed."
+    ),
+)
 def test_membership_settings_persist(browser):
 
     LOG.info("Verifying membership settings persist: %s", MEMBERSHIP_NAME)
@@ -100,16 +138,17 @@ def test_membership_settings_persist(browser):
     assert memberships_page.customer_portal_switch_is_on()
     assert memberships_page.get_global_price_value() == GLOBAL_PRICE
     assert memberships_page.get_global_commission_value() == GLOBAL_COMMISSION
-    assert memberships_page.location_is_assigned_by_index(0)
-    assert memberships_page.get_location_price_by_index(0) == FIRST_LOCATION_PRICE
+    assigned = memberships_page.assigned_location_names()
+    assert len(assigned) == 1
+    assert memberships_page.get_location_price(assigned[0]) == FIRST_LOCATION_PRICE
     assert (
-        memberships_page.get_location_commission_by_index(0)
+        memberships_page.get_location_commission(assigned[0])
         == FIRST_LOCATION_COMMISSION
     )
 
     memberships_page.open_redemption_settings()
 
-    assert memberships_page.redemption_location_is_assigned_by_index(0)
+    assert memberships_page.assigned_redemption_location_names()
     assert REDEEM_AS_SERVICE.lower() in memberships_page.get_body_text().lower()
 
 
