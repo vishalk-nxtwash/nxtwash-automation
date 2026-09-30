@@ -587,12 +587,6 @@ def test_date_range_field_opens_calendar_picker(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-011 Future dates are disabled (grayed out) in the calendar picker")
 @pytest.mark.regression
-@pytest.mark.skip(
-    reason=(
-        "Manual - Check later for fixes: disabled future-date detection relies on "
-        "aria-disabled/class heuristics — verify calendar day button DOM in DevTools."
-    ),
-)
 def test_future_dates_disabled_in_calendar(rvo_modal):
     rvo_modal.open_date_range_picker()
     assert rvo_modal.calendar_is_open(), "Calendar not open"

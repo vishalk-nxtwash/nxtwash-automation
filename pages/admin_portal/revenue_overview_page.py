@@ -466,15 +466,23 @@ class RevenueOverviewPage(BasePage):
 
     def calendar_has_future_dates_disabled(self):
         import datetime
+        # Day buttons here carry no aria-label, so the authoritative signal is
+        # whether forward navigation itself is blocked (native disabled attr).
+        next_buttons = self.driver.find_elements(
+            By.XPATH, "//button[normalize-space()='Next Month']"
+        )
+        if next_buttons and next_buttons[0].get_attribute("disabled") is not None:
+            return True
         tomorrow_day = str(
             (datetime.date.today() + datetime.timedelta(days=1)).day
         )
-        disabled = self.driver.find_elements(*self.CALENDAR_DISABLED_BUTTONS)
-        for el in disabled:
-            label = el.get_attribute("aria-label") or el.text.strip()
-            if tomorrow_day in label:
-                return True
-        return len(disabled) > 0
+        for btn in self.driver.find_elements(*self.CALENDAR_DAY_BUTTONS):
+            if btn.text.strip() == tomorrow_day:
+                return (
+                    btn.get_attribute("disabled") is not None
+                    or btn.get_attribute("aria-disabled") == "true"
+                )
+        return False
 
     def calendar_year_selector_visible(self):
         els = self.driver.find_elements(*self.CALENDAR_YEAR_SELECTOR)
