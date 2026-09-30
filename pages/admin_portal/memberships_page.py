@@ -1228,7 +1228,9 @@ class MembershipsPage(BasePage):
         )
         ActionChains(self.driver).move_to_element(checkbox).click().perform()
 
-    def _toggle_checkbox_until(self, get_checkbox, click_checkbox, target_checked, attempts=5):
+    def _toggle_checkbox_until(
+        self, get_checkbox, click_checkbox, target_checked, attempts=5, per_attempt_timeout=3
+    ):
         """Click a checkbox until it reaches ``target_checked``, retrying the click itself.
 
         A click here can complete with no exception yet not actually toggle
@@ -1238,6 +1240,14 @@ class MembershipsPage(BasePage):
         whole find-click-verify cycle with a short per-attempt wait, instead
         of one click followed by one long wait that has no recourse if that
         single click silently didn't register.
+
+        ``attempts``/``per_attempt_timeout`` are overridable because retrying
+        is only worth its cost when the checkbox has a real chance of
+        catching up — unassign specifically almost never does (BUG 8,
+        docs/bug_reports.md): the change is not reflected in what gets saved
+        at all, not delayed, so retrying the default 5×3s budget against a
+        known-broken record is pure wasted wall-clock time. Bulk cleanup
+        (unassign_locations_after_first) passes a much smaller budget.
         """
         for attempt in range(attempts):
             checkbox = get_checkbox()
@@ -1245,7 +1255,7 @@ class MembershipsPage(BasePage):
                 return
             click_checkbox(checkbox)
             try:
-                WebDriverWait(self.driver, 3, poll_frequency=0.2).until(
+                WebDriverWait(self.driver, per_attempt_timeout, poll_frequency=0.2).until(
                     lambda driver: self.row_checkbox_is_checked(get_checkbox())
                     == target_checked
                 )
@@ -1267,34 +1277,48 @@ class MembershipsPage(BasePage):
         # Set price/commission after assigning — the checkbox reveal may clear fields.
         self.set_location_price_and_commission(site_name, price, commission)
 
-    def unassign_location(self, site_name):
-        """Unassign a location (by site name) if it is currently assigned."""
+    def unassign_location(self, site_name, attempts=5, per_attempt_timeout=3):
+        """Unassign a location (by site name) if it is currently assigned.
+
+        ``attempts``/``per_attempt_timeout`` default to a generous budget for
+        callers that need a real unassign to actually land. Bulk cleanup
+        (unassign_locations_after_first) overrides both to fail fast — see
+        _toggle_checkbox_until for why.
+        """
         self._retry_transient(
             lambda: self._toggle_checkbox_until(
                 lambda: self._location_checkbox(site_name),
                 self._click_location_checkbox,
                 False,
+                attempts=attempts,
+                per_attempt_timeout=per_attempt_timeout,
             )
         )
 
     def unassign_locations_after_first(self, keep_site_name):
         """Unassign every currently-mounted, assigned location except ``keep_site_name``.
 
-        Best-effort per location: the location-assignment checkbox's visual
-        state does not reliably persist through Save on staging (confirmed —
-        see BUG 8, docs/bug_reports.md), so an unassign click can fail to
-        register even after every available retry. One unreachable checkbox
-        must not crash setup for every other test that goes through
-        fill_membership_form() — log and move on to the next location instead
-        of raising, and let the test's own assertions (not this cleanup step)
-        surface whether BUG 8 affected that specific test.
+        Best-effort per location, with a deliberately small retry budget
+        (1 attempt, ~1.5s): the location-assignment checkbox's visual state
+        does not reliably persist through Save on staging (confirmed — see
+        BUG 8, docs/bug_reports.md), so an unassign click essentially never
+        catches up no matter how long we wait — this isn't transient, so the
+        default 5×3s budget per location is pure wasted wall-clock time here.
+        Measured impact: adopted leftover records can carry over a dozen
+        stale locations (nothing has ever successfully unassigned them,
+        since BUG 8 blocks that too), so at the default budget this step
+        alone was costing several minutes of setup time per test. One
+        unreachable checkbox must not crash setup for every other test that
+        goes through fill_membership_form() either — log and move on, and
+        let the test's own assertions (not this cleanup step) surface
+        whether BUG 8 affected that specific test.
         """
         import logging
         for name in self.assigned_location_names():
             if name == keep_site_name:
                 continue
             try:
-                self.unassign_location(name)
+                self.unassign_location(name, attempts=1, per_attempt_timeout=1.5)
             except Exception as error:  # noqa: BLE001
                 logging.getLogger("nxtwash").warning(
                     "Could not unassign location '%s' (likely BUG 8): %s",
