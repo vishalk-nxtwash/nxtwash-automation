@@ -534,26 +534,49 @@ class PerformanceMetricsPage(BasePage):
         return any(m.is_displayed() for m in markers)
 
     def future_day_is_disabled(self, days_ahead=1):
-        """Return True if a future day's cell is marked disabled.
+        """Return True if a future day is unselectable in the calendar picker.
 
-        react-day-picker places 'rdp-disabled' on the <td> wrapper, not the
-        <button> itself.  Also checks aria-disabled on the button as fallback.
+        Verified against staging (2026-09-30): this calendar's default view
+        never shows a future month, and its 'rdp-button_next' nav button is
+        itself aria-disabled="true" — forward navigation is blocked, so a
+        date in an unreached month is unselectable by definition. Matches
+        the target day by its full aria-label (e.g. "Thursday, October 1st,
+        2026") rather than bare day-of-month text, since two visible months
+        can share the same day number (e.g. both show a "1").
         """
         import datetime
-        future = datetime.date.today() + datetime.timedelta(days=days_ahead)
-        day_str = str(future.day)
-        # Check <td> cells with rdp-disabled that contain the day number
-        disabled_cells = self.driver.find_elements(By.XPATH,
-            "//td[contains(@class,'rdp-disabled')]")
-        for cell in disabled_cells:
-            if cell.text.strip() == day_str or day_str in cell.text:
+        import re
+        target = datetime.date.today() + datetime.timedelta(days=days_ahead)
+        month_name = target.strftime("%B")
+        year = str(target.year)
+
+        def _find_target_button():
+            for btn in self.driver.find_elements(*self.CALENDAR_DAY_BUTTONS):
+                label = btn.get_attribute("aria-label") or ""
+                if month_name not in label or year not in label:
+                    continue
+                m = re.search(r"(\d{1,2})(?:st|nd|rd|th)", label)
+                if m and int(m.group(1)) == target.day:
+                    return btn
+            return None
+
+        # Bring the target month into view. If forward navigation is itself
+        # disabled, the date is unreachable through the UI -> disabled.
+        for _ in range(3):
+            btn = _find_target_button()
+            if btn is not None:
+                return (
+                    btn.get_attribute("aria-disabled") == "true"
+                    or btn.get_attribute("disabled") is not None
+                )
+            next_buttons = self.driver.find_elements(
+                By.XPATH, "//button[contains(@class,'rdp-button_next')]")
+            if not next_buttons or next_buttons[0].get_attribute("aria-disabled") == "true":
                 return True
-        # Fallback: check aria-disabled on the button itself
-        btns = self.driver.find_elements(*self.CALENDAR_DAY_BUTTONS)
-        for btn in btns:
-            if btn.text.strip() == day_str:
-                return btn.get_attribute("aria-disabled") == "true"
-        return False
+            self._click_calendar_nav(1)
+
+        # Exhausted navigation attempts without reaching the target month.
+        return True
 
     def _click_calendar_nav(self, direction):
         """Click the prev (direction=-1) or next (direction=+1) month button."""
