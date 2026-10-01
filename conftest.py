@@ -160,6 +160,24 @@ _QUARANTINE_SCRIPT = {
 }
 
 
+def pytest_itemcollected(item):
+    # Serialize tests sharing a managed_resource fixture (tests/admin_portal/
+    # _managed.py) onto one xdist worker. These fixtures point every test at
+    # ONE shared staging record with no delete; under --dist loadgroup two
+    # workers editing it concurrently race (last write wins). xdist_group
+    # pins same-named-group tests to a single worker, so they run in
+    # sequence instead of racing. Covers every managed_* fixture by naming
+    # convention alone — no per-module wiring needed.
+    #
+    # Must run here, not in pytest_collection_modifyitems: pytest-xdist
+    # derives a test's group assignment from its nodeid at per-item
+    # collection time, before modifyitems hooks run — a marker added there
+    # is visible on the item but never reaches xdist's scheduler.
+    for fixture_name in item.fixturenames:
+        if fixture_name.startswith("managed_"):
+            item.add_marker(pytest.mark.xdist_group(name=fixture_name))
+
+
 def pytest_collection_modifyitems(config, items):
     # Auto-tag tests by location so `-m admin/superadmin/smoke` works suite-wide.
     for item in items:
