@@ -149,6 +149,12 @@ def open_transactions_page(browser):
     page = TransactionsPage(browser)
     # Wait for the table shell — rows may be 0 until filter is applied.
     page.wait_for_table()
+    # Reset first — a leftover filter field from an earlier test (or, under
+    # heavy concurrent CI load, another session sharing this account) can
+    # combine with 'Last month' to zero out the result set. Reset normalizes
+    # to a known baseline before applying our own filter.
+    page.open_filter_panel()
+    page.reset_panel_filters()
     # Apply 'Last month' so all dependent tests have real data.
     page.open_filter_panel()
     page.click_quick_filter("Last month")
