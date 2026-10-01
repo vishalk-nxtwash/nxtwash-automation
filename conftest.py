@@ -175,6 +175,17 @@ def pytest_collection_modifyitems(config, items):
         # checks per module). The old path rule (/login/, *_positive, *_smoke)
         # marked whole files and bloated admin smoke to 500+ tests.
 
+        # Serialize tests sharing a managed_resource fixture (tests/admin_portal/
+        # _managed.py) onto one xdist worker. These fixtures point every test at
+        # ONE shared staging record with no delete; under --dist loadgroup two
+        # workers editing it concurrently race (last write wins). xdist_group
+        # pins same-named-group tests to a single worker, so they run in
+        # sequence instead of racing. Covers every managed_* fixture by naming
+        # convention alone — no per-module wiring needed.
+        for fixture_name in item.fixturenames:
+            if fixture_name.startswith("managed_"):
+                item.add_marker(pytest.mark.xdist_group(name=fixture_name))
+
         # Quarantine known-failing tests (kept green via xfail until fixed).
         if any(fragment in nodeid for fragment in _QUARANTINE_TIMING):
             item.add_marker(

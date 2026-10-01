@@ -111,7 +111,10 @@ def test_discount_expiring_today_accepted(browser):
     discounts_page.select_service_category(REQUESTED_SERVICE_CATEGORY, SERVICE_CATEGORY)
     discounts_page.select_amount_discount_type()
     discounts_page.set_discount_amount(DISCOUNT_AMOUNT)
-    discounts_page.set_discount_start(START_DAY, START_TIME)
+    # Start and end must both land on "today" — the end-date picker enforces
+    # end >= start, so pairing a dynamic end with the fixed START_DAY breaks
+    # whenever today falls before START_DAY in the month (e.g. the 1st-8th).
+    discounts_page.set_discount_start(today_day, START_TIME)
     discounts_page.set_discount_end(today_day, "11:00 PM")
     discounts_page.ensure_active_switch_on()
     discounts_page.set_location_discount_value_by_index(0, DISCOUNT_AMOUNT)

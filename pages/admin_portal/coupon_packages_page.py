@@ -202,7 +202,16 @@ class CouponPackagesPage(BasePage):
         """Open edit coupon package form."""
         self.wait_for_list_loaded()
         self.search_coupon_package(coupon_package_name)
-        row = self.wait_for_coupon_package_row(coupon_package_name)
+        try:
+            row = self.wait_for_coupon_package_row(coupon_package_name)
+        except TimeoutException:
+            # A leftover "Filter by (N)" from an earlier step can hide a row
+            # that genuinely exists. Self-heal once instead of failing outright.
+            if not self.has_active_filters():
+                raise
+            self.reset_filters()
+            self.search_coupon_package(coupon_package_name)
+            row = self.wait_for_coupon_package_row(coupon_package_name)
         edit_button = row.find_element(
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
