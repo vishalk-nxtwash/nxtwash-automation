@@ -41,6 +41,21 @@ def page_has_no_broken_state(page):
 # adopt in place of creating a fresh one (see _adopt_leftover_membership).
 ADOPTABLE_PREFIX = "VK decimal"
 
+
+def _needs_baseline_resave(memberships_page):
+    """True if the open edit form's global price/commission differ from baseline.
+
+    create_membership_if_missing()/create_recurring_membership_if_missing()
+    run on every test using them, every run — re-saving the form unconditionally
+    (as before) pays a full fill+save+redirect cycle even on the overwhelming
+    majority of runs where the record already matches. This check lets callers
+    skip straight back to the list instead.
+    """
+    return (
+        memberships_page.get_global_price_value() != GLOBAL_PRICE
+        or memberships_page.get_global_commission_value() != GLOBAL_COMMISSION
+    )
+
 def open_memberships_page(browser):
 
     open_admin_path(browser, "/services/memberships")
@@ -104,14 +119,17 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     if memberships_page.membership_exists(membership_name):
         memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
@@ -134,14 +152,17 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
 
     if inactive_found:
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
@@ -184,14 +205,17 @@ def create_recurring_membership_if_missing(
     if memberships_page.membership_exists(membership_name):
         memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_recurring_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
@@ -212,14 +236,17 @@ def create_recurring_membership_if_missing(
 
     if inactive_found:
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_recurring_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
