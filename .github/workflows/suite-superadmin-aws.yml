@@ -9,8 +9,14 @@ name: Superadmin Suite — AWS runner
 #   - GitHub Actions runner registered with label: self-hosted
 #   - STAGING secret (full .env file contents) set in repo/environment secrets
 #
-# Sharded: 4 jobs in parallel (one per module). EC2 runners typically have
-# more vCPUs — raise the `parallel` input to speed up further.
+# Sharded: 5 jobs, capped to 2 concurrent (see below). This host is t3.large:
+# 2 real vCPUs, same as a GitHub-hosted runner — not more, despite the name.
+# It's also shared with 3-4 other registered runner agents for the admin
+# suite (confirmed 2026-10-03 via instance metadata: all on one ip-172-31-0-106
+# box), so even 2 concurrent shards here are competing with whatever else is
+# running on that host. Raising `parallel` above 2 reproduces the confirmed
+# "runner lost communication (starved for CPU/Memory)" failure from the admin
+# suite's AWS runner.
 #
 # Trigger: manual dispatch only.
 
@@ -18,9 +24,9 @@ on:
   workflow_dispatch:
     inputs:
       parallel:
-        description: "xdist workers per shard (raise to use extra EC2 vCPUs, e.g. 4)"
+        description: "xdist workers per shard (this host has 2 real vCPUs — do not raise above 2)"
         required: false
-        default: "4"
+        default: "2"
       test_path:
         description: "Optional: run only these test path(s)/node id(s) as one job (blank = full sharded suite)"
         required: false
@@ -39,6 +45,7 @@ jobs:
     if: ${{ !inputs.test_path }}
     strategy:
       fail-fast: false
+      max-parallel: 2
       matrix:
         shard:
           # ── Auth ──────────────────────────────────────────────────────────────
@@ -65,7 +72,7 @@ jobs:
       label: sa-aws-${{ matrix.shard.name }}
       environment: staging
       test_path: ${{ matrix.shard.path }}
-      parallel: ${{ github.event.inputs.parallel || '4' }}
+      parallel: ${{ github.event.inputs.parallel || '2' }}
       timeout_minutes: 45
       runner: self-hosted
 

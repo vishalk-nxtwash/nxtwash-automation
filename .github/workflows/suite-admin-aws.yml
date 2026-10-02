@@ -14,16 +14,17 @@ name: Admin Suite — AWS runner
 # touch the same staging managed records, so a GitHub-hosted run and an AWS
 # run must never run at the same time (queue, don't cancel).
 #
-# Isolated-runner pilot (targeted mode only): the 3 registered "self-hosted"
-# agents share one EC2 host, so concurrent jobs compete for the same
-# CPU/RAM — this produced widespread ChromeDriver/renderer timeouts, xdist
-# worker crashes, and one confirmed "runner lost communication (starved for
-# CPU/Memory)" failure. `isolated_runner_modules` routes just those modules'
-# targeted job(s) to a separate, genuinely isolated runner (its own
-# instance/container, registered under `isolated_runner_label`) so we can
-# compare stability against the shared pool without touching the other
-# modules. Requires a runner registered with that label to actually pick the
-# job up — until then, the job just queues.
+# Isolated-runner pilot (targeted mode only) — NOT actually isolated: verified
+# 2026-10-03 that admin-isolated-01 (self-hosted-isolated) runs on the exact
+# same box (ip-172-31-0-106, t3.large: 2 vCPU / 8GB, confirmed via instance
+# metadata) as admin-staging-01/02/03. All 4 registered "self-hosted"-family
+# agents share one host with 2 real vCPUs — concurrent jobs across any of them
+# compete for the same CPU/RAM. This produced widespread ChromeDriver/renderer
+# timeouts, xdist worker crashes, and one confirmed "runner lost communication
+# (starved for CPU/Memory)" failure. Until the isolated label is moved to a
+# genuinely separate instance, routing jobs to it adds a 4th contender to the
+# same contention rather than escaping it — `parallel` below is sized for the
+# shared pool's real 2-vCPU ceiling regardless of which label picks a job up.
 
 on:
   workflow_dispatch:
@@ -33,9 +34,9 @@ on:
         required: false
         default: ''
       parallel:
-        description: 'xdist workers per job (EC2 runners typically have more vCPUs than GitHub-hosted — raise this to use them, e.g. 4)'
+        description: 'xdist workers per job (this host is t3.large: 2 real vCPUs, same as GitHub-hosted — do not raise above 2, more agents already share these same 2 vCPUs)'
         required: false
-        default: '4'
+        default: '2'
       isolated_runner_modules:
         description: 'Pilot: space-separated module names (targeted mode) to route to isolated_runner_label instead of the shared self-hosted pool'
         required: false
@@ -51,13 +52,20 @@ concurrency:
 
 # ──────────────────────────────────────────────────────────────────────────────
 # FULL SUITE — one job per module, all in parallel (capped).
+# max-parallel was 12, implying throughput this host never had even before the
+# isolated-runner finding: 4 registered agents share one t3.large (2 vCPU).
+# Capped to 2 so GitHub never schedules more concurrent jobs onto this pool
+# than its real CPU can run without the confirmed starvation failure. For a
+# full 29-module sweep this is multiple hours slower than suite-admin.yml
+# (GitHub-hosted, ~44 min) — prefer that workflow for full sweeps and reserve
+# this one for targeted 1-2 module runs needing VPC-internal staging access.
 # ──────────────────────────────────────────────────────────────────────────────
 jobs:
   full:
     if: ${{ !inputs.test_path }}
     strategy:
       fail-fast: false
-      max-parallel: 12
+      max-parallel: 2
       matrix:
         module:
           - bank_drop
@@ -96,7 +104,7 @@ jobs:
       label: admin-aws-${{ matrix.module }}
       environment: staging
       test_path: tests/admin_portal/${{ matrix.module }}
-      parallel: ${{ inputs.parallel || '4' }}
+      parallel: ${{ inputs.parallel || '2' }}
       timeout_minutes: 90
       runner: self-hosted
 
@@ -144,6 +152,6 @@ jobs:
       label: admin-aws-t-${{ matrix.target.label }}
       environment: staging
       test_path: ${{ matrix.target.path }}
-      parallel: ${{ inputs.parallel || '4' }}
+      parallel: ${{ inputs.parallel || '2' }}
       timeout_minutes: 90
       runner: ${{ matrix.target.runner }}
