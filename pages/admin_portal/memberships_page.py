@@ -1659,14 +1659,24 @@ class MembershipsPage(BasePage):
             lambda driver: not self.discount_is_selected(discount_name)
         )
 
+    APPLICABLE_DISCOUNT_REMOVE_CHIP = (
+        By.XPATH,
+        "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+        "//*[contains(@class,'form-select__multi-value__remove')]"
+    )
+
+    def has_applicable_discounts(self):
+        """Return whether any applicable discount chip is attached (Discount tab)."""
+        self.open_discount_settings()
+        return any(
+            b.is_displayed()
+            for b in self.driver.find_elements(*self.APPLICABLE_DISCOUNT_REMOVE_CHIP)
+        )
+
     def clear_applicable_discounts(self):
         """Remove all applicable discounts from the Discount settings tab."""
         self.open_discount_settings()
-        remove_locator = (
-            By.XPATH,
-            "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
-            "//*[contains(@class,'form-select__multi-value__remove')]"
-        )
+        remove_locator = self.APPLICABLE_DISCOUNT_REMOVE_CHIP
         while True:
             visible = [
                 b for b in self.driver.find_elements(*remove_locator)
