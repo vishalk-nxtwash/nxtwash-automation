@@ -324,7 +324,6 @@ def test_memberships_reset_filters_restores_grid(browser, screenshot):
     screenshot("filtered before reset")
 
     memberships_page.reset_filters()
-    memberships_page.apply_filters()
     screenshot("grid after reset")
 
     assert memberships_page.get_visible_membership_count() >= filtered_count

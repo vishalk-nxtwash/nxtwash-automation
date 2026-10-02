@@ -26,13 +26,13 @@ def test_redemption_single_location_persists(managed_membership):
         REDEEM_AS_SERVICE,
     )
     page.open_edit_membership(MANAGED_MEMBERSHIP)
-    page.configure_redemption_settings(0, REDEEM_AS_SERVICE)
+    site_name = page.configure_redemption_settings(REDEEM_AS_SERVICE)
     page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_redemption_settings()
 
-    assert page.redemption_location_is_assigned_by_index(0)
+    assert page.redemption_location_is_assigned(site_name)
     assert REDEEM_AS_SERVICE.lower() in page.get_body_text().lower()
 
 
@@ -49,14 +49,18 @@ def test_redeem_at_multiple_locations_persists(managed_membership):
     )
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_redemption_settings()
-    page.assign_redemption_location_by_index(0)
-    page.select_redeem_as_option(REDEEM_AS_SERVICE, 0)
-    page.assign_redemption_location_by_index(1)
-    page.select_redeem_as_option(REDEEM_AS_SERVICE, 1)
+    # Capture concrete site names once — index isn't a stable identity across
+    # the reload below (grid virtualizes; see get_redemption_location_name_by_index).
+    first_name = page.get_redemption_location_name_by_index(0)
+    page.assign_redemption_location(first_name)
+    page.select_redeem_as_option(first_name, REDEEM_AS_SERVICE)
+    second_name = page.get_redemption_location_name_by_index(1)
+    page.assign_redemption_location(second_name)
+    page.select_redeem_as_option(second_name, REDEEM_AS_SERVICE)
     page.save_and_return_to_list()
 
     page.open_edit_membership(MANAGED_MEMBERSHIP)
     page.open_redemption_settings()
 
-    assert page.redemption_location_is_assigned_by_index(0)
-    assert page.redemption_location_is_assigned_by_index(1)
+    assert page.redemption_location_is_assigned(first_name)
+    assert page.redemption_location_is_assigned(second_name)

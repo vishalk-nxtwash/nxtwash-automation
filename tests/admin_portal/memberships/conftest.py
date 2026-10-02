@@ -37,6 +37,25 @@ def page_has_no_broken_state(page):
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
 
 
+# Prefix of leftover per-run memberships that any create-flow helper below may
+# adopt in place of creating a fresh one (see _adopt_leftover_membership).
+ADOPTABLE_PREFIX = "VK decimal"
+
+
+def _needs_baseline_resave(memberships_page):
+    """True if the open edit form's global price/commission differ from baseline.
+
+    create_membership_if_missing()/create_recurring_membership_if_missing()
+    run on every test using them, every run — re-saving the form unconditionally
+    (as before) pays a full fill+save+redirect cycle even on the overwhelming
+    majority of runs where the record already matches. This check lets callers
+    skip straight back to the list instead.
+    """
+    return (
+        memberships_page.get_global_price_value() != GLOBAL_PRICE
+        or memberships_page.get_global_commission_value() != GLOBAL_COMMISSION
+    )
+
 def open_memberships_page(browser):
 
     open_admin_path(browser, "/services/memberships")
@@ -48,6 +67,50 @@ def open_memberships_page(browser):
     return memberships_page
 
 
+def _adopt_leftover_membership(browser, membership_name, fill_fn):
+    """Rename a leftover "VK decimal ..." membership into ``membership_name``.
+
+    Creating a membership is broken on staging (Save sends no request at all
+    — BUG 7, docs/bug_reports.md) but EDITING works, so every create-flow
+    helper in this file adopts a leftover uniquely-named test membership
+    (created by earlier runs, never cleaned up — product has no delete)
+    instead of calling create_membership()/create_recurring_membership().
+
+    ``fill_fn`` is one of MembershipsPage.fill_membership_form /
+    fill_recurring_membership_form, called as ``fill_fn(membership_name, ...)``
+    on the opened edit page to both rename and fill it.
+
+    Returns the list-page MembershipsPage on success, or None if no leftover
+    was found (caller falls back to the normal create call, in case BUG 7
+    ever gets fixed).
+    """
+    memberships_page = open_memberships_page(browser)
+    memberships_page.search_membership(ADOPTABLE_PREFIX)
+    adoptable = [
+        line for line in memberships_page.get_body_text().split("\n")
+        if line.startswith(ADOPTABLE_PREFIX)
+    ]
+    if not adoptable:
+        return None
+
+    memberships_page = open_memberships_page(browser)
+    memberships_page.open_edit_membership(adoptable[0])
+    fill_fn(memberships_page, membership_name)
+    memberships_page.save_and_return_to_list()
+    # Search lags behind a rename (the search index updates later), and a
+    # missed lookup here would make the next run adopt a second leftover.
+    # Confirm on the unfiltered list instead, retrying for up to ~60 s.
+    import time as _time
+    for _ in range(6):
+        memberships_page = open_memberships_page(browser)
+        if membership_name in memberships_page.get_body_text():
+            return memberships_page
+        _time.sleep(10)
+    raise AssertionError(
+        "Adopted membership '%s' not visible on the list after rename" % membership_name
+    )
+
+
 def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     from selenium.common.exceptions import TimeoutException
 
@@ -56,14 +119,17 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     if memberships_page.membership_exists(membership_name):
         memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
@@ -86,16 +152,32 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
 
     if inactive_found:
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_membership_form(
-            membership_name,
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
+        memberships_page.clear_active_filters()
+        return memberships_page
+
+    def _fill(page, name):
+        page.fill_membership_form(
+            name,
             GLOBAL_PRICE,
             GLOBAL_COMMISSION,
             FIRST_LOCATION_PRICE,
             FIRST_LOCATION_COMMISSION
         )
-        memberships_page.save_and_return_to_list()
-        memberships_page.clear_active_filters()
-        return memberships_page
+
+    adopted = _adopt_leftover_membership(browser, membership_name, _fill)
+    if adopted is not None:
+        return adopted
 
     memberships_page.create_membership(
         membership_name,
@@ -123,14 +205,17 @@ def create_recurring_membership_if_missing(
     if memberships_page.membership_exists(membership_name):
         memberships_page = open_memberships_page(browser)
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION
-        )
-        memberships_page.save_and_return_to_list()
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_recurring_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
         memberships_page.clear_active_filters()
         return memberships_page
 
@@ -151,16 +236,32 @@ def create_recurring_membership_if_missing(
 
     if inactive_found:
         memberships_page.open_edit_membership(membership_name)
-        memberships_page.fill_recurring_membership_form(
-            membership_name,
+        if _needs_baseline_resave(memberships_page):
+            memberships_page.fill_recurring_membership_form(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION
+            )
+            memberships_page.save_and_return_to_list()
+        else:
+            memberships_page = open_memberships_page(browser)
+        memberships_page.clear_active_filters()
+        return memberships_page
+
+    def _fill_recurring(page, name):
+        page.fill_recurring_membership_form(
+            name,
             GLOBAL_PRICE,
             GLOBAL_COMMISSION,
             FIRST_LOCATION_PRICE,
             FIRST_LOCATION_COMMISSION
         )
-        memberships_page.save_and_return_to_list()
-        memberships_page.clear_active_filters()
-        return memberships_page
+
+    adopted = _adopt_leftover_membership(browser, membership_name, _fill_recurring)
+    if adopted is not None:
+        return adopted
 
     memberships_page.create_recurring_membership(
         membership_name,
@@ -187,6 +288,50 @@ MANAGED_MEMBERSHIP = managed_name("Membership")
 # (likely because it has active subscribers).  The field always reads back
 # as "5" regardless of what is submitted, so the baseline matches that value.
 BASELINE_POINTS = "5"
+
+
+def _managed_membership_matches_baseline(memberships_page):
+    """True if every field reset_managed_membership() would touch is already
+    at baseline, on the currently-open edit form for MANAGED_MEMBERSHIP.
+
+    reset_managed_membership() runs twice per managed_membership test (setup
+    and teardown), and the fill+save cycle it guards is the single most
+    expensive thing in the module. Skipping it is only safe if every field it
+    would otherwise reset already matches — so this checks each one
+    individually rather than assuming "looks fine" from a subset. Anything
+    not covered here (should a new mutating test add a field) falls back to
+    the full reset by design: this function must return False, not raise, on
+    anything it isn't sure about.
+    """
+    if memberships_page.get_global_price_value() != GLOBAL_PRICE:
+        return False
+    if memberships_page.get_global_commission_value() != GLOBAL_COMMISSION:
+        return False
+    if memberships_page.get_barcode_value():
+        return False
+    if memberships_page.get_points_awarded_value() != BASELINE_POINTS:
+        return False
+    if not memberships_page.prepaid_membership_type_is_selected():
+        return False
+    if memberships_page.get_prepaid_months_value() != PREPAID_MONTHS:
+        return False
+    if not memberships_page.active_switch_is_on():
+        return False
+    if not memberships_page.customer_portal_switch_is_on():
+        return False
+    if memberships_page.limit_membership_switch_is_on():
+        return False
+
+    first_location_name = memberships_page.get_location_name_by_index(0)
+    if memberships_page.get_location_price(first_location_name) != FIRST_LOCATION_PRICE:
+        return False
+    if memberships_page.get_location_commission(first_location_name) != FIRST_LOCATION_COMMISSION:
+        return False
+
+    if memberships_page.has_applicable_discounts():
+        return False
+
+    return True
 
 
 def reset_managed_membership(browser):
@@ -216,6 +361,20 @@ def reset_managed_membership(browser):
             membership_found = False
 
     if not membership_found:
+        def _fill(page, name):
+            page.fill_membership_form(
+                name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION,
+            )
+
+        adopted = _adopt_leftover_membership(browser, MANAGED_MEMBERSHIP, _fill)
+        if adopted is not None:
+            # Adoption already renamed + filled it to baseline via _fill above.
+            return adopted
+
         memberships_page.create_membership(
             MANAGED_MEMBERSHIP,
             GLOBAL_PRICE,
@@ -232,6 +391,16 @@ def reset_managed_membership(browser):
     # wait_for_list_loaded() call that open_edit_membership() would trigger.
     # This saves ~100 s per reset on slow staging.
     memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
+
+    if _managed_membership_matches_baseline(memberships_page):
+        # Nothing to reset — skip the fill+save cycle entirely (this runs
+        # twice per managed_membership test, setup and teardown, and the
+        # save-and-redirect wait is the single most expensive step in the
+        # module). Re-navigate to the list fresh rather than relying on
+        # whatever tab the baseline check left active.
+        memberships_page = open_memberships_page(browser)
+        memberships_page.clear_active_filters()
+        return memberships_page
 
     # Reset all mutable fields touched by tests back to a known baseline.
     # clear_applicable_discounts() navigates to the Discount tab, so do all

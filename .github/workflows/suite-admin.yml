@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       test_path:
-        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite, one job per module).'
+        description: 'Optional: space-separated test paths / node ids. Each entry runs as its own parallel job (blank = full suite, one job per module). Comma-join paths within one entry (no spaces around commas) to run them together in a single job — e.g. "a.py,b.py c.py" is 2 jobs: [a.py+b.py] and [c.py].'
         required: false
         default: ''
       parallel:
@@ -87,9 +87,16 @@ jobs:
       runner: ubuntu-latest
 
 # ──────────────────────────────────────────────────────────────────────────────
-# TARGETED  — fast iteration: every entry of test_path is its own parallel job.
+# TARGETED  — fast iteration: every space-separated entry of test_path is its
+# own parallel job. Comma-join paths within one entry (no spaces around the
+# commas) to run them together as a single job instead — e.g. tests sharing a
+# managed_resource fixture need to land in the same pytest process (so xdist's
+# loadgroup scheduling can serialize them) rather than in separate jobs, which
+# would race each other on the shared staging record with no coordination.
 #   gh workflow run suite-admin.yml --ref <branch> \
 #     -f test_path="tests/admin_portal/cash_report tests/admin_portal/card_declines"
+#   gh workflow run suite-admin.yml --ref <branch> \
+#     -f test_path="tests/admin_portal/memberships/test_memberships_edit.py,tests/admin_portal/memberships/test_memberships_managed.py tests/admin_portal/memberships/test_memberships_ui.py"
 # ──────────────────────────────────────────────────────────────────────────────
   plan:
     if: ${{ inputs.test_path }}
@@ -101,11 +108,20 @@ jobs:
         env:
           TEST_PATH: ${{ inputs.test_path }}
         run: |
-          # One matrix entry per path; label = artifact-safe version of the path.
+          # One matrix entry per space-separated group; a comma-joined group
+          # becomes one job running all its paths together (label derived from
+          # the group's first path, suffixed with the group size when >1).
           targets=$(printf '%s\n' $TEST_PATH | python3 -c '
           import json, re, sys
-          paths = [p for p in sys.stdin.read().split() if p]
-          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80]} for p in paths]))')
+          groups = [g for g in sys.stdin.read().split() if g]
+          out = []
+          for g in groups:
+              sub_paths = [p for p in g.split(",") if p]
+              label = re.sub(r"[^A-Za-z0-9_.-]+", "-", sub_paths[0].replace("tests/admin_portal/", ""))[:80]
+              if len(sub_paths) > 1:
+                  label += "-plus%d" % (len(sub_paths) - 1)
+              out.append({"path": " ".join(sub_paths), "label": label})
+          print(json.dumps(out))')
           echo "targets=$targets" >> "$GITHUB_OUTPUT"
           echo "$targets"
 

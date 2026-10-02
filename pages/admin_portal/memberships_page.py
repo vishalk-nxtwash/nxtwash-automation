@@ -1,6 +1,9 @@
+import json
 import time
 
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -169,11 +172,6 @@ class MembershipsPage(BasePage):
         "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
         "//*[contains(@class,'InovuaReactDataGrid__row') "
         "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
-    )
-    REDEMPTION_CHECKBOXES = (
-        By.XPATH,
-        "//*[contains(@class,'inovua-react-toolkit-checkbox') "
-        "and contains(@class,'InovuaReactDataGrid__checkbox')]"
     )
     REDEEM_AS_COMBOBOX = (
         By.XPATH,
@@ -1020,7 +1018,12 @@ class MembershipsPage(BasePage):
         )
 
     def get_location_rows(self):
-        """Return unique visible location assignment rows."""
+        """Return unique location assignment rows currently mounted.
+
+        The grid virtualizes (InovuaReactDataGrid) — this only reflects
+        whatever is in the current scroll window. Use get_location_row(name)
+        to reliably find a specific row, including one scrolled out of view.
+        """
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.LOCATION_ROWS)
         )
@@ -1043,16 +1046,17 @@ class MembershipsPage(BasePage):
 
         return unique_rows
 
-    def row_checkbox_is_checked(self, checkbox):
-        """Return whether an Inovua checkbox is checked."""
-        classes = checkbox.get_attribute("class")
-        return (
-            "inovua-react-toolkit-checkbox--checked" in classes
-            and "inovua-react-toolkit-checkbox--unchecked" not in classes
-        )
+    def get_location_name_by_index(self, row_index):
+        """Return the site name of whichever row is currently at ``row_index``.
 
-    def get_location_checkbox_by_index(self, row_index):
-        """Return assignment checkbox for one visible location row."""
+        For picking a row to act on when the caller doesn't care which site.
+        NOT stable across a save/reload — the grid virtualizes, so "row 0"
+        can render as a different site after a fresh page load (this was the
+        root cause of the index-based methods this file used to have; see
+        docs/admin_test_coverage.md). Capture the name here once and address
+        the row by name afterwards (get_location_row(), location_is_assigned(),
+        ...) if it needs to survive a reload.
+        """
         rows = self.get_location_rows()
 
         if row_index >= len(rows):
@@ -1061,19 +1065,146 @@ class MembershipsPage(BasePage):
                 % (row_index + 1, len(rows))
             )
 
-        return rows[row_index].find_element(
-            By.XPATH,
-            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+        lines = [
+            line.strip() for line in rows[row_index].text.splitlines() if line.strip()
+        ]
+        return lines[0]
+
+    def row_checkbox_is_checked(self, checkbox):
+        """Return whether an Inovua checkbox is checked."""
+        classes = checkbox.get_attribute("class")
+        return (
+            "inovua-react-toolkit-checkbox--checked" in classes
+            and "inovua-react-toolkit-checkbox--unchecked" not in classes
         )
 
-    def location_is_assigned_by_index(self, row_index):
-        """Return whether one visible location row is assigned."""
+    def _scroll_grid_to_find_row(self, row_xpath, container_selector):
+        """Scroll a virtualized Inovua grid until ``row_xpath`` is mounted.
+
+        Both the location-assignment and redemption-location grids
+        (InovuaReactDataGrid) recycle row DOM nodes: a row scrolled out of
+        the actively-rendered window isn't removed, it's repositioned to a
+        (0-width, 0-height) pooled state with stale content and left in the
+        DOM — confirmed live, including with the row's OWN text still
+        matching (so a presence-only check finds it and wrongly treats it as
+        usable; its checkbox is then unclickable — "has no size and
+        location"). A real, currently-rendered row always has non-zero
+        width even when its own height is legitimately 0 (a positioning
+        wrapper around visible child content) — that's the check below.
+        Ported from WashPackagesPage.get_site_row(): find the grid's own
+        scrollable container and step scrollTop through it, checking for a
+        REAL row after each step (bypasses the WheelEvent -> React-state ->
+        scroll-reset cycle that broke a simpler drag/scroll approach).
+        """
+        def _real(el):
+            rect = el.rect
+            return rect["width"] > 0
+
+        els = [el for el in self.driver.find_elements(*row_xpath) if _real(el)]
+        if els:
+            return els[0]
+
+        selector_json = json.dumps(container_selector)
+        find_scroller_js = (
+            "var vl = document.querySelector(%s);"
+            "if (!vl) return null;"
+            "var kids = Array.from(vl.querySelectorAll('div'));"
+            "for (var i = 0; i < kids.length; i++) {"
+            "  if (kids[i].scrollHeight > kids[i].clientHeight + 50)"
+            "    return kids[i].scrollHeight - kids[i].clientHeight;"
+            "}"
+            "return null;"
+        ) % selector_json
+        max_scroll = self.driver.execute_script(find_scroller_js)
+        if max_scroll is None:
+            max_scroll = 4000
+
+        set_scroll_js = (
+            "var vl = document.querySelector(%s);"
+            "if (!vl) return;"
+            "var kids = Array.from(vl.querySelectorAll('div'));"
+            "for (var i = 0; i < kids.length; i++) {"
+            "  if (kids[i].scrollHeight > kids[i].clientHeight + 50) {"
+            "    kids[i].scrollTop = arguments[0];"
+            "    return;"
+            "  }"
+            "}"
+        ) % selector_json
+
+        step = 350
+        for pos in range(0, int(max_scroll) + step, step):
+            self.driver.execute_script(set_scroll_js, min(pos, int(max_scroll)))
+            time.sleep(0.12)
+            els = [el for el in self.driver.find_elements(*row_xpath) if _real(el)]
+            if els:
+                return els[0]
+
+        return WebDriverWait(self.driver, 30).until(
+            lambda d: next(
+                (el for el in d.find_elements(*row_xpath) if _real(el)), False
+            )
+        )
+
+    def get_location_row(self, site_name):
+        """Return the location assignment grid row for a site, by name.
+
+        Index-based lookup broke once the site count grew past one screen
+        (now 20+) and after any reload that resets the grid's scroll window.
+        This finds the row by its visible site name instead, which stays
+        correct regardless of scroll position or row count.
+
+        Checks get_location_rows()'s full, freshly-fetched list first — a
+        single raw XPath lookup for the name is more likely to match a
+        recycled/pooled (0-width) node (see _scroll_grid_to_find_row) than
+        this Python-side scan is, confirmed live.
+        """
         self.open_membership_settings()
+        WebDriverWait(self.driver, 60).until(
+            EC.presence_of_element_located(self.LOCATION_ROWS)
+        )
+        for row in self.get_location_rows():
+            if site_name in row.text and row.rect["width"] > 0:
+                return row
+
+        row_xpath = (
+            By.XPATH,
+            "//*[contains(@class,'InovuaReactDataGrid__row') "
+            "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
+            "[.//*[normalize-space()='%s']]" % site_name,
+        )
+        return self._scroll_grid_to_find_row(
+            row_xpath, "[class*=\"InovuaReactDataGrid__virtual-list\"]"
+        )
+
+    def _location_checkbox(self, site_name):
+        return self._retry_transient(
+            lambda: self.get_location_row(site_name).find_element(
+                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+            )
+        )
+
+    def location_is_assigned(self, site_name):
+        """Return whether a location (by site name) is assigned."""
         try:
-            checkbox = self.get_location_checkbox_by_index(row_index)
-            return self.row_checkbox_is_checked(checkbox)
-        except AssertionError:
+            return self.row_checkbox_is_checked(self._location_checkbox(site_name))
+        except (TimeoutException, NoSuchElementException):
             return False
+
+    def assigned_location_names(self):
+        """Return the site names of every currently-mounted, assigned location row."""
+        self.open_membership_settings()
+        names = []
+        for row in self.get_location_rows():
+            if row.rect["width"] <= 0:
+                continue  # recycled/pooled node — see _scroll_grid_to_find_row
+            checkbox = row.find_element(
+                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+            )
+            if self.row_checkbox_is_checked(checkbox):
+                lines = [line.strip() for line in row.text.splitlines() if line.strip()]
+                if lines:
+                    names.append(lines[0])
+        return names
 
     def _click_location_checkbox(self, checkbox):
         """Toggle a location assignment checkbox via ActionChains on the checkbox element.
@@ -1083,113 +1214,154 @@ class MembershipsPage(BasePage):
         checkbox widget.  Targeting the checkbox element directly with a real
         (trusted) mouse event is reliable for both checked and unchecked rows
         and correctly propagates through Inovua → React Hook Form onChange.
+
+        block: 'center', not 'nearest' — confirmed live: a row scrolled to
+        just below the grid's sticky header reports a real, non-zero rect
+        (so 'nearest' treats it as already in view and does nothing), but
+        the header visually overlaps it, so the click silently lands on the
+        header instead of the checkbox (no exception, checkbox never
+        toggles). Centering it guarantees clear space above and below.
         """
         self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'nearest'});",
+            "arguments[0].scrollIntoView({block: 'center'});",
             checkbox,
         )
         ActionChains(self.driver).move_to_element(checkbox).click().perform()
 
-    def assign_location_by_index_with_price_and_commission(
-        self,
-        row_index,
-        price,
-        commission
+    def _toggle_checkbox_until(
+        self, get_checkbox, click_checkbox, target_checked, attempts=5, per_attempt_timeout=3
     ):
-        """Assign one visible location row and set price/commission."""
-        rows = self.get_location_rows()
+        """Click a checkbox until it reaches ``target_checked``, retrying the click itself.
 
-        if row_index >= len(rows):
-            raise AssertionError(
-                "Expected at least %s location rows, found %s"
-                % (row_index + 1, len(rows))
-            )
+        A click here can complete with no exception yet not actually toggle
+        the checkbox — confirmed live, apparently a genuine race in the app
+        (not a geometry/overlap issue: reproduced and later failed to
+        reproduce with identical element coordinates). So this retries the
+        whole find-click-verify cycle with a short per-attempt wait, instead
+        of one click followed by one long wait that has no recourse if that
+        single click silently didn't register.
 
-        checkbox = rows[row_index].find_element(
-            By.XPATH,
-            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
-        )
-
-        if not self.row_checkbox_is_checked(checkbox):
-            self._click_location_checkbox(checkbox)
-            self.wait.until(
-                lambda driver: self.row_checkbox_is_checked(
-                    self.get_location_rows()[row_index].find_element(
-                        By.XPATH,
-                        ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
-                    )
+        ``attempts``/``per_attempt_timeout`` are overridable because retrying
+        is only worth its cost when the checkbox has a real chance of
+        catching up — unassign specifically almost never does (BUG 8,
+        docs/bug_reports.md): the change is not reflected in what gets saved
+        at all, not delayed, so retrying the default 5×3s budget against a
+        known-broken record is pure wasted wall-clock time. Bulk cleanup
+        (unassign_locations_after_first) passes a much smaller budget.
+        """
+        for attempt in range(attempts):
+            checkbox = get_checkbox()
+            if self.row_checkbox_is_checked(checkbox) == target_checked:
+                return
+            click_checkbox(checkbox)
+            try:
+                WebDriverWait(self.driver, per_attempt_timeout, poll_frequency=0.2).until(
+                    lambda driver: self.row_checkbox_is_checked(get_checkbox())
+                    == target_checked
                 )
+                return
+            except TimeoutException:
+                if attempt == attempts - 1:
+                    raise
+
+    def assign_location_with_price_and_commission(self, site_name, price, commission):
+        """Assign a location (by site name) and set its price/commission."""
+        self._retry_transient(
+            lambda: self._toggle_checkbox_until(
+                lambda: self._location_checkbox(site_name),
+                self._click_location_checkbox,
+                True,
             )
+        )
 
         # Set price/commission after assigning — the checkbox reveal may clear fields.
-        self.set_location_price_and_commission_by_index(row_index, price, commission)
+        self.set_location_price_and_commission(site_name, price, commission)
 
-    def unassign_location_by_index(self, row_index):
-        """Unassign one visible location row if it is checked."""
-        rows = self.get_location_rows()
+    def unassign_location(self, site_name, attempts=5, per_attempt_timeout=3):
+        """Unassign a location (by site name) if it is currently assigned.
 
-        if row_index >= len(rows):
-            raise AssertionError(
-                "Expected at least %s location rows, found %s"
-                % (row_index + 1, len(rows))
+        ``attempts``/``per_attempt_timeout`` default to a generous budget for
+        callers that need a real unassign to actually land. Bulk cleanup
+        (unassign_locations_after_first) overrides both to fail fast — see
+        _toggle_checkbox_until for why.
+        """
+        self._retry_transient(
+            lambda: self._toggle_checkbox_until(
+                lambda: self._location_checkbox(site_name),
+                self._click_location_checkbox,
+                False,
+                attempts=attempts,
+                per_attempt_timeout=per_attempt_timeout,
             )
-
-        checkbox = rows[row_index].find_element(
-            By.XPATH,
-            ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
         )
 
-        if self.row_checkbox_is_checked(checkbox):
-            self._click_location_checkbox(checkbox)
-            self.wait.until(
-                lambda driver: not self.row_checkbox_is_checked(
-                    self.get_location_rows()[row_index].find_element(
-                        By.XPATH,
-                        ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
-                    )
+    def unassign_locations_after_first(self, keep_site_name):
+        """Unassign every currently-mounted, assigned location except ``keep_site_name``.
+
+        Best-effort per location, with a deliberately small retry budget
+        (1 attempt, ~1.5s): the location-assignment checkbox's visual state
+        does not reliably persist through Save on staging (confirmed — see
+        BUG 8, docs/bug_reports.md), so an unassign click essentially never
+        catches up no matter how long we wait — this isn't transient, so the
+        default 5×3s budget per location is pure wasted wall-clock time here.
+        Measured impact: adopted leftover records can carry over a dozen
+        stale locations (nothing has ever successfully unassigned them,
+        since BUG 8 blocks that too), so at the default budget this step
+        alone was costing several minutes of setup time per test. One
+        unreachable checkbox must not crash setup for every other test that
+        goes through fill_membership_form() either — log and move on, and
+        let the test's own assertions (not this cleanup step) surface
+        whether BUG 8 affected that specific test.
+        """
+        import logging
+        for name in self.assigned_location_names():
+            if name == keep_site_name:
+                continue
+            try:
+                self.unassign_location(name, attempts=1, per_attempt_timeout=1.5)
+            except Exception as error:  # noqa: BLE001
+                logging.getLogger("nxtwash").warning(
+                    "Could not unassign location '%s' (likely BUG 8): %s",
+                    name, error,
                 )
-            )
 
-    def unassign_locations_after_first(self):
-        """Keep only the first visible location assigned."""
-        for row_index in range(1, len(self.get_location_rows())):
-            self.unassign_location_by_index(row_index)
+    def _retry_transient(self, fn, attempts=4, delay=0.5):
+        """Retry ``fn`` on a handful of "the grid is mid-re-render" errors.
 
-    def set_location_price_and_commission_by_index(
-        self,
-        row_index,
-        price,
-        commission
-    ):
-        """Set one visible location row price/commission without assigning it."""
-        price_inputs = [
-            element
-            for element in self.wait.until(
-                EC.presence_of_all_elements_located((By.NAME, "price"))
-            )
-            if element.is_displayed() and element.is_enabled()
-        ]
-        commission_inputs = [
-            element
-            for element in self.wait.until(
-                EC.presence_of_all_elements_located((By.NAME, "commission"))
-            )[1:]
-            if element.is_displayed() and element.is_enabled()
-        ]
+        The grid re-renders its row list on essentially every interaction
+        (checkbox toggle, field blur) — confirmed live: a row/element found a
+        moment ago can transiently fail a fresh lookup, or fail to click
+        (ElementNotInteractableException: "has no size and location", seen
+        live right after editing ~19 other rows' fields shifted layout),
+        then succeed again a few hundred ms later. This is not the row
+        actually being gone (see get_location_row()'s scroll-search for
+        that case) — it is this app's grid settling after a change, so a
+        short retry that re-fetches the element fresh is the fix, not a
+        longer wait on any single lookup or reusing the stale handle.
+        """
+        last_error = None
+        for _ in range(attempts):
+            try:
+                return fn()
+            except (
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotInteractableException,
+            ) as error:
+                last_error = error
+                time.sleep(delay)
+        raise last_error
 
-        if row_index >= len(price_inputs) or row_index >= len(commission_inputs):
-            raise AssertionError(
-                "Expected at least %s location rows, found %s"
-                % (
-                    row_index + 1,
-                    min(len(price_inputs), len(commission_inputs))
-                )
-            )
+    def set_location_price_and_commission(self, site_name, price, commission):
+        """Set price/commission for a location row (by site name) without (re)assigning it."""
+        def _do():
+            row = self.get_location_row(site_name)
+            price_input = row.find_element(By.NAME, "price")
+            commission_input = row.find_element(By.NAME, "commission")
+            self.set_grid_input_value(price_input, price)
+            self.set_grid_input_value(commission_input, commission)
 
-        price_input = price_inputs[row_index]
-        commission_input = commission_inputs[row_index]
-        self.set_grid_input_value(price_input, price)
-        self.set_grid_input_value(commission_input, commission)
+        self._retry_transient(_do)
 
     def set_grid_input_value(self, element, value):
         """Set a React grid input value without appending to stale text."""
@@ -1265,13 +1437,39 @@ class MembershipsPage(BasePage):
             time.sleep(0.5)
         return not self.driver.execute_script(find_empty)
 
-    def fill_required_unassigned_location_values(self):
-        """Fill required grid inputs for unassigned locations without assigning."""
-        for row_index in range(1, len(self.get_location_rows())):
-            self.set_location_price_and_commission_by_index(row_index, "0", "0")
+    def fill_required_unassigned_location_values(self, skip_site_name=None):
+        """Fill required grid inputs for unassigned locations without assigning.
+
+        Acts on each row's held element directly instead of re-finding rows
+        by name afterwards — this only needs to touch every row currently in
+        the DOM once, not preserve identity across time, so it sidesteps the
+        re-render timing that makes name-based re-lookup mid-loop flaky (see
+        _retry_transient). A row that's mid-re-render right when we reach it
+        is skipped rather than failed — fill_all_empty_location_inputs()
+        (called right after this, in fill_membership_form) is a second,
+        catch-all pass over whatever's still empty.
+        """
+        for row in self.get_location_rows():
+            if row.rect["width"] <= 0:
+                continue  # recycled/pooled node — see _scroll_grid_to_find_row
+            lines = [line.strip() for line in row.text.splitlines() if line.strip()]
+            name = lines[0] if lines else None
+            if not name or name == skip_site_name:
+                continue
+            try:
+                price_input = row.find_element(By.NAME, "price")
+                commission_input = row.find_element(By.NAME, "commission")
+            except (NoSuchElementException, StaleElementReferenceException):
+                continue
+            self.set_grid_input_value(price_input, "0")
+            self.set_grid_input_value(commission_input, "0")
 
     def get_redemption_rows(self):
-        """Return unique visible redemption location rows."""
+        """Return unique redemption location rows currently mounted.
+
+        Same virtualization caveat as get_location_rows(); use
+        get_redemption_row(name) to reliably find a specific row.
+        """
         rows = WebDriverWait(self.driver, 60).until(
             EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
         )
@@ -1294,79 +1492,110 @@ class MembershipsPage(BasePage):
 
         return unique_rows
 
-    def assign_redemption_location_by_index(self, row_index):
-        """Assign one redemption location row by zero-based row index."""
-        checkboxes = [
-            checkbox
-            for checkbox in WebDriverWait(self.driver, 60).until(
-                EC.presence_of_all_elements_located(self.REDEMPTION_CHECKBOXES)
-            )
-            if checkbox.rect["width"] > 0 and checkbox.rect["height"] > 0
-        ]
+    def get_redemption_location_name_by_index(self, row_index):
+        """Return the site name of whichever redemption row is at ``row_index``.
 
-        if row_index >= len(checkboxes):
+        Same "pick once, then address by name" caveat as
+        get_location_name_by_index — not stable across a reload.
+        """
+        rows = self.get_redemption_rows()
+
+        if row_index >= len(rows):
             raise AssertionError(
                 "Expected at least %s redemption rows, found %s"
-                % (row_index + 1, len(checkboxes))
+                % (row_index + 1, len(rows))
             )
 
-        checkbox_index = row_index + 1 if len(checkboxes) > row_index + 1 else row_index
-        checkbox = checkboxes[checkbox_index]
-
-        if not self.row_checkbox_is_checked(checkbox):
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block: 'nearest'});", checkbox
-            )
-            ActionChains(self.driver).move_to_element(checkbox).click().perform()
-            self.wait.until(
-                lambda driver: self.row_checkbox_is_checked(
-                    [
-                        cb
-                        for cb in driver.find_elements(*self.REDEMPTION_CHECKBOXES)
-                        if cb.rect["width"] > 0 and cb.rect["height"] > 0
-                    ][checkbox_index]
-                )
-            )
-
-    def redemption_location_is_assigned_by_index(self, row_index):
-        """Return whether one redemption location row is assigned."""
-        checkboxes = [
-            checkbox
-            for checkbox in self.wait.until(
-                EC.presence_of_all_elements_located(self.REDEMPTION_CHECKBOXES)
-            )
-            if checkbox.rect["width"] > 0 and checkbox.rect["height"] > 0
+        lines = [
+            line.strip() for line in rows[row_index].text.splitlines() if line.strip()
         ]
+        return lines[0]
 
-        checkbox_index = row_index + 1 if len(checkboxes) > row_index + 1 else row_index
+    def get_redemption_row(self, site_name):
+        """Return the redemption-location grid row for a site, by name.
 
-        if checkbox_index >= len(checkboxes):
-            raise AssertionError(
-                "Expected at least %s redemption rows, found %s"
-                % (row_index + 1, len(checkboxes))
-            )
+        Same virtualized-grid handling and "check the full list first"
+        rationale as get_location_row(); scoped to the active tab-pane since
+        a hidden tab's grid stays mounted in the DOM. Replaces the old
+        per-checkbox ``.rect`` scan (assign_redemption_location_by_index),
+        which made one WebDriver round-trip per checkbox on the page and
+        could hang for minutes once the location count grew.
+        """
+        WebDriverWait(self.driver, 60).until(
+            EC.presence_of_element_located(self.REDEMPTION_ROWS)
+        )
+        for row in self.get_redemption_rows():
+            if site_name in row.text and row.rect["width"] > 0:
+                return row
 
-        checkbox = checkboxes[checkbox_index]
-        return self.row_checkbox_is_checked(checkbox)
-
-    def select_redeem_as_option(self, service_name, row_index=0):
-        """Select Redeem as option in Redemption settings."""
-        comboboxes = self.wait.until(
-            lambda driver: [
-                element
-                for element in driver.find_elements(*self.REDEEM_AS_COMBOBOX)
-                if element.is_displayed() and element.is_enabled()
-            ]
+        row_xpath = (
+            By.XPATH,
+            "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+            "//*[contains(@class,'InovuaReactDataGrid__row') "
+            "and .//*[contains(@class,'inovua-react-toolkit-checkbox')]]"
+            "[.//*[normalize-space()='%s']]" % site_name,
+        )
+        return self._scroll_grid_to_find_row(
+            row_xpath,
+            ".tab-pane.active [class*=\"InovuaReactDataGrid__virtual-list\"]",
         )
 
-        if row_index >= len(comboboxes):
-            raise AssertionError(
-                "Expected at least %s redeem-as fields, found %s"
-                % (row_index + 1, len(comboboxes))
+    def _redemption_checkbox(self, site_name):
+        return self._retry_transient(
+            lambda: self.get_redemption_row(site_name).find_element(
+                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
             )
+        )
 
-        comboboxes[row_index].click()
-        comboboxes[row_index].send_keys(service_name)
+    def redemption_location_is_assigned(self, site_name):
+        """Return whether a redemption location (by site name) is assigned."""
+        try:
+            return self.row_checkbox_is_checked(self._redemption_checkbox(site_name))
+        except (TimeoutException, NoSuchElementException):
+            return False
+
+    def assigned_redemption_location_names(self):
+        """Return the site names of every currently-mounted, assigned redemption row."""
+        names = []
+        for row in self.get_redemption_rows():
+            if row.rect["width"] <= 0:
+                continue  # recycled/pooled node — see _scroll_grid_to_find_row
+            checkbox = row.find_element(
+                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
+            )
+            if self.row_checkbox_is_checked(checkbox):
+                lines = [line.strip() for line in row.text.splitlines() if line.strip()]
+                if lines:
+                    names.append(lines[0])
+        return names
+
+    def _click_redemption_checkbox(self, checkbox):
+        # block: 'center' — see _click_location_checkbox for why not 'nearest'.
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});", checkbox
+        )
+        ActionChains(self.driver).move_to_element(checkbox).click().perform()
+
+    def assign_redemption_location(self, site_name):
+        """Assign one redemption location row by site name."""
+        self._retry_transient(
+            lambda: self._toggle_checkbox_until(
+                lambda: self._redemption_checkbox(site_name),
+                self._click_redemption_checkbox,
+                True,
+            )
+        )
+
+    def select_redeem_as_option(self, site_name, service_name):
+        """Select the Redeem-as service for one redemption row, by site name."""
+        def _open_combobox():
+            row = self.get_redemption_row(site_name)
+            combobox = row.find_element(By.XPATH, ".//input[@role='combobox']")
+            combobox.click()
+            combobox.send_keys(service_name)
+            return True
+
+        self._retry_transient(_open_combobox)
         option = WebDriverWait(self.driver, 20).until(
             lambda d: self._find_react_option(service_name)
         )
@@ -1375,16 +1604,22 @@ class MembershipsPage(BasePage):
             lambda driver: service_name.lower() in self.get_body_text().lower()
         )
 
-    def configure_redemption_settings(
-        self,
-        redemption_row_index,
-        redeem_as_service
-    ):
-        """Set required redemption location and redeem-as service."""
+    def configure_redemption_settings(self, redeem_as_service):
+        """Assign a redemption location and set its redeem-as service.
+
+        Picks whichever redemption row renders first — the two callers
+        (fill_membership_form/fill_recurring_membership_form) just need any
+        one valid redemption location, not a specific site.
+
+        Returns the site name chosen, for callers that want to verify the
+        same row persists after a reload.
+        """
         self.open_redemption_settings()
         self.wait_for_grid_idle()
-        self.assign_redemption_location_by_index(redemption_row_index)
-        self.select_redeem_as_option(redeem_as_service, redemption_row_index)
+        site_name = self.get_redemption_location_name_by_index(0)
+        self.assign_redemption_location(site_name)
+        self.select_redeem_as_option(site_name, redeem_as_service)
+        return site_name
 
     def discount_is_selected(self, discount_name):
         """Return whether an applicable discount is selected."""
@@ -1424,14 +1659,24 @@ class MembershipsPage(BasePage):
             lambda driver: not self.discount_is_selected(discount_name)
         )
 
+    APPLICABLE_DISCOUNT_REMOVE_CHIP = (
+        By.XPATH,
+        "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
+        "//*[contains(@class,'form-select__multi-value__remove')]"
+    )
+
+    def has_applicable_discounts(self):
+        """Return whether any applicable discount chip is attached (Discount tab)."""
+        self.open_discount_settings()
+        return any(
+            b.is_displayed()
+            for b in self.driver.find_elements(*self.APPLICABLE_DISCOUNT_REMOVE_CHIP)
+        )
+
     def clear_applicable_discounts(self):
         """Remove all applicable discounts from the Discount settings tab."""
         self.open_discount_settings()
-        remove_locator = (
-            By.XPATH,
-            "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
-            "//*[contains(@class,'form-select__multi-value__remove')]"
-        )
+        remove_locator = self.APPLICABLE_DISCOUNT_REMOVE_CHIP
         while True:
             visible = [
                 b for b in self.driver.find_elements(*remove_locator)
@@ -1460,24 +1705,47 @@ class MembershipsPage(BasePage):
         self.select_applicable_discount(discount_name)
         self.save_and_return_to_list()
 
-    def get_location_price_by_index(self, row_index):
-        """Return one visible location row price by zero-based row index."""
-        rows = self.get_location_rows()
-        price_input = rows[row_index].find_element(By.NAME, "price")
-        return price_input.get_attribute("value")
+    def get_location_price(self, site_name):
+        """Return one location row's price (by site name)."""
+        return self._retry_transient(
+            lambda: self.get_location_row(site_name)
+            .find_element(By.NAME, "price")
+            .get_attribute("value")
+        )
 
-    def get_location_commission_by_index(self, row_index):
-        """Return one visible location row commission by zero-based row index."""
-        rows = self.get_location_rows()
-        commission_input = rows[row_index].find_element(By.NAME, "commission")
-        return commission_input.get_attribute("value")
+    def get_location_commission(self, site_name):
+        """Return one location row's commission (by site name)."""
+        return self._retry_transient(
+            lambda: self.get_location_row(site_name)
+            .find_element(By.NAME, "commission")
+            .get_attribute("value")
+        )
+
+    def _scroll_to_save_button(self):
+        """Scroll the Save button into view before clicking it.
+
+        Confirmed live: after assigning two locations (heavy scrolling
+        inside the location grid's own container), the Save button ended up
+        at y=-243 — above the viewport — and a plain click() on it (native
+        Selenium click, which is supposed to auto-scroll) silently did
+        nothing: no exception, no network activity, no page state change,
+        for a full 10 seconds. Explicitly scrolling first fixes it. This was
+        the actual cause of "the second assigned location doesn't persist"
+        — the save click itself was never landing, not a data/serialization
+        bug.
+        """
+        element = self.wait.until(EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON))
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});", element
+        )
 
     def click_save_membership(self):
         """Click save membership."""
+        self._scroll_to_save_button()
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
 
     def save_and_return_to_list(self):
-        """Save the current membership form and return to the list page.
+        """Save the membership, confirm the save landed, then show the list.
 
         Patches window.confirm so deactivation dialogs are auto-accepted.
         Waits for the app's own post-save redirect (BasePage.wait_for_legacy_save)
@@ -1488,8 +1756,8 @@ class MembershipsPage(BasePage):
         disable/re-enable + fixed-sleep heuristic if this module turns out not
         to auto-redirect (kept only as a safety net, not the primary path).
         """
-        import time
         self.driver.execute_script("window.confirm = () => true;")
+        self._scroll_to_save_button()
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
         try:
             outcome, error = self.wait_for_legacy_save()
@@ -1513,14 +1781,11 @@ class MembershipsPage(BasePage):
         # page URL (the iframe URL can be null after a form submission).
         self.driver.switch_to.default_content()
         current = self.driver.current_url or ""
-        if "/services/" in current:
-            base_url = current.split("/services/")[0]
-        else:
-            base_url = current.rstrip("/")
+        base_url = current.split("/services/")[0] if "/services/" in current else current.rstrip("/")
         try:
             self.driver.get(base_url + "/services/memberships")
         except TimeoutException:
-            pass  # page load timeout on slow staging; iframe content may still render
+            pass  # slow staging load; list wait below
         self.wait_for_list_loaded()
         if save_error:
             import logging
@@ -1556,25 +1821,29 @@ class MembershipsPage(BasePage):
         self.ensure_switch_off(self.LIMIT_MEMBERSHIP_SWITCH)
         self.set_global_price(global_price)
         self.set_global_commission(global_commission)
-        self.set_location_price_and_commission_by_index(
-            0,
+        # Resolve "the first location" to a concrete site name once — index 0
+        # isn't a stable identity across the reload save_and_return_to_list()
+        # triggers, so everything past this point addresses the row by name.
+        first_location_name = self.get_location_name_by_index(0)
+        self.set_location_price_and_commission(
+            first_location_name,
             first_location_price,
             first_location_commission
         )
-        self.fill_required_unassigned_location_values()
-        self.assign_location_by_index_with_price_and_commission(
-            0,
+        self.fill_required_unassigned_location_values(skip_site_name=first_location_name)
+        self.assign_location_with_price_and_commission(
+            first_location_name,
             first_location_price,
             first_location_commission
         )
-        self.unassign_locations_after_first()
+        self.unassign_locations_after_first(first_location_name)
         # Any location row still empty would block Save via HTML5 validation.
         self.fill_all_empty_location_inputs()
         # Last: the app now blocks Save entirely without a redemption location
         # + redeem-as service ("Please select at least one redeem location").
         # Configuring it here covers every caller (create, managed-reset,
         # direct fill) instead of each call site remembering to do it.
-        self.configure_redemption_settings(0, redeem_as_service)
+        self.configure_redemption_settings(redeem_as_service)
 
 
     def fill_recurring_membership_form(
@@ -1594,23 +1863,26 @@ class MembershipsPage(BasePage):
         self.ensure_switch_off(self.LIMIT_MEMBERSHIP_SWITCH)
         self.set_global_price(global_price)
         self.set_global_commission(global_commission)
-        self.set_location_price_and_commission_by_index(
-            0,
+        # Resolve "the first location" to a concrete site name once — see
+        # fill_membership_form() for why.
+        first_location_name = self.get_location_name_by_index(0)
+        self.set_location_price_and_commission(
+            first_location_name,
             first_location_price,
             first_location_commission
         )
-        self.fill_required_unassigned_location_values()
-        self.assign_location_by_index_with_price_and_commission(
-            0,
+        self.fill_required_unassigned_location_values(skip_site_name=first_location_name)
+        self.assign_location_with_price_and_commission(
+            first_location_name,
             first_location_price,
             first_location_commission
         )
-        self.unassign_locations_after_first()
+        self.unassign_locations_after_first(first_location_name)
         # Any location row still empty would block Save via HTML5 validation.
         self.fill_all_empty_location_inputs()
         # Last: the app now blocks Save entirely without a redemption location
         # + redeem-as service ("Please select at least one redeem location").
-        self.configure_redemption_settings(0, redeem_as_service)
+        self.configure_redemption_settings(redeem_as_service)
 
 
     def create_membership(

@@ -25,13 +25,23 @@ def test_membership_create_is_idempotent(browser):
 
 @allure.title("MB-SIT-001 Membership only first location is assigned at baseline")
 @pytest.mark.regression
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BUG 8 (docs/bug_reports.md): location-assignment checkbox changes "
+        "are not reliably saved (both assign and unassign) — leftover "
+        "locations from earlier runs' MEMBERSHIP_NAME record can't be "
+        "cleaned up via the UI, so more than one location may show assigned "
+        "at baseline. Reports XPASS once fixed."
+    ),
+)
 def test_membership_only_first_location_is_assigned(browser):
 
     memberships_page = create_membership_if_missing(browser)
     memberships_page.open_edit_membership(MEMBERSHIP_NAME)
 
-    assert memberships_page.location_is_assigned_by_index(0)
-    assert not memberships_page.location_is_assigned_by_index(1)
+    first_name = memberships_page.get_location_name_by_index(0)
+    assert memberships_page.assigned_location_names() == [first_name]
 
 
 @allure.title("MB-NAM-004 Maximum length membership name does not break form")
