@@ -10,8 +10,10 @@ from tests.admin_portal.memberships.conftest import FIRST_LOCATION_PRICE
 from tests.admin_portal.memberships.conftest import GLOBAL_COMMISSION
 from tests.admin_portal.memberships.conftest import GLOBAL_PRICE
 from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP
+from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP_2
 from tests.admin_portal.memberships.conftest import create_membership_if_missing
 from tests.admin_portal.memberships.conftest import managed_membership  # noqa: F401
+from tests.admin_portal.memberships.conftest import managed_membership_2  # noqa: F401
 from tests.admin_portal.memberships.conftest import open_memberships_page
 
 
@@ -97,14 +99,14 @@ def test_edit_membership_name_and_restore(browser):
 @allure.story("Membership Settings")
 @allure.title("MB-TYP-003 Edit membership type")
 @pytest.mark.regression
-def test_edit_managed_membership_type(managed_membership):
+def test_edit_managed_membership_type(managed_membership_2):
 
-    page = managed_membership
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page = managed_membership_2
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     page.select_recurring_membership_type()
     page.save_and_return_to_list()
 
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
 
     assert page.recurring_membership_type_is_selected()
 
@@ -114,18 +116,18 @@ def test_edit_managed_membership_type(managed_membership):
 @allure.story("Membership Settings")
 @allure.title("MB-EDT-003/MB-EDT-004 Edit global price and commission")
 @pytest.mark.regression
-def test_edit_managed_membership_global_price_and_commission(managed_membership):
+def test_edit_managed_membership_global_price_and_commission(managed_membership_2):
 
-    page = managed_membership
+    page = managed_membership_2
     updated_price = "25"
     updated_commission = "4"
 
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     page.set_global_price(updated_price)
     page.set_global_commission(updated_commission)
     page.save_and_return_to_list()
 
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
 
     assert page.get_global_price_value() == updated_price
     assert page.get_global_commission_value() == updated_commission
@@ -205,10 +207,10 @@ def test_edit_managed_membership_customer_portal_toggle_on(managed_membership):
         "price/commission field edits. Reports XPASS once fixed."
     ),
 )
-def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
+def test_edit_managed_membership_assigns_multiple_locations(managed_membership_2):
 
-    page = managed_membership
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page = managed_membership_2
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     # Capture concrete site names once — index isn't a stable identity across
     # the reload below (grid virtualizes; see get_location_name_by_index).
     first_name = page.get_location_name_by_index(0)
@@ -225,7 +227,7 @@ def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
     )
     page.save_and_return_to_list()
 
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
 
     assert page.location_is_assigned(first_name)
     assert page.location_is_assigned(second_name)
@@ -238,15 +240,15 @@ def test_edit_managed_membership_assigns_multiple_locations(managed_membership):
 @allure.story("Discount Settings")
 @allure.title("MB-DIS-001 Assign applicable discount persists after save")
 @pytest.mark.regression
-def test_applicable_discount_persists(managed_membership):
+def test_applicable_discount_persists(managed_membership_2):
 
-    page = managed_membership
-    LOG.info("Assigning discount %s to %s", APPLICABLE_DISCOUNT, MANAGED_MEMBERSHIP)
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page = managed_membership_2
+    LOG.info("Assigning discount %s to %s", APPLICABLE_DISCOUNT, MANAGED_MEMBERSHIP_2)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     page.open_discount_settings()
 
     assert page.discount_is_selected(APPLICABLE_DISCOUNT)
