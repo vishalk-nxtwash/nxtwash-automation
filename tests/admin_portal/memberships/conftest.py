@@ -290,6 +290,50 @@ MANAGED_MEMBERSHIP = managed_name("Membership")
 BASELINE_POINTS = "5"
 
 
+def _managed_membership_matches_baseline(memberships_page):
+    """True if every field reset_managed_membership() would touch is already
+    at baseline, on the currently-open edit form for MANAGED_MEMBERSHIP.
+
+    reset_managed_membership() runs twice per managed_membership test (setup
+    and teardown), and the fill+save cycle it guards is the single most
+    expensive thing in the module. Skipping it is only safe if every field it
+    would otherwise reset already matches — so this checks each one
+    individually rather than assuming "looks fine" from a subset. Anything
+    not covered here (should a new mutating test add a field) falls back to
+    the full reset by design: this function must return False, not raise, on
+    anything it isn't sure about.
+    """
+    if memberships_page.get_global_price_value() != GLOBAL_PRICE:
+        return False
+    if memberships_page.get_global_commission_value() != GLOBAL_COMMISSION:
+        return False
+    if memberships_page.get_barcode_value():
+        return False
+    if memberships_page.get_points_awarded_value() != BASELINE_POINTS:
+        return False
+    if not memberships_page.prepaid_membership_type_is_selected():
+        return False
+    if memberships_page.get_prepaid_months_value() != PREPAID_MONTHS:
+        return False
+    if not memberships_page.active_switch_is_on():
+        return False
+    if not memberships_page.customer_portal_switch_is_on():
+        return False
+    if memberships_page.limit_membership_switch_is_on():
+        return False
+
+    first_location_name = memberships_page.get_location_name_by_index(0)
+    if memberships_page.get_location_price(first_location_name) != FIRST_LOCATION_PRICE:
+        return False
+    if memberships_page.get_location_commission(first_location_name) != FIRST_LOCATION_COMMISSION:
+        return False
+
+    if memberships_page.has_applicable_discounts():
+        return False
+
+    return True
+
+
 def reset_managed_membership(browser):
     """Ensure the managed membership exists and reset its mutable fields."""
     from selenium.common.exceptions import TimeoutException
@@ -347,6 +391,16 @@ def reset_managed_membership(browser):
     # wait_for_list_loaded() call that open_edit_membership() would trigger.
     # This saves ~100 s per reset on slow staging.
     memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
+
+    if _managed_membership_matches_baseline(memberships_page):
+        # Nothing to reset — skip the fill+save cycle entirely (this runs
+        # twice per managed_membership test, setup and teardown, and the
+        # save-and-redirect wait is the single most expensive step in the
+        # module). Re-navigate to the list fresh rather than relying on
+        # whatever tab the baseline check left active.
+        memberships_page = open_memberships_page(browser)
+        memberships_page.clear_active_filters()
+        return memberships_page
 
     # Reset all mutable fields touched by tests back to a known baseline.
     # clear_applicable_discounts() navigates to the Discount tab, so do all
