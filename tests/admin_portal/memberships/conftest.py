@@ -284,6 +284,12 @@ def create_recurring_membership_if_missing(
 # fields instead of deleting. See tests/admin_portal/_managed.py.
 
 MANAGED_MEMBERSHIP = managed_name("Membership")
+# Second, independent managed record — splits the managed_membership test
+# group across two xdist workers instead of forcing all of them onto one
+# (see reset_managed_membership's membership_name parameter). Tests on
+# MANAGED_MEMBERSHIP and tests on MANAGED_MEMBERSHIP_2 never touch the same
+# record, so they can run fully in parallel with each other.
+MANAGED_MEMBERSHIP_2 = managed_name("Membership 2")
 # The server silently rejects changes to pointsAwarded for this membership
 # (likely because it has active subscribers).  The field always reads back
 # as "5" regardless of what is submitted, so the baseline matches that value.
@@ -334,8 +340,18 @@ def _managed_membership_matches_baseline(memberships_page):
     return True
 
 
-def reset_managed_membership(browser):
-    """Ensure the managed membership exists and reset its mutable fields."""
+def reset_managed_membership(browser, membership_name=MANAGED_MEMBERSHIP):
+    """Ensure the managed membership exists and reset its mutable fields.
+
+    membership_name defaults to the original single shared record
+    (MANAGED_MEMBERSHIP) but accepts any managed-record name — see
+    MANAGED_MEMBERSHIP_2 — so the same reset logic serves multiple
+    independent records. Splitting the 17 managed_membership tests across
+    two records lets them run on two xdist workers instead of one long
+    serialized queue (they still can't share a record — see
+    feedback_ci_managed_fixture_parallel_race — but two independent records
+    race nothing).
+    """
     from selenium.common.exceptions import TimeoutException
 
     memberships_page = open_memberships_page(browser)
@@ -343,9 +359,9 @@ def reset_managed_membership(browser):
     # Check existence without calling membership_exists() (which re-triggers
     # wait_for_list_loaded, costing ~100 s on slow staging).  We are already
     # inside the list frame after open_memberships_page().
-    memberships_page.search_membership(MANAGED_MEMBERSHIP)
+    memberships_page.search_membership(membership_name)
     try:
-        memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+        memberships_page.wait_for_membership_row(membership_name)
         membership_found = True
     except TimeoutException:
         membership_found = False
@@ -353,9 +369,9 @@ def reset_managed_membership(browser):
     if not membership_found:
         # Not in active view — check inactive filter before creating.
         memberships_page._show_inactive_memberships()
-        memberships_page.search_membership(MANAGED_MEMBERSHIP)
+        memberships_page.search_membership(membership_name)
         try:
-            memberships_page.wait_for_membership_row(MANAGED_MEMBERSHIP)
+            memberships_page.wait_for_membership_row(membership_name)
             membership_found = True
         except TimeoutException:
             membership_found = False
@@ -370,13 +386,13 @@ def reset_managed_membership(browser):
                 FIRST_LOCATION_COMMISSION,
             )
 
-        adopted = _adopt_leftover_membership(browser, MANAGED_MEMBERSHIP, _fill)
+        adopted = _adopt_leftover_membership(browser, membership_name, _fill)
         if adopted is not None:
             # Adoption already renamed + filled it to baseline via _fill above.
             return adopted
 
         memberships_page.create_membership(
-            MANAGED_MEMBERSHIP,
+            membership_name,
             GLOBAL_PRICE,
             GLOBAL_COMMISSION,
             FIRST_LOCATION_PRICE,
@@ -390,7 +406,7 @@ def reset_managed_membership(browser):
     # Open edit directly from the current list state, skipping the extra
     # wait_for_list_loaded() call that open_edit_membership() would trigger.
     # This saves ~100 s per reset on slow staging.
-    memberships_page.open_edit_membership_if_visible(MANAGED_MEMBERSHIP)
+    memberships_page.open_edit_membership_if_visible(membership_name)
 
     if _managed_membership_matches_baseline(memberships_page):
         # Nothing to reset — skip the fill+save cycle entirely (this runs
@@ -408,7 +424,7 @@ def reset_managed_membership(browser):
     # tab is the LAST active tab when save is called, keeping any field edits
     # made there in React Hook Form's live state.
     memberships_page.fill_membership_form(
-        MANAGED_MEMBERSHIP,
+        membership_name,
         GLOBAL_PRICE,
         GLOBAL_COMMISSION,
         FIRST_LOCATION_PRICE,
@@ -434,3 +450,6 @@ def reset_managed_membership(browser):
 
 
 managed_membership = managed_resource(reset_managed_membership)
+managed_membership_2 = managed_resource(
+    lambda browser: reset_managed_membership(browser, MANAGED_MEMBERSHIP_2)
+)

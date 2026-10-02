@@ -10,6 +10,7 @@ from tests.admin_portal.memberships.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     MANAGED_MEMBERSHIP,
+    MANAGED_MEMBERSHIP_2,
     MEMBERSHIP_NAME,
     PREPAID_MONTHS,
     RECURRING_MEMBERSHIP_NAME,
@@ -17,6 +18,7 @@ from tests.admin_portal.memberships.conftest import (
     VISIBLE_PRICE,
     create_membership_if_missing,
     create_recurring_membership_if_missing,
+    managed_membership_2,  # noqa: F401
     open_memberships_page,
 )
 
@@ -252,14 +254,14 @@ def test_activate_membership(managed_membership):
         "Inactive toggle on the edit form. Same app bug as WP-TGL-002 / POS-CRT-007."
     ),
 )
-def test_deactivate_membership(managed_membership):
+def test_deactivate_membership(managed_membership_2):
 
-    page = managed_membership
-    page.open_edit_membership(MANAGED_MEMBERSHIP)
+    page = managed_membership_2
+    page.open_edit_membership(MANAGED_MEMBERSHIP_2)
     page.ensure_active_switch_off()
     page.save_and_return_to_list()
 
     # Inactive memberships are hidden from the default grid — verify the row
     # does not appear after searching for it without any filter applied
-    page.search_membership(MANAGED_MEMBERSHIP)
-    assert MANAGED_MEMBERSHIP not in page.get_body_text()
+    page.search_membership(MANAGED_MEMBERSHIP_2)
+    assert MANAGED_MEMBERSHIP_2 not in page.get_body_text()
