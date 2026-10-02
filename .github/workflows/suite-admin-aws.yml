@@ -14,17 +14,18 @@ name: Admin Suite — AWS runner
 # touch the same staging managed records, so a GitHub-hosted run and an AWS
 # run must never run at the same time (queue, don't cancel).
 #
-# Isolated-runner pilot (targeted mode only) — NOT actually isolated: verified
-# 2026-10-03 that admin-isolated-01 (self-hosted-isolated) runs on the exact
-# same box (ip-172-31-0-106, t3.large: 2 vCPU / 8GB, confirmed via instance
-# metadata) as admin-staging-01/02/03. All 4 registered "self-hosted"-family
-# agents share one host with 2 real vCPUs — concurrent jobs across any of them
-# compete for the same CPU/RAM. This produced widespread ChromeDriver/renderer
-# timeouts, xdist worker crashes, and one confirmed "runner lost communication
-# (starved for CPU/Memory)" failure. Until the isolated label is moved to a
-# genuinely separate instance, routing jobs to it adds a 4th contender to the
-# same contention rather than escaping it — `parallel` below is sized for the
-# shared pool's real 2-vCPU ceiling regardless of which label picks a job up.
+# Isolated-runner pilot (targeted mode only) — DISABLED as of 2026-10-02.
+# admin-isolated-01 (self-hosted-isolated) was never on separate hardware —
+# verified 2026-10-03 it ran on the exact same box (ip-172-31-0-106, t3.large:
+# 2 vCPU / 8GB) as admin-staging-01/02/03, so it was always a 4th contender
+# for the same 2 vCPUs, not an escape from them. Along with the agent-count
+# fix below (4 agents -> 1, admin-staging-01 only), admin-isolated-01 has been
+# deregistered entirely. `isolated_runner_modules` defaults to empty so
+# targeted dispatches don't route any module to a label with zero registered
+# runners (that hangs the job in "queued" indefinitely — confirmed firsthand
+# right after deregistering, dispatching the default 'login' pilot target).
+# Only set isolated_runner_modules/isolated_runner_label if a genuinely
+# separate instance is registered under a new label in the future.
 
 on:
   workflow_dispatch:
@@ -38,9 +39,9 @@ on:
         required: false
         default: '2'
       isolated_runner_modules:
-        description: 'Pilot: space-separated module names (targeted mode) to route to isolated_runner_label instead of the shared self-hosted pool'
+        description: 'Pilot (currently disabled — no isolated runner registered): space-separated module names to route to isolated_runner_label instead of the shared self-hosted pool. Leave blank unless a genuinely separate instance is registered under that label.'
         required: false
-        default: 'login pos_settings'
+        default: ''
       isolated_runner_label:
         description: 'Pilot: runner label for the isolated-runner pilot'
         required: false
