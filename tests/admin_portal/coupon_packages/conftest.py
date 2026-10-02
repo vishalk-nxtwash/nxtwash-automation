@@ -98,15 +98,19 @@ MANAGED_COUPON_PACKAGE = managed_name("Coupon Pkg")
 def _reset_managed_coupon_package(browser):
     create_discount_if_missing(browser, DISCOUNT_NAME)
     page = open_coupon_packages_page(browser)
-    if page.coupon_package_exists(MANAGED_COUPON_PACKAGE):
+    if not page.coupon_package_exists(MANAGED_COUPON_PACKAGE):
+        page.create_coupon_package(MANAGED_COUPON_PACKAGE, DISCOUNT_NAME, GIVEAWAY_SERVICE)
         page = open_coupon_packages_page(browser)
-        page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
-        page.clear_assign_discount()
-        page.select_assign_discount(DISCOUNT_NAME)
-        page.ensure_active_switch_on()
-        page.click_save_coupon_package()
-        return open_coupon_packages_page(browser)
-    page.create_coupon_package(MANAGED_COUPON_PACKAGE, DISCOUNT_NAME, GIVEAWAY_SERVICE)
+    # Force every mutable field back to a known baseline on every setup/teardown
+    # (not just discount + active) — CP-EDT-003/CP-EXD-001/CP-EXD-002 all mutate
+    # expiration_days, so it must be reset too or a leftover value from the
+    # previous test leaks into the next one even with xdist_group serialization.
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
+    page.clear_assign_discount()
+    page.select_assign_discount(DISCOUNT_NAME)
+    page.ensure_active_switch_on()
+    page.enter_expiration_days(EXPIRATION_DAYS)
+    page.click_save_coupon_package()
     return open_coupon_packages_page(browser)
 
 

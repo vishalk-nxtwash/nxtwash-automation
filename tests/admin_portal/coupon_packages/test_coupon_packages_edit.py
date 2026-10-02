@@ -6,6 +6,7 @@ from tests.admin_portal.coupon_packages.conftest import COUPON_PACKAGE_NAME
 from tests.admin_portal.coupon_packages.conftest import DISCOUNT_NAME
 from tests.admin_portal.coupon_packages.conftest import EXPIRATION_DAYS
 from tests.admin_portal.coupon_packages.conftest import GIVEAWAY_SERVICES
+from tests.admin_portal.coupon_packages.conftest import MANAGED_COUPON_PACKAGE
 from tests.admin_portal.coupon_packages.conftest import SECOND_DISCOUNT_NAME
 from tests.admin_portal.coupon_packages.conftest import create_coupon_package_if_missing
 from tests.admin_portal.coupon_packages.conftest import create_inactive_coupon_package_if_missing
@@ -24,32 +25,35 @@ UPDATED_NAME = "VK ACC2 Renamed"
 
 @allure.title("CP-EDT-001 Edit coupon package name persists after save")
 @pytest.mark.regression
-def test_edit_coupon_package_name(browser):
+def test_edit_coupon_package_name(browser, managed_coupon_package):
 
-    create_coupon_package_if_missing(browser)
-    page = open_coupon_packages_page(browser)
+    page = managed_coupon_package
 
     if page.coupon_package_exists(UPDATED_NAME):
-        page.update_coupon_package_name(UPDATED_NAME, COUPON_PACKAGE_NAME)
+        page.update_coupon_package_name(UPDATED_NAME, MANAGED_COUPON_PACKAGE)
         page = open_coupon_packages_page(browser)
 
-    page.update_coupon_package_name(COUPON_PACKAGE_NAME, UPDATED_NAME)
+    page.update_coupon_package_name(MANAGED_COUPON_PACKAGE, UPDATED_NAME)
     page.search_coupon_package(UPDATED_NAME)
     row = page.wait_for_coupon_package_row(UPDATED_NAME)
 
     assert row.is_displayed()
 
-    page.update_coupon_package_name(UPDATED_NAME, COUPON_PACKAGE_NAME)
+    page.update_coupon_package_name(UPDATED_NAME, MANAGED_COUPON_PACKAGE)
 
 
 @allure.title("CP-EDT-002 Edit assigned discount persists after save")
 @pytest.mark.regression
-def test_edit_coupon_package_discount(browser):
+def test_edit_coupon_package_discount(browser, managed_coupon_package):
 
     create_percentage_discount_if_missing(browser)
-    page = create_coupon_package_if_missing(browser)
-    page.update_assigned_discount(COUPON_PACKAGE_NAME, SECOND_DISCOUNT_NAME)
-    page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+    # create_percentage_discount_if_missing navigates to /services/discounts to
+    # check/create the discount, leaving the browser off the coupon packages
+    # page the managed_coupon_package fixture set up before this test body ran.
+    # Re-navigate back before touching the coupon package.
+    page = open_coupon_packages_page(browser)
+    page.update_assigned_discount(MANAGED_COUPON_PACKAGE, SECOND_DISCOUNT_NAME)
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
     # Assign discount hydrates after the name field; wait before asserting.
     page.wait.until(lambda d: SECOND_DISCOUNT_NAME.lower() in page.get_body_text().lower())
 
@@ -57,16 +61,16 @@ def test_edit_coupon_package_discount(browser):
 
     page.click_save_coupon_package()
     page.wait_for_list_loaded()
-    page.update_assigned_discount(COUPON_PACKAGE_NAME, DISCOUNT_NAME)
+    page.update_assigned_discount(MANAGED_COUPON_PACKAGE, DISCOUNT_NAME)
 
 
 @allure.title("CP-EDT-003 Edit expiration days persists after save")
 @pytest.mark.extended
-def test_edit_coupon_package_expiration_days(browser):
+def test_edit_coupon_package_expiration_days(managed_coupon_package):
 
-    page = create_coupon_package_if_missing(browser)
-    page.update_expiration_days(COUPON_PACKAGE_NAME, EXPIRATION_DAYS)
-    page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+    page = managed_coupon_package
+    page.update_expiration_days(MANAGED_COUPON_PACKAGE, EXPIRATION_DAYS)
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
 
     assert page.get_expiration_days_value() == EXPIRATION_DAYS
 

@@ -5,6 +5,7 @@ from tests.admin_portal.coupon_packages.conftest import COUPON_PACKAGE_NAME
 from tests.admin_portal.coupon_packages.conftest import DISCOUNT_NAME
 from tests.admin_portal.coupon_packages.conftest import EXPIRATION_DAYS
 from tests.admin_portal.coupon_packages.conftest import GIVEAWAY_SERVICE
+from tests.admin_portal.coupon_packages.conftest import MANAGED_COUPON_PACKAGE
 from tests.admin_portal.coupon_packages.conftest import create_coupon_package_if_missing
 from tests.admin_portal.coupon_packages.conftest import open_coupon_packages_page
 from tests.admin_portal.coupon_packages.conftest import page_has_no_broken_state
@@ -33,22 +34,22 @@ def test_coupon_package_long_name_does_not_break_form(browser):
 
 @allure.title("CP-EXD-001 Valid positive expiration days saves and persists")
 @pytest.mark.regression
-def test_coupon_package_valid_expiration_days(browser):
+def test_coupon_package_valid_expiration_days(managed_coupon_package):
 
-    page = create_coupon_package_if_missing(browser)
-    page.update_expiration_days(COUPON_PACKAGE_NAME, EXPIRATION_DAYS)
-    page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+    page = managed_coupon_package
+    page.update_expiration_days(MANAGED_COUPON_PACKAGE, EXPIRATION_DAYS)
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
 
     assert page.get_expiration_days_value() == EXPIRATION_DAYS
 
 
 @allure.title("CP-EXD-002 Zero expiration days creates package with no expiry")
 @pytest.mark.extended
-def test_coupon_package_zero_expiration_days(browser):
+def test_coupon_package_zero_expiration_days(managed_coupon_package):
 
-    page = create_coupon_package_if_missing(browser)
-    page.update_expiration_days(COUPON_PACKAGE_NAME, "0")
-    page.open_edit_coupon_package(COUPON_PACKAGE_NAME)
+    page = managed_coupon_package
+    page.update_expiration_days(MANAGED_COUPON_PACKAGE, "0")
+    page.open_edit_coupon_package(MANAGED_COUPON_PACKAGE)
 
     assert page.get_expiration_days_value() == "0"
     assert page_has_no_broken_state(page)
