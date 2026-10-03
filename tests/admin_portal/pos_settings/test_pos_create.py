@@ -90,7 +90,7 @@ def test_create_pos_name_required(browser):
 
 
 @allure.title("POS-CRT-004 Save without site blocked with error")
-def test_create_pos_site_required(browser):
+def test_create_pos_site_required(browser, managed_pos):
     form = open_create_pos_form(browser)
     form.enter_pos_name(POS_NAME)
     # Site intentionally omitted
@@ -106,7 +106,7 @@ def test_create_pos_site_required(browser):
 
 
 @allure.title("POS-CRT-005 Save without lane blocked with error")
-def test_create_pos_lane_required(browser):
+def test_create_pos_lane_required(browser, managed_pos):
     # Dependency: Sites & Locations module
     form = open_create_pos_form(browser)
     form.enter_pos_name(POS_NAME)

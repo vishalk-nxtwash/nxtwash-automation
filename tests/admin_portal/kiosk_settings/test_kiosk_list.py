@@ -3,7 +3,6 @@ import pytest
 
 from tests.admin_portal.kiosk_settings.conftest import (
     KSK_NAME,
-    create_kiosk_if_missing,
     open_kiosk_page,
     page_has_no_broken_state,
 )
@@ -56,8 +55,7 @@ def test_kiosk_list_status_column(browser, managed_kiosk):
 @allure.title("KSK-LST-004 Pagination control shows a numeric record count")
 @pytest.mark.regression
 @pytest.mark.skip(reason="CI-SKIP KSK-LST-004: create_kiosk_if_missing times out in headless CI. Fix: same as CS-CRT-001.")
-def test_kiosk_list_pagination_shows_count(browser):
-    create_kiosk_if_missing(browser)
+def test_kiosk_list_pagination_shows_count(browser, managed_kiosk):
     page = open_kiosk_page(browser)
     body = page.get_body_text()
 

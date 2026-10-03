@@ -2,6 +2,7 @@ import pytest
 
 from pages.admin_portal.custom_services_page import CustomServicesPage
 from tests.admin_portal.admin_session import open_admin_path
+from tests.admin_portal._managed import managed_name, managed_resource
 from tests.admin_portal._data import load as _load
 
 _D = _load("custom_services")
@@ -77,9 +78,43 @@ def page_has_no_broken_state(page):
     return not any(text in body_text for text in BROKEN_STATE_TEXTS)
 
 
-@pytest.fixture
-def managed_service(browser):
-    """Ensure SERVICE_NAME exists at baseline before the test and restore after."""
-    page = create_service_if_missing(browser)
-    yield page
-    create_service_if_missing(browser)
+MANAGED_SERVICE_NAME = managed_name("Service")
+
+
+def _reset_managed_service(browser):
+    """Ensure MANAGED_SERVICE_NAME exists and reset every field writer tests touch.
+
+    The previous version of this fixture only reset category/price/commission/
+    site via create_service_if_missing — barcode, description, site price
+    override, and applicable-discount selection were left untouched, so a value
+    set by one test (e.g. CS-EDT-008's barcode) could leak into the next test
+    even with xdist_group serialization. Reset all of them here, same pattern
+    as the coupon_packages / wash_books managed-resource fixes.
+    """
+    page = open_custom_services_page(browser)
+    if not page.service_exists(MANAGED_SERVICE_NAME):
+        page.create_service(
+            MANAGED_SERVICE_NAME, SERVICE_CATEGORY, GLOBAL_PRICE, GLOBAL_COMMISSION, ASSIGNMENT_SITE
+        )
+        page = open_custom_services_page(browser)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
+    page.fill_service_form(
+        MANAGED_SERVICE_NAME,
+        SERVICE_CATEGORY,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        ASSIGNMENT_SITE,
+    )
+    page.enter_barcode("")
+    page.enter_description("")
+    page.open_discount_settings()
+    if page.discount_is_selected(APPLICABLE_DISCOUNT):
+        page.remove_applicable_discount(APPLICABLE_DISCOUNT)
+    if page.discount_is_selected(SECOND_APPLICABLE_DISCOUNT):
+        page.remove_applicable_discount(SECOND_APPLICABLE_DISCOUNT)
+    page.click_save_service()
+    page.wait_for_list_loaded()
+    return open_custom_services_page(browser)
+
+
+managed_service = managed_resource(_reset_managed_service)

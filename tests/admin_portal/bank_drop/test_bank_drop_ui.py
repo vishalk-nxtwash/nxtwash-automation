@@ -2,7 +2,6 @@ import allure
 import pytest
 
 from tests.admin_portal.bank_drop.conftest import (
-    create_bank_drop_if_missing,
     open_bank_drop_page,
     page_has_no_broken_state,
 )
@@ -33,9 +32,8 @@ def test_bank_drop_page_loads_with_primary_controls(browser):
 
 @allure.title("BD-LST-002 Grid displays name, order, and status with Edit action per row")
 @pytest.mark.regression
-def test_bank_drop_grid_columns_are_visible(browser):
+def test_bank_drop_grid_columns_are_visible(browser, managed_bank_drop):
 
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     body_text = page.get_body_text()
 

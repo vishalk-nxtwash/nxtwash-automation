@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from tests.admin_portal.custom_services.conftest import (
     APPLICABLE_DISCOUNT,
+    MANAGED_SERVICE_NAME,
     SECOND_APPLICABLE_DISCOUNT,
     SERVICE_NAME,
     create_service_if_missing,
@@ -47,13 +48,13 @@ def test_discount_settings_tab_is_visible_on_create(browser):
 def test_applicable_discount_persists_after_save(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     assert page.discount_is_selected(APPLICABLE_DISCOUNT)
     assert page_has_no_broken_state(page)
@@ -65,14 +66,14 @@ def test_applicable_discount_persists_after_save(managed_service):
 def test_multiple_applicable_discounts_can_be_selected(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.select_applicable_discount(SECOND_APPLICABLE_DISCOUNT)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     assert page.discount_is_selected(APPLICABLE_DISCOUNT)
     assert page.discount_is_selected(SECOND_APPLICABLE_DISCOUNT)
@@ -91,19 +92,19 @@ def test_multiple_applicable_discounts_can_be_selected(managed_service):
 def test_remove_applicable_discount_persists(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(APPLICABLE_DISCOUNT)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     page.remove_applicable_discount(APPLICABLE_DISCOUNT)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.open_discount_settings()
     assert not page.discount_is_selected(APPLICABLE_DISCOUNT)
     assert page_has_no_broken_state(page)

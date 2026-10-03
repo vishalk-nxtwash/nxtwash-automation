@@ -45,9 +45,8 @@ def test_zero_order_documents_behavior(browser):
 
 @allure.title("BD-VAL-006 Duplicate bank drop name — document server behaviour")
 @pytest.mark.edge
-def test_duplicate_name_documents_behavior(browser):
+def test_duplicate_name_documents_behavior(browser, managed_bank_drop):
     """App may accept or reject a duplicate name. Test documents that the form stays usable."""
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     page.open_create()
     page.enter_name(BANK_DROP_NAME)
@@ -61,9 +60,8 @@ def test_duplicate_name_documents_behavior(browser):
 
 @allure.title("BD-VAL-007 Duplicate order value — document server behaviour")
 @pytest.mark.edge
-def test_duplicate_order_documents_behavior(browser):
+def test_duplicate_order_documents_behavior(browser, managed_bank_drop):
     """App may accept or reject a duplicate order. Test documents that the form stays usable."""
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     page.open_create()
     page.enter_name("VK dup-order-%s" % BANK_DROP_ORDER)
@@ -138,9 +136,8 @@ def test_save_button_has_human_readable_label(browser):
         "Remove xfail once the count is rendered correctly."
     ),
 )
-def test_pagination_footer_shows_record_count(browser):
+def test_pagination_footer_shows_record_count(browser, managed_bank_drop):
 
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     body_text = page.get_body_text()
 

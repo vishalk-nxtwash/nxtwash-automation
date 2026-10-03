@@ -3,7 +3,6 @@ import pytest
 
 from tests.admin_portal.pos_settings.conftest import (
     POS_NAME,
-    create_pos_if_missing,
     open_pos_page,
     page_has_no_broken_state,
 )
@@ -54,8 +53,7 @@ def test_pos_list_status_column(browser, managed_pos):
 
 @allure.title("POS-LST-004 Pagination shows correct total count and page info")
 @pytest.mark.regression
-def test_pos_list_pagination_shows_count(browser):
-    create_pos_if_missing(browser)
+def test_pos_list_pagination_shows_count(browser, managed_pos):
     page = open_pos_page(browser)
     body = page.get_body_text()
 

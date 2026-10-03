@@ -53,8 +53,7 @@ def test_user_roles_search_nonexistent_shows_empty(browser):
 
 @allure.title("UR-SRH-004 Clearing search after a query restores the full list")
 @pytest.mark.regression
-def test_user_roles_clear_search_restores_list(browser):
-    create_role_if_missing(browser)
+def test_user_roles_clear_search_restores_list(browser, managed_role):
     page = open_user_roles_page(browser)
     original_count = page.get_visible_row_count()
 

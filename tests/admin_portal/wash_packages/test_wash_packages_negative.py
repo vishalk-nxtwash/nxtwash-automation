@@ -8,7 +8,6 @@ from tests.admin_portal.wash_packages.conftest import (
     PACKAGE_NAME,
     POINTS_AWARDED,
     POINTS_REDEEMED,
-    create_wash_package_if_missing,
     open_wash_packages_page,
     page_has_no_broken_state,
 )
@@ -40,8 +39,7 @@ def test_wash_package_required_name_validation(browser):
     strict=False,
     reason="Staging shows 'Something went wrong' server error for duplicate package name; same product defect as duplicate barcode.",
 )
-def test_create_duplicate_wash_package_is_blocked(browser):
-    create_wash_package_if_missing(browser)
+def test_create_duplicate_wash_package_is_blocked(browser, managed_package):
     page = open_wash_packages_page(browser)
     page.open_create_package()
     page.fill_package_form(

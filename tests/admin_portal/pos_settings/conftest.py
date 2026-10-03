@@ -134,6 +134,11 @@ def create_pos_if_missing(browser, name=POS_NAME, site=POS_SITE, lane=None,
         form = open_edit_pos_form(browser, name)
         form.enter_pos_name(name)
         form.ensure_active_pos_on()
+        # Reset payment methods too — POS-EDT-007 forces both on, and without
+        # resetting here a prior test's state would leak into the next one
+        # even with xdist_group serialization via the managed_pos fixture.
+        form.ensure_cash_checked()
+        form.ensure_card_checked()
         form.click_save()
         return open_pos_page(browser)
 
@@ -182,11 +187,15 @@ def _restore_managed_pos(browser):
         form = open_edit_pos_form(browser, POS_NAME)
         form.enter_pos_name(POS_NAME)
         form.ensure_active_pos_on()
+        form.ensure_cash_checked()
+        form.ensure_card_checked()
         form.click_save()
     elif page.pos_exists(POS_UPDATED_NAME):
         form = open_edit_pos_form(browser, POS_UPDATED_NAME)
         form.enter_pos_name(POS_NAME)
         form.ensure_active_pos_on()
+        form.ensure_cash_checked()
+        form.ensure_card_checked()
         form.click_save()
     else:
         create_pos_if_missing(browser)

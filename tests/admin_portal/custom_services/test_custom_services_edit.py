@@ -11,6 +11,7 @@ from tests.admin_portal.custom_services.conftest import (
     DESCRIPTION_TEXT,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
+    MANAGED_SERVICE_NAME,
     SERVICE_CATEGORY,
     SERVICE_NAME,
     SITE_OVERRIDE_PRICE,
@@ -56,12 +57,12 @@ def test_edit_service_name_persists(browser):
 def test_edit_global_price_persists(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.set_global_price(SITE_OVERRIDE_PRICE_HIGH)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     assert page.get_global_price_value() == SITE_OVERRIDE_PRICE_HIGH
     assert page_has_no_broken_state(page)
 
@@ -72,14 +73,14 @@ def test_edit_global_price_persists(managed_service):
 def test_edit_site_price_override_persists(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     row = page.get_site_row(ASSIGNMENT_SITE)
     price_input = row.find_element(By.NAME, "price")
     page._set_input_value(price_input, SITE_OVERRIDE_PRICE)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     assert page.get_site_price_value(ASSIGNMENT_SITE) == SITE_OVERRIDE_PRICE
     assert page_has_no_broken_state(page)
 
@@ -174,13 +175,13 @@ def test_edit_barcode_and_description_persist(managed_service):
 
     page = managed_service
     barcode = "VK-BC-" + uuid.uuid4().hex[:6]
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.enter_barcode(barcode)
     page.enter_description(DESCRIPTION_TEXT)
     page.click_save_service()
     page.wait_for_list_loaded()
 
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     assert page.get_barcode_value() == barcode
     assert page.get_description_value() == DESCRIPTION_TEXT
     assert page_has_no_broken_state(page)
@@ -205,12 +206,12 @@ def test_created_service_persists_after_reload(browser):
 def test_edited_service_persists_after_reload(managed_service):
 
     page = managed_service
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     page.set_global_price(SITE_OVERRIDE_PRICE)
     page.click_save_service()
     page.wait_for_list_loaded()
 
     page = open_custom_services_page(page.driver)
-    page.open_edit_service(SERVICE_NAME)
+    page.open_edit_service(MANAGED_SERVICE_NAME)
     assert page.get_global_price_value() == SITE_OVERRIDE_PRICE
     assert page_has_no_broken_state(page)

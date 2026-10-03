@@ -118,9 +118,8 @@ def test_filter_by_site_narrows_results(browser):
 
 @allure.title("WP-FLT-002 Filter active service shows only active wash packages")
 @pytest.mark.regression
-def test_filter_active_shows_active_packages(browser):
-    create_wash_package_if_missing(browser)
-    page = open_wash_packages_page(browser)
+def test_filter_active_shows_active_packages(managed_package):
+    page = managed_package
     page.open_filter_panel()
     page.toggle_active_service_filter()
     page.apply_filters()
@@ -133,9 +132,8 @@ def test_filter_active_shows_active_packages(browser):
 
 @allure.title("WP-FLT-004 Site and active filter applied together narrows results correctly")
 @pytest.mark.regression
-def test_filter_site_and_active_combined(browser):
-    create_wash_package_if_missing(browser)
-    page = open_wash_packages_page(browser)
+def test_filter_site_and_active_combined(managed_package):
+    page = managed_package
     page.select_site_filter(ASSIGNMENT_SITE)
     page.toggle_active_service_filter()
     page.apply_filters()

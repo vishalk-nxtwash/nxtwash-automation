@@ -119,11 +119,11 @@ class CardDeclinesPage(BasePage):
         """
         self._switch_to_frame()
         try:
-            self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+            self.wait_clickable_with_retry(self.SITE_MULTISELECT)
         except TimeoutException:
             # Fallback: wait for the date preset combobox
             try:
-                self.wait.until(EC.element_to_be_clickable(self.DATE_PRESET_COMBOBOX))
+                self.wait_clickable_with_retry(self.DATE_PRESET_COMBOBOX)
             except TimeoutException:
                 pass
         try:

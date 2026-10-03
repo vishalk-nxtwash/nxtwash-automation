@@ -114,9 +114,8 @@ def test_deactivate_active_bank_drop(browser):
 
 @allure.title("BD-EDT-005 Edit form pre-populates existing name and order values")
 @pytest.mark.regression
-def test_edit_form_prepopulates_existing_values(browser):
+def test_edit_form_prepopulates_existing_values(browser, managed_bank_drop):
 
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     page.open_edit(BANK_DROP_NAME)
 
@@ -128,9 +127,8 @@ def test_edit_form_prepopulates_existing_values(browser):
 
 @allure.title("BD-EDT-006 Cancel out of edit form discards changes")
 @pytest.mark.regression
-def test_cancel_out_of_edit_form(browser):
+def test_cancel_out_of_edit_form(browser, managed_bank_drop):
 
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
     page.open_edit(BANK_DROP_NAME)
     page.enter_name("VK should-not-save")

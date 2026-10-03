@@ -46,7 +46,7 @@ def test_add_kiosk_form_opens(browser):
 
 @allure.title("KSK-CRT-002 Creating a kiosk with name only saves correctly")
 @pytest.mark.skip(reason="Manual - Check later for fixes: KSK-CRT-002: Site is required to save — name-only submission is blocked by form validation; test asserts the wrong behavior")
-def test_create_kiosk_name_only(browser):
+def test_create_kiosk_name_only(browser, managed_kiosk):
     form = open_create_kiosk_form(browser)
     form.enter_kiosk_name(KSK_NAME)
     form.click_save()
@@ -77,8 +77,8 @@ def test_create_kiosk_name_required(browser):
 @allure.title("KSK-CRT-004 Creating a kiosk with site and lane saves correctly")
 @pytest.mark.regression
 @_LOCATION_XFAIL
-def test_create_kiosk_with_site_and_lane(browser):
-    page = create_kiosk_if_missing(browser, name=KSK_NAME, site=KSK_SITE, lane=KSK_LANE)
+def test_create_kiosk_with_site_and_lane(managed_kiosk):
+    page = managed_kiosk
     assert page.kiosk_exists(KSK_NAME), (
         "Kiosk '%s' not found after create_kiosk_if_missing" % KSK_NAME
     )

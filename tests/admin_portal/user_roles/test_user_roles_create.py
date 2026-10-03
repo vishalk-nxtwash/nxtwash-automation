@@ -5,7 +5,6 @@ from pages.admin_portal.user_roles_page import AdminUserRoleFormPage
 from tests.admin_portal.user_roles.conftest import (
     ROLE_NAME,
     ROLE_PRIORITY,
-    create_role_if_missing,
     make_unique_role_name,
     open_create_role_form,
     open_user_roles_page,
@@ -111,8 +110,7 @@ def test_create_role_priority_required(browser):
 
 @allure.title("UR-CRT-006 Submitting a duplicate role name is blocked")
 @pytest.mark.regression
-def test_create_duplicate_role_rejected(browser):
-    create_role_if_missing(browser)
+def test_create_duplicate_role_rejected(browser, managed_role):
     form = open_create_role_form(browser)
     form.enter_role_name(ROLE_NAME)
     form.enter_priority(ROLE_PRIORITY)

@@ -52,8 +52,7 @@ def test_user_roles_default_roles_present(browser):
 
 @allure.title("UR-LST-004 Pagination shows a record count that matches rendered rows")
 @pytest.mark.regression
-def test_user_roles_pagination_count(browser):
-    create_role_if_missing(browser)
+def test_user_roles_pagination_count(browser, managed_role):
     page = open_user_roles_page(browser)
     body = page.get_body_text()
 

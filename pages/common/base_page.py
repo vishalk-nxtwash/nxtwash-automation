@@ -410,6 +410,31 @@ class BasePage:
         from selenium.common.exceptions import TimeoutException as TE
         raise TE("Frame %s not stable after %ss" % (locator, timeout)) from last_exc
 
+    def wait_clickable_with_retry(self, locator, timeout=45):
+        """Wait for an element to be clickable, retrying on staleness.
+
+        EC.element_to_be_clickable re-finds the element by locator on every
+        poll, but then calls .is_displayed()/.is_enabled() on that specific
+        reference. If the element re-renders (e.g. a React filter modal) in
+        the gap between the find and that check, the call raises
+        StaleElementReferenceException — and WebDriverWait, which by default
+        only ignores NoSuchElementException, aborts the whole wait on the
+        first such hit instead of retrying with the time left on the clock.
+        """
+        from selenium.common.exceptions import TimeoutException as TE
+        deadline = time.time() + timeout
+        last_exc = None
+        while time.time() < deadline:
+            try:
+                remaining = max(1, deadline - time.time())
+                return WebDriverWait(self.driver, remaining).until(
+                    EC.element_to_be_clickable(locator)
+                )
+            except StaleElementReferenceException as exc:
+                last_exc = exc
+                time.sleep(0.3)
+        raise TE("Element %s not stable after %ss" % (locator, timeout)) from last_exc
+
     def wait_for_persisted_value(
         self, value_getter, expected, reopen=None, attempts=6, per_try=5, max_seconds=120
     ):

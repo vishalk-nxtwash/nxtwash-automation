@@ -209,7 +209,7 @@ def test_create_tunnel_required_fields_only(browser):
     pytest.param("controller_ip", id="TUN-VAL-003"),
 ])
 @pytest.mark.smoke
-def test_required_field_validation(browser, field):
+def test_required_field_validation(browser, field, managed_tunnel):
     form = open_create_tunnel_form(browser)
 
     if field == "name":

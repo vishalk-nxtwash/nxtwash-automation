@@ -209,10 +209,10 @@ class WashActivityPage(BasePage):
         """Wait for the blocking filter modal to be interactive."""
         self._switch_to_frame()
         try:
-            self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+            self.wait_clickable_with_retry(self.APPLY_BUTTON)
         except TimeoutException:
             try:
-                self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+                self.wait_clickable_with_retry(self.SITE_MULTISELECT)
             except TimeoutException:
                 pass
         try:

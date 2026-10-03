@@ -65,8 +65,7 @@ def test_user_roles_filter_off_shows_all(browser):
 
 @allure.title("UR-FLT-004 Site filter narrows results to roles assigned to that site")
 @pytest.mark.regression
-def test_user_roles_filter_by_site(browser):
-    create_role_if_missing(browser)
+def test_user_roles_filter_by_site(browser, managed_role):
     page = open_user_roles_page(browser)
     page.select_site_filter(ASSIGNMENT_SITE)
     page.apply_filters()
@@ -90,8 +89,7 @@ def test_user_roles_filter_combined_site_and_active(browser):
 
 @allure.title("UR-FLT-005 Filter result count in pagination matches visible row count")
 @pytest.mark.regression
-def test_user_roles_filter_count_matches_rows(browser):
-    create_role_if_missing(browser)
+def test_user_roles_filter_count_matches_rows(browser, managed_role):
     page = open_user_roles_page(browser)
     page.toggle_active_filter()
     page.apply_filters()
@@ -122,8 +120,7 @@ def test_user_roles_site_filter_alphabetical(browser):
 @allure.title("UR-FLT-007 Reset All clears all applied filters and restores the full list")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Manual check: StaleElementReferenceException on Reset All — native click races React re-render")
-def test_user_roles_reset_all_clears_filters(browser):
-    create_role_if_missing(browser)
+def test_user_roles_reset_all_clears_filters(browser, managed_role):
     page = open_user_roles_page(browser)
     original_count = page.get_visible_row_count()
 

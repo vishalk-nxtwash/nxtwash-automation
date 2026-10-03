@@ -178,7 +178,7 @@ class RevenueOverviewPage(BasePage):
 
     def wait_for_modal(self):
         self._switch_to_frame()
-        self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+        self.wait_clickable_with_retry(self.APPLY_BUTTON)
         try:
             WebDriverWait(self.driver, 5).until(
                 EC.invisibility_of_element_located(self.LOAD_MASK)
@@ -187,12 +187,13 @@ class RevenueOverviewPage(BasePage):
             pass
 
     def modal_is_open(self):
+        from selenium.common.exceptions import StaleElementReferenceException
         try:
             WebDriverWait(self.driver, 2).until(
                 EC.visibility_of_element_located(self.APPLY_BUTTON)
             )
             return True
-        except TimeoutException:
+        except (TimeoutException, StaleElementReferenceException):
             return False
 
     def apply_modal_filters(self):

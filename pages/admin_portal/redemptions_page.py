@@ -116,7 +116,7 @@ class RedemptionsPage(BasePage):
     def wait_for_modal(self):
         """Wait for the blocking filter modal (Apply filters button) to be ready."""
         self._switch_to_frame()
-        self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+        self.wait_clickable_with_retry(self.APPLY_BUTTON)
         try:
             self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         except TimeoutException:

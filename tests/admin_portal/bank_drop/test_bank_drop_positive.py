@@ -7,7 +7,6 @@ from tests.admin_portal.bank_drop.conftest import (
     BANK_DROP_NAME,
     BANK_DROP_ORDER,
     VISIBLE_BANK_DROP_ORDER,
-    create_bank_drop_if_missing,
     open_bank_drop_page,
     page_has_no_broken_state,
 )
@@ -22,9 +21,9 @@ pytestmark = [
 
 @pytest.mark.smoke
 @allure.title("BD-CRT-001 Create active bank drop appears in list with Active status and correct order")
-def test_create_active_bank_drop(browser):
+def test_create_active_bank_drop(browser, managed_bank_drop):
 
-    page = create_bank_drop_if_missing(browser)
+    page = managed_bank_drop
     page.wait_for_list_loaded()
 
     assert page.wait_for_bank_drop_row(BANK_DROP_NAME).is_displayed()
@@ -73,9 +72,8 @@ def test_cancel_out_of_add_form(browser):
 
 @allure.title("BD-PER-001 Created bank drop data persists after page reload")
 @pytest.mark.regression
-def test_created_bank_drop_persists_after_reload(browser):
+def test_created_bank_drop_persists_after_reload(browser, managed_bank_drop):
 
-    create_bank_drop_if_missing(browser)
     page = open_bank_drop_page(browser)
 
     assert page.wait_for_bank_drop_row(BANK_DROP_NAME).is_displayed()

@@ -214,15 +214,15 @@ class LaborShiftsPage(BasePage):
         """
         # Primary: Apply button in the main (React) frame.
         try:
-            self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+            self.wait_clickable_with_retry(self.APPLY_BUTTON)
         except TimeoutException:
             # Fallback: frame detection then retry.
             self._switch_to_frame()
             try:
-                self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+                self.wait_clickable_with_retry(self.APPLY_BUTTON)
             except TimeoutException:
                 try:
-                    self.wait.until(EC.element_to_be_clickable(self.SITE_MULTISELECT))
+                    self.wait_clickable_with_retry(self.SITE_MULTISELECT)
                 except TimeoutException:
                     pass
         try:

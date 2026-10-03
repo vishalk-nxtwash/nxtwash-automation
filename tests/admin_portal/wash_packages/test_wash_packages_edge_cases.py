@@ -47,8 +47,8 @@ def test_wash_package_whitespace_name_is_rejected(browser):
 
 @allure.title("WP-SRH Repeated search for the same package remains stable")
 @pytest.mark.regression
-def test_wash_package_existing_search_is_repeatable(browser):
-    page = open_wash_packages_page(browser)
+def test_wash_package_existing_search_is_repeatable(managed_package):
+    page = managed_package
     page.search_package(PACKAGE_NAME)
     page.search_package(PACKAGE_NAME)
 

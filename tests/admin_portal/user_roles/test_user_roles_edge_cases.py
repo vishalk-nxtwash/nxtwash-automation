@@ -6,7 +6,6 @@ from tests.admin_portal.user_roles.conftest import (
     DEFAULT_ROLE_NAME,
     ROLE_NAME,
     ROLE_PRIORITY,
-    create_role_if_missing,
     make_unique_role_name,
     open_create_role_form,
     open_edit_role_form,
@@ -48,8 +47,7 @@ def test_duplicate_name_vs_inactive_role(browser):
 
 @allure.title("UR-EC-002 Role name that differs only in letter case documents uniqueness behavior")
 @pytest.mark.edge
-def test_case_sensitivity_duplicate(browser):
-    create_role_if_missing(browser)
+def test_case_sensitivity_duplicate(browser, managed_role):
     upper_name = ROLE_NAME.upper()
 
     form = open_create_role_form(browser)
@@ -126,9 +124,7 @@ def test_priority_zero_documents_behavior(browser):
 
 @allure.title("UR-EC-008 Creating two roles with the same priority — document behavior")
 @pytest.mark.edge
-def test_duplicate_priority_documents_behavior(browser):
-    create_role_if_missing(browser)
-
+def test_duplicate_priority_documents_behavior(browser, managed_role):
     # Attempt to create a second role with the same priority
     form = open_create_role_form(browser)
     form.enter_role_name(make_unique_role_name())

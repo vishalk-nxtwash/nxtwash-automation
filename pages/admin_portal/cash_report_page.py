@@ -125,7 +125,7 @@ class CashReportPage(BasePage):
     def wait_for_modal(self):
         """Wait for the filter modal (Apply filters button) to be ready."""
         self._switch_to_frame()
-        self.wait.until(EC.element_to_be_clickable(self.APPLY_BUTTON))
+        self.wait_clickable_with_retry(self.APPLY_BUTTON)
         try:
             self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         except TimeoutException:
@@ -136,7 +136,10 @@ class CashReportPage(BasePage):
             btn = WebDriverWait(self.driver, 3).until(
                 EC.element_to_be_clickable(self.APPLY_BUTTON)
             )
-            return btn.is_displayed()
+            try:
+                return btn.is_displayed()
+            except StaleElementReferenceException:
+                return False
         except TimeoutException:
             return False
 
