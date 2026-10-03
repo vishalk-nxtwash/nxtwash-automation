@@ -77,8 +77,8 @@ class AdminUserRolesPage(BasePage):
         self.driver.switch_to.default_content()
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.visibility_of_element_located(self.ADD_ROLE_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_visible_with_retry(self.ADD_ROLE_BUTTON)
         # Wait for the data-loading spinner to clear so body text reflects real rows
         self.wait.until(
             lambda d: "Please wait" not in d.find_element(By.TAG_NAME, "body").text
@@ -316,13 +316,13 @@ class AdminUserRoleFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.switch_to_frame_with_retry(AdminUserRolesPage.CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.ROLE_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self.switch_to_frame_with_retry(AdminUserRolesPage.EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.ROLE_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.ROLE_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         # Best-effort: wait up to 5s for React to populate the name field.
         # Don't block on this — the role may legitimately have an empty name.
         try:

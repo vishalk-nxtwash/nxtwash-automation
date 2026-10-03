@@ -81,7 +81,7 @@ class AdminPOSSettingsPage(BasePage):
             )
         except Exception:
             pass  # fall through to ADD_POS_BUTTON which is the real readiness gate
-        self.wait.until(EC.element_to_be_clickable(self.ADD_POS_BUTTON))
+        self.wait_clickable_with_retry(self.ADD_POS_BUTTON)
         self._reset_stale_filters()
 
     def _reset_stale_filters(self):
@@ -462,14 +462,14 @@ class AdminPOSFormPage(BasePage):
     def wait_for_create_loaded(self):
         self._switch_to_form_frame(AdminPOSSettingsPage.POS_CREATE_FRAME)
         self._click_main_settings_nav()
-        self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.POS_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self._switch_to_form_frame(AdminPOSSettingsPage.POS_EDIT_FRAME)
         self._click_main_settings_nav()
-        self.wait.until(EC.visibility_of_element_located(self.POS_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.POS_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         self.wait.until(
             lambda d: d.find_element(*self.POS_NAME_INPUT).get_attribute("value") != ""
         )

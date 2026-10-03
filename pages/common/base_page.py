@@ -435,6 +435,27 @@ class BasePage:
                 time.sleep(0.3)
         raise TE("Element %s not stable after %ss" % (locator, timeout)) from last_exc
 
+    def wait_visible_with_retry(self, locator, timeout=45):
+        """Wait for an element to be visible, retrying on staleness.
+
+        Same TOCTOU gap as wait_clickable_with_retry, for the
+        EC.visibility_of_element_located gate used by list/page-load checks
+        (e.g. a PAGE_TITLE or grid-header check right after a frame switch).
+        """
+        from selenium.common.exceptions import TimeoutException as TE
+        deadline = time.time() + timeout
+        last_exc = None
+        while time.time() < deadline:
+            try:
+                remaining = max(1, deadline - time.time())
+                return WebDriverWait(self.driver, remaining).until(
+                    EC.visibility_of_element_located(locator)
+                )
+            except StaleElementReferenceException as exc:
+                last_exc = exc
+                time.sleep(0.3)
+        raise TE("Element %s not stable after %ss" % (locator, timeout)) from last_exc
+
     def wait_for_persisted_value(
         self, value_getter, expected, reopen=None, attempts=6, per_try=5, max_seconds=120
     ):

@@ -127,31 +127,34 @@ class DiscountsPage(BasePage):
         self.driver.switch_to.default_content()
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_DISCOUNT_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.ADD_DISCOUNT_BUTTON)
         self.wait_for_grid_idle()
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""
         from selenium.webdriver.support.ui import WebDriverWait
-        WebDriverWait(self.driver, 60).until(
-            lambda driver: not any(
-                mask.is_displayed()
-                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
-            )
-        )
+        def _mask_gone(driver):
+            for mask in driver.find_elements(*self.GRID_LOAD_MASK):
+                try:
+                    if mask.is_displayed():
+                        return False
+                except StaleElementReferenceException:
+                    continue
+            return True
+        WebDriverWait(self.driver, 60).until(_mask_gone)
 
     def wait_for_create_loaded(self):
         """Wait until the create discount form is visible."""
         self.switch_to_frame_with_retry(self.CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
+        self.wait_visible_with_retry(self.DISCOUNT_NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_DISCOUNT_BUTTON)
 
     def wait_for_edit_loaded(self):
         """Wait until the edit discount form is visible."""
         self.switch_to_frame_with_retry(self.EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.DISCOUNT_NAME_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_DISCOUNT_BUTTON))
+        self.wait_visible_with_retry(self.DISCOUNT_NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_DISCOUNT_BUTTON)
         WebDriverWait(self.driver, 30).until(
             lambda driver: self.get_discount_name_value() != ""
         )

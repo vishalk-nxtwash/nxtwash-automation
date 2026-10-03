@@ -71,7 +71,7 @@ class AdminEmployeesPage(BasePage):
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.EMP_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_EMPLOYEE_BUTTON))
+        self.wait_clickable_with_retry(self.ADD_EMPLOYEE_BUTTON)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -307,13 +307,13 @@ class AdminEmployeeFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.switch_to_frame_with_retry(AdminEmployeesPage.EMP_CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.FIRST_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self.switch_to_frame_with_retry(AdminEmployeesPage.EMP_EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.FIRST_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         self.wait.until(
             lambda d: d.find_element(*self.FIRST_NAME_INPUT).get_attribute("value") != ""
         )
@@ -602,7 +602,7 @@ class AdminEmployeeShiftPage(BasePage):
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.SHIFT_LIST_FRAME)
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
-        self.wait.until(EC.visibility_of_element_located(self.ADD_SHIFT_BUTTON))
+        self.wait_visible_with_retry(self.ADD_SHIFT_BUTTON)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -753,12 +753,12 @@ class AdminEmployeeShiftFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self.switch_to_frame_with_retry(AdminEmployeeShiftPage.SHIFT_CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_COMBOBOX))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.EMPLOYEE_COMBOBOX)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self.switch_to_frame_with_retry(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text

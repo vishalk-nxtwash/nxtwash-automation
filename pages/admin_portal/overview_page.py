@@ -85,7 +85,7 @@ class AdminOverviewPage(BasePage):
 
     def wait_for_loaded(self):
         """Wait until Overview shell is visible and not redirected to login."""
-        self.wait.until(EC.visibility_of_element_located(self.OVERVIEW_TITLE))
+        self.wait_visible_with_retry(self.OVERVIEW_TITLE)
         self.wait.until(lambda d: "/login" not in d.current_url)
         # Wait for the legacy dashboard iframe to mount (present but may be empty).
         try:

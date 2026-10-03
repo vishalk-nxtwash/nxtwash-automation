@@ -57,7 +57,7 @@ class GasPumpSettingsListPage(BasePage):
             )
         except Exception:
             pass
-        self.wait.until(EC.element_to_be_clickable(self.ADD_PUMP_BUTTON))
+        self.wait_clickable_with_retry(self.ADD_PUMP_BUTTON)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -327,12 +327,12 @@ class GasPumpSettingsFormPage(BasePage):
 
     def wait_for_create_loaded(self):
         self._switch_to_form_frame(GasPumpSettingsListPage.PUMP_CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.GAS_PUMP_NAME_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.GAS_PUMP_NAME_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self._switch_to_form_frame(GasPumpSettingsListPage.PUMP_EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         self.wait.until(
             lambda d: any(
                 inp.get_attribute("value")

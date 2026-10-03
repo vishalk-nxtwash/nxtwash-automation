@@ -138,42 +138,39 @@ class GiftCardsPage(BasePage):
         self.driver.switch_to.default_content()
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_GIFT_CARD_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.ADD_GIFT_CARD_BUTTON)
         # Wait for the grid column headers — the inovua grid initialises
         # asynchronously; in headless mode the header can lag behind the add
         # button, causing body-text assertions to see an empty page.
-        self.wait.until(
-            EC.visibility_of_element_located(
-                (By.XPATH, "//*[normalize-space()='Gift card name']")
-            )
+        self.wait_visible_with_retry(
+            (By.XPATH, "//*[normalize-space()='Gift card name']")
         )
         self.wait_for_grid_idle()
 
     def wait_for_grid_idle(self):
         """Wait until the Inovua load mask clears — grid DOM is stable after this."""
-        self.wait.until(
-            lambda driver: not any(
-                mask.is_displayed()
-                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
-            )
-        )
+        def _mask_gone(driver):
+            for mask in driver.find_elements(*self.GRID_LOAD_MASK):
+                try:
+                    if mask.is_displayed():
+                        return False
+                except StaleElementReferenceException:
+                    continue
+            return True
+        self.wait.until(_mask_gone)
 
     def wait_for_create_loaded(self):
         """Wait until the create gift card form is visible."""
         self.switch_to_frame_with_retry(self.CREATE_FRAME)
-        self.wait.until(
-            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
-        )
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+        self.wait_visible_with_retry(self.GIFT_CARD_NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_GIFT_CARD_BUTTON)
 
     def wait_for_edit_loaded(self):
         """Wait until the edit gift card form is visible."""
         self.switch_to_frame_with_retry(self.EDIT_FRAME)
-        self.wait.until(
-            EC.visibility_of_element_located(self.GIFT_CARD_NAME_INPUT)
-        )
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_GIFT_CARD_BUTTON))
+        self.wait_visible_with_retry(self.GIFT_CARD_NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_GIFT_CARD_BUTTON)
         self.wait.until(lambda driver: self.get_gift_card_name_value() != "")
         self.wait.until(
             lambda driver: driver.find_element(

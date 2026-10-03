@@ -1,3 +1,4 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -64,30 +65,33 @@ class BankDropPage(BasePage):
         self.driver.switch_to.default_content()
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.ADD_BUTTON)
         self.wait_for_grid_idle()
 
     def wait_for_grid_idle(self):
         """Wait until the React grid load mask is not blocking interactions."""
-        self.wait.until(
-            lambda driver: not any(
-                mask.is_displayed()
-                for mask in driver.find_elements(*self.GRID_LOAD_MASK)
-            )
-        )
+        def _mask_gone(driver):
+            for mask in driver.find_elements(*self.GRID_LOAD_MASK):
+                try:
+                    if mask.is_displayed():
+                        return False
+                except StaleElementReferenceException:
+                    continue
+            return True
+        self.wait.until(_mask_gone)
 
     def wait_for_create_loaded(self):
         """Wait until create Bank Drop form is visible."""
         self.switch_to_frame_with_retry(self.CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.NAME_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         """Wait until edit Bank Drop form is visible."""
         self.switch_to_frame_with_retry(self.EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.NAME_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_BUTTON)
         self.wait.until(lambda driver: self.get_name_value() != "")
 
     def get_body_text(self):

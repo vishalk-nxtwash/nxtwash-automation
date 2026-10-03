@@ -41,7 +41,7 @@ class TunnelSettingsListPage(BasePage):
         self.driver.switch_to.default_content()
         self.wait.until(EC.frame_to_be_available_and_switch_to_it(self.TUNNEL_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_TUNNEL_BUTTON))
+        self.wait_clickable_with_retry(self.ADD_TUNNEL_BUTTON)
 
     def get_body_text(self):
         return self.driver.find_element(By.TAG_NAME, "body").text
@@ -220,12 +220,12 @@ class TunnelSettingsFormPage(BasePage):
         # click_add_tunnel() causes a full top-level navigation to /tunnels/new.
         # The form content is inside TUNNEL_CREATE_FRAME — must switch frames first.
         self._switch_to_form_frame(TunnelSettingsListPage.TUNNEL_CREATE_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         # Same pattern: full navigation to /tunnels/{id}, form inside TUNNEL_EDIT_FRAME.
         self._switch_to_form_frame(TunnelSettingsListPage.TUNNEL_EDIT_FRAME)
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         # Confirm React has hydrated the form — any visible non-control input must
         # carry a value.  Use XPath negation rather than @type='text' because inputs
         # without an explicit type attribute are not matched by @type='text' in XPath

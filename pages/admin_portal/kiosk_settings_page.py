@@ -72,7 +72,7 @@ class AdminKioskSettingsPage(BasePage):
         self.dismiss_dev_toast()
         WebDriverWait(self.driver, 60).until(EC.frame_to_be_available_and_switch_to_it(self.KSK_LIST_FRAME))
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_KIOSK_BUTTON))
+        self.wait_clickable_with_retry(self.ADD_KIOSK_BUTTON)
         # The filter badge count is fetched asynchronously after the page renders.
         # Wait for the button text to stabilize so reset_filters_if_active() sees the final state.
         self._wait_for_filter_stable()
@@ -573,14 +573,14 @@ class AdminKioskFormPage(BasePage):
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_CREATE_FRAME)
         )
-        self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
+        self.wait_visible_with_retry(self.KIOSK_NAME_INPUT)
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminKioskSettingsPage.KSK_EDIT_FRAME)
         )
-        self.wait.until(EC.visibility_of_element_located(self.KIOSK_NAME_INPUT))
+        self.wait_visible_with_retry(self.KIOSK_NAME_INPUT)
         self.wait.until(
             lambda d: d.find_element(*self.KIOSK_NAME_INPUT).get_attribute("value") != ""
         )

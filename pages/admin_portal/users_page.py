@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -77,16 +77,20 @@ class AdminUsersPage(BasePage):
         self.driver.switch_to.default_content()
         self.dismiss_dev_toast()
         self.switch_to_frame_with_retry(self.LIST_FRAME, timeout=60)
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_USER_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.ADD_USER_BUTTON)
         self._wait_for_grid_idle()
 
     def _wait_for_grid_idle(self):
-        self.wait.until(
-            lambda d: not any(
-                m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
-            )
-        )
+        def _mask_gone(d):
+            for mask in d.find_elements(*self.GRID_LOAD_MASK):
+                try:
+                    if mask.is_displayed():
+                        return False
+                except StaleElementReferenceException:
+                    continue
+            return True
+        self.wait.until(_mask_gone)
 
     def get_body_text(self):
         try:
@@ -373,16 +377,16 @@ class AdminUserFormPage(BasePage):
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.CREATE_FRAME)
         )
-        self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.EMAIL_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
 
     def wait_for_edit_loaded(self):
         self.driver.switch_to.default_content()
         WebDriverWait(self.driver, 60).until(
             EC.frame_to_be_available_and_switch_to_it(AdminUsersPage.EDIT_FRAME)
         )
-        self.wait.until(EC.visibility_of_element_located(self.EMAIL_INPUT))
-        self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
+        self.wait_visible_with_retry(self.EMAIL_INPUT)
+        self.wait_visible_with_retry(self.SAVE_BUTTON)
         self.wait.until(
             lambda d: d.find_element(*self.EMAIL_INPUT).get_attribute("value") != ""
         )

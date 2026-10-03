@@ -1,5 +1,6 @@
 import time
 
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -283,25 +284,29 @@ class CustomersPage(BasePage):
             pass
 
     def wait_for_list_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_CUSTOMER_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.ADD_CUSTOMER_BUTTON)
         self._wait_for_grid_idle()
         self._wait_for_success_toast_gone()
 
     def _wait_for_grid_idle(self):
-        self.wait.until(
-            lambda d: not any(
-                m.is_displayed() for m in d.find_elements(*self.GRID_LOAD_MASK)
-            )
-        )
+        def _mask_gone(d):
+            for mask in d.find_elements(*self.GRID_LOAD_MASK):
+                try:
+                    if mask.is_displayed():
+                        return False
+                except StaleElementReferenceException:
+                    continue
+            return True
+        self.wait.until(_mask_gone)
 
     def wait_for_create_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
+        self.wait_visible_with_retry(self.FIRST_NAME_INPUT)
+        self.wait_clickable_with_retry(self.SAVE_CUSTOMER_BUTTON)
 
     def wait_for_edit_loaded(self, _retries=2):
         try:
-            self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_INPUT))
+            self.wait_visible_with_retry(self.FIRST_NAME_INPUT)
         except TimeoutException:
             # Staging occasionally renders a client-side crash boundary
             # ("Something went wrong" / "Try again") instead of the edit
@@ -309,7 +314,7 @@ class CustomersPage(BasePage):
             if _retries > 0 and self._recover_from_crash_boundary():
                 return self.wait_for_edit_loaded(_retries - 1)
             raise
-        self.wait.until(EC.element_to_be_clickable(self.SAVE_CUSTOMER_BUTTON))
+        self.wait_clickable_with_retry(self.SAVE_CUSTOMER_BUTTON)
         self.wait.until(lambda d: self.get_first_name_value() != "")
 
     def _recover_from_crash_boundary(self):

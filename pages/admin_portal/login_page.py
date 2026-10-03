@@ -51,12 +51,10 @@ class AdminLoginPage(BasePage):
         long_wait = WebDriverWait(self.driver, 60)
 
         long_wait.until(lambda driver: "/login" in driver.current_url)
-        long_wait.until(EC.visibility_of_element_located(self.LOGIN_TITLE))
-        long_wait.until(
-            EC.visibility_of_element_located(self.EMAIL_OR_PHONE_INPUT)
-        )
-        long_wait.until(EC.visibility_of_element_located(self.PASSWORD_INPUT))
-        long_wait.until(EC.element_to_be_clickable(self.LOGIN_BUTTON))
+        self.wait_visible_with_retry(self.LOGIN_TITLE, timeout=60)
+        self.wait_visible_with_retry(self.EMAIL_OR_PHONE_INPUT, timeout=60)
+        self.wait_visible_with_retry(self.PASSWORD_INPUT, timeout=60)
+        self.wait_clickable_with_retry(self.LOGIN_BUTTON, timeout=60)
 
     def get_body_text(self):
         """Get visible page text."""

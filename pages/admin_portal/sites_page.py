@@ -54,9 +54,9 @@ class SitesPage(BasePage):
     def wait_for_loaded(self):
         """Wait until Sites / Locations is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
-        self.wait.until(EC.element_to_be_clickable(self.ADD_SITE_BUTTON))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_clickable_with_retry(self.FILTER_BUTTON)
+        self.wait_clickable_with_retry(self.ADD_SITE_BUTTON)
 
     def get_body_text(self):
         """Get visible page text."""
@@ -567,9 +567,9 @@ class CreateSitePage(BasePage):
     def wait_for_loaded(self):
         """Wait until the create site form is visible."""
         self.driver.switch_to.default_content()
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.visibility_of_element_located(self.NEW_MODE_LABEL))
-        self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_visible_with_retry(self.NEW_MODE_LABEL)
+        self.wait_visible_with_retry(self.SITE_NAME_INPUT)
 
     def get_body_text(self):
         """Get visible page text."""
@@ -1065,8 +1065,8 @@ class EditSitePage(CreateSitePage):
         enter_site_name() targets the edit form field, not the filter input.
         """
         self.driver.switch_to.default_content()
-        self.wait.until(EC.visibility_of_element_located(self.PAGE_TITLE))
-        self.wait.until(EC.visibility_of_element_located(self.SITE_NAME_INPUT))
+        self.wait_visible_with_retry(self.PAGE_TITLE)
+        self.wait_visible_with_retry(self.SITE_NAME_INPUT)
         # Wait for the filter panel's duplicate siteName input to unmount
         self.wait.until(
             lambda d: sum(
