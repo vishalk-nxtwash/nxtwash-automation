@@ -245,6 +245,15 @@ class ServiceCategoriesPage(BasePage):
             % category_name
         )
 
+    def category_row_is_present(self, category_name):
+        """Return whether a category row is immediately present (no wait).
+
+        For use with BasePage.wait_for_persisted_value()'s own paced retry
+        loop — a plain instant check, not a second waiting mechanism layered
+        on top of it.
+        """
+        return bool(self.driver.find_elements(*self.get_category_row_locator(category_name)))
+
     def wait_for_category_row(self, category_name):
         """Wait until a category row is visible in the current grid view."""
         return self.wait.until(

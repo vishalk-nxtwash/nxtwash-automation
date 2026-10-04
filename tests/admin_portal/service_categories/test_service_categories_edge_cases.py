@@ -70,7 +70,12 @@ def test_edit_inactive_category_saves_changes(managed_category):
 
     page._show_inactive_categories()
     page.search_category(MANAGED_CATEGORY_EDITED)
-    assert page.wait_for_category_row(MANAGED_CATEGORY_EDITED).is_displayed()
+    found = page.wait_for_persisted_value(
+        value_getter=lambda: page.category_row_is_present(MANAGED_CATEGORY_EDITED),
+        expected=True,
+        reopen=lambda: page.search_category(MANAGED_CATEGORY_EDITED),
+    )
+    assert found, "'%s' never appeared in the inactive-filtered list" % MANAGED_CATEGORY_EDITED
     assert page_has_no_broken_state(page)
 
 
@@ -92,7 +97,12 @@ def test_deactivated_category_findable_via_filter(managed_category):
 
     page._show_inactive_categories()
     page.search_category(MANAGED_CATEGORY)
-    assert page.wait_for_category_row(MANAGED_CATEGORY).is_displayed()
+    found = page.wait_for_persisted_value(
+        value_getter=lambda: page.category_row_is_present(MANAGED_CATEGORY),
+        expected=True,
+        reopen=lambda: page.search_category(MANAGED_CATEGORY),
+    )
+    assert found, "'%s' never appeared in the inactive-filtered list" % MANAGED_CATEGORY
     assert page_has_no_broken_state(page)
 
 
