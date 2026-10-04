@@ -3,9 +3,11 @@ import pytest
 
 from tests.admin_portal.service_categories.conftest import CATEGORY_NAME
 from tests.admin_portal.service_categories.conftest import INACTIVE_CATEGORY_NAME
+from tests.admin_portal.service_categories.conftest import MANAGED_CATEGORY
 from tests.admin_portal.service_categories.conftest import MISSING_CATEGORY
 from tests.admin_portal.service_categories.conftest import create_category_if_missing
 from tests.admin_portal.service_categories.conftest import create_inactive_category_if_missing
+from tests.admin_portal.service_categories.conftest import managed_category  # noqa: F401
 from tests.admin_portal.service_categories.conftest import open_service_categories_page
 from tests.admin_portal.service_categories.conftest import page_has_no_broken_state
 
@@ -33,12 +35,12 @@ def test_service_category_required_name_validation(browser):
 
 @allure.title("SC-NG-002 Create Duplicate Category")
 @pytest.mark.regression
-def test_create_duplicate_category_is_blocked(browser):
+def test_create_duplicate_category_is_blocked(managed_category):
 
-    page = create_category_if_missing(browser)
+    page = managed_category
 
     page.open_create_category()
-    page.enter_category_name(CATEGORY_NAME)
+    page.enter_category_name(MANAGED_CATEGORY)
     page.ensure_active_switch_on()
     page.click_save_new()
 
@@ -72,12 +74,12 @@ def test_create_category_exceeding_max_length(browser):
 @allure.title("SC-NG-004 Create category with leading/trailing/only whitespace")
 @pytest.mark.regression
 @pytest.mark.validation
-def test_create_category_with_whitespace_name(browser):
+def test_create_category_with_whitespace_name(managed_category):
 
-    page = create_category_if_missing(browser)
+    page = managed_category
 
     page.open_create_category()
-    page.enter_category_name("  %s  " % CATEGORY_NAME)
+    page.enter_category_name("  %s  " % MANAGED_CATEGORY)
     page.click_save_new()
 
     # App should trim and treat it as a duplicate, or show a validation error
