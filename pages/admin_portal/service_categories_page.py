@@ -254,9 +254,17 @@ class ServiceCategoriesPage(BasePage):
         """
         return bool(self.driver.find_elements(*self.get_category_row_locator(category_name)))
 
-    def wait_for_category_row(self, category_name):
-        """Wait until a category row is visible in the current grid view."""
-        return self.wait.until(
+    def wait_for_category_row(self, category_name, timeout=None):
+        """Wait until a category row is visible in the current grid view.
+
+        timeout defaults to self.wait's 45s for callers waiting on a row to
+        genuinely appear (e.g. right after a save). Existence *probes*
+        (category_exists, get_category_status) pass a short explicit timeout
+        instead — there's no reason to wait 45s to confirm "not here" when
+        search_category() already waited for the grid to go idle first.
+        """
+        wait = self.wait if timeout is None else WebDriverWait(self.driver, timeout)
+        return wait.until(
             EC.visibility_of_element_located(
                 self.get_category_row_locator(category_name)
             )
@@ -292,7 +300,7 @@ class ServiceCategoriesPage(BasePage):
         self.wait_for_list_loaded()
         self.search_category(category_name)
         try:
-            self.wait_for_category_row(category_name)
+            self.wait_for_category_row(category_name, timeout=10)
             return True
         except TimeoutException:
             pass
@@ -300,7 +308,7 @@ class ServiceCategoriesPage(BasePage):
         try:
             self._show_inactive_categories()
             self.search_category(category_name)
-            self.wait_for_category_row(category_name)
+            self.wait_for_category_row(category_name, timeout=10)
             return True
         except TimeoutException:
             return False
@@ -311,12 +319,12 @@ class ServiceCategoriesPage(BasePage):
         """Return status text for a category row, falling back to inactive filter."""
         used_fallback = False
         try:
-            row = self.wait_for_category_row(category_name)
+            row = self.wait_for_category_row(category_name, timeout=10)
         except TimeoutException:
             used_fallback = True
             self._show_inactive_categories()
             self.search_category(category_name)
-            row = self.wait_for_category_row(category_name)
+            row = self.wait_for_category_row(category_name, timeout=10)
         status = row.find_element(
             By.XPATH, ".//*[@data-props-id='isActive']"
         ).text.strip()
