@@ -1120,7 +1120,7 @@ class WashBooksPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_btn.click()
+        self.driver.execute_script("arguments[0].click();", edit_btn)
         self.wait_for_cwb_edit_loaded()
 
     def select_cwb_wash_book(self, wash_book_name):

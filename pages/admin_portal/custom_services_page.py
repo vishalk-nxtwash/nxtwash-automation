@@ -394,7 +394,7 @@ class CustomServicesPage(BasePage):
         edit_button = row.find_element(
             By.XPATH, ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     # ---------------------------------------------------------------------- form inputs

@@ -1061,7 +1061,7 @@ class GiftCardsPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_customer_edit_loaded()
 
     def gift_card_option_exists_in_dropdown(self, gift_card_name):

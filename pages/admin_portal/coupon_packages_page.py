@@ -209,7 +209,7 @@ class CouponPackagesPage(BasePage):
             By.XPATH,
             ".//*[normalize-space()='Edit']/ancestor::a[1]"
         )
-        edit_button.click()
+        self.driver.execute_script("arguments[0].click();", edit_button)
         self.wait_for_edit_loaded()
 
     def enter_coupon_package_name(self, coupon_package_name):
