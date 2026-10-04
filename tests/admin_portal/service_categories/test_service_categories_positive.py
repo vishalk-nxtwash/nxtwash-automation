@@ -78,14 +78,12 @@ def test_activate_service_category(managed_category):
     # Deactivate first to set up the test condition
     page.open_edit_category(MANAGED_CATEGORY)
     page.ensure_active_switch_off()
-    page.click_save_changes()
-    page.wait_for_list_loaded()
+    page.save_changes_and_return_to_list()
 
     # Re-activate — open_edit_category uses inactive-filter fallback
     page.open_edit_category(MANAGED_CATEGORY)
     page.ensure_active_switch_on()
-    page.click_save_changes()
-    page.wait_for_list_loaded()
+    page.save_changes_and_return_to_list()
 
     page.search_category(MANAGED_CATEGORY)
     assert page.wait_for_category_row(MANAGED_CATEGORY).is_displayed()
@@ -102,8 +100,7 @@ def test_deactivate_service_category(managed_category):
 
     page.open_edit_category(MANAGED_CATEGORY)
     page.ensure_active_switch_off()
-    page.click_save_changes()
-    page.wait_for_list_loaded()
+    page.save_changes_and_return_to_list()
 
     # Default list shows only Active — deactivated category must be absent
     page.search_category(MANAGED_CATEGORY)

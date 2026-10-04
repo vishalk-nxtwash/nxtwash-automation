@@ -56,12 +56,9 @@ def create_inactive_category_if_missing(browser, category_name=INACTIVE_CATEGORY
         return page
 
     if page.get_category_status(category_name) != "Inactive":
-        import time
         page.open_edit_category(category_name)
         page.ensure_active_switch_off()
-        page.click_save_changes()
-        time.sleep(3)
-        page = open_service_categories_page(browser)
+        page.save_changes_and_return_to_list()
 
     return page
 
@@ -89,17 +86,14 @@ def reset_managed_category(browser):
     page = open_service_categories_page(browser)
 
     if page.category_exists(MANAGED_CATEGORY_EDITED):
-        # Rename back — bypass update_category_name to avoid wait_for_list_loaded
-        # failing when the category was opened via the inactive-filter fallback.
-        # A brief sleep after save gives the API time to complete before we
-        # force-navigate fresh.
-        import time
+        # Rename back — bypass update_category_name to avoid open_edit_category's
+        # own inactive-filter fallback interfering with this reopen; the
+        # deterministic save-and-return (waits for the app's own save signal,
+        # then re-navigates) survives that regardless.
         page.open_edit_category(MANAGED_CATEGORY_EDITED)
         page.enter_category_name(MANAGED_CATEGORY)
         page.ensure_active_switch_on()
-        page.click_save_changes()
-        time.sleep(3)
-        page = open_service_categories_page(browser)
+        page.save_changes_and_return_to_list()
     elif not page.category_exists(MANAGED_CATEGORY):
         page.create_category(MANAGED_CATEGORY)
         page.search_category(MANAGED_CATEGORY)
@@ -109,12 +103,9 @@ def reset_managed_category(browser):
     # Restore active status if a test deactivated the category
     page.search_category(MANAGED_CATEGORY)
     if page.get_category_status(MANAGED_CATEGORY) != "Active":
-        import time
         page.open_edit_category(MANAGED_CATEGORY)
         page.ensure_active_switch_on()
-        page.click_save_changes()
-        time.sleep(3)
-        page = open_service_categories_page(browser)
+        page.save_changes_and_return_to_list()
 
     return page
 

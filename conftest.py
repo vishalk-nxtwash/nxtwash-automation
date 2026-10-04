@@ -122,17 +122,16 @@ _QUARANTINE_TIMING_REASON = (
 
 # Post-save / grid-reload timing races (one nodeid fragment per test).
 _QUARANTINE_TIMING = (
-    "test_service_categories_positive.py::test_activate_service_category",
-    "test_service_categories_positive.py::test_deactivate_service_category",
+    # test_edit_service_category_name stays skip-marked in source (separate
+    # "app no longer auto-redirects" investigation) — this entry is inert
+    # either way, left as-is to minimize this diff.
     "test_service_categories_positive.py::test_edit_service_category_name",
-    "test_service_categories_positive.py::test_service_category_settings_persist",
-    "test_service_categories_edge_cases.py::test_activate_deactivate_activate_cycle",
-    "test_service_categories_edge_cases.py::test_deactivated_category_findable_via_filter",
-    "test_service_categories_edge_cases.py::test_edit_inactive_category_saves_changes",
-    "test_service_categories_edit.py::test_edit_service_category_name_and_restore",
-    "test_service_categories_filter.py::test_filter_inactive_categories_shows_inactive",
-    "test_service_categories_managed.py::test_managed_category_provided_at_baseline",
-    "test_service_categories_managed.py::test_managed_category_rename_is_reset_on_teardown",
+    # The other 10 service_categories entries were removed: save_new/changes
+    # _and_return_to_list() (service_categories_page.py) now waits for the
+    # app's own save signal and force-navigates back to the list instead of
+    # trusting wait_for_list_loaded() to survive the iframe/grid re-render —
+    # same fix already proven for wash_packages. See the NXTDEV-2320 commit
+    # that removed these for the validation run that confirmed it.
     "test_memberships_search_filter.py::test_memberships_partial_search",
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
@@ -192,17 +191,6 @@ def pytest_collection_modifyitems(config, items):
         # Smoke is opt-in via explicit @pytest.mark.smoke only (curated core
         # checks per module). The old path rule (/login/, *_positive, *_smoke)
         # marked whole files and bloated admin smoke to 500+ tests.
-
-        # Serialize tests sharing a managed_resource fixture (tests/admin_portal/
-        # _managed.py) onto one xdist worker. These fixtures point every test at
-        # ONE shared staging record with no delete; under --dist loadgroup two
-        # workers editing it concurrently race (last write wins). xdist_group
-        # pins same-named-group tests to a single worker, so they run in
-        # sequence instead of racing. Covers every managed_* fixture by naming
-        # convention alone — no per-module wiring needed.
-        for fixture_name in item.fixturenames:
-            if fixture_name.startswith("managed_"):
-                item.add_marker(pytest.mark.xdist_group(name=fixture_name))
 
         # Quarantine known-failing tests (kept green via xfail until fixed).
         if any(fragment in nodeid for fragment in _QUARANTINE_TIMING):

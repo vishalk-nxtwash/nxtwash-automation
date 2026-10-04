@@ -546,12 +546,28 @@ class ServiceCategoriesPage(BasePage):
 
     # ----------------------------------------------------------------- helpers
 
-    def create_category(self, category_name):
-        """Create an active category and return to list."""
-        self.open_create_category()
-        self.enter_category_name(category_name)
-        self.ensure_active_switch_on()
-        self.click_save_new()
+    def _save_and_return_to_list(self, click_save):
+        """Click a save button, confirm the save landed, then re-navigate to the list.
+
+        The app does not reliably auto-redirect the legacy iframe back to the
+        list after save — relying on wait_for_list_loaded() alone to survive
+        that iframe/grid re-render is the "post-save/grid-reload timing race"
+        documented in docs/admin_test_burndown.md (same root cause already
+        fixed this way in wash_packages_page.py's save_and_return_to_list).
+        Wait for the app's own save signal first (confirms success vs a real
+        validation/duplicate error), then force a fresh navigation instead of
+        trusting the SPA's own post-save state.
+        """
+        click_save()
+        outcome, error = self.wait_for_legacy_save()
+        if outcome == "error":
+            raise RuntimeError("Service category save error: %s" % error)
+        self.driver.switch_to.default_content()
+        origin = self.driver.execute_script("return window.location.origin")
+        try:
+            self.driver.get(origin + "/services/serviceCategories")
+        except TimeoutException:
+            self.driver.get(origin + "/services/serviceCategories")
         try:
             self.wait_for_list_loaded()
         except TimeoutException:
@@ -561,25 +577,31 @@ class ServiceCategoriesPage(BasePage):
                 % (error or "none visible")
             ) from None
 
+    def save_new_and_return_to_list(self):
+        """Save the new-category form, confirm it landed, return to the list."""
+        self._save_and_return_to_list(self.click_save_new)
+
+    def save_changes_and_return_to_list(self):
+        """Save the edit-category form, confirm it landed, return to the list."""
+        self._save_and_return_to_list(self.click_save_changes)
+
+    def create_category(self, category_name):
+        """Create an active category and return to list."""
+        self.open_create_category()
+        self.enter_category_name(category_name)
+        self.ensure_active_switch_on()
+        self.save_new_and_return_to_list()
+
     def create_inactive_category(self, category_name):
         """Create a category with Active switch OFF and return to list."""
         self.open_create_category()
         self.enter_category_name(category_name)
         self.ensure_active_switch_off()
-        self.click_save_new()
-        try:
-            self.wait_for_list_loaded()
-        except TimeoutException:
-            error = self.get_visible_error()
-            raise RuntimeError(
-                "Inactive service category save did not return to list. Page message: %s"
-                % (error or "none visible")
-            ) from None
+        self.save_new_and_return_to_list()
 
     def update_category_name(self, old_name, new_name):
         """Rename a category and return to list."""
         self.open_edit_category(old_name)
         self.enter_category_name(new_name)
         self.ensure_active_switch_on()
-        self.click_save_changes()
-        self.wait_for_list_loaded()
+        self.save_changes_and_return_to_list()
