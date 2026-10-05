@@ -135,15 +135,10 @@ _QUARANTINE_TIMING = (
     "test_memberships_search_filter.py::test_memberships_partial_search",
     "test_memberships_search_filter.py::test_memberships_clear_search_restores_records",
     "test_memberships_search_filter.py::test_memberships_search_with_surrounding_spaces",
-    "test_wash_packages_edit.py::test_deactivate_wash_package",
-    "test_wash_packages_edit.py::test_remove_applicable_discount_persists",
-    "test_wash_packages_export.py::test_wash_packages_export_after_filter",
-    "test_wash_packages_search_filter.py::test_filter_active_shows_active_packages",
-    "test_wash_packages_search_filter.py::test_filter_site_and_active_combined",
-    "test_wash_packages_search_filter.py::test_reset_filters_restores_grid",
-    "test_wash_packages_search_filter.py::test_wash_packages_partial_search",
-    "test_wash_packages_site_assignment.py::test_location_price_override_persists",
-    "test_wash_extras_edit.py::test_edit_wash_extra_values_persist",
+    # All 8 wash_packages entries removed (NXTDEV-2320): 5 were already fixed
+    # and just never un-quarantined (confirmed passing as-is); the other 3
+    # had real, distinct bugs unrelated to this generic timing-race label —
+    # see the NXTDEV-2320 commits that fixed each one individually.
     # Overview tests carry their own in-code xfail(strict=False) markers
     # (legacy Overview iframe), so they are not listed here.
 )
@@ -156,6 +151,13 @@ _QUARANTINE_SCRIPT = {
     "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
+    "test_wash_extras_edit.py::test_edit_wash_extra_values_persist":
+        "Index-based location addressing (get/set_location_price_by_index), not a "
+        "timing race: the location grid's row order isn't guaranteed stable between "
+        "the assign pass and the post-reopen verify pass, so index 0/1 can point at "
+        "an unrelated, unpriced row. Same bug class already diagnosed (and "
+        "deliberately deferred) for memberships_page.py's index-based location "
+        "methods — fix means converting both to name-based addressing together.",
 }
 
 

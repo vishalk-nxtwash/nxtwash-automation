@@ -208,6 +208,16 @@ def test_remove_applicable_discount_persists(isolated_package):
 
     page.open_edit_package(name)
     page.open_discount_settings()
+
+    def _reopen_for_remove():
+        page.open_edit_package(name)
+        page.open_discount_settings()
+
+    # Confirm the chip actually rendered after the reopen (read-after-write
+    # lag on the just-saved discount) before trying to click its remove (x).
+    assert page.wait_for_persisted_value(
+        lambda: page.discount_is_selected(APPLICABLE_DISCOUNT), True, reopen=_reopen_for_remove,
+    )
     page.remove_applicable_discount(APPLICABLE_DISCOUNT)
     page.save_and_return_to_list()
 

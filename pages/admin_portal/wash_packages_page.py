@@ -878,6 +878,24 @@ for (var i = 0; i < kids.length; i++) {
         )
         self.driver.execute_script("arguments[0].click();", switch)
 
+    def ensure_active_service_filter_on(self):
+        """Ensure the Active service filter switch is checked (active-only).
+
+        The switch defaults to aria-checked="true" on a fresh page load, so a
+        blind toggle_active_service_filter() call can flip it OFF (into
+        inactive-only) instead of turning it on — confirmed in CI.
+        """
+        switch = self.wait.until(
+            EC.element_to_be_clickable(self.ACTIVE_SERVICE_FILTER_SWITCH)
+        )
+        if switch.get_attribute("aria-checked") != "true":
+            self.driver.execute_script("arguments[0].click();", switch)
+            self.wait.until(
+                lambda driver: driver.find_element(
+                    *self.ACTIVE_SERVICE_FILTER_SWITCH
+                ).get_attribute("aria-checked") == "true"
+            )
+
     def select_site_filter(self, site_name):
         """Open the site dropdown in the filter panel and click the named option."""
         self.open_filter_panel()
@@ -959,9 +977,16 @@ for (var i = 0; i < kids.length; i++) {
         return element.get_attribute("value")
 
     def remove_applicable_discount(self, discount_name):
-        """Click the remove (×) button on a selected discount chip."""
+        """Click the remove (×) button on a selected discount chip.
+
+        The remove icon's wrapper div reports is_displayed()=False with a
+        0x0 bounding box in headless Chrome — permanently, not a load race
+        (confirmed: still 0x0 after 40s+) — even though it is genuinely
+        present, enabled, and clickable via a direct JS click. Wait for
+        presence only, not EC.element_to_be_clickable's visibility check.
+        """
         remove_btn = self.wait.until(
-            EC.element_to_be_clickable((
+            EC.presence_of_element_located((
                 By.XPATH,
                 "//div[contains(@class,'tab-pane') and contains(@class,'active')]"
                 "//*[contains(@class,'form-select__multi-value__label')"

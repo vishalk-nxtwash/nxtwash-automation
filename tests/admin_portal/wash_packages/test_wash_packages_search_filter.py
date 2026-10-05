@@ -121,7 +121,7 @@ def test_filter_by_site_narrows_results(browser):
 def test_filter_active_shows_active_packages(managed_package):
     page = managed_package
     page.open_filter_panel()
-    page.toggle_active_service_filter()
+    page.ensure_active_service_filter_on()
     page.apply_filters()
     page.search_package(PACKAGE_NAME)
 
@@ -135,7 +135,7 @@ def test_filter_active_shows_active_packages(managed_package):
 def test_filter_site_and_active_combined(managed_package):
     page = managed_package
     page.select_site_filter(ASSIGNMENT_SITE)
-    page.toggle_active_service_filter()
+    page.ensure_active_service_filter_on()
     page.apply_filters()
     page.search_package(PACKAGE_NAME)
 
