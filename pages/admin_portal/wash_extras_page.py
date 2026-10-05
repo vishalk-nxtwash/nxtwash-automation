@@ -411,7 +411,17 @@ class WashExtrasPage(BasePage):
         self.select_applicable_discount(new_discount_name)
 
     def get_location_rows(self):
-        """Return unique visible location assignment rows.
+        """Return visible location assignment rows, sorted by site name.
+
+        Sorted (not raw DOM/fetch order) so "row index N" is a stable,
+        well-defined position across separate calls — e.g. one call to set
+        a price, then a save and a fresh page load before a second call to
+        read it back. Confirmed in CI: the grid's unsorted render order is
+        not guaranteed identical between those two passes once enough
+        sites accumulate (14+ on staging today), so an index-based
+        write/read pair can silently target two different rows. Sorting by
+        the same stable key (site name) on every call fixes that without
+        needing to hardcode specific site names in test data.
 
         Waits for rows that are both visible (non-zero rect) AND have their
         price input mounted, so child find_element calls don't raise
@@ -428,11 +438,17 @@ class WashExtrasPage(BasePage):
                 if row.rect["height"] > 0
             )
         )
-        return [
+        rows = [
             row
             for row in self.driver.find_elements(*self.LOCATION_ROWS)
             if row.rect["height"] > 0 and row.find_elements(By.NAME, "price")
         ]
+
+        def _site_name(row):
+            cells = row.find_elements(By.XPATH, ".//*[@data-props-id='assignTo']")
+            return cells[0].text.strip() if cells else ""
+
+        return sorted(rows, key=_site_name)
 
     def row_checkbox_is_checked(self, checkbox):
         """Return whether an Inovua checkbox is checked."""
@@ -605,6 +621,30 @@ class WashExtrasPage(BasePage):
     def click_save_extra(self):
         """Click save wash extra."""
         self.click(self.SAVE_EXTRA_BUTTON)
+
+    def save_and_return_to_list(self):
+        """Save the wash extra, confirm the save landed, then show the list.
+
+        wash_extras never had the re-navigate-after-save fix already proven
+        in service_categories/wash_packages/memberships — relying on
+        wait_for_list_loaded() alone to survive the post-save iframe/grid
+        re-render is the same "post-save/grid-reload timing race" documented
+        in docs/admin_test_burndown.md. Waits for the app's own save signal
+        first (confirms success vs. a real validation error), then forces a
+        fresh navigation instead of trusting the SPA's own post-save state.
+        """
+        self.driver.execute_script("window.confirm = () => true;")
+        self.click(self.SAVE_EXTRA_BUTTON)
+        outcome, error = self.wait_for_legacy_save()
+        if outcome == "error":
+            raise RuntimeError("Wash extra save error: %s" % error)
+        self.driver.switch_to.default_content()
+        origin = self.driver.execute_script("return window.location.origin")
+        try:
+            self.driver.get(origin + "/services/washExtras")
+        except TimeoutException:
+            self.driver.get(origin + "/services/washExtras")
+        self.wait_for_list_loaded()
 
     def click_cancel(self):
         """Cancel create/edit wash extra."""
@@ -848,5 +888,4 @@ class WashExtrasPage(BasePage):
         self.set_location_price_by_index(1, second_location_price)
         self.open_discount_settings()
         self.replace_applicable_discount(old_discount_name, new_discount_name)
-        self.click_save_extra()
-        self.wait_for_list_loaded()
+        self.save_and_return_to_list()

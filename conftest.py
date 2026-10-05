@@ -152,12 +152,15 @@ _QUARANTINE_SCRIPT = {
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
     "test_wash_extras_edit.py::test_edit_wash_extra_values_persist":
-        "Index-based location addressing (get/set_location_price_by_index), not a "
-        "timing race: the location grid's row order isn't guaranteed stable between "
-        "the assign pass and the post-reopen verify pass, so index 0/1 can point at "
-        "an unrelated, unpriced row. Same bug class already diagnosed (and "
-        "deliberately deferred) for memberships_page.py's index-based location "
-        "methods — fix means converting both to name-based addressing together.",
+        "WE-EDT-003: two layers fixed (get_location_rows() now sorts by site "
+        "name for stable index addressing; added save_and_return_to_list() — "
+        "wash_extras never had the re-navigate-after-save fix proven in "
+        "service_categories/wash_packages/memberships). Still fails on a third, "
+        "deeper issue: the Save button click doesn't register at all "
+        "(wait_for_legacy_save times out, still on the edit form) once "
+        "replace_applicable_discount() has interacted with the Discount "
+        "settings tab beforehand. Not yet investigated — needs a live DOM "
+        "check of what's intercepting/blocking the Save click in that state.",
 }
 
 

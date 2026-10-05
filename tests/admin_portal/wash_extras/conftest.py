@@ -88,8 +88,8 @@ def update_wash_extra_if_needed(browser):
         page.set_location_price_by_index(1, SECOND_LOCATION_PRICE)
         page.open_discount_settings()
         page.replace_applicable_discount(DISCOUNT_NAME, UPDATED_DISCOUNT_NAME)
-        page.click_save_extra()
-        return open_wash_extras_page(browser)
+        page.save_and_return_to_list()
+        return page
 
     page.update_extra_name_location_prices_and_discount(
         WASH_EXTRA_NAME,
