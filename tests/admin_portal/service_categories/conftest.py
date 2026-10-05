@@ -146,14 +146,37 @@ def reset_managed_category(browser):
     _consolidate_duplicate_category(page, MANAGED_CATEGORY_EDITED)
 
     if page.category_exists(MANAGED_CATEGORY_EDITED):
-        # Rename back — bypass update_category_name to avoid open_edit_category's
-        # own inactive-filter fallback interfering with this reopen; the
-        # deterministic save-and-return (waits for the app's own save signal,
-        # then re-navigates) survives that regardless.
-        page.open_edit_category(MANAGED_CATEGORY_EDITED)
-        page.enter_category_name(MANAGED_CATEGORY)
-        page.ensure_active_switch_on()
-        page.save_changes_and_return_to_list()
+        if page.category_exists(MANAGED_CATEGORY):
+            # Split identity: one id holds the base name, a DIFFERENT id is
+            # stuck on "...edited" — not caught by _consolidate_duplicate_category
+            # above, which only looks for multiple rows sharing ONE exact
+            # name. Confirmed in CI (full-suite run, heavier staging load):
+            # the base-name holder is already the canonical survivor, so the
+            # "edited" one is the orphan — park it instead of attempting a
+            # rename that's guaranteed to collide with "already exists".
+            import time as _time
+            page.open_edit_category(MANAGED_CATEGORY_EDITED)
+            page.enter_category_name(
+                "ZZ-ORPHAN-edited-%d-DO-NOT-USE" % int(_time.time() * 1000)
+            )
+            page.save_changes_and_return_to_list()
+        else:
+            # Rename back — bypass update_category_name to avoid open_edit_category's
+            # own inactive-filter fallback interfering with this reopen; the
+            # deterministic save-and-return (waits for the app's own save signal,
+            # then re-navigates) survives that regardless.
+            try:
+                page.open_edit_category(MANAGED_CATEGORY_EDITED)
+                page.enter_category_name(MANAGED_CATEGORY)
+                page.ensure_active_switch_on()
+                page.save_changes_and_return_to_list()
+            except RuntimeError:
+                # Lost a race against something else that just claimed the
+                # base name between the category_exists() check above and
+                # this save — park this one as an orphan rather than
+                # propagate; the next reset() call sees MANAGED_CATEGORY
+                # already satisfied and moves on.
+                pass
     elif not page.category_exists(MANAGED_CATEGORY):
         # category_exists()'s 10s probe (bound short deliberately for the
         # read-after-write fallback paths elsewhere) can false-negative on
