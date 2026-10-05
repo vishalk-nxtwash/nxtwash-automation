@@ -1,3 +1,6 @@
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+
 from pages.admin_portal.service_categories_page import ServiceCategoriesPage
 from tests.admin_portal._managed import managed_name
 from tests.admin_portal._managed import managed_resource
@@ -75,6 +78,61 @@ MANAGED_CATEGORY = managed_name("Category")
 MANAGED_CATEGORY_EDITED = "%s edited" % MANAGED_CATEGORY
 
 
+def _consolidate_duplicate_category(page, name):
+    """If more than one row is named exactly `name`, rename every extra one
+    out of the way, keeping just the first (by id) as canonical.
+
+    Defends against duplicate-creation paths this fixture can't fully
+    prevent on its own — confirmed in CI: extra "CI-AUTOTEST Category"
+    records sporadically appear by a mechanism not yet root-caused, each
+    one permanently blocking any future rename back to the base name
+    (no delete UI). Self-heals on every setup/teardown instead of
+    requiring every possible creation path to be found and fixed first.
+
+    Resolves every matching row's id up front from the href (not by
+    position) before touching anything, then edits each EXTRA id directly
+    by URL — never re-queries row order mid-cleanup, which previously
+    caused the "keeper" to get caught by a later iteration when the grid
+    re-sorted after a rename (confirmed in CI: wiped the canonical record
+    to zero).
+    """
+    import re
+    import time
+
+    page.search_category(name)
+    rows = page.get_visible_category_rows()
+    ids = []
+    for row in rows:
+        try:
+            row_name = row.find_element(
+                By.XPATH, ".//*[@data-props-id='categoryName']"
+            ).text.strip()
+        except Exception:  # noqa: BLE001
+            continue
+        if row_name != name:
+            continue
+        try:
+            href = row.find_element(
+                By.XPATH, ".//*[normalize-space()='Edit']/ancestor::*[self::a or self::button][1]"
+            ).get_attribute("href")
+        except Exception:  # noqa: BLE001
+            continue
+        match = re.search(r"/edit/(\d+)", href or "")
+        if match and match.group(1) not in ids:
+            ids.append(match.group(1))
+
+    if len(ids) <= 1:
+        return
+
+    origin = page.driver.execute_script("return window.location.origin")
+    for extra_id in ids[1:]:
+        page.driver.get("%s/services/serviceCategories/edit/%s" % (origin, extra_id))
+        page.wait_for_edit_loaded()
+        page.enter_category_name("ZZ-DUP-%s-%d-DO-NOT-USE" % (extra_id, int(time.time() * 1000)))
+        page.save_changes_and_return_to_list()
+    page.search_category(name)
+
+
 def reset_managed_category(browser):
     """Ensure the managed category exists at its baseline name and is Active.
 
@@ -84,6 +142,8 @@ def reset_managed_category(browser):
     - Deactivated by test → re-activate it
     """
     page = open_service_categories_page(browser)
+    _consolidate_duplicate_category(page, MANAGED_CATEGORY)
+    _consolidate_duplicate_category(page, MANAGED_CATEGORY_EDITED)
 
     if page.category_exists(MANAGED_CATEGORY_EDITED):
         # Rename back — bypass update_category_name to avoid open_edit_category's
@@ -95,17 +155,46 @@ def reset_managed_category(browser):
         page.ensure_active_switch_on()
         page.save_changes_and_return_to_list()
     elif not page.category_exists(MANAGED_CATEGORY):
+        # category_exists()'s 10s probe (bound short deliberately for the
+        # read-after-write fallback paths elsewhere) can false-negative on
+        # genuine backend lag — confirmed in CI: it fabricated 2 duplicate
+        # "CI-AUTOTEST Category" records in a single run this way. Creating
+        # one here is unrecoverable staging pollution (no delete UI), so
+        # give it one longer, final look before concluding it's really gone.
+        page.search_category(MANAGED_CATEGORY)
+        try:
+            page.wait_for_category_row(MANAGED_CATEGORY, timeout=40)
+            return page
+        except TimeoutException:
+            pass
         page.create_category(MANAGED_CATEGORY)
         page.search_category(MANAGED_CATEGORY)
         page.wait_for_category_row(MANAGED_CATEGORY)
         return page
 
-    # Restore active status if a test deactivated the category
-    page.search_category(MANAGED_CATEGORY)
-    if page.get_category_status(MANAGED_CATEGORY) != "Active":
-        page.open_edit_category(MANAGED_CATEGORY)
-        page.ensure_active_switch_on()
-        page.save_changes_and_return_to_list()
+    # Restore active status if a test deactivated the category. Best-effort:
+    # this step depends on the same shared staging record's read-after-write
+    # lag that's been the recurring theme in this fixture (confirmed in CI,
+    # sometimes 40s+). A paced retry (wait_for_persisted_value) already
+    # covers the common case; if it's STILL not resolved after that budget,
+    # don't fail setup/teardown over it — this fixture runs again before
+    # the very next test and will simply retry this same step then. Letting
+    # a flaky read here fail the whole test (or worse, teardown, which
+    # xfail can't even mark) is a worse outcome than one test occasionally
+    # starting from a not-yet-reactivated record.
+    try:
+        page.search_category(MANAGED_CATEGORY)
+        status = page.wait_for_persisted_value(
+            lambda: page.get_category_status(MANAGED_CATEGORY),
+            "Active",
+            reopen=lambda: page.search_category(MANAGED_CATEGORY),
+        )
+        if status != "Active":
+            page.open_edit_category(MANAGED_CATEGORY)
+            page.ensure_active_switch_on()
+            page.save_changes_and_return_to_list()
+    except TimeoutException:
+        pass
 
     return page
 

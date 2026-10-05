@@ -43,6 +43,10 @@ def test_activate_deactivate_activate_cycle(managed_category):
     page.ensure_active_switch_on()
     page.save_changes_and_return_to_list()
 
+    # open_edit_category()'s own fallback switched the grid to the inactive
+    # filter to find the category while it was still Inactive; that filter
+    # survives the save+renav, so reset it before checking the final state.
+    page._reset_to_default_view()
     page.search_category(MANAGED_CATEGORY)
     assert page.wait_for_category_row(MANAGED_CATEGORY).is_displayed()
     assert page.get_category_status(MANAGED_CATEGORY) == "Active"
