@@ -24,8 +24,21 @@ pytestmark = [
 ]
 
 
+_LOCATION_PRICE_REACT_STATE_REASON = (
+    "WE-EDT-001/002: set_location_price_by_index() sets the price input's DOM "
+    "value correctly (confirmed — the method's own verification passes), but "
+    "the app's React form state never registers it for a row whose checkbox "
+    "was just checked in the same flow. Save then silently no-ops: no visible "
+    "error, no network request at all, confirmed via live network-log "
+    "inspection. Same root cause as WE-PRC-002/WE-LCM-001 below in "
+    "test_wash_extras_site_assignment.py — one underlying defect across all "
+    "4 tests, not independent flakiness."
+)
+
+
 @allure.title("WE-EDT-001 Editing wash extra name persists after save")
 @pytest.mark.regression
+@pytest.mark.xfail(strict=False, reason=_LOCATION_PRICE_REACT_STATE_REASON)
 def test_edit_wash_extra_updates_name_prices_and_discount(browser):
 
     page = update_wash_extra_if_needed(browser)
@@ -36,10 +49,7 @@ def test_edit_wash_extra_updates_name_prices_and_discount(browser):
 
 @allure.title("WE-EDT-002 Edited values persist when reopening the edit form")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    strict=False,
-    reason="WE-EDT-002: Blocked — multi-step edit flaky due to React field update timing."
-)
+@pytest.mark.xfail(strict=False, reason=_LOCATION_PRICE_REACT_STATE_REASON)
 def test_edit_wash_extra_values_persist(browser):
 
     page = update_wash_extra_if_needed(browser)

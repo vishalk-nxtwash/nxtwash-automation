@@ -109,7 +109,10 @@ def test_global_price_reflected_at_site_level(browser):
 @allure.title("WE-PRC-002 Location price override persists after save")
 @pytest.mark.regression
 @pytest.mark.skip(
-    reason="WE-PRC-002: Blocked — JS value setter not persisting on save, React state not updated."
+    reason="WE-PRC-002: Confirmed — price is set correctly in the DOM but the "
+    "app's React form state never registers it, so Save silently no-ops (no "
+    "error, no network request). Same root cause as WE-LCM-001 below and "
+    "WE-EDT-001/002 in test_wash_extras_edit.py — one defect, not four."
 )
 def test_location_price_override_persists(browser):
 
@@ -175,7 +178,10 @@ def test_state_city_tax_fields_are_read_only(browser):
 @allure.title("WE-LCM-001 Location commission override persists after save")
 @pytest.mark.extended
 @pytest.mark.skip(
-    reason="WE-LCM-001: Blocked — JS value setter not persisting, React controlled-component state not updated."
+    reason="WE-LCM-001: Confirmed — same root cause as WE-PRC-002 above and "
+    "WE-EDT-001/002 in test_wash_extras_edit.py: the value is set correctly "
+    "in the DOM but the app's React form state never registers it, so Save "
+    "silently no-ops. One defect, not four."
 )
 def test_location_commission_override_persists(browser):
 

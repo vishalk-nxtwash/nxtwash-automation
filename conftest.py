@@ -151,16 +151,11 @@ _QUARANTINE_SCRIPT = {
     "test_sites_validation.py::test_create_site_validation_invalid_email_formats":
         "Site create form appears to accept invalid email formats (abc@, abc, "
         "abc@yopmail). Investigate product-side email validation before un-xfail.",
-    "test_wash_extras_edit.py::test_edit_wash_extra_values_persist":
-        "WE-EDT-003: two layers fixed (get_location_rows() now sorts by site "
-        "name for stable index addressing; added save_and_return_to_list() — "
-        "wash_extras never had the re-navigate-after-save fix proven in "
-        "service_categories/wash_packages/memberships). Still fails on a third, "
-        "deeper issue: the Save button click doesn't register at all "
-        "(wait_for_legacy_save times out, still on the edit form) once "
-        "replace_applicable_discount() has interacted with the Discount "
-        "settings tab beforehand. Not yet investigated — needs a live DOM "
-        "check of what's intercepting/blocking the Save click in that state.",
+    # test_wash_extras_edit.py's two affected tests (WE-EDT-001/002) carry their
+    # own in-code xfail with the confirmed root cause — see
+    # _LOCATION_PRICE_REACT_STATE_REASON there, shared with WE-PRC-002/WE-LCM-001
+    # in test_wash_extras_site_assignment.py. Not tracked here to avoid
+    # duplicating the same reason in two places.
 }
 
 
