@@ -430,31 +430,61 @@ class ServiceCategoriesPage(BasePage):
             if cb.is_selected() != on:
                 self.driver.execute_script("arguments[0].click();", cb)
 
+    def _grid_row_fingerprint(self):
+        """Cheap text snapshot of the currently visible grid rows.
+
+        Reads text content fresh on every call instead of relying on a
+        captured element's identity/staleness — the Inovua grid recycles row
+        DOM nodes on filter toggle instead of destroying them, so a captured
+        row can stay "live" (never go stale) even once the grid's content has
+        fully changed underneath it.
+        """
+        try:
+            return tuple(
+                row.text for row in self.driver.find_elements(*self.GRID_ROWS)
+            )
+        except StaleElementReferenceException:
+            return ()
+
+    def _wait_for_grid_change(self, before, timeout=10):
+        """Wait briefly for the grid's visible rows to differ from `before`.
+
+        Bounded by its own short timeout, not self.wait's 45s: by the time
+        this is called, wait_for_list_loaded() has already confirmed the load
+        mask is gone, so a real re-render is either done or a moment away. If
+        the filtered result happens to render identical text (e.g. toggling a
+        filter that doesn't change the visible set), there is nothing to
+        detect — give up quickly rather than block on a condition that may
+        never occur.
+
+        Replaces an EC.staleness_of(sentinel) wait that always burned its
+        full timeout: because the grid recycles row nodes, that condition
+        never resolved (confirmed reproducing across CI runs 37452664586 and
+        37510201332), costing ~45s on every call and driving the containing
+        test past pytest-timeout's 420s per-test cap when invoked more than
+        a few times (test body + teardown self-heal retries all pass through
+        here).
+        """
+        try:
+            WebDriverWait(self.driver, timeout, poll_frequency=0.3).until(
+                lambda driver: self._grid_row_fingerprint() != before
+            )
+        except TimeoutException:
+            pass
+
     def apply_filters(self):
         """Apply filters — clicks Apply button if present, else auto-applies."""
         apply_btns = self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)
-        sentinel = None
         if apply_btns:
-            # Capture a grid row before the click so we can detect DOM replacement.
-            sentinel_rows = self.driver.find_elements(*self.GRID_ROWS)
-            sentinel = sentinel_rows[0] if sentinel_rows else None
+            before = self._grid_row_fingerprint()
             self.driver.execute_script("arguments[0].click();", apply_btns[0])
             self.wait.until(
                 EC.invisibility_of_element_located(self.APPLY_FILTERS_BUTTON)
             )
-        self.wait_for_list_loaded()
-        # Wait for the pre-filter rows to go stale (grid re-rendered with new data).
-        # TODO(check later): seen hanging past self.wait's 45s and getting cut off
-        # by pytest-timeout's 420s test-level kill instead of raising here (CI run
-        # 37452664586, test_edit_service_category_name_and_restore). Suspect the
-        # Inovua grid recycles row DOM nodes on filter toggle instead of destroying
-        # them, so this sentinel never actually goes stale. Needs a non-staleness
-        # completion signal if confirmed.
-        if sentinel is not None:
-            try:
-                self.wait.until(EC.staleness_of(sentinel))
-            except Exception:  # noqa: BLE001
-                pass
+            self.wait_for_list_loaded()
+            self._wait_for_grid_change(before)
+        else:
+            self.wait_for_list_loaded()
         # Wait for the filtered rows to be present (noop for empty result sets).
         try:
             self.wait.until(EC.presence_of_element_located(self.GRID_ROWS))
