@@ -444,6 +444,12 @@ class ServiceCategoriesPage(BasePage):
             )
         self.wait_for_list_loaded()
         # Wait for the pre-filter rows to go stale (grid re-rendered with new data).
+        # TODO(check later): seen hanging past self.wait's 45s and getting cut off
+        # by pytest-timeout's 420s test-level kill instead of raising here (CI run
+        # 37452664586, test_edit_service_category_name_and_restore). Suspect the
+        # Inovua grid recycles row DOM nodes on filter toggle instead of destroying
+        # them, so this sentinel never actually goes stale. Needs a non-staleness
+        # completion signal if confirmed.
         if sentinel is not None:
             try:
                 self.wait.until(EC.staleness_of(sentinel))
