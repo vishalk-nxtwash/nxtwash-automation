@@ -68,43 +68,81 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        module:
-          - bank_drop
-          - card_declines
-          - cash_report
-          - coupon_packages
-          - custom_services
-          - customers
-          - discounts
-          - employees
-          - gas_pump_settings
-          - general_sales_report
-          - gift_cards
-          - kiosk_settings
-          - labor_shifts
-          - login
-          - memberships
-          - overview
-          - performance_metrics
-          - pos_settings
-          - redemptions
-          - revenue_overview
-          - service_categories
-          - sites
-          - transactions
-          - tunnel_settings
-          - user_roles
-          - users
-          - wash_activity
-          - wash_books
-          - wash_extras
-          - wash_packages
+        # See suite-admin.yml's "full" job for why memberships gets two
+        # custom shards instead of one plain tests/admin_portal/memberships
+        # path — same reasoning applies here, just more load-bearing: this
+        # host is the one that actually hit the timeout. Tests sharing a
+        # managed_resource fixture MUST stay in the same shard (xdist_group
+        # only serializes within one job's worker pool).
+        include:
+          - module: bank_drop
+            test_path: tests/admin_portal/bank_drop
+          - module: card_declines
+            test_path: tests/admin_portal/card_declines
+          - module: cash_report
+            test_path: tests/admin_portal/cash_report
+          - module: coupon_packages
+            test_path: tests/admin_portal/coupon_packages
+          - module: custom_services
+            test_path: tests/admin_portal/custom_services
+          - module: customers
+            test_path: tests/admin_portal/customers
+          - module: discounts
+            test_path: tests/admin_portal/discounts
+          - module: employees
+            test_path: tests/admin_portal/employees
+          - module: gas_pump_settings
+            test_path: tests/admin_portal/gas_pump_settings
+          - module: general_sales_report
+            test_path: tests/admin_portal/general_sales_report
+          - module: gift_cards
+            test_path: tests/admin_portal/gift_cards
+          - module: kiosk_settings
+            test_path: tests/admin_portal/kiosk_settings
+          - module: labor_shifts
+            test_path: tests/admin_portal/labor_shifts
+          - module: login
+            test_path: tests/admin_portal/login
+          - module: memberships-managed
+            test_path: tests/admin_portal/memberships/test_memberships_edit.py tests/admin_portal/memberships/test_memberships_managed.py tests/admin_portal/memberships/test_memberships_positive.py tests/admin_portal/memberships/test_memberships_redemption.py tests/admin_portal/memberships/test_memberships_validation.py
+          - module: memberships-safe
+            test_path: tests/admin_portal/memberships/test_memberships_download.py tests/admin_portal/memberships/test_memberships_edge_cases.py tests/admin_portal/memberships/test_memberships_negative.py tests/admin_portal/memberships/test_memberships_search_filter.py tests/admin_portal/memberships/test_memberships_ui.py
+          - module: overview
+            test_path: tests/admin_portal/overview
+          - module: performance_metrics
+            test_path: tests/admin_portal/performance_metrics
+          - module: pos_settings
+            test_path: tests/admin_portal/pos_settings
+          - module: redemptions
+            test_path: tests/admin_portal/redemptions
+          - module: revenue_overview
+            test_path: tests/admin_portal/revenue_overview
+          - module: service_categories
+            test_path: tests/admin_portal/service_categories
+          - module: sites
+            test_path: tests/admin_portal/sites
+          - module: transactions
+            test_path: tests/admin_portal/transactions
+          - module: tunnel_settings
+            test_path: tests/admin_portal/tunnel_settings
+          - module: user_roles
+            test_path: tests/admin_portal/user_roles
+          - module: users
+            test_path: tests/admin_portal/users
+          - module: wash_activity
+            test_path: tests/admin_portal/wash_activity
+          - module: wash_books
+            test_path: tests/admin_portal/wash_books
+          - module: wash_extras
+            test_path: tests/admin_portal/wash_extras
+          - module: wash_packages
+            test_path: tests/admin_portal/wash_packages
     uses: ./.github/workflows/run-suite.yml
     secrets: inherit
     with:
       label: admin-aws-${{ matrix.module }}
       environment: staging
-      test_path: tests/admin_portal/${{ matrix.module }}
+      test_path: ${{ matrix.test_path }}
       parallel: ${{ inputs.parallel || '2' }}
       # 180, not 90: this host is the same 2-vCPU size as GitHub-hosted but
       # shared with other runner agents and jobs, so a module that fits in
