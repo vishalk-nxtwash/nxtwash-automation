@@ -195,16 +195,16 @@ jobs:
           if [ -n "${MARKER}" ]; then marker_arg="-m ${MARKER}"; fi
 
           mkdir -p reports/allure-results reports/screenshots reports/logs
-          # --reruns 1: absorbs a transient ChromeDriver/Chrome transport
-          # crash (raw socket hang, not an application-logic failure) —
-          # confirmed in CI on the AWS runner under concurrent-job memory
-          # pressure. rerunfailures is already an installed dependency but
-          # was never actually enabled here. A genuinely broken test still
-          # ends up FAILED/XFAIL after the one retry — this only helps the
-          # transient-crash case.
+          # --reruns was tried here to absorb a one-time transient
+          # ChromeDriver/Chrome transport crash, but confirmed in CI to be a
+          # genuine, severe pytest-rerunfailures + pytest-xdist
+          # incompatibility: a rerun crashes the entire worker session
+          # ("ConnectionError: StatusDB connection closed unexpectedly",
+          # INTERNALERROR), not just the one retried test. Reverted — not
+          # worth trading a confirmed session-wide crash for a one-time,
+          # never-repeated transient hang.
           pytest $marker_arg ${TEST_PATH} $xdist \
             --headless \
-            --reruns 1 --reruns-delay 3 \
             --alluredir=reports/allure-results \
             --html=reports/report.html --self-contained-html \
             --junitxml=reports/results.xml
