@@ -99,9 +99,6 @@ class AdminOverviewPage(BasePage):
         """Navigate to an Admin Portal path relative to the base URL."""
         self.driver.get(self.base_url + path)
 
-    def get_body_text(self):
-        """Get visible page text."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_overview_text(self):
         """Get Overview title text."""

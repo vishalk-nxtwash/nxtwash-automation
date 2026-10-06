@@ -244,12 +244,6 @@ class WashActivityPage(BasePage):
         except TimeoutException:
             pass
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_current_url(self):
         return self.driver.current_url

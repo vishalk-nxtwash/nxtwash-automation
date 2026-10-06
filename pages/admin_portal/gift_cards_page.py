@@ -213,9 +213,6 @@ class GiftCardsPage(BasePage):
             EC.element_to_be_clickable(self.SAVE_CUSTOMER_GIFT_CARD_BUTTON)
         )
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_gift_card_row_locator(self, gift_card_name):
         """Build a locator for a gift card row by name."""

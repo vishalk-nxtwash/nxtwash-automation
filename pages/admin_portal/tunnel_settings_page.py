@@ -43,8 +43,6 @@ class TunnelSettingsListPage(BasePage):
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait_clickable_with_retry(self.ADD_TUNNEL_BUTTON)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _row_locator(self, name):
         return (By.XPATH,
@@ -241,12 +239,6 @@ class TunnelSettingsFormPage(BasePage):
             )
         )
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Core field actions ────────────────────────────────────────────────────
 

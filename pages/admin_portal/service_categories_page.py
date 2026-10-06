@@ -124,9 +124,6 @@ class ServiceCategoriesPage(BasePage):
 
     # ----------------------------------------------------------- body / checks
 
-    def get_body_text(self):
-        """Get visible text inside the current frame."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def search_input_is_visible(self):
         return self.wait.until(

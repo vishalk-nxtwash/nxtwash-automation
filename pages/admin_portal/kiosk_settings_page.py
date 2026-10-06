@@ -96,8 +96,6 @@ class AdminKioskSettingsPage(BasePage):
                 return
             time.sleep(0.2)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def search_kiosk(self, name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
@@ -585,12 +583,6 @@ class AdminKioskFormPage(BasePage):
             lambda d: d.find_element(*self.KIOSK_NAME_INPUT).get_attribute("value") != ""
         )
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Core form actions ─────────────────────────────────────────────────────
 

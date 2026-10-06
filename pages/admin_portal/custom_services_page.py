@@ -166,9 +166,6 @@ class CustomServicesPage(BasePage):
 
     # ---------------------------------------------------------------------- helpers
 
-    def get_body_text(self):
-        """Return visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         """Set a React-controlled input or textarea value and fire change events."""

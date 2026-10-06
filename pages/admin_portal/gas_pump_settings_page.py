@@ -59,8 +59,6 @@ class GasPumpSettingsListPage(BasePage):
             pass
         self.wait_clickable_with_retry(self.ADD_PUMP_BUTTON)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _row_locator(self, name):
         return (By.XPATH,
@@ -344,12 +342,6 @@ class GasPumpSettingsFormPage(BasePage):
             )
         )
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Core field actions ────────────────────────────────────────────────────
 

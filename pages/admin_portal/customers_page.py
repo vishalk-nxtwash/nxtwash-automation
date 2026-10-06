@@ -327,8 +327,6 @@ class CustomersPage(BasePage):
         time.sleep(1.0)
         return True
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ─────────────────────────────────────────────────────────────────────────
     # List controls

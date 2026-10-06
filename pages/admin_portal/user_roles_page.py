@@ -85,8 +85,6 @@ class AdminUserRolesPage(BasePage):
         )
         self.reset_filters_if_active()
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def search_role(self, role_name):
         element = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
@@ -332,15 +330,6 @@ class AdminUserRoleFormPage(BasePage):
         except Exception:
             pass
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            # The create/edit iframe was removed by a post-save SPA navigation.
-            # Fall back to the main document so callers like page_has_no_broken_state
-            # still get a string rather than an exception.
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         """Set a React-controlled input value with focus() so onChange fires."""

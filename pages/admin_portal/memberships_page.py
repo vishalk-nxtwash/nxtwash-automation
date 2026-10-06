@@ -245,9 +245,6 @@ class MembershipsPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.SAVE_MEMBERSHIP_BUTTON))
         self.wait.until(lambda driver: self.get_membership_name_value() != "")
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def element_is_visible(self, locator):
         """Return whether an element is visible without failing the test."""

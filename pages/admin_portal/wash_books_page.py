@@ -210,9 +210,6 @@ class WashBooksPage(BasePage):
         self.wait_clickable_with_retry(self.SAVE_WASH_BOOK_BUTTON, timeout=60)
         long_wait.until(lambda driver: self.get_wash_book_name_value() != "")
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         """Set a React-controlled input value and dispatch change events."""

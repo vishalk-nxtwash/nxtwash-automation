@@ -94,9 +94,6 @@ class BankDropPage(BasePage):
         self.wait_clickable_with_retry(self.SAVE_BUTTON)
         self.wait.until(lambda driver: self.get_name_value() != "")
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_bank_drop_row_locator(self, name):
         """Build a locator for a Bank Drop row by name."""

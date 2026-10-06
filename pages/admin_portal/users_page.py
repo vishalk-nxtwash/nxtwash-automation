@@ -92,12 +92,6 @@ class AdminUsersPage(BasePage):
             return True
         self.wait.until(_mask_gone)
 
-    def get_body_text(self):
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        except Exception:
-            self.driver.switch_to.default_content()
-            return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Search ────────────────────────────────────────────────────────────────
 
@@ -391,8 +385,6 @@ class AdminUserFormPage(BasePage):
             lambda d: d.find_element(*self.EMAIL_INPUT).get_attribute("value") != ""
         )
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     # ── Field interactions ────────────────────────────────────────────────────
 

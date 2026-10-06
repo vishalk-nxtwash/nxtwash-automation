@@ -56,9 +56,6 @@ class AdminLoginPage(BasePage):
         self.wait_visible_with_retry(self.PASSWORD_INPUT, timeout=60)
         self.wait_clickable_with_retry(self.LOGIN_BUTTON, timeout=60)
 
-    def get_body_text(self):
-        """Get visible page text."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def is_login_page(self):
         """Return whether the browser is on the login page."""

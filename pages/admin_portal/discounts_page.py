@@ -160,9 +160,6 @@ class DiscountsPage(BasePage):
         )
         self.wait_for_grid_idle()
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         """Set a React-controlled input value and dispatch change events."""

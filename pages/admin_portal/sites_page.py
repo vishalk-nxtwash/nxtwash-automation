@@ -58,9 +58,6 @@ class SitesPage(BasePage):
         self.wait_clickable_with_retry(self.FILTER_BUTTON)
         self.wait_clickable_with_retry(self.ADD_SITE_BUTTON)
 
-    def get_body_text(self):
-        """Get visible page text."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_site_count_from_title(self):
         """Return the visible site count from the page title.
@@ -571,9 +568,6 @@ class CreateSitePage(BasePage):
         self.wait_visible_with_retry(self.NEW_MODE_LABEL)
         self.wait_visible_with_retry(self.SITE_NAME_INPUT)
 
-    def get_body_text(self):
-        """Get visible page text."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, locator, value):
         """Set a React-controlled input value and dispatch change events."""

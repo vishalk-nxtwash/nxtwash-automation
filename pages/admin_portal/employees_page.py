@@ -73,8 +73,6 @@ class AdminEmployeesPage(BasePage):
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait_clickable_with_retry(self.ADD_EMPLOYEE_BUTTON)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def search_employee(self, last_name):
         el = self.wait.until(EC.element_to_be_clickable(self.SEARCH_INPUT))
@@ -318,8 +316,6 @@ class AdminEmployeeFormPage(BasePage):
             lambda d: d.find_element(*self.FIRST_NAME_INPUT).get_attribute("value") != ""
         )
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         self.driver.execute_script("""
@@ -604,8 +600,6 @@ class AdminEmployeeShiftPage(BasePage):
         self.wait.until(EC.invisibility_of_element_located(self.LOAD_MASK))
         self.wait_visible_with_retry(self.ADD_SHIFT_BUTTON)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_visible_row_count(self):
         rows = self.driver.find_elements(*self.GRID_ROWS)
@@ -760,8 +754,6 @@ class AdminEmployeeShiftFormPage(BasePage):
         self.switch_to_frame_with_retry(AdminEmployeeShiftPage.SHIFT_EDIT_FRAME)
         self.wait_visible_with_retry(self.SAVE_BUTTON)
 
-    def get_body_text(self):
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def _set_input_value(self, element, value):
         self.driver.execute_script("""

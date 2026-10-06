@@ -24,6 +24,39 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 45)
 
+    # ── Body text ─────────────────────────────────────────────────────────────
+
+    def get_body_text(self, timeout=5):
+        """Get visible text of the current document's <body>.
+
+        Tolerates two known transient failure shapes right after a Save
+        click whose outcome (stay on form vs. navigate away) isn't known in
+        advance:
+          1. A brief gap where the old document has torn down and the new
+             one isn't attached yet — <body> doesn't resolve for an instant.
+          2. A post-save SPA navigation that removes the iframe WebDriver
+             was switched into entirely — that frame reference never
+             recovers on its own; switching to the top-level document is
+             the only way out.
+        Several page objects independently hit and ad-hoc-patched variants
+        of this (service_categories, cash_report, wash_packages, user_roles,
+        among others) before this was pulled into one place. Retries the
+        current context first (covers case 1); if that's still failing once
+        the budget is spent, falls back to the top-level document once
+        (covers case 2) before letting the final attempt's exception
+        propagate.
+        """
+        deadline = time.time() + timeout
+        while True:
+            try:
+                return self.driver.find_element(By.TAG_NAME, "body").text
+            except (NoSuchElementException, StaleElementReferenceException):
+                if time.time() >= deadline:
+                    break
+                time.sleep(0.2)
+        self.driver.switch_to.default_content()
+        return self.driver.find_element(By.TAG_NAME, "body").text
+
     # ── Staging toast dismissal ──────────────────────────────────────────────
 
     def dismiss_dev_toast(self):

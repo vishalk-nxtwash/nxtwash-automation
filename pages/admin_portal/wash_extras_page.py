@@ -137,9 +137,6 @@ class WashExtrasPage(BasePage):
         self.wait_clickable_with_retry(self.SAVE_EXTRA_BUTTON)
         self.wait.until(lambda driver: self.get_service_name_value() != "")
 
-    def get_body_text(self):
-        """Get visible text inside the current iframe."""
-        return self.driver.find_element(By.TAG_NAME, "body").text
 
     def get_extra_row_locator(self, extra_name):
         """Build a locator for a wash extra row by service name."""
