@@ -106,7 +106,13 @@ jobs:
       environment: staging
       test_path: tests/admin_portal/${{ matrix.module }}
       parallel: ${{ inputs.parallel || '2' }}
-      timeout_minutes: 90
+      # 180, not 90: this host is the same 2-vCPU size as GitHub-hosted but
+      # shared with other runner agents and jobs, so a module that fits in
+      # 90min there can genuinely need more wall-clock time here. Confirmed
+      # in CI: memberships reached only 56% progress (all passing/xfailing,
+      # zero real failures) before hitting 90min and getting cancelled —
+      # not a stuck test, just slower hardware needing more patience.
+      timeout_minutes: 180
       runner: self-hosted
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -154,5 +160,5 @@ jobs:
       environment: staging
       test_path: ${{ matrix.target.path }}
       parallel: ${{ inputs.parallel || '2' }}
-      timeout_minutes: 90
+      timeout_minutes: 180  # see "full" job above for why
       runner: ${{ matrix.target.runner }}

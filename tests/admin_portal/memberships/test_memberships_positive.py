@@ -39,7 +39,14 @@ def test_create_prepaid_membership(browser):
     memberships_page.wait_for_list_loaded()
     memberships_page.search_membership(MEMBERSHIP_NAME)
 
-    assert memberships_page.wait_for_membership_row(MEMBERSHIP_NAME).is_displayed()
+    # create_membership_if_missing() may have just resaved this record's
+    # baseline fields — give the search index more room than the method's
+    # default (60s) before concluding it's missing. Confirmed in CI: under
+    # full-suite concurrent load this failed at ~60s even though the record
+    # genuinely existed (passed in 5s when run in isolation, no other load).
+    assert memberships_page.wait_for_membership_row(
+        MEMBERSHIP_NAME, attempts=8, per_try=15
+    ).is_displayed()
     assert memberships_page.get_membership_type(MEMBERSHIP_NAME) == "Prepaid"
     assert memberships_page.get_membership_price(MEMBERSHIP_NAME) == VISIBLE_PRICE
     assert memberships_page.get_membership_status(MEMBERSHIP_NAME) == "Active"
