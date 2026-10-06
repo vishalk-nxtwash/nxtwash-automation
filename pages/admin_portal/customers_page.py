@@ -638,6 +638,25 @@ class CustomersPage(BasePage):
         except TimeoutException:
             pass
         self._wait_for_grid_idle()
+        self._wait_for_row_count_stable()
+
+    def _wait_for_row_count_stable(self, attempts=6, interval=1.0):
+        """Wait until get_visible_row_count() returns the same value twice.
+
+        _wait_for_grid_idle()'s load-mask check can clear before the FILTERED
+        rows have actually replaced the previous (unfiltered or differently
+        filtered) ones — confirmed in CI: immediately after apply_filters()
+        returned, get_visible_row_count() read 68 (stale, unfiltered), then
+        1 (correct) just 2s later. The mask disappearing is not proof the
+        grid's content has caught up with it.
+        """
+        previous = self.get_visible_row_count()
+        for _ in range(attempts):
+            time.sleep(interval)
+            current = self.get_visible_row_count()
+            if current == previous:
+                return
+            previous = current
 
     def reset_filters(self):
         try:
