@@ -539,7 +539,7 @@ class GasPumpSettingsFormPage(BasePage):
         time.sleep(1.5)
         save_succeeded = False
         try:
-            body = self.driver.find_element(By.TAG_NAME, "body").text
+            body = self.get_body_text()
             _log.info("GPS form body after save (400 chars): %s", body[:400])
             save_succeeded = (
                 "successfully created" in body

@@ -408,7 +408,7 @@ class WashPackagesPage(BasePage):
 
     def clear_active_filters(self):
         """Reset all filters and wait until the active-filter badge is gone."""
-        body = self.driver.find_element(By.TAG_NAME, "body").text
+        body = self.get_body_text()
         if "Filter by (" not in body:
             return
         try:
@@ -432,7 +432,7 @@ class WashPackagesPage(BasePage):
         operation that needs to find a specific row in an unfiltered grid.
         """
         try:
-            body = self.driver.find_element(By.TAG_NAME, "body").text
+            body = self.get_body_text()
             if "Filter by (" in body:
                 self.reset_filters()
                 try:

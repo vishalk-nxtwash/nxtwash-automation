@@ -411,9 +411,17 @@ class BasePage:
 
         Checks both duplicate-record keywords and generic server-error signals.
         Safe to call at any time; never raises.
+
+        Uses get_body_text() rather than a raw find_element call: this is
+        most often called right after a Save, the exact moment get_body_text()
+        was built to tolerate (see its docstring). A bare find_element here
+        previously meant a transient mid-navigation gap — the save actually
+        failing with a real, visible error — was swallowed by the blanket
+        except below and reported as "no error visible", when the error was
+        simply read at the wrong instant.
         """
         try:
-            body = self.driver.find_element(By.TAG_NAME, "body").text.lower()
+            body = self.get_body_text().lower()
             for kw in self._DUPLICATE_KEYWORDS + self._SERVER_ERROR_KEYWORDS:
                 if kw in body:
                     # Prefix the matched keyword — a large page (e.g. a data

@@ -349,7 +349,7 @@ class DiscountsPage(BasePage):
 
     def reset_filters_if_active(self):
         try:
-            body = self.driver.find_element(By.TAG_NAME, "body").text
+            body = self.get_body_text()
             if "Filter by (" in body:
                 self.reset_filters()
         except Exception:

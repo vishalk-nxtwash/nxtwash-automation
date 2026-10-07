@@ -500,7 +500,7 @@ class AdminEmployeeFormPage(BasePage):
         except Exception:
             body = ""
             try:
-                body = self.driver.find_element(By.TAG_NAME, "body").text[:1200]
+                body = self.get_body_text()[:1200]
             except Exception:
                 pass
             logging.getLogger("nxtwash").warning(
