@@ -190,7 +190,23 @@ def reset_managed_category(browser):
             return page
         except TimeoutException:
             pass
-        page.create_category(MANAGED_CATEGORY)
+        try:
+            page.create_category(MANAGED_CATEGORY)
+        except Exception:
+            # managed_resource() has no locking across xdist workers —
+            # another worker can create this exact category between the
+            # "not found" check above and this call (same race as
+            # tests/admin_portal/customers/conftest.py's
+            # create_customer_if_missing). If it exists now, that's a race
+            # we lost, not a real failure — adopt it instead of raising.
+            page = open_service_categories_page(browser)
+            page.search_category(MANAGED_CATEGORY)
+            try:
+                page.wait_for_category_row(MANAGED_CATEGORY, timeout=10)
+                return page
+            except TimeoutException:
+                pass
+            raise
         page.search_category(MANAGED_CATEGORY)
         page.wait_for_category_row(MANAGED_CATEGORY)
         return page

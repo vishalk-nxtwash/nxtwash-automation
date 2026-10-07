@@ -158,3 +158,35 @@ unreachable checkbox doesn't crash setup for unrelated tests. Tests that
 directly assert on location-assignment changes are xfailed — see
 `test_edit_managed_membership_assigns_multiple_locations`,
 `test_membership_only_first_location_is_assigned`.
+
+---
+
+## BUG 9 — Service categories: leading/trailing whitespace is not trimmed before the duplicate-name check
+- **Found during:** AWS runner CI stabilization (2026-10-07), run 37538816687
+  and reproduced again identically in run 37605453851
+- **Module:** Admin Portal → Services → Service categories → Add new category
+- **Severity:** Low
+
+**Steps to reproduce**
+1. Note an existing active category name, e.g. "CI-AUTOTEST Category".
+2. Create a new category named "  CI-AUTOTEST Category  " (same name,
+   padded with leading/trailing spaces).
+3. Click **Save new category**.
+
+**Expected:** The app trims the name before comparing, and either rejects
+it as a duplicate or shows a validation error — same as submitting the name
+without padding.
+**Actual:** The app accepts the padded name as a distinct new category and
+shows "Service category succesfully created" (app's own spelling). Confirmed
+deterministic across multiple CI runs — not a timing/race artifact.
+
+**Impact:** Low — cosmetic/data-hygiene only (a near-duplicate category with
+invisible leading/trailing whitespace can be created), not a functional
+blocker. Each occurrence is self-healing: `_consolidate_duplicate_category()`
+in `tests/admin_portal/service_categories/conftest.py` strips whitespace
+when matching row names, so the next test run's setup renames the stray
+record to `ZZ-DUP-...-DO-NOT-USE` automatically.
+
+**Automation:** `test_create_category_with_whitespace_name` is xfailed —
+it's asserting the rejection behavior described above as "Expected", which
+does not happen.

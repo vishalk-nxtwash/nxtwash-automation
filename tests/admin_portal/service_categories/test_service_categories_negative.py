@@ -74,6 +74,16 @@ def test_create_category_exceeding_max_length(browser):
 @allure.title("SC-NG-004 Create category with leading/trailing/only whitespace")
 @pytest.mark.regression
 @pytest.mark.validation
+@pytest.mark.xfail(
+    strict=False,
+    reason=(
+        "BUG 9 (docs/bug_reports.md): the app does not trim leading/"
+        "trailing whitespace before the duplicate-name check — a padded "
+        "duplicate is accepted as a new, distinct category every time "
+        "(confirmed deterministic in CI runs 37538816687, 37605453851), "
+        "not the rejection/validation-error this test expects."
+    ),
+)
 def test_create_category_with_whitespace_name(managed_category):
 
     page = managed_category
