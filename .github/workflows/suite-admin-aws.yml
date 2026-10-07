@@ -170,18 +170,35 @@ jobs:
           ISOLATED_MODULES: ${{ inputs.isolated_runner_modules }}
           ISOLATED_LABEL: ${{ inputs.isolated_runner_label }}
         run: |
-          # One matrix entry per path; label = artifact-safe version of the path.
-          # runner = isolated_runner_label when the path's module is in the
-          # isolated-runner pilot list, else the shared self-hosted pool.
+          # One matrix entry per space-separated group; a comma-joined group
+          # becomes one job running all its paths together (same convention
+          # as suite-admin.yml's plan job — see there for why: label derived
+          # from the group's first path, suffixed with the group size when
+          # >1). This AWS variant also picks a runner per group: isolated
+          # pilot label when the group's module is in the isolated-runner
+          # list, else the shared self-hosted pool.
+          #
+          # Previously didn't split/rejoin on comma at all — passed a
+          # comma-joined group straight to pytest as one literal path
+          # argument, which doesn't exist as a file, so pytest collected 0
+          # tests and exited 5 (confirmed in CI, run 37599921118: "2 workers
+          # [0 items]" / "no tests ran in 1.49s" for a 5-file memberships
+          # shard dispatched exactly this way).
           targets=$(printf '%s\n' $TEST_PATH | python3 -c '
           import json, os, re, sys
-          paths = [p for p in sys.stdin.read().split() if p]
+          groups = [g for g in sys.stdin.read().split() if g]
           isolated = set(os.environ.get("ISOLATED_MODULES", "").split())
           isolated_label = os.environ.get("ISOLATED_LABEL") or "self-hosted-isolated"
-          def runner_for(p):
-              module = p.replace("tests/admin_portal/", "").split("/")[0]
-              return isolated_label if module in isolated else "self-hosted"
-          print(json.dumps([{"path": p, "label": re.sub(r"[^A-Za-z0-9_.-]+", "-", p.replace("tests/admin_portal/", ""))[:80], "runner": runner_for(p)} for p in paths]))')
+          out = []
+          for g in groups:
+              sub_paths = [p for p in g.split(",") if p]
+              first_module = sub_paths[0].replace("tests/admin_portal/", "").split("/")[0]
+              label = re.sub(r"[^A-Za-z0-9_.-]+", "-", sub_paths[0].replace("tests/admin_portal/", ""))[:80]
+              if len(sub_paths) > 1:
+                  label += "-plus%d" % (len(sub_paths) - 1)
+              runner = isolated_label if first_module in isolated else "self-hosted"
+              out.append({"path": " ".join(sub_paths), "label": label, "runner": runner})
+          print(json.dumps(out))')
           echo "targets=$targets" >> "$GITHUB_OUTPUT"
           echo "$targets"
 
