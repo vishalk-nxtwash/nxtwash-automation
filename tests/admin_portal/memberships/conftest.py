@@ -67,7 +67,7 @@ def open_memberships_page(browser):
     return memberships_page
 
 
-def _adopt_leftover_membership(browser, membership_name, fill_fn):
+def _adopt_leftover_membership(browser, membership_name, fill_fn, attempts=3):
     """Rename a leftover "VK decimal ..." membership into ``membership_name``.
 
     Creating a membership is broken on staging (Save sends no request at all
@@ -83,32 +83,54 @@ def _adopt_leftover_membership(browser, membership_name, fill_fn):
     Returns the list-page MembershipsPage on success, or None if no leftover
     was found (caller falls back to the normal create call, in case BUG 7
     ever gets fixed).
-    """
-    memberships_page = open_memberships_page(browser)
-    memberships_page.search_membership(ADOPTABLE_PREFIX)
-    adoptable = [
-        line for line in memberships_page.get_body_text().split("\n")
-        if line.startswith(ADOPTABLE_PREFIX)
-    ]
-    if not adoptable:
-        return None
 
-    memberships_page = open_memberships_page(browser)
-    memberships_page.open_edit_membership(adoptable[0])
-    fill_fn(memberships_page, membership_name)
-    memberships_page.save_and_return_to_list()
-    # Search lags behind a rename (the search index updates later), and a
-    # missed lookup here would make the next run adopt a second leftover.
-    # Confirm on the unfiltered list instead, retrying for up to ~60 s.
+    Wrapped in a bounded outer retry: multiple xdist workers can each pick
+    the SAME leftover record — the first ``adoptable`` match of their own
+    fresh search — and race to rename it to their own different target
+    name; nothing locks this across workers. A lost race surfaces either as
+    an exception opening/editing a record another worker already renamed
+    out from under us, or as the post-rename verification below never
+    finding our target name. Either way, re-searching from scratch for the
+    retry picks whatever's left — the record we raced over no longer
+    matches ADOPTABLE_PREFIX once someone else has renamed it — so
+    retrying the whole attempt, not just the verification, recovers
+    cleanly instead of failing on what was just bad luck.
+    """
     import time as _time
-    for _ in range(6):
+
+    last_error = None
+    for _ in range(attempts):
         memberships_page = open_memberships_page(browser)
-        if membership_name in memberships_page.get_body_text():
-            return memberships_page
-        _time.sleep(10)
-    raise AssertionError(
-        "Adopted membership '%s' not visible on the list after rename" % membership_name
-    )
+        memberships_page.search_membership(ADOPTABLE_PREFIX)
+        adoptable = [
+            line for line in memberships_page.get_body_text().split("\n")
+            if line.startswith(ADOPTABLE_PREFIX)
+        ]
+        if not adoptable:
+            return None
+
+        try:
+            memberships_page = open_memberships_page(browser)
+            memberships_page.open_edit_membership(adoptable[0])
+            fill_fn(memberships_page, membership_name)
+            memberships_page.save_and_return_to_list()
+        except Exception as error:  # noqa: BLE001 — likely lost a race, retry fresh
+            last_error = error
+            continue
+
+        # Search lags behind a rename (the search index updates later), and a
+        # missed lookup here would make the next run adopt a second leftover.
+        # Confirm on the unfiltered list instead, retrying for up to ~60 s.
+        for _ in range(6):
+            memberships_page = open_memberships_page(browser)
+            if membership_name in memberships_page.get_body_text():
+                return memberships_page
+            _time.sleep(10)
+        last_error = AssertionError(
+            "Adopted membership '%s' not visible on the list after rename" % membership_name
+        )
+
+    raise last_error
 
 
 def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
@@ -179,13 +201,26 @@ def create_membership_if_missing(browser, membership_name=MEMBERSHIP_NAME):
     if adopted is not None:
         return adopted
 
-    memberships_page.create_membership(
-        membership_name,
-        GLOBAL_PRICE,
-        GLOBAL_COMMISSION,
-        FIRST_LOCATION_PRICE,
-        FIRST_LOCATION_COMMISSION
-    )
+    try:
+        memberships_page.create_membership(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+    except Exception:
+        # No locking across xdist workers — another worker can create this
+        # exact membership between the checks above and this call (same
+        # race already fixed for customers/service_categories). If it
+        # exists now, adopt it instead of failing the test.
+        memberships_page = open_memberships_page(browser)
+        if memberships_page.membership_exists(membership_name):
+            memberships_page = open_memberships_page(browser)
+            memberships_page.search_membership(membership_name)
+            memberships_page.wait_for_membership_row(membership_name)
+            return memberships_page
+        raise
     # Fresh navigation clears the inactive-filter chip left by _show_inactive_memberships().
     memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
@@ -263,13 +298,24 @@ def create_recurring_membership_if_missing(
     if adopted is not None:
         return adopted
 
-    memberships_page.create_recurring_membership(
-        membership_name,
-        GLOBAL_PRICE,
-        GLOBAL_COMMISSION,
-        FIRST_LOCATION_PRICE,
-        FIRST_LOCATION_COMMISSION
-    )
+    try:
+        memberships_page.create_recurring_membership(
+            membership_name,
+            GLOBAL_PRICE,
+            GLOBAL_COMMISSION,
+            FIRST_LOCATION_PRICE,
+            FIRST_LOCATION_COMMISSION
+        )
+    except Exception:
+        # Same race as create_membership_if_missing's create_membership()
+        # call above — adopt it if another worker got there first.
+        memberships_page = open_memberships_page(browser)
+        if memberships_page.membership_exists(membership_name):
+            memberships_page = open_memberships_page(browser)
+            memberships_page.search_membership(membership_name)
+            memberships_page.wait_for_membership_row(membership_name)
+            return memberships_page
+        raise
     # Fresh navigation clears the inactive-filter chip left by _show_inactive_memberships().
     memberships_page = open_memberships_page(browser)
     memberships_page.search_membership(membership_name)
@@ -391,13 +437,27 @@ def reset_managed_membership(browser, membership_name=MANAGED_MEMBERSHIP):
             # Adoption already renamed + filled it to baseline via _fill above.
             return adopted
 
-        memberships_page.create_membership(
-            membership_name,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-            FIRST_LOCATION_PRICE,
-            FIRST_LOCATION_COMMISSION,
-        )
+        try:
+            memberships_page.create_membership(
+                membership_name,
+                GLOBAL_PRICE,
+                GLOBAL_COMMISSION,
+                FIRST_LOCATION_PRICE,
+                FIRST_LOCATION_COMMISSION,
+            )
+        except Exception:
+            # MANAGED_MEMBERSHIP / MANAGED_MEMBERSHIP_2 are split into two
+            # independent records specifically so managed-membership tests
+            # never race each other — this path is only reachable by
+            # construction if something outside that pair claims the same
+            # name, which doesn't happen today. Kept consistent with the
+            # same adopt-on-race handling used everywhere else anyway.
+            memberships_page = open_memberships_page(browser)
+            if memberships_page.membership_exists(membership_name):
+                memberships_page = open_memberships_page(browser)
+                memberships_page.clear_active_filters()
+                return memberships_page
+            raise
         # create_membership() saves and returns to list — membership is at
         # baseline from fill_membership_form(), so reset is complete.
         memberships_page.clear_active_filters()

@@ -98,6 +98,23 @@ class DriverFactory:
                     raise
                 time.sleep(2)
 
+        # socket.setdefaulttimeout(60) above does NOT actually bound a frozen
+        # Chrome: Selenium 4.44's RemoteConnection._request() explicitly
+        # passes timeout=self._client_config.timeout to urllib3, which
+        # defaults to None — an explicit None overrides the global socket
+        # default and tells urllib3 to wait forever for that one call.
+        # Confirmed in CI (run 37538816687): a single send_keys() call froze
+        # for 900+ seconds before pytest-timeout's own signal eventually
+        # broke it. Set the instance's client_config timeout directly so
+        # every webdriver command this driver issues is actually bounded.
+        # 90, not 60: set_page_load_timeout(60) below and the longest
+        # explicit WebDriverWait(..., 60) calls across pages/ already rely
+        # on getting a clean Selenium-level timeout response within 60s —
+        # this needs to sit above all of those so it only ever fires for a
+        # genuinely frozen command, never racing a wait that's working as
+        # designed.
+        driver.command_executor._client_config.timeout = 90
+
         original_quit = driver.quit
 
         def _quit_and_remove_profile():

@@ -762,9 +762,7 @@ class MembershipsPage(BasePage):
             "arguments[0].scrollIntoView({ block: 'center' }); arguments[0].focus();",
             element
         )
-        element.send_keys(SELECT_ALL_KEY, "a")
-        element.send_keys(Keys.BACKSPACE)
-        element.send_keys(str(barcode))
+        element.send_keys(SELECT_ALL_KEY, "a", Keys.BACKSPACE, str(barcode))
         self.driver.execute_script(
             """
             arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
@@ -1020,28 +1018,43 @@ class MembershipsPage(BasePage):
         The grid virtualizes (InovuaReactDataGrid) — this only reflects
         whatever is in the current scroll window. Use get_location_row(name)
         to reliably find a specific row, including one scrolled out of view.
+
+        Reads every row's text in one JS round-trip instead of one
+        row.text call per row — same fix, same reason, as the sibling
+        get_redemption_rows(): with enough location rows mounted, a
+        per-row .text loop is slow enough on a loaded host to meaningfully
+        add to this method's cost every time it's called. Read-only — no
+        write technique involved, so none of the stale-state risk that
+        applies to set_grid_input_value here.
         """
-        rows = WebDriverWait(self.driver, 60).until(
-            EC.presence_of_all_elements_located(self.LOCATION_ROWS)
-        )
-        unique_rows = []
-        seen_locations = set()
+        def _do():
+            rows = WebDriverWait(self.driver, 60).until(
+                EC.presence_of_all_elements_located(self.LOCATION_ROWS)
+            )
+            texts = self.driver.execute_script(
+                "return arguments[0].map(function(el) { return el.innerText || ''; });",
+                rows
+            )
+            unique_rows = []
+            seen_locations = set()
 
-        for row in rows:
-            lines = [
-                line.strip()
-                for line in row.text.splitlines()
-                if line.strip()
-            ]
-            location_key = "\n".join(lines[:2])
+            for row, text in zip(rows, texts):
+                lines = [
+                    line.strip()
+                    for line in text.splitlines()
+                    if line.strip()
+                ]
+                location_key = "\n".join(lines[:2])
 
-            if not location_key or location_key in seen_locations:
-                continue
+                if not location_key or location_key in seen_locations:
+                    continue
 
-            seen_locations.add(location_key)
-            unique_rows.append(row)
+                seen_locations.add(location_key)
+                unique_rows.append(row)
 
-        return unique_rows
+            return unique_rows
+
+        return self._retry_transient(_do)
 
     def get_location_name_by_index(self, row_index):
         """Return the site name of whichever row is currently at ``row_index``.
@@ -1187,21 +1200,42 @@ class MembershipsPage(BasePage):
         except (TimeoutException, NoSuchElementException):
             return False
 
+    _ASSIGNED_NAME_JS = """
+        return arguments[0].map(function(row) {
+            var rect = row.getBoundingClientRect();
+            var checkbox = row.querySelector('[class*="inovua-react-toolkit-checkbox"]');
+            var cls = checkbox ? checkbox.className : '';
+            var checked = cls.indexOf('inovua-react-toolkit-checkbox--checked') !== -1
+                && cls.indexOf('inovua-react-toolkit-checkbox--unchecked') === -1;
+            return {width: rect.width, checked: checked, text: row.innerText || ''};
+        });
+    """
+
+    def _assigned_names_from_rows(self, rows):
+        """Site names of assigned (checked), currently-rendered rows, read in one JS call.
+
+        Replaces a per-row loop that did 3-4 WebDriver round-trips each
+        (rect, find the checkbox, read its class, read the row's text) —
+        same batching rationale as get_location_rows()/get_redemption_rows().
+        """
+        if not rows:
+            return []
+        results = self.driver.execute_script(self._ASSIGNED_NAME_JS, rows)
+        names = []
+        for info in results:
+            if info["width"] <= 0:
+                continue  # recycled/pooled node — see _scroll_grid_to_find_row
+            if not info["checked"]:
+                continue
+            lines = [line.strip() for line in info["text"].splitlines() if line.strip()]
+            if lines:
+                names.append(lines[0])
+        return names
+
     def assigned_location_names(self):
         """Return the site names of every currently-mounted, assigned location row."""
         self.open_membership_settings()
-        names = []
-        for row in self.get_location_rows():
-            if row.rect["width"] <= 0:
-                continue  # recycled/pooled node — see _scroll_grid_to_find_row
-            checkbox = row.find_element(
-                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
-            )
-            if self.row_checkbox_is_checked(checkbox):
-                lines = [line.strip() for line in row.text.splitlines() if line.strip()]
-                if lines:
-                    names.append(lines[0])
-        return names
+        return self._assigned_names_from_rows(self.get_location_rows())
 
     def _click_location_checkbox(self, checkbox):
         """Toggle a location assignment checkbox via ActionChains on the checkbox element.
@@ -1361,15 +1395,31 @@ class MembershipsPage(BasePage):
         self._retry_transient(_do)
 
     def set_grid_input_value(self, element, value):
-        """Set a React grid input value without appending to stale text."""
+        """Set a React grid input value without appending to stale text.
+
+        Keeps the keystroke sequence (not the native-setter write) as the
+        primary technique deliberately: fill_all_empty_location_inputs()
+        elsewhere in this file documents a confirmed prior incident where
+        setting location-grid values via JS made React's handlers run on
+        stale state and wipe OTHER rows (17 filled -> 33 empty) — this
+        method is itself called in exactly that shape, in a loop over
+        unassigned location rows, by fill_required_unassigned_location_values().
+        _set_input_value is proven safe as a single-row write elsewhere
+        (set_location_price_and_commission here, and the whole of
+        wash_packages_page.py), but not proven safe in this multi-row-loop
+        shape, and the cost of being wrong is silent data corruption, not
+        just a slow test — so it stays the fallback, used only when the
+        keystroke write doesn't verify. The one safe trim applied: send_keys
+        accepts multiple arguments and sends them as one combined keystroke
+        sequence in a single command, so select-all, backspace, and the new
+        value no longer need three separate round-trips.
+        """
         self.driver.execute_script(
             "arguments[0].scrollIntoView({ block: 'center' });"
             "arguments[0].focus();",
             element
         )
-        element.send_keys(SELECT_ALL_KEY, "a")
-        element.send_keys(Keys.BACKSPACE)
-        element.send_keys(str(value))
+        element.send_keys(SELECT_ALL_KEY, "a", Keys.BACKSPACE, str(value))
         self.driver.execute_script(
             """
             arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
@@ -1570,18 +1620,7 @@ class MembershipsPage(BasePage):
 
     def assigned_redemption_location_names(self):
         """Return the site names of every currently-mounted, assigned redemption row."""
-        names = []
-        for row in self.get_redemption_rows():
-            if row.rect["width"] <= 0:
-                continue  # recycled/pooled node — see _scroll_grid_to_find_row
-            checkbox = row.find_element(
-                By.XPATH, ".//*[contains(@class,'inovua-react-toolkit-checkbox')]"
-            )
-            if self.row_checkbox_is_checked(checkbox):
-                lines = [line.strip() for line in row.text.splitlines() if line.strip()]
-                if lines:
-                    names.append(lines[0])
-        return names
+        return self._assigned_names_from_rows(self.get_redemption_rows())
 
     def _click_redemption_checkbox(self, checkbox):
         # block: 'center' — see _click_location_checkbox for why not 'nearest'.
