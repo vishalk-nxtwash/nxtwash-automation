@@ -191,6 +191,22 @@ def create_customer_if_missing(browser):
                     city=CUSTOMER_CITY,
                 )
             except Exception:
+                # managed_customer is function-scoped and shared by name
+                # across xdist workers with no locking — another worker's
+                # own setup/teardown can create this exact customer between
+                # our "not found" check above and this call (confirmed as
+                # the likely cause in CI, run 37538816687,
+                # test_deactivate_active_customer's teardown: two searches
+                # genuinely found nothing, yet the create was then rejected
+                # as a duplicate). If the record exists now, that's a race
+                # we lost, not a real failure — adopt it instead of failing
+                # the test.
+                page = open_customers_page(browser)
+                if _find_customer_row_by_email(page):
+                    _restore_customer_state(browser)
+                    page = open_customers_page(browser)
+                    page._reset_active_filter_if_present()
+                    return page
                 next_slot = SLOT + 1
                 print(
                     f"\n[test_data] Customer '{CUSTOMER_LAST}' / '{CUSTOMER_EMAIL}' "
