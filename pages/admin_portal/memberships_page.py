@@ -1466,28 +1466,45 @@ class MembershipsPage(BasePage):
 
         Same virtualization caveat as get_location_rows(); use
         get_redemption_row(name) to reliably find a specific row.
+
+        Reads every row's text in one JS round-trip instead of one
+        row.text call per row — with enough redemption locations mounted,
+        that per-row loop was slow enough on a loaded host to burn through
+        a whole test's pytest-timeout budget on its own (confirmed in CI,
+        runs 37531450569 / 37538816687: the timeout fired while this exact
+        loop was still running, for two different tests). Retried as one
+        unit via _retry_transient — a row going stale between the find and
+        the script read re-fetches everything fresh rather than reusing a
+        now-stale handle.
         """
-        rows = WebDriverWait(self.driver, 60).until(
-            EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
-        )
-        unique_rows = []
-        seen_locations = set()
+        def _do():
+            rows = WebDriverWait(self.driver, 60).until(
+                EC.presence_of_all_elements_located(self.REDEMPTION_ROWS)
+            )
+            texts = self.driver.execute_script(
+                "return arguments[0].map(function(el) { return el.innerText || ''; });",
+                rows
+            )
+            unique_rows = []
+            seen_locations = set()
 
-        for row in rows:
-            lines = [
-                line.strip()
-                for line in row.text.splitlines()
-                if line.strip()
-            ]
-            location_key = "\n".join(lines[:2])
+            for row, text in zip(rows, texts):
+                lines = [
+                    line.strip()
+                    for line in text.splitlines()
+                    if line.strip()
+                ]
+                location_key = "\n".join(lines[:2])
 
-            if not location_key or location_key in seen_locations:
-                continue
+                if not location_key or location_key in seen_locations:
+                    continue
 
-            seen_locations.add(location_key)
-            unique_rows.append(row)
+                seen_locations.add(location_key)
+                unique_rows.append(row)
 
-        return unique_rows
+            return unique_rows
+
+        return self._retry_transient(_do)
 
     def get_redemption_location_name_by_index(self, row_index):
         """Return the site name of whichever redemption row is at ``row_index``.

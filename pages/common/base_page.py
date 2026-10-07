@@ -4,8 +4,8 @@ import time
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
     ElementNotInteractableException,
-    NoSuchElementException,
     StaleElementReferenceException,
+    WebDriverException,
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -40,17 +40,32 @@ class BasePage:
              the only way out.
         Several page objects independently hit and ad-hoc-patched variants
         of this (service_categories, cash_report, wash_packages, user_roles,
-        among others) before this was pulled into one place. Retries the
-        current context first (covers case 1); if that's still failing once
-        the budget is spent, falls back to the top-level document once
-        (covers case 2) before letting the final attempt's exception
-        propagate.
+        among others) before this was pulled into one place.
+
+        Catches the broad WebDriverException rather than just
+        NoSuchElementException/StaleElementReferenceException: the same
+        race surfaces as different concrete exceptions depending on the
+        Chrome/ChromeDriver build. Confirmed in CI — the GitHub-hosted
+        runner (Chrome ~154-155.x) raised NoSuchElementException for this;
+        the AWS runner's pinned Chrome (153.0.8010.x) instead raised a bare
+        WebDriverException wrapping a CDP-level "Node with given id does
+        not belong to the document" error (run 37538816687). Both
+        NoSuchElementException and StaleElementReferenceException are
+        themselves WebDriverException subclasses, so this covers all three
+        shapes (and any other driver-level hiccup) without widening what
+        this method actually tolerates in spirit — it's still only ever
+        retrying "couldn't read the body right now", bounded by `timeout`.
+
+        Retries the current context first (covers case 1); if that's still
+        failing once the budget is spent, falls back to the top-level
+        document once (covers case 2) before letting the final attempt's
+        exception propagate.
         """
         deadline = time.time() + timeout
         while True:
             try:
                 return self.driver.find_element(By.TAG_NAME, "body").text
-            except (NoSuchElementException, StaleElementReferenceException):
+            except WebDriverException:
                 if time.time() >= deadline:
                     break
                 time.sleep(0.2)
