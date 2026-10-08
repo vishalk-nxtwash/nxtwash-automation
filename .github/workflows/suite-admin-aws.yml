@@ -14,6 +14,14 @@ name: Admin Suite — AWS runner
 # touch the same staging managed records, so a GitHub-hosted run and an AWS
 # run must never run at the same time (queue, don't cancel).
 #
+# Full-suite mode runs memberships as its own job stage AFTER every other
+# module finishes (full-memberships, needs: full) rather than mixed into the
+# same matrix. Reason: this host is one shared t3.large (2 vCPU) agent, and
+# memberships is the slowest, heaviest module on it — confirmed in CI it can
+# fail to finish within its own time budget when competing for that same
+# pool against everything else at once. Running it only once the rest have
+# released the pool gives it the full host to itself.
+#
 # Isolated-runner pilot (targeted mode only) — DISABLED as of 2026-10-02.
 # admin-isolated-01 (self-hosted-isolated) was never on separate hardware —
 # verified 2026-10-03 it ran on the exact same box (ip-172-31-0-106, t3.large:
@@ -103,10 +111,8 @@ jobs:
             test_path: tests/admin_portal/labor_shifts
           - module: login
             test_path: tests/admin_portal/login
-          - module: memberships-managed
-            test_path: tests/admin_portal/memberships/test_memberships_edit.py tests/admin_portal/memberships/test_memberships_managed.py tests/admin_portal/memberships/test_memberships_positive.py tests/admin_portal/memberships/test_memberships_redemption.py tests/admin_portal/memberships/test_memberships_validation.py
-          - module: memberships-safe
-            test_path: tests/admin_portal/memberships/test_memberships_download.py tests/admin_portal/memberships/test_memberships_edge_cases.py tests/admin_portal/memberships/test_memberships_negative.py tests/admin_portal/memberships/test_memberships_search_filter.py tests/admin_portal/memberships/test_memberships_ui.py
+          # memberships-managed / memberships-safe run in the full-memberships
+          # job below, after this job finishes — see the header comment.
           - module: overview
             test_path: tests/admin_portal/overview
           - module: performance_metrics
@@ -151,6 +157,36 @@ jobs:
       # zero real failures) before hitting 90min and getting cancelled —
       # not a stuck test, just slower hardware needing more patience.
       timeout_minutes: 180
+      runner: self-hosted
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FULL SUITE — memberships, run only after every job above has finished.
+# needs: full means this entire job waits for ALL of "full"'s matrix entries
+# to complete (success or failure — fail-fast: false there, and this job has
+# no "if" condition on full's outcome) before starting, so memberships gets
+# the whole shared host to itself instead of competing for the same 2 vCPUs.
+# Only runs in full-suite mode (blank test_path), matching "full" above.
+# ──────────────────────────────────────────────────────────────────────────────
+  full-memberships:
+    needs: full
+    if: ${{ !inputs.test_path }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - module: memberships-managed
+            test_path: tests/admin_portal/memberships/test_memberships_edit.py tests/admin_portal/memberships/test_memberships_managed.py tests/admin_portal/memberships/test_memberships_positive.py tests/admin_portal/memberships/test_memberships_redemption.py tests/admin_portal/memberships/test_memberships_validation.py
+          - module: memberships-safe
+            test_path: tests/admin_portal/memberships/test_memberships_download.py tests/admin_portal/memberships/test_memberships_edge_cases.py tests/admin_portal/memberships/test_memberships_negative.py tests/admin_portal/memberships/test_memberships_search_filter.py tests/admin_portal/memberships/test_memberships_ui.py
+    uses: ./.github/workflows/run-suite.yml
+    secrets: inherit
+    with:
+      label: admin-aws-${{ matrix.module }}
+      environment: staging
+      test_path: ${{ matrix.test_path }}
+      parallel: ${{ inputs.parallel || '2' }}
+      timeout_minutes: 180  # see "full" job above for why
       runner: self-hosted
 
 # ──────────────────────────────────────────────────────────────────────────────
