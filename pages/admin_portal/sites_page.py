@@ -271,38 +271,67 @@ class SitesPage(BasePage):
         return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
     def get_site_summary_with_api(self, site_name):
-        """Return a site summary by exact name from the authenticated session."""
-        result = self.driver.execute_async_script(
-            self._api_script("""
-            const siteName = arguments[0];
-            const done = arguments[arguments.length - 1];
-            const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
-            const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
-            const authKey = _la.key ? JSON.parse(_la.key) : "";
-            const params = new URLSearchParams({
-                key: authKey,
-                pageSize: "500",
-                pageNumber: "1"
-            });
+        """Return a site summary by exact name from the authenticated session.
 
-            fetch(API_BASE + "/api/sites?" + params, {
-                headers: {
-                    accept: "application/json",
-                    authorization: "Bearer " + accessToken
+        Paginates through the full /api/sites list rather than trusting
+        page 1 of 500 alone: confirmed in CI (AWS run 37751372019) that a
+        site can genuinely exist beyond that first page — staging has
+        accumulated well over 500 "VK AL*"/test sites over time — causing
+        this check to report "not found" for a site the backend otherwise
+        knows about. That false negative cascaded into a real "Site name
+        already exists" rejection downstream (next_available_site_data()
+        picking an already-taken number). Stops as soon as a page comes
+        back shorter than the page size (end of list) or a match is found.
+        """
+        original_timeout = self.driver.timeouts.script
+        self.driver.set_script_timeout(120)
+
+        try:
+            result = self.driver.execute_async_script(
+                self._api_script("""
+                const siteName = arguments[0];
+                const done = arguments[arguments.length - 1];
+                const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
+                const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
+                const authKey = _la.key ? JSON.parse(_la.key) : "";
+                const pageSize = 500;
+
+                async function findSite() {
+                    for (let pageNumber = 1; pageNumber <= 50; pageNumber++) {
+                        const params = new URLSearchParams({
+                            key: authKey,
+                            pageSize: String(pageSize),
+                            pageNumber: String(pageNumber)
+                        });
+                        const response = await fetch(API_BASE + "/api/sites?" + params, {
+                            headers: {
+                                accept: "application/json",
+                                authorization: "Bearer " + accessToken
+                            }
+                        });
+                        const body = await response.json();
+                        const sites = body.data || [];
+                        const match = sites.find(
+                            (item) => item.siteName === siteName
+                        );
+                        if (match) {
+                            return match;
+                        }
+                        if (sites.length < pageSize) {
+                            return null;
+                        }
+                    }
+                    return null;
                 }
-            })
-                .then((response) => response.json())
-                .then((body) => {
-                    const sites = body.data || [];
-                    const site = sites.find(
-                        (item) => item.siteName === siteName
-                    );
-                    done(site || null);
-                })
-                .catch((error) => done({ error: String(error) }));
-            """),
-            site_name
-        )
+
+                findSite()
+                    .then((site) => done(site || null))
+                    .catch((error) => done({ error: String(error) }));
+                """),
+                site_name
+            )
+        finally:
+            self.driver.set_script_timeout(original_timeout)
 
         if isinstance(result, dict) and result.get("error"):
             raise AssertionError(result["error"])
