@@ -5,11 +5,12 @@ import allure
 import pytest
 
 from tests.admin_portal.memberships.conftest import GLOBAL_COMMISSION
+from tests.admin_portal.memberships.conftest import GLOBAL_PRICE
 from tests.admin_portal.memberships.conftest import FIRST_LOCATION_COMMISSION
 from tests.admin_portal.memberships.conftest import FIRST_LOCATION_PRICE
 from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import MEMBERSHIP_NAME
-from tests.admin_portal.memberships.conftest import create_membership_if_missing
+from tests.admin_portal.memberships.conftest import managed_default_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import managed_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import open_memberships_page
 
@@ -76,10 +77,10 @@ def test_membership_requires_global_price(browser):
 @allure.title("MB-NAM-003 Verify duplicate Membership Name is rejected")
 @pytest.mark.regression
 @pytest.mark.validation
-def test_duplicate_membership_name_is_rejected(browser):
+def test_duplicate_membership_name_is_rejected(managed_default_membership):
 
     LOG.info("Validating duplicate membership name is rejected")
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.open_create_membership()
     memberships_page.fill_membership_form(
         MEMBERSHIP_NAME,
@@ -234,9 +235,26 @@ def test_duplicate_barcode_is_rejected(managed_membership):
     page.set_barcode(duplicate_barcode)
     page.save_and_return_to_list()
 
-    # Try to set the same barcode on a second membership — expect rejection
-    create_membership_if_missing(page.driver)
-    page.open_edit_membership(MEMBERSHIP_NAME)
+    # Try to set the same barcode on a second membership — expect rejection.
+    # Uses a freshly-named, one-off membership rather than the shared
+    # MEMBERSHIP_NAME record: this test already depends on managed_membership
+    # (its own xdist_group), and a second managed_* fixture here would form a
+    # separate, uniquely-combined group (pytest-xdist unions all xdist_group
+    # marks on an item into one group name) instead of actually joining the
+    # other MEMBERSHIP_NAME consumers' group — so it would NOT have been
+    # mutually exclusive with them. A one-off name sidesteps the shared state
+    # entirely instead. Confirmed in CI (AWS run 37743018614, GitHub Actions
+    # run 37775700204) as open_edit_membership() timing out on MEMBERSHIP_NAME
+    # while a sibling worker was mid-create on the same name.
+    second_membership_name = "VK BAR %s" % uuid.uuid4().hex[:6]
+    page.create_membership(
+        second_membership_name,
+        GLOBAL_PRICE,
+        GLOBAL_COMMISSION,
+        FIRST_LOCATION_PRICE,
+        FIRST_LOCATION_COMMISSION
+    )
+    page.open_edit_membership(second_membership_name)
     page.set_barcode(duplicate_barcode)
     page.click_save_membership()
     page.wait_for_form_save_blocked()

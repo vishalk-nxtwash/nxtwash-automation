@@ -2,7 +2,7 @@ import allure
 import pytest
 
 from tests.admin_portal.memberships.conftest import MEMBERSHIP_NAME
-from tests.admin_portal.memberships.conftest import create_membership_if_missing
+from tests.admin_portal.memberships.conftest import managed_default_membership  # noqa: F401
 
 
 pytestmark = [
@@ -14,9 +14,9 @@ pytestmark = [
 
 @allure.title("MB-EC-001 Membership create workflow is idempotent")
 @pytest.mark.regression
-def test_membership_create_is_idempotent(browser):
+def test_membership_create_is_idempotent(managed_default_membership):
 
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.wait_for_list_loaded()
     memberships_page.search_membership(MEMBERSHIP_NAME)
 
@@ -35,9 +35,9 @@ def test_membership_create_is_idempotent(browser):
         "at baseline. Reports XPASS once fixed."
     ),
 )
-def test_membership_only_first_location_is_assigned(browser):
+def test_membership_only_first_location_is_assigned(managed_default_membership):
 
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.open_edit_membership(MEMBERSHIP_NAME)
 
     first_name = memberships_page.get_location_name_by_index(0)
@@ -46,9 +46,9 @@ def test_membership_only_first_location_is_assigned(browser):
 
 @allure.title("MB-NAM-004 Maximum length membership name does not break form")
 @pytest.mark.regression
-def test_membership_long_name_does_not_break_form(browser):
+def test_membership_long_name_does_not_break_form(managed_default_membership):
 
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.open_create_membership()
     memberships_page.enter_membership_name("VK " + ("M" * 128))
 

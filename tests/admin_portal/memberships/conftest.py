@@ -513,3 +513,15 @@ managed_membership = managed_resource(reset_managed_membership)
 managed_membership_2 = managed_resource(
     lambda browser: reset_managed_membership(browser, MANAGED_MEMBERSHIP_2)
 )
+
+# MEMBERSHIP_NAME (the reference/default membership) was touched directly via
+# create_membership_if_missing(browser) from several validation/edge-case
+# tests — a plain function call, not a managed_* fixture, so it was invisible
+# to the pytest_itemcollected auto-grouping hook in the root conftest.py
+# (serializes tests sharing a managed_* fixture onto one xdist worker). That
+# gap let two tests mutate/read this same record concurrently: confirmed in
+# CI (AWS run 37743018614, GitHub Actions run 37775700204) as
+# open_edit_membership() timing out while a sibling worker was mid-create on
+# the same name. Wrapping it here, matching every other shared record in
+# this module, closes that gap.
+managed_default_membership = managed_resource(create_membership_if_missing)

@@ -11,7 +11,7 @@ from tests.admin_portal.memberships.conftest import GLOBAL_COMMISSION
 from tests.admin_portal.memberships.conftest import GLOBAL_PRICE
 from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP
 from tests.admin_portal.memberships.conftest import MANAGED_MEMBERSHIP_2
-from tests.admin_portal.memberships.conftest import create_membership_if_missing
+from tests.admin_portal.memberships.conftest import managed_default_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import managed_membership  # noqa: F401
 from tests.admin_portal.memberships.conftest import managed_membership_2  # noqa: F401
 from tests.admin_portal.memberships.conftest import open_memberships_page
@@ -32,10 +32,10 @@ pytestmark = pytest.mark.timeout(900)
 @allure.story("CRUD")
 @allure.title("MB-EDT-005/MB-EDT-008 Edit loyalty points and discount")
 @pytest.mark.regression
-def test_edit_membership_loyalty_points_and_discount(browser):
+def test_edit_membership_loyalty_points_and_discount(managed_default_membership):
 
     LOG.info("Editing membership loyalty points and discount: %s", MEMBERSHIP_NAME)
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.update_loyalty_points_and_discount(
         MEMBERSHIP_NAME,
         POINTS_AWARDED,
@@ -57,7 +57,7 @@ def test_edit_membership_loyalty_points_and_discount(browser):
 @allure.title("MB-EDT-001 Verify Edit Membership functionality")
 @pytest.mark.regression
 @pytest.mark.timeout(300)
-def test_edit_membership_name_and_restore(browser):
+def test_edit_membership_name_and_restore(managed_default_membership):
 
     LOG.info(
         "Editing membership name from %s and restoring it",
@@ -67,7 +67,7 @@ def test_edit_membership_name_and_restore(browser):
         MEMBERSHIP_NAME,
         uuid.uuid4().hex[:6]
     )
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
 
     try:
         memberships_page.update_membership_name(
@@ -86,7 +86,7 @@ def test_edit_membership_name_and_restore(browser):
         assert memberships_page.get_membership_name_value() == updated_membership_name
 
     finally:
-        memberships_page = open_memberships_page(browser)
+        memberships_page = open_memberships_page(memberships_page.driver)
         if memberships_page.membership_exists(updated_membership_name):
             memberships_page.update_membership_name(
                 updated_membership_name,

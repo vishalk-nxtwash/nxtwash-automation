@@ -16,8 +16,8 @@ from tests.admin_portal.memberships.conftest import (
     RECURRING_MEMBERSHIP_NAME,
     REDEEM_AS_SERVICE,
     VISIBLE_PRICE,
-    create_membership_if_missing,
     create_recurring_membership_if_missing,
+    managed_default_membership,  # noqa: F401
     managed_membership_2,  # noqa: F401
     open_memberships_page,
 )
@@ -32,10 +32,10 @@ pytestmark = pytest.mark.timeout(900)
 @allure.feature("Memberships")
 @allure.story("CRUD")
 @allure.title("MB-TYP-002 / MB-TGL-001 Verify creation of active Prepaid membership")
-def test_create_prepaid_membership(browser):
+def test_create_prepaid_membership(managed_default_membership):
 
     LOG.info("Creating/verifying prepaid membership: %s", MEMBERSHIP_NAME)
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.wait_for_list_loaded()
     memberships_page.search_membership(MEMBERSHIP_NAME)
 
@@ -134,10 +134,10 @@ def test_create_new_membership_saves(browser):
         "assigned. Reports XPASS once fixed."
     ),
 )
-def test_membership_settings_persist(browser):
+def test_membership_settings_persist(managed_default_membership):
 
     LOG.info("Verifying membership settings persist: %s", MEMBERSHIP_NAME)
-    memberships_page = create_membership_if_missing(browser)
+    memberships_page = managed_default_membership
     memberships_page.open_edit_membership(MEMBERSHIP_NAME)
 
     assert memberships_page.get_membership_name_value() == MEMBERSHIP_NAME
