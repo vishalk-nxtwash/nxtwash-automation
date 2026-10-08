@@ -762,7 +762,17 @@ class MembershipsPage(BasePage):
             "arguments[0].scrollIntoView({ block: 'center' }); arguments[0].focus();",
             element
         )
-        element.send_keys(SELECT_ALL_KEY, "a", Keys.BACKSPACE, str(barcode))
+        # SELECT_ALL_KEY stays its own call: Selenium sends one combined text
+        # string per send_keys() call, and ChromeDriver holds a modifier key
+        # down for the rest of whatever's in THAT string — merging backspace
+        # and the barcode in with it meant they were sent as Ctrl/Cmd+<key>,
+        # which does nothing in a plain input, so the value never changed
+        # (confirmed in CI: test_edit_managed_membership_barcode_persists and
+        # test_duplicate_barcode_is_rejected both hung forever waiting for a
+        # value update that could never happen). Keys.BACKSPACE + the new
+        # value don't involve a modifier, so merging those two is still safe.
+        element.send_keys(SELECT_ALL_KEY, "a")
+        element.send_keys(Keys.BACKSPACE, str(barcode))
         self.driver.execute_script(
             """
             arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
@@ -1409,17 +1419,23 @@ class MembershipsPage(BasePage):
         wash_packages_page.py), but not proven safe in this multi-row-loop
         shape, and the cost of being wrong is silent data corruption, not
         just a slow test — so it stays the fallback, used only when the
-        keystroke write doesn't verify. The one safe trim applied: send_keys
-        accepts multiple arguments and sends them as one combined keystroke
-        sequence in a single command, so select-all, backspace, and the new
-        value no longer need three separate round-trips.
+        keystroke write doesn't verify. SELECT_ALL_KEY stays its own call,
+        not merged with what follows: ChromeDriver holds a modifier key down
+        for the rest of whatever text is in the SAME send_keys() string, so
+        combining it with backspace/the new value sends them as Ctrl/Cmd+
+        <key> — which does nothing in a plain input (confirmed in CI: this
+        exact mistake in set_barcode() made two membership tests hang
+        forever waiting for a value that could never change). Keys.BACKSPACE
+        and the new value don't involve a modifier, so merging those two is
+        still a safe one-round-trip cut.
         """
         self.driver.execute_script(
             "arguments[0].scrollIntoView({ block: 'center' });"
             "arguments[0].focus();",
             element
         )
-        element.send_keys(SELECT_ALL_KEY, "a", Keys.BACKSPACE, str(value))
+        element.send_keys(SELECT_ALL_KEY, "a")
+        element.send_keys(Keys.BACKSPACE, str(value))
         self.driver.execute_script(
             """
             arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
