@@ -1,4 +1,5 @@
 import json
+import time
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -970,10 +971,32 @@ class CreateSitePage(BasePage):
             pass
 
     def click_save_new(self):
-        """Click Save new."""
+        """Click Save new, then wait for the save to land or a clear error to show.
+
+        Previously returned immediately after the click with no wait at
+        all — confirmed in CI (AWS run 37612565958) as the cause of 3
+        sites_search_filter failures: create_site_if_missing() immediately
+        checked the LIST page right after this call, while the browser was
+        still sitting on /sites/create. Waits for the URL to change away
+        from the create form, checking for a visible validation error each
+        poll so a genuine save failure raises a clear message instead of
+        leaving the caller to hit an unrelated timeout on the wrong page.
+        """
         self._scroll_to_locator(self.SAVE_NEW_BUTTON)
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_NEW_BUTTON))
+        start_url = self.driver.current_url
         self.driver.execute_script("arguments[0].click();", button)
+        deadline = time.time() + 45
+        while time.time() < deadline:
+            if self.driver.current_url != start_url:
+                return
+            error = self.get_visible_error()
+            if error:
+                raise RuntimeError("Site save failed: %s" % error)
+            time.sleep(0.5)
+        raise RuntimeError(
+            "Site save did not navigate away from %s within 45s" % start_url
+        )
 
     def fill_general_settings(
         self,
@@ -1110,13 +1133,23 @@ class EditSitePage(CreateSitePage):
         self.click(self.ADD_LANE_BUTTON)
 
     def click_save(self):
-        """Save changes and wait for navigation back to the sites list."""
+        """Save changes and wait for navigation back to the sites list.
+
+        Waits for either signal, whichever comes first: a URL change (the
+        real signal that we've navigated) or the Save button becoming
+        invisible (the original check — kept as a fallback since a
+        re-render can detach the old button node without the button
+        reference itself remaining valid to re-query). Stays best-effort
+        like before: a slow or no-op save doesn't raise, it just lets the
+        caller's own wait_for_loaded() surface the real problem.
+        """
+        start_url = self.driver.current_url
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
-        # After save the app navigates back to the list. Wait until the Save
-        # button is gone (i.e. we've left the edit form) before returning so
-        # callers aren't racing against an in-flight save.
         try:
-            self.wait.until(EC.invisibility_of_element(button))
+            self.wait.until(
+                lambda driver: driver.current_url != start_url
+                or EC.invisibility_of_element(button)(driver)
+            )
         except TimeoutException:
-            pass  # if the button is already gone the wait resolves immediately
+            pass  # best-effort, as before

@@ -821,8 +821,22 @@ class AdminEmployeeShiftFormPage(BasePage):
         return [o.text.strip() for o in opts if o.text.strip()]
 
     def click_save(self):
+        """Click Save shift, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since negative/validation tests
+        call this directly and expect to stay on the form after a rejected
+        save.
+        """
         el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))

@@ -238,8 +238,21 @@ class BankDropPage(BasePage):
         self.ensure_active_on()
 
     def click_save(self):
-        """Click save Bank Drop."""
+        """Click save Bank Drop, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since negative/validation tests
+        call this directly and expect to stay on the form after a rejected
+        save.
+        """
         self.click(self.SAVE_BUTTON)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def click_cancel(self):
         """Cancel create/edit Bank Drop."""

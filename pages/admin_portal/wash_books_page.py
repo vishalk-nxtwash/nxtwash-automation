@@ -932,11 +932,24 @@ class WashBooksPage(BasePage):
         )
 
     def click_save_wash_book(self):
-        """Click save wash book."""
+        """Click save wash book, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since negative/validation tests
+        call this directly and expect to stay on the form after a rejected
+        save.
+        """
         button = self.wait.until(
             EC.element_to_be_clickable(self.SAVE_WASH_BOOK_BUTTON)
         )
         self.driver.execute_script("arguments[0].click();", button)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def fill_wash_book_form(
         self,
@@ -1152,9 +1165,22 @@ class WashBooksPage(BasePage):
         return element.get_attribute("value")
 
     def click_save_cwb(self):
-        """Click the Save customer wash book button."""
+        """Click the Save customer wash book button, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since negative/validation tests
+        call this directly and expect to stay on the form after a rejected
+        save.
+        """
         button = self.wait.until(EC.element_to_be_clickable(self.CWB_SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def cwb_active_switch_is_on(self):
         """Return whether the Active customer wash book switch is on."""

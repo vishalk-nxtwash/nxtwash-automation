@@ -701,8 +701,21 @@ class GiftCardsPage(BasePage):
             pass
 
     def click_save_customer_gift_card(self):
-        """Click save customer gift card."""
+        """Click save customer gift card, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since negative/validation tests
+        call this directly and expect to stay on the form after a rejected
+        save.
+        """
         self.click(self.SAVE_CUSTOMER_GIFT_CARD_BUTTON)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def click_cancel(self):
         """Cancel create/edit gift card."""

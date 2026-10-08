@@ -1809,9 +1809,23 @@ class MembershipsPage(BasePage):
         )
 
     def click_save_membership(self):
-        """Click save membership."""
+        """Click save membership, then wait for the save to land.
+
+        Previously returned immediately after the click with no wait at
+        all — same defect shape found and fixed in sites_page.py's
+        click_save_new() (CI run 37612565958): the caller could check the
+        list page while the browser was still on the create/edit form.
+        Stays lenient (swallows a timeout) since test_memberships_validation.py
+        calls this directly and expects to stay on the form after a rejected
+        save. save_and_return_to_list() below is the strict version for
+        callers expecting a guaranteed successful save.
+        """
         self._scroll_to_save_button()
         self.click(self.SAVE_MEMBERSHIP_BUTTON)
+        try:
+            self.wait_for_legacy_save()
+        except Exception:
+            pass
 
     def save_and_return_to_list(self):
         """Save the membership, confirm the save landed, then show the list.
