@@ -971,16 +971,22 @@ class CreateSitePage(BasePage):
             pass
 
     def click_save_new(self):
-        """Click Save new, then wait for the save to land or a clear error to show.
+        """Click Save new, then wait briefly for the save to land.
 
         Previously returned immediately after the click with no wait at
         all — confirmed in CI (AWS run 37612565958) as the cause of 3
         sites_search_filter failures: create_site_if_missing() immediately
         checked the LIST page right after this call, while the browser was
-        still sitting on /sites/create. Waits for the URL to change away
-        from the create form, checking for a visible validation error each
-        poll so a genuine save failure raises a clear message instead of
-        leaving the caller to hit an unrelated timeout on the wrong page.
+        still sitting on /sites/create. Waits (bounded, non-raising) for
+        the URL to change away from the create form.
+
+        Must stay lenient — raising here broke every negative/validation
+        test in the module (confirmed via AWS run 37737522573): those tests
+        call create_site() -> click_save_new() directly and expect the
+        browser to remain on the create form after an intentionally invalid
+        submission. Swallowing a duplicate-site TOCTOU race (another worker
+        already created the same managed site) is also correct: the
+        caller's own wait_for_site_row() check afterward still finds it.
         """
         self._scroll_to_locator(self.SAVE_NEW_BUTTON)
         button = self.wait.until(EC.element_to_be_clickable(self.SAVE_NEW_BUTTON))
@@ -990,13 +996,7 @@ class CreateSitePage(BasePage):
         while time.time() < deadline:
             if self.driver.current_url != start_url:
                 return
-            error = self.get_visible_error()
-            if error:
-                raise RuntimeError("Site save failed: %s" % error)
             time.sleep(0.5)
-        raise RuntimeError(
-            "Site save did not navigate away from %s within 45s" % start_url
-        )
 
     def fill_general_settings(
         self,
