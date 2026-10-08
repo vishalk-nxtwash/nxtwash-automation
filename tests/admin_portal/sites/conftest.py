@@ -127,17 +127,48 @@ def next_available_site_data(browser):
 
 
 def create_site_if_missing(browser):
+    """Ensure the managed site exists; return its template data.
 
+    Checks existence via the UI's own name filter (site_exists_in_ui)
+    rather than the paginated /api/sites list (get_site_summary_with_api,
+    pageSize=500/pageNumber=1): confirmed in CI (run 37739575112) that this
+    list call can miss a site the backend otherwise knows about — the
+    create POST was rejected as "Site name already exists" right after the
+    list check had returned nothing, taking down every test in the module
+    that depends on this managed site. The UI filter issues a server-side
+    name query instead of scanning a fixed page, matching the pattern
+    already proven reliable for customers/service_categories/memberships
+    this session.
+
+    If a create attempt is still rejected (e.g. another worker's own setup
+    won a genuine race in between), cancel out of the form and adopt the
+    now-existing site instead of failing — this fixture is function-scoped
+    and shared by name across xdist workers with no locking.
+    """
     sites_page = open_sites_page(browser)
     first_site = site_data_for_number(BASE_SITE_NUMBER)
 
-    if sites_page.get_site_summary_with_api(first_site["site_name"]):
+    if sites_page.site_exists_in_ui(first_site["site_name"]):
         return first_site
 
     create_page = CreateSitePage(browser)
     sites_page.click_add_site()
     create_page.wait_for_loaded()
     create_page.create_site(**first_site)
+
+    if "/sites/create" in browser.current_url:
+        error = create_page.get_visible_error()
+        create_page.click_cancel_and_confirm_if_needed()
+        sites_page = open_sites_page(browser)
+        if sites_page.site_exists_in_ui(first_site["site_name"]):
+            return first_site
+        raise RuntimeError(
+            "Could not create managed site '%s': %s"
+            % (
+                first_site["site_name"],
+                error or "save did not navigate away from the create form",
+            )
+        )
 
     sites_page = SitesPage(browser)
     sites_page.wait_for_loaded()
