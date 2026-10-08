@@ -89,9 +89,14 @@ def test_duplicate_membership_name_is_rejected(browser):
         "3"
     )
     memberships_page.click_save_membership()
+    # wait_for_duplicate_membership_error() IS the assertion (it raises
+    # TimeoutException if the error never shows) — a separate immediate
+    # re-check here raced itself if the error is a transient toast that
+    # can fade between the wait resolving true and the next read running
+    # (confirmed in CI, AWS run 37743018614: the wait succeeded, then the
+    # very next call to the same check saw False).
     memberships_page.wait_for_duplicate_membership_error()
 
-    assert memberships_page.duplicate_membership_error_is_visible()
     assert "Add new membership" in memberships_page.get_body_text()
 
 
