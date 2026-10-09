@@ -161,15 +161,27 @@ jobs:
 
 # ──────────────────────────────────────────────────────────────────────────────
 # FULL SUITE — memberships, run only after every job above has finished.
-# needs: full means this entire job waits for ALL of "full"'s matrix entries
-# to complete (success or failure — fail-fast: false there, and this job has
-# no "if" condition on full's outcome) before starting, so memberships gets
-# the whole shared host to itself instead of competing for the same 2 vCPUs.
+# needs: full means this job waits for ALL of "full"'s matrix entries to
+# complete before starting, so memberships gets the whole shared host to
+# itself instead of competing for the same 2 vCPUs.
+#
+# !cancelled() in the if: is required, not optional — GitHub Actions' default
+# needs: behavior only runs a dependent job when every needed job's overall
+# conclusion is "success". fail-fast: false on "full" keeps one matrix
+# failure from cancelling its siblings, but "full" as a whole still reports
+# "failure" if even one of its 29 entries fails — which silently skips this
+# job entirely under the plain default rule. Confirmed in CI (run
+# 37823441762): wash_books failed on an unrelated host-resource-contention
+# timeout (nothing to do with memberships), "full" reported failure, and
+# full-memberships never ran at all. !cancelled() runs this job on either
+# success or failure of "full", only skipping if the workflow run itself was
+# cancelled.
+#
 # Only runs in full-suite mode (blank test_path), matching "full" above.
 # ──────────────────────────────────────────────────────────────────────────────
   full-memberships:
     needs: full
-    if: ${{ !inputs.test_path }}
+    if: ${{ !inputs.test_path && !cancelled() }}
     strategy:
       fail-fast: false
       max-parallel: 2
