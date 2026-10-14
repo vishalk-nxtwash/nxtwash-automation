@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 from core.config_manager import ConfigManager
 from pages.common.base_page import BasePage
@@ -84,16 +83,16 @@ class AdminOverviewPage(BasePage):
         return self.config.get_url(self.PORTAL).rstrip("/")
 
     def wait_for_loaded(self):
-        """Wait until Overview shell is visible and not redirected to login."""
+        """Wait until Overview shell is visible and not redirected to login.
+
+        No longer waits for LEGACY_DASHBOARD_IFRAME to mount: confirmed via a
+        direct staging check (2026-10-14) that the Overview dashboard was
+        migrated to native page content — that iframe no longer exists on
+        the page at all, so waiting for it was dead weight (it always timed
+        out and was silently swallowed).
+        """
         self.wait_visible_with_retry(self.OVERVIEW_TITLE)
         self.wait.until(lambda d: "/login" not in d.current_url)
-        # Wait for the legacy dashboard iframe to mount (present but may be empty).
-        try:
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(self.LEGACY_DASHBOARD_IFRAME)
-            )
-        except Exception:
-            pass
 
     def open_relative_path(self, path):
         """Navigate to an Admin Portal path relative to the base URL."""
@@ -152,19 +151,29 @@ class AdminOverviewPage(BasePage):
         return any(text in body_text for text in self.BROKEN_STATE_TEXTS)
 
     def legacy_dashboard_iframe_is_present(self):
-        """Return whether the legacy Overview iframe is mounted."""
+        """Return whether the legacy Overview iframe is mounted.
+
+        Confirmed via a direct staging check (2026-10-14) that this now
+        correctly, permanently returns False — the Overview dashboard was
+        migrated from an iframe-embedded legacy app to native page content,
+        so the iframe genuinely doesn't exist anymore. Not a bug in this
+        method; any caller still asserting this is True is testing a stale
+        expectation and needs its own assertion rewritten separately
+        against the new native content (not part of this pass).
+        """
         return len(self.driver.find_elements(*self.LEGACY_DASHBOARD_IFRAME)) > 0
 
     def get_legacy_dashboard_text(self):
-        """Return visible text from the legacy Overview iframe."""
-        iframe = self.wait.until(
-            EC.presence_of_element_located(self.LEGACY_DASHBOARD_IFRAME)
-        )
-        self.driver.switch_to.frame(iframe)
-        try:
-            return self.driver.find_element(By.TAG_NAME, "body").text
-        finally:
-            self.driver.switch_to.default_content()
+        """Return visible dashboard text.
+
+        Despite the name (kept so every caller across the test suite didn't
+        need touching in this pass), this no longer reads from an iframe:
+        confirmed via a direct staging check (2026-10-14) that the Overview
+        dashboard was migrated to native page content — the
+        //iframe[contains(@src,'legacy')] this used to switch into doesn't
+        exist anymore. Reads the main document body directly instead.
+        """
+        return self.get_body_text()
 
     def support_button_is_visible(self):
         """Return whether the support widget iframe is visible."""
@@ -191,74 +200,75 @@ class AdminOverviewPage(BasePage):
         dashboard_text = self.get_legacy_dashboard_text()
         return any(text in dashboard_text for text in expected_texts)
 
-    # ── Filter interaction helpers (all run inside the legacy iframe) ────────────
-
-    def _in_iframe(self):
-        """Context: switch into the legacy iframe; switch back on exit."""
-        return _IframeContext(self.driver, self.wait, self.LEGACY_DASHBOARD_IFRAME)
+    # ── Filter interaction helpers ────────────────────────────────────────────
+    # Previously ran inside the legacy iframe (via _in_iframe()). Confirmed via
+    # a direct staging check (2026-10-14) that the Overview dashboard was
+    # migrated to native page content, so these now operate on the main
+    # document directly. The locator strategies below are unchanged from the
+    # iframe era and have NOT yet been verified against the actual new filter
+    # widget's DOM (Sites/Locations dropdown, Predefined date range dropdown,
+    # Pick custom date range picker) — that verification is separate,
+    # follow-up work, not part of this pass.
 
     def select_site_filter(self, site_name):
-        """Select a site by name from the Site filter inside the legacy dashboard."""
-        with self._in_iframe():
-            # Try <select> first, then React combobox / listbox.
-            try:
-                sel = self.wait.until(EC.element_to_be_clickable((
-                    By.XPATH,
-                    "//select[contains(@class,'site') or @id='site' or @name='site']"
-                    " | //*[normalize-space()='Site']/following::select[1]",
-                )))
-                from selenium.webdriver.support.ui import Select
-                Select(sel).select_by_visible_text(site_name)
-            except Exception:  # noqa: BLE001
-                # Fallback: click the combobox then click the matching option.
-                combo = self.wait.until(EC.element_to_be_clickable((
-                    By.XPATH,
-                    "//*[normalize-space()='Site']/following::*[@role='combobox' or @role='listbox'][1]",
-                )))
-                combo.click()
-                self.wait.until(EC.element_to_be_clickable((
-                    By.XPATH, "//*[normalize-space()='%s']" % site_name,
-                ))).click()
+        """Select a site by name from the Site filter."""
+        # Try <select> first, then React combobox / listbox.
+        try:
+            sel = self.wait.until(EC.element_to_be_clickable((
+                By.XPATH,
+                "//select[contains(@class,'site') or @id='site' or @name='site']"
+                " | //*[normalize-space()='Site']/following::select[1]",
+            )))
+            from selenium.webdriver.support.ui import Select
+            Select(sel).select_by_visible_text(site_name)
+        except Exception:  # noqa: BLE001
+            # Fallback: click the combobox then click the matching option.
+            combo = self.wait.until(EC.element_to_be_clickable((
+                By.XPATH,
+                "//*[normalize-space()='Site']/following::*[@role='combobox' or @role='listbox'][1]",
+            )))
+            combo.click()
+            self.wait.until(EC.element_to_be_clickable((
+                By.XPATH, "//*[normalize-space()='%s']" % site_name,
+            ))).click()
 
     def select_date_preset(self, preset_label):
-        """Click a date-preset button (e.g. 'Last Month') in the legacy dashboard."""
-        with self._in_iframe():
-            self.wait.until(EC.element_to_be_clickable((
-                By.XPATH,
-                "//*[normalize-space()='%s' and ("
-                "self::button or self::a or contains(@class,'preset') or contains(@class,'tab'))]"
-                " | //*[normalize-space()='%s']" % (preset_label, preset_label),
-            ))).click()
+        """Click a date-preset button (e.g. 'Last Month')."""
+        self.wait.until(EC.element_to_be_clickable((
+            By.XPATH,
+            "//*[normalize-space()='%s' and ("
+            "self::button or self::a or contains(@class,'preset') or contains(@class,'tab'))]"
+            " | //*[normalize-space()='%s']" % (preset_label, preset_label),
+        ))).click()
 
     def set_custom_date_range(self, from_date, to_date):
         """Select Custom preset and fill start/end date inputs (YYYY-MM-DD format)."""
-        with self._in_iframe():
-            # Click "Custom" to reveal the date inputs.
-            self.wait.until(EC.element_to_be_clickable((
-                By.XPATH, "//*[normalize-space()='Custom']",
-            ))).click()
-            start = self.wait.until(EC.visibility_of_element_located((
-                By.XPATH,
-                "//*[contains(normalize-space(),'Start') or @placeholder='Start']"
-                "/following::input[@type='date' or @type='text'][1]"
-                " | //input[@name='startDate' or @name='start_date' or @name='fromDate'][1]",
-            )))
-            end = self.driver.find_element(
-                By.XPATH,
-                "//*[contains(normalize-space(),'End') or @placeholder='End']"
-                "/following::input[@type='date' or @type='text'][1]"
-                " | //input[@name='endDate' or @name='end_date' or @name='toDate'][1]",
-            )
-            self.driver.execute_script(
-                "arguments[0].value = arguments[1]; "
-                "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
-                start, from_date,
-            )
-            self.driver.execute_script(
-                "arguments[0].value = arguments[1]; "
-                "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
-                end, to_date,
-            )
+        # Click "Custom" to reveal the date inputs.
+        self.wait.until(EC.element_to_be_clickable((
+            By.XPATH, "//*[normalize-space()='Custom']",
+        ))).click()
+        start = self.wait.until(EC.visibility_of_element_located((
+            By.XPATH,
+            "//*[contains(normalize-space(),'Start') or @placeholder='Start']"
+            "/following::input[@type='date' or @type='text'][1]"
+            " | //input[@name='startDate' or @name='start_date' or @name='fromDate'][1]",
+        )))
+        end = self.driver.find_element(
+            By.XPATH,
+            "//*[contains(normalize-space(),'End') or @placeholder='End']"
+            "/following::input[@type='date' or @type='text'][1]"
+            " | //input[@name='endDate' or @name='end_date' or @name='toDate'][1]",
+        )
+        self.driver.execute_script(
+            "arguments[0].value = arguments[1]; "
+            "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
+            start, from_date,
+        )
+        self.driver.execute_script(
+            "arguments[0].value = arguments[1]; "
+            "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
+            end, to_date,
+        )
 
     def open_overview_in_new_tab(self):
         """Open Overview in a second browser tab."""
@@ -275,20 +285,3 @@ class AdminOverviewPage(BasePage):
             "Overview" in body_text
             and "Sites / Locations" in body_text
         )
-
-
-class _IframeContext:
-    """Context manager that switches into a given iframe and back out on exit."""
-
-    def __init__(self, driver, wait, iframe_locator):
-        self._driver = driver
-        self._wait = wait
-        self._locator = iframe_locator
-
-    def __enter__(self):
-        iframe = self._wait.until(EC.presence_of_element_located(self._locator))
-        self._driver.switch_to.frame(iframe)
-        return self
-
-    def __exit__(self, *_):
-        self._driver.switch_to.default_content()
