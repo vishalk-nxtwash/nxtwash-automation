@@ -10,7 +10,7 @@ from tests.admin_portal.discounts.conftest import REQUESTED_SERVICE_CATEGORY
 from tests.admin_portal.discounts.conftest import SERVICE_CATEGORY
 from tests.admin_portal.discounts.conftest import START_DAY
 from tests.admin_portal.discounts.conftest import START_TIME
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 
 
 pytestmark = [
@@ -22,9 +22,9 @@ pytestmark = [
 
 @allure.title("DS-HP-005 Edit discount value and reapply expected settings")
 @pytest.mark.regression
-def test_edit_discount_reapplies_expected_settings(browser):
+def test_edit_discount_reapplies_expected_settings(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.update_discount(
         DISCOUNT_NAME,
         REQUESTED_SERVICE_CATEGORY,

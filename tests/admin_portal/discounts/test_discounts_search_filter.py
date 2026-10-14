@@ -5,7 +5,7 @@ from tests.admin_portal.discounts.conftest import DISCOUNT_AMOUNT
 from tests.admin_portal.discounts.conftest import DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import EXISTING_DISCOUNT
 from tests.admin_portal.discounts.conftest import MANAGED_DISCOUNT
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 from tests.admin_portal.discounts.conftest import open_discounts_page
 from tests.admin_portal.discounts.conftest import page_has_no_broken_state
 
@@ -31,8 +31,8 @@ def test_discounts_existing_search(browser):
 @allure.title("DS-SRH-002 Partial search returns matching results")
 @allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.regression
-def test_discounts_partial_search(browser):
-    discounts_page = create_discount_if_missing(browser)
+def test_discounts_partial_search(managed_default_discount):
+    discounts_page = managed_default_discount
     discounts_page.search_discount(DISCOUNT_NAME[:4])
 
     assert discounts_page.wait_for_discount_row(DISCOUNT_NAME).is_displayed()
@@ -166,9 +166,9 @@ def test_discounts_filter_inactive_and_site(browser):
 @allure.story("Filter")
 @allure.title("DS-FLT-005 Clear filters restores full grid")
 @pytest.mark.regression
-def test_discounts_clear_filters_restores_grid(browser):
+def test_discounts_clear_filters_restores_grid(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     all_names = discounts_page.get_visible_discount_names()
 
     discounts_page.open_filter_panel()
@@ -187,9 +187,9 @@ def test_discounts_clear_filters_restores_grid(browser):
 @allure.story("Filter")
 @allure.title("DS-FLT-006 Search and filter together narrows results")
 @pytest.mark.regression
-def test_discounts_search_and_filter_together(browser):
+def test_discounts_search_and_filter_together(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
 
     discounts_page.open_filter_panel()
     discounts_page.set_active_discount_filter(True)

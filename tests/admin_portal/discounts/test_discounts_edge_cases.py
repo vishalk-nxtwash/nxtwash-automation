@@ -9,7 +9,7 @@ from tests.admin_portal.discounts.conftest import REQUESTED_SERVICE_CATEGORY
 from tests.admin_portal.discounts.conftest import SERVICE_CATEGORY
 from tests.admin_portal.discounts.conftest import START_DAY
 from tests.admin_portal.discounts.conftest import START_TIME
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 from tests.admin_portal.discounts.conftest import open_discounts_page
 from tests.admin_portal.discounts.conftest import page_has_no_broken_state
 
@@ -23,9 +23,9 @@ pytestmark = [
 
 @allure.title("DS-EC-009 Long discount name does not break form")
 @pytest.mark.regression
-def test_discount_long_name_does_not_break_form(browser):
+def test_discount_long_name_does_not_break_form(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.open_create_discount()
     discounts_page.enter_discount_name("VK " + ("D" * 128))
 

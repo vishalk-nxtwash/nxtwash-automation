@@ -4,7 +4,7 @@ import pytest
 from tests.admin_portal.admin_session import open_admin_path
 from tests.admin_portal.discounts.conftest import DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import MANAGED_DISCOUNT
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 from tests.admin_portal.discounts.conftest import open_discounts_page
 from tests.admin_portal.discounts.conftest import page_has_no_broken_state
 
@@ -25,9 +25,9 @@ pytestmark = [
         "without a visible browser. Verify manually until headless re-login is stabilised."
     )
 )
-def test_discount_persists_after_relogin(browser):
+def test_discount_persists_after_relogin(managed_default_discount):
 
-    create_discount_if_missing(browser)
+    browser = managed_default_discount.driver
 
     browser.execute_script("window.localStorage.clear();")
     discounts_page = open_discounts_page(browser)

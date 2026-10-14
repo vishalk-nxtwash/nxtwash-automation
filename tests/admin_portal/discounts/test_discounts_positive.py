@@ -9,8 +9,8 @@ from tests.admin_portal.discounts.conftest import PERCENTAGE_AMOUNT
 from tests.admin_portal.discounts.conftest import PERCENTAGE_DISCOUNT_NAME
 from tests.admin_portal.discounts.conftest import START_VALUE
 from tests.admin_portal.discounts.conftest import create_all_locations_discount_if_missing
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
 from tests.admin_portal.discounts.conftest import create_percentage_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 
 
 pytestmark = [
@@ -23,9 +23,9 @@ pytestmark = [
 @pytest.mark.smoke
 @allure.title("DS-HP-001 Create amount discount")
 @pytest.mark.sanity
-def test_create_amount_discount(browser):
+def test_create_amount_discount(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.wait_for_list_loaded()
     discounts_page.search_discount(DISCOUNT_NAME)
 
@@ -36,9 +36,9 @@ def test_create_amount_discount(browser):
 @allure.title("DS-PER-001 Discount settings persist after creation")
 @pytest.mark.regression
 @pytest.mark.skip(reason="staging data / intermittent — deferred")
-def test_discount_settings_persist(browser):
+def test_discount_settings_persist(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.open_edit_discount(DISCOUNT_NAME)
 
     assert discounts_page.get_discount_name_value() == DISCOUNT_NAME
@@ -50,9 +50,9 @@ def test_discount_settings_persist(browser):
 
 @allure.title("DS-HP-008 Create discount flow is idempotent")
 @pytest.mark.regression
-def test_discount_create_is_idempotent(browser):
+def test_discount_create_is_idempotent(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.wait_for_list_loaded()
     discounts_page.search_discount(DISCOUNT_NAME)
 
@@ -62,9 +62,9 @@ def test_discount_create_is_idempotent(browser):
 @pytest.mark.smoke
 @allure.title("DS-HP-004 Specific location settings persist")
 @pytest.mark.regression
-def test_discount_first_location_settings_persist(browser):
+def test_discount_first_location_settings_persist(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     discounts_page.open_edit_discount(DISCOUNT_NAME)
 
     assert discounts_page.location_is_assigned_by_index(0)

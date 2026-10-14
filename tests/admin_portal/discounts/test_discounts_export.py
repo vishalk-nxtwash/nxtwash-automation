@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from tests.admin_portal.discounts.conftest import create_discount_if_missing
+from tests.admin_portal.discounts.conftest import managed_default_discount  # noqa: F401
 from tests.admin_portal.discounts.conftest import open_discounts_page
 from tests.admin_portal.discounts.conftest import page_has_no_broken_state
 
@@ -50,9 +50,9 @@ def test_discounts_export_record_count_matches_grid(browser):
 
 @allure.title("DS-EXP-004 Export data matches grid data")
 @pytest.mark.regression
-def test_discounts_export_data_matches_grid(browser):
+def test_discounts_export_data_matches_grid(managed_default_discount):
 
-    discounts_page = create_discount_if_missing(browser)
+    discounts_page = managed_default_discount
     grid_names = discounts_page.get_visible_discount_names()
     discounts_page.click_download_button()
 

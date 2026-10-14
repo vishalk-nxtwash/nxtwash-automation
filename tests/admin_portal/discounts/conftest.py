@@ -168,6 +168,20 @@ def reset_managed_discount(browser):
 
 managed_discount = managed_resource(reset_managed_discount)
 
+# DISCOUNT_NAME (the reference/default discount) was touched directly via
+# create_discount_if_missing(browser) from 11 call sites across 6 test
+# files — a plain function call, not a managed_* fixture, so it was
+# invisible to the pytest_itemcollected auto-grouping hook in the root
+# conftest.py (serializes tests sharing a managed_* fixture onto one xdist
+# worker). That gap let concurrent tests mutate/read this same record's
+# location-assignment data at once: confirmed as the cause of
+# test_discount_first_location_settings_persist's intermittent smoke
+# failures (AWS/GitHub Actions runs 2026-10-14) — same root cause already
+# found and fixed for memberships' MEMBERSHIP_NAME this session. Wrapping
+# it here, matching every other shared record in this module, closes
+# that gap.
+managed_default_discount = managed_resource(create_discount_if_missing)
+
 
 def reset_managed_percentage_discount(browser):
     """Ensure the managed percentage discount exists and reset its mutable fields."""
