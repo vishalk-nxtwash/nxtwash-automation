@@ -36,6 +36,7 @@ def test_overview_cars_washed_report_summary_cards_update(overview_page):
 )
 @pytest.mark.regression
 def test_overview_cars_washed_report_redemption_cards(overview_page):
+    overview_page.open_cars_washed_full_report()
     assert overview_page.dashboard_has_any_text(
         ["Total Redemptions", "Total Paid", "Total Comp", "Comp Washes"]
     )
@@ -62,17 +63,33 @@ def test_overview_cars_washed_report_usage_breakdown_tabs(overview_page):
 @allure.title("OV-RPT-CW-006 Per-service percentages sum to 100 % within the selected tab")
 @pytest.mark.regression
 def test_overview_cars_washed_report_percentages_sum_to_100(overview_page):
-    assert overview_page.dashboard_has_any_text(["100%", "100 %", "%"])
+    """Verify the Washes Breakdown by Category section renders correctly.
+
+    Not asserting on actual percentage arithmetic: confirmed via a direct
+    staging check (2026-10-15) that "today" has zero wash activity, so
+    there is no real percentage data to sum. A literal "sums to 100%"
+    check needs a site/date range with real volume to be meaningful —
+    that's separate, follow-up work (finding or seeding such data), not
+    something this test can honestly assert right now. This still
+    verifies the section itself loads correctly with no broken state.
+    """
+    overview_page.open_cars_washed_full_report()
+    assert overview_page.dashboard_has_any_text(["Washes Breakdown by Category"])
+    assert not overview_page.has_broken_state_text()
 
 
 @allure.title("OV-RPT-CW-008 Usage Breakdown per-service percentages obey the rounding rule")
 @pytest.mark.regression
 def test_overview_cars_washed_report_rounding_rule(overview_page):
-    """Percentages in Usage Breakdown must follow a documented rounding rule.
+    """Percentages in Washes Breakdown by Category must follow a documented rounding rule.
 
     Acceptable: values that add to exactly 100 %, or a visible rounding footnote.
+    Not asserting on actual percentage arithmetic here either, for the same
+    reason as OV-RPT-CW-006 (no real wash-activity data today to round) —
+    verifies the section renders with no broken state.
     """
-    assert overview_page.dashboard_has_any_text(["Usage Breakdown", "%"])
+    overview_page.open_cars_washed_full_report()
+    assert overview_page.dashboard_has_any_text(["Washes Breakdown by Category"])
     assert not overview_page.has_broken_state_text()
 
 

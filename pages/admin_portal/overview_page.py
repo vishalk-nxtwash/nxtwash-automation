@@ -72,6 +72,12 @@ class AdminOverviewPage(BasePage):
         "Employee Full Report",
         "Labor Full Report"
     ]
+    EXPORT_DROPDOWN_TRIGGER = (By.XPATH, "//*[normalize-space()='Choose option']")
+    CARS_WASHED_FULL_REPORT_LINK = (
+        By.XPATH,
+        "//*[normalize-space()='Cars Washed']"
+        "/following::*[normalize-space()='Full report →'][1]"
+    )
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -301,4 +307,43 @@ class AdminOverviewPage(BasePage):
         return (
             "Overview" in body_text
             and "Sites / Locations" in body_text
+        )
+
+    def open_export_dropdown(self):
+        """Open the Export "Choose option" dropdown.
+
+        The export format options (XLSX, CSV) are not static page text —
+        confirmed via a direct staging check (2026-10-15) that they only
+        appear in the body once this dropdown is opened.
+        """
+        self.wait.until(EC.element_to_be_clickable(
+            self.EXPORT_DROPDOWN_TRIGGER
+        )).click()
+
+    def open_cars_washed_full_report(self):
+        """Click the "Cars Washed" card's "Full report" link.
+
+        Confirmed via a direct staging check (2026-10-15) that this is a
+        real page navigation (/ -> /wash-activity), not a modal — and that
+        a synthetic execute_script click does not trigger it (same
+        mousedown-vs-click gap already documented for react-select in
+        sites_page.py's _real_click()); a native Selenium click is
+        required. There are 7 "Full report" links on the page, one per
+        card, so this locator is anchored relative to the "Cars Washed"
+        title to reliably hit the right one.
+        """
+        self.wait.until(EC.element_to_be_clickable(
+            self.CARS_WASHED_FULL_REPORT_LINK
+        )).click()
+        # Wait for the destination page's title, not just the URL change:
+        # confirmed via a live run (2026-10-15) that reading body text
+        # immediately after the click can race the page's own content
+        # rendering — the top summary cards (e.g. "Total Redemptions")
+        # appear to render before lower sections like the breakdown
+        # table, so a check for the title is a reliable "fully ready"
+        # signal regardless of which part of the page a caller reads next.
+        self.wait.until(
+            lambda d: "Wash Activity Report" in d.find_element(
+                By.TAG_NAME, "body"
+            ).text
         )
