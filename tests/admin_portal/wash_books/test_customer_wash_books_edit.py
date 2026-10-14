@@ -19,6 +19,7 @@ pytestmark = [
 
 
 @allure.title("CWB-EDT-001 Editing number of washes persists after save")
+@pytest.mark.smoke
 @pytest.mark.regression
 def test_edit_cwb_number_of_washes_persists(browser):
 

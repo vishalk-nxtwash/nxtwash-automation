@@ -181,6 +181,7 @@ def test_create_shift_datetime_picker_present(browser):
 
 
 @allure.title("EMP-SH-CRT-010 A shift with end time before start time shows a validation error")
+@pytest.mark.smoke
 @pytest.mark.edge
 @pytest.mark.xfail(
     strict=False,
