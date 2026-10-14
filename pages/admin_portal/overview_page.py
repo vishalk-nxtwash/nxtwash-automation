@@ -200,6 +200,23 @@ class AdminOverviewPage(BasePage):
         dashboard_text = self.get_legacy_dashboard_text()
         return any(text in dashboard_text for text in expected_texts)
 
+    def dashboard_has_rendered(self):
+        """Return whether the Overview dashboard has rendered, either architecture.
+
+        Accepts either a mounted legacy iframe OR native dashboard widget
+        content, rather than assuming one. Staging is confirmed migrated to
+        native content (2026-10-14 direct check), but this same check also
+        runs against production via the prod_smoke marker
+        (test_overview_shell_redirects_and_loads), and production's
+        migration state has not been verified — asserting either form is
+        present is correct regardless of which architecture a given
+        environment is currently running, now or after a future migration.
+        """
+        return (
+            self.legacy_dashboard_iframe_is_present()
+            or self.dashboard_has_any_text(self.DASHBOARD_WIDGET_LABELS)
+        )
+
     # ── Filter interaction helpers ────────────────────────────────────────────
     # Previously ran inside the legacy iframe (via _in_iframe()). Confirmed via
     # a direct staging check (2026-10-14) that the Overview dashboard was

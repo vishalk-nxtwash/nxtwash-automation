@@ -13,7 +13,7 @@ def test_overview_shell_redirects_and_loads(overview_page):
     assert not overview_page.is_redirected_to_login()
     assert overview_page.get_overview_text() == "Overview"
     assert overview_page.shell_has_content()
-    assert overview_page.legacy_dashboard_iframe_is_present()
+    assert overview_page.dashboard_has_rendered()
     assert not overview_page.has_broken_state_text()
 
 
