@@ -132,6 +132,14 @@ MANAGED_WASH_BOOK = managed_name("Wash Book")
 
 
 def _reset_managed_wash_book(browser):
+    """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
+
+    fill_wash_book_form() covers name/washes/points/price/commission/switches/
+    locations/redemption; description is reset separately here since no
+    create/fill helper touches it and test_edit_wash_book_description would
+    otherwise leak a stale description into the next test even with
+    xdist_group serialization.
+    """
     page = open_wash_books_page(browser)
     if page.wash_book_exists(MANAGED_WASH_BOOK):
         page = open_wash_books_page(browser)
@@ -144,6 +152,8 @@ def _reset_managed_wash_book(browser):
             GLOBAL_COMMISSION,
         )
         page.click_save_wash_book()
+        page.wait_for_list_loaded()
+        page.update_wash_book_description(MANAGED_WASH_BOOK, "")
         return open_wash_books_page(browser)
     page.create_wash_book(
         MANAGED_WASH_BOOK,

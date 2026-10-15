@@ -3,9 +3,7 @@ import pytest
 
 from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
-    GLOBAL_PRICE,
-    WASH_BOOK_NAME,
-    create_wash_book_if_missing,
+    MANAGED_WASH_BOOK,
     open_wash_books_page,
     page_has_no_broken_state,
 )
@@ -27,15 +25,15 @@ pytestmark = [
     ),
     strict=False,
 )
-def test_assign_single_site_persists(browser):
+def test_assign_single_site_persists(managed_wash_book):
 
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page = managed_wash_book
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     page.assign_location_by_index(0)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     assert page.location_is_assigned_by_index(0)
     assert page_has_no_broken_state(page)
 
@@ -47,15 +45,15 @@ def test_assign_single_site_persists(browser):
            "headless Chrome. Fix: same as WB-EDT-004 — retry on "
            "StaleElementReferenceException, wait for grid row stability."
 )
-def test_assign_multiple_sites_persists(browser):
+def test_assign_multiple_sites_persists(managed_wash_book):
 
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page = managed_wash_book
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     page.assign_all_locations()
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     page.wait_for_service_location_rows()
     location_count = len(page.visible_service_location_rows())
     for i in range(location_count):
@@ -65,23 +63,19 @@ def test_assign_multiple_sites_persists(browser):
 
 @allure.title("WB-SIT-003 Location price override persists after save")
 @pytest.mark.regression
-def test_location_price_override_persists(browser):
+def test_location_price_override_persists(managed_wash_book):
 
     override_price = "45"
-    page = create_wash_book_if_missing(browser)
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page = managed_wash_book
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     page.assign_location_by_index(0)
     page.set_location_price_and_commission_by_index(0, override_price, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(WASH_BOOK_NAME)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
     assert page.get_location_price_by_index(0) == override_price
     assert page_has_no_broken_state(page)
-
-    page.set_location_price_and_commission_by_index(0, GLOBAL_PRICE, GLOBAL_COMMISSION)
-    page.click_save_wash_book()
-    page.wait_for_list_loaded()
 
 
 @allure.title("WB-SIT-004 Saving a wash book with no site assigned is handled gracefully")

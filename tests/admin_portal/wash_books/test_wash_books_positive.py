@@ -4,11 +4,10 @@ import pytest
 from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
+    MANAGED_WASH_BOOK,
     NUMBER_OF_WASHES,
     POINTS_AWARDED,
     VISIBLE_PRICE,
-    WASH_BOOK_NAME,
-    create_wash_book_if_missing,
     open_wash_books_page,
     page_has_no_broken_state,
 )
@@ -22,33 +21,33 @@ pytestmark = [
 
 
 @allure.title("WB-NAM-001 / WB-TGL-001 Create active wash book — name and status in listing")
-def test_create_wash_book(browser):
+def test_create_wash_book(managed_wash_book):
 
-    wash_books_page = create_wash_book_if_missing(browser)
-    wash_books_page.wait_for_list_loaded()
-    wash_books_page.search_wash_book(WASH_BOOK_NAME)
+    page = managed_wash_book
+    page.wait_for_list_loaded()
+    page.search_wash_book(MANAGED_WASH_BOOK)
 
-    assert wash_books_page.wait_for_wash_book_row(WASH_BOOK_NAME).is_displayed()
-    assert wash_books_page.get_wash_book_washes(WASH_BOOK_NAME) == NUMBER_OF_WASHES
-    assert wash_books_page.get_wash_book_price(WASH_BOOK_NAME) == VISIBLE_PRICE
-    assert wash_books_page.get_wash_book_status(WASH_BOOK_NAME) == "Active"
+    assert page.wait_for_wash_book_row(MANAGED_WASH_BOOK).is_displayed()
+    assert page.get_wash_book_washes(MANAGED_WASH_BOOK) == NUMBER_OF_WASHES
+    assert page.get_wash_book_price(MANAGED_WASH_BOOK) == VISIBLE_PRICE
+    assert page.get_wash_book_status(MANAGED_WASH_BOOK) == "Active"
 
 
 @allure.title("WB-NAM-001 Saved settings persist when reopening the edit form")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Manual check: dirty staging data + substring match in open_edit_wash_book opens wrong record")
-def test_wash_book_settings_persist(browser):
+def test_wash_book_settings_persist(managed_wash_book):
 
-    wash_books_page = create_wash_book_if_missing(browser)
-    wash_books_page.open_edit_wash_book(WASH_BOOK_NAME)
+    page = managed_wash_book
+    page.open_edit_wash_book(MANAGED_WASH_BOOK)
 
-    assert wash_books_page.get_wash_book_name_value() == WASH_BOOK_NAME
-    assert wash_books_page.get_number_of_washes_value() == NUMBER_OF_WASHES
-    assert wash_books_page.get_points_awarded_value() == POINTS_AWARDED
-    assert wash_books_page.active_switch_is_on()
-    assert wash_books_page.customer_portal_switch_is_on()
-    assert wash_books_page.get_global_price_value() == GLOBAL_PRICE
-    assert wash_books_page.get_global_commission_value() == GLOBAL_COMMISSION
+    assert page.get_wash_book_name_value() == MANAGED_WASH_BOOK
+    assert page.get_number_of_washes_value() == NUMBER_OF_WASHES
+    assert page.get_points_awarded_value() == POINTS_AWARDED
+    assert page.active_switch_is_on()
+    assert page.customer_portal_switch_is_on()
+    assert page.get_global_price_value() == GLOBAL_PRICE
+    assert page.get_global_commission_value() == GLOBAL_COMMISSION
 
 
 @allure.title("WB-TGL-002 Create wash book with Active toggle OFF — form accepts inactive status")
