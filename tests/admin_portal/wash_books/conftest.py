@@ -134,23 +134,42 @@ MANAGED_WASH_BOOK = managed_name("Wash Book")
 def _reset_managed_wash_book(browser):
     """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
 
-    fill_wash_book_form() covers name/washes/points/price/commission/switches/
-    locations/redemption; description is reset separately here since no
-    create/fill helper touches it and test_edit_wash_book_description would
-    otherwise leak a stale description into the next test even with
-    xdist_group serialization.
+    None of the 15 tests on this fixture need the reset itself to carry a
+    specific location/redemption-settings baseline — the two that do
+    (test_assign_single_site_persists, test_location_price_override_persists)
+    already assign what they need inside their own test body. So, unlike
+    fill_wash_book_form() (used by create_wash_book() below and by other
+    modules' shared-record helper, left untouched), this does NOT call
+    assign_all_locations() / open_redemption_settings() on every reset.
+
+    That matters: this exact Inovua location-assignment grid interaction is
+    the documented cause of WB-EDT-004 and WB-SIT-002 being permanently
+    CI-skipped ("times out in headless Chrome"). Routing all 15 tests'
+    setup *and* teardown through it (30 resets/run) turned one already-known
+    flaky interaction into something hit 30x per run instead of 0 — this
+    reset function existed but was never wired to a test before, so it was
+    never exercised in CI until now. Strongly suspected as the cause of CI
+    run 38731358420's "Run tests" step never completing in 57+ minutes
+    (cancelled, no live logs available to confirm directly) vs. ~14 min for
+    this module historically — could not be verified against the actual
+    run output, only inferred from the timing and the pre-existing
+    known-flaky-grid documentation elsewhere in this file.
+
+    Description is reset separately since no create/fill helper touches it,
+    and test_edit_wash_book_description would otherwise leak a stale
+    description into the next test even with xdist_group serialization.
     """
     page = open_wash_books_page(browser)
     if page.wash_book_exists(MANAGED_WASH_BOOK):
         page = open_wash_books_page(browser)
         page.open_edit_wash_book(MANAGED_WASH_BOOK)
-        page.fill_wash_book_form(
-            MANAGED_WASH_BOOK,
-            NUMBER_OF_WASHES,
-            POINTS_AWARDED,
-            GLOBAL_PRICE,
-            GLOBAL_COMMISSION,
-        )
+        page.enter_wash_book_name(MANAGED_WASH_BOOK)
+        page.set_number_of_washes(NUMBER_OF_WASHES)
+        page.set_points_awarded(POINTS_AWARDED)
+        page.ensure_active_switch_on()
+        page.ensure_customer_portal_switch_on()
+        page.set_global_price(GLOBAL_PRICE)
+        page.set_global_commission(GLOBAL_COMMISSION)
         page.click_save_wash_book()
         page.wait_for_list_loaded()
         page.update_wash_book_description(MANAGED_WASH_BOOK, "")
