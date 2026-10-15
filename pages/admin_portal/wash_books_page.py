@@ -393,11 +393,21 @@ class WashBooksPage(BasePage):
         # Atomic JS click so a grid re-render between find and click cannot stale the ref.
         # InovuaReactDataGrid renders rows as <div class="InovuaReactDataGrid__row …">
         # not <tr>, so query by CSS class rather than tag name.
+        #
+        # Matches the washbookName cell's trimmed text exactly — not a substring
+        # (textContent.indexOf(name)) — to stay consistent with the exact-match
+        # XPath get_wash_book_row_locator() already uses. A substring match let
+        # this click land on a known corrupted "ghost" record on staging (e.g.
+        # ID 133) whenever its name happened to contain the target name as a
+        # substring, landing on a broken edit page with no commission input and
+        # hanging every wait on it (confirmed: CI run 38699160162,
+        # test_edit_wash_book_global_commission_persists, edit/133).
         _CLICK_EDIT_JS = (
             "var name=arguments[0];"
             "var rows=document.querySelectorAll('.InovuaReactDataGrid__row');"
             "for(var i=0;i<rows.length;i++){"
-            " if(rows[i].textContent.indexOf(name)!==-1){"
+            " var cell=rows[i].querySelector('[data-props-id=\"washbookName\"]');"
+            " if(cell && cell.textContent.trim()===name){"
             "  var a=Array.from(rows[i].querySelectorAll('a'))"
             "   .find(function(x){return x.textContent.trim()==='Edit';});"
             "  if(a){a.click();return true;}"
