@@ -115,14 +115,33 @@ def site_data_for_number(number):
 
 
 def next_available_site_data(browser):
+    """Find the first site number whose name AND code are both unclaimed.
 
+    Checking only the name isn't enough: site_data_for_number() derives both
+    a name and a code from the same number, but an unrelated, differently-
+    named site can independently hold that code (confirmed in CI runs
+    38945390072/38953567087 — code "AL346" belonged to "VK Auto Test 1", a
+    site outside this suite's own naming convention). A name-only check
+    reports the number free, the create POST is then rejected for the code
+    collision, and since click_save_new() is deliberately lenient (must
+    stay that way for the negative/validation tests), that rejection is
+    swallowed silently — the test just times out stuck on the create form.
+    """
     sites_page = open_sites_page(browser)
     number = BASE_SITE_NUMBER
 
     while True:
         candidate = site_data_for_number(number)
+        # Short-circuit on the name check (already the common case for
+        # almost every candidate): only pay for the extra code-check API
+        # call on a candidate that already looks available by name. Checking
+        # both unconditionally on every iteration would double the already
+        # multi-hundred-second scan this loop runs on a staging environment
+        # with hundreds of accumulated test sites, risking the test's own
+        # timeout independent of any real collision.
         if not sites_page.get_site_summary_with_api(candidate["site_name"]):
-            return candidate
+            if not sites_page.get_site_by_code_with_api(candidate["site_code"]):
+                return candidate
         number += 1
 
 

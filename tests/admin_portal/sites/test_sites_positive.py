@@ -29,8 +29,14 @@ pytestmark = [
 
 
 @pytest.mark.smoke
+@pytest.mark.timeout(900)
 @allure.title("SL-CRT-001 Create site with all required fields — appears in list as Active")
 def test_create_new_site_with_required_general_settings(logged_in_admin_browser):
+    # next_available_site_data() does a real linear scan of every already-
+    # consumed site number (confirmed ~475-500s against staging's current
+    # ~345 accumulated "VK AL*" sites, growing every run) — comfortably over
+    # pytest.ini's global 420s timeout on its own, before this test does any
+    # of its own work. Overridden here rather than raised globally.
     site_data = next_available_site_data(logged_in_admin_browser)
     sites_page = SitesPage(logged_in_admin_browser)
     sites_page.click_add_site()

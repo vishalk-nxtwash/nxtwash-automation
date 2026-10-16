@@ -270,18 +270,16 @@ class SitesPage(BasePage):
         """Prepend an API_BASE constant so JS uses the configured API host."""
         return "const API_BASE = " + json.dumps(self.api_url) + ";\n" + body
 
-    def get_site_summary_with_api(self, site_name):
-        """Return a site summary by exact name from the authenticated session.
+    def _find_site_by_field_with_api(self, field, value):
+        """Return a site summary by exact match on one API field (siteName/siteCode).
 
         Paginates through the full /api/sites list rather than trusting
         page 1 of 500 alone: confirmed in CI (AWS run 37751372019) that a
         site can genuinely exist beyond that first page — staging has
         accumulated well over 500 "VK AL*"/test sites over time — causing
         this check to report "not found" for a site the backend otherwise
-        knows about. That false negative cascaded into a real "Site name
-        already exists" rejection downstream (next_available_site_data()
-        picking an already-taken number). Stops as soon as a page comes
-        back shorter than the page size (end of list) or a match is found.
+        knows about. Stops as soon as a page comes back shorter than the
+        page size (end of list) or a match is found.
         """
         original_timeout = self.driver.timeouts.script
         self.driver.set_script_timeout(120)
@@ -289,7 +287,8 @@ class SitesPage(BasePage):
         try:
             result = self.driver.execute_async_script(
                 self._api_script("""
-                const siteName = arguments[0];
+                const field = arguments[0];
+                const value = arguments[1];
                 const done = arguments[arguments.length - 1];
                 const _la = JSON.parse(localStorage.getItem("persist:latest-auth") || "{}");
                 const accessToken = _la.accessToken ? JSON.parse(_la.accessToken) : "";
@@ -312,7 +311,7 @@ class SitesPage(BasePage):
                         const body = await response.json();
                         const sites = body.data || [];
                         const match = sites.find(
-                            (item) => item.siteName === siteName
+                            (item) => item[field] === value
                         );
                         if (match) {
                             return match;
@@ -328,7 +327,8 @@ class SitesPage(BasePage):
                     .then((site) => done(site || null))
                     .catch((error) => done({ error: String(error) }));
                 """),
-                site_name
+                field,
+                value
             )
         finally:
             self.driver.set_script_timeout(original_timeout)
@@ -337,6 +337,33 @@ class SitesPage(BasePage):
             raise AssertionError(result["error"])
 
         return result
+
+    def get_site_summary_with_api(self, site_name):
+        """Return a site summary by exact name from the authenticated session.
+
+        See _find_site_by_field_with_api() for why this paginates the full
+        list. That false negative cascaded into a real "Site name already
+        exists" rejection downstream (next_available_site_data() picking an
+        already-taken number).
+        """
+        return self._find_site_by_field_with_api("siteName", site_name)
+
+    def get_site_by_code_with_api(self, site_code):
+        """Return a site summary by exact site code from the authenticated session.
+
+        site_data_for_number() derives both a site name and a site code from
+        the same number, but next_available_site_data() only checked the
+        name — a number can be free by name while its code is already taken
+        by an unrelated, differently-named site (confirmed in CI runs
+        38945390072/38953567087: site code "AL346" belonged to a site named
+        "VK Auto Test 1", created outside this suite's own naming
+        convention, created 2026-10-16 mid-run). The create POST was
+        rejected for the code collision instead; since click_save_new() is
+        deliberately lenient (must stay that way for the negative/
+        validation tests), that rejection was silently swallowed and the
+        test just timed out stuck on the create form.
+        """
+        return self._find_site_by_field_with_api("siteCode", site_code)
 
     def get_site_details_with_api(self, site_name):
         """Return full site details by exact name."""
