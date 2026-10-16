@@ -131,29 +131,47 @@ def create_customer_wash_book_if_missing(
 MANAGED_WASH_BOOK = managed_name("Wash Book")
 
 
+def _fill_managed_wash_book_baseline(page):
+    """Set every field the 15 managed_wash_book tests touch, deliberately
+    skipping assign_all_locations()/open_redemption_settings().
+
+    fill_wash_book_form() (used elsewhere in this file by create_wash_book()'s
+    other callers, and by other modules' shared-record helpers — left
+    untouched) calls assign_all_locations() unconditionally, not wrapped in
+    try/except like the redemption-settings block right after it. That's the
+    same Inovua location-assignment grid interaction already permanently
+    CI-skipped elsewhere in this file (WB-EDT-004, WB-SIT-002: "times out in
+    headless Chrome").
+
+    None of the 15 tests on managed_wash_book need the reset/create to carry
+    a location/redemption baseline — the two that do (test_assign_single_
+    site_persists, test_location_price_override_persists) already assign
+    what they need inside their own test body, the same pattern already
+    proven safe by test_wash_books_positive.py's other create-from-scratch
+    tests (e.g. test_create_inactive_wash_book), none of which touch
+    location assignment either.
+    """
+    page.enter_wash_book_name(MANAGED_WASH_BOOK)
+    page.set_number_of_washes(NUMBER_OF_WASHES)
+    page.set_points_awarded(POINTS_AWARDED)
+    page.ensure_active_switch_on()
+    page.ensure_customer_portal_switch_on()
+    page.set_global_price(GLOBAL_PRICE)
+    page.set_global_commission(GLOBAL_COMMISSION)
+
+
 def _reset_managed_wash_book(browser):
     """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
 
-    None of the 15 tests on this fixture need the reset itself to carry a
-    specific location/redemption-settings baseline — the two that do
-    (test_assign_single_site_persists, test_location_price_override_persists)
-    already assign what they need inside their own test body. So, unlike
-    fill_wash_book_form() (used by create_wash_book() below and by other
-    modules' shared-record helper, left untouched), this does NOT call
-    assign_all_locations() / open_redemption_settings() on every reset.
-
-    That matters: this exact Inovua location-assignment grid interaction is
-    the documented cause of WB-EDT-004 and WB-SIT-002 being permanently
-    CI-skipped ("times out in headless Chrome"). Routing all 15 tests'
-    setup *and* teardown through it (30 resets/run) turned one already-known
-    flaky interaction into something hit 30x per run instead of 0 — this
-    reset function existed but was never wired to a test before, so it was
-    never exercised in CI until now. Strongly suspected as the cause of CI
-    run 38731358420's "Run tests" step never completing in 57+ minutes
-    (cancelled, no live logs available to confirm directly) vs. ~14 min for
-    this module historically — could not be verified against the actual
-    run output, only inferred from the timing and the pre-existing
-    known-flaky-grid documentation elsewhere in this file.
+    Confirmed in CI (run 38740880006): routing the one-time creation of this
+    brand-new managed record through create_wash_book() -> fill_wash_book_form()
+    -> assign_all_locations() never completed — every one of the 15 tests'
+    setup landed on /services/washBooks/new and timed out after 90s waiting
+    for the list iframe, because the record was never actually saved, so
+    wash_book_exists() kept returning False on every subsequent attempt too.
+    Uses _fill_managed_wash_book_baseline() for both the create and the
+    reset-existing path so creation is exercised exactly the same
+    (location-grid-free) way as every later reset.
 
     Description is reset separately since no create/fill helper touches it,
     and test_edit_wash_book_description would otherwise leak a stale
@@ -163,24 +181,15 @@ def _reset_managed_wash_book(browser):
     if page.wash_book_exists(MANAGED_WASH_BOOK):
         page = open_wash_books_page(browser)
         page.open_edit_wash_book(MANAGED_WASH_BOOK)
-        page.enter_wash_book_name(MANAGED_WASH_BOOK)
-        page.set_number_of_washes(NUMBER_OF_WASHES)
-        page.set_points_awarded(POINTS_AWARDED)
-        page.ensure_active_switch_on()
-        page.ensure_customer_portal_switch_on()
-        page.set_global_price(GLOBAL_PRICE)
-        page.set_global_commission(GLOBAL_COMMISSION)
+        _fill_managed_wash_book_baseline(page)
         page.click_save_wash_book()
         page.wait_for_list_loaded()
         page.update_wash_book_description(MANAGED_WASH_BOOK, "")
         return open_wash_books_page(browser)
-    page.create_wash_book(
-        MANAGED_WASH_BOOK,
-        NUMBER_OF_WASHES,
-        POINTS_AWARDED,
-        GLOBAL_PRICE,
-        GLOBAL_COMMISSION,
-    )
+    page.open_create_wash_book()
+    _fill_managed_wash_book_baseline(page)
+    page.click_save_wash_book()
+    page.wait_for_list_loaded()
     return open_wash_books_page(browser)
 
 
