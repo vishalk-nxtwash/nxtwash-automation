@@ -132,24 +132,31 @@ MANAGED_WASH_BOOK = managed_name("Wash Book")
 
 
 def _fill_managed_wash_book_baseline(page):
-    """Set every field the 15 managed_wash_book tests touch, deliberately
-    skipping assign_all_locations()/open_redemption_settings().
+    """Set every field the 15 managed_wash_book tests touch.
 
-    fill_wash_book_form() (used elsewhere in this file by create_wash_book()'s
-    other callers, and by other modules' shared-record helpers — left
-    untouched) calls assign_all_locations() unconditionally, not wrapped in
-    try/except like the redemption-settings block right after it. That's the
-    same Inovua location-assignment grid interaction already permanently
-    CI-skipped elsewhere in this file (WB-EDT-004, WB-SIT-002: "times out in
-    headless Chrome").
+    Corrects a wrong assumption from an earlier version of this fix: skipping
+    location assignment entirely seemed safe (none of the 15 tests assert a
+    specific location baseline, and several already-passing from-scratch
+    create tests in test_wash_books_positive.py never touch it either) but
+    those other tests never actually click Save, so they never proved a
+    locationless save succeeds. Confirmed in CI (run 38872327917, screenshots
+    pixel-identical across tests hours apart): with zero locations assigned,
+    clicking Save silently does nothing — no error, no navigation — the
+    record is simply never created, so every one of the 15 tests' setup hit
+    the same dead end. fill_wash_book_form() (used elsewhere in this file by
+    create_wash_book()'s other callers, and by other modules' shared-record
+    helpers) always assigns every location before saving for exactly this
+    reason, unconditionally, not wrapped in try/except like the
+    redemption-settings block right after it.
 
-    None of the 15 tests on managed_wash_book need the reset/create to carry
-    a location/redemption baseline — the two that do (test_assign_single_
-    site_persists, test_location_price_override_persists) already assign
-    what they need inside their own test body, the same pattern already
-    proven safe by test_wash_books_positive.py's other create-from-scratch
-    tests (e.g. test_create_inactive_wash_book), none of which touch
-    location assignment either.
+    Assigns exactly ONE location (assign_location_by_index(0)) rather than
+    fill_wash_book_form()'s assign_all_locations(): a single-checkbox
+    assign+verify is the already-proven-reliable operation
+    test_location_price_override_persists itself still uses today, whereas
+    looping every row is the actual documented source of the Inovua grid
+    timeout (WB-EDT-004, WB-SIT-002: "times out in headless Chrome") — this
+    avoids that cost while still satisfying whatever save requires at least
+    one location for.
     """
     page.enter_wash_book_name(MANAGED_WASH_BOOK)
     page.set_number_of_washes(NUMBER_OF_WASHES)
@@ -158,20 +165,16 @@ def _fill_managed_wash_book_baseline(page):
     page.ensure_customer_portal_switch_on()
     page.set_global_price(GLOBAL_PRICE)
     page.set_global_commission(GLOBAL_COMMISSION)
+    page.assign_location_by_index(0)
 
 
 def _reset_managed_wash_book(browser):
     """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
 
-    Confirmed in CI (run 38740880006): routing the one-time creation of this
-    brand-new managed record through create_wash_book() -> fill_wash_book_form()
-    -> assign_all_locations() never completed — every one of the 15 tests'
-    setup landed on /services/washBooks/new and timed out after 90s waiting
-    for the list iframe, because the record was never actually saved, so
-    wash_book_exists() kept returning False on every subsequent attempt too.
     Uses _fill_managed_wash_book_baseline() for both the create and the
-    reset-existing path so creation is exercised exactly the same
-    (location-grid-free) way as every later reset.
+    reset-existing path, so creation is exercised exactly the same way as
+    every later reset (see that function's docstring for why it assigns one
+    location).
 
     Description is reset separately since no create/fill helper touches it,
     and test_edit_wash_book_description would otherwise leak a stale
