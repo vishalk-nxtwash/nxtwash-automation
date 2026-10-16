@@ -19,13 +19,6 @@ pytestmark = [
 
 @allure.title("WB-SIT-001 Assigning a single site persists after save")
 @pytest.mark.regression
-@pytest.mark.xfail(
-    reason=(
-        "WB-SIT-001: EDIT_FRAME iframe not found on second open_edit_wash_book after "
-        "saving with location assignment. Needs DevTools inspection of iframe src."
-    ),
-    strict=False,
-)
 def test_assign_single_site_persists(managed_wash_book):
 
     page = managed_wash_book

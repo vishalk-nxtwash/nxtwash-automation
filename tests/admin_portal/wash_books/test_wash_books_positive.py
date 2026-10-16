@@ -35,7 +35,6 @@ def test_create_wash_book(managed_wash_book):
 
 @allure.title("WB-NAM-001 Saved settings persist when reopening the edit form")
 @pytest.mark.regression
-@pytest.mark.xfail(strict=False, reason="Manual check: dirty staging data + substring match in open_edit_wash_book opens wrong record")
 def test_wash_book_settings_persist(managed_wash_book):
 
     page = managed_wash_book
