@@ -132,31 +132,36 @@ MANAGED_WASH_BOOK = managed_name("Wash Book")
 
 
 def _fill_managed_wash_book_baseline(page):
-    """Set every field the 15 managed_wash_book tests touch.
+    """Set every field the 15 managed_wash_book tests touch, plus every field
+    the app actually requires before Save will do anything.
 
-    Corrects a wrong assumption from an earlier version of this fix: skipping
-    location assignment entirely seemed safe (none of the 15 tests assert a
-    specific location baseline, and several already-passing from-scratch
-    create tests in test_wash_books_positive.py never touch it either) but
-    those other tests never actually click Save, so they never proved a
-    locationless save succeeds. Confirmed in CI (run 38872327917, screenshots
-    pixel-identical across tests hours apart): with zero locations assigned,
-    clicking Save silently does nothing — no error, no navigation — the
-    record is simply never created, so every one of the 15 tests' setup hit
-    the same dead end. fill_wash_book_form() (used elsewhere in this file by
-    create_wash_book()'s other callers, and by other modules' shared-record
-    helpers) always assigns every location before saving for exactly this
-    reason, unconditionally, not wrapped in try/except like the
-    redemption-settings block right after it.
+    Two earlier versions of this fix guessed wrong. Root-caused properly this
+    time by running the create+save flow locally against staging (headless,
+    outside CI) and reading the page text immediately after clicking Save —
+    both CI and the local repro had been landing on a dead end silently, with
+    no visible error in any pytest log, because switch_to_frame_with_retry's
+    own failure path clears the frame context before any diagnostic runs.
+
+    Reading the raw body text at the moment of failure surfaced two
+    server-side validation messages in turn, neither of which raises or
+    toasts in a way the existing xfail/skip comments elsewhere in this file
+    had attributed to the Inovua grid:
+      1. "price in requestWashbookSiteList is required" — assigning a
+         location (assign_location_by_index) is not sufficient on its own;
+         that row's own price/commission must also be set
+         (set_location_price_and_commission_by_index), same as
+         fill_wash_book_form() already does for the first 2 rows.
+      2. "Please select at least one redeem location" — Redemption settings
+         needs its own assignment + redeem-as service, same as
+         fill_wash_book_form()'s redemption block.
+    Only after setting both did Save actually navigate away from /new.
 
     Assigns exactly ONE location (assign_location_by_index(0)) rather than
     fill_wash_book_form()'s assign_all_locations(): a single-checkbox
     assign+verify is the already-proven-reliable operation
     test_location_price_override_persists itself still uses today, whereas
     looping every row is the actual documented source of the Inovua grid
-    timeout (WB-EDT-004, WB-SIT-002: "times out in headless Chrome") — this
-    avoids that cost while still satisfying whatever save requires at least
-    one location for.
+    timeout (WB-EDT-004, WB-SIT-002: "times out in headless Chrome").
     """
     page.enter_wash_book_name(MANAGED_WASH_BOOK)
     page.set_number_of_washes(NUMBER_OF_WASHES)
@@ -166,6 +171,15 @@ def _fill_managed_wash_book_baseline(page):
     page.set_global_price(GLOBAL_PRICE)
     page.set_global_commission(GLOBAL_COMMISSION)
     page.assign_location_by_index(0)
+    page.set_location_price_and_commission_by_index(0, GLOBAL_PRICE, GLOBAL_COMMISSION)
+    try:
+        page.open_redemption_settings()
+        if page.visible_redemption_checkboxes():
+            page.assign_redemption_location_by_index(0)
+            page.select_redeem_as_option(0, "vk detail wash")
+    except TimeoutException:
+        pass
+    page.open_service_settings()
 
 
 def _reset_managed_wash_book(browser):
