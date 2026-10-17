@@ -6,7 +6,6 @@ from tests.admin_portal.wash_extras.conftest import (
     FIRST_LOCATION_PRICE,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
-    MANAGED_WASH_EXTRA,
     SECOND_LOCATION_PRICE,
     UPDATED_DISCOUNT_NAME,
     UPDATED_WASH_EXTRA_NAME,
@@ -67,21 +66,23 @@ def test_edit_wash_extra_values_persist(browser):
 
 @allure.title("WE-EDT-003 Editing global commission persists after save")
 @pytest.mark.extended
-def test_edit_wash_extra_global_commission_persists(managed_wash_extra):
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
+def test_edit_wash_extra_global_commission_persists(browser):
 
     new_commission = "5"
-    page = managed_wash_extra
-    page.open_edit_extra(MANAGED_WASH_EXTRA)
+    page = create_wash_extra_if_missing(browser)
+    page.open_edit_extra(WASH_EXTRA_NAME)
     page.set_global_commission(new_commission)
     page.click_save_extra()
     page.wait_for_list_loaded()
 
-    page.open_edit_extra(MANAGED_WASH_EXTRA)
+    page.open_edit_extra(WASH_EXTRA_NAME)
     assert page.get_global_commission_value() == new_commission
     assert page_has_no_broken_state(page)
 
-    # Baseline restore (GLOBAL_COMMISSION) happens via managed_wash_extra's own
-    # teardown — no manual revert needed here.
+    page.set_global_commission(GLOBAL_COMMISSION)
+    page.click_save_extra()
+    page.wait_for_list_loaded()
 
 
 @allure.title("WE-EDT-004 Editing loyalty points persists after save (deferred)")
