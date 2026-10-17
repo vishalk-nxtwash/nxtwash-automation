@@ -1,8 +1,19 @@
 # Admin Portal Test Coverage — Full & Smoke
 
-**Status: stabilization pass 1 (2026-09-27).** Covered vs pending tests for the
-admin full suite and smoke, with the next action for every gap. Companion to
-`docs/superadmin_test_coverage.md`.
+**Status: FROZEN — all 30 modules green (2026-10-17).** Covered vs pending
+tests for the admin full suite and smoke, with the next action for every gap.
+Companion to `docs/superadmin_test_coverage.md`.
+
+**Frozen at commit `f3417f3b` on `development`**, confirmed via two
+independent full-suite CI runs: 38999104400 and 39013854876 (the latter the
+regular daily scheduled run), both `success`, all 30 modules green. Don't
+touch admin_portal modules without a reason — see memory `admin-portal-frozen`
+for the full fix list and root causes from this stabilization round
+(wash_books, sites, gift_cards, custom_services). The sections below are the
+status *as of the previous pass (2026-09-27)* and are stale for the specific
+failures they describe (memberships, wash_packages, gas_pump_settings are now
+green) — kept for the still-open polish items (xfail-but-passing promotions,
+locator rewrites) and historical root-cause context.
 
 Status key: ✅ Covered (real check) · 🟡 Xfail but passing (promote) ·
 ⚠️ Xfail (not working yet) · ⏭️ Skipped · 🔥 In smoke.
@@ -11,17 +22,17 @@ Status key: ✅ Covered (real check) · 🟡 Xfail but passing (promote) ·
 
 ## 1. Where things stand
 
-**2,146 tests in 30 modules** (was 2,329 — 183 duplicated tests removed).
-Latest CI outcome per test (GitHub-hosted, targeted parallel runs):
-**1,148 passed · 5 failed · 144 xfail · 91 xpass · 677 skipped** — memberships
-not included (its run was cancelled; see pending).
+**2,147 tests in 30 modules.** As of the 2026-10-17 freeze, every module is
+green on a full-suite run — the per-module breakdown below predates that and
+should be read as historical (which bugs existed, how they were diagnosed),
+not current status.
 
-| Group | Modules | Status |
+| Group | Modules | Status (as of 2026-09-27; see freeze note above for current) |
 |---|---|---|
 | Reports | revenue_overview, performance_metrics, general_sales_report, transactions, cash_report, card_declines, labor_shifts, wash_activity, redemptions | ✅ all green |
 | Catalog | wash_books, wash_extras, custom_services, service_categories, discounts, gift_cards, coupon_packages | ✅ all green |
-| Catalog | wash_packages | ⚠️ 36 pass / 4 fail (save race, below) |
-| Catalog | memberships | ⚠️ create flow blocked (below) |
+| Catalog | wash_packages | ⚠️ 36 pass / 4 fail (save race, below) — now green |
+| Catalog | memberships | ⚠️ create flow blocked (below) — now green |
 | People | customers, users, user_roles | ✅ green |
 | People | employees | ✅ green (create path = product BUG 4 → xfail) |
 | Settings | sites, kiosk_settings, tunnel_settings, pos_settings, bank_drop | ✅ green |
