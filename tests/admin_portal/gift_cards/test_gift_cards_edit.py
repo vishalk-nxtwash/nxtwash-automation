@@ -44,6 +44,7 @@ def test_edit_gift_card_name(browser):
 
 @allure.title("GC-EDT-002 Edit gift card amount and landing page code persist after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_edit_gift_card_updates_settings_without_duplicate(browser):
 
     page = create_gift_card_if_missing(browser)
@@ -61,6 +62,7 @@ def test_edit_gift_card_updates_settings_without_duplicate(browser):
 
 @allure.title("GC-EDT-006 Activate an inactive gift card updates its status to Active")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_activate_inactive_gift_card(browser):
 
     page = create_gift_card_if_missing(browser)
@@ -97,6 +99,7 @@ def test_deactivate_active_gift_card(browser):
 
 @allure.title("CGC-EDT-001 Edit customer gift card amount persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_edit_customer_gift_card_amount(browser):
 
     page = create_customer_gift_card_if_missing(browser)
@@ -109,13 +112,22 @@ def test_edit_customer_gift_card_amount(browser):
     page.open_edit_customer_gift_card(CUSTOMER_GIFT_CARD_NUMBER)
     assert page.get_customer_gift_card_amount_value() == new_amount
 
+    # Verify the restore actually landed before returning — click_save_
+    # customer_gift_card() is deliberately lenient (swallows a timeout so
+    # negative/validation tests can call it directly), so a silently-failed
+    # restore here would leave the shared CUSTOMER_GIFT_CARD_NUMBER record
+    # stuck at "30" for whichever test reads it next. Same bug shape found
+    # and fixed in wash_extras (CI run 39055342050).
     page.enter_customer_gift_card_amount(CUSTOMER_GIFT_CARD_AMOUNT)
     page.click_save_customer_gift_card()
     page.wait_for_customer_list_loaded()
+    page.open_edit_customer_gift_card(CUSTOMER_GIFT_CARD_NUMBER)
+    assert page.get_customer_gift_card_amount_value() == CUSTOMER_GIFT_CARD_AMOUNT
 
 
 @allure.title("CGC-EDT-003 Toggle active customer gift card keeps it active after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_toggle_active_customer_gift_card(browser):
 
     page = create_customer_gift_card_if_missing(browser)

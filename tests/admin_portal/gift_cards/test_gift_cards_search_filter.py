@@ -18,6 +18,7 @@ pytestmark = [
 
 @allure.title("GC-SRH-001 Search exact gift card name returns the correct record")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_search_exact_gift_card_name_returns_match(browser):
 
     page = create_gift_card_if_missing(browser)
@@ -40,6 +41,7 @@ def test_gift_cards_search_accepts_partial_text_without_breaking_grid(browser):
 
 @allure.title("CGC-SRH-002 Partial customer gift card number search returns matching records")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_customer_gift_card_search_partial_number(browser):
 
     page = create_customer_gift_card_if_missing(browser)

@@ -279,6 +279,7 @@ def test_create_user_invalid_email_rejected(browser):
 
 @allure.title("USR-CRT-016 Duplicate email address is rejected")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_create_user_duplicate_email_rejected(browser):
     create_user_if_missing(browser)
     form = open_create_user_form(browser)

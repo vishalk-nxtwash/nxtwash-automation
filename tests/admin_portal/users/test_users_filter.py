@@ -64,6 +64,7 @@ def test_users_filter_by_last_name(browser):
 
 @allure.title("USR-FLT-004 Filter by Email returns the correct user")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_by_email(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -89,6 +90,7 @@ def test_users_filter_by_employee_code(browser):
 
 @allure.title("USR-FLT-006 Filter by Site shows only users assigned to that site")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_by_site(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -100,6 +102,7 @@ def test_users_filter_by_site(browser):
 
 @allure.title("USR-FLT-007 Active filter shows only active users")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_active_only(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -113,6 +116,7 @@ def test_users_filter_active_only(browser):
 
 @allure.title("USR-FLT-008 Disabling the Active filter restores all users including inactive")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_active_off_shows_all(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -131,6 +135,7 @@ def test_users_filter_active_off_shows_all(browser):
 
 @allure.title("USR-FLT-009 Combining First Name and Site filters returns the correct subset")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_combined_name_and_site(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -143,6 +148,7 @@ def test_users_filter_combined_name_and_site(browser):
 
 @allure.title("USR-FLT-010 Filter result count label matches actual rendered row count")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_result_count_matches_rows(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -160,6 +166,7 @@ def test_users_filter_result_count_matches_rows(browser):
 
 @allure.title("USR-FLT-011 Reset All clears all filters and restores the full list")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_reset_all(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -196,6 +203,7 @@ def test_users_filter_site_dropdown_lists_sites(browser):
 
 @allure.title("USR-FLT-013 Partial name filter returns matching users")
 @pytest.mark.edge
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_filter_partial_name_matches(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

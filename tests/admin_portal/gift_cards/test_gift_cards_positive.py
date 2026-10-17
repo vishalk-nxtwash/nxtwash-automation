@@ -25,6 +25,7 @@ pytestmark = [
 
 @pytest.mark.smoke
 @allure.title("GC-CRT-001 Create gift card with name and amount appears in list as Active")
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_create_gift_card_with_required_settings(browser):
 
     page = create_gift_card_if_missing(browser, update_existing=True)
@@ -59,6 +60,7 @@ def test_create_inactive_gift_card(browser):
 @pytest.mark.smoke
 @allure.title("GC-PER-001 Created gift card data persists after page reload")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_created_gift_card_settings_persist(browser):
 
     create_gift_card_if_missing(browser, update_existing=True)
@@ -78,6 +80,7 @@ def test_created_gift_card_settings_persist(browser):
 
 
 @allure.title("GC-DEP-002 Active gift card appears in Customer gift cards select dropdown")
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_gift_card_appears_in_customer_gift_card_dropdown(browser):
 
     create_gift_card_if_missing(browser)
@@ -111,6 +114,7 @@ def test_create_customer_gift_card_from_template(browser):
 @pytest.mark.smoke
 @allure.title("CGC-PER-001 Created customer gift card data persists after page reload")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_customer_gift_card_persists_after_page_reload(browser):
 
     create_customer_gift_card_if_missing(browser)

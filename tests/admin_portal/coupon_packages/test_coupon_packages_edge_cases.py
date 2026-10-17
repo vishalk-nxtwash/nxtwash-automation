@@ -21,6 +21,7 @@ pytestmark = [
 
 @allure.title("CP-NAM-004 Maximum length name does not break the form")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_coupon_package_long_name_does_not_break_form(browser):
 
     page = create_coupon_package_if_missing(browser)

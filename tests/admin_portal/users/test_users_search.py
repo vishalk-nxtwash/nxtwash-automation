@@ -20,6 +20,7 @@ pytestmark = [
 
 @allure.title("USR-SRH-001 Exact phone number search returns the matching user")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_search_exact_phone(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -31,6 +32,7 @@ def test_users_search_exact_phone(browser):
 
 @allure.title("USR-SRH-002 Partial phone number search returns matching users")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_search_partial_phone(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -53,6 +55,7 @@ def test_users_search_nonexistent_phone_shows_empty(browser):
 
 @allure.title("USR-SRH-004 Clearing the phone search restores the full user list")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_search_clear_restores_list(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

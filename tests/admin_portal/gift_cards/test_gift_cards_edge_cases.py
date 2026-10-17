@@ -15,6 +15,7 @@ pytestmark = [
 
 @allure.title("GC-EDGE create_gift_card_if_missing helper is idempotent")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_create_gift_card_helper_is_idempotent(browser):
 
     page = create_gift_card_if_missing(browser)
@@ -27,6 +28,7 @@ def test_create_gift_card_helper_is_idempotent(browser):
 
 @allure.title("GC-SRH-004 Clear search after no-result query restores the gift card list")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_gift_cards_page_recovers_after_no_result_search(browser):
 
     page = create_gift_card_if_missing(browser)

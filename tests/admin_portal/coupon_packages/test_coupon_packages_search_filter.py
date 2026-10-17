@@ -18,6 +18,7 @@ pytestmark = [
 
 @allure.title("CP-SRH-001 Search by exact coupon package name returns the correct row")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_coupon_packages_exact_search(browser):
 
     page = create_coupon_package_if_missing(browser)
@@ -28,6 +29,7 @@ def test_coupon_packages_exact_search(browser):
 
 @allure.title("CP-SRH-002 Search by partial coupon package name returns matching rows")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_coupon_packages_partial_search(browser):
 
     partial = COUPON_PACKAGE_NAME[:4]
@@ -49,6 +51,7 @@ def test_coupon_packages_missing_search(browser):
 
 @allure.title("CP-SRH-004 Clear search restores the full coupon packages list")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_coupon_packages_clear_search_restores_list(browser):
 
     page = create_coupon_package_if_missing(browser)
@@ -61,6 +64,7 @@ def test_coupon_packages_clear_search_restores_list(browser):
 
 @allure.title("CP-FLT-001 Active coupon package filter shows only active packages")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_active_coupon_package_filter_shows_active_only(browser):
 
     create_coupon_package_if_missing(browser)
@@ -77,6 +81,7 @@ def test_active_coupon_package_filter_shows_active_only(browser):
 
 @allure.title("CP-FLT-002 Active toggle off shows all coupon packages")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_active_toggle_off_shows_all_packages(browser):
 
     create_coupon_package_if_missing(browser)
@@ -91,6 +96,7 @@ def test_active_toggle_off_shows_all_packages(browser):
 
 @allure.title("CP-FLT-003 Reset all restores the unfiltered coupon packages list")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_reset_all_restores_unfiltered_list(browser):
 
     create_coupon_package_if_missing(browser)

@@ -19,6 +19,7 @@ pytestmark = [
 
 @pytest.mark.smoke
 @allure.title("CP-TGL-001 / CP-NAM-001 Create active coupon package appears in list")
+@pytest.mark.xdist_group("admin-managed-coupon_packages")
 def test_create_coupon_package(browser):
 
     page = create_coupon_package_if_missing(browser)

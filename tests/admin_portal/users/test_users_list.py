@@ -38,6 +38,7 @@ def test_users_list_required_columns(browser):
 
 @allure.title("USR-LST-003 Pagination shows a record count that matches rendered rows")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_list_pagination_count(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)
@@ -50,6 +51,7 @@ def test_users_list_pagination_count(browser):
 
 @allure.title("USR-LST-004 Results-per-page dropdown changes the number of rows displayed")
 @pytest.mark.edge
+@pytest.mark.xdist_group("admin-managed-users")
 def test_users_list_rows_per_page(browser):
     create_user_if_missing(browser)
     page = open_users_page(browser)

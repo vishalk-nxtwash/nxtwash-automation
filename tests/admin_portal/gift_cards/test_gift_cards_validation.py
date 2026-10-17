@@ -103,6 +103,7 @@ def test_create_customer_gift_card_requires_number(browser):
 
 @allure.title("CGC-VAL-003 Blank customer gift card amount is blocked on save")
 @pytest.mark.validation
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_create_customer_gift_card_requires_amount(browser):
 
     page = open_customer_gift_cards_page(browser)
@@ -119,6 +120,7 @@ def test_create_customer_gift_card_requires_amount(browser):
 @allure.title("CGC-VAL-006 Negative customer gift card amount is rejected by the form")
 @pytest.mark.regression
 @pytest.mark.validation
+@pytest.mark.xdist_group("admin-gift-cards-shared-record")
 def test_negative_customer_gift_card_amount_rejected(browser):
 
     page = open_customer_gift_cards_page(browser)
