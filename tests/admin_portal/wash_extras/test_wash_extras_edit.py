@@ -73,16 +73,23 @@ def test_edit_wash_extra_global_commission_persists(browser):
     page = create_wash_extra_if_missing(browser)
     page.open_edit_extra(WASH_EXTRA_NAME)
     page.set_global_commission(new_commission)
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_extra(WASH_EXTRA_NAME)
     assert page.get_global_commission_value() == new_commission
     assert page_has_no_broken_state(page)
 
+    # Restore to baseline and VERIFY it actually landed before returning —
+    # click_save_extra()+wait_for_list_loaded() alone doesn't confirm a save
+    # landed (it's deliberately lenient, see pages/common/base_page.py's
+    # click helpers), so a silently-failed restore here used to leave the
+    # shared WASH_EXTRA_NAME record's commission stuck at "5" for whichever
+    # other test read it next (CI run 39055342050, reproduced again under
+    # xdist_group serialization in run 39065687229 — same bug, not a race).
     page.set_global_commission(GLOBAL_COMMISSION)
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
+    page.open_edit_extra(WASH_EXTRA_NAME)
+    assert page.get_global_commission_value() == GLOBAL_COMMISSION
 
 
 @allure.title("WE-EDT-004 Editing loyalty points persists after save (deferred)")
