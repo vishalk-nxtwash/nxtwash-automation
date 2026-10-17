@@ -455,6 +455,47 @@ class WashExtrasPage(BasePage):
             and "inovua-react-toolkit-checkbox--unchecked" not in classes
         )
 
+    def _send_keys_to_grid_input(self, element, value):
+        """Type a value into an Inovua grid input via send_keys.
+
+        Setting these React-controlled inputs with the JS property setter
+        (_set_input_value) in a tight loop over many rows is unreliable: the
+        grid's re-render after one row's checkbox/value change can wipe an
+        already-set sibling row's value before Save reads it (see
+        set_location_price_by_index's docstring and
+        admin-stabilization-pass1.md). send_keys one field at a time, like
+        set_location_price_by_index already does, avoids that.
+        """
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});"
+            "arguments[0].focus();",
+            element
+        )
+        element.send_keys(SELECT_ALL_KEY, "a")
+        element.send_keys(Keys.BACKSPACE)
+        element.send_keys(str(value))
+        self.driver.execute_script(
+            """
+            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+            arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+            """,
+            element
+        )
+        try:
+            WebDriverWait(self.driver, 3).until(
+                lambda driver: self._numeric_matches(element, value)
+            )
+        except TimeoutException:
+            self._set_input_value(element, str(value))
+            self.driver.execute_script(
+                "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
+                element
+            )
+        WebDriverWait(self.driver, 60).until(
+            lambda driver: self._numeric_matches(element, value)
+        )
+
     def assign_location_row_with_price_and_commission(
         self,
         row,
@@ -474,16 +515,8 @@ class WashExtrasPage(BasePage):
 
         price_input = row.find_element(By.NAME, "price")
         commission_input = row.find_element(By.NAME, "commission")
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
-            price_input
-        )
-        self._set_input_value(price_input, str(price))
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
-            commission_input
-        )
-        self._set_input_value(commission_input, str(commission))
+        self._send_keys_to_grid_input(price_input, price)
+        self._send_keys_to_grid_input(commission_input, commission)
 
     def assign_all_locations_with_price_and_commission(self, price, commission):
         """Assign all visible locations and set price/commission for each."""
