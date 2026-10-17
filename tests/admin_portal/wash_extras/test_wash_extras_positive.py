@@ -22,6 +22,7 @@ pytestmark = [
 
 @pytest.mark.smoke
 @allure.title("WE-NAM-001 / WE-TGL-001 Create active wash extra — name, price, and status in listing")
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_create_wash_extra(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -105,6 +106,7 @@ def test_wash_extra_save_without_commission_succeeds(browser):
 
 @allure.title("WE-BAR-002 Saving without a barcode succeeds — barcode is optional")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_wash_extra_save_without_barcode_succeeds(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -115,6 +117,7 @@ def test_wash_extra_save_without_barcode_succeeds(browser):
 
 @allure.title("WE-DSC-002 Saving without a service description succeeds — description is optional")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_wash_extra_save_without_description_succeeds(browser):
 
     page = create_wash_extra_if_missing(browser)

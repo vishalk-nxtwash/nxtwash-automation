@@ -16,6 +16,7 @@ pytestmark = [
 
 @allure.title("WE-EDGE Create wash extra is idempotent — calling twice does not duplicate")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_wash_extra_create_is_idempotent(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -26,6 +27,7 @@ def test_wash_extra_create_is_idempotent(browser):
 
 @allure.title("WE-NAM-004 Long service name does not break the form")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_wash_extra_long_name_does_not_break_form(browser):
 
     page = create_wash_extra_if_missing(browser)

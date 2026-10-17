@@ -68,20 +68,19 @@ def test_assign_multiple_discounts_persist(browser):
 
 @allure.title("WE-DIS-003 Removing an assigned discount persists after save")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_remove_assigned_discount_persists(browser):
 
     page = create_wash_extra_if_missing(browser)
     page.open_edit_extra(WASH_EXTRA_NAME)
     page.open_discount_settings()
     page.select_applicable_discount(DISCOUNT_NAME)
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_extra(WASH_EXTRA_NAME)
     page.open_discount_settings()
     page.remove_applicable_discount(DISCOUNT_NAME)
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
 
     page.open_edit_extra(WASH_EXTRA_NAME)
     page.open_discount_settings()
@@ -92,6 +91,7 @@ def test_remove_assigned_discount_persists(browser):
 
 @allure.title("WE-DIS-004 Saving a wash extra without any discount succeeds — discount is optional")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_save_wash_extra_without_discount(browser):
 
     page = create_wash_extra_if_missing(browser)

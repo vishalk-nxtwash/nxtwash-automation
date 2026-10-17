@@ -39,6 +39,7 @@ _LOCATION_PRICE_REACT_STATE_REASON = (
 @allure.title("WE-EDT-001 Editing wash extra name persists after save")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason=_LOCATION_PRICE_REACT_STATE_REASON)
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_edit_wash_extra_updates_name_prices_and_discount(browser):
 
     page = update_wash_extra_if_needed(browser)
@@ -50,6 +51,7 @@ def test_edit_wash_extra_updates_name_prices_and_discount(browser):
 @allure.title("WE-EDT-002 Edited values persist when reopening the edit form")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason=_LOCATION_PRICE_REACT_STATE_REASON)
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_edit_wash_extra_values_persist(browser):
 
     page = update_wash_extra_if_needed(browser)
@@ -104,6 +106,7 @@ def test_edit_wash_extra_loyalty_points_persist(browser):
 
 @allure.title("WE-EDT-005 Editing assigned sites persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_edit_wash_extra_assigned_sites_persist(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -135,14 +138,14 @@ def test_edit_wash_extra_discount_configuration_persists(browser):
 
 @pytest.mark.smoke
 @allure.title("WE-EDT-007 Activating an inactive wash extra updates its status to Active")
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_activate_wash_extra(browser):
 
     page = create_wash_extra_if_missing(browser)
     page.open_edit_extra(WASH_EXTRA_NAME)
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_extra(WASH_EXTRA_NAME)
 
     assert page.wait_for_extra_row(WASH_EXTRA_NAME).is_displayed()
@@ -151,6 +154,7 @@ def test_activate_wash_extra(browser):
 
 
 @allure.title("WE-EDT-008 Deactivating an active wash extra marks it Inactive without deletion")
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_deactivate_wash_extra(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -164,8 +168,7 @@ def test_deactivate_wash_extra(browser):
     assert not page.active_switch_is_on(), "Active switch should be OFF after toggling"
 
     page.ensure_active_switch_on()
-    page.click_save_extra()
-    page.wait_for_list_loaded()
+    page.save_and_return_to_list()
     page.search_extra(WASH_EXTRA_NAME)
 
     assert page.wait_for_extra_row(WASH_EXTRA_NAME).is_displayed()

@@ -21,6 +21,7 @@ pytestmark = [
 
 @allure.title("WE-SIT-001 Assigning a single site persists after save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_assign_single_site_persists(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -51,6 +52,7 @@ def test_assign_multiple_sites_persists(browser):
 
 @allure.title("WE-SIT-003 Selecting all sites via header checkbox assigns every location")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_assign_all_sites_via_header_checkbox(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -91,6 +93,7 @@ def test_deselect_previously_assigned_site(browser):
 @allure.title("WE-PRC-001 Global price is reflected as the default location price")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Staging data: location price field returns empty string")
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_global_price_reflected_at_site_level(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -134,6 +137,7 @@ def test_location_price_override_persists(browser):
 
 @allure.title("WE-PRC-003 Negative location price is rejected on save")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_negative_location_price_is_rejected(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -166,6 +170,7 @@ def test_disable_tax_exemption_for_site_persists(browser):
 
 @allure.title("WE-TAX-003 State and city sales tax fields are read-only in the site grid")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_state_city_tax_fields_are_read_only(browser):
 
     page = create_wash_extra_if_missing(browser)
@@ -203,6 +208,7 @@ def test_location_commission_override_persists(browser):
 
 @allure.title("WE-LCM-002 Negative location commission is rejected on save")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-wash-extras-shared-record")
 def test_negative_location_commission_is_rejected(browser):
 
     page = create_wash_extra_if_missing(browser)
