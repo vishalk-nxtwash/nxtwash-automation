@@ -5,6 +5,7 @@ from tests.admin_portal.wash_extras.conftest import (
     DISCOUNT_NAME,
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
+    MANAGED_WASH_EXTRA,
     VISIBLE_PRICE,
     WASH_EXTRA_NAME,
     create_wash_extra_if_missing,
@@ -34,12 +35,12 @@ def test_create_wash_extra(browser):
 
 @allure.title("WE-NAM-001 Saved settings persist when reopening the edit form")
 @pytest.mark.regression
-def test_wash_extra_settings_persist(browser):
+def test_wash_extra_settings_persist(managed_wash_extra):
 
-    page = create_wash_extra_if_missing(browser)
-    page.open_edit_extra(WASH_EXTRA_NAME)
+    page = managed_wash_extra
+    page.open_edit_extra(MANAGED_WASH_EXTRA)
 
-    assert page.get_service_name_value() == WASH_EXTRA_NAME
+    assert page.get_service_name_value() == MANAGED_WASH_EXTRA
     assert page.get_global_price_value() == GLOBAL_PRICE
     assert page.get_global_commission_value() == GLOBAL_COMMISSION
     assert page.active_switch_is_on()
