@@ -550,24 +550,79 @@ class CustomServicesPage(BasePage):
     # ---------------------------------------------------------------------- site assignment
 
     def get_site_row(self, site_name):
-        """Return the site assignment grid row for a given site."""
-        # InovuaReactDataGrid--native-scroll uses a JS-managed virtual scroll
-        # (inovua-react-scroll-container) that ignores CSS scroll APIs.
-        # ASSIGNMENT_SITE must be in the grid's initially-rendered row batch
-        # (first ~14 rows), otherwise it will never appear without the grid's
-        # own scroll controls. Bring the grid body into view to ensure the
-        # initial batch is rendered, then locate the target row directly.
-        self.driver.execute_script(
-            "var el = document.querySelector('.InovuaReactDataGrid__body');"
-            "if (el) el.scrollIntoView({block: 'start', behavior: 'instant'});"
-        )
+        """Return the site assignment grid row for a given site.
+
+        Previously relied on ASSIGNMENT_SITE being in the grid's initially-
+        rendered row batch (first ~14 rows), with no scroll fallback at all
+        if it wasn't — explicitly documented as fragile and confirmed broken
+        the same way in a sibling module (gift_cards, CI run 38975416941)
+        once staging's accumulated site count grew past what the first
+        batch covers. Steps scrollTop through the grid's own virtual
+        scroller across its real full range (scrollHeight - clientHeight)
+        instead, the same max-scroll-and-step pattern already proven for
+        this identical grid-virtualization behavior in
+        WashPackagesPage.get_site_row() and
+        MembershipsPage._scroll_grid_to_find_row().
+        """
         xpath = (
             "//*[@data-props-id='assignTo']"
             "[.//*[normalize-space()='%s']]"
             "/ancestor::*[contains(@class,'InovuaReactDataGrid__row ')][1]"
             % site_name
         )
-        return self.wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+        row_locator = (By.XPATH, xpath)
+
+        self.driver.execute_script(
+            "var el = document.querySelector('.InovuaReactDataGrid__body');"
+            "if (el) el.scrollIntoView({block: 'start', behavior: 'instant'});"
+        )
+
+        def _visible_row():
+            rows = self.driver.find_elements(*row_locator)
+            return rows[0] if rows and rows[0].is_displayed() else None
+
+        row = _visible_row()
+        if row is None:
+            find_scroller_js = (
+                "var vl = document.querySelector("
+                "  '[class*=\"InovuaReactDataGrid__virtual-list\"]');"
+                "if (!vl) return null;"
+                "var kids = Array.from(vl.querySelectorAll('div'));"
+                "for (var i = 0; i < kids.length; i++) {"
+                "  if (kids[i].scrollHeight > kids[i].clientHeight + 50)"
+                "    return kids[i].scrollHeight - kids[i].clientHeight;"
+                "}"
+                "return null;"
+            )
+            max_scroll = self.driver.execute_script(find_scroller_js) or 4000
+
+            set_scroll_js = (
+                "var vl = document.querySelector("
+                "  '[class*=\"InovuaReactDataGrid__virtual-list\"]');"
+                "if (!vl) return;"
+                "var kids = Array.from(vl.querySelectorAll('div'));"
+                "for (var i = 0; i < kids.length; i++) {"
+                "  if (kids[i].scrollHeight > kids[i].clientHeight + 50) {"
+                "    kids[i].scrollTop = arguments[0];"
+                "    return;"
+                "  }"
+                "}"
+            )
+            step = 350
+            for pos in range(0, int(max_scroll) + step, step):
+                self.driver.execute_script(set_scroll_js, min(pos, int(max_scroll)))
+                time.sleep(0.12)
+                row = _visible_row()
+                if row is not None:
+                    break
+
+        if row is not None:
+            return row
+
+        # Last-resort explicit wait, matching the original method's failure
+        # shape (a clear TimeoutException) if the row genuinely never
+        # renders even after a full scroll pass.
+        return self.wait.until(EC.visibility_of_element_located(row_locator))
 
     def assign_site_with_price_and_commission(self, site_name, price, commission):
         """Assign a site and set site-level price and commission."""

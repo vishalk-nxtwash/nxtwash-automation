@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -564,10 +566,34 @@ class GiftCardsPage(BasePage):
     def get_location_row(self, location_name):
         """Return the location assignment row, scrolling the virtual grid as needed.
 
-        InovuaReactDataGrid uses virtual scrolling — only rows near the current
-        viewport are rendered in the DOM.  Scroll the grid's own scroller element
-        (data-name="scroller" inside .service-sites-table) 300 px per poll until
-        the target row becomes visible.
+        InovuaReactDataGrid uses virtual scrolling — only rows near the
+        current viewport are rendered in the DOM. This grid's scroller
+        (.service-sites-table [data-name='scroller']) has no usable
+        scrollHeight — confirmed live: scrollHeight == clientHeight even
+        with ~570 sites rendered, because rows are positioned via CSS
+        transforms, not real document flow (ruling out the
+        max-scroll-and-step approach WashPackagesPage.get_site_row() /
+        MembershipsPage._scroll_grid_to_find_row() use for their own grids,
+        which do expose a real scrollHeight).
+
+        The previous version here set scrollTop directly — confirmed live
+        that alone is a no-op on this element; the library needs an actual
+        'scroll' Event dispatched too, not just the property changed, to
+        recompute which rows are mounted. assign_location() only ever
+        "worked" when the target happened to be in the first few rendered
+        rows for exactly this reason (the scrollTop writes were never
+        doing anything) — the same blind spot CustomServicesPage.get_site_row()
+        had with no scroll attempt at all. Confirmed in CI (run 38975416941)
+        once staging's site count (570+) made that increasingly unlikely.
+
+        Steps in small 350px increments (not a handful of large jumps):
+        confirmed live that big single jumps (e.g. 1500px) skip past the
+        target because the grid only mounts a narrow row window around
+        the current position, not everything between the old and new
+        position. Bounded by an attempt count, not wall-clock time, so CI
+        network latency can't erode the real distance covered (confirmed
+        live: reaching a target ~340 rows into a sorted-newest-first list
+        took 80 steps / ~14s at this step size).
         """
         scroller = self.wait.until(
             EC.presence_of_element_located(
@@ -581,20 +607,35 @@ class GiftCardsPage(BasePage):
             % location_name
         )
 
-        def _find_or_scroll(driver):
-            rows = driver.find_elements(*row_locator)
-            if rows and rows[0].is_displayed():
-                # Scroll the row to the top of the grid viewport so it clears
-                # the settings-page__form-column overlay at the bottom edge.
-                driver.execute_script(
-                    "arguments[0].scrollIntoView({block: 'start'});", rows[0]
-                )
-                refreshed = driver.find_elements(*row_locator)
-                return refreshed[0] if refreshed and refreshed[0].is_displayed() else False
-            driver.execute_script("arguments[0].scrollTop += 300;", scroller)
-            return False
+        def _displayed_row():
+            rows = self.driver.find_elements(*row_locator)
+            return rows[0] if rows and rows[0].is_displayed() else None
 
-        return self.wait.until(_find_or_scroll)
+        row = _displayed_row()
+        step = 350
+        max_attempts = 400
+        attempt = 0
+        while row is None and attempt < max_attempts:
+            self.driver.execute_script(
+                "arguments[0].scrollTop += arguments[1];"
+                "arguments[0].dispatchEvent(new Event('scroll', {bubbles: true}));",
+                scroller, step
+            )
+            time.sleep(0.15)
+            row = _displayed_row()
+            attempt += 1
+
+        if row is None:
+            # Last-resort explicit wait, matching the original method's
+            # failure shape (a clear TimeoutException) if the row genuinely
+            # never renders even after a full scroll pass.
+            row = self.wait.until(EC.presence_of_element_located(row_locator))
+
+        # Scroll the row to the top of the grid viewport so it clears the
+        # settings-page__form-column overlay at the bottom edge.
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'start'});", row)
+        refreshed = self.driver.find_elements(*row_locator)
+        return refreshed[0] if refreshed and refreshed[0].is_displayed() else row
 
     def assign_location(self, location_name):
         """Assign a gift card to one location."""
