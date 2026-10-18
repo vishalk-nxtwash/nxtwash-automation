@@ -1,19 +1,27 @@
 # Admin Portal Test Coverage — Full & Smoke
 
-**Status: FROZEN — all 30 modules green (2026-10-17).** Covered vs pending
-tests for the admin full suite and smoke, with the next action for every gap.
-Companion to `docs/superadmin_test_coverage.md`.
+**Status: FROZEN — all 30 modules green (2026-10-17, updated same day after a
+second stabilization pass).** Covered vs pending tests for the admin full
+suite and smoke, with the next action for every gap. Companion to
+`docs/superadmin_test_coverage.md`.
 
-**Frozen at commit `f3417f3b` on `development`**, confirmed via two
-independent full-suite CI runs: 38999104400 and 39013854876 (the latter the
-regular daily scheduled run), both `success`, all 30 modules green. Don't
-touch admin_portal modules without a reason — see memory `admin-portal-frozen`
-for the full fix list and root causes from this stabilization round
-(wash_books, sites, gift_cards, custom_services). The sections below are the
-status *as of the previous pass (2026-09-27)* and are stale for the specific
-failures they describe (memberships, wash_packages, gas_pump_settings are now
-green) — kept for the still-open polish items (xfail-but-passing promotions,
-locator rewrites) and historical root-cause context.
+**Frozen at commit `8ab80315` on `development`**, confirmed via a full
+30-module CI run on GitHub Actions (39073917545, `success`) plus targeted
+confirmation runs for every touched module. Don't touch admin_portal modules
+without a reason — see memory `admin-portal-frozen` for the full fix list and
+root causes from both stabilization rounds: the first (wash_books, sites,
+gift_cards, custom_services, frozen earlier the same day at `f3417f3b`) and
+this second one (wash_extras, users, gift_cards again, coupon_packages — a
+distinct shared-staging-record concurrency bug class, not the grid/scroll
+bugs from round 1). The AWS-runner full-suite confirmation (suite-admin-aws.yml)
+was dispatched but stalled on a stuck/busy self-hosted runner, unrelated to
+the code — the GitHub-hosted full suite is the authoritative green signal
+here; re-run the AWS leg separately when the runner is healthy. The sections
+below are the status *as of the original pass (2026-09-27)* and are stale for
+the specific failures they describe (memberships, wash_packages,
+gas_pump_settings are now green) — kept for the still-open polish items
+(xfail-but-passing promotions, locator rewrites) and historical root-cause
+context.
 
 Status key: ✅ Covered (real check) · 🟡 Xfail but passing (promote) ·
 ⚠️ Xfail (not working yet) · ⏭️ Skipped · 🔥 In smoke.
