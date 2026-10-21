@@ -41,6 +41,11 @@ class RedemptionsPage(BasePage):
     DATE_RANGE_INPUT = (By.XPATH,
         "//input[@placeholder='Select range of dates']")
 
+    # Calendar — day buttons use sc-gFqAkR styled-component class (same
+    # widget as Revenue Overview).
+    CALENDAR_DAY_BUTTONS = (By.XPATH,
+        "//button[contains(@class,'sc-gFqAkR')]")
+
     # DevTools confirmed class for the Single day checkbox.
     MODAL_SINGLE_DAY_CHECKBOX = (By.CSS_SELECTOR,
         "input.header-widget__title__descr_checkbox")
@@ -347,19 +352,94 @@ class RedemptionsPage(BasePage):
         except Exception:
             return ""
 
-    def enter_date_range(self, start, end):
-        """Enter a custom date range by typing 'start - end' into the range input.
+    def _click_calendar_nav(self, direction):
+        """Click prev (-1) or next (+1) month navigation button in the open calendar."""
+        if direction < 0:
+            xpaths = [
+                "//button[@aria-label='Previous month' or "
+                "@aria-label='Go to previous month' or "
+                "@aria-label='Prev month']",
+                "//button[contains(@aria-label,'previous') or "
+                "contains(@aria-label,'Previous') or "
+                "contains(@aria-label,'prev')]",
+                "//button[contains(@class,'prev') or contains(@class,'Prev') or "
+                "contains(@class,'back')][@type='button']",
+            ]
+        else:
+            xpaths = [
+                "//button[@aria-label='Next month' or "
+                "@aria-label='Go to next month' or "
+                "@aria-label='Next Month']",
+                "//button[contains(@aria-label,'next') or "
+                "contains(@aria-label,'Next')]",
+                "//button[contains(@class,'next') or contains(@class,'Next') or "
+                "contains(@class,'forward')][@type='button']",
+            ]
+        for xpath in xpaths:
+            btns = self.driver.find_elements(By.XPATH, xpath)
+            visible = [b for b in btns if b.is_displayed()]
+            if visible:
+                self.driver.execute_script("arguments[0].click();", visible[0])
+                time.sleep(0.12)
+                return True
+        return False
 
-        TODO: Verify on first live run whether the RDM date range input
-        accepts direct keyboard entry (like CSH) or requires calendar
-        interaction (like CDL).  Raise NotImplementedError and switch to
-        calendar interaction if this method fails.
-        """
-        combined = "%s - %s" % (start, end)
+    def _navigate_calendar_months(self, months):
+        """Navigate an open calendar picker by the given signed number of months."""
+        direction = -1 if months < 0 else 1
+        for _ in range(abs(months)):
+            if not self._click_calendar_nav(direction):
+                break
+
+    def _calendar_click_day(self, day_number):
+        """Click a calendar day button by its visible day number."""
+        for xpath in [
+            "//button[contains(@class,'sc-gFqAkR')][not(@disabled)]"
+            "[normalize-space()='%d']" % day_number,
+            "//button[not(@disabled)][normalize-space()='%d']"
+            "[@data-selected or @tabindex]" % day_number,
+        ]:
+            btns = self.driver.find_elements(By.XPATH, xpath)
+            visible = [b for b in btns if b.is_displayed() and b.is_enabled()]
+            if visible:
+                self.driver.execute_script("arguments[0].click();", visible[0])
+                time.sleep(0.3)
+                return True
+        return False
+
+    def select_date_range_from_calendar(self, year, month, start_day, end_day):
+        """Open the calendar, navigate to year/month, click start_day then end_day."""
+        import datetime
+        today = datetime.date.today()
+        months_offset = (year - today.year) * 12 + (month - today.month)
+
         el = self.wait.until(EC.element_to_be_clickable(self.DATE_RANGE_INPUT))
-        el.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
-        el.send_keys(combined)
-        el.send_keys(Keys.TAB)
+        self.driver.execute_script("arguments[0].click();", el)
+        time.sleep(0.6)
+
+        if months_offset != 0:
+            self._navigate_calendar_months(months_offset)
+            time.sleep(0.3)
+
+        self._calendar_click_day(start_day)
+        self._calendar_click_day(end_day)
+        time.sleep(0.3)
+
+    def enter_date_range(self, start, end):
+        """Select a date range via the calendar picker.
+
+        The date range input is readonly (opens a calendar overlay rather than
+        accepting keyboard entry) — confirmed via live run. Parses MM/DD/YYYY
+        strings, navigates the calendar to the start month, and clicks start
+        and end day numbers.
+        """
+        import datetime
+        try:
+            s = datetime.datetime.strptime(start, "%m/%d/%Y").date()
+            e = datetime.datetime.strptime(end, "%m/%d/%Y").date()
+        except ValueError:
+            return
+        self.select_date_range_from_calendar(s.year, s.month, s.day, e.day)
 
     def open_date_range_calendar(self):
         """Click the date range input to open the calendar picker."""

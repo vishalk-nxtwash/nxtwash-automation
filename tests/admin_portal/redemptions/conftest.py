@@ -229,23 +229,16 @@ def rdm_expanded(browser):
 
 @pytest.fixture
 def rdm_zero_data(browser):
-    """Metrics screen filtered to a date range expected to yield no redemptions.
+    """Metrics screen filtered to a fixed past date range with no redemptions.
 
-    Uses 'Yesterday' preset as a zero-data workaround; the intended approach
-    (future-date calendar selection) requires calendar picker interaction that
-    cannot be scripted until the RDM calendar DOM is confirmed via DevTools.
-    TODO: Replace with calendar interaction to select a confirmed zero-data
-    future date range once RDM-DTE-014 calendar DOM is verified.
+    Uses a fixed Jan 2022 range (RDM_ZERO_DATE_START/END) via calendar
+    interaction — confirmed zero-data for RDM_SITE and immune to the
+    "Yesterday" preset's shared-site read race (a real redemption landing on
+    the previous calendar day broke this fixture intermittently).
     """
     page = open_rdm_page(browser)
     page.select_site(RDM_SITE)
-    page.select_date_preset("Yesterday")
-    try:
-        WebDriverWait(page.driver, 10).until(
-            lambda d: page.get_date_range_value() != ""
-        )
-    except Exception:
-        time.sleep(1.0)
+    page.enter_date_range(RDM_ZERO_DATE_START, RDM_ZERO_DATE_END)
     page.apply_modal_filters()
     return page
 
