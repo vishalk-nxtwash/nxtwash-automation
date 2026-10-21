@@ -770,7 +770,7 @@ class LaborShiftsPage(BasePage):
         """
         return self._parse_employee_summary_count(self.get_body_text(), label)
 
-    def get_employee_summary_counts(self):
+    def get_employee_summary_counts(self, timeout=8):
         """Return {'Total': int|None, 'Active': int|None, 'Inactive': int|None},
         all parsed from ONE page-body snapshot.
 
@@ -781,12 +781,28 @@ class LaborShiftsPage(BasePage):
         longer reconcile even though the page was internally consistent at
         every instant. Reading once and parsing all three from that snapshot
         closes that gap regardless of what else the page does concurrently.
+
+        The Active/Inactive breakdown within this card can itself still be
+        mid-render when Total (and the Phase2 keywords the lab_page fixture
+        waits on) already show real data -- confirmed live: Total=8 while
+        Active/Inactive both read as the card's 0/0 loading placeholder.
+        Poll until the three reconcile (or until Total/Active/Inactive is
+        unparseable) instead of trusting the very first snapshot.
         """
-        body = self.get_body_text()
-        return {
-            label: self._parse_employee_summary_count(body, label)
-            for label in ("Total", "Active", "Inactive")
-        }
+        deadline = time.time() + timeout
+        counts = {"Total": None, "Active": None, "Inactive": None}
+        while True:
+            body = self.get_body_text()
+            counts = {
+                label: self._parse_employee_summary_count(body, label)
+                for label in ("Total", "Active", "Inactive")
+            }
+            total, active, inactive = counts["Total"], counts["Active"], counts["Inactive"]
+            if total is None or active is None or inactive is None:
+                return counts
+            if active + inactive == total or time.time() >= deadline:
+                return counts
+            time.sleep(0.5)
 
     def hours_format_present(self):
         """Return True if a 'Xh Ym' or similar total hours pattern appears."""
