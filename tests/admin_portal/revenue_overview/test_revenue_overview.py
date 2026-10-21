@@ -116,6 +116,7 @@ _DATE_PRESET_PARAMS = [
 @pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("RVO-NAV-001 Revenue Overview page loads at /reports/detailed/revenue")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_page_loads_at_correct_url(rvo_modal):
     assert "revenue" in rvo_modal.get_current_url().lower(), (
         "URL does not contain 'revenue': %s" % rvo_modal.get_current_url()
@@ -125,6 +126,7 @@ def test_page_loads_at_correct_url(rvo_modal):
 
 @allure.story("Navigation")
 @allure.title("RVO-NAV-002 Filter modal auto-opens on page load without user action")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_filter_modal_auto_opens(rvo_modal):
     assert rvo_modal.modal_is_open(), (
         "Filter modal (Apply filters button) not visible on page load"
@@ -134,6 +136,7 @@ def test_filter_modal_auto_opens(rvo_modal):
 
 @allure.story("Navigation")
 @allure.title("RVO-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_modal_contains_all_controls(rvo_modal):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     driver = rvo_modal.driver
@@ -151,6 +154,7 @@ def test_modal_contains_all_controls(rvo_modal):
 @allure.story("Navigation")
 @allure.title("RVO-NAV-004 Behind the modal the metrics shell renders with $0.00 cards")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_metrics_shell_renders_behind_modal(rvo_modal):
     body = rvo_modal.get_body_text()
     # The metrics shell is pre-rendered (zero-state) behind the blocking modal.
@@ -166,6 +170,7 @@ def test_metrics_shell_renders_behind_modal(rvo_modal):
 @allure.story("Navigation")
 @allure.title("RVO-NAV-006 Page title 'Revenue Metrics' and ⓘ icon present after apply")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_page_title_and_info_icon_render(rvo_page):
     assert rvo_page.page_title_visible(), "Page title 'Revenue Metrics' not visible"
     assert page_has_no_broken_state(rvo_page)
@@ -174,6 +179,7 @@ def test_page_title_and_info_icon_render(rvo_page):
 @allure.story("Navigation")
 @allure.title("RVO-NAV-007 Sidebar highlights Revenue Overview as active item")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_sidebar_highlights_active_item(rvo_page):
     active = rvo_page.sidebar_item_is_active("Revenue")
     body = rvo_page.get_body_text()
@@ -191,6 +197,7 @@ def test_sidebar_highlights_active_item(rvo_page):
 @allure.title("RVO-FMD-001 Sites dropdown lists all active sites")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Site dropdown intermittently returns empty on staging; timing race during modal open.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_sites_dropdown_lists_all_active_sites(rvo_modal):
     # Dependency: Sites & Locations module
     options = rvo_modal.get_site_options()
@@ -209,6 +216,7 @@ def test_sites_dropdown_lists_all_active_sites(rvo_modal):
     reason="RVO-FMD-002: Date preset dropdown intermittently returns no options; "
            "timing race during modal open on staging.",
 )
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_date_preset_dropdown_lists_seven_options(rvo_modal):
     options = rvo_modal.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -221,6 +229,7 @@ def test_date_preset_dropdown_lists_seven_options(rvo_modal):
 
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-003 Modal opens with default state (no site selected, no date)")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_modal_opens_with_default_state(rvo_modal):
     # On fresh load neither site nor date should be pre-filled.
     chips = rvo_modal.get_site_chips()
@@ -233,6 +242,7 @@ def test_modal_opens_with_default_state(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-004 Changing preset auto-populates date range field")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_changing_preset_auto_updates_date_range(rvo_modal):
     rvo_modal.select_date_preset("Last month")
     date_val = rvo_modal.get_date_range_value()
@@ -246,6 +256,7 @@ def test_changing_preset_auto_updates_date_range(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-005 Single day checkbox changes field label from range to single date")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_single_day_checkbox_switches_to_single_date(rvo_modal):
     placeholder_before = rvo_modal.date_range_input_placeholder()
     rvo_modal.check_single_day()
@@ -263,6 +274,7 @@ def test_single_day_checkbox_switches_to_single_date(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-006 Apply filters closes modal and renders Revenue Metrics screen")
 @pytest.mark.xfail(strict=False, reason="ElementNotInteractableException in select_site; timing race during modal open on staging.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_apply_filters_closes_modal_and_renders_metrics(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset("Last month")
@@ -278,6 +290,7 @@ def test_apply_filters_closes_modal_and_renders_metrics(rvo_modal):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-008 Filter values reflected in page-level bar after apply")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_filter_values_reflected_in_page_level_bar(rvo_page):
     # After apply, the selected site should appear as a chip.
     chips = rvo_page.get_site_chips()
@@ -295,6 +308,7 @@ def test_filter_values_reflected_in_page_level_bar(rvo_page):
 @allure.story("Filter Modal")
 @allure.title("RVO-FMD-009 Modal does not re-open when filters are changed from page-level bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_modal_does_not_reopen_from_page_level_bar(rvo_page):
     # Change a filter on the metrics screen — modal must NOT come back.
     rvo_page.select_date_preset("This month")
@@ -317,6 +331,7 @@ def test_modal_does_not_reopen_from_page_level_bar(rvo_page):
     reason="RVO-SIT-001: Page-level site dropdown returns only pre-selected site; "
            "same timing race as modal site dropdown (options not fully populated when read).",
 )
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_page_level_sites_dropdown_lists_all_sites(rvo_page):
     # Dependency: Sites & Locations module
     options = rvo_page.get_site_options()
@@ -330,6 +345,7 @@ def test_page_level_sites_dropdown_lists_all_sites(rvo_page):
 @pytest.mark.smoke
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-003 Selecting single site scopes all KPI cards, chart, and tabs")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_selecting_single_site_scopes_all_sections(rvo_page):
     # Dependency: Sites & Locations module
     body = rvo_page.get_body_text()
@@ -344,6 +360,7 @@ def test_selecting_single_site_scopes_all_sections(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-004 Selecting multiple sites aggregates revenue across all")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_selecting_multiple_sites_aggregates_revenue(rvo_page):
     # Dependency: Sites & Locations module
     # rvo_page already has one site; keep it and verify data loads (we can't
@@ -360,6 +377,7 @@ def test_selecting_multiple_sites_aggregates_revenue(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-005 Selected sites render as chips in the filter bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_selected_sites_render_as_chips(rvo_page):
     chips = rvo_page.get_site_chips()
     assert len(chips) >= 1, (
@@ -371,6 +389,7 @@ def test_selected_sites_render_as_chips(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-006 Overflow counter chip shown when selected sites exceed display limit")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_overflow_counter_chip_shown_for_many_sites(rvo_page):
     options = rvo_page.get_site_options()
     if len(options) < 3:
@@ -405,6 +424,7 @@ def test_selected_options_highlighted_in_dropdown(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-009 Deselecting a site option removes its chip")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_deselecting_option_removes_it(rvo_page):
     chips_before = rvo_page.get_site_chips()
     # Click the already-selected site again to deselect it
@@ -440,6 +460,7 @@ def test_clear_control_removes_all_chips(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-011 Clearing all sites shows zero / empty state")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_clearing_sites_shows_empty_state(rvo_page):
     rvo_page.clear_sites()
     time.sleep(1.0)
@@ -483,6 +504,7 @@ def test_site_dropdown_scrolls_for_many_sites(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-013 Changing site on metrics screen auto-applies without Apply button")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_site_change_auto_applies_no_apply_button(rvo_page):
     options = rvo_page.get_site_options()
     body_before = rvo_page.get_body_text()
@@ -504,6 +526,7 @@ def test_site_change_auto_applies_no_apply_button(rvo_page):
 @allure.story("Site Filter")
 @allure.title("RVO-SIT-014 Deactivated sites do not appear in the site dropdown")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_deactivated_sites_not_in_dropdown(rvo_page):
     # Dependency: Sites & Locations module
     options = rvo_page.get_site_options()
@@ -521,6 +544,7 @@ def test_deactivated_sites_not_in_dropdown(rvo_page):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-001 Page-level date preset dropdown lists all seven options")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_page_level_preset_lists_seven_options(rvo_page):
     options = rvo_page.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -535,6 +559,7 @@ def test_page_level_preset_lists_seven_options(rvo_page):
 @allure.title("RVO-DTE-002..008 Selecting preset auto-populates date range and refreshes data")
 @pytest.mark.regression
 @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_preset_updates_range_and_data(rvo_modal, preset):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset(preset)
@@ -561,6 +586,7 @@ def test_preset_updates_range_and_data(rvo_modal, preset):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-009 Typing a custom date range switches the preset selector to Custom")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_custom_range_switches_preset_to_custom(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset("Last month")
@@ -576,6 +602,7 @@ def test_custom_range_switches_preset_to_custom(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-010 Clicking date range field opens a dual-month calendar picker")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_date_range_field_opens_calendar_picker(rvo_modal):
     rvo_modal.open_date_range_picker()
     assert rvo_modal.calendar_is_open(), (
@@ -587,6 +614,7 @@ def test_date_range_field_opens_calendar_picker(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-011 Future dates are disabled (grayed out) in the calendar picker")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_future_dates_disabled_in_calendar(rvo_modal):
     rvo_modal.open_date_range_picker()
     assert rvo_modal.calendar_is_open(), "Calendar not open"
@@ -617,6 +645,7 @@ def test_year_selector_visible_in_calendar(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-022 Changing date preset on metrics screen auto-applies immediately")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_date_preset_auto_applies_on_metrics_screen(rvo_page):
     rvo_page.select_date_preset("This month")
     time.sleep(1.2)
@@ -635,6 +664,7 @@ def test_date_preset_auto_applies_on_metrics_screen(rvo_page):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-019 Custom range with same start and end date (single calendar day) renders")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_custom_range_same_start_end(rvo_modal):
     today = datetime.date.today().strftime("%m/%d/%Y")
     rvo_modal.select_site(RVO_SITE)
@@ -652,6 +682,7 @@ def test_custom_range_same_start_end(rvo_modal):
 @allure.story("Date Filter")
 @allure.title("RVO-DTE-020 Date range spanning a month boundary renders without error")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_month_boundary_date_range(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.enter_date_range("06/28/2026", "07/03/2026")
@@ -672,6 +703,7 @@ def test_month_boundary_date_range(rvo_modal):
 @pytest.mark.smoke
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-001 Five KPI cards render on the metrics screen")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_five_kpi_cards_render(rvo_page):
     assert rvo_page.kpi_cards_present(), (
         "Not all five KPI cards visible. Body excerpt: %s"
@@ -683,6 +715,7 @@ def test_five_kpi_cards_render(rvo_page):
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-002 KPI cards show $0.00 when no transactions exist")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_kpi_cards_show_zero_when_no_data(zero_data_filter):
     assert zero_data_filter.all_kpi_show_zero(), (
         "KPI cards should show $0.00 / 0 for a future-date filter with no transactions"
@@ -694,6 +727,7 @@ def test_kpi_cards_show_zero_when_no_data(zero_data_filter):
 @allure.title("RVO-KPI-003 KPI values update when the site filter changes")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Staging data: membership tab count inconsistent with new-sales tab count")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_kpi_values_update_on_site_change(rvo_page):
     body_before = rvo_page.get_body_text()
     options = rvo_page.get_site_options()
@@ -713,6 +747,7 @@ def test_kpi_values_update_on_site_change(rvo_page):
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-004 KPI values update when the date filter changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_kpi_values_update_on_date_change(rvo_page):
     body_before = rvo_page.get_body_text()
     rvo_page.select_date_preset("This month")
@@ -729,6 +764,7 @@ def test_kpi_values_update_on_date_change(rvo_page):
 @allure.story("KPI Cards")
 @allure.title("RVO-KPI-005 KPI values are displayed in $X.XX currency format")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_kpi_values_currency_format(rvo_page):
     body = rvo_page.get_body_text()
     import re
@@ -746,6 +782,7 @@ def test_kpi_values_currency_format(rvo_page):
 @pytest.mark.smoke
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-001 Revenue distribution chart renders when data exists")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_chart_renders_when_data_exists(rvo_page):
     assert rvo_page.chart_is_visible(), (
         "Revenue distribution chart not visible on metrics screen"
@@ -756,6 +793,7 @@ def test_chart_renders_when_data_exists(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-002 Chart area shows 'No information' message when no data")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_chart_shows_no_info_when_no_data(zero_data_filter):
     body = zero_data_filter.get_body_text()
     assert (
@@ -769,6 +807,7 @@ def test_chart_shows_no_info_when_no_data(zero_data_filter):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-003 Chart legend lists all revenue series")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_legend_lists_all_series(rvo_page):
     legend_items = rvo_page.get_legend_items()
     body = rvo_page.get_body_text()
@@ -786,6 +825,7 @@ def test_legend_lists_all_series(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-004 Hovering a chart segment shows a tooltip")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_hover_segment_shows_tooltip(rvo_page):
     rvo_page.hover_chart_segment(0)
     tooltip = rvo_page.get_tooltip_text()
@@ -799,6 +839,7 @@ def test_hover_segment_shows_tooltip(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-005 Hovering a segment updates the donut centre label")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_hover_updates_centre_label(rvo_page):
     label_before = rvo_page.get_chart_center_label()
     rvo_page.hover_chart_segment(0)
@@ -859,6 +900,7 @@ def test_legend_toggle_hides_segment(rvo_page):
         "Remove xfail when product fixes this."
     ),
 )
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_centre_label_not_recalculated_after_legend_toggle(rvo_page):
     legend_items = rvo_page.get_legend_items()
     if not legend_items:
@@ -884,6 +926,7 @@ def test_centre_label_not_recalculated_after_legend_toggle(rvo_page):
     reason="RVO-CHT-012: StaleElementReferenceException intermittently when "
            "clicking legend items in sequence on staging.",
 )
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_hiding_all_legend_series_no_error(rvo_page):
     legend_items = rvo_page.get_legend_items()
     if not legend_items:
@@ -899,6 +942,7 @@ def test_hiding_all_legend_series_no_error(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-013 Segment colours are stable across filter changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_segment_colours_are_stable(rvo_page):
     legend_before = rvo_page.get_legend_items()
     rvo_page.select_date_preset("This month")
@@ -914,6 +958,7 @@ def test_segment_colours_are_stable(rvo_page):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-014 Zero-revenue series appears in legend but has no visible arc")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_zero_revenue_series_in_legend_no_arc(zero_data_filter):
     body = zero_data_filter.get_body_text()
     assert page_has_no_broken_state(zero_data_filter), (
@@ -924,6 +969,7 @@ def test_zero_revenue_series_in_legend_no_arc(zero_data_filter):
 @allure.story("Revenue Distribution Chart")
 @allure.title("RVO-CHT-015 Chart re-renders correctly after a filter change")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_chart_rerenders_on_filter_change(rvo_page):
     rvo_page.select_date_preset("This month")
     time.sleep(1.2)
@@ -939,6 +985,7 @@ def test_chart_rerenders_on_filter_change(rvo_page):
 
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-001 Membership Revenue tab is displayed with a count badge")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_membership_tab_displayed_with_count(rvo_page):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     els = rvo_page.driver.find_elements(*RevenueOverviewPage.MEMBERSHIP_TAB)
@@ -953,6 +1000,7 @@ def test_membership_tab_displayed_with_count(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-002 Membership Revenue tab is selected by default")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_membership_tab_selected_by_default(rvo_page):
     # After apply, the Membership tab should be active without any clicks.
     body = rvo_page.get_body_text()
@@ -964,6 +1012,7 @@ def test_membership_tab_selected_by_default(rvo_page):
 
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-003 Membership Revenue tab shows three sub-tabs")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_membership_tab_shows_three_subtabs(rvo_page):
     rvo_page.click_membership_tab()
     body = rvo_page.get_body_text()
@@ -976,6 +1025,7 @@ def test_membership_tab_shows_three_subtabs(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-004 All three membership sub-tabs are clickable")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_all_membership_subtabs_clickable(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("New Sales")
@@ -987,6 +1037,7 @@ def test_all_membership_subtabs_clickable(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-005 New Sales + Recharges + Resignups == Membership Revenue count")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_membership_count_invariant(rvo_page):
     rvo_page.click_membership_tab()
     ns = rvo_page.get_tab_count("New Sales")
@@ -1004,6 +1055,7 @@ def test_membership_count_invariant(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-006 New Sales sub-tab lists membership plan rows")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_new_sales_subtab_lists_plans(rvo_page):
     # Dependency: Membership module
     rvo_page.click_membership_tab()
@@ -1019,6 +1071,7 @@ def test_new_sales_subtab_lists_plans(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-007 Recharges sub-tab renders cleanly with zero count")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_recharges_subtab_zero_count_renders_cleanly(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("Recharges")
@@ -1032,6 +1085,7 @@ def test_recharges_subtab_zero_count_renders_cleanly(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-009 Resignups sub-tab lists all resignup rows")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_resignups_subtab_lists_rows(rvo_page):
     # Dependency: Membership module
     rvo_page.click_membership_tab()
@@ -1067,6 +1121,7 @@ def test_subtab_row_count_equals_badge(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-011 Switching sub-tabs does not change KPI cards or chart")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_switching_subtabs_does_not_change_kpi_or_chart(rvo_page):
     kpi_before = rvo_page.get_body_text()
     rvo_page.click_membership_tab()
@@ -1088,6 +1143,7 @@ def test_switching_subtabs_does_not_change_kpi_or_chart(rvo_page):
 @allure.story("Membership Revenue")
 @allure.title("RVO-MEM-012 Membership plan names match the Membership module")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_membership_plan_names_match_module(rvo_page):
     # Dependency: Membership module
     rvo_page.click_membership_tab()
@@ -1105,6 +1161,7 @@ def test_membership_plan_names_match_module(rvo_page):
 
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-001 Retail Revenue tab is displayed with a count badge")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_retail_tab_displayed_with_count(rvo_page):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     els = rvo_page.driver.find_elements(*RevenueOverviewPage.RETAIL_TAB)
@@ -1122,6 +1179,7 @@ def test_retail_tab_displayed_with_count(rvo_page):
     "RVO-RET-002: Retail section uses a flat product list ('Wash Prepaid');"
     " 'Wash Package'/'Wash Extra' subtabs not present on current page"
 ))
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_retail_tab_shows_two_subtabs(rvo_page):
     rvo_page.click_retail_tab()
     body = rvo_page.get_body_text()
@@ -1134,6 +1192,7 @@ def test_retail_tab_shows_two_subtabs(rvo_page):
 @allure.title("RVO-RET-003 Wash Package + Wash Extra == Retail Revenue tab count")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Retail count invariant fails when staging has uncategorized retail items not mapped to Wash Package or Wash Extra.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_retail_count_invariant(rvo_page):
     rvo_page.click_retail_tab()
     rvo_page.assert_retail_count_invariant()
@@ -1151,6 +1210,7 @@ def test_retail_count_invariant(rvo_page):
 @allure.title("RVO-RET-004 Wash Package sub-tab lists wash package rows")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Wash Package sub-tab not clickable when no Wash Package retail data exists in staging for the selected date range.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_wash_package_subtab_lists_packages(rvo_page):
     # Dependency: Wash Packages module
     rvo_page.click_retail_tab()
@@ -1166,6 +1226,7 @@ def test_wash_package_subtab_lists_packages(rvo_page):
 @allure.title("RVO-RET-005 Wash Extra sub-tab lists wash extra rows")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Wash Extra sub-tab not clickable when no Wash Extra retail data exists in staging for the selected date range.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_wash_extra_subtab_lists_extras(rvo_page):
     # Dependency: Wash Extras module
     rvo_page.click_retail_tab()
@@ -1181,6 +1242,7 @@ def test_wash_extra_subtab_lists_extras(rvo_page):
 @allure.title("RVO-RET-008 Wash Package names match the Wash Packages module")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Wash Package sub-tab not clickable when no Wash Package retail data exists in staging for the selected date range.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_wash_package_names_match_module(rvo_page):
     # Dependency: Wash Packages module
     rvo_page.click_retail_tab()
@@ -1197,6 +1259,7 @@ def test_wash_package_names_match_module(rvo_page):
 @allure.title("RVO-RET-009 Wash Extra names match the Wash Extras module")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="Wash Extra sub-tab not clickable when no Wash Extra retail data exists in staging for the selected date range.")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_wash_extra_names_match_module(rvo_page):
     # Dependency: Wash Extras module
     rvo_page.click_retail_tab()
@@ -1212,6 +1275,7 @@ def test_wash_extra_names_match_module(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-010 Switching between Membership and Retail tabs preserves KPI and chart")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_switching_tabs_preserves_kpi_and_chart(rvo_page):
     import re
     body_start = rvo_page.get_body_text()
@@ -1231,6 +1295,7 @@ def test_switching_tabs_preserves_kpi_and_chart(rvo_page):
 @allure.story("Retail Revenue")
 @allure.title("RVO-RET-012 Retail tab shows empty list when count is 0")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_retail_tab_empty_list_when_count_zero(zero_data_filter):
     zero_data_filter.click_retail_tab()
     ret_count = zero_data_filter.retail_tab_count()
@@ -1252,6 +1317,7 @@ def test_retail_tab_empty_list_when_count_zero(zero_data_filter):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-001 Each breakdown list row shows name, count, amount, and percentage")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_each_row_shows_four_data_points(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("New Sales")
@@ -1270,6 +1336,7 @@ def test_each_row_shows_four_data_points(rvo_page):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-002 Single-count row uses singular 'item' not 'items'")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_single_item_count_grammar(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("New Sales")
@@ -1285,6 +1352,7 @@ def test_single_item_count_grammar(rvo_page):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-003 Row with zero amount displays 0.00 and 0%")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_zero_amount_shows_zero_percent(zero_data_filter):
     zero_data_filter.click_membership_tab()
     zero_data_filter.click_sub_tab("New Sales")
@@ -1300,6 +1368,7 @@ def test_zero_amount_shows_zero_percent(zero_data_filter):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-004 Long plan/package names are truncated without breaking layout")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_long_names_truncate_without_breaking(rvo_page):
     rvo_page.click_membership_tab()
     rvo_page.click_sub_tab("New Sales")
@@ -1311,6 +1380,7 @@ def test_long_names_truncate_without_breaking(rvo_page):
 @allure.story("Breakdown List")
 @allure.title("RVO-LST-006 Breakdown list refreshes when filter changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_list_refreshes_on_filter_change(rvo_page):
     rvo_page.click_membership_tab()
     rows_before = rvo_page.get_breakdown_rows()
@@ -1329,6 +1399,7 @@ def test_list_refreshes_on_filter_change(rvo_page):
 @allure.story("Export")
 @allure.title("RVO-EXP-001 Export XLSX button is present on the metrics screen")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_export_button_present(rvo_page):
     from pages.admin_portal.revenue_overview_page import RevenueOverviewPage
     els = rvo_page.driver.find_elements(*RevenueOverviewPage.EXPORT_BUTTON)
@@ -1341,6 +1412,7 @@ def test_export_button_present(rvo_page):
 @allure.story("Export")
 @allure.title("RVO-EXP-002 Clicking Export XLSX triggers a file download")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_export_triggers_download(rvo_page):
     rvo_page.click_export()
     time.sleep(1.5)
@@ -1356,6 +1428,7 @@ def test_export_triggers_download(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-001 Hovering the ⓘ icon shows a tooltip with descriptive text")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_info_icon_tooltip_text(rvo_page):
     rvo_page.hover_info_icon()
     tooltip = rvo_page.get_tooltip_text()
@@ -1366,6 +1439,7 @@ def test_info_icon_tooltip_text(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-002 Tooltip dismisses when user clicks away from the icon")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_tooltip_dismisses_on_click_away(rvo_page):
     rvo_page.hover_info_icon()
     tooltip_before = rvo_page.get_tooltip_text()
@@ -1382,6 +1456,7 @@ def test_tooltip_dismisses_on_click_away(rvo_page):
 @allure.story("Tooltip / Info Icons")
 @allure.title("RVO-TTP-003 Tooltip content does not change when data changes")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_tooltip_content_is_static(rvo_page):
     rvo_page.hover_info_icon()
     tooltip_last_month = rvo_page.get_tooltip_text()
@@ -1404,6 +1479,7 @@ def test_tooltip_content_is_static(rvo_page):
 
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-001 Zero-transaction site renders all sections cleanly")
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_zero_transaction_site_renders_cleanly(zero_data_filter):
     assert page_has_no_broken_state(zero_data_filter), (
         "Broken state on Revenue Overview with zero-transaction filter"
@@ -1417,6 +1493,7 @@ def test_zero_transaction_site_renders_cleanly(zero_data_filter):
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-002 Today filter with no transactions renders cleanly")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_today_with_no_transactions_renders_cleanly(rvo_modal):
     rvo_modal.select_site(RVO_SITE)
     rvo_modal.select_date_preset("Today")
@@ -1433,6 +1510,7 @@ def test_today_with_no_transactions_renders_cleanly(rvo_modal):
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-003 Rapidly switching date presets does not cause stale data")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_rapid_preset_switching_no_stale_data(rvo_page):
     presets = ["Today", "Last week", "This month", "Yesterday", "Last month"]
     rvo_page.rapid_preset_switch(presets)
@@ -1445,6 +1523,7 @@ def test_rapid_preset_switching_no_stale_data(rvo_page):
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-004 Rapidly toggling site selections does not cause stale data")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_rapid_site_toggle_no_stale_data(rvo_page):
     options = rvo_page.get_site_options()
     if not options:
@@ -1460,6 +1539,7 @@ def test_rapid_site_toggle_no_stale_data(rvo_page):
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-006 Retail-only site renders Membership Revenue tab with empty list")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_retail_only_site_renders_cleanly(rvo_page):
     # If current test data has no membership sales, Membership tab should show 0/empty.
     rvo_page.click_membership_tab()
@@ -1472,6 +1552,7 @@ def test_retail_only_site_renders_cleanly(rvo_page):
 @allure.story("Edge Cases")
 @allure.title("RVO-EC-009 Navigating directly to the URL opens the filter modal")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_direct_url_opens_filter_modal(browser):
     page = open_rvo_page(browser)
     assert page.modal_is_open(), (
@@ -1490,6 +1571,7 @@ def test_direct_url_opens_filter_modal(browser):
     "RVO-DEP-001: Overview page content is inside an iframe;"
     " 'Full report' link not findable from outer frame context"
 ))
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_overview_full_report_link_navigates_here(browser):
     from tests.admin_portal.admin_session import open_admin_path
     from selenium.webdriver.support.ui import WebDriverWait as _WDW
@@ -1527,6 +1609,7 @@ def test_overview_full_report_link_navigates_here(browser):
 @allure.story("Dependencies")
 @allure.title("RVO-DEP-002 Site dropdown reflects active sites from Sites & Locations module")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-revenue_overview")
 def test_sites_dropdown_reflects_sites_module(rvo_modal):
     # Dependency: Sites & Locations module
     options = rvo_modal.get_site_options()
@@ -1554,6 +1637,7 @@ class TestSingleDayMode:
     @allure.story("Date Filter")
     @allure.title("RVO-DTE-013 Checking Single day changes label to 'Select date' and field to single-date input")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-revenue_overview")
     def test_single_day_changes_label_and_field(self):
         assert self.page.single_day_is_checked(), (
             "Single day checkbox not checked by fixture"
@@ -1578,6 +1662,7 @@ class TestSingleDayMode:
         "RVO-DTE-014: Page does not auto-switch preset to 'Custom' when Single day"
         " is checked; preset retains its previous value (e.g. 'Today')"
     ))
+    @pytest.mark.xdist_group("admin-shared-site-revenue_overview")
     def test_single_day_forces_preset_to_custom(self):
         assert self.page.single_day_is_checked(), (
             "Single day checkbox not checked by fixture"
@@ -1595,6 +1680,7 @@ class TestSingleDayMode:
     @allure.story("Date Filter")
     @allure.title("RVO-DTE-016 Selecting a date in single-day mode renders the report for that date")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-revenue_overview")
     def test_select_date_in_single_day_mode(self):
         # Enter a date with known data (last day of last month).
         today = datetime.date.today()
@@ -1611,6 +1697,7 @@ class TestSingleDayMode:
     @allure.story("Date Filter")
     @allure.title("RVO-DTE-017 Unchecking Single day reverts the field to date range mode")
     @pytest.mark.extended
+    @pytest.mark.xdist_group("admin-shared-site-revenue_overview")
     def test_uncheck_single_day_reverts_to_range(self):
         assert self.page.single_day_is_checked(), "Single day not checked by fixture"
         self.page.uncheck_single_day()

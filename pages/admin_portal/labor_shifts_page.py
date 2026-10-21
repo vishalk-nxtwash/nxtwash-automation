@@ -735,15 +735,14 @@ class LaborShiftsPage(BasePage):
             and re.search(r"\d+h|\d+\s*hours?", body, re.I) is not None
         )
 
-    def get_employee_summary_count(self, label):
-        """Return the integer count next to *label* in the Employees summary card.
+    def _parse_employee_summary_count(self, body, label):
+        """Parse the integer count next to *label* out of an already-fetched body.
 
-        *label* should be 'Total', 'Active', or 'Inactive'.
-        Finds the section where all three labels appear together (the Employees summary
-        card), avoiding false matches in pagination text ("out of 250 records") or
+        *label* should be 'Total', 'Active', or 'Inactive'. Finds the section
+        where all three labels appear together (the Employees summary card),
+        avoiding false matches in pagination text ("out of 250 records") or
         column headers ("Total shifts", "Active" status values).
         """
-        body = self.get_body_text()
         # Anchor on "Total hours" (unique to Employees summary card) or the
         # "Xh Ym" hours pattern — NOT present in pagination text or commission section.
         # Look backwards from the anchor to find Total / Active / Inactive counts.
@@ -759,6 +758,35 @@ class LaborShiftsPage(BasePage):
                 if numbers:
                     return int(numbers[0])
         return None
+
+    def get_employee_summary_count(self, label):
+        """Return the integer count next to *label* in the Employees summary card.
+
+        See _parse_employee_summary_count for what *label* and the parsing
+        mean. Fetches the page body fresh -- fine for a single label, but
+        callers that need more than one of Total/Active/Inactive together
+        should use get_employee_summary_counts() instead so all three come
+        from the same snapshot (see that method's docstring for why).
+        """
+        return self._parse_employee_summary_count(self.get_body_text(), label)
+
+    def get_employee_summary_counts(self):
+        """Return {'Total': int|None, 'Active': int|None, 'Inactive': int|None},
+        all parsed from ONE page-body snapshot.
+
+        Calling get_employee_summary_count() three times (once per label) each
+        re-fetches the body independently -- if this page's own async refresh
+        (see test_widgets_refresh_on_date_change/_on_site_change) lands between
+        those calls, the three counts can come from different moments and no
+        longer reconcile even though the page was internally consistent at
+        every instant. Reading once and parsing all three from that snapshot
+        closes that gap regardless of what else the page does concurrently.
+        """
+        body = self.get_body_text()
+        return {
+            label: self._parse_employee_summary_count(body, label)
+            for label in ("Total", "Active", "Inactive")
+        }
 
     def hours_format_present(self):
         """Return True if a 'Xh Ym' or similar total hours pattern appears."""

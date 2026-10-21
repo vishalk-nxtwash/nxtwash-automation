@@ -47,6 +47,7 @@ from tests.admin_portal.performance_metrics.conftest import (
 @pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("PFM-NAV-001 Page loads at /performance-metrics")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_page_loads_at_correct_url(browser):
     from tests.admin_portal.admin_session import open_admin_path
     open_admin_path(browser, "/performance-metrics")
@@ -57,6 +58,7 @@ def test_page_loads_at_correct_url(browser):
 
 @allure.story("Navigation")
 @allure.title("PFM-NAV-002 Filter modal auto-opens on page load without user action")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_filter_modal_auto_opens(pfm_modal):
     assert pfm_modal.modal_is_open(), (
         "Filter modal did not auto-open on /performance-metrics load"
@@ -66,6 +68,7 @@ def test_filter_modal_auto_opens(pfm_modal):
 
 @allure.story("Navigation")
 @allure.title("PFM-NAV-003 Filter modal contains four controls: site, preset, date range, Apply")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_filter_modal_contains_four_controls(pfm_modal):
     body = pfm_modal.get_body_text()
     # Four controls: Sites/Locations multiselect, date preset dropdown,
@@ -86,6 +89,7 @@ def test_filter_modal_contains_four_controls(pfm_modal):
 @allure.story("Navigation")
 @allure.title("PFM-NAV-004 Behind the modal the metrics shell renders with widget placeholders")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_metrics_shell_renders_behind_modal(pfm_modal):
     # Modal overlays the page; the shell underneath should still be present.
     body = pfm_modal.get_body_text()
@@ -98,6 +102,7 @@ def test_metrics_shell_renders_behind_modal(pfm_modal):
 @pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("PFM-NAV-006 Page renders two widgets: Conversion Rate and Membership History")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_page_renders_two_widgets(pfm_page):
     assert pfm_page.cvr_widget_visible(), "Conversion Rate widget not visible"
     assert pfm_page.mht_widget_visible(), "Membership History widget not visible"
@@ -122,6 +127,7 @@ def test_sidebar_highlights_active_item(pfm_page):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-001 Sites dropdown lists all active sites")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_sites_dropdown_lists_all_active_sites(pfm_modal):
     # Dependency: Sites & Locations module
     options = pfm_modal.get_site_options()
@@ -134,6 +140,7 @@ def test_sites_dropdown_lists_all_active_sites(pfm_modal):
 
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-002 Modal opens with default state: All Sites, Today preset")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_modal_opens_with_default_state(pfm_modal):
     body = pfm_modal.get_body_text()
     preset = pfm_modal.get_current_preset_label()
@@ -151,6 +158,7 @@ def test_modal_opens_with_default_state(pfm_modal):
 @allure.title("PFM-FMD-003 Date preset dropdown lists exactly 6 options (no Custom)")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not rendering options on staging")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_date_preset_dropdown_lists_six_options(pfm_modal):
     options = pfm_modal.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -168,6 +176,7 @@ def test_date_preset_dropdown_lists_six_options(pfm_modal):
 @allure.title("PFM-FMD-004 Selecting a preset auto-populates the custom date range field")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_preset_auto_updates_date_range(pfm_modal):
     pfm_modal.select_date_preset("Last month")
     try:
@@ -189,6 +198,7 @@ def test_preset_auto_updates_date_range(pfm_modal):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-005 Apply filters closes modal and renders both widgets")
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_apply_closes_modal_and_renders_widgets(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.select_date_preset("Last month")
@@ -208,6 +218,7 @@ def test_apply_closes_modal_and_renders_widgets(pfm_modal):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-006 Filter values reflected in page-level bar after Apply")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_filter_values_reflected_in_page_bar(pfm_page):
     chips = pfm_page.get_site_chips()
     assert PFM_SITE in chips or any(PFM_SITE in c for c in chips), (
@@ -222,6 +233,7 @@ def test_filter_values_reflected_in_page_bar(pfm_page):
 @allure.story("Filter Modal")
 @allure.title("PFM-FMD-008 Filter modal does not re-open from the page-level bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_modal_does_not_reopen_from_page_bar(pfm_page):
     # Interact with the page-level filter bar; it should auto-apply without
     # reopening the full blocking modal.
@@ -240,6 +252,7 @@ def test_modal_does_not_reopen_from_page_bar(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-001 Sites dropdown options use checkbox controls")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_sites_dropdown_uses_checkboxes(pfm_modal):
     # Dependency: Sites & Locations module
     # Open the dropdown and confirm option items include checkbox elements.
@@ -264,6 +277,7 @@ def test_sites_dropdown_uses_checkboxes(pfm_modal):
 
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-002 All Sites option is present and selected by default")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_all_sites_option_present_and_default(pfm_modal):
     # Dependency: Sites & Locations module
     body = pfm_modal.get_body_text()
@@ -280,6 +294,7 @@ def test_all_sites_option_present_and_default(pfm_modal):
 @allure.title("PFM-SIT-003 All Sites aggregates data from all locations")
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_all_sites_aggregates_data(pfm_modal):
     # Dependency: Sites & Locations module
     # Apply with All Sites (default) + Last month — page should show aggregate data.
@@ -309,6 +324,7 @@ def test_all_sites_aggregates_data(pfm_modal):
 @pytest.mark.smoke
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-004 Selecting a single site scopes both CVR and MHT widgets")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_single_site_scopes_both_widgets(pfm_page):
     # Dependency: Sites & Locations module
     assert pfm_page.cvr_widget_visible(), "CVR widget not visible after single-site filter"
@@ -325,6 +341,7 @@ def test_single_site_scopes_both_widgets(pfm_page):
     "Needs DevTools inspection to determine if VK AL02 is available in the PM site "
     "dropdown and why the second select_site call produces no chip."
 ))
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_multiple_sites_aggregate_data(pfm_modal):
     # Dependency: Sites & Locations module
     pfm_modal.select_multiple_sites([PFM_SITE, PFM_SITE_2])
@@ -352,6 +369,7 @@ def test_multiple_sites_aggregate_data(pfm_modal):
     "Known defect PFM-SIT-006: Membership history SITE NAME shows 'All Sites' "
     "even when a subset of sites is selected"
 ))
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_membership_history_site_name_scoped(pfm_page):
     headers = pfm_page.mht_get_column_headers()
     site_col_idx = next(
@@ -371,6 +389,7 @@ def test_membership_history_site_name_scoped(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-007 Selected sites render as chips in the page-level filter bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_selected_sites_render_as_chips(pfm_page):
     chips = pfm_page.get_site_chips()
     overflow = pfm_page.get_overflow_chip_text()
@@ -385,6 +404,7 @@ def test_selected_sites_render_as_chips(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-009 Checkbox state reflects current site selection")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_checkbox_state_reflects_selection(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     # Open dropdown again to inspect checkbox state
@@ -405,6 +425,7 @@ def test_checkbox_state_reflects_selection(pfm_modal):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-010 Un-checking a site from the page bar refreshes widgets immediately")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_unchecking_removes_site(pfm_page):
     # Page bar auto-applies; removing a site triggers widget refresh
     chips_before = pfm_page.get_site_chips()
@@ -421,6 +442,7 @@ def test_unchecking_removes_site(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-011 X clear control removes all selected sites in one click")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_clear_all_removes_all_sites(pfm_page):
     pfm_page.clear_sites()
     time.sleep(0.8)
@@ -434,6 +456,7 @@ def test_clear_all_removes_all_sites(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-013 Site dropdown scrolls when there are 9+ options")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_dropdown_scrolls_with_many_options(pfm_modal):
     # Dependency: Sites & Locations module
     options = pfm_modal.get_site_options()
@@ -464,6 +487,7 @@ def test_dropdown_scrolls_with_many_options(pfm_modal):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-014 Changing site in page bar auto-applies without clicking Apply")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_page_level_site_change_auto_applies(pfm_page):
     # Dependency: Sites & Locations module
     pfm_page.clear_sites()
@@ -479,6 +503,7 @@ def test_page_level_site_change_auto_applies(pfm_page):
 @allure.story("Site Filter")
 @allure.title("PFM-SIT-015 Deactivated sites are excluded from the dropdown")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_deactivated_sites_excluded(pfm_modal):
     # Dependency: Sites & Locations module
     options = pfm_modal.get_site_options()
@@ -496,6 +521,7 @@ def test_deactivated_sites_excluded(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-001 Page-level bar shows a date preset dropdown with 6 options")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_page_level_preset_dropdown_has_six_options(pfm_page):
     options = pfm_page.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -513,6 +539,7 @@ def test_page_level_preset_dropdown_has_six_options(pfm_page):
 @pytest.mark.regression
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
 @pytest.mark.parametrize("preset", DATE_PRESETS, ids=DATE_PRESETS)
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_date_preset_sets_correct_range(pfm_modal, preset):
     pfm_modal.select_date_preset(preset)
     try:
@@ -539,6 +566,7 @@ def test_date_preset_sets_correct_range(pfm_modal, preset):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-008 Custom date range opens a dual-month calendar picker")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_custom_range_calendar_picker_opens(pfm_modal):
     pfm_modal.click_date_range_input()
     time.sleep(0.5)
@@ -554,6 +582,7 @@ def test_custom_range_calendar_picker_opens(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-009 Today is highlighted in the calendar with a distinct marker")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_today_highlighted_in_calendar(pfm_modal):
     pfm_modal.click_date_range_input()
     time.sleep(0.5)
@@ -565,6 +594,7 @@ def test_today_highlighted_in_calendar(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-010 Future dates are disabled in the calendar picker")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_future_dates_not_selectable(pfm_modal):
     pfm_modal.click_date_range_input()
     time.sleep(0.5)
@@ -576,6 +606,7 @@ def test_future_dates_not_selectable(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-011 Selecting a custom date range updates and auto-applies the filter")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_custom_range_updates_and_refreshes(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.enter_date_range(LAST_MONTH_START, LAST_MONTH_END)
@@ -602,6 +633,7 @@ def test_custom_range_updates_and_refreshes(pfm_modal):
     "requires a React internal state event that Selenium cannot dispatch. "
     "Needs DevTools inspection to identify the clear mechanism."
 ))
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_clear_date_range_button(pfm_modal):
     pfm_modal.select_date_preset("Last month")
     try:
@@ -624,6 +656,7 @@ def test_clear_date_range_button(pfm_modal):
 @allure.title("PFM-DTE-018 A single-day range triggers the CVR constraint message")
 @pytest.mark.extended
 @pytest.mark.xfail(strict=False, reason="PFM date preset dropdown not responding on staging")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_single_day_range_shows_cvr_constraint(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.select_date_preset("Today")
@@ -643,6 +676,7 @@ def test_single_day_range_shows_cvr_constraint(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-019 Month-boundary-spanning date range renders both widgets correctly")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_month_boundary_spanning_range(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     # 06/28/2026 – 07/03/2026: spans June→July boundary (≥ 7 days for CVR)
@@ -663,6 +697,7 @@ def test_month_boundary_spanning_range(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-020 Multi-year date range renders without application error")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_multi_year_range_no_error(pfm_modal):
     pfm_modal.select_site(PFM_SITE)
     # 01/01/2025 – 12/31/2025: full prior year, 365 days
@@ -682,6 +717,7 @@ def test_multi_year_range_no_error(pfm_modal):
 @allure.story("Date Filter")
 @allure.title("PFM-DTE-021 Changing preset in page bar auto-applies and refreshes both widgets")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_preset_change_in_page_bar_auto_applies(pfm_page):
     pfm_page.select_date_preset("This month")
     time.sleep(1.5)
@@ -700,6 +736,7 @@ def test_preset_change_in_page_bar_auto_applies(pfm_page):
 
 @allure.story("Conversion Rate")
 @allure.title("PFM-CVR-001 Conversion Rate line chart renders for a date range ≥ 7 days")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_conversion_rate_chart_renders(pfm_page):
     # pfm_page uses Last month (30 days) — chart must render
     assert pfm_page.cvr_chart_visible(), (
@@ -719,6 +756,7 @@ def test_conversion_rate_chart_renders(pfm_page):
         pytest.param("Last month", False, id="CVR-004-gte_7days"),
     ],
 )
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_cvr_week_range_boundary(pfm_modal, preset, expect_constraint):
     pfm_modal.select_site(PFM_SITE)
     pfm_modal.select_date_preset(preset)
@@ -748,6 +786,7 @@ def test_cvr_week_range_boundary(pfm_modal, preset, expect_constraint):
 @allure.story("Conversion Rate")
 @allure.title("PFM-CVR-006 CVR legend shows the series name 'Retail transactions 100%'")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_cvr_legend_shows_series_name(pfm_page):
     assert pfm_page.cvr_legend_visible(), (
         "CVR legend with 'Retail transactions' not visible. "
@@ -758,6 +797,7 @@ def test_cvr_legend_shows_series_name(pfm_page):
 @allure.story("Conversion Rate")
 @allure.title("PFM-CVR-007 CVR y-axis displays percentage values from 0% to 100%")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_cvr_y_axis_percentage_range(pfm_page):
     assert pfm_page.cvr_y_axis_has_percentages(), (
         "CVR y-axis does not display percentage values"
@@ -771,6 +811,7 @@ def test_cvr_y_axis_percentage_range(pfm_page):
 @allure.story("Conversion Rate")
 @allure.title("PFM-CVR-012 CVR chart re-renders when filter is changed")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_cvr_rerenders_on_filter_change(pfm_page):
     # Chart is visible with Last month; switch to This month (still ≥ 7 days)
     assert pfm_page.cvr_chart_visible(), "CVR chart not visible before filter change"
@@ -789,6 +830,7 @@ def test_cvr_rerenders_on_filter_change(pfm_page):
 @pytest.mark.smoke
 @allure.story("Membership History")
 @allure.title("PFM-MHT-001 Membership History table renders with at least one data row")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_membership_history_table_renders(pfm_page):
     assert pfm_page.mht_table_visible(), "MHT table not visible after filter apply"
     row_count = pfm_page.mht_get_row_count()
@@ -802,6 +844,7 @@ def test_membership_history_table_renders(pfm_page):
 @allure.title("PFM-MHT-002 MHT default visible columns include all 18 expected headers")
 @pytest.mark.regression
 @pytest.mark.parametrize("column_name", MHT_COLUMNS, ids=MHT_COLUMNS)
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_default_column_headers(pfm_page, column_name):
     headers = pfm_page.mht_get_column_headers()
     assert any(column_name.lower() in h.lower() for h in headers), (
@@ -812,6 +855,7 @@ def test_default_column_headers(pfm_page, column_name):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-003 MHT shows a 'no data' message when the filter returns no results")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_no_data_message_when_empty(zero_data_filter):
     assert zero_data_filter.mht_no_data_visible() or zero_data_filter.mht_get_row_count() == 0, (
         "Expected no-data message or empty table for All Sites + Today. "
@@ -823,6 +867,7 @@ def test_no_data_message_when_empty(zero_data_filter):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-004 MHT rows are sorted descending by date (newest row first)")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_rows_sorted_descending_by_date(pfm_page):
     assert pfm_page.mht_dates_are_descending(), (
         "MHT date column is not sorted descending. "
@@ -856,6 +901,7 @@ def test_mht_includes_most_recent_rows(pfm_modal):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-006 Date cells display weekday name and weekend rows are amber-coded")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_date_cells_with_weekday_and_color(pfm_page):
     dates = pfm_page.mht_get_date_values()
     assert len(dates) > 0, "No date cells found in MHT"
@@ -880,6 +926,7 @@ def test_date_cells_with_weekday_and_color(pfm_page):
     "Known gap PFM-MHT-007: MHT column headers do not expose aria-sort or sort-class "
     "icons in the current build — sort UI is not yet implemented"
 ))
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_column_headers_have_sort_controls(pfm_page):
     assert pfm_page.mht_has_sort_controls(), (
         "No sort controls found on MHT column headers (expected aria-sort or sort icons)"
@@ -893,6 +940,7 @@ def test_column_headers_have_sort_controls(pfm_page):
     "Known gap PFM-MHT-008: MHT table does not re-sort on header click — "
     "sort interaction is not yet implemented in the current build"
 ))
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_clicking_header_toggles_sort(pfm_page):
     dates_before = pfm_page.mht_get_date_values()
     pfm_page.mht_click_column_header("Date")
@@ -908,6 +956,7 @@ def test_clicking_header_toggles_sort(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-010 MHT container shows a horizontal scrollbar for wide column sets")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_horizontal_scrollbar_visible(pfm_page):
     assert pfm_page.mht_horizontal_scroll_available(), (
         "MHT container does not appear to support horizontal scrolling (18 columns expected)"
@@ -917,6 +966,7 @@ def test_horizontal_scrollbar_visible(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-014 MHT cells use colour coding (green for positive, red for negative)")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_color_coded_semantics(pfm_page):
     # Accept colour on cells OR presence of semantic CSS classes
     has_color = pfm_page.mht_cell_has_color_coding()
@@ -933,6 +983,7 @@ def test_color_coded_semantics(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-019 Zero values in MHT render as '0', not as blank cells")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_zero_values_render_as_zero(pfm_page):
     assert pfm_page.mht_has_zero_value_cells(), (
         "No cells showing '0' found in MHT — zero values may be blank"
@@ -942,6 +993,7 @@ def test_zero_values_render_as_zero(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-021 CANCELLED column header spelling is consistent across the UI")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_cancelled_vs_canceled_spelling(pfm_page):
     body = pfm_page.get_body_text()
     # Expect a single consistent spelling; assert the page does not mix both
@@ -955,6 +1007,7 @@ def test_cancelled_vs_canceled_spelling(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-022 RESIGNUP count label is consistent with 'Resignups' column name")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_resignup_label_mismatch(pfm_page):
     body = pfm_page.get_body_text()
     has_all_caps  = "RESIGNUP" in body
@@ -967,6 +1020,7 @@ def test_resignup_label_mismatch(pfm_page):
 @allure.story("Membership History")
 @allure.title("PFM-MHT-023 MHT table updates when the date filter changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_mht_updates_on_filter_change(pfm_page):
     rows_before = pfm_page.mht_get_row_count()
     pfm_page.select_date_preset("This month")
@@ -986,6 +1040,7 @@ def test_mht_updates_on_filter_change(pfm_page):
 
 @allure.story("Column Settings")
 @allure.title("PFM-CST-001 Clicking the settings gear icon opens the Column Settings modal")
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_settings_icon_opens_modal(pfm_page):
     pfm_page.cst_open_settings()
     assert pfm_page.cst_settings_open(), (
@@ -996,6 +1051,7 @@ def test_settings_icon_opens_modal(pfm_page):
 @allure.story("Column Settings")
 @allure.title("PFM-CST-002 Column Settings modal lists 17 column toggles plus a master switch")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_modal_lists_17_column_toggles(pfm_page):
     pfm_page.cst_open_settings()
     count = pfm_page.cst_toggle_count()
@@ -1013,6 +1069,7 @@ def test_modal_lists_17_column_toggles(pfm_page):
 @allure.story("Column Settings")
 @allure.title("PFM-CST-003 All column toggles are ON by default when opening settings")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_all_toggles_on_by_default(pfm_page):
     pfm_page.cst_open_settings()
     assert pfm_page.cst_all_toggles_on(), (
@@ -1036,6 +1093,7 @@ class TestColumnSettings:
 
     @allure.story("Column Settings")
     @allure.title("PFM-CST-004 Toggling a column OFF removes it from the MHT header row")
+    @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
     def test_toggle_off_removes_column(self):
         # All columns are already OFF via the autouse fixture.
         # Verify a non-Date column is absent from the table.
@@ -1047,6 +1105,7 @@ class TestColumnSettings:
     @allure.story("Column Settings")
     @allure.title("PFM-CST-005 Toggling a column back ON restores it in the MHT header row")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
     def test_toggle_on_restores_column(self):
         target = "Total"
         self.page.cst_toggle_column(target)   # re-enable "Total"
@@ -1059,6 +1118,7 @@ class TestColumnSettings:
     @allure.story("Column Settings")
     @allure.title("PFM-CST-006 Master switch toggles all columns OFF simultaneously")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
     def test_master_switch_toggles_all_off(self):
         # autouse fixture already toggled all OFF.
         # Verify that no non-Date non-pinned columns appear.
@@ -1079,6 +1139,7 @@ class TestColumnSettings:
     @allure.story("Column Settings")
     @allure.title("PFM-CST-007 Date column is always visible even when all other columns are OFF")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
     def test_date_column_always_visible(self):
         assert self.page.cst_date_column_always_visible(), (
             "Date column is not visible in MHT even though it should be permanently pinned"

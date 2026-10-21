@@ -112,6 +112,7 @@ class TestWashActivityNav:
 
     @pytest.mark.smoke
     @allure.title("WAC-NAV-001 Wash Activity page loads at /reports/detailed/cars_washed")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_page_loads_at_correct_url(self, wac_modal):
         url = wac_modal.get_current_url()
         assert "cars_washed" in url.lower() or "wash" in url.lower(), (
@@ -120,6 +121,7 @@ class TestWashActivityNav:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-NAV-002 Blocking filter modal auto-opens on page load")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_filter_modal_auto_opens(self, wac_modal):
         assert wac_modal.modal_is_open(), (
             "Blocking filter modal (Apply filters button) not visible on page load"
@@ -130,6 +132,7 @@ class TestWashActivityNav:
         "WAC-NAV-003 Modal contains site, date preset, date range, "
         "single-day checkbox and Apply button"
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_modal_contains_all_controls(self, wac_modal):
         d = wac_modal.driver
         site_els   = d.find_elements(*WashActivityPage.SITE_MULTISELECT)
@@ -151,6 +154,7 @@ class TestWashActivityNav:
         reason="WAC-NAV-004: wac_page fixture intermittently raises StaleElementReferenceException "
                "during filter application on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_page_content_visible_after_apply(self, wac_page):
         body = wac_page.get_body_text()
         assert body.strip(), "Page body empty after applying WAC_SITE + Last month filters"
@@ -175,6 +179,7 @@ class TestWashActivityNav:
 
     @allure.title("WAC-FMD-006 Filter values are reflected in the page-level bar after apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_filter_values_reflected_in_page_bar(self, wac_page):
         date_val = wac_page.get_date_range_value()
         assert date_val, "Date range value not visible in the page-level filter bar after apply"
@@ -184,6 +189,7 @@ class TestWashActivityNav:
         "WAC-FMD-007 Changing date preset from the page bar does not re-open the modal"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_page_bar_changes_do_not_reopen_modal(self, wac_page):
         wac_page.select_date_preset("This month")
         time.sleep(1.0)
@@ -211,6 +217,7 @@ class TestWashActivitySiteFilter:
         reason="WAC-SIT-001: Site dropdown intermittently returns empty; "
                "timing race during modal open on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_sites_dropdown_lists_active_sites(self, wac_modal):
         # Dependency: Sites & Locations module
         options = wac_modal.get_site_options()
@@ -221,6 +228,7 @@ class TestWashActivitySiteFilter:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-FMD-003 Site filter is in empty default state on fresh page load")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_site_filter_empty_by_default(self, wac_modal):
         chips = wac_modal.get_site_chips()
         assert chips == [], (
@@ -229,6 +237,7 @@ class TestWashActivitySiteFilter:
         assert page_has_no_broken_state(wac_modal)
 
     @allure.title("WAC-SIT-003 Selecting a site creates a chip in the site control")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_selecting_site_creates_chip(self, wac_modal):
         # Dependency: Sites & Locations module
         wac_modal.select_site(WAC_SITE)
@@ -265,6 +274,7 @@ class TestWashActivitySiteFilter:
         reason="WAC-SIT-004b: Site selection loop intermittently fails; "
                "select_site timing race when iterating all options on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_all_sites_shows_overflow_chip(self, wac_modal):
         options = wac_modal.get_site_options()
         assert len(options) >= WAC_ALL_SITE_COUNT, (
@@ -286,6 +296,7 @@ class TestWashActivitySiteFilter:
         reason="WAC-SIT-005: wac_page fixture intermittently raises StaleElementReferenceException "
                "during filter application on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_single_site_scopes_data(self, wac_page):
         chips = wac_page.get_site_chips()
         body  = wac_page.get_body_text()
@@ -296,6 +307,7 @@ class TestWashActivitySiteFilter:
 
     @allure.title("WAC-SIT-007 Removing a site chip reduces the site selection")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_removing_chip_reduces_site_filter(self, wac_page):
         chips_before = wac_page.get_site_chips()
         assert chips_before, "Expected at least one chip before clear"
@@ -312,6 +324,7 @@ class TestWashActivitySiteFilter:
         "Clicking X on a chip clears it; clearing all chips returns to empty state"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chip_x_and_clear_returns_empty_state(self, wac_page):
         chips_before = wac_page.get_site_chips()
         assert chips_before, "Need at least one chip to test removal"
@@ -331,6 +344,7 @@ class TestWashActivitySiteFilter:
 
     @allure.title("WAC-SIT-008 Clear all removes every site chip from the control")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_clear_all_sites(self, wac_page):
         wac_page.clear_sites()
         chips = wac_page.get_site_chips()
@@ -345,6 +359,7 @@ class TestWashActivitySiteFilter:
         reason="WAC-SIT-011: StaleElementReferenceException intermittently in select_site() "
                "when called from the page-bar on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_page_bar_site_change_no_modal(self, wac_page):
         wac_page.select_site(WAC_SITE, clear_first=False)
         time.sleep(1.0)
@@ -360,6 +375,7 @@ class TestWashActivitySiteFilter:
         reason="WAC-SIT-012: Site dropdown intermittently returns only one option; "
                "timing race during modal open on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_site_dropdown_lists_multiple_sites(self, wac_modal):
         options = wac_modal.get_site_options()
         assert len(options) > 1, (
@@ -369,6 +385,7 @@ class TestWashActivitySiteFilter:
 
     @allure.title("WAC-SIT-013 WAC_SITE is present and selectable in the site dropdown")
     @pytest.mark.xfail(strict=False, reason="Site dropdown intermittently returns empty; timing race during modal open on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_wac_site_present_in_dropdown(self, wac_modal):
         # Dependency: Sites & Locations module
         options = wac_modal.get_site_options()
@@ -384,6 +401,7 @@ class TestWashActivitySiteFilter:
     @pytest.mark.parametrize("widget_label", _WIDGET_REFRESH_PARAMS)
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException intermittently when calling select_site() in test body after wac_page fixture.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_widgets_refresh_on_site_change(self, wac_page, widget_label):
         wac_page.clear_sites()
         wac_page.select_site(WAC_SITE)
@@ -405,6 +423,7 @@ class TestWashActivityDateFilter:
     @allure.title("WAC-DTE-001 Date preset dropdown lists 7 options including Custom")
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="Date preset dropdown intermittently returns empty on staging; timing race during modal open.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_date_preset_count(self, wac_modal):
         options = wac_modal.get_date_preset_options()
         assert len(options) >= len(DATE_PRESETS), (
@@ -417,6 +436,7 @@ class TestWashActivityDateFilter:
     @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="WAC-DTE-005/007 TimeoutException intermittently; date range field slow to populate on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_preset_populates_date_range(self, wac_modal, preset):
         wac_modal.select_date_preset(preset)
         try:
@@ -447,6 +467,7 @@ class TestWashActivityDateFilter:
         reason="WAC-DTE-008: Date preset dropdown intermittently returns empty options; "
                "timing race during modal open on staging.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_custom_preset_available(self, wac_modal):
         options = wac_modal.get_date_preset_options()
         assert any("custom" in o.lower() for o in options), (
@@ -456,6 +477,7 @@ class TestWashActivityDateFilter:
 
     @allure.title("WAC-DTE-010 Selecting a preset auto-populates the date range input")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_selecting_preset_fills_date_range(self, wac_modal):
         wac_modal.select_date_preset("Last month")
         try:
@@ -478,6 +500,7 @@ class TestWashActivityDateFilter:
         reason="WAC-DTE-012: Date range input may not populate within wait window; "
                "staging date preset rendering is intermittently slow.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_date_range_input_shows_selected_range(self, wac_modal):
         wac_modal.select_date_preset("Last month")
         try:
@@ -495,6 +518,7 @@ class TestWashActivityDateFilter:
 
     @allure.title("WAC-DTE-014 Single day checkbox is present inside the filter modal")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_single_day_checkbox_in_modal(self, wac_modal):
         assert wac_modal.modal_single_day_checkbox_visible(), (
             "Single day checkbox not found inside the blocking filter modal"
@@ -503,6 +527,7 @@ class TestWashActivityDateFilter:
 
     @allure.title("WAC-DTE-015 Checking single day mode narrows the date field to one date")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_single_day_field_narrows_to_one_date(self, wac_single_day):
         assert wac_single_day.modal_single_day_is_checked(), (
             "Single day checkbox not checked after check_modal_single_day()"
@@ -550,6 +575,7 @@ class TestWashActivityDateFilter:
         "and 'No information' chart message"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_zero_data_state(self, wac_zero_data):
         body = wac_zero_data.get_body_text().lower()
         has_zero_state = (
@@ -570,6 +596,7 @@ class TestWashActivityDateFilter:
     @pytest.mark.parametrize("widget_label", _WIDGET_REFRESH_PARAMS)
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="ElementNotInteractableException for kpi widget intermittently after date preset change on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_widgets_refresh_on_date_change(self, wac_page, widget_label):
         wac_page.select_date_preset("This month")
         time.sleep(1.5)
@@ -590,6 +617,7 @@ class TestWashActivityKPI:
     @pytest.mark.smoke
     @allure.title("WAC-KPI-001 KPI card '{label}' is visible with a non-empty label")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_card_visible(self, wac_page, label):
         assert wac_page.kpi_card_visible(label), (
             "KPI card '%s' not found on the Wash Activity metrics screen. "
@@ -601,6 +629,7 @@ class TestWashActivityKPI:
         "WAC-KPI-002 At least one KPI card has a non-zero value for the test dataset"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_values_non_zero(self, wac_page):
         assert wac_page.kpi_values_non_zero(), (
             "All KPI card values appear to be zero or absent for %s + Last month"
@@ -612,6 +641,7 @@ class TestWashActivityKPI:
         "WAC-KPI-002b KPI cards show zero state for Today (no-data date range)"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_zero_data_state(self, wac_zero_data):
         body = wac_zero_data.get_body_text().lower()
         has_zero = (
@@ -630,6 +660,7 @@ class TestWashActivityKPI:
         "(expected: %d)" % WAC_TOTAL_CARS
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_total_cars_equals_sum(self, wac_page):
         total      = wac_page.get_kpi_value("Total Cars")
         redemptions = wac_page.get_kpi_value("Total Redemptions")
@@ -646,6 +677,7 @@ class TestWashActivityKPI:
     )
     @pytest.mark.xfail(reason="WAC-KPI-006: Daily Average KPI returns 0 even when Total Cars > 0 — product defect", strict=False)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_daily_average_non_zero(self, wac_page):
         total_cars   = wac_page.get_kpi_value("Total Cars")
         daily_avg    = wac_page.get_kpi_value("Daily Average")
@@ -665,6 +697,7 @@ class TestWashActivityKPI:
             "— formula not computing. See also WAC-KPI-005, WAC-KPI-011."
         ),
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_hourly_average_non_zero(self, wac_page):
         total_cars   = wac_page.get_kpi_value("Total Cars")
         hourly_avg   = wac_page.get_kpi_value("Hourly Average")
@@ -678,6 +711,7 @@ class TestWashActivityKPI:
     )
     @pytest.mark.parametrize("card_label,sublabel", _KPI_SUBLABEL_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_card_sublabels(self, wac_page, card_label, sublabel):
         assert wac_page.kpi_sublabel_visible(card_label, sublabel), (
             "Sub-label '%s' not found near KPI card '%s'. "
@@ -699,6 +733,7 @@ class TestWashActivityKPI:
             % (WAC_TOTAL_PAID_KPI, WAC_PAID_TAB_COUNT)
         ),
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_kpi_total_paid_matches_tab(self, wac_page):
         wac_page.assert_tab_kpi_reconciliation("Paid Washes", "Total Paid")
 
@@ -712,6 +747,7 @@ class TestWashActivityChart:
 
     @pytest.mark.smoke
     @allure.title("WAC-CHT-001 Hourly Distribution chart section is visible")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chart_section_visible(self, wac_page):
         assert wac_page.chart_section_visible(), (
             "Hourly Distribution chart section not visible on the Wash Activity screen. "
@@ -734,6 +770,7 @@ class TestWashActivityChart:
         "for zero-data date range"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chart_empty_state_for_zero_data(self, wac_zero_data):
         has_empty = (
             wac_zero_data.no_data_message_visible()
@@ -751,6 +788,7 @@ class TestWashActivityChart:
     )
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException intermittently in chart section methods on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chart_renders_for_test_dataset(self, wac_page):
         body = wac_page.get_body_text()
         has_chart = (
@@ -768,6 +806,7 @@ class TestWashActivityChart:
         "and applies strikethrough styling"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chart_legend_toggle_off(self, wac_page):
         items = wac_page.get_chart_legend_items()
         if not items:
@@ -792,6 +831,7 @@ class TestWashActivityChart:
     )
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException in legend toggle methods on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_chart_legend_toggle_on(self, wac_page):
         items = wac_page.get_chart_legend_items()
         if not items:
@@ -820,6 +860,7 @@ class TestWashActivityTabs:
 
     @allure.title("WAC-TAB-001 Usage Breakdown section is visible on the metrics screen")
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException in usage_breakdown_visible() intermittently on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_usage_breakdown_section_visible(self, wac_page):
         assert wac_page.usage_breakdown_visible(), (
             "Usage Breakdown section not visible after applying filters. "
@@ -831,6 +872,7 @@ class TestWashActivityTabs:
         "WAC-TAB-002 All three tabs are visible: Memberships, Paid Washes, Comp Washes"
     )
     @pytest.mark.smoke
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_all_three_tabs_visible(self, wac_page):
         labels = wac_page.get_tab_labels()
         for tab in USAGE_TABS:
@@ -841,6 +883,7 @@ class TestWashActivityTabs:
 
     @allure.title("WAC-TAB-003 Default active tab is 'Memberships'")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_default_active_tab_is_memberships(self, wac_page):
         active = wac_page.get_active_tab_label()
         assert "memberships" in active.lower() or active == "", (
@@ -852,6 +895,7 @@ class TestWashActivityTabs:
     @allure.title("WAC-TAB-004 Clicking tab '{tab_name}' activates it and shows its content")
     @pytest.mark.parametrize("tab_name", _TAB_SWITCHING_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_tab_switching(self, wac_page, tab_name):
         wac_page.click_tab(tab_name)
         has_active = wac_page.tab_has_active_class(tab_name)
@@ -870,6 +914,7 @@ class TestWashActivityTabs:
     )
     @pytest.mark.parametrize("tab_name", _EMPTY_TAB_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_empty_tab_clean_state(self, wac_zero_data, tab_name):
         is_empty = wac_zero_data.breakdown_is_empty(tab_name)
         assert is_empty, (
@@ -888,6 +933,7 @@ class TestWashActivityMemberships:
 
     @allure.title("WAC-MEM-001 Memberships tab shows breakdown cards for the test dataset")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_memberships_breakdown_cards_present(self, wac_page):
         # Dependency: Membership module
         wac_page.click_tab("Memberships")
@@ -906,6 +952,7 @@ class TestWashActivityMemberships:
         "WAC-MEM-002 Memberships tab shows empty state for Today (zero-data) filter"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_memberships_empty_state(self, wac_zero_data):
         assert wac_zero_data.breakdown_is_empty("Memberships"), (
             "Memberships tab should be empty for Today filter; content still visible"
@@ -916,6 +963,7 @@ class TestWashActivityMemberships:
         "WAC-MEM-004 Memberships tab count equals the Total Redemptions KPI value"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_memberships_tab_matches_total_redemptions_kpi(self, wac_page):
         # Dependency: Membership module
         wac_page.assert_tab_kpi_reconciliation("Memberships", "Total Redemptions")
@@ -952,6 +1000,7 @@ class TestWashActivityPaidWashes:
     )
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="TimeoutException in click_tab/get_tab_count intermittently on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_paid_washes_sum_matches_tab_count(self, wac_page):
         wac_page.click_tab("Paid Washes")
         tab_total = wac_page.get_tab_count("Paid Washes")
@@ -975,6 +1024,7 @@ class TestWashActivityPaidWashes:
             % (WAC_PAID_TAB_COUNT, WAC_TOTAL_PAID_KPI)
         ),
     )
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_paid_washes_tab_vs_total_paid_kpi_mismatch(self, wac_page):
         wac_page.assert_tab_kpi_reconciliation("Paid Washes", "Total Paid")
 
@@ -988,6 +1038,7 @@ class TestWashActivityCompWashes:
 
     @allure.title("WAC-CMP-001 Comp Washes tab shows breakdown cards for the test dataset")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_comp_washes_breakdown_cards_present(self, wac_page):
         # Dependency: Wash Packages / Custom Services module
         has_content = wac_page.breakdown_cards_present("Comp Washes")
@@ -1001,6 +1052,7 @@ class TestWashActivityCompWashes:
         "WAC-CMP-002 Comp Washes tab shows empty state for Today (zero-data) filter"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_comp_washes_empty_state(self, wac_zero_data):
         assert wac_zero_data.breakdown_is_empty("Comp Washes"), (
             "Comp Washes tab should be empty for Today filter; content still visible"
@@ -1011,6 +1063,7 @@ class TestWashActivityCompWashes:
         "WAC-CMP-004 Comp Washes tab count equals the Total Comp Washes KPI value"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_comp_washes_tab_matches_kpi(self, wac_page):
         # Dependency: Wash Packages / Custom Services module
         wac_page.assert_tab_kpi_reconciliation("Comp Washes", "Total Comp Washes")
@@ -1029,6 +1082,7 @@ class TestWashActivityExport:
         "(no modal — direct download)"
     )
     @pytest.mark.xfail(strict=False, reason="TimeoutException: export button not found within wait on slow staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_export_xlsx_button_visible(self, wac_page):
         assert wac_page.export_xlsx_button_visible(), (
             "Export XLSX button not found in the filter bar. "
@@ -1041,6 +1095,7 @@ class TestWashActivityExport:
     )
     @pytest.mark.regression
     @pytest.mark.xfail(strict=False, reason="StaleElementReferenceException in click_export_xlsx() intermittently on staging.")
+    @pytest.mark.xdist_group("admin-shared-site-wash_activity")
     def test_export_xlsx_initiates_download(self, wac_page):
         # Click the direct export button — no modal opens.
         wac_page.click_export_xlsx()

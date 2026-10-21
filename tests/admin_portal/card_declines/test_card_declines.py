@@ -110,6 +110,7 @@ class TestCardDeclinesNav:
 
     @pytest.mark.smoke
     @allure.title("CDL-NAV-001 Card Declines page loads at /reports/detailed/cc_declines")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_page_loads_at_correct_url(self, cdl_modal):
         url = cdl_modal.get_current_url()
         assert (
@@ -121,6 +122,7 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-NAV-002 Filter header is visible on page load without user action")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_filter_modal_auto_opens(self, cdl_modal):
         # CDL uses a persistent inline filter header, not a blocking modal dialog.
         assert cdl_modal.modal_is_open(), (
@@ -129,6 +131,7 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_modal_contains_all_controls(self, cdl_modal):
         d = cdl_modal.driver
         site_els   = d.find_elements(*CardDeclinesPage.SITE_MULTISELECT)
@@ -142,6 +145,7 @@ class TestCardDeclinesNav:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-FMD-003 Site filter is in empty default state on fresh page load")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_modal_opens_with_all_sites_default(self, cdl_modal):
         # DOM confirmed: CDL opens with placeholder "Select site to filter..." — no
         # sites are pre-selected.  (test_selecting_site_creates_chip passes with
@@ -154,6 +158,7 @@ class TestCardDeclinesNav:
 
     @pytest.mark.smoke
     @allure.title("CDL-FMD-005 Selecting a preset and applying renders the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_apply_filters_closes_modal(self, cdl_modal):
         # CDL uses an inline filter header — there is no blocking modal to close.
         # Verify that selecting a preset and applying produces visible content.
@@ -165,6 +170,7 @@ class TestCardDeclinesNav:
 
     @allure.title("CDL-FMD-006 Filter values are reflected in the page-level bar after apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_filter_values_reflected_in_page_bar(self, cdl_page):
         date_val = cdl_page.get_date_range_value()
         assert date_val, "Date range not reflected in the page-level filter bar"
@@ -172,6 +178,7 @@ class TestCardDeclinesNav:
 
     @allure.title("CDL-FMD-007 Changing the date preset from the filter header does not navigate away")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_page_bar_changes_do_not_reopen_modal(self, cdl_page):
         # CDL has no blocking modal — verify the page stays on the CDL URL
         # after a preset change from the persistent filter header.
@@ -185,6 +192,7 @@ class TestCardDeclinesNav:
 
     @allure.title("CDL-NAV-004 Page content is visible after applying filters")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_page_content_visible_after_apply(self, cdl_page):
         body = cdl_page.get_body_text()
         assert body.strip() != "", "Page body empty after applying filters"
@@ -204,6 +212,7 @@ class TestCardDeclinesSiteFilter:
         reason="CDL site dropdown indicator click is intermittent in headless Chrome — options sometimes not rendered before JS query runs.",
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_sites_dropdown_lists_active_sites(self, cdl_modal):
         options = cdl_modal.get_site_options()
         assert len(options) > 0, "Site dropdown returned no options"
@@ -213,6 +222,7 @@ class TestCardDeclinesSiteFilter:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-SIT-001 No sites are pre-selected by default on page load")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_all_sites_is_default(self, cdl_modal):
         # DOM confirmed: CDL opens with placeholder "Select site to filter..." and
         # no chips — the site filter is empty by default, same as Cash Report.
@@ -223,6 +233,7 @@ class TestCardDeclinesSiteFilter:
         assert page_has_no_broken_state(cdl_modal)
 
     @allure.title("CDL-SIT-003 Selecting a site creates a chip in the site control")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_selecting_site_creates_chip(self, cdl_modal):
         cdl_modal.clear_sites()
         cdl_modal.select_site(CDL_SITE)
@@ -234,6 +245,7 @@ class TestCardDeclinesSiteFilter:
 
     @allure.title("CDL-SIT-004 Selecting multiple sites is accepted by the control")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_multi_site_selection_accepted(self, cdl_modal):
         cdl_modal.clear_sites()
         for site in CDL_MULTI_SITES:
@@ -248,6 +260,7 @@ class TestCardDeclinesSiteFilter:
 
     @allure.title("CDL-SIT-005 Selecting a single site scopes the visible data")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_single_site_scopes_data(self, cdl_page):
         chips = cdl_page.get_site_chips()
         body  = cdl_page.get_body_text()
@@ -258,6 +271,7 @@ class TestCardDeclinesSiteFilter:
 
     @allure.title("CDL-SIT-007 Removing a site chip reduces the site selection")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_removing_chip_reduces_site_filter(self, cdl_page):
         chips_before = cdl_page.get_site_chips()
         assert chips_before, "Expected at least one chip before clearing"
@@ -271,6 +285,7 @@ class TestCardDeclinesSiteFilter:
 
     @allure.title("CDL-SIT-008 Clear all removes all site chips from the control")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_clear_all_sites(self, cdl_page):
         cdl_page.clear_sites()
         chips = cdl_page.get_site_chips()
@@ -286,6 +301,7 @@ class TestCardDeclinesSiteFilter:
         reason="CDL site dropdown indicator click is intermittent in headless Chrome — options sometimes not rendered before JS query runs.",
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_site_dropdown_uses_checkboxes(self, cdl_modal):
         cdl_modal.clear_sites()
         options = cdl_modal.get_site_options()
@@ -305,6 +321,7 @@ class TestCardDeclinesSiteFilter:
         reason="CDL site dropdown indicator click is intermittent in headless Chrome — options sometimes not rendered before JS query runs.",
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_site_dropdown_lists_multiple_sites(self, cdl_modal):
         options = cdl_modal.get_site_options()
         assert len(options) > 1, (
@@ -314,6 +331,7 @@ class TestCardDeclinesSiteFilter:
 
     @allure.title("CDL-SIT-011 Page-level site filter applies without re-opening the modal")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_page_bar_site_change_no_modal(self, cdl_page):
         cdl_page.select_site(CDL_SITE, clear_first=False)
         time.sleep(1.0)
@@ -338,6 +356,7 @@ class TestCardDeclinesSiteFilter:
         ),
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_chart_title_updates_on_site_filter(self, cdl_page):
         body = cdl_page.get_body_text()
         assert "All Sites" not in body, (
@@ -345,6 +364,7 @@ class TestCardDeclinesSiteFilter:
         )
 
     @allure.title("CDL-SIT-013 CDL_SITE is present and selectable in the site dropdown")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_cdl_site_present_in_dropdown(self, cdl_modal):
         # get_site_options() returns only initially visible rows in a virtualized dropdown
         # and may not include CDL_SITE.  Verify presence by selecting it — if the site
@@ -363,6 +383,7 @@ class TestCardDeclinesSiteFilter:
     )
     @pytest.mark.parametrize("widget_label", _WIDGET_REFRESH_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_widgets_refresh_on_site_change(self, cdl_page, widget_label):
         cdl_page.clear_sites()
         cdl_page.select_site(CDL_SITE)
@@ -383,6 +404,7 @@ class TestCardDeclinesDateFilter:
 
     @allure.title("CDL-DTE-001 Date preset dropdown lists 6 options (Today … Last month)")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_date_preset_count(self, cdl_modal):
         options = cdl_modal.get_date_preset_options()
         assert len(options) >= len(DATE_PRESETS), (
@@ -393,6 +415,7 @@ class TestCardDeclinesDateFilter:
 
     @allure.title("CDL-FMD-002 Date preset dropdown lists all expected preset options")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_date_preset_dropdown_options(self, cdl_modal):
         options = cdl_modal.get_date_preset_options()
         options_lower = [o.lower() for o in options]
@@ -404,6 +427,7 @@ class TestCardDeclinesDateFilter:
 
     @allure.title("CDL-FMD-004 Selecting a date preset auto-populates the date range field")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_selecting_preset_fills_date_range(self, cdl_modal):
         cdl_modal.select_date_preset("Last month")
         date_val = cdl_modal.get_date_range_value()
@@ -416,6 +440,7 @@ class TestCardDeclinesDateFilter:
     @allure.title("CDL-DTE-{preset} Selecting '{preset}' preset populates the date range field")
     @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_preset_populates_date_range(self, cdl_modal, preset):
         cdl_modal.select_date_preset(preset)
         try:
@@ -448,6 +473,7 @@ class TestCardDeclinesDateFilter:
 class TestCardDeclinesGlossary:
 
     @allure.title("CDL-GLS-001 Glossary section is visible on the Card Declines page")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_glossary_section_visible(self, cdl_page):
         assert cdl_page.glossary_section_visible(), (
             "Glossary section not visible on the Card Declines metrics screen"
@@ -457,6 +483,7 @@ class TestCardDeclinesGlossary:
     @allure.title("CDL-GLS-002 Glossary term '{term}' is visible in the glossary section")
     @pytest.mark.parametrize("term", _GLOSSARY_TERM_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_glossary_term_visible(self, cdl_page, term):
         assert cdl_page.glossary_term_visible(term), (
             "Glossary term '%s' not found in the page body.  "
@@ -467,6 +494,7 @@ class TestCardDeclinesGlossary:
 
     @allure.title("CDL-GLS-003 Glossary section remains visible for a zero-data date range")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_glossary_visible_for_zero_data(self, cdl_zero_data):
         body = cdl_zero_data.get_body_text()
         # Glossary is static content — it should appear regardless of data.
@@ -491,6 +519,7 @@ class TestCardDeclinesKPI:
     @pytest.mark.smoke
     @allure.title("CDL-KPI-001 KPI card '{label}' is visible with a non-empty label")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_kpi_card_visible(self, cdl_page, label):
         assert cdl_page.kpi_card_visible(label), (
             "KPI card '%s' not found on the Card Declines metrics screen.  "
@@ -501,6 +530,7 @@ class TestCardDeclinesKPI:
     @allure.title("CDL-KPI-002 At least one KPI card has a non-zero value for the test dataset")
     @pytest.mark.regression
     @pytest.mark.xfail(reason="No CC decline data on staging for last month; KPI values are zero.", strict=False)
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_kpi_values_non_zero(self, cdl_page):
         assert cdl_page.kpi_values_non_zero(), (
             "All KPI card values appear to be zero or absent for the primary dataset "
@@ -510,6 +540,7 @@ class TestCardDeclinesKPI:
 
     @allure.title("CDL-KPI-004 KPI cards show empty or zero state for a zero-data date range")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_kpi_zero_data_state(self, cdl_zero_data):
         body = cdl_zero_data.get_body_text().lower()
         has_empty = (
@@ -533,6 +564,7 @@ class TestCardDeclinesKPI:
 class TestCardDeclinesMatrix:
 
     @allure.title("CDL-MTX-001 CC Declines matrix table section is visible")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_matrix_section_visible(self, cdl_page):
         assert cdl_page.matrix_section_visible(), (
             "CC Declines matrix table not visible on the metrics screen.  "
@@ -543,6 +575,7 @@ class TestCardDeclinesMatrix:
     @allure.title("CDL-MTX-002 Matrix column '{col}' is present in the table header")
     @pytest.mark.parametrize("col", _MATRIX_COLUMN_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_matrix_column_present(self, cdl_page, col):
         # Check body text as a broad heuristic; tighten to <th> after DevTools
         # inspection confirms the matrix container class.
@@ -556,6 +589,7 @@ class TestCardDeclinesMatrix:
     @allure.title("CDL-MTX-003 CC Declines matrix has data rows for the test dataset")
     @pytest.mark.regression
     @pytest.mark.xfail(reason="No CC decline data on staging for last month; matrix shows no rows.", strict=False)
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_matrix_has_data_rows(self, cdl_page):
         assert cdl_page.matrix_has_data_rows(), (
             "CC Declines matrix table has no visible data rows for the primary dataset "
@@ -565,6 +599,7 @@ class TestCardDeclinesMatrix:
 
     @allure.title("CDL-MTX-004 CC Declines matrix has pagination controls")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_matrix_pagination_present(self, cdl_page):
         if not cdl_page.matrix_has_data_rows():
             pytest.skip("No data rows in CC Declines matrix — pagination check skipped")
@@ -603,6 +638,7 @@ class TestCardDeclinesMatrix:
 class TestCardDeclinesBestWorst:
 
     @allure.title("CDL-BWS-001 Best and Worst Sites section is visible on the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_bws_section_visible(self, cdl_page):
         assert cdl_page.bws_section_visible(), (
             "Best & Worst Sites section not visible on the Card Declines metrics screen.  "
@@ -612,6 +648,7 @@ class TestCardDeclinesBestWorst:
 
     @allure.title("CDL-BWS-002 Best sites sub-section is visible within the BWS widget")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_best_sites_visible(self, cdl_page):
         assert cdl_page.best_sites_visible(), (
             "Best sites sub-section not visible in the BWS widget"
@@ -620,6 +657,7 @@ class TestCardDeclinesBestWorst:
 
     @allure.title("CDL-BWS-003 Worst sites sub-section is visible within the BWS widget")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_worst_sites_visible(self, cdl_page):
         assert cdl_page.worst_sites_visible(), (
             "Worst sites sub-section not visible in the BWS widget"
@@ -639,6 +677,7 @@ class TestCardDeclinesBestWorst:
         ),
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_bws_excludes_defect_site(self, cdl_page):
         body = cdl_page.get_body_text()
         assert CDL_DEFECT_SITE not in body, (
@@ -655,6 +694,7 @@ class TestCardDeclinesBestWorst:
 class TestCardDeclinesDailySummary:
 
     @allure.title("CDL-TDS-001 Daily Declines Summary section is visible on the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_daily_summary_section_visible(self, cdl_page):
         assert cdl_page.daily_summary_section_visible(), (
             "Daily Declines Summary section not visible on the metrics screen.  "
@@ -664,6 +704,7 @@ class TestCardDeclinesDailySummary:
 
     @allure.title("CDL-TDS-002 Daily Declines Summary section contains expected content or data")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_daily_summary_has_content(self, cdl_page):
         body = cdl_page.get_body_text().lower()
         # Heuristic: at least one of the expected content signals is present.
@@ -688,6 +729,7 @@ class TestCardDeclinesHeatmap:
 
     @pytest.mark.smoke
     @allure.title("CDL-HMP-001 Heatmap section is visible on the Card Declines metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_heatmap_section_visible(self, cdl_page):
         assert cdl_page.heatmap_section_visible(), (
             "Heatmap section not visible on the Card Declines metrics screen.  "
@@ -705,6 +747,7 @@ class TestCardDeclinesHeatmap:
 class TestCardDeclinesReasonDist:
 
     @allure.title("CDL-DRD-001 Reason Distribution section is visible on the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-card_declines")
     def test_reason_dist_section_visible(self, cdl_page):
         assert cdl_page.reason_dist_section_visible(), (
             "Reason Distribution section not visible on the Card Declines metrics screen.  "

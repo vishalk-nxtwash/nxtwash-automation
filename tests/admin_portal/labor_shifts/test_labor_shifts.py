@@ -115,6 +115,7 @@ class TestLaborShiftsNav:
 
     @pytest.mark.smoke
     @allure.title("LAB-NAV-001 Labor & Shifts page loads at /reports/detailed/employee_labor")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_loads_at_correct_url(self, lab_modal):
         url = lab_modal.get_current_url()
         assert (
@@ -125,6 +126,7 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-NAV-002 Blocking filter modal auto-opens on page load")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_filter_modal_auto_opens(self, lab_modal):
         assert lab_modal.modal_is_open(), (
             "Blocking filter modal (Apply filters button) not visible on page load"
@@ -135,6 +137,7 @@ class TestLaborShiftsNav:
         "LAB-NAV-003 Modal contains site multiselect, date preset, "
         "date range, single-day checkbox, and Apply filters button"
     )
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_modal_contains_all_controls(self, lab_modal):
         d = lab_modal.driver
         site_els   = d.find_elements(*LaborShiftsPage.SITE_MULTISELECT)
@@ -150,6 +153,7 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-FMD-002 Site filter is in empty default state on fresh page load")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_modal_opens_with_no_site_default(self, lab_modal):
         chips = lab_modal.get_site_chips()
         assert chips == [], (
@@ -160,6 +164,7 @@ class TestLaborShiftsNav:
 
     @pytest.mark.smoke
     @allure.title("LAB-FMD-006 Applying filters closes the blocking modal")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_apply_filters_closes_modal(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.select_date_preset(LAB_DATE_PRESET)
@@ -177,6 +182,7 @@ class TestLaborShiftsNav:
 
     @allure.title("LAB-NAV-004 Page renders the full widget stack after applying filters")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_renders_widget_stack(self, lab_page):
         body = lab_page.get_body_text()
         assert body.strip(), "Page body empty after applying filters"
@@ -186,6 +192,7 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_page)
 
     @allure.title("LAB-NAV-006 Employee summary card and Commission Details block are visible")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_summary_and_commission_visible(self, lab_page):
         assert lab_page.employee_summary_visible(), (
             "Employees summary card (Total/Active/Inactive + hours) not visible"
@@ -197,6 +204,7 @@ class TestLaborShiftsNav:
 
     @allure.title("LAB-FMD-007 Filter values are reflected in the page-level filter bar after apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_filter_values_reflected_in_page_bar(self, lab_page):
         date_val = lab_page.get_date_range_value()
         assert date_val, "Date range value not visible in the page-level filter bar after apply"
@@ -204,6 +212,7 @@ class TestLaborShiftsNav:
 
     @allure.title("LAB-FMD-009 Changing the date preset from the page bar does not re-open the modal")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_level_changes_do_not_reopen_modal(self, lab_page):
         lab_page.select_date_preset("Last month")
         time.sleep(1.0)
@@ -218,6 +227,7 @@ class TestLaborShiftsNav:
 
     @allure.title("LAB-NAV-007 Sidebar highlights Labor & Shifts as the active page")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_sidebar_active_state(self, lab_page):
         active = lab_page.sidebar_labor_shifts_active()
         if not active:
@@ -242,6 +252,7 @@ class TestLaborShiftsNav:
         ),
         strict=False,
     )
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_commission_transactions_subtitle_spelling(self, lab_page):
         subtitle = lab_page.commission_subtitle_text()
         assert subtitle, "Commission Transactions subtitle element not found in page body"
@@ -260,6 +271,7 @@ class TestLaborShiftsSiteFilter:
     @allure.title(
         "LAB-FMD-001 / LAB-SIT-001 Sites dropdown lists active sites including LAB_SITE"
     )
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_sites_dropdown_lists_active_sites(self, lab_modal):
         # Dependency: Sites & Locations module
         options = lab_modal.get_site_options()
@@ -271,6 +283,7 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-003 Selecting a single site creates a chip and scopes data")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_single_site_scopes_data(self, lab_modal):
         # Dependency: Sites & Locations module
         lab_modal.select_site(LAB_SITE)
@@ -284,6 +297,7 @@ class TestLaborShiftsSiteFilter:
         "LAB-SIT-004 Selecting 5 sites aggregates labor and commission data across sites"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_multi_site_aggregation(self, lab_modal):
         # Dependency: Sites & Locations module
         # TODO: verify LAB_MULTI_SITES_5 names via DevTools on first run
@@ -308,6 +322,7 @@ class TestLaborShiftsSiteFilter:
         "LAB-SIT-005 Selecting 5 sites renders 2 visible chips and a '+3' overflow indicator"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_multi_site_shows_chips_with_overflow(self, lab_modal):
         # TODO: verify LAB_MULTI_SITES_5 names via DevTools on first run
         for site in LAB_MULTI_SITES_5:
@@ -334,6 +349,7 @@ class TestLaborShiftsSiteFilter:
         "LAB-SIT-007 Previously selected site appears highlighted in the open dropdown"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_selected_option_highlighted_in_dropdown(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         # Re-open the dropdown to verify the selected option is visually marked
@@ -368,6 +384,7 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-008 Clicking a selected option de-selects it and removes the chip")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_deselecting_site_removes_chip(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         chips_before = lab_modal.get_site_chips()
@@ -416,6 +433,7 @@ class TestLaborShiftsSiteFilter:
         "X control clears all chips; clearing returns to empty state"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_chip_x_clear_returns_empty_state(self, lab_page):
         chips_before = lab_page.get_site_chips()
         assert chips_before, "Need at least one chip to test removal"
@@ -435,6 +453,7 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-011 Site dropdown container is scrollable with many options")
     @pytest.mark.extended
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_site_dropdown_scrollable(self, lab_modal):
         options = lab_modal.get_site_options()
         assert len(options) > 3, (
@@ -457,6 +476,7 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-012 Changing the site from the page-level bar refreshes without Apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_level_site_refresh(self, lab_page):
         # Dependency: Sites & Locations module
         lab_page.clear_sites()
@@ -472,6 +492,7 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-013 Deactivated sites do not appear in the site dropdown options")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_deactivated_sites_absent(self, lab_modal):
         # Dependency: Sites & Locations module — a deactivated site must exist in the
         # test environment for this assertion to be meaningful.
@@ -511,6 +532,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-FMD-004 Selecting a preset auto-populates the date range field")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_selecting_preset_fills_date_range(self, lab_modal):
         lab_modal.select_date_preset("Last month")
         date_val = lab_modal.get_date_range_value()
@@ -522,6 +544,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-001 Page-level date preset dropdown matches modal preset options")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_level_preset_matches_modal(self, lab_page):
         # After apply, the page-level filter bar should expose the same preset options.
         options = lab_page.get_date_preset_options()
@@ -540,6 +563,7 @@ class TestLaborShiftsDateFilter:
     @allure.title("LAB-DTE-{preset} Selecting '{preset}' preset populates the date range field")
     @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_preset_populates_date_range(self, lab_modal, preset):
         # TODO: confirm week-start convention (Sun vs Mon) — not confirmed for Labor & Shifts.
         # Wash Activity also unconfirmed. Transactions = Monday, Revenue Overview/Redemptions = Sunday.
@@ -567,6 +591,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-008 Clicking the date range field opens the dual-month calendar picker")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_calendar_opens_on_date_click(self, lab_modal):
         lab_modal.click_date_range_input()
         calendar_visible = lab_modal.calendar_picker_visible()
@@ -582,6 +607,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-010 Entering a custom start/end date updates the filter and refreshes data")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_custom_date_range_updates(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.select_date_preset("Custom")
@@ -602,6 +628,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-014 Single-day mode renders a single-date report after apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_single_day_mode_renders_report(self, lab_single_day):
         lab_single_day.select_date_preset("Today")
         try:
@@ -626,6 +653,7 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-015 Unchecking Single day reverts the date field to range mode")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_uncheck_single_day_reverts_to_range(self, lab_single_day):
         assert lab_single_day.modal_single_day_is_checked(), (
             "Single day checkbox not checked in lab_single_day fixture"
@@ -652,6 +680,7 @@ class TestLaborShiftsDateFilter:
         "LAB-DTE-017 Custom single-day range renders a correctly scoped single-date report"
     )
     @pytest.mark.extended
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_single_day_custom_range_renders(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.check_modal_single_day()
@@ -675,6 +704,7 @@ class TestLaborShiftsDateFilter:
         "LAB-DTE-018 A date range spanning a month boundary renders without errors"
     )
     @pytest.mark.extended
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_range_spanning_month_boundary_renders(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.select_date_preset("Custom")
@@ -703,6 +733,7 @@ class TestLaborShiftsKPI:
     @pytest.mark.smoke
     @allure.title("LAB-KPI-001 KPI widget '{label}' is visible on the metrics screen")
     @pytest.mark.parametrize("label", _KPI_CARD_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_kpi_card_visible(self, lab_page, label):
         assert lab_page.kpi_card_visible(label), (
             "KPI widget '%s' not found on the Labor & Shifts metrics screen. "
@@ -715,6 +746,7 @@ class TestLaborShiftsKPI:
         "and Total hours"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employees_summary_card_content(self, lab_page):
         assert lab_page.employee_summary_visible(), (
             "Employees summary card (Total / Active / Inactive + Total hours) "
@@ -731,6 +763,7 @@ class TestLaborShiftsKPI:
         "LAB-KPI-003 All metrics show 0 / $0.00 / 0h 0m when no data exists for the period"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_all_metrics_zero_with_no_data(self, lab_zero_data):
         # lab_zero_data: LAB_SITE + Today — shared by LAB-KPI-003, LAB-EMP-002, LAB-CSM-002
         assert lab_zero_data.all_kpis_zero_or_empty(), (
@@ -744,6 +777,7 @@ class TestLaborShiftsKPI:
         "All metric widgets update when the site filter is changed"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_widgets_refresh_on_site_change(self, lab_page):
         # Combined refresh assertion — change site and verify all widget groups update.
         lab_page.clear_sites()
@@ -768,6 +802,7 @@ class TestLaborShiftsKPI:
         "All metric widgets update immediately when the date preset is changed"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_widgets_refresh_on_date_change(self, lab_page):
         lab_page.select_date_preset("Last month")
         time.sleep(2.0)
@@ -789,10 +824,10 @@ class TestLaborShiftsKPI:
         "LAB-KPI-009 Total employees = Active employees + Inactive employees"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_count_reconciliation(self, lab_page):
-        total    = lab_page.get_employee_summary_count("Total")
-        active   = lab_page.get_employee_summary_count("Active")
-        inactive = lab_page.get_employee_summary_count("Inactive")
+        counts = lab_page.get_employee_summary_counts()
+        total, active, inactive = counts["Total"], counts["Active"], counts["Inactive"]
         if total is None or active is None or inactive is None:
             pytest.skip(
                 "Could not parse Total/Active/Inactive counts from Employees summary card. "
@@ -816,6 +851,7 @@ class TestLaborShiftsKPI:
         "LAB-KPI-012 Employees summary card count matches Employee table row count"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_summary_matches_table_count(self, lab_page):
         # LAB-EMP-003 is the mirror defect — employee table shows 0 rows despite summary
         # reporting 1 active. Automation=No in sheet for both; included as xfail.
@@ -830,6 +866,7 @@ class TestLaborShiftsKPI:
 
     @allure.title("LAB-KPI-013 Total hours value is formatted as 'Xh Ym' in the summary card")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_total_hours_format(self, lab_page):
         assert lab_page.hours_format_present(), (
             "Total hours not in expected 'Xh Ym' format in page body. "
@@ -841,6 +878,7 @@ class TestLaborShiftsKPI:
         "LAB-KPI-014 Currency values use $X.XX format and percentages use X.XX% format"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_currency_and_percentage_format(self, lab_page):
         assert lab_page.kpi_currency_format_ok(), (
             "No $X.XX currency value found in page body"
@@ -875,6 +913,7 @@ class TestLaborShiftsEmployeeTable:
 
     @allure.title("LAB-EMP-001 Employee table column '{col}' is present in the table header")
     @pytest.mark.parametrize("col", _EMP_COLUMN_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_table_column_present(self, lab_page, col):
         body = lab_page.get_body_text()
         assert col in body, (
@@ -888,6 +927,7 @@ class TestLaborShiftsEmployeeTable:
         "when no data exists for the period"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_table_empty_state(self, lab_zero_data):
         # lab_zero_data shared with LAB-KPI-003 and LAB-CSM-002
         assert lab_zero_data.employee_table_empty_state_visible(), (
@@ -911,6 +951,7 @@ class TestLaborShiftsEmployeeTable:
 
     @allure.title("LAB-EMP-004 Searching by employee name filters the table to matching rows")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_search_filters_table(self, lab_page):
         # Structural isolation: only interact with EMPLOYEE_SEARCH in this class
         rows_before = lab_page.get_employee_table_row_count()
@@ -932,6 +973,7 @@ class TestLaborShiftsEmployeeTable:
         % LAB_SEARCH_NO_MATCH
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_search_no_match(self, lab_page):
         # Structural isolation: only interact with EMPLOYEE_SEARCH in this class
         lab_page.search_employee_table(LAB_SEARCH_NO_MATCH)
@@ -949,6 +991,7 @@ class TestLaborShiftsEmployeeTable:
     )
     @pytest.mark.parametrize("status", _EMP_STATUS_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_employee_status_filter(self, lab_page, status):
         lab_page.select_employee_status_filter(status)
         time.sleep(1.0)
@@ -984,6 +1027,7 @@ class TestLaborShiftsCommissionCards:
 
     @pytest.mark.smoke
     @allure.title("LAB-CSM-001 All four commission cards are visible on the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_four_commission_cards_visible(self, lab_page):
         for label in COMMISSION_CARDS:
             assert lab_page.commission_card_visible(label), (
@@ -996,6 +1040,7 @@ class TestLaborShiftsCommissionCards:
         "LAB-CSM-002 All commission cards show $0.00 when no data exists for the period"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_commission_cards_zero_with_no_data(self, lab_zero_data):
         # lab_zero_data shared with LAB-KPI-003 and LAB-EMP-002
         assert lab_zero_data.commission_cards_all_zero(), (
@@ -1006,6 +1051,7 @@ class TestLaborShiftsCommissionCards:
 
     @allure.title("LAB-CSM-003 Commission cards update when the filter is changed")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_commission_cards_update_on_filter_change(self, lab_page):
         before_total = lab_page.get_commission_card_value("Total Commission")
         lab_page.select_date_preset("Last month")
@@ -1022,6 +1068,7 @@ class TestLaborShiftsCommissionCards:
 
     @allure.title("LAB-CSM-006 Commission card values use $X.XX currency format")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_commission_card_currency_format(self, lab_page):
         for label in COMMISSION_CARDS:
             assert lab_page.commission_card_format_ok(label), (
@@ -1036,6 +1083,7 @@ class TestLaborShiftsCommissionCards:
         "Retail card = Retail Sale rows, component cards sum to Total"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_commission_reconciliation_chain(self, lab_page):
         """Three-step commission reconciliation (assert_commission_reconciliation).
 
@@ -1071,6 +1119,7 @@ class TestLaborShiftsCommissionTransactions:
         "LAB-CTX-001 Commission Transactions column '{col}' is present in the table header"
     )
     @pytest.mark.parametrize("col", _CTX_COLUMN_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_ctx_table_column_present(self, lab_page, col):
         body = lab_page.get_body_text()
         assert col in body, (
@@ -1084,6 +1133,7 @@ class TestLaborShiftsCommissionTransactions:
         "for the test dataset"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_ctx_table_has_rows(self, lab_page):
         assert lab_page.ctx_table_visible(), (
             "Commission Transactions table not visible on the metrics screen"
@@ -1105,6 +1155,7 @@ class TestLaborShiftsCommissionTransactions:
         "when no data exists for the period"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_ctx_table_empty_state(self, lab_zero_data):
         assert lab_zero_data.ctx_table_empty_state_visible(), (
             "Commission Transactions table does not show empty state for Today; "
@@ -1116,6 +1167,7 @@ class TestLaborShiftsCommissionTransactions:
         "LAB-CTX-004 Searching by employee name filters the Commission Transactions table"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_ctx_search_filters_table(self, lab_page):
         # Structural isolation: only interact with CTX_SEARCH in this class
         rows_before = lab_page.get_ctx_table_row_count()
@@ -1133,6 +1185,7 @@ class TestLaborShiftsCommissionTransactions:
         "LAB-CTX-006 Type column in Commission Transactions reflects the transaction type"
     )
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_ctx_type_column_has_values(self, lab_page):
         row_count = lab_page.get_ctx_table_row_count()
         if row_count == 0:
@@ -1171,6 +1224,7 @@ class TestLaborShiftsPagination:
     )
     @pytest.mark.parametrize("table_locator,tc_id", _PAGINATION_TABLE_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_table_pagination_controls_present(self, lab_page, table_locator, tc_id):
         visible = lab_page.assert_pagination_controls(table_locator)
         if not visible:

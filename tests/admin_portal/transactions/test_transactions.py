@@ -107,21 +107,25 @@ class TestTransactionsNav:
 
     @pytest.mark.smoke
     @allure.title("TRN-NAV-001 Page loads at /transactions/report")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_page_loads_at_expected_url(self, trn_page):
         assert "/transactions/report" in trn_page.driver.current_url
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-002 Page title is 'Transactions Report'")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_page_title_visible(self, trn_page):
         assert trn_page.page_title_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-003 Export icon is visible in the header")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_export_icon_visible(self, trn_page):
         assert trn_page.export_icon_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-NAV-004 'Filter by' button is visible")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_filter_by_button_visible(self, trn_page):
         assert trn_page.filter_by_button_is_visible()
         assert page_has_no_broken_state(trn_page)
@@ -136,6 +140,7 @@ class TestTransactionsTable:
 
     @allure.title("TRN-TBL-001 Column present in table header: {col}")
     @pytest.mark.parametrize("col", _COLUMN_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_column_header_present(self, col, trn_page):
         headers = trn_page.get_table_headers()
         assert col in headers, f"Expected column '{col}' not found in {headers}"
@@ -147,6 +152,7 @@ class TestTransactionsTable:
         reason="TRN-TBL-002: 'Last month' preset returns 0 rows on staging — "
                "date preset locator or staging data gap. Deferred.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_table_has_rows(self, trn_page):
         assert trn_page.get_table_row_count() > 0
         assert page_has_no_broken_state(trn_page)
@@ -159,18 +165,21 @@ class TestTransactionsTable:
                "date preset locator or staging data gap. Deferred. An empty "
                "table has no data wide enough to overflow horizontally.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_table_has_horizontal_scroll(self, trn_page):
         assert trn_page.has_horizontal_scroll()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-TBL-004 Pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_pagination_present(self, trn_page):
         assert trn_page.has_pagination()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-TBL-005 Record count is displayed")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_record_count_displayed(self, trn_page):
         count_text = trn_page.get_record_count_text()
         assert count_text != "", "Record count label not found on page"
@@ -182,6 +191,7 @@ class TestTransactionsTable:
         strict=False,
         reason="TRN-TBL-006: cascades from empty table (TRN-TBL-002). Deferred.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_invoice_number_is_link(self, trn_page):
         assert trn_page.first_row_has_invoice_link()
         assert page_has_no_broken_state(trn_page)
@@ -192,11 +202,13 @@ class TestTransactionsTable:
         strict=False,
         reason="TRN-TBL-007: cascades from empty table (TRN-TBL-002). Deferred.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_full_info_link_present(self, trn_page):
         assert trn_page.first_row_has_full_info_link()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-TBL-010 Default date preset is 'Today' on fresh page load")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_default_date_preset_is_today(self, browser):
         # Must use fresh navigation — trn_page applies a filter before the test runs.
         open_admin_path(browser, "/transactions/report")
@@ -234,6 +246,7 @@ class TestTransactionsRowInteraction:
         strict=False,
         reason="TRN-SEL-002/TRN-TBL-008: cascades from empty table (TRN-TBL-002). Deferred.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_navigation_to_detail_page(self, link_type, trn_page):
         """TRN-SEL-002 (invoice_link) / TRN-TBL-008 (full_info_link)."""
         if link_type == "invoice_link":
@@ -256,12 +269,14 @@ class TestTransactionsExport:
 
     @pytest.mark.smoke
     @allure.title("TRN-EXP-001 Export icon opens the export modal")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_export_modal_opens(self, trn_page):
         trn_page.open_export_modal()
         assert trn_page.export_modal_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-EXP-002a Format selector defaults to XLSX")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_export_format_selector(self, trn_page):
         trn_page.open_export_modal()
         formats = trn_page.get_export_format_labels()
@@ -318,6 +333,7 @@ class TestTransactionsExport:
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-EXP-010 Export button is present in the export modal")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_export_button_present(self, trn_page):
         trn_page.open_export_modal()
         assert trn_page.export_button_is_visible()
@@ -333,12 +349,14 @@ class TestTransactionsFilterPanel:
 
     @pytest.mark.smoke
     @allure.title("TRN-FLT-001 'Filter by' button opens the filter panel")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_filter_panel_opens(self, trn_page):
         trn_page.open_filter_panel()
         assert trn_page.filter_panel_is_visible()
         assert page_has_no_broken_state(trn_page)
 
     @allure.title("TRN-FLT-002 Filter panel contains Quick Filters row and FILTERS tab strip")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_filter_panel_structure(self, trn_filter_panel):
         quick_labels = trn_filter_panel.get_quick_filter_labels()
         tab_labels   = trn_filter_panel.get_filter_tab_labels()
@@ -349,6 +367,7 @@ class TestTransactionsFilterPanel:
     @allure.title("TRN-FLT-003 Filter tab present in FILTERS strip: {tab}")
     @pytest.mark.regression
     @pytest.mark.parametrize("tab", _TAB_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_filter_tab_present(self, tab, trn_filter_panel):
         tab_labels = trn_filter_panel.get_filter_tab_labels()
         assert tab in tab_labels, (
@@ -358,6 +377,7 @@ class TestTransactionsFilterPanel:
 
     @allure.title("TRN-FLT-004 Apply filters button is visible inside the filter panel")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_apply_filters_button_visible(self, trn_filter_panel):
         from selenium.webdriver.common.by import By
         els = trn_filter_panel.driver.find_elements(*trn_filter_panel.APPLY_FILTERS_BTN)
@@ -366,6 +386,7 @@ class TestTransactionsFilterPanel:
 
     @allure.title("TRN-FLT-005 Live Results count updates before clicking Apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_live_results_count_updates(self, trn_filter_panel):
         """3-step: note default count → select a filter → count changes → apply → table matches."""
         initial_count = trn_filter_panel.get_results_count()
@@ -389,6 +410,7 @@ class TestTransactionsFilterPanel:
 
     @allure.title("TRN-FLT-006 Applying filters closes panel and updates table")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_apply_filters_closes_panel_and_updates(self, trn_filter_panel):
         trn_filter_panel.click_filter_tab("Date & Location")
         import time
@@ -406,6 +428,7 @@ class TestTransactionsFilterPanel:
         reason="TRN-FLT-007: reset_panel_filters locator or quick-filter label "
                "detection unverified in CI. Deferred.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_reset_filters_clears_selections(self, trn_filter_panel):
         # Select a quick filter to create a non-default state.
         trn_filter_panel.click_quick_filter("Today")
@@ -422,6 +445,7 @@ class TestTransactionsFilterPanel:
 
     @allure.title("TRN-FLT-008 X button closes panel without applying filters")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_x_button_closes_panel_without_applying(self, trn_filter_panel):
         # Make a filter change without applying.
         trn_filter_panel.click_quick_filter("Today")
@@ -437,6 +461,7 @@ class TestTransactionsFilterPanel:
 
     @allure.title("TRN-FLT-010 Filter panel can be reopened after closing")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_filter_panel_can_be_reopened(self, trn_filter_panel):
         trn_filter_panel.close_filter_panel()
         assert not trn_filter_panel.filter_panel_is_visible()
@@ -456,6 +481,7 @@ class TestTransactionsQuickFilters:
     @allure.title("Quick filter changes active preset and updates Results count: {label}")
     @pytest.mark.regression
     @pytest.mark.parametrize("label", _QUICK_FILTER_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_quick_filter_updates_state(self, label, trn_filter_panel):
         """TRN-QCK-001 (Today) / TRN-QCK-002 (This week) / TRN-QCK-003 (This month).
         TRN-QCK-008: combined — Results count is captured before and after clicking
@@ -485,12 +511,14 @@ class TestTransactionsQuickFilters:
 class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-001 Date & Location tab opens without error")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_date_location_tab_opens(self, trn_date_location):
         assert page_has_no_broken_state(trn_date_location)
 
     @allure.title("TRN-DLC-002 Date preset option is present: {preset}")
     @pytest.mark.regression
     @pytest.mark.parametrize("preset", _PRESET_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_date_preset_option_present(self, preset, trn_date_location):
         labels = trn_date_location.get_date_preset_labels()
         assert preset in labels, (
@@ -500,6 +528,7 @@ class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-003 Site multi-select is present in Date & Location tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_site_multiselect_present(self, trn_date_location):
         from selenium.webdriver.common.by import By
         els = trn_date_location.driver.find_elements(By.XPATH,
@@ -515,6 +544,7 @@ class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-004 Custom date range input is present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_custom_date_range_input_present(self, trn_date_location):
         from selenium.webdriver.common.by import By
         els = trn_date_location.driver.find_elements(By.XPATH,
@@ -527,6 +557,7 @@ class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-005 Selecting a single site scopes the result set")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_selecting_site_scopes_data(self, trn_filter_panel):
         # Navigate to Date & Location and select one site, then apply.
         trn_filter_panel.click_filter_tab("Date & Location")
@@ -538,6 +569,7 @@ class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-006 Week-start for 'This week' preset is Monday (not Sunday)")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_this_week_starts_on_monday(self, trn_date_location):
         """Confirmed: Transactions uses Monday-first week (differs from CDL/RDM)."""
         import datetime
@@ -553,6 +585,7 @@ class TestTransactionsDateLocation:
 
     @allure.title("TRN-DLC-007 Selecting 2+ sites shows overflow chip (e.g. '+1')")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_multi_site_shows_overflow_chip(self, trn_date_location):
         # TODO: Add site selection calls once site locator is confirmed via DevTools.
         # For now assert page integrity.
@@ -561,6 +594,7 @@ class TestTransactionsDateLocation:
     @allure.title("Lane filter state with {scenario}: enabled={expected_enabled}")
     @pytest.mark.regression
     @pytest.mark.parametrize("scenario,expected_enabled", _LANE_STATE_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_lane_filter_state(self, scenario, expected_enabled, trn_date_location):
         """TRN-DLC-008 (multi_site → lane disabled) / TRN-DLC-009 (single_site → lane enabled)."""
         # TODO: Add site selection calls once site locator is confirmed via DevTools.
@@ -585,11 +619,13 @@ class TestTransactionsDateLocation:
 class TestTransactionsTransactionFilter:
 
     @allure.title("TRN-TXN-001 Transaction tab opens without error")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_transaction_tab_opens(self, trn_transaction_filter):
         assert page_has_no_broken_state(trn_transaction_filter)
 
     @allure.title("TRN-TXN-002 Category dropdown is present in Transaction tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_category_dropdown_present(self, trn_transaction_filter):
         from selenium.webdriver.common.by import By
         els = trn_transaction_filter.driver.find_elements(By.XPATH,
@@ -605,6 +641,7 @@ class TestTransactionsTransactionFilter:
 
     @allure.title("TRN-TXN-003 Services dropdown is present in Transaction tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_services_dropdown_present(self, trn_transaction_filter):
         from selenium.webdriver.common.by import By
         els = trn_transaction_filter.driver.find_elements(By.XPATH,
@@ -620,6 +657,7 @@ class TestTransactionsTransactionFilter:
 
     @allure.title("TRN-TXN-005 Sale Type dropdown is present in Transaction tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_sale_type_dropdown_present(self, trn_transaction_filter):
         from selenium.webdriver.common.by import By
         els = trn_transaction_filter.driver.find_elements(By.XPATH,
@@ -636,6 +674,7 @@ class TestTransactionsTransactionFilter:
     @allure.title("TRN-TXN-006 Sale type option present: {sale_type}")
     @pytest.mark.regression
     @pytest.mark.parametrize("sale_type", _SALE_TYPE_PARAMS)
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_sale_type_option_present(self, sale_type, trn_transaction_filter):
         """Sale Type options include the four known values.
 
@@ -646,6 +685,7 @@ class TestTransactionsTransactionFilter:
 
     @allure.title("TRN-TXN-008 Transaction source dropdown is present in Transaction tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_transaction_source_dropdown_present(self, trn_transaction_filter):
         from selenium.webdriver.common.by import By
         els = trn_transaction_filter.driver.find_elements(By.XPATH,
@@ -669,11 +709,13 @@ class TestTransactionsTransactionFilter:
 class TestTransactionsPaymentFilter:
 
     @allure.title("TRN-PAY-001 Payment tab opens without error")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_payment_tab_opens(self, trn_payment_filter):
         assert page_has_no_broken_state(trn_payment_filter)
 
     @allure.title("TRN-PAY-002 Payment method dropdown is present in Payment tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_payment_method_dropdown_present(self, trn_payment_filter):
         from selenium.webdriver.common.by import By
         els = trn_payment_filter.driver.find_elements(By.XPATH,
@@ -690,6 +732,7 @@ class TestTransactionsPaymentFilter:
 
     @allure.title("TRN-PAY-003 CC type dropdown is present in Payment tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_cc_type_dropdown_present(self, trn_payment_filter):
         from selenium.webdriver.common.by import By
         els = trn_payment_filter.driver.find_elements(By.XPATH,
@@ -707,6 +750,7 @@ class TestTransactionsPaymentFilter:
 
     @allure.title("TRN-PAY-004a Payment status multi-select is present in Payment tab")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_payment_status_multiselect_present(self, trn_payment_filter):
         from selenium.webdriver.common.by import By
         els = trn_payment_filter.driver.find_elements(By.XPATH,
@@ -732,6 +776,7 @@ class TestTransactionsDetailPage:
 
     @pytest.mark.smoke
     @allure.title("TRN-DTL-001 Detail page loads for invoice 10276")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_detail_page_loads(self, trn_detail_page):
         assert "transactions_log" in trn_detail_page.driver.current_url or \
                TRN_DETAIL_INTERNAL_ID in trn_detail_page.driver.current_url, (
@@ -740,6 +785,7 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-002 'Transaction details' panel is visible")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_transaction_details_panel_visible(self, trn_detail_page):
         headings = trn_detail_page.get_detail_panel_headings()
         assert any("transaction" in h.lower() for h in headings), (
@@ -748,6 +794,7 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-003 'Car details' section is visible")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_car_details_panel_visible(self, trn_detail_page):
         body = trn_detail_page.get_detail_page_text()
         assert "Car details" in body or "car details" in body.lower(), (
@@ -756,6 +803,7 @@ class TestTransactionsDetailPage:
         assert page_has_no_broken_state(trn_detail_page)
 
     @allure.title("TRN-DTL-004 'Customer' section is visible")
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_customer_panel_visible(self, trn_detail_page):
         body = trn_detail_page.get_detail_page_text()
         assert "Customer" in body, (
@@ -765,6 +813,7 @@ class TestTransactionsDetailPage:
 
     @allure.title("TRN-DTL-005 Customer name on detail page matches test record")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_customer_name_matches(self, trn_detail_page):
         body = trn_detail_page.get_body_text()
         assert TRN_DETAIL_CUSTOMER in body, (
@@ -773,6 +822,7 @@ class TestTransactionsDetailPage:
 
     @allure.title("TRN-DTL-006 Invoice number on detail page matches TRN_DETAIL_INVOICE")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_invoice_number_matches(self, trn_detail_page):
         body = trn_detail_page.get_body_text()
         assert TRN_DETAIL_INVOICE in body, (
@@ -781,6 +831,7 @@ class TestTransactionsDetailPage:
 
     @allure.title("TRN-DTL-007 'Service used' table is visible on detail page")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_service_table_visible(self, trn_detail_page):
         assert trn_detail_page.detail_service_table_is_visible()
         assert page_has_no_broken_state(trn_detail_page)
@@ -792,6 +843,7 @@ class TestTransactionsDetailPage:
         reason="Known defect: payment type field displays 'CreditCard **** null' instead of "
                "the actual card details.  Passes once defect is fixed in backend.",
     )
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_payment_type_not_null(self, trn_detail_page):
         body = trn_detail_page.get_body_text()
         assert "null" not in body.lower(), \
@@ -799,6 +851,7 @@ class TestTransactionsDetailPage:
 
     @allure.title("TRN-DTL-009 Action buttons are present on detail page")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_action_buttons_present(self, trn_detail_page):
         buttons = trn_detail_page.get_detail_action_button_labels()
         assert len(buttons) > 0, "No action buttons found on detail page"
@@ -806,6 +859,7 @@ class TestTransactionsDetailPage:
 
     @allure.title("TRN-DTL-016 Navigating back from detail page returns to Transactions Report")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-transactions")
     def test_back_navigation_from_detail(self, trn_detail_page):
         trn_detail_page.click_back_from_detail()
         assert "/transactions/report" in trn_detail_page.driver.current_url or \

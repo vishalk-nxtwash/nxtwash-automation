@@ -101,6 +101,7 @@ _EXPECTED_DATE_PRESETS = DATE_PRESETS  # reuse shared constant
 @pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("GSR-NAV-001 General Sales Report page loads at /general-sales-report")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gsr_page_loads(gsr_page):
     assert "general-sales-report" in gsr_page.get_current_url().lower()
     assert page_has_no_broken_state(gsr_page)
@@ -108,6 +109,7 @@ def test_gsr_page_loads(gsr_page):
 
 @allure.story("Navigation")
 @allure.title("GSR-NAV-002 Page loads with default filter state: All Sites and Today's date")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_default_filter_state(gsr_page):
     body = gsr_page.get_body_text()
     assert (
@@ -122,6 +124,7 @@ def test_default_filter_state(gsr_page):
 @pytest.mark.smoke
 @allure.story("Navigation")
 @allure.title("GSR-NAV-003 All report sections present on page load")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_all_report_sections_present(gsr_page):
     body = gsr_page.get_body_text()
     missing = [kw for kw in _EXPECTED_SECTIONS if kw.lower() not in body.lower()]
@@ -136,6 +139,7 @@ def test_all_report_sections_present(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-001 Sites/Locations dropdown lists all configured sites")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_site_dropdown_lists_sites(gsr_page):
     # Dependency: Sites & Locations module
     options = gsr_page.get_site_options()
@@ -148,6 +152,7 @@ def test_site_dropdown_lists_sites(gsr_page):
 
 @allure.story("Filters")
 @allure.title("GSR-FLT-002 Selecting single site filters all report sections")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_single_site_filter(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -162,6 +167,7 @@ def test_single_site_filter(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-003 Selecting multiple sites filters to combined data")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_multiple_sites_filter(gsr_page):
     # Dependency: Sites & Locations module
     # Select the known site; additional sites are environment-dependent.
@@ -177,6 +183,7 @@ def test_multiple_sites_filter(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-004 'All Sites' returns aggregated data across every site")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_all_sites_filter(gsr_page):
     gsr_page.apply_filters()
     body = gsr_page.get_body_text()
@@ -189,6 +196,7 @@ def test_all_sites_filter(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-005 Clearing selected site chips reverts to All Sites")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_clearing_site_reverts_to_all(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -205,6 +213,7 @@ def test_clearing_site_reverts_to_all(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-006 Predefined date range dropdown shows all six options")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_date_preset_dropdown_shows_options(gsr_page):
     options = gsr_page.get_date_preset_options()
     options_lower = [o.lower() for o in options]
@@ -219,6 +228,7 @@ def test_date_preset_dropdown_shows_options(gsr_page):
 @allure.title("GSR-FLT-007..012 Selecting date preset auto-populates date range field")
 @pytest.mark.regression
 @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_date_preset_updates_range(gsr_page, preset):
     start_date, _ = _date_range_for_preset(preset)
     gsr_page.select_date_preset(preset)
@@ -236,6 +246,7 @@ def test_date_preset_updates_range(gsr_page, preset):
 @allure.story("Filters")
 @allure.title("GSR-FLT-013 Custom date range picker opens dual calendar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_custom_date_range_picker_opens(gsr_page):
     # Confirmed: single input (placeholder='Select date range') opens react-day-picker
     from selenium.webdriver.common.by import By
@@ -257,6 +268,7 @@ def test_custom_date_range_picker_opens(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-014 Custom date range updates field and applies to all data")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_custom_date_range_applies(gsr_page):
     gsr_page.enter_custom_date_range(GSR_DATE_START, GSR_DATE_END)
     gsr_page.apply_filters()
@@ -270,6 +282,7 @@ def test_custom_date_range_applies(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-015 Custom range selection clears predefined selection")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_custom_range_clears_preset(gsr_page):
     gsr_page.select_date_preset("Last month")
     gsr_page.enter_custom_date_range(GSR_DATE_START, GSR_DATE_END)
@@ -280,6 +293,7 @@ def test_custom_range_clears_preset(gsr_page):
 @pytest.mark.smoke
 @allure.story("Filters")
 @allure.title("GSR-FLT-016 'Apply filters' refreshes all report sections")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_apply_filters_refreshes_data(gsr_page):
     # Dependency: Sites & Locations module
     gsr_page.select_site(GSR_SITE)
@@ -294,6 +308,7 @@ def test_apply_filters_refreshes_data(gsr_page):
 @allure.story("Filters")
 @allure.title("GSR-FLT-017 Re-applying same filter returns identical data")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_reapply_same_filter_identical(gsr_filtered):
     gsr_filtered.apply_filters()
     body = gsr_filtered.get_body_text()
@@ -310,6 +325,7 @@ def test_reapply_same_filter_identical(gsr_filtered):
 @pytest.mark.smoke
 @allure.story("Revenue")
 @allure.title("GSR-REV-001 Four revenue cards displayed correctly")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_four_revenue_cards_displayed(gsr_page):
     body = gsr_page.get_body_text()
     expected_cards = [
@@ -327,6 +343,7 @@ def test_four_revenue_cards_displayed(gsr_page):
 @allure.title("GSR-REV-002..005 Revenue card shows expected number of line items")
 @pytest.mark.regression
 @pytest.mark.parametrize("card_title,min_items", _REVENUE_CARD_PARAMS)
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_revenue_card_line_items(gsr_filtered, card_title, min_items):
     body = gsr_filtered.get_body_text()
     assert card_title.lower() in body.lower(), (
@@ -342,6 +359,7 @@ def test_revenue_card_line_items(gsr_filtered, card_title, min_items):
 @allure.story("Revenue")
 @allure.title("GSR-REV-007 Revenue cards show $0.00 when no transactions exist")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_zero_data_revenue_cards(zero_data_filter):
     body = zero_data_filter.get_body_text()
     assert (
@@ -355,6 +373,7 @@ def test_zero_data_revenue_cards(zero_data_filter):
 @allure.story("Revenue")
 @allure.title("GSR-REV-008 Revenue cards update when site or date filter changes")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_revenue_cards_update_on_filter_change(gsr_filtered):
     gsr_filtered.select_date_preset("Today")
     gsr_filtered.apply_filters()
@@ -378,6 +397,7 @@ def test_revenue_cards_update_on_filter_change(gsr_filtered):
 @allure.story("Redemptions Overview")
 @allure.title("GSR-RDM-001 Redemptions Overview displays total and count")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_redemptions_overview_displayed(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Redemption" in body, "Redemptions Overview section not visible"
@@ -387,6 +407,7 @@ def test_redemptions_overview_displayed(gsr_filtered):
 @allure.story("Redemptions Overview")
 @allure.title("GSR-RDM-002 'Full report' link navigates to Redemption Details page")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_redemptions_full_report_link(gsr_page):
     # Dependency: Redemption Details page
     from selenium.webdriver.support import expected_conditions as _EC
@@ -412,6 +433,7 @@ def test_redemptions_full_report_link(gsr_page):
 @allure.story("Redemptions Overview")
 @allure.title("GSR-RDM-003 Redemptions count and amount update on filter change")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_redemptions_update_on_filter_change(gsr_filtered):
     gsr_filtered.select_date_preset("Today")
     gsr_filtered.apply_filters()
@@ -428,6 +450,7 @@ def test_redemptions_update_on_filter_change(gsr_filtered):
 
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-001 Multi-Site Comparison table visible with twelve columns")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_multi_site_comparison_visible(gsr_page):
     body = gsr_page.get_body_text()
     assert (
@@ -441,6 +464,7 @@ def test_multi_site_comparison_visible(gsr_page):
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-002 Table shows one row per site plus Total row")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_multi_site_shows_site_rows(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Total" in body, "Total row not visible in Multi-Site Comparison table"
@@ -453,6 +477,7 @@ def test_multi_site_shows_site_rows(gsr_filtered):
 @allure.story("Multi-Site Comparison")
 @allure.title("GSR-MSC-003 Table shows only selected site row when filtered")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_multi_site_filtered_single_site(gsr_filtered):
     # gsr_filtered already has GSR_SITE selected
     body = gsr_filtered.get_body_text()
@@ -489,6 +514,7 @@ def test_column_headers_sort(gsr_filtered):
 @allure.story("Revenue Breakdown")
 @allure.title("GSR-RBR-001 Revenue Net by Payment Method shows eight channels")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_revenue_breakdown_payment_channels(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert (
@@ -506,6 +532,7 @@ def test_revenue_breakdown_payment_channels(gsr_filtered):
 @allure.story("Revenue Breakdown")
 @allure.title("GSR-RBR-003 Card Payment Distribution shows no-data message")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_card_distribution_no_data(zero_data_filter):
     body = zero_data_filter.get_body_text()
     assert (
@@ -521,6 +548,7 @@ def test_card_distribution_no_data(zero_data_filter):
 @allure.story("Revenue Breakdown")
 @allure.title("GSR-RBR-005 Revenue breakdown updates on filter change")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_revenue_breakdown_updates(gsr_filtered):
     gsr_filtered.select_date_preset("Today")
     gsr_filtered.apply_filters()
@@ -538,6 +566,7 @@ def test_revenue_breakdown_updates(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-001 Retail Sales table shows six columns")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_retail_sales_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Retail" in body, "Retail Sales section not visible"
@@ -552,6 +581,7 @@ def test_retail_sales_columns(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-003 Retail Sales category row expands to details")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_retail_sales_category_expands(gsr_filtered):
     from selenium.webdriver.common.by import By
     body = gsr_filtered.get_body_text()
@@ -567,6 +597,7 @@ def test_retail_sales_category_expands(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-004 Memberships Breakdown shows eight columns")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_memberships_breakdown_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Membership" in body, "Memberships Breakdown section not visible"
@@ -581,6 +612,7 @@ def test_memberships_breakdown_columns(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-005 Membership bar chart displays three transaction types")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_membership_bar_chart(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Membership" in body, "Membership section not visible"
@@ -590,6 +622,7 @@ def test_membership_bar_chart(gsr_filtered):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-006 Sales Activity shows no-data message when empty")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_sales_activity_no_data(zero_data_filter):
     body = zero_data_filter.get_body_text()
     assert (
@@ -605,6 +638,7 @@ def test_sales_activity_no_data(zero_data_filter):
 @allure.story("Sales Activity")
 @allure.title("GSR-SAC-007 Sales Activity data updates on filter change")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_sales_activity_updates(gsr_filtered):
     gsr_filtered.select_date_preset("Today")
     gsr_filtered.apply_filters()
@@ -622,6 +656,7 @@ def test_sales_activity_updates(gsr_filtered):
 @allure.story("Prepaid Liability")
 @allure.title("GSR-PLB-001 Prepaid Liability Overview table shows five columns")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_prepaid_liability_columns(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Prepaid" in body, "Prepaid Liability section not visible"
@@ -636,6 +671,7 @@ def test_prepaid_liability_columns(gsr_filtered):
 @allure.story("Prepaid Liability")
 @allure.title("GSR-PLB-002 Liability Composition progress bar reflects proportions")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_liability_composition_bar(gsr_filtered):
     from selenium.webdriver.common.by import By
     body = gsr_filtered.get_body_text()
@@ -654,6 +690,7 @@ def test_liability_composition_bar(gsr_filtered):
 @allure.story("Prepaid Liability")
 @allure.title("GSR-PLB-003 Three summary tiles render correctly")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_three_summary_tiles(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Prepaid" in body or "Liability" in body, (
@@ -669,6 +706,7 @@ def test_three_summary_tiles(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-001 Gift Card Activity section is collapsible")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gift_card_section_collapsible(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert "Gift Card" in body, "Gift Card Activity section not visible"
@@ -682,6 +720,7 @@ def test_gift_card_section_collapsible(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-002 Expanded Gift Card Activity shows three sub-cards")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gift_card_three_sub_cards(gsr_filtered):
     count = gsr_filtered.sub_card_count_after_expand("Gift Card")
     assert count >= 3, (
@@ -693,6 +732,7 @@ def test_gift_card_three_sub_cards(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-003 Net Revenue Impact formula renders correctly")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gift_card_net_revenue_formula(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Gift Card")
     body = gsr_filtered.get_body_text()
@@ -706,6 +746,7 @@ def test_gift_card_net_revenue_formula(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-004 Gift Cards Sold Breakdown table displays correctly")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gift_cards_sold_table(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Gift Card")
     body = gsr_filtered.get_body_text()
@@ -719,6 +760,7 @@ def test_gift_cards_sold_table(gsr_filtered):
 @allure.story("Gift Card Activity")
 @allure.title("GSR-GCA-005 Gift Cards Redeemed Breakdown table displays")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_gift_cards_redeemed_table(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Gift Card")
     body = gsr_filtered.get_body_text()
@@ -736,6 +778,7 @@ def test_gift_cards_redeemed_table(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-001 Washbook Activity section is collapsible")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_washbook_section_collapsible(gsr_filtered):
     body = gsr_filtered.get_body_text()
     assert (
@@ -765,6 +808,7 @@ def test_washbook_three_sub_cards(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-003 Net Revenue Impact formula renders for washbooks")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_washbook_net_revenue_formula(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Washbook")
     body = gsr_filtered.get_body_text()
@@ -778,6 +822,7 @@ def test_washbook_net_revenue_formula(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-004 Cash to Accrual Reconciliation accordion expands")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_washbook_reconciliation_accordion(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Washbook")
     body = gsr_filtered.get_body_text()
@@ -793,6 +838,7 @@ def test_washbook_reconciliation_accordion(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-005 Washbooks Sold Breakdown table displays correctly")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_washbooks_sold_table(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Washbook")
     body = gsr_filtered.get_body_text()
@@ -806,6 +852,7 @@ def test_washbooks_sold_table(gsr_filtered):
 @allure.story("Washbook Activity")
 @allure.title("GSR-WBA-006 Washbooks Redeemed Breakdown table displays")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_washbooks_redeemed_table(gsr_filtered):
     gsr_filtered.expand_collapsible_section("Washbook")
     body = gsr_filtered.get_body_text()
@@ -823,6 +870,7 @@ def test_washbooks_redeemed_table(gsr_filtered):
 @allure.story("Transaction Breakdown")
 @allure.title("GSR-TRB-001 Total Invoices count displayed with progress bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_total_invoices_count(gsr_filtered):
     from selenium.webdriver.common.by import By
     body = gsr_filtered.get_body_text()
@@ -835,6 +883,7 @@ def test_total_invoices_count(gsr_filtered):
 @allure.story("Transaction Breakdown")
 @allure.title("GSR-TRB-003 Transaction Breakdown updates on filter change")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_transaction_breakdown_updates(gsr_filtered):
     gsr_filtered.select_date_preset("Today")
     gsr_filtered.apply_filters()
@@ -852,6 +901,7 @@ def test_transaction_breakdown_updates(gsr_filtered):
 @allure.story("Export")
 @allure.title("GSR-EXP-001 Export 'Choose option' button present in filter bar")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_export_button_present(gsr_page):
     from selenium.webdriver.common.by import By
     from pages.admin_portal.general_sales_report_page import AdminGeneralSalesReportPage
@@ -882,6 +932,7 @@ def test_export_modal_four_options(gsr_page):
 
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-001 Zero-transaction site renders all sections cleanly")
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_zero_transaction_renders_cleanly(zero_data_filter):
     assert page_has_no_broken_state(zero_data_filter), (
         "Broken state detected on GSR page with zero-transaction filter"
@@ -895,6 +946,7 @@ def test_zero_transaction_renders_cleanly(zero_data_filter):
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-002 Zero-transaction day renders without errors")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_zero_transaction_day_renders(zero_data_filter):
     assert page_has_no_broken_state(zero_data_filter), (
         "Errors visible on GSR page with zero-transaction day filter"
@@ -904,6 +956,7 @@ def test_zero_transaction_day_renders(zero_data_filter):
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-003 Single-day date range renders correctly")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_single_day_date_range(gsr_page):
     today = datetime.date.today().strftime("%m/%d/%Y")
     gsr_page.enter_custom_date_range(today, today)
@@ -920,6 +973,7 @@ def test_single_day_date_range(gsr_page):
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-004 Date range spanning month boundary renders")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_month_boundary_date_range(gsr_page):
     gsr_page.enter_custom_date_range("06/28/2026", "07/03/2026")
     gsr_page.apply_filters()
@@ -935,6 +989,7 @@ def test_month_boundary_date_range(gsr_page):
 @allure.story("Edge Cases")
 @allure.title("GSR-EC-007 Rapid date preset switching doesn't cause crashes")
 @pytest.mark.extended
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_rapid_preset_switching(gsr_page):
     presets = ["Today", "Last week", "This month", "Yesterday", "Last month"]
     gsr_page.rapid_preset_switch(presets)
@@ -950,6 +1005,7 @@ def test_rapid_preset_switching(gsr_page):
 @allure.story("Dependencies")
 @allure.title("GSR-DEP-001 Sites dropdown reflects active sites from Sites & Locations module")
 @pytest.mark.manual
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_sites_dropdown_reflects_module(gsr_page):
     # Dependency: Sites & Locations module
     options = gsr_page.get_site_options()
@@ -964,6 +1020,7 @@ def test_sites_dropdown_reflects_module(gsr_page):
 @allure.story("Dependencies")
 @allure.title("GSR-DEP-008 Redemptions link navigates to correct Redemption Details page")
 @pytest.mark.regression
+@pytest.mark.xdist_group("admin-shared-site-general_sales_report")
 def test_redemptions_link_navigates(gsr_page):
     # Dependency: Redemption Details page
     from selenium.webdriver.support import expected_conditions as _EC

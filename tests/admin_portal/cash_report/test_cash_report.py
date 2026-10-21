@@ -75,6 +75,7 @@ class TestNavigation:
 
     @pytest.mark.smoke
     @allure.title("CSH-NAV-001 Cash Report page loads at /reports/detailed/cash_report")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_page_loads_at_correct_url(self, csh_modal):
         url = csh_modal.get_current_url()
         assert "cash_report" in url.lower() or "cash-report" in url.lower(), (
@@ -83,6 +84,7 @@ class TestNavigation:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-NAV-002 Filter modal auto-opens on page load without user action")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_filter_modal_auto_opens(self, csh_modal):
         assert csh_modal.modal_is_open(), (
             "Filter modal (Apply filters button) not visible on page load"
@@ -90,6 +92,7 @@ class TestNavigation:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-NAV-003 Modal contains site, date preset, date range, single day, and Apply")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_modal_contains_all_controls(self, csh_modal):
         from pages.admin_portal.cash_report_page import CashReportPage
         d = csh_modal.driver
@@ -105,6 +108,7 @@ class TestNavigation:
 
     @allure.title("CSH-NAV-004 Filter bar and tab labels visible after applying filters")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_page_title_visible_after_apply(self, csh_page):
         # Confirmed DevTools (Jul 2026): Cash Report has no module-level heading.
         # Page goes directly to the filter bar (Sites / Locations) then the
@@ -119,6 +123,7 @@ class TestNavigation:
 
     @allure.title("CSH-NAV-005 Sidebar FINANCIAL section highlights Cash Report as active item")
     @pytest.mark.extended
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_sidebar_highlights_active_item(self, csh_page):
         assert csh_page.sidebar_cash_report_active(), (
             "Sidebar does not highlight an active Cash Report / Financial item"
@@ -134,6 +139,7 @@ class TestFilterModal:
 
     @allure.title("CSH-FMD-001 Sites dropdown lists active sites including test site")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_sites_dropdown_lists_active_sites(self, csh_modal):
         options = csh_modal.get_site_options()
         assert len(options) > 0, "Site dropdown returned no options"
@@ -144,6 +150,7 @@ class TestFilterModal:
 
     @allure.title("CSH-FMD-002 Date preset dropdown lists exactly 6 options (no Custom)")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_date_preset_dropdown_options(self, csh_modal):
         options = csh_modal.get_date_preset_options()
         options_lower = [o.lower() for o in options]
@@ -154,6 +161,7 @@ class TestFilterModal:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-FMD-003 Modal opens with no default site selected")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_modal_opens_with_no_default_site(self, csh_modal):
         chips = csh_modal.get_site_chips()
         assert chips == [], (
@@ -163,6 +171,7 @@ class TestFilterModal:
 
     @allure.title("CSH-FMD-004 Selecting a date preset auto-populates the date range field")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_selecting_preset_fills_date_range(self, csh_modal):
         csh_modal.select_date_preset("Last month")
         date_val = csh_modal.get_date_range_value()
@@ -174,6 +183,7 @@ class TestFilterModal:
 
     @pytest.mark.smoke
     @allure.title("CSH-FMD-005 Apply filters closes modal and renders the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_apply_filters_closes_modal_and_renders_metrics(self, csh_modal):
         csh_modal.select_site(CSH_SITE)
         csh_modal.select_date_preset("Last month")
@@ -187,6 +197,7 @@ class TestFilterModal:
 
     @allure.title("CSH-FMD-006 Filter values are reflected in the page-level bar after apply")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_filter_values_reflected_in_page_bar(self, csh_page):
         chips    = csh_page.get_site_chips()
         date_val = csh_page.get_date_range_value()
@@ -199,6 +210,7 @@ class TestFilterModal:
 
     @allure.title("CSH-FMD-007 Page bar filter changes do not re-open the blocking modal")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_page_bar_changes_do_not_reopen_modal(self, csh_page):
         csh_page.select_date_preset("This month")
         time.sleep(1.0)
@@ -217,6 +229,7 @@ class TestSiteFilter:
 
     @allure.title("CSH-SIT-001 Site dropdown has no 'All Sites' option")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_no_all_sites_option(self, csh_modal):
         options = csh_modal.get_site_options()
         options_lower = [o.lower() for o in options]
@@ -226,6 +239,7 @@ class TestSiteFilter:
         assert page_has_no_broken_state(csh_modal)
 
     @allure.title("CSH-SIT-002 Selecting a site creates a chip in the control")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_selecting_site_creates_chip(self, csh_modal):
         csh_modal.select_site(CSH_SITE)
         chips = csh_modal.get_site_chips()
@@ -245,6 +259,7 @@ class TestSiteFilter:
 
     @allure.title("CSH-SIT-004 Clearing the site chip removes the site filter")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_clearing_chip_removes_site_filter(self, csh_page):
         chips_before = csh_page.get_site_chips()
         assert chips_before, "Expected at least one chip before clearing"
@@ -266,6 +281,7 @@ class TestDateFilter:
 
     @allure.title("CSH-DTE-001 Date preset dropdown lists 6 options (Today … Last month)")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_date_preset_count(self, csh_modal):
         options = csh_modal.get_date_preset_options()
         assert len(options) >= len(DATE_PRESETS), (
@@ -277,6 +293,7 @@ class TestDateFilter:
     @allure.title("CSH-DTE-{preset} Selecting '{preset}' preset populates date range field")
     @pytest.mark.parametrize("preset", _DATE_PRESET_PARAMS)
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_preset_populates_date_range(self, csh_modal, preset):
         csh_modal.select_site(CSH_SITE)
         csh_modal.select_date_preset(preset)
@@ -336,6 +353,7 @@ class TestSingleDayMode(SingleDaySyncMixin):
 class TestTabNavigation:
 
     @allure.title("CSH-TAB-001 Three tabs visible after apply: Analytics, Kiosk, POS")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_three_tabs_visible(self, csh_page):
         tabs = csh_page.get_visible_tabs()
         tabs_lower = [t.lower() for t in tabs]
@@ -347,6 +365,7 @@ class TestTabNavigation:
 
     @allure.title("CSH-TAB-002 Analytics tab is active by default after filters are applied")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_analytics_tab_active_by_default(self, csh_page):
         active = csh_page.get_active_tab()
         body   = csh_page.get_body_text().lower()
@@ -360,6 +379,7 @@ class TestTabNavigation:
         assert page_has_no_broken_state(csh_page)
 
     @allure.title("CSH-TAB-003 Clicking Kiosk tab switches to Kiosk content")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_tab_click(self, csh_page):
         csh_page.click_tab(TAB_KIOSK)
         body = csh_page.get_body_text().lower()
@@ -371,6 +391,7 @@ class TestTabNavigation:
         assert page_has_no_broken_state(csh_page)
 
     @allure.title("CSH-TAB-004 Clicking POS tab switches to POS content")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_pos_tab_click(self, csh_page):
         csh_page.click_tab(TAB_POS)
         body = csh_page.get_body_text().lower()
@@ -383,6 +404,7 @@ class TestTabNavigation:
 
     @allure.title("CSH-TAB-005 Re-clicking Analytics tab restores Analytics content")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_analytics_tab_restores(self, csh_page):
         csh_page.click_tab(TAB_KIOSK)
         time.sleep(0.3)
@@ -405,6 +427,7 @@ class TestExport:
 
     @pytest.mark.smoke
     @allure.title("CSH-EXP-001 Export XLSX button is visible on the metrics screen")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_export_xlsx_button_visible(self, csh_page):
         assert csh_page.export_button_visible(), (
             "Export XLSX button not visible on the Cash Report metrics screen"
@@ -413,6 +436,7 @@ class TestExport:
 
     @allure.title("CSH-EXP-002 Export XLSX button click initiates a file download")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_export_xlsx_triggers_download(self, csh_page):
         csh_page.click_export_xlsx()
         time.sleep(2.0)
@@ -430,6 +454,7 @@ class TestAnalyticsTab:
 
     @pytest.mark.smoke
     @allure.title("CSH-ANA-001 Analytics tab renders summary metric cards or KPIs")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_analytics_tab_shows_metrics(self, csh_analytics):
         body = csh_analytics.get_body_text()
         # Cash / currency indicators or KPI labels expected on the Analytics tab
@@ -443,6 +468,7 @@ class TestAnalyticsTab:
 
     @allure.title("CSH-ANA-002 Analytics metric values are non-zero for the test dataset")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_analytics_metrics_not_all_zero(self, csh_analytics):
         body = csh_analytics.get_body_text()
         # At least one non-$0.00 / non-zero figure expected for last month dataset
@@ -455,6 +481,7 @@ class TestAnalyticsTab:
 
     @allure.title("CSH-ANA-003 Analytics tab shows no-data message for zero-data date range")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_analytics_zero_data_message(self, csh_zero_data):
         csh_zero_data.click_tab(TAB_ANALYTICS)
         body = csh_zero_data.get_body_text().lower()
@@ -520,6 +547,7 @@ class TestKioskTab:
 
     @allure.title("CSH-KSK-004 Kiosk Balance Summary — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_balance_summary_pagination(self, csh_kiosk):
         has_paging = csh_kiosk.table_pagination_present(TABLE_KIOSK_BALANCE_SUMMARY)
         row_count  = csh_kiosk.get_table_row_count(TABLE_KIOSK_BALANCE_SUMMARY)
@@ -532,6 +560,7 @@ class TestKioskTab:
         assert page_has_no_broken_state(csh_kiosk)
 
     @allure.title("CSH-KSK-005 Kiosk Denomination section is visible on Kiosk tab")
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_denomination_visible(self, csh_kiosk):
         assert csh_kiosk.table_section_visible(TABLE_KIOSK_DENOMINATION), (
             "Section '%s' not visible on Kiosk tab" % TABLE_KIOSK_DENOMINATION
@@ -557,6 +586,7 @@ class TestKioskTab:
 
     @allure.title("CSH-KSK-007 Kiosk Denomination — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_denomination_pagination(self, csh_kiosk):
         has_paging = csh_kiosk.table_pagination_present(TABLE_KIOSK_DENOMINATION)
         row_count  = csh_kiosk.get_table_row_count(TABLE_KIOSK_DENOMINATION)
@@ -594,6 +624,7 @@ class TestKioskTab:
 
     @allure.title("CSH-KSK-010 Kiosk Transactions — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_transactions_pagination(self, csh_kiosk):
         has_paging = csh_kiosk.table_pagination_present(TABLE_KIOSK_TRANSACTIONS)
         row_count  = csh_kiosk.get_table_row_count(TABLE_KIOSK_TRANSACTIONS)
@@ -606,6 +637,7 @@ class TestKioskTab:
 
     @allure.title("CSH-KSK-011 Kiosk tab shows empty/no-data state for a zero-data date range")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_kiosk_zero_data_state(self, csh_zero_data):
         csh_zero_data.click_tab(TAB_KIOSK)
         body = csh_zero_data.get_body_text().lower()
@@ -662,6 +694,7 @@ class TestPOSTab:
 
     @allure.title("CSH-POS-003 POS Balance Summary — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_pos_balance_summary_pagination(self, csh_pos):
         has_paging = csh_pos.table_pagination_present(TABLE_POS_BALANCE_SUMMARY)
         row_count  = csh_pos.get_table_row_count(TABLE_POS_BALANCE_SUMMARY)
@@ -682,6 +715,7 @@ class TestPOSTab:
 
     @allure.title("CSH-POS-005 POS Bank Drop — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_pos_bank_drop_pagination(self, csh_pos):
         has_paging = csh_pos.table_pagination_present(TABLE_POS_BANK_DROP)
         row_count  = csh_pos.get_table_row_count(TABLE_POS_BANK_DROP)
@@ -702,6 +736,7 @@ class TestPOSTab:
 
     @allure.title("CSH-POS-007 POS Transactions — pagination controls are present")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_pos_transactions_pagination(self, csh_pos):
         has_paging = csh_pos.table_pagination_present(TABLE_POS_TRANSACTIONS)
         row_count  = csh_pos.get_table_row_count(TABLE_POS_TRANSACTIONS)
@@ -714,6 +749,7 @@ class TestPOSTab:
 
     @allure.title("CSH-POS-008 POS tab shows empty/no-data state for a zero-data date range")
     @pytest.mark.regression
+    @pytest.mark.xdist_group("admin-shared-site-cash_report")
     def test_pos_zero_data_state(self, csh_zero_data):
         csh_zero_data.click_tab(TAB_POS)
         body = csh_zero_data.get_body_text().lower()
