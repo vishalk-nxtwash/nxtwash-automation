@@ -425,6 +425,17 @@ class RedemptionsPage(BasePage):
         self._calendar_click_day(end_day)
         time.sleep(0.3)
 
+        # Confirmed via live CI run: unlike Revenue Overview's calendar, RDM's
+        # does not auto-close after the end-day click -- the overlay
+        # (#overviewDatepicker_modal_calendar) then intercepts the "Apply
+        # filters" click. Same safe ESCAPE-to-close-calendar-only pattern
+        # already used by future_dates_disabled_in_calendar()/select_date_preset().
+        try:
+            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        except Exception:
+            pass
+        time.sleep(0.2)
+
     def enter_date_range(self, start, end):
         """Select a date range via the calendar picker.
 
