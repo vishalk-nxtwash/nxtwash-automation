@@ -356,6 +356,13 @@ class RedemptionsPage(BasePage):
         """Click prev (-1) or next (+1) month navigation button in the open calendar."""
         if direction < 0:
             xpaths = [
+                # Confirmed via future_dates_disabled_in_calendar(): RDM's
+                # calendar nav buttons use plain visible text, not aria-label
+                # (unlike Revenue Overview's widget -- verified via a live CI
+                # failure where this method's aria-label-only locators never
+                # matched anything, silently leaving navigation at today's
+                # month).
+                "//button[normalize-space()='Previous Month']",
                 "//button[@aria-label='Previous month' or "
                 "@aria-label='Go to previous month' or "
                 "@aria-label='Prev month']",
@@ -367,6 +374,7 @@ class RedemptionsPage(BasePage):
             ]
         else:
             xpaths = [
+                "//button[normalize-space()='Next Month']",
                 "//button[@aria-label='Next month' or "
                 "@aria-label='Go to next month' or "
                 "@aria-label='Next Month']",
