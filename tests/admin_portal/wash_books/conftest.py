@@ -182,7 +182,7 @@ def _fill_managed_wash_book_baseline(page):
     page.open_service_settings()
 
 
-def _reset_managed_wash_book(browser):
+def _reset_managed_wash_book(browser, _attempt=1):
     """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
 
     Uses _fill_managed_wash_book_baseline() for both the create and the
@@ -193,21 +193,36 @@ def _reset_managed_wash_book(browser):
     Description is reset separately since no create/fill helper touches it,
     and test_edit_wash_book_description would otherwise leak a stale
     description into the next test even with xdist_group serialization.
+
+    This reset opens the edit iframe twice per call (once directly, once
+    inside update_wash_book_description) -- each one a fresh chance to hit
+    switch_to_frame_with_retry's own documented React iframe-remount race
+    exceeding its 90s budget. Confirmed in CI (run 39918158522): two
+    teardown-only TimeoutExceptions here, with both tests' own bodies
+    already passed -- the reset itself is otherwise sound, so retry the
+    whole thing once with a completely fresh list navigation before giving
+    up (a second consecutive hit is left to raise rather than retried
+    forever, since that would likely mean a real, non-transient problem).
     """
-    page = open_wash_books_page(browser)
-    if page.wash_book_exists(MANAGED_WASH_BOOK):
+    try:
         page = open_wash_books_page(browser)
-        page.open_edit_wash_book(MANAGED_WASH_BOOK)
+        if page.wash_book_exists(MANAGED_WASH_BOOK):
+            page = open_wash_books_page(browser)
+            page.open_edit_wash_book(MANAGED_WASH_BOOK)
+            _fill_managed_wash_book_baseline(page)
+            page.click_save_wash_book()
+            page.wait_for_list_loaded()
+            page.update_wash_book_description(MANAGED_WASH_BOOK, "")
+            return open_wash_books_page(browser)
+        page.open_create_wash_book()
         _fill_managed_wash_book_baseline(page)
         page.click_save_wash_book()
         page.wait_for_list_loaded()
-        page.update_wash_book_description(MANAGED_WASH_BOOK, "")
         return open_wash_books_page(browser)
-    page.open_create_wash_book()
-    _fill_managed_wash_book_baseline(page)
-    page.click_save_wash_book()
-    page.wait_for_list_loaded()
-    return open_wash_books_page(browser)
+    except TimeoutException:
+        if _attempt >= 2:
+            raise
+        return _reset_managed_wash_book(browser, _attempt=_attempt + 1)
 
 
 managed_wash_book = managed_resource(_reset_managed_wash_book)
