@@ -82,6 +82,18 @@ class DriverFactory:
         # only, on hosts shared by several runners.
         # Chrome occasionally fails to launch under load ("session not
         # created: chrome not reachable") — retry once with a fresh profile.
+        # A degraded/overloaded host (confirmed on the AWS self-hosted
+        # runner, CI runs 39685108893 and 40043640609) can also launch Chrome
+        # successfully but leave chromedriver unresponsive to its very first
+        # real command — SessionNotCreatedException never fires because the
+        # launch itself didn't fail, so that case fell straight through to
+        # the test and only surfaced ~90s later as a confusing mid-test
+        # ReadTimeoutError. Health-check with a short, bounded timeout before
+        # handing the driver to a test, and retry the whole launch (fresh
+        # profile, fresh chromedriver/Chrome process) the same way as a
+        # launch failure. This only ever adds one fast, successful JS call to
+        # every test's existing driver-startup path -- zero behavior change
+        # when the host is healthy, which is the overwhelming common case.
         for attempt in range(2):
             profile_dir = tempfile.mkdtemp(prefix="nxtwash-chrome-")
             launch_options = copy.deepcopy(options)
@@ -91,29 +103,47 @@ class DriverFactory:
                     service=Service(cls._chromedriver_path()),
                     options=launch_options
                 )
-                break
             except SessionNotCreatedException:
                 shutil.rmtree(profile_dir, ignore_errors=True)
                 if attempt == 1:
                     raise
                 time.sleep(2)
+                continue
 
-        # socket.setdefaulttimeout(60) above does NOT actually bound a frozen
-        # Chrome: Selenium 4.44's RemoteConnection._request() explicitly
-        # passes timeout=self._client_config.timeout to urllib3, which
-        # defaults to None — an explicit None overrides the global socket
-        # default and tells urllib3 to wait forever for that one call.
-        # Confirmed in CI (run 37538816687): a single send_keys() call froze
-        # for 900+ seconds before pytest-timeout's own signal eventually
-        # broke it. Set the instance's client_config timeout directly so
-        # every webdriver command this driver issues is actually bounded.
-        # 90, not 60: set_page_load_timeout(60) below and the longest
-        # explicit WebDriverWait(..., 60) calls across pages/ already rely
-        # on getting a clean Selenium-level timeout response within 60s —
-        # this needs to sit above all of those so it only ever fires for a
-        # genuinely frozen command, never racing a wait that's working as
-        # designed.
-        driver.command_executor._client_config.timeout = 90
+            # socket.setdefaulttimeout(60) above does NOT actually bound a
+            # frozen Chrome: Selenium 4.44's RemoteConnection._request()
+            # explicitly passes timeout=self._client_config.timeout to
+            # urllib3, which defaults to None — an explicit None overrides
+            # the global socket default and tells urllib3 to wait forever
+            # for that one call. Use a short bound just for the health check
+            # itself so an unresponsive driver is caught in ~10s, not 90.
+            driver.command_executor._client_config.timeout = 10
+            try:
+                driver.execute_script("return 1")
+            except Exception:  # noqa: BLE001
+                try:
+                    driver.quit()
+                except Exception:  # noqa: BLE001
+                    pass
+                shutil.rmtree(profile_dir, ignore_errors=True)
+                if attempt == 1:
+                    raise
+                time.sleep(2)
+                continue
+
+            # Confirmed in CI (run 37538816687): a single send_keys() call
+            # froze for 900+ seconds before pytest-timeout's own signal
+            # eventually broke it. Set the instance's client_config timeout
+            # directly so every webdriver command this driver issues for the
+            # rest of the test is actually bounded.
+            # 90, not 60: set_page_load_timeout(60) below and the longest
+            # explicit WebDriverWait(..., 60) calls across pages/ already
+            # rely on getting a clean Selenium-level timeout response within
+            # 60s — this needs to sit above all of those so it only ever
+            # fires for a genuinely frozen command, never racing a wait
+            # that's working as designed.
+            driver.command_executor._client_config.timeout = 90
+            break
 
         original_quit = driver.quit
 
