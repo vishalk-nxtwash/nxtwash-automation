@@ -16,7 +16,20 @@ distinct shared-staging-record concurrency bug class, not the grid/scroll
 bugs from round 1). The AWS-runner full-suite confirmation (suite-admin-aws.yml)
 was dispatched but stalled on a stuck/busy self-hosted runner, unrelated to
 the code — the GitHub-hosted full suite is the authoritative green signal
-here; re-run the AWS leg separately when the runner is healthy. The sections
+here; re-run the AWS leg separately when the runner is healthy.
+
+**Update 2026-10-26:** `wash_books` reliably hangs mid-test on the AWS
+self-hosted runner (`admin-staging-01`) specifically — same test every
+time, same `pytest-xdist INTERNALERROR` crash shape, root-caused to that
+EC2 host's own accumulated degraded state (confirmed: a stray
+`pytest-rerunfailures` install left over from a weeks-old experiment,
+never cleaned up because the host is never rebuilt, unlike GitHub-hosted's
+always-fresh VMs). GitHub-hosted is unaffected and remains the
+authoritative signal. **Deferred, not blocking**: the fix is rebuilding
+that EC2 host from a fresh image, not another test-code patch — see
+memory `admin-portal-frozen`'s "ROUND 3" section for the full
+investigation and why three code-level attempts this round each only
+partially helped. The sections
 below are the status *as of the original pass (2026-09-27)* and are stale for
 the specific failures they describe (memberships, wash_packages,
 gas_pump_settings are now green) — kept for the still-open polish items
