@@ -133,10 +133,29 @@ jobs:
       - name: Install dependencies
         run: |
           if command -v python3.11 >/dev/null 2>&1; then
-            python3.11 -m pip install -r requirements.txt --quiet
+            PYBIN=python3.11
           else
-            python -m pip install -r requirements.txt --quiet
+            PYBIN=python
           fi
+          $PYBIN -m pip install -r requirements.txt --quiet
+          # pytest-rerunfailures is not in requirements.txt and not used by
+          # any current workflow (the --reruns revert below, and
+          # suite-prod-smoke.yml's "reruns" input, are both dead config --
+          # run-suite.yml never passes --reruns to pytest). `pip install -r`
+          # only installs/upgrades listed packages; it never removes ones
+          # that aren't listed. GitHub-hosted runners always get a fresh VM
+          # so this is a no-op there, but the AWS self-hosted runner reuses
+          # one persistent environment across every run -- confirmed via its
+          # own pytest plugin banner (run 40320535906) that this leftover
+          # plugin is still installed there from the earlier --reruns
+          # experiment. Its xdist-compatibility layer spins up a background
+          # "run_connection" socket thread unconditionally just by being
+          # loaded, which is exactly what crashed with an unhandled
+          # TimeoutError when pytest-timeout's SIGALRM fired during that same
+          # run, producing a session-wide pytest-xdist INTERNALERROR instead
+          # of one clean test failure. Uninstalling it is a safe no-op
+          # wherever it isn't present.
+          $PYBIN -m pip uninstall -y pytest-rerunfailures --quiet || true
 
       # ── EC2: pre-download ChromeDriver once so xdist workers reuse it ───────
       - name: Pre-download ChromeDriver (EC2)
