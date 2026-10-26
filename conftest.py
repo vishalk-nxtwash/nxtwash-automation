@@ -250,7 +250,27 @@ def screenshot(browser):
 
 
 def _capture_failure(item, driver):
-    """Save a screenshot + page source on failure and attach to Allure."""
+    """Save a screenshot + page source on failure and attach to Allure.
+
+    Bound every driver command here to a few seconds before doing anything
+    else. If the driver is already unresponsive -- which is usually exactly
+    why the test just failed -- capturing diagnostics about that same dead
+    driver can otherwise hang for however much of pytest's global timeout
+    budget happens to be left, and get SIGALRM-interrupted mid-hookwrapper.
+    Confirmed in CI (AWS run 40348949806): that produced a pytest-xdist
+    INTERNALERROR (`assert not crashitem`) from the signal landing inside
+    this function's own driver.current_url call -- turning one ordinary
+    test failure into a crashed worker that loses every other queued test's
+    results. Diagnostics are a nice-to-have, not a correctness-critical
+    path, so failing them fast is strictly better than risking this.
+    """
+    original_timeout = None
+    try:
+        original_timeout = driver.command_executor._client_config.timeout
+        driver.command_executor._client_config.timeout = 5
+    except Exception:  # noqa: BLE001
+        pass
+
     try:
         url = driver.current_url
     except Exception:  # noqa: BLE001
@@ -262,7 +282,10 @@ def _capture_failure(item, driver):
     # Backend errors the UI swallows (e.g. 499 "already exists" on save) are
     # the most common root cause and are invisible in the page — log them.
     from core.network_capture import failed_api_calls, format_failures
-    api_failures = failed_api_calls(driver)
+    try:
+        api_failures = failed_api_calls(driver)
+    except Exception:  # noqa: BLE001
+        api_failures = []
     if api_failures:
         api_text = format_failures(api_failures)
         LOG.error("Failed API calls during test:\n%s", api_text)
@@ -272,6 +295,12 @@ def _capture_failure(item, driver):
                 name="failed_api_calls",
                 attachment_type=allure.attachment_type.TEXT,
             )
+
+    if original_timeout is not None:
+        try:
+            driver.command_executor._client_config.timeout = original_timeout
+        except Exception:  # noqa: BLE001
+            pass
 
     # Capture visible text from the active frame — error messages in this app
     # appear inside iframes, so page_source (outer shell) is nearly empty.
