@@ -579,8 +579,19 @@ class WashBooksPage(BasePage):
                 self.WASH_BOOK_DESCRIPTION_TEXTAREA
             )
         )
-        textarea.clear()
-        textarea.send_keys(description)
+        # JS value-set instead of send_keys(): send_keys simulates one real
+        # keystroke per character through chromedriver, holding that single
+        # HTTP command open for the whole string. test_wash_book_long_
+        # description_does_not_break_form calls this with a 274-char value --
+        # hundreds of synthesized key events on one long-held connection, the
+        # one send_keys-on-a-long-string call left in this file (every other
+        # field here already uses this same JS pattern) and the one test
+        # that's reliably hung the AWS self-hosted runner's chromedriver
+        # connection. A single fast value-set removes the only long-held
+        # command in this flow.
+        self.driver.execute_script(
+            "arguments[0].value=arguments[1];", textarea, description
+        )
         self.driver.execute_script(
             """
             arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
