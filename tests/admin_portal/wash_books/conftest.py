@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from selenium.common.exceptions import TimeoutException
 
@@ -203,11 +205,28 @@ def _reset_managed_wash_book(browser, _attempt=1):
     whole thing once with a completely fresh list navigation before giving
     up (a second consecutive hit is left to raise rather than retried
     forever, since that would likely mean a real, non-transient problem).
+
+    A retry only helps for a quick, one-off glitch -- it does nothing for a
+    sustained slow connection, where it just pays the same cost twice and
+    can push the combined time past pytest's global timeout. Confirmed in
+    CI (AWS run 40392927095): once the host's connection degraded partway
+    through a run, every subsequent managed_wash_book test's teardown hit
+    this retry, took ~2x as long as a single slow attempt, and landed
+    right on the 420s global timeout for the rest of the run. Only retry
+    if the first attempt failed reasonably fast (<60s) -- that's the
+    signature of the transient iframe-remount race this retry was built
+    for; a slow failure means the connection itself is degraded, and
+    retrying will not help, just burn more time toward the global timeout
+    for no benefit.
     """
+    start = time.time()
     try:
         page = open_wash_books_page(browser)
         if page.wash_book_exists(MANAGED_WASH_BOOK):
-            page = open_wash_books_page(browser)
+            # (no re-navigation here: wash_book_exists() is a read-only
+            # check against the page just loaded above -- nothing
+            # invalidates it, so re-opening the same list page again was
+            # pure duplicate overhead on every reset call.)
             page.open_edit_wash_book(MANAGED_WASH_BOOK)
             _fill_managed_wash_book_baseline(page)
             page.click_save_wash_book()
@@ -220,7 +239,7 @@ def _reset_managed_wash_book(browser, _attempt=1):
         page.wait_for_list_loaded()
         return open_wash_books_page(browser)
     except TimeoutException:
-        if _attempt >= 2:
+        if _attempt >= 2 or (time.time() - start) >= 60:
             raise
         return _reset_managed_wash_book(browser, _attempt=_attempt + 1)
 
