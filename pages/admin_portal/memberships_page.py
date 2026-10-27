@@ -1903,7 +1903,7 @@ class MembershipsPage(BasePage):
         first_location_price,
         first_location_commission,
         prepaid_months="1",
-        redeem_as_service="VK detail wash"
+        redeem_as_service="Vk detail wp"
     ):
         """Fill membership settings for a prepaid membership."""
         self.enter_membership_name(membership_name)
@@ -1946,7 +1946,7 @@ class MembershipsPage(BasePage):
         global_commission,
         first_location_price,
         first_location_commission,
-        redeem_as_service="VK detail wash"
+        redeem_as_service="Vk detail wp"
     ):
         """Fill membership settings for a recurring membership."""
         self.enter_membership_name(membership_name)
