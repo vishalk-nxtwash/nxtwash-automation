@@ -1665,7 +1665,17 @@ class MembershipsPage(BasePage):
             return True
 
         self._retry_transient(_open_combobox)
-        option = WebDriverWait(self.driver, 20).until(
+        # 90s, not 20s: this sits inside reset_managed_membership(), which
+        # every managed_membership/managed_membership_2 test's fixture setup
+        # runs through -- confirmed in CI (AWS run 40418666324) as the one
+        # spot in this module's reset flow with a much tighter margin than
+        # the 90s convention used elsewhere in this codebase
+        # (driver_factory.py, switch_to_frame_with_retry), making this
+        # module more exposed than others to the same brief AWS host
+        # connectivity hiccups that already get absorbed elsewhere. A
+        # healthy connection resolves this in well under a second either
+        # way -- zero behavior change for the common case.
+        option = WebDriverWait(self.driver, 90).until(
             lambda d: self._find_react_option(service_name)
         )
         self.driver.execute_script("arguments[0].click();", option)
