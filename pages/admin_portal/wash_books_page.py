@@ -417,6 +417,26 @@ class WashBooksPage(BasePage):
         WebDriverWait(self.driver, 45).until(
             lambda d: d.execute_script(_CLICK_EDIT_JS, wash_book_name)
         )
+
+        # The click above is a synthetic element.click() dispatched via
+        # execute_script, not a real pointer event -- it normally triggers
+        # the app's router navigation just like a real click, but nothing
+        # previously verified that it actually did. If it silently doesn't
+        # register, the only symptom was a long wait_for_edit_loaded() below
+        # timing out on an iframe that was never coming. Give it a short
+        # window to appear and re-click once if not, before falling through
+        # to the unchanged wait_for_edit_loaded() call either way. Adds no
+        # measurable delay when the first click works (the common case),
+        # since WebDriverWait returns as soon as the frame is found.
+        self.driver.switch_to.default_content()
+        try:
+            WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located(self.EDIT_FRAME)
+            )
+        except TimeoutException:
+            self.switch_to_frame_with_retry(self.LIST_FRAME)
+            self.driver.execute_script(_CLICK_EDIT_JS, wash_book_name)
+
         self.wait_for_edit_loaded()
 
     def enter_wash_book_name(self, wash_book_name):
