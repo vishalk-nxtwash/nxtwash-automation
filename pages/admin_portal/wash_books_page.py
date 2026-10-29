@@ -1023,7 +1023,7 @@ class WashBooksPage(BasePage):
             redemption_sites = self.visible_redemption_checkboxes()
             if len(redemption_sites) >= 1:
                 self.assign_redemption_location_by_index(0)
-                self.select_redeem_as_option(0, "vk detail wash")
+                self.select_redeem_as_option(0, "Vk detail wp")
             if len(redemption_sites) >= 2:
                 self.assign_redemption_location_by_index(1)
                 self.select_redeem_as_option(1, "Detail cleaning")
@@ -1321,7 +1321,22 @@ class WashBooksPage(BasePage):
     def open_cwb_filter_panel(self):
         """Open the filter panel while on the CWB list page (idempotent)."""
         self.wait_for_cwb_list_loaded()
-        if any(el.is_displayed() for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON)):
+        # find_elements() + is_displayed() races a grid re-render (e.g. right
+        # after apply_filters()/reset_cwb_filters() just updated the list):
+        # the element found an instant ago can go stale before is_displayed()
+        # reads it (CI run 40788574366, test_cwb_filter_reset_all_restores_list).
+        # A stale element is definitionally not the currently-open panel, so
+        # treat it the same as "not displayed" instead of letting the
+        # exception escape.
+        already_open = False
+        for el in self.driver.find_elements(*self.APPLY_FILTERS_BUTTON):
+            try:
+                if el.is_displayed():
+                    already_open = True
+                    break
+            except StaleElementReferenceException:
+                continue
+        if already_open:
             return
         button = self.wait.until(EC.element_to_be_clickable(self.FILTER_BUTTON))
         self.driver.execute_script("arguments[0].click();", button)

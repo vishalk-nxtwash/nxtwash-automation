@@ -178,7 +178,7 @@ def _fill_managed_wash_book_baseline(page):
         page.open_redemption_settings()
         if page.visible_redemption_checkboxes():
             page.assign_redemption_location_by_index(0)
-            page.select_redeem_as_option(0, "vk detail wash")
+            page.select_redeem_as_option(0, "Vk detail wp")
     except TimeoutException:
         pass
     page.open_service_settings()
