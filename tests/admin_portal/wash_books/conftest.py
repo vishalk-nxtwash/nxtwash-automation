@@ -192,32 +192,46 @@ def _reset_managed_wash_book(browser, _attempt=1):
     every later reset (see that function's docstring for why it assigns one
     location).
 
-    Description is reset separately since no create/fill helper touches it,
-    and test_edit_wash_book_description would otherwise leak a stale
-    description into the next test even with xdist_group serialization.
+    Description is reset in the same edit session as the baseline fields
+    (set_wash_book_description("") right after _fill_managed_wash_book_
+    baseline(), before the one Save) since no create/fill helper touches
+    it otherwise, and test_edit_wash_book_description would otherwise leak
+    a stale description into the next test even with xdist_group
+    serialization.
 
-    This reset opens the edit iframe twice per call (once directly, once
-    inside update_wash_book_description) -- each one a fresh chance to hit
-    switch_to_frame_with_retry's own documented React iframe-remount race
-    exceeding its 90s budget. Confirmed in CI (run 39918158522): two
-    teardown-only TimeoutExceptions here, with both tests' own bodies
-    already passed -- the reset itself is otherwise sound, so retry the
-    whole thing once with a completely fresh list navigation before giving
-    up (a second consecutive hit is left to raise rather than retried
-    forever, since that would likely mean a real, non-transient problem).
+    Previously this reset opened the edit iframe TWICE per call (once for
+    the baseline fields, once again separately via update_wash_book_
+    description()) -- each one a fresh chance to hit switch_to_frame_
+    with_retry's own documented React iframe-remount race exceeding its
+    90s budget, and each one adding a full open+save cycle's worth of
+    time to every single setup and teardown. Confirmed in CI (run
+    39918158522): two teardown-only TimeoutExceptions here, with both
+    tests' own bodies already passed. Confirmed again later (AWS run
+    40799714038, after the double-open was already known but not yet
+    merged): four isolated teardown-only `Failed: Timeout >420.0s`
+    errors, each with the test's own body passing and the very next test
+    starting clean -- not a cascade, just this reset's cost occasionally
+    pushing one item's total setup+call+teardown time past the global
+    ceiling on a slow connection. Merging both edits into the one already-
+    open page removes a full open+save cycle from every reset, directly
+    cutting the time available for that to happen -- it does not fix the
+    AWS host's own intermittent connection slowness (that needs a host
+    rebuild, see admin-portal-frozen), only removes avoidable overhead
+    that was making it worse.
 
-    A retry only helps for a quick, one-off glitch -- it does nothing for a
-    sustained slow connection, where it just pays the same cost twice and
-    can push the combined time past pytest's global timeout. Confirmed in
-    CI (AWS run 40392927095): once the host's connection degraded partway
-    through a run, every subsequent managed_wash_book test's teardown hit
-    this retry, took ~2x as long as a single slow attempt, and landed
-    right on the 420s global timeout for the rest of the run. Only retry
-    if the first attempt failed reasonably fast (<60s) -- that's the
-    signature of the transient iframe-remount race this retry was built
-    for; a slow failure means the connection itself is degraded, and
-    retrying will not help, just burn more time toward the global timeout
-    for no benefit.
+    The retry-once-on-TimeoutException below only helps a quick, one-off
+    glitch -- it does nothing for a sustained slow connection, where it
+    just pays the same cost twice and can push the combined time past
+    pytest's global timeout. Confirmed in CI (AWS run 40392927095): once
+    the host's connection degraded partway through a run, every
+    subsequent managed_wash_book test's teardown hit this retry, took ~2x
+    as long as a single slow attempt, and landed right on the 420s global
+    timeout for the rest of the run. Only retry if the first attempt
+    failed reasonably fast (<60s) -- that's the signature of the
+    transient iframe-remount race this retry was built for; a slow
+    failure means the connection itself is degraded, and retrying will
+    not help, just burn more time toward the global timeout for no
+    benefit.
     """
     start = time.time()
     try:
@@ -229,9 +243,9 @@ def _reset_managed_wash_book(browser, _attempt=1):
             # pure duplicate overhead on every reset call.)
             page.open_edit_wash_book(MANAGED_WASH_BOOK)
             _fill_managed_wash_book_baseline(page)
+            page.set_wash_book_description("")
             page.click_save_wash_book()
             page.wait_for_list_loaded()
-            page.update_wash_book_description(MANAGED_WASH_BOOK, "")
             return open_wash_books_page(browser)
         page.open_create_wash_book()
         _fill_managed_wash_book_baseline(page)
