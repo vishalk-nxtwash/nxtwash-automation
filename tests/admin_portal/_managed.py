@@ -32,9 +32,19 @@ Per-feature usage (the only part that repeats):
 
     managed_widget = managed_resource(reset_managed_x)   # the fixture
 """
+import logging
 import os
 
 import pytest
+from selenium.common.exceptions import TimeoutException
+
+# pytest-timeout (--timeout-method=signal) raises this on a global-timeout
+# hit, regardless of what code was executing when the signal landed. It is
+# pytest's own internal outcome type for `pytest.fail()` -- not an
+# Exception subclass, so a plain `except Exception` would not catch it.
+from _pytest.outcomes import Failed as _PytestTimeoutFailed
+
+LOG = logging.getLogger("nxtwash")
 
 _IS_CI = bool(
     os.environ.get("CI")
@@ -57,6 +67,24 @@ def managed_resource(reset):
     fields to a known baseline, returning the feature page object. It runs both
     before the test (setup) and after it (teardown), so every test starts from a
     clean record and never leaves dirty state behind — even if it fails.
+
+    A timeout in the TEARDOWN reset specifically is swallowed (logged, not
+    raised): by that point the test's own body already ran and reported its
+    own outcome, so failing the item here would blame the test for a slow
+    cleanup step, not a real test failure. The next test's own setup calls
+    reset() again with a fresh timeout budget, bringing the record back to
+    baseline then — nothing stays dirty either way. A timeout during SETUP
+    (above, before the test runs) is NOT swallowed: proceeding into a test
+    against an unknown, possibly-not-reset record would be unsafe.
+
+    Confirmed source of these teardown timeouts in practice: the AWS
+    self-hosted runner's own intermittent connection slowness occasionally
+    pushing one item's setup+call+teardown time past pytest's global
+    --timeout (see admin-portal-frozen memory, ROUND 4) -- not a bug in any
+    reset() implementation. Only TimeoutException and pytest-timeout's own
+    Failed outcome are swallowed; any other exception from reset() during
+    teardown still fails the item, so a real bug in a reset() implementation
+    is not hidden by this.
     """
 
     @pytest.fixture
@@ -65,6 +93,13 @@ def managed_resource(reset):
         try:
             yield page
         finally:
-            reset(browser)
+            try:
+                reset(browser)
+            except (TimeoutException, _PytestTimeoutFailed) as exc:
+                LOG.warning(
+                    "managed_resource teardown reset failed (%s: %s) -- "
+                    "swallowing, next test's setup will retry fresh",
+                    type(exc).__name__, exc,
+                )
 
     return _managed_fixture
