@@ -70,16 +70,29 @@ def create_role_if_missing(browser, role_name=ROLE_NAME, priority=ROLE_PRIORITY)
         form.enter_role_name(role_name)
         form.enter_priority(priority)
         form.ensure_active_switch_on()
-        form.click_save()
-        return open_user_roles_page(browser)
+        saved = form.click_save()
     except Exception:
-        pass
+        form = open_create_role_form(browser)
+        form.enter_role_name(role_name)
+        form.enter_priority(priority)
+        form.ensure_active_switch_on()
+        saved = form.click_save()
 
-    form = open_create_role_form(browser)
-    form.enter_role_name(role_name)
-    form.enter_priority(priority)
-    form.ensure_active_switch_on()
-    form.click_save()
+    if saved:
+        # click_save() already confirmed the SPA navigated off the form and
+        # back to the list client-side -- a second hard reload here would be
+        # pure waste (no test uses this fixture's returned page object for
+        # anything beyond the side effect of the role existing).
+        page = AdminUserRolesPage(browser)
+        page.wait_for_loaded()
+        return page
+
+    # click_save() did NOT confirm navigating away -- e.g. the edit path
+    # above failed for an unrelated transient reason, fell through to the
+    # create fallback, and the server rejected it as a duplicate since the
+    # role already existed (confirmed live: a real CI occurrence, run
+    # 41640249527). Recover with a real hard reload instead of leaving the
+    # browser stuck on a broken form every later test would then also hit.
     return open_user_roles_page(browser)
 
 

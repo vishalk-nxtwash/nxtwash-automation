@@ -411,6 +411,13 @@ class AdminUserRoleFormPage(BasePage):
             )
 
     def click_save(self):
+        """Click Save; return True if the SPA confirmed navigating off the form.
+
+        False means validation blocked the save (or something else went
+        wrong) and the browser is still on the form — callers that need to
+        reach the list afterward must not assume it's safe to skip a real
+        navigation back to it.
+        """
         url_before = self.driver.current_url
         el = self.wait.until(EC.visibility_of_element_located(self.SAVE_BUTTON))
         self.driver.execute_script("arguments[0].click();", el)
@@ -423,6 +430,7 @@ class AdminUserRoleFormPage(BasePage):
             # URL changed: SPA navigated away from the form. Release the stale iframe so
             # subsequent find_element calls don't search inside a detached frame.
             self.driver.switch_to.default_content()
+            return True
         except Exception:
             error = self.get_visible_error()
             if error:
@@ -430,6 +438,7 @@ class AdminUserRoleFormPage(BasePage):
                 logging.getLogger("nxtwash").warning(
                     "Role save did not navigate away. Page message: %s", error
                 )
+            return False
 
     def click_cancel(self):
         el = self.wait.until(EC.visibility_of_element_located(self.CANCEL_BUTTON))
