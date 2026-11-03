@@ -115,7 +115,6 @@ class TestLaborShiftsNav:
 
     @pytest.mark.smoke
     @allure.title("LAB-NAV-001 Labor & Shifts page loads at /reports/detailed/employee_labor")
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_page_loads_at_correct_url(self, lab_modal):
         url = lab_modal.get_current_url()
         assert (
@@ -126,7 +125,6 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-NAV-002 Blocking filter modal auto-opens on page load")
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_filter_modal_auto_opens(self, lab_modal):
         assert lab_modal.modal_is_open(), (
             "Blocking filter modal (Apply filters button) not visible on page load"
@@ -137,7 +135,6 @@ class TestLaborShiftsNav:
         "LAB-NAV-003 Modal contains site multiselect, date preset, "
         "date range, single-day checkbox, and Apply filters button"
     )
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_modal_contains_all_controls(self, lab_modal):
         d = lab_modal.driver
         site_els   = d.find_elements(*LaborShiftsPage.SITE_MULTISELECT)
@@ -153,7 +150,6 @@ class TestLaborShiftsNav:
         assert page_has_no_broken_state(lab_modal)
 
     @allure.title("LAB-FMD-002 Site filter is in empty default state on fresh page load")
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_modal_opens_with_no_site_default(self, lab_modal):
         chips = lab_modal.get_site_chips()
         assert chips == [], (
@@ -271,7 +267,6 @@ class TestLaborShiftsSiteFilter:
     @allure.title(
         "LAB-FMD-001 / LAB-SIT-001 Sites dropdown lists active sites including LAB_SITE"
     )
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_sites_dropdown_lists_active_sites(self, lab_modal):
         # Dependency: Sites & Locations module
         options = lab_modal.get_site_options()
@@ -453,7 +448,6 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-011 Site dropdown container is scrollable with many options")
     @pytest.mark.extended
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_site_dropdown_scrollable(self, lab_modal):
         options = lab_modal.get_site_options()
         assert len(options) > 3, (
@@ -492,7 +486,6 @@ class TestLaborShiftsSiteFilter:
 
     @allure.title("LAB-SIT-013 Deactivated sites do not appear in the site dropdown options")
     @pytest.mark.regression
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_deactivated_sites_absent(self, lab_modal):
         # Dependency: Sites & Locations module — a deactivated site must exist in the
         # test environment for this assertion to be meaningful.
@@ -591,7 +584,6 @@ class TestLaborShiftsDateFilter:
 
     @allure.title("LAB-DTE-008 Clicking the date range field opens the dual-month calendar picker")
     @pytest.mark.regression
-    @pytest.mark.xdist_group("admin-shared-site-labor_shifts")
     def test_calendar_opens_on_date_click(self, lab_modal):
         lab_modal.click_date_range_input()
         calendar_visible = lab_modal.calendar_picker_visible()
