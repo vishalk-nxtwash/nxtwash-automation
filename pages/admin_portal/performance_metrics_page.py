@@ -545,11 +545,24 @@ class PerformanceMetricsPage(BasePage):
             pass
 
     def today_highlighted_in_calendar(self):
-        """Return True if the today marker is visible in the open calendar."""
-        markers = self.driver.find_elements(By.XPATH,
+        """Return True if the today marker is visible in the open calendar.
+
+        The today marker can render in a pass slightly after the day-button
+        grid itself (confirmed live: CI run 41670102675 failed here right
+        after click_date_range_input() stopped padding every caller with a
+        blind sleep(0.5) in favor of waiting only for the day buttons) --
+        poll for the marker directly here instead of relying on callers to
+        have waited long enough for it specifically.
+        """
+        locator = (By.XPATH,
             "//*[contains(@class,'today') or contains(@class,'current-day') or "
             "@aria-current='date' or contains(@aria-label,'Today')]")
-        return any(m.is_displayed() for m in markers)
+        try:
+            return WebDriverWait(self.driver, 3).until(
+                lambda d: any(m.is_displayed() for m in d.find_elements(*locator))
+            )
+        except TimeoutException:
+            return False
 
     def future_day_is_disabled(self, days_ahead=1):
         """Return True if a future day is unselectable in the calendar picker.
