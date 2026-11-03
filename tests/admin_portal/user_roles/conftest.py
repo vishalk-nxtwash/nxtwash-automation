@@ -71,24 +71,16 @@ def create_role_if_missing(browser, role_name=ROLE_NAME, priority=ROLE_PRIORITY)
         form.enter_priority(priority)
         form.ensure_active_switch_on()
         form.click_save()
+        return open_user_roles_page(browser)
     except Exception:
-        form = open_create_role_form(browser)
-        form.enter_role_name(role_name)
-        form.enter_priority(priority)
-        form.ensure_active_switch_on()
-        form.click_save()
+        pass
 
-    # click_save() already waits for the SPA to navigate off the form and back
-    # to the list client-side -- re-navigating via open_user_roles_page() here
-    # would be a second, full hard page reload for no reason: no test uses
-    # this fixture's returned page object for anything beyond the side effect
-    # of the role existing (confirmed: no `managed_role.<method>` call anywhere
-    # in this module). Called twice per test (fixture setup + teardown), the
-    # redundant reload this removes was up to 2 of the 4 hard navigations each
-    # managed_role test was paying for.
-    page = AdminUserRolesPage(browser)
-    page.wait_for_loaded()
-    return page
+    form = open_create_role_form(browser)
+    form.enter_role_name(role_name)
+    form.enter_priority(priority)
+    form.ensure_active_switch_on()
+    form.click_save()
+    return open_user_roles_page(browser)
 
 
 def make_unique_role_name():
