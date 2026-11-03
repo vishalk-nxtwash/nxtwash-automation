@@ -176,7 +176,6 @@ class CardDeclinesPage(BasePage):
             inputs = ctrl.find_elements(By.XPATH, ".//input")
             target = inputs[0] if inputs else ctrl
             ActionChains(self.driver).move_to_element(target).click(target).perform()
-        time.sleep(0.8)
         try:
             WebDriverWait(self.driver, 10).until(
                 lambda d: d.execute_script(
@@ -277,7 +276,6 @@ class CardDeclinesPage(BasePage):
             controls = self.driver.find_elements(*self.SITE_MULTISELECT)
             if controls:
                 ActionChains(self.driver).move_to_element(controls[0]).perform()
-                time.sleep(0.3)
             btn = WebDriverWait(self.driver, 2).until(
                 EC.element_to_be_clickable(self.SITE_CLEAR_BTN)
             )
@@ -452,7 +450,6 @@ class CardDeclinesPage(BasePage):
         except TimeoutException:
             # No Apply button — filters are applied automatically.
             pass
-        time.sleep(1.5)
         try:
             WebDriverWait(self.driver, 10).until(
                 EC.invisibility_of_element_located(self.LOAD_MASK)

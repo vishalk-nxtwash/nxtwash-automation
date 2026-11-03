@@ -469,7 +469,6 @@ class TransactionsPage(BasePage):
             return
         btn = self.wait.until(EC.element_to_be_clickable(self.FILTER_BY_BTN))
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(0.5)
         try:
             self.wait.until(EC.visibility_of_element_located(self.FILTER_PANEL))
         except TimeoutException:
@@ -710,7 +709,6 @@ class TransactionsPage(BasePage):
         """Click the export icon and wait for the export modal."""
         btn = self.wait.until(EC.element_to_be_clickable(self.EXPORT_ICON))
         self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(0.5)
         try:
             self.wait.until(EC.visibility_of_element_located(self.EXPORT_MODAL))
         except TimeoutException:
