@@ -172,9 +172,33 @@ def pytest_itemcollected(item):
     # derives a test's group assignment from its nodeid at per-item
     # collection time, before modifyitems hooks run — a marker added there
     # is visible on the item but never reaches xdist's scheduler.
-    for fixture_name in item.fixturenames:
-        if fixture_name.startswith("managed_"):
-            item.add_marker(pytest.mark.xdist_group(name=fixture_name))
+    #
+    # A test can request more than one managed_* fixture at once (e.g.
+    # kiosk_settings' managed_kiosk_form(browser, managed_kiosk)). Adding one
+    # mark per fixture name made xdist treat that as a NEW, uniquely-combined
+    # group distinct from either fixture's own group on its own (see
+    # test_memberships_validation.py's test_duplicate_barcode_is_rejected
+    # comment, confirmed via CI evidence there) — so e.g. kiosk_settings' 52
+    # managed_kiosk_form tests were never mutually exclusive with its 19
+    # managed_kiosk-only tests, despite both touching the same managed_kiosk
+    # record (same latent gap in pos_settings/managed_pos_form,
+    # tunnel_settings/managed_tunnel_form, employees/managed_shift). Fix: add
+    # exactly ONE mark per item — the fixture at the root of its own
+    # managed_* dependency chain (the one with no other managed_* fixture as
+    # a direct argument) — so a derived fixture's tests land in its base
+    # fixture's group instead of a separate combined one.
+    managed = [name for name in item.fixturenames if name.startswith("managed_")]
+    if not managed:
+        return
+    managed_set = set(managed)
+    root = managed[0]
+    for name in managed:
+        fixturedefs = item._fixtureinfo.name2fixturedefs.get(name)
+        argnames = fixturedefs[-1].argnames if fixturedefs else ()
+        if not any(dep in managed_set for dep in argnames):
+            root = name
+            break
+    item.add_marker(pytest.mark.xdist_group(name=root))
 
 
 def pytest_collection_modifyitems(config, items):
