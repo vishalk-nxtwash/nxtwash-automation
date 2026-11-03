@@ -13,6 +13,17 @@ from tests.admin_portal.admin_session import open_admin_path
 # LAB-SIT-013.
 LAB_SITE = "VK Test carwash 2"
 
+# Second, independent site for lab_page_2/lab_zero_data_2 -- splits this
+# module's locked xdist bucket into two concurrent lanes instead of one,
+# same pattern already proven for memberships/wash_books. Confirmed live
+# (2026-11-03): renders the same structural widgets as LAB_SITE but with
+# zero real labor/commission activity for every date window tried -- fine
+# for lab_zero_data_2 (already a zero-data fixture) and for structural/
+# visibility checks, but reconciliation-style checks degrade to their
+# existing skip guards here rather than verifying real data. Accepted
+# tradeoff (user decision) in exchange for real wall-clock savings.
+LAB_SITE_2 = "VK Test Wash 01"
+
 # 5 sites used in LAB-SIT-004 and LAB-SIT-005 (2 chips + "+3" overflow).
 # TODO: confirm exact names for all 5 sites via DevTools on first run.
 LAB_MULTI_SITES_5 = [
@@ -185,20 +196,15 @@ def lab_modal(browser):
     return open_lab_page(browser)
 
 
-@pytest.fixture
-def lab_page(browser):
-    """Phase 2 — LAB_SITE + This month applied; metrics screen visible.
-
-    Primary dataset (07/01/2026 – current date):
-    Cost Per Car = $27.27, Commission Total = $24.00 (all Retail),
-    7 Commission Transactions rows.
+def _open_lab_page_phase2(browser, site):
+    """Shared Phase 2 setup for lab_page/lab_page_2 — `site` + This month applied.
 
     Phase 2 has no Apply button and no page title — the inline filter bar
     auto-applies after a dropdown selection.  Wait for KPI content to confirm
     the metrics screen has loaded rather than checking for a modal.
     """
     page = open_lab_page(browser)
-    page.select_site(LAB_SITE)
+    page.select_site(site)
     page.select_date_preset(LAB_DATE_PRESET)
     try:
         WebDriverWait(page.driver, 10).until(
@@ -219,14 +225,36 @@ def lab_page(browser):
 
 
 @pytest.fixture
-def lab_zero_data(browser):
-    """Phase 2 — LAB_SITE + Today; all KPIs = 0 / $0.00, both tables = 0 records.
+def lab_page(browser):
+    """Phase 2 — LAB_SITE + This month applied; metrics screen visible.
+
+    Primary dataset (07/01/2026 – current date):
+    Cost Per Car = $27.27, Commission Total = $24.00 (all Retail),
+    7 Commission Transactions rows.
+    """
+    return _open_lab_page_phase2(browser, LAB_SITE)
+
+
+@pytest.fixture
+def lab_page_2(browser):
+    """Phase 2 on LAB_SITE_2 (VK Test Wash 01) — second concurrent xdist lane.
+
+    VK Test Wash 01 has zero real labor/commission activity (confirmed
+    live) — fine for structural/visibility checks, but reconciliation-style
+    checks here degrade to their existing skip guards rather than verify
+    real data. See LAB_SITE_2's own comment for why.
+    """
+    return _open_lab_page_phase2(browser, LAB_SITE_2)
+
+
+def _open_lab_zero_data(browser, site):
+    """Shared setup for lab_zero_data/lab_zero_data_2 — `site` + a zero-activity preset.
 
     Shared by LAB-KPI-003 (all metrics zero), LAB-EMP-002 (employee table empty),
     and LAB-CSM-002 (commission cards $0.00).
     """
     page = open_lab_page(browser)
-    page.select_site(LAB_SITE)
+    page.select_site(site)
     page.select_date_preset(LAB_ZERO_PRESET)
     try:
         WebDriverWait(page.driver, 10).until(
@@ -243,6 +271,23 @@ def lab_zero_data(browser):
     except Exception:
         time.sleep(3.0)
     return page
+
+
+@pytest.fixture
+def lab_zero_data(browser):
+    """Phase 2 — LAB_SITE + Today; all KPIs = 0 / $0.00, both tables = 0 records."""
+    return _open_lab_zero_data(browser, LAB_SITE)
+
+
+@pytest.fixture
+def lab_zero_data_2(browser):
+    """Phase 2 on LAB_SITE_2 — second concurrent xdist lane.
+
+    A natural fit: VK Test Wash 01 is already always-zero, same as the
+    zero-activity preset this fixture applies to LAB_SITE — no behavior
+    change expected, just a different site producing the same zero result.
+    """
+    return _open_lab_zero_data(browser, LAB_SITE_2)
 
 
 @pytest.fixture
