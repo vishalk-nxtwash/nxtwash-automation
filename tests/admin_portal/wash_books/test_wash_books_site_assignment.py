@@ -5,6 +5,7 @@ from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     MANAGED_WASH_BOOK,
+    MANAGED_WASH_BOOK_2,
     open_wash_books_page,
     page_has_no_broken_state,
 )
@@ -39,15 +40,15 @@ def test_assign_single_site_persists(managed_wash_book):
            "headless Chrome. Fix: same as WB-EDT-004 — retry on "
            "StaleElementReferenceException, wait for grid row stability."
 )
-def test_assign_multiple_sites_persists(managed_wash_book):
+def test_assign_multiple_sites_persists(managed_wash_book_2):
 
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.assign_all_locations()
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.wait_for_service_location_rows()
     location_count = len(page.visible_service_location_rows())
     for i in range(location_count):
@@ -57,20 +58,20 @@ def test_assign_multiple_sites_persists(managed_wash_book):
 
 @allure.title("WB-SIT-003 Location price override persists after save")
 @pytest.mark.regression
-def test_location_price_override_persists(managed_wash_book):
+def test_location_price_override_persists(managed_wash_book_2):
 
-    # managed_wash_book's reset deliberately does not touch location price/
+    # managed_wash_book_2's reset deliberately does not touch location price/
     # commission (see _reset_managed_wash_book) — reset it back here so it
     # doesn't leak into whatever test runs next on this fixture.
     override_price = "45"
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.assign_location_by_index(0)
     page.set_location_price_and_commission_by_index(0, override_price, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     assert page.get_location_price_by_index(0) == override_price
     assert page_has_no_broken_state(page)
 

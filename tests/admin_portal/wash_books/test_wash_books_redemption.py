@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from tests.admin_portal.wash_books.conftest import MANAGED_WASH_BOOK
+from tests.admin_portal.wash_books.conftest import MANAGED_WASH_BOOK_2
 from tests.admin_portal.wash_books.conftest import page_has_no_broken_state
 
 
@@ -27,10 +28,10 @@ def test_redemption_at_site_with_wash_package_persists(managed_wash_book):
 
 @allure.title("WB-RED-004 Checking a redemption site without selecting a wash package is documented")
 @pytest.mark.regression
-def test_redemption_site_without_wash_package_behaviour(managed_wash_book):
+def test_redemption_site_without_wash_package_behaviour(managed_wash_book_2):
 
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.open_redemption_settings()
 
     checkboxes = page.visible_redemption_checkboxes()

@@ -5,6 +5,7 @@ from tests.admin_portal.wash_books.conftest import (
     GLOBAL_COMMISSION,
     GLOBAL_PRICE,
     MANAGED_WASH_BOOK,
+    MANAGED_WASH_BOOK_2,
     NUMBER_OF_WASHES,
     POINTS_AWARDED,
     VISIBLE_PRICE,
@@ -35,12 +36,12 @@ def test_create_wash_book(managed_wash_book):
 
 @allure.title("WB-NAM-001 Saved settings persist when reopening the edit form")
 @pytest.mark.regression
-def test_wash_book_settings_persist(managed_wash_book):
+def test_wash_book_settings_persist(managed_wash_book_2):
 
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
 
-    assert page.get_wash_book_name_value() == MANAGED_WASH_BOOK
+    assert page.get_wash_book_name_value() == MANAGED_WASH_BOOK_2
     assert page.get_number_of_washes_value() == NUMBER_OF_WASHES
     assert page.get_points_awarded_value() == POINTS_AWARDED
     assert page.active_switch_is_on()

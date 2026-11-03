@@ -133,7 +133,7 @@ def create_customer_wash_book_if_missing(
 MANAGED_WASH_BOOK = managed_name("Wash Book")
 
 
-def _fill_managed_wash_book_baseline(page):
+def _fill_managed_wash_book_baseline(page, name=MANAGED_WASH_BOOK):
     """Set every field the 15 managed_wash_book tests touch, plus every field
     the app actually requires before Save will do anything.
 
@@ -165,7 +165,7 @@ def _fill_managed_wash_book_baseline(page):
     looping every row is the actual documented source of the Inovua grid
     timeout (WB-EDT-004, WB-SIT-002: "times out in headless Chrome").
     """
-    page.enter_wash_book_name(MANAGED_WASH_BOOK)
+    page.enter_wash_book_name(name)
     page.set_number_of_washes(NUMBER_OF_WASHES)
     page.set_points_awarded(POINTS_AWARDED)
     page.ensure_active_switch_on()
@@ -184,8 +184,15 @@ def _fill_managed_wash_book_baseline(page):
     page.open_service_settings()
 
 
-def _reset_managed_wash_book(browser, _attempt=1):
-    """Ensure MANAGED_WASH_BOOK exists and reset every field writer tests touch.
+def _reset_managed_wash_book(browser, name=MANAGED_WASH_BOOK, _attempt=1):
+    """Ensure MANAGED_WASH_BOOK (or `name`) exists and reset every field writer tests touch.
+
+    `name` defaults to MANAGED_WASH_BOOK but also backs a second, independent
+    record (MANAGED_WASH_BOOK_2, see managed_wash_book_2 below) so the
+    module's managed-fixture tests split across two xdist_group lanes
+    instead of one -- same pattern already proven for memberships'
+    managed_membership / managed_membership_2. The two records never
+    interact; splitting only cuts how many tests share one worker.
 
     Uses _fill_managed_wash_book_baseline() for both the create and the
     reset-existing path, so creation is exercised exactly the same way as
@@ -236,26 +243,31 @@ def _reset_managed_wash_book(browser, _attempt=1):
     start = time.time()
     try:
         page = open_wash_books_page(browser)
-        if page.wash_book_exists(MANAGED_WASH_BOOK):
+        if page.wash_book_exists(name):
             # (no re-navigation here: wash_book_exists() is a read-only
             # check against the page just loaded above -- nothing
             # invalidates it, so re-opening the same list page again was
             # pure duplicate overhead on every reset call.)
-            page.open_edit_wash_book(MANAGED_WASH_BOOK)
-            _fill_managed_wash_book_baseline(page)
+            page.open_edit_wash_book(name)
+            _fill_managed_wash_book_baseline(page, name)
             page.set_wash_book_description("")
             page.click_save_wash_book()
             page.wait_for_list_loaded()
             return open_wash_books_page(browser)
         page.open_create_wash_book()
-        _fill_managed_wash_book_baseline(page)
+        _fill_managed_wash_book_baseline(page, name)
         page.click_save_wash_book()
         page.wait_for_list_loaded()
         return open_wash_books_page(browser)
     except TimeoutException:
         if _attempt >= 2 or (time.time() - start) >= 60:
             raise
-        return _reset_managed_wash_book(browser, _attempt=_attempt + 1)
+        return _reset_managed_wash_book(browser, name=name, _attempt=_attempt + 1)
 
 
 managed_wash_book = managed_resource(_reset_managed_wash_book)
+
+MANAGED_WASH_BOOK_2 = managed_name("Wash Book 2")
+managed_wash_book_2 = managed_resource(
+    lambda browser: _reset_managed_wash_book(browser, name=MANAGED_WASH_BOOK_2)
+)

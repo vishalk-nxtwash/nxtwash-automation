@@ -3,6 +3,7 @@ import pytest
 
 from tests.admin_portal.wash_books.conftest import (
     MANAGED_WASH_BOOK,
+    MANAGED_WASH_BOOK_2,
     WASH_BOOK_DESCRIPTION,
     open_wash_books_page,
     page_has_no_broken_state,
@@ -32,15 +33,16 @@ def test_edit_wash_book_description(managed_wash_book):
 
 @allure.title("WB-EDT-001 Editing the wash book name persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_name_persists(managed_wash_book, browser):
+def test_edit_wash_book_name_persists(managed_wash_book_2, browser):
 
-    # Renames back to MANAGED_WASH_BOOK before returning: the managed_wash_book
-    # teardown resets by exact name match (wash_book_exists(MANAGED_WASH_BOOK)),
-    # so leaving the record renamed would make it create a brand-new orphan
-    # record next run instead of resetting this one.
-    updated_name = MANAGED_WASH_BOOK + " edited"
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    # Renames back to MANAGED_WASH_BOOK_2 before returning: the
+    # managed_wash_book_2 teardown resets by exact name match
+    # (wash_book_exists(MANAGED_WASH_BOOK_2)), so leaving the record renamed
+    # would make it create a brand-new orphan record next run instead of
+    # resetting this one.
+    updated_name = MANAGED_WASH_BOOK_2 + " edited"
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.enter_wash_book_name(updated_name)
     page.click_save_wash_book()
     page = open_wash_books_page(browser)
@@ -49,7 +51,7 @@ def test_edit_wash_book_name_persists(managed_wash_book, browser):
     assert page.wait_for_wash_book_row(updated_name).is_displayed()
 
     page.open_edit_wash_book(updated_name)
-    page.enter_wash_book_name(MANAGED_WASH_BOOK)
+    page.enter_wash_book_name(MANAGED_WASH_BOOK_2)
     page.click_save_wash_book()
     open_wash_books_page(browser)
 
@@ -72,16 +74,16 @@ def test_edit_wash_book_global_price_persists(managed_wash_book):
 
 @allure.title("WB-EDT-003 Editing the number of washes persists after save")
 @pytest.mark.regression
-def test_edit_wash_book_number_of_washes_persists(managed_wash_book):
+def test_edit_wash_book_number_of_washes_persists(managed_wash_book_2):
 
     new_washes = "20"
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.set_number_of_washes(new_washes)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     assert page.get_number_of_washes_value() == new_washes
     assert page_has_no_broken_state(page)
 
@@ -130,18 +132,18 @@ def test_edit_wash_book_global_commission_persists(managed_wash_book):
 
 @pytest.mark.smoke
 @allure.title("WB-EDT-007 Activating an inactive wash book updates its status to Active")
-def test_activate_wash_book(managed_wash_book):
+def test_activate_wash_book(managed_wash_book_2):
 
-    page = managed_wash_book
-    page.open_edit_wash_book(MANAGED_WASH_BOOK)
+    page = managed_wash_book_2
+    page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
     page.ensure_active_switch_off()
     page.ensure_active_switch_on()
     page.click_save_wash_book()
     page.wait_for_list_loaded()
-    page.search_wash_book(MANAGED_WASH_BOOK)
+    page.search_wash_book(MANAGED_WASH_BOOK_2)
 
-    assert page.wait_for_wash_book_row(MANAGED_WASH_BOOK).is_displayed()
-    assert page.get_wash_book_status(MANAGED_WASH_BOOK) == "Active"
+    assert page.wait_for_wash_book_row(MANAGED_WASH_BOOK_2).is_displayed()
+    assert page.get_wash_book_status(MANAGED_WASH_BOOK_2) == "Active"
     assert page_has_no_broken_state(page)
 
 
