@@ -319,9 +319,15 @@ class PerformanceMetricsPage(BasePage):
                     (By.XPATH, "//*[contains(@class,'nxt-multi-select__menu')]")
                 )
             )
+            # The menu shell can render before its option rows populate --
+            # wait for an actual option instead of guessing a fixed delay.
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//*[contains(@class,'nxt-multi-select__option')]")
+                )
+            )
         except TimeoutException:
             pass
-        time.sleep(0.3)
         els = self.driver.find_elements(
             By.XPATH, "//*[contains(@class,'nxt-multi-select__option')]"
         )
@@ -357,14 +363,16 @@ class PerformanceMetricsPage(BasePage):
 
     def clear_sites(self):
         try:
-            # Hover over the multiselect first so the clear indicator becomes clickable
+            # Hover over the multiselect first so the clear indicator becomes clickable.
+            # The explicit wait just below already polls for clickability, so no
+            # extra delay is needed between the hover and starting that poll.
             control = self.driver.find_elements(*self.SITE_MULTISELECT)
             if control:
                 ActionChains(self.driver).move_to_element(control[0]).perform()
-                time.sleep(0.3)
             btn = self.wait.until(EC.element_to_be_clickable(self.SITE_CLEAR_BTN))
             ActionChains(self.driver).move_to_element(btn).click(btn).perform()
-            time.sleep(1.0)
+            # Wait for the chips to actually clear instead of a blind delay.
+            WebDriverWait(self.driver, 5).until(lambda d: self.get_site_chips() == [])
         except TimeoutException:
             pass
 
@@ -472,7 +480,16 @@ class PerformanceMetricsPage(BasePage):
             for el in els:
                 if el.is_displayed():
                     self.driver.execute_script("arguments[0].click();", el)
-                    time.sleep(0.5)
+                    # Wait for the calendar to actually render instead of a
+                    # blind delay -- every caller immediately inspects day
+                    # buttons anyway, so this also makes the separate sleeps
+                    # callers used to add after this call redundant.
+                    try:
+                        WebDriverWait(self.driver, 5).until(
+                            EC.presence_of_element_located(self.CALENDAR_DAY_BUTTONS)
+                        )
+                    except TimeoutException:
+                        pass
                     return
         except Exception:
             pass
@@ -830,12 +847,14 @@ class PerformanceMetricsPage(BasePage):
         btn = self.wait.until(EC.element_to_be_clickable(self.CST_ICON))
         self.driver.execute_script("arguments[0].click();", btn)
         # Wait for the settings modal to actually render before returning.
-        # time.sleep(0.5) was insufficient late in long suite runs.
+        # time.sleep(0.5) was insufficient late in long suite runs -- the
+        # explicit wait below (which checks the same is_displayed() state a
+        # trailing sleep could only guess at) replaced it; no delay needed
+        # after it confirms the modal is already open.
         try:
             WebDriverWait(self.driver, 8).until(lambda d: self.cst_settings_open())
         except TimeoutException:
             pass
-        time.sleep(0.3)
 
     def cst_settings_open(self):
         els = self.driver.find_elements(*self.CST_MODAL)

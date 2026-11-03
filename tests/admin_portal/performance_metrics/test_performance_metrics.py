@@ -430,7 +430,6 @@ def test_unchecking_removes_site(pfm_page):
     # Page bar auto-applies; removing a site triggers widget refresh
     chips_before = pfm_page.get_site_chips()
     pfm_page.clear_sites()
-    time.sleep(1.5)
     chips_after = pfm_page.get_site_chips()
     assert len(chips_after) < len(chips_before) or chips_after == [], (
         "Site chips not reduced after clearing. Before: %s After: %s"
@@ -445,7 +444,6 @@ def test_unchecking_removes_site(pfm_page):
 @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_clear_all_removes_all_sites(pfm_page):
     pfm_page.clear_sites()
-    time.sleep(0.8)
     chips = pfm_page.get_site_chips()
     assert len(chips) == 0, (
         "Expected no chips after X-clear, got: %s" % chips
@@ -569,7 +567,6 @@ def test_date_preset_sets_correct_range(pfm_modal, preset):
 @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_custom_range_calendar_picker_opens(pfm_modal):
     pfm_modal.click_date_range_input()
-    time.sleep(0.5)
     # Calendar should appear — look for day buttons
     day_btns = pfm_modal.driver.find_elements(*pfm_modal.CALENDAR_DAY_BUTTONS)
     visible_days = [b for b in day_btns if b.is_displayed()]
@@ -585,7 +582,6 @@ def test_custom_range_calendar_picker_opens(pfm_modal):
 @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_today_highlighted_in_calendar(pfm_modal):
     pfm_modal.click_date_range_input()
-    time.sleep(0.5)
     assert pfm_modal.today_highlighted_in_calendar(), (
         "Today's date is not highlighted in the calendar picker"
     )
@@ -597,7 +593,6 @@ def test_today_highlighted_in_calendar(pfm_modal):
 @pytest.mark.xdist_group("admin-shared-site-performance_metrics")
 def test_future_dates_not_selectable(pfm_modal):
     pfm_modal.click_date_range_input()
-    time.sleep(0.5)
     assert pfm_modal.future_day_is_disabled(days_ahead=1), (
         "Future day (tomorrow) is not disabled in the calendar — expected it to be"
     )
@@ -1089,7 +1084,14 @@ class TestColumnSettings:
         self.page = pfm_page
         pfm_page.cst_open_settings()
         pfm_page.cst_toggle_all()   # toggle all OFF — hides every non-pinned column
-        time.sleep(0.4)
+        # Wait for the OFF state to actually land (same check
+        # test_toggle_off_removes_column makes) instead of a blind delay.
+        try:
+            WebDriverWait(pfm_page.driver, 5).until(
+                lambda d: not pfm_page.mht_column_visible("Total")
+            )
+        except Exception:
+            pass
 
     @allure.story("Column Settings")
     @allure.title("PFM-CST-004 Toggling a column OFF removes it from the MHT header row")
