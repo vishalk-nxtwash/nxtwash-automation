@@ -135,9 +135,28 @@ class AdminUserRolesPage(BasePage):
 
     def open_edit_role(self, role_name):
         self.search_role(role_name)
-        rows = self.driver.find_elements(*self._role_row_locator(role_name))
-        if not any(r.is_displayed() for r in rows):
-            # Role is hidden by the active filter (e.g. it is inactive).
+        # search_role() only waits for the search INPUT's value to update,
+        # not for the (debounced, async) list re-render -- confirmed live,
+        # 2026-11-04: the filtered row can take several real seconds to
+        # actually appear. Checking visibility with zero grace period used
+        # to treat that normal render lag as "role must be inactive" on
+        # essentially every call, wastefully toggling the active filter
+        # and only succeeding via wait_for_role_row()'s ~45s timeout below
+        # once enough real time had passed anyway -- the dominant,
+        # previously unidentified cost behind this module's ~140s/test
+        # overhead (reproduced solo: create_role_if_missing() took
+        # 76-89s/call before this fix). Give the filter a real, bounded
+        # chance to apply before assuming it's hidden.
+        try:
+            WebDriverWait(self.driver, 8).until(
+                lambda d: any(
+                    el.is_displayed()
+                    for el in d.find_elements(*self._role_row_locator(role_name))
+                )
+            )
+        except TimeoutException:
+            # Genuinely not visible even after a real wait -- now it's safe
+            # to assume the role is hidden by the active-only filter.
             # Toggle the filter off so inactive roles are visible too.
             self.toggle_active_filter()
             self.apply_filters()
