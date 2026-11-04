@@ -29,6 +29,13 @@ def test_assign_single_site_persists(managed_wash_book):
     page = managed_wash_book
     page.open_edit_wash_book(MANAGED_WASH_BOOK)
     page.assign_location_for_site(site)
+    # A newly-assigned location's price/commission must also be set or the
+    # server rejects the save outright ("price in requestWashbookSiteList
+    # is required") -- confirmed live, 2026-11-04. The original by-index
+    # version of this test never needed this because index 0 happened to
+    # already be a previously-configured row; "VK Test carwash 2" is a
+    # fresh assignment for this record and has no such default.
+    page.set_location_price_and_commission_for_site(site, GLOBAL_PRICE, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 

@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -702,8 +704,9 @@ class WashBooksPage(BasePage):
 
         return baseline_rows or unique_rows
 
-    def _service_location_row_for_site(self, site_name):
-        """Return the service-location row for a specific site, or None.
+    def _service_location_row_for_site(self, site_name, max_attempts=400):
+        """Return the service-location row for a specific site, scrolling
+        the virtual grid as needed.
 
         Selecting a specific, known site by name rather than by position
         avoids depending on row order in a grid that's a live view over
@@ -712,11 +715,60 @@ class WashBooksPage(BasePage):
         different physical row between two independent grid loads
         (assign, then reopen to verify), failing a correct assign/verify
         pair on a row-order shift rather than a real defect.
+
+        A plain DOM scan over visible_service_location_rows() is NOT
+        enough, though (first fix attempt, CI run 41798226078, also
+        failed): this grid mounts far more rows than are actually
+        displayed -- confirmed live, 2026-11-04: 1370
+        InovuaReactDataGrid__row elements in the DOM with only ~12
+        is_displayed()==True at any one scroll position, and the two
+        baseline sites were present in the DOM but not displayed until
+        scrolled into view. Same grid-virtualization shape already proven
+        and fixed for GiftCardsPage.get_location_row() -- adapted here:
+        reset scroll to the top, then dispatch a real 'scroll' Event on
+        the grid's scroller (confirmed live that setting scrollTop alone
+        without dispatching the event is a no-op for this library),
+        stepping in small 350px increments so a jump doesn't skip past
+        the target -- confirmed live this grid's real target is found
+        after ~95 steps, consistent with gift_cards' own documented
+        ~80-step/~14s typical case for a similarly-sized site list.
         """
         self.wait_for_service_location_rows()
-        for row in self.visible_service_location_rows():
-            if site_name in row.text:
+
+        row_locator = (
+            By.XPATH,
+            "//*[contains(@class,'InovuaReactDataGrid__row')]"
+            "[.//*[normalize-space(text())='%s']]" % site_name
+        )
+
+        def _displayed_row():
+            rows = self.driver.find_elements(*row_locator)
+            return rows[0] if rows and rows[0].is_displayed() else None
+
+        scrollers = self.driver.find_elements(By.CSS_SELECTOR, "[data-name='scroller']")
+        scroller = scrollers[0] if scrollers else None
+        if scroller is not None:
+            self.driver.execute_script(
+                "arguments[0].scrollTop = 0;"
+                "arguments[0].dispatchEvent(new Event('scroll', {bubbles: true}));",
+                scroller
+            )
+
+        row = _displayed_row()
+        if row is not None or scroller is None:
+            return row
+
+        for _ in range(max_attempts):
+            self.driver.execute_script(
+                "arguments[0].scrollTop += arguments[1];"
+                "arguments[0].dispatchEvent(new Event('scroll', {bubbles: true}));",
+                scroller, 350
+            )
+            time.sleep(0.1)
+            row = _displayed_row()
+            if row is not None:
                 return row
+
         return None
 
     def _assignment_checkbox_for_row(self, row):
