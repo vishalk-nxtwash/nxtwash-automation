@@ -296,7 +296,6 @@ def lab_single_day(browser):
     page = open_lab_page(browser)
     page.select_site(LAB_SITE)
     page.check_modal_single_day()
-    time.sleep(0.5)
     return page
 
 
@@ -314,7 +313,6 @@ def sdm_single_day(browser):
     page = open_lab_page(browser)
     page.select_site(LAB_SITE)
     page.check_modal_single_day()
-    time.sleep(0.5)
     return page
 
 

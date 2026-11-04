@@ -276,7 +276,6 @@ class LaborShiftsPage(BasePage):
                 }));
             }
         """)
-        time.sleep(0.5)
         try:
             WebDriverWait(self.driver, 8).until(
                 lambda d: d.execute_script(
@@ -317,7 +316,6 @@ class LaborShiftsPage(BasePage):
                    || document.querySelector('.nxt-multi-select__input');
             if (inp) { inp.focus(); }
         """)
-        time.sleep(0.5)
 
     def _get_site_input(self):
         """Return the site multiselect search input.
@@ -360,7 +358,6 @@ class LaborShiftsPage(BasePage):
             inner.send_keys(SELECT_ALL_KEY + "a" + Keys.NULL + Keys.BACKSPACE)
             time.sleep(0.1)
         inner.send_keys(site_name)
-        time.sleep(0.3)
         # Find and click in a single atomic JS call to avoid stale reference between
         # the two separate operations (_find_react_option then execute_script click).
         _CLICK_JS = """
@@ -412,12 +409,11 @@ class LaborShiftsPage(BasePage):
             controls = self.driver.find_elements(*self.SITE_MULTISELECT)
             if controls:
                 ActionChains(self.driver).move_to_element(controls[0]).perform()
-                time.sleep(0.3)
             btn = WebDriverWait(self.driver, 2).until(
                 EC.element_to_be_clickable(self.SITE_CLEAR_BTN)
             )
             ActionChains(self.driver).move_to_element(btn).click(btn).perform()
-            time.sleep(0.5)
+            WebDriverWait(self.driver, 5).until(lambda d: self.get_site_chips() == [])
             return
         except TimeoutException:
             pass
@@ -477,7 +473,6 @@ class LaborShiftsPage(BasePage):
                 el.click()
             except Exception:
                 pass
-        time.sleep(0.6)
 
     def select_date_preset(self, preset):
         """Select a named preset from the date preset combobox."""
@@ -599,7 +594,9 @@ class LaborShiftsPage(BasePage):
             if el.is_displayed() and not el.is_selected():
                 try:
                     self.driver.execute_script("arguments[0].click();", el)
-                    time.sleep(0.3)
+                    WebDriverWait(self.driver, 5).until(
+                        lambda d: self.modal_single_day_is_checked()
+                    )
                     return
                 except Exception:
                     pass
@@ -610,7 +607,9 @@ class LaborShiftsPage(BasePage):
             if el.is_displayed() and el.is_selected():
                 try:
                     self.driver.execute_script("arguments[0].click();", el)
-                    time.sleep(0.3)
+                    WebDriverWait(self.driver, 5).until(
+                        lambda d: not self.modal_single_day_is_checked()
+                    )
                     return
                 except Exception:
                     pass
@@ -629,7 +628,9 @@ class LaborShiftsPage(BasePage):
             if el.is_displayed() and not el.is_selected():
                 try:
                     self.driver.execute_script("arguments[0].click();", el)
-                    time.sleep(0.5)
+                    WebDriverWait(self.driver, 5).until(
+                        lambda d: self.page_bar_single_day_is_checked()
+                    )
                     return
                 except Exception:
                     pass
@@ -653,7 +654,6 @@ class LaborShiftsPage(BasePage):
             self.driver.execute_script("arguments[0].click();", btn)
         except TimeoutException:
             pass
-        time.sleep(1.5)
         # Wait for modal to close (Apply button disappears)
         def _apply_still_visible(d):
             for e in d.find_elements(*self.APPLY_BUTTON):

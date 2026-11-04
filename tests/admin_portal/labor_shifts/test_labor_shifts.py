@@ -652,7 +652,6 @@ class TestLaborShiftsDateFilter:
             "Single day checkbox not checked in lab_single_day fixture"
         )
         lab_single_day.uncheck_modal_single_day()
-        time.sleep(0.5)
         assert not lab_single_day.modal_single_day_is_checked(), (
             "Single day checkbox still checked after unchecking"
         )
@@ -677,7 +676,6 @@ class TestLaborShiftsDateFilter:
     def test_single_day_custom_range_renders(self, lab_modal):
         lab_modal.select_site(LAB_SITE)
         lab_modal.check_modal_single_day()
-        time.sleep(0.3)
         assert lab_modal.modal_single_day_is_checked(), "SDM not checked"
         lab_modal.select_date_preset("Custom")
         time.sleep(0.3)
