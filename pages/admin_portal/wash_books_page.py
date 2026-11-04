@@ -732,18 +732,72 @@ class WashBooksPage(BasePage):
         the target -- confirmed live this grid's real target is found
         after ~95 steps, consistent with gift_cards' own documented
         ~80-step/~14s typical case for a similarly-sized site list.
+
+        Caches the found row for `site_name` across consecutive calls on
+        the same page load (assign, then set price, both target the same
+        row) -- confirmed live (2026-11-04, AWS run 41884407755) that
+        repeating the full scroll search twice in a row for the same site
+        materially adds to the risk of exceeding pytest's 420s global
+        timeout on a slower connection. Invalidated automatically if the
+        cached element goes stale (a fresh page/frame load) rather than
+        tracked explicitly.
+
+        Each scroll step is also a single combined "check, then scroll"
+        execute_script call instead of a separate scroll call plus a
+        separate Selenium find_elements/is_displayed check -- confirmed
+        live (2026-11-04) the original 2-3-round-trip-per-step version
+        could, on the AWS self-hosted runner's slower/shared connection,
+        push a test's up-to-~400-step search past that same 420s global
+        timeout; something this grid's small 350px-step requirement
+        (already proven necessary on faster connections -- larger jumps
+        skip past the target) never risked before. The real per-step
+        delay a React re-render needs stays as a genuine Python-side
+        time.sleep() between calls -- only the round-trip COUNT per step
+        drops (checking + advancing the scroll in one call instead of
+        two or three), not the timing behavior that makes the scroll
+        itself work.
         """
+        cached = getattr(self, "_cached_location_row", None)
+        if cached is not None and cached[0] == site_name:
+            try:
+                if cached[1].is_displayed():
+                    return cached[1]
+            except Exception:
+                # Cached element (or its whole frame/page) no longer exists --
+                # confirmed live, 2026-11-04: a page reload between calls
+                # raises NoSuchElementException here, not
+                # StaleElementReferenceException (the element's context is
+                # gone entirely, not just re-rendered) -- any failure here
+                # just means the cache is invalid, so fall through to a
+                # fresh search rather than enumerate every possible cause.
+                pass
+
         self.wait_for_service_location_rows()
 
-        row_locator = (
-            By.XPATH,
-            "//*[contains(@class,'InovuaReactDataGrid__row')]"
-            "[.//*[normalize-space(text())='%s']]" % site_name
-        )
-
-        def _displayed_row():
-            rows = self.driver.find_elements(*row_locator)
-            return rows[0] if rows and rows[0].is_displayed() else None
+        check_and_scroll_js = """
+            var scroller = arguments[0];
+            var siteName = arguments[1];
+            var stepSize = arguments[2];
+            function isVisible(el) {
+                var r = el.getBoundingClientRect();
+                return r.width > 0 && r.height > 0;
+            }
+            var rows = document.querySelectorAll('[class*="InovuaReactDataGrid__row"]');
+            for (var i = 0; i < rows.length; i++) {
+                if (!isVisible(rows[i])) continue;
+                var cells = rows[i].querySelectorAll('*');
+                for (var j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.trim() === siteName) {
+                        return rows[i];
+                    }
+                }
+            }
+            if (scroller) {
+                scroller.scrollTop += stepSize;
+                scroller.dispatchEvent(new Event('scroll', {bubbles: true}));
+            }
+            return null;
+        """
 
         scrollers = self.driver.find_elements(By.CSS_SELECTOR, "[data-name='scroller']")
         scroller = scrollers[0] if scrollers else None
@@ -754,20 +808,15 @@ class WashBooksPage(BasePage):
                 scroller
             )
 
-        row = _displayed_row()
-        if row is not None or scroller is None:
-            return row
-
-        for _ in range(max_attempts):
-            self.driver.execute_script(
-                "arguments[0].scrollTop += arguments[1];"
-                "arguments[0].dispatchEvent(new Event('scroll', {bubbles: true}));",
-                scroller, 350
-            )
-            time.sleep(0.1)
-            row = _displayed_row()
+        attempts = max_attempts if scroller is not None else 1
+        for _ in range(attempts):
+            row = self.driver.execute_script(check_and_scroll_js, scroller, site_name, 350)
             if row is not None:
+                self._cached_location_row = (site_name, row)
                 return row
+            if scroller is None:
+                break
+            time.sleep(0.1)
 
         return None
 
