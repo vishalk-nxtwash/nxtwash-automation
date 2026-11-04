@@ -702,6 +702,67 @@ class WashBooksPage(BasePage):
 
         return baseline_rows or unique_rows
 
+    def _service_location_row_for_site(self, site_name):
+        """Return the service-location row for a specific site, or None.
+
+        Selecting a specific, known site by name rather than by position
+        avoids depending on row order in a grid that's a live view over
+        staging's shared, ever-growing site list -- confirmed live
+        (2026-11-04, CI run 41791363043) that index 0 can point at a
+        different physical row between two independent grid loads
+        (assign, then reopen to verify), failing a correct assign/verify
+        pair on a row-order shift rather than a real defect.
+        """
+        self.wait_for_service_location_rows()
+        for row in self.visible_service_location_rows():
+            if site_name in row.text:
+                return row
+        return None
+
+    def _assignment_checkbox_for_row(self, row):
+        return row.find_element(
+            By.XPATH,
+            ".//*[contains(@class,'inovua-react-toolkit-checkbox') "
+            "and contains(@class,'InovuaReactDataGrid__checkbox')]"
+        )
+
+    def assign_location_for_site(self, site_name):
+        """Assign one service location row by site name instead of position."""
+        row = self._service_location_row_for_site(site_name)
+        if row is None:
+            raise AssertionError(
+                "Service location row for site '%s' not found" % site_name
+            )
+        self.ensure_checkbox_checked(self._assignment_checkbox_for_row(row))
+
+    def location_is_assigned_for_site(self, site_name):
+        """Return whether the service location row for `site_name` is assigned."""
+        row = self._service_location_row_for_site(site_name)
+        if row is None:
+            raise AssertionError(
+                "Service location row for site '%s' not found" % site_name
+            )
+        return self.row_checkbox_is_checked(self._assignment_checkbox_for_row(row))
+
+    def get_location_price_for_site(self, site_name):
+        """Return the price input value for the service location row matching `site_name`."""
+        row = self._service_location_row_for_site(site_name)
+        if row is None:
+            raise AssertionError(
+                "Service location row for site '%s' not found" % site_name
+            )
+        return row.find_element(By.NAME, "price").get_attribute("value")
+
+    def set_location_price_and_commission_for_site(self, site_name, price, commission):
+        """Set price/commission for the service location row matching `site_name`."""
+        row = self._service_location_row_for_site(site_name)
+        if row is None:
+            raise AssertionError(
+                "Service location row for site '%s' not found" % site_name
+            )
+        self.set_grid_input_value(row.find_element(By.NAME, "price"), price)
+        self.set_grid_input_value(row.find_element(By.NAME, "commission"), commission)
+
     def visible_assignment_checkboxes(self):
         """Return visible service assignment checkboxes, excluding header."""
         rows = self.visible_service_location_rows()

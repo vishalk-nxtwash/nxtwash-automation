@@ -21,15 +21,19 @@ pytestmark = [
 @allure.title("WB-SIT-001 Assigning a single site persists after save")
 @pytest.mark.regression
 def test_assign_single_site_persists(managed_wash_book):
-
+    # Assign by a known, stable site name rather than row position 0: that
+    # grid is a live view over staging's shared, ever-growing site list, so
+    # "index 0" can point at a different physical row between the assign
+    # and the later re-open-to-verify (confirmed live, CI run 41791363043).
+    site = "VK Test carwash 2"
     page = managed_wash_book
     page.open_edit_wash_book(MANAGED_WASH_BOOK)
-    page.assign_location_by_index(0)
+    page.assign_location_for_site(site)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
     page.open_edit_wash_book(MANAGED_WASH_BOOK)
-    assert page.location_is_assigned_by_index(0)
+    assert page.location_is_assigned_for_site(site)
     assert page_has_no_broken_state(page)
 
 
@@ -63,19 +67,22 @@ def test_location_price_override_persists(managed_wash_book_2):
     # managed_wash_book_2's reset deliberately does not touch location price/
     # commission (see _reset_managed_wash_book) — reset it back here so it
     # doesn't leak into whatever test runs next on this fixture.
+    # Anchored on a known, stable site name rather than row position 0 --
+    # same reason as test_assign_single_site_persists above.
+    site = "VK Test Wash 01"
     override_price = "45"
     page = managed_wash_book_2
     page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
-    page.assign_location_by_index(0)
-    page.set_location_price_and_commission_by_index(0, override_price, GLOBAL_COMMISSION)
+    page.assign_location_for_site(site)
+    page.set_location_price_and_commission_for_site(site, override_price, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
     page.open_edit_wash_book(MANAGED_WASH_BOOK_2)
-    assert page.get_location_price_by_index(0) == override_price
+    assert page.get_location_price_for_site(site) == override_price
     assert page_has_no_broken_state(page)
 
-    page.set_location_price_and_commission_by_index(0, GLOBAL_PRICE, GLOBAL_COMMISSION)
+    page.set_location_price_and_commission_for_site(site, GLOBAL_PRICE, GLOBAL_COMMISSION)
     page.click_save_wash_book()
     page.wait_for_list_loaded()
 
