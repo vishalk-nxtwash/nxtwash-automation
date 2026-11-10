@@ -1,5 +1,6 @@
 import re
 import time
+from urllib.parse import urlparse
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -862,8 +863,19 @@ class TransactionsPage(BasePage):
     # All methods below switch to the legacy iframe before querying elements.
 
     def get_detail_panel_headings(self):
-        """Return visible panel heading texts inside the legacy iframe."""
+        """Return visible panel heading texts inside the legacy iframe.
+
+        The iframe renders progressively — body text can appear before the
+        page-header buttons finish painting — so wait for at least one
+        heading to be visible instead of reading the DOM immediately after
+        the frame switch. Degrades to the old behaviour (empty list) if none
+        ever appears.
+        """
         self._switch_to_detail_frame()
+        try:
+            self.wait_visible_with_retry(self.DETAIL_PANEL_HEADINGS, timeout=15)
+        except TimeoutException:
+            pass
         els = self.driver.find_elements(*self.DETAIL_PANEL_HEADINGS)
         result = []
         for el in els:
@@ -917,18 +929,29 @@ class TransactionsPage(BasePage):
         Prefers a Back button/link if one exists; otherwise derives the report
         URL from the current URL and navigates directly — avoids driver.back()
         which goes to the wrong history entry when the fixture navigated directly.
+
+        The "Back" text match is generic and can hit an unrelated control
+        (confirmed in CI: it landed on the bare app root instead of the
+        report), so a landing on the root is treated as a miss and corrected
+        via the direct-nav fallback rather than trusted.
         """
         self.driver.switch_to.default_content()
+        current = self.driver.current_url
+        if "/reports/transactions_log" in current:
+            base = current.split("/reports/transactions_log")[0]
+        else:
+            base = current.rsplit("/", 2)[0]
+        report_url = base + "/transactions/report"
+
         try:
             btn = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(self.DETAIL_BACK_LINK))
             self.driver.execute_script("arguments[0].click();", btn)
             time.sleep(1.0)
+            if urlparse(self.driver.current_url).path not in ("", "/"):
+                return
         except TimeoutException:
-            current = self.driver.current_url
-            if "/reports/transactions_log" in current:
-                base = current.split("/reports/transactions_log")[0]
-            else:
-                base = current.rsplit("/", 2)[0]
-            self.driver.get(base + "/transactions/report")
-            time.sleep(1.5)
+            pass
+
+        self.driver.get(report_url)
+        time.sleep(1.5)
