@@ -169,10 +169,15 @@ class TransactionsPage(BasePage):
         "//button[normalize-space()='Cancel'] | //button[@aria-label='Cancel']")
 
     # ── Detail page panels ────────────────────────────────────────────────────
-    # confirmed via DevTools 2026-07-13: panel headings inside the legacy iframe are
+    # confirmed via DevTools 2026-07-13: panel headings inside the legacy iframe were
     # <button class="settings-page__page-header__title">Transaction details</button>
+    # confirmed live 2026-11-10: the legacy iframe is gone - the detail page now
+    # renders natively, and panel/page headings ("Transaction details", "Car
+    # details", "Customer") are plain <div class="text-xl/5 text-dark">...
+    # Keep the old button pattern too in case the legacy shape ever reappears.
     DETAIL_PANEL_HEADINGS = (By.XPATH,
-        "//button[contains(@class,'page-header__title')]")
+        "//button[contains(@class,'page-header__title')] | "
+        "//div[contains(@class,'text-xl/5') and contains(@class,'text-dark')]")
 
     # Service section confirmed visible in screenshot: "Service used" column header present.
     # Text-anchor covers both <table> and div-based legacy layouts.
@@ -930,19 +935,26 @@ class TransactionsPage(BasePage):
         URL from the current URL and navigates directly — avoids driver.back()
         which goes to the wrong history entry when the fixture navigated directly.
 
-        The "Back" text match is generic and can hit an unrelated control
-        (confirmed in CI: it landed on the bare app root instead of the
-        report), so a landing on the root is treated as a miss and corrected
-        via the direct-nav fallback rather than trusted.
+        Confirmed live 2026-11-10: the detail page no longer has any "Back"-
+        labelled control (the legacy iframe it lived in is gone), so the
+        direct-nav fallback below is what actually runs every time. The app
+        also now redirects straight to /transactions/report/{id} instead of
+        the old /reports/transactions_log/{id}, so the previous "strip two
+        path segments" derivation produced a malformed
+        .../transactions/transactions/report URL that 404s back to the app
+        root — strip exactly the trailing /{id} segment for that shape.
+        A landing on the bare root is still treated as a miss and corrected
+        via a retry, in case routing drifts again.
         """
-        self.driver.switch_to.default_content()
         current = self.driver.current_url
-        if "/reports/transactions_log" in current:
-            base = current.split("/reports/transactions_log")[0]
+        if "/transactions/report/" in current:
+            report_url = current.rsplit("/", 1)[0]
+        elif "/reports/transactions_log" in current:
+            report_url = current.split("/reports/transactions_log")[0] + "/transactions/report"
         else:
-            base = current.rsplit("/", 2)[0]
-        report_url = base + "/transactions/report"
+            report_url = current.rsplit("/", 2)[0] + "/transactions/report"
 
+        self.driver.switch_to.default_content()
         try:
             btn = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(self.DETAIL_BACK_LINK))
